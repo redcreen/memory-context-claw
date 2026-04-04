@@ -35,5 +35,26 @@
       "上下文引擎",
       "上下文层"
     ]
+  },
+  {
+    "name": "provider-role",
+    "message": "memorySearch.provider 是做什么的？",
+    "expectedAll": [
+      "embedding",
+      "memory_search",
+      "不影响"
+    ],
+    "forbiddenAny": [
+      "Gateway: `memorySearch` failed"
+    ]
+  },
+  {
+    "name": "plugin-config",
+    "message": "memory-context-claw 这个插件的配置应该怎么写？",
+    "expectedAll": [
+      "memory-context-claw",
+      "contextEngine",
+      "enabled: true"
+    ]
   }
 ]

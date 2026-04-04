@@ -18,6 +18,20 @@ function includesAny(text, patterns) {
   return patterns.some((pattern) => text.includes(pattern));
 }
 
+function includesAll(text, patterns) {
+  if (!patterns || patterns.length === 0) {
+    return true;
+  }
+  return patterns.every((pattern) => text.includes(pattern));
+}
+
+function excludesAll(text, patterns) {
+  if (!patterns || patterns.length === 0) {
+    return true;
+  }
+  return patterns.every((pattern) => !text.includes(pattern));
+}
+
 function includesSources(text, expectedSources) {
   if (!expectedSources || expectedSources.length === 0) {
     return true;
@@ -48,16 +62,22 @@ async function runCase(testCase, index) {
   const payload = JSON.parse(stdout);
   const text = payload?.result?.payloads?.map((item) => item?.text || "").join("\n") || "";
   const contentOk = includesAny(text, testCase.expectedAny || []);
+  const contentAllOk = includesAll(text, testCase.expectedAll || []);
   const sourceOk = includesSources(text, testCase.expectedSources || []);
+  const forbiddenOk = excludesAll(text, testCase.forbiddenAny || []);
   return {
     name: testCase.name,
     message: testCase.message,
-    ok: contentOk && (testCase.requireSources ? sourceOk : true),
+    ok: contentOk && contentAllOk && forbiddenOk && (testCase.requireSources ? sourceOk : true),
     contentOk,
+    contentAllOk,
     sourceOk,
+    forbiddenOk,
     requireSources: Boolean(testCase.requireSources),
     expectedAny: testCase.expectedAny || [],
+    expectedAll: testCase.expectedAll || [],
     expectedSources: testCase.expectedSources || [],
+    forbiddenAny: testCase.forbiddenAny || [],
     answer: text
   };
 }
