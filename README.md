@@ -77,24 +77,6 @@ Minimal example:
 
 ```json5
 {
-  agents: {
-    list: [
-      {
-        id: "main",
-        memorySearch: {
-          provider: "local",
-          fallback: "none",
-          local: {
-            modelPath: "/ABSOLUTE/PATH/TO/embeddinggemma-300m-qat-Q8_0.gguf"
-          },
-          sync: {
-            watch: true
-          },
-          extraPaths: ["/ABSOLUTE/PATH/TO/YOUR-WORKSPACE"]
-        }
-      }
-    ]
-  },
   plugins: {
     allow: ["memory-context-claw"],
     load: {
@@ -105,34 +87,7 @@ Minimal example:
     },
     entries: {
       "memory-context-claw": {
-        enabled: true,
-        config: {
-          enabled: true,
-          maxCandidates: 18,
-          maxSelectedChunks: 4,
-          maxChunksPerPath: 1,
-          memoryBudgetRatio: 0.35,
-          recentMessageCount: 8,
-          excludePaths: [
-            "/memory-context-claw/",
-            "/context-assembly-claw/",
-            "/openclaw-task-system/",
-            "/node_modules/",
-            "/.git/"
-          ],
-          queryRewrite: {
-            enabled: true,
-            maxQueries: 4
-          },
-          llmRerank: {
-            enabled: false,
-            topN: 6,
-            model: "gpt-5.4",
-            timeoutMs: 20000,
-            maxSnippetChars: 900,
-            minScoreDeltaToSkip: 0.18
-          }
-        }
+        enabled: true
       }
     }
   }
@@ -143,6 +98,10 @@ Templates:
 
 - [openclaw.context-assembly.example.json](/Users/redcreen/Project/长记忆/context-assembly-claw/templates/openclaw.context-assembly.example.json)
 - [openclaw.context-assembly.llm-rerank.example.json](/Users/redcreen/Project/长记忆/context-assembly-claw/templates/openclaw.context-assembly.llm-rerank.example.json)
+
+Configuration details:
+
+- [CONFIGURATION.md](/Users/redcreen/Project/长记忆/context-assembly-claw/CONFIGURATION.md)
 
 ### Normal Usage
 
@@ -276,24 +235,6 @@ openclaw plugins install -l .
 
 ```json5
 {
-  agents: {
-    list: [
-      {
-        id: "main",
-        memorySearch: {
-          provider: "local",
-          fallback: "none",
-          local: {
-            modelPath: "/ABSOLUTE/PATH/TO/embeddinggemma-300m-qat-Q8_0.gguf"
-          },
-          sync: {
-            watch: true
-          },
-          extraPaths: ["/ABSOLUTE/PATH/TO/YOUR-WORKSPACE"]
-        }
-      }
-    ]
-  },
   plugins: {
     allow: ["memory-context-claw"],
     load: {
@@ -304,34 +245,7 @@ openclaw plugins install -l .
     },
     entries: {
       "memory-context-claw": {
-        enabled: true,
-        config: {
-          enabled: true,
-          maxCandidates: 18,
-          maxSelectedChunks: 4,
-          maxChunksPerPath: 1,
-          memoryBudgetRatio: 0.35,
-          recentMessageCount: 8,
-          excludePaths: [
-            "/memory-context-claw/",
-            "/context-assembly-claw/",
-            "/openclaw-task-system/",
-            "/node_modules/",
-            "/.git/"
-          ],
-          queryRewrite: {
-            enabled: true,
-            maxQueries: 4
-          },
-          llmRerank: {
-            enabled: false,
-            topN: 6,
-            model: "gpt-5.4",
-            timeoutMs: 20000,
-            maxSnippetChars: 900,
-            minScoreDeltaToSkip: 0.18
-          }
-        }
+        enabled: true
       }
     }
   }
@@ -342,6 +256,10 @@ openclaw plugins install -l .
 
 - [openclaw.context-assembly.example.json](/Users/redcreen/Project/长记忆/context-assembly-claw/templates/openclaw.context-assembly.example.json)
 - [openclaw.context-assembly.llm-rerank.example.json](/Users/redcreen/Project/长记忆/context-assembly-claw/templates/openclaw.context-assembly.llm-rerank.example.json)
+
+配置说明文档：
+
+- [CONFIGURATION.md](/Users/redcreen/Project/长记忆/context-assembly-claw/CONFIGURATION.md)
 
 ### 日常使用
 
