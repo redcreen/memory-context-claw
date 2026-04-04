@@ -56,5 +56,26 @@
       "contextEngine",
       "enabled: true"
     ]
+  },
+  {
+    "name": "alt-phrasing-context-plugin",
+    "message": "为什么已经有长记忆了，还要这个上下文插件？",
+    "expectedAll": [
+      "长记忆",
+      "context engine",
+      "一个负责记得住，一个负责这一轮喂得准"
+    ]
+  },
+  {
+    "name": "plugin-minimal-config",
+    "message": "只说 memory-context-claw 这个插件本身，最小配置怎么写？",
+    "expectedAll": [
+      "memory-context-claw",
+      "contextEngine",
+      "openclaw plugins install -l ."
+    ],
+    "forbiddenAny": [
+      "memorySearch 负责"
+    ]
   }
 ]
