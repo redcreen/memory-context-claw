@@ -1,0 +1,39 @@
+[
+  {
+    "name": "lossless-understanding",
+    "message": "我之前怎么理解 Lossless 和长期记忆的区别？",
+    "expectedAny": [
+      "互补关系",
+      "Memory 是“存和找”",
+      "图书馆"
+    ]
+  },
+  {
+    "name": "memory-md-scope",
+    "message": "MEMORY.md 应该放什么内容？",
+    "expectedAny": [
+      "长期稳定",
+      "长期偏好",
+      "固定工作流程",
+      "项目长期背景"
+    ]
+  },
+  {
+    "name": "directory-layering",
+    "message": "长期记忆目录规则是什么？",
+    "expectedAny": [
+      "根目录",
+      "memory/",
+      "专题知识资料"
+    ]
+  },
+  {
+    "name": "plugin-positioning",
+    "message": "这个插件的定位是什么？",
+    "expectedAny": [
+      "context engine",
+      "上下文引擎",
+      "上下文层"
+    ]
+  }
+]

@@ -11,6 +11,7 @@
     "smoke:llm": "node scripts/smoke-assemble.js --preset llm-rerank --llm-rerank",
     "smoke:compare": "node scripts/compare-presets.js",
     "eval": "node scripts/eval-cases.js",
+    "eval:agent": "node scripts/agent-regression.js",
     "verify": "node scripts/verify-suite.js",
     "runtime:check": "node scripts/configure-local-runtime.js --check",
     "runtime:apply": "node scripts/configure-local-runtime.js",

@@ -129,9 +129,15 @@ Maintainer checks:
 ```bash
 npm test
 npm run eval
+npm run eval:agent
 npm run smoke:compare -- "Lossless plugin vs long memory"
 npm run verify
 ```
+
+`npm run eval:agent` runs live questions against the real `main` agent. It
+reports both content quality and source checks when configured, but the default
+pass/fail focuses on answer quality to keep the suite stable across normal
+answer phrasing differences.
 
 ### Local Embeddings Note
 
@@ -287,9 +293,14 @@ openclaw memory search "你的测试问题"
 ```bash
 npm test
 npm run eval
+npm run eval:agent
 npm run smoke:compare -- "Lossless 插件 和 长期记忆 的区别"
 npm run verify
 ```
+
+`npm run eval:agent` 会直接向真实的 `main` agent 发送回归问题。它会同时
+报告内容命中和来源命中；如果某个 case 没有显式要求来源，默认是否通过以
+回答内容质量为主，避免真实链路回归因为措辞变化而过于脆弱。
 
 ### 本地 Embedding 说明
 
