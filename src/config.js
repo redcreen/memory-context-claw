@@ -9,6 +9,7 @@ const DEFAULT_CONFIG = {
   excludePaths: [
     "/memory-context-claw/",
     "/context-assembly-claw/",
+    "/memory-context-claw-enabled-vs-disabled-report.md",
     "/openclaw-task-system/",
     "/node_modules/",
     "/.git/"
@@ -52,6 +53,14 @@ function mergeObject(base, incoming) {
   return { ...base, ...incoming };
 }
 
+function mergeStringArrays(base, incoming) {
+  const values = [
+    ...(Array.isArray(base) ? base : []),
+    ...(Array.isArray(incoming) ? incoming : [])
+  ].filter((item) => typeof item === "string" && item.trim());
+  return [...new Set(values)];
+}
+
 export function resolvePluginConfig(raw) {
   const cfg = raw && typeof raw === "object" && !Array.isArray(raw) ? raw : {};
   const llmRerank = mergeObject(DEFAULT_CONFIG.llmRerank, cfg.llmRerank);
@@ -89,9 +98,7 @@ export function resolvePluginConfig(raw) {
       30,
       DEFAULT_CONFIG.recentMessageCount
     ),
-    excludePaths: Array.isArray(cfg.excludePaths)
-      ? cfg.excludePaths.filter((item) => typeof item === "string" && item.trim())
-      : [...DEFAULT_CONFIG.excludePaths],
+    excludePaths: mergeStringArrays(DEFAULT_CONFIG.excludePaths, cfg.excludePaths),
     queryRewrite: {
       enabled: queryRewrite.enabled !== false,
       maxQueries: clampNumber(queryRewrite.maxQueries, 1, 8, DEFAULT_CONFIG.queryRewrite.maxQueries)

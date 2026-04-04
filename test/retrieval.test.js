@@ -41,4 +41,16 @@ test("resolvePluginConfig enables query rewrite by default", () => {
   const config = resolvePluginConfig({});
   assert.equal(config.queryRewrite.enabled, true);
   assert.equal(config.queryRewrite.maxQueries, 4);
+  assert.equal(
+    config.excludePaths.includes("/memory-context-claw-enabled-vs-disabled-report.md"),
+    true
+  );
+});
+
+test("resolvePluginConfig merges default and preset exclude paths", () => {
+  const config = resolvePluginConfig({
+    excludePaths: ["/custom-report.md"]
+  });
+  assert.equal(config.excludePaths.includes("/memory-context-claw-enabled-vs-disabled-report.md"), true);
+  assert.equal(config.excludePaths.includes("/custom-report.md"), true);
 });

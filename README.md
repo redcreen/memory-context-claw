@@ -130,6 +130,7 @@ Maintainer checks:
 npm test
 npm run eval
 npm run eval:agent
+npm run eval:toggle
 npm run smoke:compare -- "Lossless plugin vs long memory"
 npm run verify
 ```
@@ -294,6 +295,7 @@ openclaw memory search "你的测试问题"
 npm test
 npm run eval
 npm run eval:agent
+npm run eval:toggle
 npm run smoke:compare -- "Lossless 插件 和 长期记忆 的区别"
 npm run verify
 ```
