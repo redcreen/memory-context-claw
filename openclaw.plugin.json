@@ -1,0 +1,187 @@
+{
+  "id": "context-assembly-claw",
+  "uiHints": {
+    "enabled": {
+      "label": "Enabled",
+      "help": "Enable the context assembly engine for selected sessions."
+    },
+    "openclawCommand": {
+      "label": "OpenClaw Command",
+      "help": "CLI command used to fetch memory candidates. Defaults to 'openclaw'."
+    },
+    "maxCandidates": {
+      "label": "Max Candidates",
+      "help": "Maximum number of recall candidates fetched before reranking."
+    },
+    "maxSelectedChunks": {
+      "label": "Max Selected Chunks",
+      "help": "Maximum number of memory chunks inserted into the assembled context."
+    },
+    "maxChunksPerPath": {
+      "label": "Max Chunks Per Path",
+      "help": "Limit how many chunks from the same document can enter one assembled context."
+    },
+    "memoryBudgetRatio": {
+      "label": "Memory Budget Ratio",
+      "help": "Fraction of token budget reserved for retrieved long-memory context."
+    },
+    "recentMessageCount": {
+      "label": "Recent Message Count",
+      "help": "Number of most recent conversation messages always preserved."
+    },
+    "excludePaths": {
+      "label": "Exclude Paths",
+      "help": "Substring path filters applied after memory recall, useful for excluding plugin repos or engineering docs from user memory."
+    },
+    "queryRewrite.enabled": {
+      "label": "Query Rewrite",
+      "help": "Generate a few retrieval query variants before recall to improve hit stability across different phrasings."
+    },
+    "queryRewrite.maxQueries": {
+      "label": "Rewrite Query Count",
+      "help": "Maximum number of rewritten retrieval queries used for one recall."
+    },
+    "llmRerank.enabled": {
+      "label": "LLM Rerank",
+      "help": "Use a subagent run to rerank top candidates with a model."
+    },
+    "llmRerank.model": {
+      "label": "LLM Rerank Model",
+      "help": "Model override for reranking, for example 'gpt-5.4'."
+    },
+    "llmRerank.provider": {
+      "label": "LLM Rerank Provider",
+      "help": "Optional provider override used with llmRerank.model."
+    },
+    "llmRerank.maxSnippetChars": {
+      "label": "Rerank Snippet Chars",
+      "help": "Maximum characters from each snippet sent to the rerank model."
+    },
+    "llmRerank.minScoreDeltaToSkip": {
+      "label": "Skip Delta",
+      "help": "Skip model reranking when the best heuristic candidate is already clearly ahead."
+    }
+  },
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "enabled": {
+        "type": "boolean"
+      },
+      "openclawCommand": {
+        "type": "string"
+      },
+      "maxCandidates": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 50
+      },
+      "maxSelectedChunks": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 20
+      },
+      "maxChunksPerPath": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 5
+      },
+      "memoryBudgetRatio": {
+        "type": "number",
+        "minimum": 0.1,
+        "maximum": 0.8
+      },
+      "recentMessageCount": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 30
+      },
+      "excludePaths": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "queryRewrite": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "enabled": {
+            "type": "boolean"
+          },
+          "maxQueries": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 8
+          }
+        }
+      },
+      "forceAgentId": {
+        "type": "string"
+      },
+      "llmRerank": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "enabled": {
+            "type": "boolean"
+          },
+          "topN": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 20
+          },
+          "model": {
+            "type": "string"
+          },
+          "provider": {
+            "type": "string"
+          },
+          "timeoutMs": {
+            "type": "integer",
+            "minimum": 1000,
+            "maximum": 120000
+          },
+          "maxSnippetChars": {
+            "type": "integer",
+            "minimum": 120,
+            "maximum": 4000
+          },
+          "minScoreDeltaToSkip": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          }
+        }
+      },
+      "weights": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "retrievalScore": {
+            "type": "number"
+          },
+          "memoryFile": {
+            "type": "number"
+          },
+          "dailyMemory": {
+            "type": "number"
+          },
+          "workspaceDoc": {
+            "type": "number"
+          },
+          "summarySection": {
+            "type": "number"
+          },
+          "keywordOverlap": {
+            "type": "number"
+          },
+          "recency": {
+            "type": "number"
+          }
+        }
+      }
+    }
+  }
+}

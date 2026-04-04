@@ -1,0 +1,36 @@
+{
+  "name": "context-assembly-claw",
+  "version": "0.1.0",
+  "description": "OpenClaw context-engine plugin for memory reranking and context assembly",
+  "type": "module",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "test": "node --test",
+    "smoke": "node scripts/smoke-assemble.js",
+    "smoke:llm": "node scripts/smoke-assemble.js --preset llm-rerank --llm-rerank",
+    "smoke:compare": "node scripts/compare-presets.js",
+    "eval": "node scripts/eval-cases.js",
+    "verify": "node scripts/verify-suite.js",
+    "runtime:check": "node scripts/configure-local-runtime.js --check",
+    "runtime:apply": "node scripts/configure-local-runtime.js",
+    "runtime:remove": "node scripts/configure-local-runtime.js --remove",
+    "config:apply": "node scripts/apply-openclaw-config.js"
+  },
+  "keywords": [
+    "openclaw",
+    "openclaw-plugin",
+    "context-engine",
+    "memory",
+    "rerank",
+    "retrieval"
+  ],
+  "peerDependencies": {
+    "openclaw": "*"
+  },
+  "openclaw": {
+    "extensions": [
+      "./index.js"
+    ]
+  }
+}

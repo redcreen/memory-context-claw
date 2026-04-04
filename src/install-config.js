@@ -1,0 +1,102 @@
+import { resolvePluginPreset } from "./presets.js";
+
+export function ensureObject(value) {
+  return value && typeof value === "object" && !Array.isArray(value) ? value : {};
+}
+
+export function ensureArray(value) {
+  return Array.isArray(value) ? value : [];
+}
+
+export function upsertAgent(list, agentId, patch) {
+  const next = [...ensureArray(list)];
+  const index = next.findIndex((item) => item && item.id === agentId);
+  if (index === -1) next.push({ id: agentId, ...patch });
+  else next[index] = { ...ensureObject(next[index]), ...patch };
+  return next;
+}
+
+function mergePluginEntryConfig(existingConfig, presetConfig) {
+  const current = ensureObject(existingConfig);
+  const currentLlmRerank = ensureObject(current.llmRerank);
+
+  return {
+    ...current,
+    enabled: presetConfig.enabled,
+    maxCandidates: presetConfig.maxCandidates,
+    maxSelectedChunks: presetConfig.maxSelectedChunks,
+    maxChunksPerPath: presetConfig.maxChunksPerPath,
+    memoryBudgetRatio: presetConfig.memoryBudgetRatio,
+    recentMessageCount: presetConfig.recentMessageCount,
+    excludePaths: Array.isArray(current.excludePaths)
+      ? current.excludePaths
+      : presetConfig.excludePaths,
+    queryRewrite: {
+      ...ensureObject(current.queryRewrite),
+      enabled: ensureObject(current.queryRewrite).enabled ?? presetConfig.queryRewrite.enabled,
+      maxQueries:
+        ensureObject(current.queryRewrite).maxQueries ?? presetConfig.queryRewrite.maxQueries
+    },
+    llmRerank: {
+      ...currentLlmRerank,
+      enabled: presetConfig.llmRerank.enabled,
+      topN: presetConfig.llmRerank.topN,
+      model: presetConfig.llmRerank.model,
+      timeoutMs: presetConfig.llmRerank.timeoutMs,
+      maxSnippetChars: presetConfig.llmRerank.maxSnippetChars,
+      minScoreDeltaToSkip: presetConfig.llmRerank.minScoreDeltaToSkip
+    }
+  };
+}
+
+export function mergeInstallConfig(config, options) {
+  const next = { ...ensureObject(config) };
+  const presetConfig = resolvePluginPreset(options.preset);
+
+  const agents = ensureObject(next.agents);
+  const list = upsertAgent(agents.list, options.agentId, {
+    memorySearch: {
+      provider: "local",
+      fallback: "none",
+      local: {
+        modelPath: options.modelPath
+      },
+      sync: {
+        watch: true
+      },
+      extraPaths: [options.workspacePath]
+    }
+  });
+  next.agents = { ...agents, list };
+
+  const plugins = ensureObject(next.plugins);
+  const allow = Array.from(new Set([...ensureArray(plugins.allow), "context-assembly-claw"]));
+  const load = ensureObject(plugins.load);
+  const loadPaths = Array.from(new Set([...ensureArray(load.paths), options.pluginPath]));
+  const entries = ensureObject(plugins.entries);
+  const existingEntry = ensureObject(entries["context-assembly-claw"]);
+  const existingConfig = ensureObject(existingEntry.config);
+
+  next.plugins = {
+    ...plugins,
+    allow,
+    load: {
+      ...load,
+      paths: loadPaths
+    },
+    slots: {
+      ...ensureObject(plugins.slots),
+      contextEngine: "context-assembly-claw"
+    },
+    entries: {
+      ...entries,
+      "context-assembly-claw": {
+        ...existingEntry,
+        enabled: true,
+        config: mergePluginEntryConfig(existingConfig, presetConfig)
+      }
+    }
+  };
+
+  return next;
+}

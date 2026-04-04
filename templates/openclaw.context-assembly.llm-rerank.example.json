@@ -1,0 +1,66 @@
+{
+  "agents": {
+    "list": [
+      {
+        "id": "main",
+        "memorySearch": {
+          "provider": "local",
+          "fallback": "none",
+          "local": {
+            "modelPath": "/ABSOLUTE/PATH/TO/embeddinggemma-300m-qat-Q8_0.gguf"
+          },
+          "sync": {
+            "watch": true
+          },
+          "extraPaths": [
+            "/ABSOLUTE/PATH/TO/YOUR-WORKSPACE"
+          ]
+        }
+      }
+    ]
+  },
+  "plugins": {
+    "allow": [
+      "context-assembly-claw"
+    ],
+    "load": {
+      "paths": [
+        "/ABSOLUTE/PATH/TO/context-assembly-claw"
+      ]
+    },
+    "slots": {
+      "contextEngine": "context-assembly-claw"
+    },
+    "entries": {
+      "context-assembly-claw": {
+        "enabled": true,
+        "config": {
+          "enabled": true,
+          "maxCandidates": 18,
+          "maxSelectedChunks": 4,
+          "maxChunksPerPath": 1,
+          "memoryBudgetRatio": 0.35,
+          "recentMessageCount": 8,
+          "excludePaths": [
+            "/context-assembly-claw/",
+            "/openclaw-task-system/",
+            "/node_modules/",
+            "/.git/"
+          ],
+          "queryRewrite": {
+            "enabled": true,
+            "maxQueries": 4
+          },
+          "llmRerank": {
+            "enabled": true,
+            "topN": 6,
+            "model": "gpt-5.4",
+            "timeoutMs": 20000,
+            "maxSnippetChars": 900,
+            "minScoreDeltaToSkip": 0.18
+          }
+        }
+      }
+    }
+  }
+}

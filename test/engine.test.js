@@ -1,0 +1,140 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import { ContextAssemblyEngine } from "../src/engine.js";
+
+function makeCandidate({
+  id,
+  path,
+  kind = "workspaceDoc",
+  retrievalScore = 0.7,
+  snippet = "snippet",
+  startLine = 1,
+  endLine = 10
+}) {
+  return {
+    id,
+    path,
+    kind,
+    retrievalScore,
+    snippet,
+    startLine,
+    endLine,
+    updatedAt: Date.now()
+  };
+}
+
+test("assemble applies llm rerank when enabled and candidates are close", async () => {
+  let rerankCalls = 0;
+  const engine = new ContextAssemblyEngine({
+    runtime: {},
+    logger: { warn() {} },
+    pluginConfig: {
+      enabled: true,
+      maxSelectedChunks: 2,
+      llmRerank: {
+        enabled: true,
+        topN: 4,
+        minScoreDeltaToSkip: 0.2
+      }
+    },
+    retrievalFn: async () => [
+      makeCandidate({
+        id: "cand-1",
+        path: "../../Project/长记忆/openclaw-memory-vs-lossless.md",
+        retrievalScore: 0.79
+      }),
+      makeCandidate({
+        id: "cand-2",
+        path: "../../Project/长记忆/MEMORY.md",
+        kind: "memoryFile",
+        retrievalScore: 0.78
+      })
+    ],
+    rerankFn: async ({ candidates }) => {
+      rerankCalls += 1;
+      assert.equal(candidates.length, 2);
+      return [{ id: "cand-2", score: 0.95, reason: "better match" }];
+    }
+  });
+
+  const result = await engine.assemble({
+    prompt: "Lossless 插件 和 长期记忆 的区别",
+    messages: [{ role: "user", content: "Lossless 插件 和 长期记忆 的区别" }],
+    tokenBudget: 4096,
+    sessionKey: "agent:main:test"
+  });
+
+  assert.equal(rerankCalls, 1);
+  assert.match(result.systemPromptAddition, /Path: \.\.\/\.\.\/Project\/长记忆\/MEMORY\.md/);
+  assert.ok(
+    result.selectedCandidates.findIndex((item) => item.path.endsWith("/MEMORY.md")) === 0
+  );
+});
+
+test("assemble skips llm rerank when heuristic winner is clearly ahead", async () => {
+  let rerankCalls = 0;
+  const engine = new ContextAssemblyEngine({
+    runtime: {},
+    logger: { warn() {} },
+    pluginConfig: {
+      enabled: true,
+      maxSelectedChunks: 2,
+      llmRerank: {
+        enabled: true,
+        topN: 4,
+        minScoreDeltaToSkip: 0.05
+      }
+    },
+    retrievalFn: async () => [
+      makeCandidate({
+        id: "cand-1",
+        path: "../../Project/长记忆/MEMORY.md",
+        kind: "memoryFile",
+        retrievalScore: 0.98
+      }),
+      makeCandidate({
+        id: "cand-2",
+        path: "../../Project/长记忆/other.md",
+        retrievalScore: 0.4
+      })
+    ],
+    rerankFn: async () => {
+      rerankCalls += 1;
+      return [];
+    }
+  });
+
+  await engine.assemble({
+    prompt: "MEMORY.md 的使用原则",
+    messages: [{ role: "user", content: "MEMORY.md 的使用原则" }],
+    tokenBudget: 4096,
+    sessionKey: "agent:main:test"
+  });
+
+  assert.equal(rerankCalls, 0);
+});
+
+test("assemble bypasses retrieval for internal rerank sessions", async () => {
+  let retrievalCalls = 0;
+  const engine = new ContextAssemblyEngine({
+    runtime: {},
+    logger: { warn() {} },
+    pluginConfig: {
+      enabled: true
+    },
+    retrievalFn: async () => {
+      retrievalCalls += 1;
+      return [];
+    }
+  });
+
+  const result = await engine.assemble({
+    prompt: "ignored",
+    messages: [{ role: "user", content: "ignored" }],
+    tokenBudget: 4096,
+    sessionKey: "agent:main:test:context-rerank:123"
+  });
+
+  assert.equal(retrievalCalls, 0);
+  assert.equal(result.systemPromptAddition, "");
+});
