@@ -1,12 +1,17 @@
 import {
   buildKeywordSet,
   canonicalizeMemoryPath,
+  extractSessionTimestamp,
   normalizeWhitespace,
+  scoreRecencyFromDate,
   scoreRecencyFromIsoDate,
   toIsoDateFromMemoryPath
 } from "./utils.js";
 
-function computePathKind(pathname) {
+function computePathKind(pathname, source = "memory") {
+  if (source === "sessions") {
+    return "sessionMemory";
+  }
   if (pathname === "MEMORY.md" || pathname.endsWith("/MEMORY.md")) {
     return "memoryFile";
   }
@@ -67,18 +72,23 @@ export function scoreCandidates(candidates, prompt, weights, now = new Date()) {
       const path = String(candidate.path || "");
       const canonicalPath = canonicalizeMemoryPath(path);
       const snippet = String(candidate.snippet || "");
+      const source = String(candidate.source || "memory");
       const retrievalScore = Number(candidate.score || 0) / maxRetrievalScore;
-      const pathKind = computePathKind(canonicalPath);
+      const pathKind = computePathKind(canonicalPath, source);
       const keywordOverlap = computeKeywordOverlap(promptKeywords, `${canonicalPath}\n${snippet}`);
       const summaryBoost = hasStructuredSummary(snippet) ? 1 : 0;
-      const recency = scoreRecencyFromIsoDate(toIsoDateFromMemoryPath(canonicalPath), now);
+      const recency = pathKind === "sessionMemory"
+        ? scoreRecencyFromDate(extractSessionTimestamp(path), now)
+        : scoreRecencyFromIsoDate(toIsoDateFromMemoryPath(canonicalPath), now);
       const intentBoost = computeIntentBoost(prompt, canonicalPath, snippet);
+      const sessionBoost = pathKind === "sessionMemory" ? 1 : 0;
 
       const weightedScore =
         retrievalScore * weights.retrievalScore +
         keywordOverlap * weights.keywordOverlap +
         summaryBoost * weights.summarySection +
         recency * weights.recency +
+        sessionBoost * (weights.sessionRecent ?? 0) +
         intentBoost +
         (pathKind === "memoryFile" ? weights.memoryFile : 0) +
         (pathKind === "dailyMemory" ? weights.dailyMemory : 0) +
@@ -95,10 +105,11 @@ export function scoreCandidates(candidates, prompt, weights, now = new Date()) {
         keywordOverlap,
         summaryBoost,
         recency,
+        sessionBoost,
         intentBoost,
         weightedScore,
         snippet,
-        source: String(candidate.source || "memory")
+        source
       };
     })
     .sort((left, right) => right.weightedScore - left.weightedScore);

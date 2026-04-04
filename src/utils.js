@@ -65,6 +65,40 @@ export function toIsoDateFromMemoryPath(pathname) {
   return match ? match[1] : "";
 }
 
+export function extractSessionTimestamp(pathname) {
+  const value = String(pathname || "");
+  const match = value.match(
+    /sessions\/.+?\.jsonl(?:\.(?:reset|deleted)\.)?(\d{4}-\d{2}-\d{2})T(\d{2})-(\d{2})-(\d{2})/
+  );
+  if (!match) {
+    return null;
+  }
+  const [, date, hh, mm, ss] = match;
+  const iso = `${date}T${hh}:${mm}:${ss}Z`;
+  const parsed = new Date(iso);
+  return Number.isNaN(parsed.getTime()) ? null : parsed;
+}
+
+export function scoreRecencyFromDate(date, now = new Date()) {
+  if (!(date instanceof Date) || Number.isNaN(date.getTime())) {
+    return 0;
+  }
+  const days = Math.max(0, (now.getTime() - date.getTime()) / 86400000);
+  if (days <= 1) {
+    return 1;
+  }
+  if (days <= 3) {
+    return 0.9;
+  }
+  if (days <= 7) {
+    return 0.7;
+  }
+  if (days <= 30) {
+    return 0.4;
+  }
+  return 0.1;
+}
+
 export function scoreRecencyFromIsoDate(isoDate, now = new Date()) {
   if (!isoDate) {
     return 0;

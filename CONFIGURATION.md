@@ -146,6 +146,33 @@ Default:
 }
 ```
 
+#### `memoryDistillation`
+
+Controls async candidate-memory extraction from dialogue.
+
+Default:
+
+```json5
+{
+  enabled: true,
+  triggerBeforeCompaction: true,
+  preCompactTriggerRatio: 0.72,
+  compactFallback: true,
+  cooldownMs: 300000,
+  sessionLimit: 8,
+  outputDir: ""
+}
+```
+
+Meaning:
+
+- `triggerBeforeCompaction`: trigger asynchronously when message usage approaches compaction
+- `preCompactTriggerRatio`: how close to compaction to start pre-triggering
+- `compactFallback`: also fire one async fallback when compaction actually happens
+- `cooldownMs`: minimum gap between triggers for the same session and stage
+- `sessionLimit`: how many recent session files the standalone distill command scans
+- `outputDir`: optional custom output directory for candidate-memory reports
+
 #### `llmRerank`
 
 Controls optional second-stage reranking with a model.
@@ -169,6 +196,12 @@ Default:
 Advanced heuristic weights for first-stage reranking. Most users should leave
 them unchanged.
 
+Current defaults encode this ranking policy:
+
+- relevance first
+- recent session memory second
+- `MEMORY.md` still acts as the long-term floor for stable preferences and rules
+
 ### Recommended Tuning Order
 
 Only tune in this order:
@@ -177,7 +210,8 @@ Only tune in this order:
 2. adjust `excludePaths` if noise enters recall
 3. adjust `maxCandidates` and `maxSelectedChunks` if recall is too broad or too narrow
 4. enable `llmRerank` only after first-stage behavior is already understandable
-5. change `weights` only after you have eval cases
+5. tune `memoryDistillation.preCompactTriggerRatio` only if async candidate extraction fires too early or too late
+6. change `weights` only after you have eval cases
 
 ## 中文
 
@@ -322,6 +356,33 @@ Only tune in this order:
 }
 ```
 
+#### `memoryDistillation`
+
+控制“从对话中异步提炼候选记忆”的行为。
+
+默认值：
+
+```json5
+{
+  enabled: true,
+  triggerBeforeCompaction: true,
+  preCompactTriggerRatio: 0.72,
+  compactFallback: true,
+  cooldownMs: 300000,
+  sessionLimit: 8,
+  outputDir: ""
+}
+```
+
+含义：
+
+- `triggerBeforeCompaction`：接近 compaction 阈值时是否异步预触发
+- `preCompactTriggerRatio`：离 compaction 多近开始预触发
+- `compactFallback`：真正进入 compaction 时是否再补一次异步兜底触发
+- `cooldownMs`：同一 session / 同一阶段两次触发之间的最短间隔
+- `sessionLimit`：独立候选提炼命令默认扫描最近多少个 session 文件
+- `outputDir`：候选记忆报告的自定义输出目录，为空时使用默认目录
+
 #### `llmRerank`
 
 控制可选的第二阶段模型重排。
@@ -344,6 +405,12 @@ Only tune in this order:
 
 第一阶段规则重排的高级权重。绝大多数用户都不需要改。
 
+当前默认权重体现的排序原则是：
+
+- 相关性第一
+- 最近 session 第二
+- `MEMORY.md` 仍然作为长期规则和稳定偏好的保底层
+
 ### 推荐调参顺序
 
 建议只按这个顺序调：
@@ -352,4 +419,5 @@ Only tune in this order:
 2. 如果召回有噪音，再调整 `excludePaths`
 3. 如果召回过宽或过窄，再调整 `maxCandidates` 和 `maxSelectedChunks`
 4. 第一阶段行为已经可理解后，再考虑启用 `llmRerank`
-5. 只有你已经有评测样本时，再去改 `weights`
+5. 只有在异步候选提炼触发得过早或过晚时，再调 `memoryDistillation.preCompactTriggerRatio`
+6. 只有你已经有评测样本时，再去改 `weights`

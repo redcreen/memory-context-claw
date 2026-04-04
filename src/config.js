@@ -18,6 +18,15 @@ const DEFAULT_CONFIG = {
     enabled: true,
     maxQueries: 4
   },
+  memoryDistillation: {
+    enabled: true,
+    triggerBeforeCompaction: true,
+    preCompactTriggerRatio: 0.72,
+    compactFallback: true,
+    cooldownMs: 300000,
+    sessionLimit: 8,
+    outputDir: ""
+  },
   forceAgentId: "",
   llmRerank: {
     enabled: false,
@@ -32,6 +41,7 @@ const DEFAULT_CONFIG = {
     retrievalScore: 0.55,
     memoryFile: 0.18,
     dailyMemory: 0.12,
+    sessionRecent: 0.1,
     workspaceDoc: 0.08,
     summarySection: 0.08,
     keywordOverlap: 0.12,
@@ -65,6 +75,7 @@ export function resolvePluginConfig(raw) {
   const cfg = raw && typeof raw === "object" && !Array.isArray(raw) ? raw : {};
   const llmRerank = mergeObject(DEFAULT_CONFIG.llmRerank, cfg.llmRerank);
   const queryRewrite = mergeObject(DEFAULT_CONFIG.queryRewrite, cfg.queryRewrite);
+  const memoryDistillation = mergeObject(DEFAULT_CONFIG.memoryDistillation, cfg.memoryDistillation);
   const weights = mergeObject(DEFAULT_CONFIG.weights, cfg.weights);
 
   return {
@@ -103,6 +114,33 @@ export function resolvePluginConfig(raw) {
       enabled: queryRewrite.enabled !== false,
       maxQueries: clampNumber(queryRewrite.maxQueries, 1, 8, DEFAULT_CONFIG.queryRewrite.maxQueries)
     },
+    memoryDistillation: {
+      enabled: memoryDistillation.enabled !== false,
+      triggerBeforeCompaction: memoryDistillation.triggerBeforeCompaction !== false,
+      preCompactTriggerRatio: clampNumber(
+        memoryDistillation.preCompactTriggerRatio,
+        0.1,
+        0.99,
+        DEFAULT_CONFIG.memoryDistillation.preCompactTriggerRatio
+      ),
+      compactFallback: memoryDistillation.compactFallback !== false,
+      cooldownMs: clampNumber(
+        memoryDistillation.cooldownMs,
+        0,
+        86400000,
+        DEFAULT_CONFIG.memoryDistillation.cooldownMs
+      ),
+      sessionLimit: clampNumber(
+        memoryDistillation.sessionLimit,
+        1,
+        50,
+        DEFAULT_CONFIG.memoryDistillation.sessionLimit
+      ),
+      outputDir:
+        typeof memoryDistillation.outputDir === "string"
+          ? memoryDistillation.outputDir.trim()
+          : ""
+    },
     forceAgentId: typeof cfg.forceAgentId === "string" ? cfg.forceAgentId.trim() : "",
     llmRerank: {
       enabled: llmRerank.enabled === true,
@@ -136,6 +174,7 @@ export function resolvePluginConfig(raw) {
       retrievalScore: Number(weights.retrievalScore ?? DEFAULT_CONFIG.weights.retrievalScore),
       memoryFile: Number(weights.memoryFile ?? DEFAULT_CONFIG.weights.memoryFile),
       dailyMemory: Number(weights.dailyMemory ?? DEFAULT_CONFIG.weights.dailyMemory),
+      sessionRecent: Number(weights.sessionRecent ?? DEFAULT_CONFIG.weights.sessionRecent),
       workspaceDoc: Number(weights.workspaceDoc ?? DEFAULT_CONFIG.weights.workspaceDoc),
       summarySection: Number(weights.summarySection ?? DEFAULT_CONFIG.weights.summarySection),
       keywordOverlap: Number(weights.keywordOverlap ?? DEFAULT_CONFIG.weights.keywordOverlap),

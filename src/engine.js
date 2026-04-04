@@ -1,6 +1,7 @@
 import { delegateCompactionToRuntime } from "openclaw/plugin-sdk";
 import { buildAssemblyResult } from "./assembly.js";
 import { resolvePluginConfig } from "./config.js";
+import { DistillationManager, estimateUsageRatio } from "./distillation-manager.js";
 import { retrieveMemoryCandidates } from "./retrieval.js";
 import {
   applyRerankOrder,
@@ -25,6 +26,10 @@ export class ContextAssemblyEngine {
     this.retrievalFn = retrievalFn;
     this.rerankFn = rerankFn;
     this.scoreFn = scoreFn;
+    this.distillationManager = new DistillationManager({
+      logger,
+      config: this.config
+    });
     this.info = {
       id: "memory-context-claw",
       name: "Memory Context Claw",
@@ -38,11 +43,30 @@ export class ContextAssemblyEngine {
   }
 
   async compact(params) {
+    if (this.config.memoryDistillation.enabled && this.config.memoryDistillation.compactFallback) {
+      this.distillationManager.schedule({
+        sessionKey: params.sessionKey || "agent:main:compact",
+        messages: params.messages || [],
+        tokenBudget: params.tokenBudget || 0,
+        stage: "compact-fallback"
+      });
+    }
     return delegateCompactionToRuntime(params);
   }
 
   async assemble(params) {
     const query = params.prompt || extractLatestUserPrompt(params.messages);
+    const usageRatio = estimateUsageRatio(params.messages, params.tokenBudget);
+    if (this.config.memoryDistillation.enabled &&
+      this.config.memoryDistillation.triggerBeforeCompaction &&
+      usageRatio >= this.config.memoryDistillation.preCompactTriggerRatio) {
+      this.distillationManager.schedule({
+        sessionKey: params.sessionKey || "agent:main:pre-compact",
+        messages: params.messages || [],
+        tokenBudget: params.tokenBudget || 0,
+        stage: "pre-compact-threshold"
+      });
+    }
     if (!this.config.enabled || !query || isInternalRerankSession(params.sessionKey)) {
       return buildAssemblyResult({
         messages: params.messages,

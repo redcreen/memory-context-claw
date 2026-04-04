@@ -138,3 +138,68 @@ test("assemble bypasses retrieval for internal rerank sessions", async () => {
   assert.equal(retrievalCalls, 0);
   assert.equal(result.systemPromptAddition, "");
 });
+
+test("assemble schedules async distillation when nearing compaction threshold", async () => {
+  const scheduled = [];
+  const engine = new ContextAssemblyEngine({
+    runtime: {},
+    logger: { warn() {}, info() {} },
+    pluginConfig: {
+      enabled: true,
+      memoryDistillation: {
+        enabled: true,
+        triggerBeforeCompaction: true,
+        preCompactTriggerRatio: 0.5,
+        compactFallback: true,
+        cooldownMs: 0
+      }
+    },
+    retrievalFn: async () => []
+  });
+
+  engine.distillationManager.schedule = (params) => {
+    scheduled.push(params);
+  };
+
+  await engine.assemble({
+    prompt: "测试",
+    messages: [
+      { role: "user", content: "a".repeat(2000) },
+      { role: "assistant", content: "b".repeat(2000) }
+    ],
+    tokenBudget: 1000,
+    sessionKey: "agent:main:test"
+  });
+
+  assert.equal(scheduled.length, 1);
+  assert.equal(scheduled[0].stage, "pre-compact-threshold");
+});
+
+test("compact schedules async fallback distillation without blocking compaction", async () => {
+  const scheduled = [];
+  const engine = new ContextAssemblyEngine({
+    runtime: {},
+    logger: { warn() {}, info() {} },
+    pluginConfig: {
+      enabled: true,
+      memoryDistillation: {
+        enabled: true,
+        compactFallback: true,
+        cooldownMs: 0
+      }
+    }
+  });
+
+  engine.distillationManager.schedule = (params) => {
+    scheduled.push(params);
+  };
+
+  await engine.compact({
+    sessionKey: "agent:main:test",
+    messages: [{ role: "user", content: "hello world" }],
+    tokenBudget: 1000
+  });
+
+  assert.equal(scheduled.length, 1);
+  assert.equal(scheduled[0].stage, "compact-fallback");
+});

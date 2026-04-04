@@ -169,6 +169,20 @@ Work:
 - finer token-budget allocation
 - improved document-layer selection
 
+### Phase 5.5: Pre-compaction memory distillation
+
+Goal:
+
+- reduce loss of important dialogue-born memory before compaction
+
+Work:
+
+- add an async pre-compaction trigger
+- preserve raw session logs as the source of truth
+- distill candidate long-term memory before compaction
+- separate candidate memory from promoted formal memory
+- design a review/promote flow into `MEMORY.md` and `memory/*.md`
+
 ### Phase 6: Public release
 
 Goal:
@@ -188,8 +202,8 @@ Work:
 If only the next three things matter, they should be:
 
 1. polish the public GitHub README
-2. add performance tiers for query rewrite
-3. expand eval coverage for rerank and rewrite comparisons
+2. add pre-compaction candidate-memory distillation
+3. expand eval coverage for rerank, rewrite, and memory-retention comparisons
 
 ## Suggested GitHub Description
 
