@@ -113,7 +113,7 @@ const result = {
 
 if (!options.jsonOnly) {
   console.error(
-    `[context-assembly-claw] preset=${options.preset} llmRerank.enabled=${config.llmRerank.enabled} llmRerank.wouldSkip=${result.llmRerank.wouldSkip}`
+    `[memory-context-claw] preset=${options.preset} llmRerank.enabled=${config.llmRerank.enabled} llmRerank.wouldSkip=${result.llmRerank.wouldSkip}`
   );
 }
 

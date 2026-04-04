@@ -1,8 +1,8 @@
-# Context Assembly Claw Roadmap
+# Memory Context Claw Roadmap
 
 ## Positioning
 
-`context-assembly-claw` is an OpenClaw `context engine` plugin.
+`memory-context-claw` is an OpenClaw `context engine` plugin.
 
 It does not replace OpenClaw's built-in long memory. It sits on top of it and
 focuses on one layer:
@@ -31,7 +31,7 @@ This project exists to solve that context-assembly layer.
 
 Primary recommendation:
 
-`context-assembly-claw`
+`memory-context-claw`
 
 Why:
 

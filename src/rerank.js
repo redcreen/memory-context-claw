@@ -135,7 +135,7 @@ export async function rerankCandidatesWithSubagent({
     });
   } catch (error) {
     logger?.warn?.(
-      `[context-assembly-claw] failed to delete rerank session ${rerankSessionKey}: ${String(error)}`
+      `[memory-context-claw] failed to delete rerank session ${rerankSessionKey}: ${String(error)}`
     );
   }
 

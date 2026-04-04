@@ -70,11 +70,11 @@ export function mergeInstallConfig(config, options) {
   next.agents = { ...agents, list };
 
   const plugins = ensureObject(next.plugins);
-  const allow = Array.from(new Set([...ensureArray(plugins.allow), "context-assembly-claw"]));
+  const allow = Array.from(new Set([...ensureArray(plugins.allow), "memory-context-claw"]));
   const load = ensureObject(plugins.load);
   const loadPaths = Array.from(new Set([...ensureArray(load.paths), options.pluginPath]));
   const entries = ensureObject(plugins.entries);
-  const existingEntry = ensureObject(entries["context-assembly-claw"]);
+  const existingEntry = ensureObject(entries["memory-context-claw"]);
   const existingConfig = ensureObject(existingEntry.config);
 
   next.plugins = {
@@ -86,11 +86,11 @@ export function mergeInstallConfig(config, options) {
     },
     slots: {
       ...ensureObject(plugins.slots),
-      contextEngine: "context-assembly-claw"
+      contextEngine: "memory-context-claw"
     },
     entries: {
       ...entries,
-      "context-assembly-claw": {
+      "memory-context-claw": {
         ...existingEntry,
         enabled: true,
         config: mergePluginEntryConfig(existingConfig, presetConfig)

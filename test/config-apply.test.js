@@ -13,17 +13,17 @@ test("mergeConfig injects plugin slot and main local memory", () => {
       agentId: "main",
       modelPath: "/tmp/model.gguf",
       workspacePath: "/tmp/workspace",
-      pluginPath: "/tmp/context-assembly-claw",
+      pluginPath: "/tmp/memory-context-claw",
       preset: "safe-local"
     }
   );
 
-  assert.equal(merged.plugins.slots.contextEngine, "context-assembly-claw");
-  assert.deepEqual(merged.plugins.load.paths, ["/tmp/context-assembly-claw"]);
-  assert.deepEqual(merged.plugins.allow, ["openclaw-task-system", "context-assembly-claw"]);
+  assert.equal(merged.plugins.slots.contextEngine, "memory-context-claw");
+  assert.deepEqual(merged.plugins.load.paths, ["/tmp/memory-context-claw"]);
+  assert.deepEqual(merged.plugins.allow, ["openclaw-task-system", "memory-context-claw"]);
   assert.equal(merged.agents.list[0].memorySearch.provider, "local");
   assert.deepEqual(merged.agents.list[0].memorySearch.extraPaths, ["/tmp/workspace"]);
-  assert.equal(merged.plugins.entries["context-assembly-claw"].config.llmRerank.enabled, false);
+  assert.equal(merged.plugins.entries["memory-context-claw"].config.llmRerank.enabled, false);
 });
 
 test("mergeConfig can apply llm-rerank preset", () => {
@@ -33,11 +33,11 @@ test("mergeConfig can apply llm-rerank preset", () => {
       agentId: "main",
       modelPath: "/tmp/model.gguf",
       workspacePath: "/tmp/workspace",
-      pluginPath: "/tmp/context-assembly-claw",
+      pluginPath: "/tmp/memory-context-claw",
       preset: "llm-rerank"
     }
   );
 
-  assert.equal(merged.plugins.entries["context-assembly-claw"].config.llmRerank.enabled, true);
-  assert.equal(merged.plugins.entries["context-assembly-claw"].config.llmRerank.model, "gpt-5.4");
+  assert.equal(merged.plugins.entries["memory-context-claw"].config.llmRerank.enabled, true);
+  assert.equal(merged.plugins.entries["memory-context-claw"].config.llmRerank.model, "gpt-5.4");
 });

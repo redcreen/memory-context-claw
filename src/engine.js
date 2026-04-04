@@ -26,8 +26,8 @@ export class ContextAssemblyEngine {
     this.rerankFn = rerankFn;
     this.scoreFn = scoreFn;
     this.info = {
-      id: "context-assembly-claw",
-      name: "Context Assembly Claw",
+      id: "memory-context-claw",
+      name: "Memory Context Claw",
       version: "0.1.0",
       ownsCompaction: false
     };
@@ -100,7 +100,7 @@ export class ContextAssemblyEngine {
         }
       } catch (error) {
         this.logger?.warn?.(
-          `[context-assembly-claw] llm rerank failed, falling back to heuristic ranking: ${String(error)}`
+          `[memory-context-claw] llm rerank failed, falling back to heuristic ranking: ${String(error)}`
         );
       }
     }

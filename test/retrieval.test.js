@@ -13,7 +13,7 @@ test("extractJsonPayload ignores leading plugin log lines", () => {
   const parsed = extractJsonPayload(
     [
       "[plugins] [task-system] plugin loaded (enabled=true)",
-      "[plugins] [context-assembly-claw] loaded (enabled=true)",
+      "[plugins] [memory-context-claw] loaded (enabled=true)",
       '{"results":[{"path":"memory/2026-04-04.md","score":0.82}]}'
     ].join("\n")
   );

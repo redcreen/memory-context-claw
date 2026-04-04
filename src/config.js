@@ -7,6 +7,7 @@ const DEFAULT_CONFIG = {
   memoryBudgetRatio: 0.35,
   recentMessageCount: 8,
   excludePaths: [
+    "/memory-context-claw/",
     "/context-assembly-claw/",
     "/openclaw-task-system/",
     "/node_modules/",

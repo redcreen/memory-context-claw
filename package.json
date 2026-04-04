@@ -1,5 +1,5 @@
 {
-  "name": "context-assembly-claw",
+  "name": "memory-context-claw",
   "version": "0.1.0",
   "description": "OpenClaw context-engine plugin for memory reranking and context assembly",
   "type": "module",

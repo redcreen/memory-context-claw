@@ -108,7 +108,7 @@ export async function retrieveMemoryCandidates({
       }));
   } catch (error) {
     logger?.warn?.(
-      `[context-assembly-claw] memory retrieval failed for agent=${agentId}: ${String(error)}`
+      `[memory-context-claw] memory retrieval failed for agent=${agentId}: ${String(error)}`
     );
     return [];
   }

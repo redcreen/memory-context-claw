@@ -21,18 +21,18 @@
   },
   "plugins": {
     "allow": [
-      "context-assembly-claw"
+      "memory-context-claw"
     ],
     "load": {
       "paths": [
-        "/ABSOLUTE/PATH/TO/context-assembly-claw"
+        "/ABSOLUTE/PATH/TO/memory-context-claw"
       ]
     },
     "slots": {
-      "contextEngine": "context-assembly-claw"
+      "contextEngine": "memory-context-claw"
     },
     "entries": {
-      "context-assembly-claw": {
+      "memory-context-claw": {
         "enabled": true,
         "config": {
           "enabled": true,
@@ -42,6 +42,7 @@
           "memoryBudgetRatio": 0.35,
           "recentMessageCount": 8,
           "excludePaths": [
+            "/memory-context-claw/",
             "/context-assembly-claw/",
             "/openclaw-task-system/",
             "/node_modules/",
