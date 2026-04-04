@@ -65,3 +65,37 @@ test("scoreCandidates boosts recent daily memory", () => {
 
   assert.equal(ranked[0].path, recent.path);
 });
+
+test("scoreCandidates prefers config docs for config-intent prompts", () => {
+  const candidates = [
+    {
+      path: "MEMORY.md",
+      startLine: 1,
+      endLine: 20,
+      score: 0.46,
+      snippet: "## 一句话结论\n长期规则和偏好在这里。\n## 关键信息\n长期偏好、固定工作流程。",
+      source: "memory"
+    },
+    {
+      path: "../../Project/长记忆/memory-context-claw-config.md",
+      startLine: 1,
+      endLine: 30,
+      score: 0.43,
+      snippet:
+        "## 一句话结论\nmemory-context-claw 的主配置分成两层。\n## 最小配置\nplugins.entries[\"memory-context-claw\"]\ncontextEngine\n安装",
+      source: "memory"
+    }
+  ];
+
+  const ranked = scoreCandidates(candidates, "这个项目的配置应该怎么写", {
+    retrievalScore: 0.55,
+    memoryFile: 0.18,
+    dailyMemory: 0.12,
+    workspaceDoc: 0.08,
+    summarySection: 0.08,
+    keywordOverlap: 0.12,
+    recency: 0.07
+  });
+
+  assert.equal(ranked[0].path, "../../Project/长记忆/memory-context-claw-config.md");
+});

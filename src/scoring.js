@@ -16,6 +16,30 @@ function computePathKind(pathname) {
   return "workspaceDoc";
 }
 
+function isConfigIntent(prompt) {
+  return /配置|config|安装|install|启用|enable/.test(String(prompt || "").toLowerCase());
+}
+
+function computeIntentBoost(prompt, canonicalPath, snippet) {
+  if (!isConfigIntent(prompt)) {
+    return 0;
+  }
+  const haystack = `${canonicalPath}\n${snippet}`.toLowerCase();
+  let boost = 0;
+
+  if (/config|配置/.test(haystack)) {
+    boost += 0.08;
+  }
+  if (/install|安装|启用|enabled|contextengine|plugins\.entries|最小配置/.test(haystack)) {
+    boost += 0.08;
+  }
+  if (/memory-context-claw/.test(haystack)) {
+    boost += 0.08;
+  }
+
+  return boost;
+}
+
 function computeKeywordOverlap(promptKeywords, candidateText) {
   if (promptKeywords.length === 0) {
     return 0;
@@ -48,12 +72,14 @@ export function scoreCandidates(candidates, prompt, weights, now = new Date()) {
       const keywordOverlap = computeKeywordOverlap(promptKeywords, `${canonicalPath}\n${snippet}`);
       const summaryBoost = hasStructuredSummary(snippet) ? 1 : 0;
       const recency = scoreRecencyFromIsoDate(toIsoDateFromMemoryPath(canonicalPath), now);
+      const intentBoost = computeIntentBoost(prompt, canonicalPath, snippet);
 
       const weightedScore =
         retrievalScore * weights.retrievalScore +
         keywordOverlap * weights.keywordOverlap +
         summaryBoost * weights.summarySection +
         recency * weights.recency +
+        intentBoost +
         (pathKind === "memoryFile" ? weights.memoryFile : 0) +
         (pathKind === "dailyMemory" ? weights.dailyMemory : 0) +
         (pathKind === "workspaceDoc" ? weights.workspaceDoc : 0);
@@ -69,6 +95,7 @@ export function scoreCandidates(candidates, prompt, weights, now = new Date()) {
         keywordOverlap,
         summaryBoost,
         recency,
+        intentBoost,
         weightedScore,
         snippet,
         source: String(candidate.source || "memory")
