@@ -79,12 +79,12 @@ Quick mental model:
 
 Recommended approach:
 
-- stable users: install a release tag
+- stable users: install the published release tag
 - early adopters: install the current `main`
 
 **Stable release install**
 
-After the first tagged release exists, install like this:
+Recommended for normal users:
 
 ```bash
 openclaw plugins install git+https://github.com/redcreen/memory-context-claw.git#v0.1.0
@@ -343,12 +343,12 @@ Other name options:
 
 推荐做法：
 
-- 稳定用户：安装 release tag
+- 稳定用户：安装已经发布的 release tag
 - 愿意吃最新开发版本的用户：安装当前 `main`
 
 **稳定版安装**
 
-等第一个 tag 发布之后，推荐这样安装：
+普通用户推荐直接这样安装：
 
 ```bash
 openclaw plugins install git+https://github.com/redcreen/memory-context-claw.git#v0.1.0

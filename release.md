@@ -43,7 +43,7 @@ Use two tracks:
 Recommended format:
 
 - `v0.1.0`
-- `v0.1.0`
+- `v0.2.0`
 - `v0.2.1`
 
 Simple meaning:
@@ -96,13 +96,15 @@ openclaw plugins install git+https://github.com/redcreen/memory-context-claw.git
 
 ### Current State
 
-At the moment, this repo has **not published its first release tag yet**.
+Current published tag:
+
+`v0.1.0`
 
 That means:
 
-- stable-install wording is ready
-- release process is defined
-- the first public stable install should switch to tag-based install after the first tag is created
+- stable install is now available
+- README can safely recommend tag-based installation
+- future releases should continue using the same model
 
 ---
 
@@ -147,7 +149,7 @@ openclaw plugins install git+https://github.com/redcreen/memory-context-claw.git
 推荐格式：
 
 - `v0.1.0`
-- `v0.1.0`
+- `v0.2.0`
 - `v0.2.1`
 
 简单理解：
@@ -200,10 +202,12 @@ openclaw plugins install git+https://github.com/redcreen/memory-context-claw.git
 
 ### 当前状态
 
-当前这个仓库**还没有发布第一个 release tag**。
+当前已发布的 tag：
+
+`v0.1.0`
 
 所以现在的状态是：
 
-- 稳定版安装文案已经准备好了
-- 发布流程已经定义好了
-- 等你打出第一个 tag 后，就可以把公开推荐安装方式切到 tag 安装
+- 稳定版安装已经可用
+- README 现在可以正式默认推荐 tag 安装
+- 后续版本继续沿用这套发布方式即可
