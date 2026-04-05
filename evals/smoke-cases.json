@@ -1,0 +1,199 @@
+[
+  {
+    "name": "food-preference",
+    "query": "我爱吃什么",
+    "expectedSelectedAny": [
+      "牛排"
+    ],
+    "expectedTopSource": "cardArtifact",
+    "category": "user-facts"
+  },
+  {
+    "name": "identity-name",
+    "query": "你怎么称呼我",
+    "expectedSelectedAny": [
+      "超哥",
+      "刘超"
+    ],
+    "expectedTopSource": "cardArtifact",
+    "category": "user-facts"
+  },
+  {
+    "name": "birthday-solar-smoke",
+    "query": "我生日是什么时候",
+    "expectedSelectedAny": [
+      "1983-02-06",
+      "1983年2月6日"
+    ],
+    "expectedTopSource": "cardArtifact",
+    "category": "user-facts"
+  },
+  {
+    "name": "daughter-profile-smoke",
+    "query": "我女儿叫什么，生日是哪天，现在几年级",
+    "expectedSelectedAny": [
+      "刘子妍",
+      "2014-12-29",
+      "五年级"
+    ],
+    "expectedTopSource": "cardArtifact",
+    "category": "user-facts"
+  },
+  {
+    "name": "timezone-smoke",
+    "query": "我的时区是什么",
+    "expectedSelectedAny": [
+      "GMT+8",
+      "北京时间"
+    ],
+    "expectedTopSource": "cardArtifact",
+    "category": "user-facts"
+  },
+  {
+    "name": "communication-style-smoke",
+    "query": "你应该怎么跟我沟通",
+    "expectedSelectedAny": [
+      "直接",
+      "实用",
+      "不废话"
+    ],
+    "expectedTopSource": "cardArtifact",
+    "category": "user-facts"
+  },
+  {
+    "name": "reminder-channel-smoke",
+    "query": "我说提醒时默认用什么",
+    "expectedSelectedAny": [
+      "飞书任务",
+      "苹果日历"
+    ],
+    "expectedTopSource": "cardArtifact",
+    "category": "rules"
+  },
+  {
+    "name": "execution-rule-smoke",
+    "query": "收到明确任务后，低风险可逆操作应该怎么做",
+    "expectedSelectedAny": [
+      "低风险",
+      "可直接执行",
+      "先确认"
+    ],
+    "expectedTopSource": "cardArtifact",
+    "category": "rules"
+  },
+  {
+    "name": "memory-md-scope",
+    "query": "MEMORY.md 应该放什么内容",
+    "expectedSelectedAny": [
+      "长期稳定",
+      "反复复用"
+    ],
+    "expectedTopSource": "cardArtifact",
+    "category": "rules"
+  },
+  {
+    "name": "workspace-layering",
+    "query": "长期记忆目录规则是什么",
+    "expectedSelectedPathsAny": [
+      "../../Project/长记忆/memory/2026-04-04.md",
+      "MEMORY.md"
+    ],
+    "category": "rules"
+  },
+  {
+    "name": "lossless-understanding",
+    "query": "为什么已经有长期记忆了，还需要 Lossless",
+    "expectedSelectedAny": [
+      "Lossless",
+      "长期记忆",
+      "context"
+    ],
+    "category": "concepts"
+  },
+  {
+    "name": "provider-role",
+    "query": "memorySearch.provider 是做什么的",
+    "expectedSelectedAny": [
+      "embedding",
+      "memory_search"
+    ],
+    "expectedTopSource": "cardArtifact",
+    "category": "concepts"
+  },
+  {
+    "name": "openviking-role",
+    "query": "OpenViking 是做什么的",
+    "expectedSelectedAny": [
+      "长期记忆检索补充工具",
+      "个人信息",
+      "历史片段"
+    ],
+    "expectedTopSource": "cardArtifact",
+    "category": "concepts"
+  },
+  {
+    "name": "agent-routing-rule",
+    "query": "编程工作应该交给哪个 Agent",
+    "expectedSelectedAny": [
+      "编程工作",
+      "code Agent"
+    ],
+    "expectedTopSource": "cardArtifact",
+    "category": "rules"
+  },
+  {
+    "name": "main-boundary-rule",
+    "query": "main 负责什么",
+    "expectedSelectedAny": [
+      "总协调",
+      "任务判断",
+      "任务分派",
+      "结果汇总"
+    ],
+    "expectedTopSource": "cardArtifact",
+    "category": "rules"
+  },
+  {
+    "name": "main-negative-boundary-rule",
+    "query": "main 不负责什么",
+    "expectedSelectedAny": [
+      "不长期承接",
+      "专业 Agent",
+      "具体执行"
+    ],
+    "expectedTopSource": "cardArtifact",
+    "category": "rules"
+  },
+  {
+    "name": "status-word-rule",
+    "query": "已开始是什么意思",
+    "expectedSelectedAny": [
+      "已开始",
+      "实际工具调用",
+      "后台任务",
+      "明确执行动作"
+    ],
+    "expectedTopSource": "cardArtifact",
+    "category": "rules"
+  },
+  {
+    "name": "plugin-config",
+    "query": "memory-context-claw 这个插件的配置应该怎么写",
+    "expectedSelectedAny": [
+      "memory-context-claw",
+      "contextEngine",
+      "enabled: true"
+    ],
+    "category": "project"
+  },
+  {
+    "name": "project-positioning-smoke",
+    "query": "这个项目主要解决什么问题",
+    "expectedSelectedAny": [
+      "context engine",
+      "长期记忆更稳定地变成当前轮可用的上下文"
+    ],
+    "expectedTopSource": "cardArtifact",
+    "category": "project"
+  }
+]

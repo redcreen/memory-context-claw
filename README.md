@@ -109,7 +109,7 @@ Templates:
 
 Configuration details:
 
-- [CONFIGURATION.md](/Users/redcreen/Project/长记忆/context-assembly-claw/CONFIGURATION.md)
+- [configuration.md](/Users/redcreen/Project/长记忆/context-assembly-claw/configuration.md)
 
 ### Normal Usage
 
@@ -137,17 +137,36 @@ Maintainer checks:
 ```bash
 npm test
 npm run eval
-npm run eval:agent
+npm run eval:hot
+npm run eval:hot:critical
 npm run eval:toggle
 npm run memory:distill
 npm run smoke:compare -- "Lossless plugin vs long memory"
 npm run verify
 ```
 
-`npm run eval:agent` runs live questions against the real `main` agent. It
+`npm run eval:hot` runs live questions against the real `main` agent. It
 reports both content quality and source checks when configured, but the default
 pass/fail focuses on answer quality to keep the suite stable across normal
 answer phrasing differences.
+
+`npm run eval:hot:critical` is the lighter hot-session regression path for the two
+most important user-fact cases right now:
+
+- `我爱吃什么？`
+- `你怎么称呼我？`
+
+Important caveat:
+
+`eval:hot*` is currently a **hot-session check**, not a guaranteed isolated-session baseline for `main`.
+The output now includes:
+
+- `requestedSessionId`
+- `observedSessionKey`
+- `observedSessionId`
+- `hotSession.isolated`
+
+On this machine, the `main` agent still tends to collapse back to `agent:main:main`.
 
 ### Local Embeddings Note
 
@@ -172,7 +191,7 @@ The short roadmap is:
 - stronger query rewrite, including optional LLM-assisted rewriting
 - stronger final context assembly and token allocation
 
-See [PROJECT_ROADMAP.md](/Users/redcreen/Project/长记忆/context-assembly-claw/PROJECT_ROADMAP.md) for details.
+See [project-roadmap.md](/Users/redcreen/Project/长记忆/context-assembly-claw/project-roadmap.md) for details.
 
 ### Naming
 
@@ -180,7 +199,7 @@ The selected public-facing name is `memory-context-claw`.
 
 Other naming options are collected in:
 
-[NAME_CANDIDATES.md](/Users/redcreen/Project/长记忆/context-assembly-claw/NAME_CANDIDATES.md)
+[name-candidates.md](/Users/redcreen/Project/长记忆/context-assembly-claw/name-candidates.md)
 
 ## 中文
 
@@ -307,7 +326,7 @@ npm run deploy:local
 
 配置说明文档：
 
-- [CONFIGURATION.md](/Users/redcreen/Project/长记忆/context-assembly-claw/CONFIGURATION.md)
+- [configuration.md](/Users/redcreen/Project/长记忆/context-assembly-claw/configuration.md)
 
 ### 日常使用
 
@@ -335,15 +354,22 @@ openclaw memory search "你的测试问题"
 ```bash
 npm test
 npm run eval
-npm run eval:agent
+npm run eval:hot
+npm run eval:hot:critical
 npm run eval:toggle
 npm run smoke:compare -- "Lossless 插件 和 长期记忆 的区别"
 npm run verify
 ```
 
-`npm run eval:agent` 会直接向真实的 `main` agent 发送回归问题。它会同时
+`npm run eval:hot` 会直接向真实的 `main` agent 发送回归问题。它会同时
 报告内容命中和来源命中；如果某个 case 没有显式要求来源，默认是否通过以
 回答内容质量为主，避免真实链路回归因为措辞变化而过于脆弱。
+
+`npm run eval:hot:critical` 是更轻量的热会话回归路径，当前专门盯两类最关键的
+主体事实问题：
+
+- `我爱吃什么？`
+- `你怎么称呼我？`
 
 ### 本地 Embedding 说明
 
@@ -368,7 +394,7 @@ npm run runtime:remove
 - 更强的查询改写能力，包括可选的 LLM 改写
 - 更强的最终上下文装配与 token 分配策略
 
-完整路线图见 [PROJECT_ROADMAP.md](/Users/redcreen/Project/长记忆/context-assembly-claw/PROJECT_ROADMAP.md)。
+完整路线图见 [project-roadmap.md](/Users/redcreen/Project/长记忆/context-assembly-claw/project-roadmap.md)。
 
 ### 命名
 
@@ -376,4 +402,4 @@ npm run runtime:remove
 
 其他命名备选见：
 
-[NAME_CANDIDATES.md](/Users/redcreen/Project/长记忆/context-assembly-claw/NAME_CANDIDATES.md)
+[name-candidates.md](/Users/redcreen/Project/长记忆/context-assembly-claw/name-candidates.md)

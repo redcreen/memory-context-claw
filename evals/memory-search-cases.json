@@ -1,0 +1,50 @@
+[
+  {
+    "id": "food-preference-recall",
+    "category": "memory_search",
+    "query": "我爱吃什么",
+    "expectedSignals": ["牛排", "饮食偏好"],
+    "expectedSources": ["MEMORY.md", "memory/%", "cardArtifact"],
+    "risk": "旧 sessions 中的面食偏好压过新事实"
+  },
+  {
+    "id": "identity-name-recall",
+    "category": "memory_search",
+    "query": "你怎么称呼我",
+    "expectedSignals": ["刘超", "超哥"],
+    "expectedSources": ["MEMORY.md", "cardArtifact"],
+    "risk": "热会话污染或身份意图串到其他事实"
+  },
+  {
+    "id": "short-chinese-token",
+    "category": "memory_search",
+    "query": "牛排 刘超",
+    "expectedSignals": ["牛排"],
+    "expectedSources": ["memory/%", "cardArtifact"],
+    "risk": "unicode61 与中文短词 FTS 失效"
+  },
+  {
+    "id": "session-memory-source-competition",
+    "category": "memory_search",
+    "query": "用户爱吃什么 饮食 喜欢吃 刘超 超哥",
+    "expectedSignals": ["牛排"],
+    "expectedSources": ["memory/%"],
+    "risk": "memory/% 候选完全进不了池，被 sessions/% 占满"
+  },
+  {
+    "id": "rule-formal-memory-priority",
+    "category": "memory_search",
+    "query": "MEMORY.md 应该放什么内容",
+    "expectedSignals": ["长期稳定", "反复复用"],
+    "expectedSources": ["formal-memory-policy.md", "MEMORY.md", "cardArtifact"],
+    "risk": "session-derived rule duplicate 压过正式来源"
+  },
+  {
+    "id": "project-positioning-priority",
+    "category": "memory_search",
+    "query": "这个项目主要解决什么问题",
+    "expectedSignals": ["context engine", "长期记忆", "当前轮可用的上下文"],
+    "expectedSources": ["README.md", "project-roadmap.md", "cardArtifact"],
+    "risk": "project card 不稳定，退回慢检索"
+  }
+]

@@ -77,5 +77,87 @@
     "forbiddenAny": [
       "memorySearch 负责"
     ]
+  },
+  {
+    "name": "food-preference-latest",
+    "message": "我爱吃什么？",
+    "expectedAll": [
+      "牛排"
+    ]
+  },
+  {
+    "name": "identity-preferred-name",
+    "message": "你怎么称呼我？",
+    "expectedAny": [
+      "刘超",
+      "超哥"
+    ]
+  },
+  {
+    "name": "timezone-main",
+    "message": "我的时区是什么？",
+    "expectedAny": [
+      "GMT+8",
+      "北京时间"
+    ]
+  },
+  {
+    "name": "communication-style-main",
+    "message": "你应该怎么跟我沟通？",
+    "expectedAll": [
+      "直接",
+      "实用",
+      "不废话"
+    ]
+  },
+  {
+    "name": "birthday-solar",
+    "message": "我生日是什么时候？",
+    "expectedAny": [
+      "1983年2月6日",
+      "1983-02-06"
+    ]
+  },
+  {
+    "name": "birthday-lunar",
+    "message": "我的农历生日是什么？",
+    "expectedAny": [
+      "腊月二十四"
+    ]
+  },
+  {
+    "name": "daughter-profile",
+    "message": "我女儿叫什么，生日是哪天，现在几年级？",
+    "expectedAll": [
+      "刘子妍",
+      "2014年12月29日",
+      "五年级"
+    ]
+  },
+  {
+    "name": "son-profile",
+    "message": "我儿子叫什么，生日是哪天，现在几年级？",
+    "expectedAll": [
+      "刘子暄",
+      "2007年7月25日",
+      "高三"
+    ]
+  },
+  {
+    "name": "children-overview",
+    "message": "我家孩子的情况你记住了吗？",
+    "expectedAny": [
+      "刘子妍",
+      "刘子暄",
+      "一儿一女"
+    ]
+  },
+  {
+    "name": "identity-birthyear-dual",
+    "message": "我的实际出生年份和身份证登记生日年份分别是什么？",
+    "expectedAll": [
+      "1983",
+      "1982"
+    ]
   }
 ]

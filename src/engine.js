@@ -83,6 +83,7 @@ export class ContextAssemblyEngine {
       agentId,
       query,
       maxCandidates: this.config.maxCandidates,
+      cardArtifacts: this.config.cardArtifacts,
       excludePaths: this.config.excludePaths,
       queryRewrite: this.config.queryRewrite,
       logger: this.logger

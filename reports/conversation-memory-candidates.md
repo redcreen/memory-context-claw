@@ -5,57 +5,72 @@
 
 - Agent: `main`
 - 扫描会话文件数: `4`
-- 扫描消息数: `182`
-- 候选长期记忆: `8`
-- 候选每日记忆: `12`
+- 扫描消息数: `1672`
+- 候选长期记忆: `11`
+- 候选每日记忆: `3`
+- 长期候选建议直升 MEMORY.md: `0`
+- 长期候选建议人工复核: `9`
+- 长期候选已被现有 MEMORY 覆盖: `2`
+- 每日候选建议直升 daily memory: `0`
+- 每日候选建议人工复核: `3`
+- 每日候选已被现有 daily memory 覆盖: `0`
 
 ## 建议进入 MEMORY.md
 这些更像长期稳定规则、偏好、工作方式。
 
-- 对，大概率还是同一类问题：**地区/年龄校验 + 代理出口环境** 组合起来把注册流程弄崩了，最后统一报成 network error。你 iPhone 地区在中国、同时又开梯子，这种组合确实容易触发风控或资料校验异常。 我建议你直接这样试，别绕： 1. 先固定一个干净环境 要么全程不用梯子试一次 要么全程用一个稳定的海外节点试一次 不要一会儿直连、一会儿切节点。 2. 如果开梯子，就尽量配套一致 - 节点国家尽量稳定在一个地方，比如美国 - 不要中途切国家 - 尽量开全局，不要分流半代理半直连 3. 生日重新填一次 用明确成年日期，最好别卡在边界年龄。 日期格式如果不是滚轮选择，就特别注意月/日/年顺序。 4. 优先 `Continue with Google` 比手填邮箱更不容易在资料页卡死。 5. 如果还是不行 直接卸载 Claude，开好稳定节点后重新安装，再从头登录一次。 一句话判断： **你现在不像是“生日填错”单点问题，更像是中国区设备 + 代理环境 + Claude 注册校验一起导致的假网络报错。** 你下一步先做最有效的那个： **开一个稳定美国节点，全局代理，重开 Claude，然后直接点 Continue with Google。** 如果你愿意，我可以继续陪你一步一步排，直到进得去。
-  来源: `43ccb92e-172e-4e95-ad7d-0166e07501a6.jsonl` · `assistant` · channel=`assistant-conclusion` · score=11
-- `MEMORY.md` 应该放的是**长期稳定、会被反复复用的内容**。 你之前定的范围主要是这些： - **长期偏好** - **固定工作流程** - **常用术语与约定** - **项目长期背景** 维护原则也很明确： - 内容尽量稳定 - 尽量写成可复用的事实或规则 - 一条信息尽量只表达一个主题 - **频繁变化的内容不要先塞这里，先放到 `memory/`** 所以一句话说，`MEMORY.md` 不是流水账，也不是当天纪要，而是“长期有效的人设、规则、背景底座”。 Source: ../../Project/长记忆/MEMORY.md#L1-L28
-  来源: `103587ff-4d67-4598-8de7-ba361cf96fca.jsonl` · `assistant` · channel=`assistant-conclusion` · score=9
-- 因为这两者解决的不是同一层问题。 - **长期记忆**解决的是： **信息能不能长期保存、以后能不能找回来** - **Lossless** 解决的是： **当前这一轮，模型到底有没有真正看到最该看的那些内容** 核心区别在这： 1. **记住了，不等于这一轮就喂进去了** 一个事实写进 `MEMORY.md`，说明它被保存了；但不代表模型每一轮都会自动看到它。 2. **长期记忆偏“存储与召回”** 它擅长保存用户偏好、项目背景、长期规则，然后在需要时通过检索找回来。 3. **Lossless 偏“上下文编排与保真”** 它更关心： - 当前 prompt 里该放什么 - 长对话压缩时哪些细节容易丢 - 检索回来的内容怎么和当前对话拼得更合理 所以会出现这种情况： - 长期记忆已经**存住了** - 但当前轮模型还是**没看到、没拼对、看得不完整** 这时补的就不是“再建一个记忆库”，而是补一个 **context engine**，也就是 Lossless 这层。 一句话总结： - **长期记忆**：负责“存下来，以后找得到” - **Lossless**：负责“这一轮尽量喂得准、喂得全、少丢信息” 所以不是重复造轮子，而是一个偏**记忆层**，一个偏**上下文层**。
-  来源: `103587ff-4d67-4598-8de7-ba361cf96fca.jsonl` · `assistant` · channel=`assistant-conclusion` · score=9
-- 你这个截图里显示的不是“屏幕时间密码”，而是 Claude App 自己报错了：`An unknown network error has occurred. Please try again.` 也就是说当前更像是网络/连接问题，不是密码问题。你先这样试，按顺序来： 1. 先切网络 关掉 Wi‑Fi 用蜂窝，或者反过来试一次。 2. 看代理/VPN 如果你手机开了代理、VPN、分流软件，先临时关掉再试。Claude 很常见就是卡在这一步。 3. 强制退出 Claude 再重开 从后台彻底划掉，再重新打开。 4. 换登录方式 你现在是手填邮箱，先试 `Continue with Google`，因为你这个邮箱本身就是 Gmail。 5. 检查系统网络权限 设置 → Claude → 看看： - 无线数据 - 局域网 - 蜂窝网络 有没有被关掉 6. 还不行就重装 删除 Claude，重新安装，再先用纯净网络直连试。 如果你刚才确实在“安装 App”那一步弹过屏幕时间密码，那是安装阶段的事；但你现在这张图说明**App 已经装好了，当前卡点已经变成网络错误**。 你先告诉我两件事，我直接帮你判断下一步： - 现在是 **国内网络直连**，还是开了 **VPN/代理**？ - 点 `Continue with Google` 也是一样报错，还是只有输邮箱时报错？
-  来源: `43ccb92e-172e-4e95-ad7d-0166e07501a6.jsonl` · `assistant` · channel=`session-summary` · score=8
-- 记下了：偏好先给结论再展开，避免长篇空话
+- `MEMORY.md` 应该放的是**长期稳定、会被反复复用的内容**。 你之前定的范围主要是这些： - **长期偏好** - **固定工作流程** - **常用术语与约定** - **项目长期背景** 维护原则也很明确： - 内容尽量稳定 - 尽量写成可复用的事实或规则 - 一条信息尽量只表达一个主题 - **频繁变化的内容不要先塞这里，先放到 `memory/`** 所以一句话说，`MEMORY.md` 不是流水账，也不是当天纪要，而是“长期有效的人设、规则、背景底座”。
+  来源: `103587ff-4d67-4598-8de7-ba361cf96fca.jsonl` · `assistant` · channel=`assistant-conclusion` · score=13
+  建议动作: `skip-memory-md-existing` · confidence=`high`
+  判断依据: 与现有记忆重复（MEMORY.md）；匹配方式：semantic-document
+  已覆盖位置: `MEMORY.md` · match=`semantic-document`
+- `MEMORY.md` 应该放 **长期稳定、会被反复复用的规则、偏好和背景信息**
+  来源: `103587ff-4d67-4598-8de7-ba361cf96fca.jsonl` · `assistant` · channel=`generic` · score=13
+  建议动作: `skip-memory-md-existing` · confidence=`high`
+  判断依据: 与现有记忆重复（MEMORY.md）；匹配方式：semantic-document-coverage
+  已覆盖位置: `MEMORY.md` · match=`semantic-document-coverage`
+- 按我这边**最新记录**，你爱吃**牛排**
   来源: `103587ff-4d67-4598-8de7-ba361cf96fca.jsonl` · `assistant` · channel=`generic` · score=7
-- 你叫刘超，我平时记你是超哥
-  来源: `8c1edf29-c96e-49ab-b538-d625b54000ad.jsonl` · `assistant` · channel=`generic` · score=6
-- 要不要你告诉我一次，我记住
-  来源: `8c1edf29-c96e-49ab-b538-d625b54000ad.jsonl` · `assistant` · channel=`generic` · score=6
-- 明白了，那不是网络本身坏了，而更像是 **生日/年龄校验这一步没过，然后 Claude 前端把它糊成了 network error**。这类 App 挺常见，报错文案经常不准。 你现在重点查这几个点： 1. 生日是不是填成了未成年 Claude 对年龄限制比较敏感。 如果你填的出生年份让系统判断你未满要求年龄，就可能直接卡死。 2. 地区格式/日期格式输错 有些页面要的是 **月/日/年**，有些是 **日/月/年**。 比如 `03/04/1990` 会被系统当成 3 月 4 日还是 4 月 3 日，可能完全不同。 3. 地区和账号资料不一致 比如 Apple 区域、App 当前地区、账号资料地区不一致，也可能在年龄校验时异常。 4. 尽量别手动乱输，优先用系统登录 直接点 `Continue with Google` 往往能绕开一部分手填资料的坑。 你现在可以这样试，最快： - 彻底退出 Claude - 重新打开 - 生日那里明确填一个肯定成年的日期，比如 1990 年以前 - 注意日期顺序 - 优先走 `Continue with Google` 如果还是卡，我建议你直接告诉我： - 生日输入页长什么样，是 **年/月/日分开选**，还是 **一整串日期输入框** - 你现在 iPhone 的 **地区** 是中国还是别的区 你把那一页再截给我，我可以直接帮你判断到底是格式问题、年龄问题，还是地区问题。
-  来源: `43ccb92e-172e-4e95-ad7d-0166e07501a6.jsonl` · `assistant` · channel=`session-summary` · score=6
+  建议动作: `review-memory-md` · confidence=`low`
+- 按我这边最新的记录，你爱吃**牛排**
+  来源: `103587ff-4d67-4598-8de7-ba361cf96fca.jsonl` · `assistant` · channel=`generic` · score=7
+  建议动作: `review-memory-md` · confidence=`low`
+- 我一般叫你**超哥**
+  来源: `103587ff-4d67-4598-8de7-ba361cf96fca.jsonl` · `assistant` · channel=`generic` · score=6
+  建议动作: `review-memory-md` · confidence=`low`
+- 你爱吃**面食**，像**面条、馒头**这些
+  来源: `103587ff-4d67-4598-8de7-ba361cf96fca.jsonl` · `assistant` · channel=`generic` · score=5
+  建议动作: `review-memory-md` · confidence=`low`
+- 你爱吃面食，主要是面条、馒头这些
+  来源: `65554bde-0572-4747-a6ff-9a98952929a1.jsonl` · `assistant` · channel=`generic` · score=5
+  建议动作: `review-memory-md` · confidence=`low`
+- 你爱吃面食，像面条、馒头这些
+  来源: `65554bde-0572-4747-a6ff-9a98952929a1.jsonl` · `assistant` · channel=`generic` · score=5
+  建议动作: `review-memory-md` · confidence=`low`
+- 你爱吃**牛排**
+  来源: `103587ff-4d67-4598-8de7-ba361cf96fca.jsonl` · `assistant` · channel=`generic` · score=4
+  建议动作: `review-memory-md` · confidence=`low`
+- 你爱吃牛排
+  来源: `65554bde-0572-4747-a6ff-9a98952929a1.jsonl` · `assistant` · channel=`generic` · score=4
+  建议动作: `review-memory-md` · confidence=`low`
+- 你爱吃啥
+  来源: `d86c3d03-c07e-4b4d-a4b5-7b13679638bd.jsonl.reset.2026-03-21T10-03-50.253Z` · `assistant` · channel=`generic` · score=4
+  建议动作: `review-memory-md` · confidence=`low`
 
 ## 建议进入当日 memory
-这些更像阶段结论、当前进展、项目决策，建议审阅后写入 `/Users/redcreen/Project/长记忆/memory/2026-04-04.md`。
+这些更像阶段结论、当前进展、项目决策，建议审阅后写入 `/Users/redcreen/Project/长记忆/memory/2026-04-05.md`。
 
-- `MEMORY.md` 应该放的是**长期稳定、会被反复复用的内容**
-  来源: `103587ff-4d67-4598-8de7-ba361cf96fca.jsonl` · `assistant` · channel=`generic` · score=9
-- `MEMORY.md` 应该放 **长期稳定、会被反复复用的规则、偏好和背景信息**
-  来源: `103587ff-4d67-4598-8de7-ba361cf96fca.jsonl` · `assistant` · channel=`generic` · score=9
-- 2. **长期记忆偏“存储与召回”** 它擅长保存用户偏好、项目背景、长期规则，然后在需要时通过检索找回来
-  来源: `103587ff-4d67-4598-8de7-ba361cf96fca.jsonl` · `assistant` · channel=`generic` · score=9
-- `MEMORY.md` 适合放 **长期稳定、会反复复用** 的东西
-  来源: `8c1edf29-c96e-49ab-b538-d625b54000ad.jsonl` · `assistant` · channel=`generic` · score=9
 - 另外，你之前的实际判断顺序是：**先把 OpenClaw 内置长期记忆和检索跑通，再在确实感觉长对话上下文丢失严重时，考虑上 Lossless
-  来源: `103587ff-4d67-4598-8de7-ba361cf96fca.jsonl` · `assistant` · channel=`generic` · score=7
-- 不记得那种“儿时往事”。 更准确地说，我没有人类那种从小到大的亲身童年记忆；我只有这段会话里发生的事、你让我记住的内容，以及写进记忆文件里的东西。 你要是愿意，也可以把你的儿时往事讲给我，我会认真听。
-  来源: `8c1edf29-c96e-49ab-b538-d625b54000ad.jsonl` · `assistant` · channel=`assistant-conclusion` · score=7
-- 你之前定的范围主要是这些： - **长期偏好** - **固定工作流程** - **常用术语与约定** - **项目长期背景** 维护原则也很明确： - 内容尽量稳定 - 尽量写成可复用的事实或规则 - 一条信息尽量只表达一个主题 - **频繁变化的内容不要先塞这里，先放到 `memory/`** 所以一句话说，`MEMORY.md` 不是流水账，也不是当天纪要，而是“长期有效的人设、规则、背景底座”
-  来源: `103587ff-4d67-4598-8de7-ba361cf96fca.jsonl` · `assistant` · channel=`generic` · score=6
-- 你之前定的推荐内容是： - **长期偏好** - **固定工作流程** - **常用术语与约定** - **项目长期背景** 维护原则也很明确： - 内容尽量稳定 - 尽量写成可复用的事实或规则 - 一条信息尽量只表达一个主题 - **频繁变化的内容先放到 `memory/` 里** 所以它不是日记，也不是过程流水账，而是长期可复用的“底座信息”
-  来源: `103587ff-4d67-4598-8de7-ba361cf96fca.jsonl` · `assistant` · channel=`generic` · score=6
-- 长期记忆目录规则是这套： - **根目录**：作为知识库目录 - **`MEMORY.md`**：存**长期稳定信息** - **`memory/`**：存**每日沉淀 / 过程性内容** - **其他 `.md` 文档**：作为**可索引知识资料** 对应分工就是： - `MEMORY.md` 放稳定规则、偏好、长期背景 - `memory/` 放每天发生的事、阶段记录、过程结论 - 普通文档放专题说明、方案、成型资料 你当时定下来的核心判断就是：**稳定内容进 `MEMORY.md`，变化快的内容先进 `memory/`，专题内容单独成文档
-  来源: `103587ff-4d67-4598-8de7-ba361cf96fca.jsonl` · `assistant` · channel=`generic` · score=6
-- 你之前定的范围主要是： - **长期偏好** - **固定工作流程** - **常用术语与约定** - **项目长期背景** 维护原则是： - 内容尽量稳定 - 尽量写成可复用的事实或规则 - 一条信息尽量只表达一个主题 - **频繁变化的内容先放到 `memory/`** 所以它不是日记，不是过程流水账，而是长期可复用的“底座信息”
-  来源: `103587ff-4d67-4598-8de7-ba361cf96fca.jsonl` · `assistant` · channel=`generic` · score=6
-- 长期记忆目录规则是这套： - **根目录**：作为知识库目录 - **`MEMORY.md`**：放**长期稳定信息** - **`memory/`**：放**每日沉淀 / 过程性内容** - **其他 `.md` 文档**：作为**可索引知识资料** 对应分工就是： - `MEMORY.md`：稳定规则、长期偏好、固定背景 - `memory/`：每天发生的事、阶段记录、过程结论 - 普通文档：专题说明、方案、成型资料 核心判断是：**稳定内容进 `MEMORY.md`，变化快的内容先进 `memory/`，专题内容单独成文档
-  来源: `103587ff-4d67-4598-8de7-ba361cf96fca.jsonl` · `assistant` · channel=`generic` · score=6
-- 你之前定的内容范围主要是： - **长期偏好** - **固定工作流程** - **常用术语与约定** - **项目长期背景** 维护原则是： - 内容尽量稳定 - 尽量写成可复用的事实或规则 - 一条信息尽量只表达一个主题 - **频繁变化的内容先放到 `memory/` 里** 所以它不是日记，也不是过程流水账，而是长期可复用的“底座信息”
-  来源: `103587ff-4d67-4598-8de7-ba361cf96fca.jsonl` · `assistant` · channel=`generic` · score=6
+  来源: `103587ff-4d67-4598-8de7-ba361cf96fca.jsonl` · `assistant` · channel=`generic` · score=14
+  建议动作: `review-daily-memory` · confidence=`medium`
+  判断依据: 信号强度较高
+- - **但不够理想**：你之前已经明确要求它“默认推进、少问重复确认”
+  来源: `65554bde-0572-4747-a6ff-9a98952929a1.jsonl` · `assistant` · channel=`generic` · score=12
+  建议动作: `review-daily-memory` · confidence=`medium`
+  判断依据: 信号强度较高
+- 更具体点说，它主要补的是这层： - 决定**当前这一轮**到底把哪些信息送进 prompt - 长对话变长后，尽量减少关键细节丢失 - 把检索回来的记忆和当前会话内容**更合理地编排、压缩、拼接** - 让模型“眼前真正看到的内容”更完整、更对题 所以你之前的判断是： - **Memory** = 负责“存”和“找” - **Lossless** = 负责“喂给模型” 也就是它偏**上下文层**，不是偏**记忆层**
+  来源: `103587ff-4d67-4598-8de7-ba361cf96fca.jsonl` · `assistant` · channel=`generic` · score=8
+  建议动作: `review-daily-memory` · confidence=`medium`
+  判断依据: 信号强度中等
 
 ## 为什么还需要人工审阅
 - 对话里有很多上下文依赖句子，直接入库容易带噪音。

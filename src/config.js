@@ -1,6 +1,13 @@
 const DEFAULT_CONFIG = {
   enabled: true,
   openclawCommand: "openclaw",
+  cardArtifacts: {
+    enabled: true,
+    path: "",
+    maxCandidates: 6,
+    fastPathEnabled: true,
+    fastPathMinScore: 0.3
+  },
   maxCandidates: 18,
   maxSelectedChunks: 4,
   maxChunksPerPath: 1,
@@ -25,6 +32,8 @@ const DEFAULT_CONFIG = {
     compactFallback: true,
     cooldownMs: 300000,
     sessionLimit: 8,
+    indexedHistoryEnabled: true,
+    indexedHistoryFileLimit: 24,
     outputDir: ""
   },
   forceAgentId: "",
@@ -39,6 +48,8 @@ const DEFAULT_CONFIG = {
   },
   weights: {
     retrievalScore: 0.55,
+    cardArtifact: 0.16,
+    preferenceConflictPenalty: 0.24,
     memoryFile: 0.18,
     dailyMemory: 0.12,
     sessionRecent: 0.1,
@@ -73,6 +84,7 @@ function mergeStringArrays(base, incoming) {
 
 export function resolvePluginConfig(raw) {
   const cfg = raw && typeof raw === "object" && !Array.isArray(raw) ? raw : {};
+  const cardArtifacts = mergeObject(DEFAULT_CONFIG.cardArtifacts, cfg.cardArtifacts);
   const llmRerank = mergeObject(DEFAULT_CONFIG.llmRerank, cfg.llmRerank);
   const queryRewrite = mergeObject(DEFAULT_CONFIG.queryRewrite, cfg.queryRewrite);
   const memoryDistillation = mergeObject(DEFAULT_CONFIG.memoryDistillation, cfg.memoryDistillation);
@@ -84,6 +96,23 @@ export function resolvePluginConfig(raw) {
       typeof cfg.openclawCommand === "string" && cfg.openclawCommand.trim()
         ? cfg.openclawCommand.trim()
         : DEFAULT_CONFIG.openclawCommand,
+    cardArtifacts: {
+      enabled: cardArtifacts.enabled !== false,
+      path: typeof cardArtifacts.path === "string" ? cardArtifacts.path.trim() : "",
+      maxCandidates: clampNumber(
+        cardArtifacts.maxCandidates,
+        0,
+        20,
+        DEFAULT_CONFIG.cardArtifacts.maxCandidates
+      ),
+      fastPathEnabled: cardArtifacts.fastPathEnabled !== false,
+      fastPathMinScore: clampNumber(
+        cardArtifacts.fastPathMinScore,
+        0,
+        5,
+        DEFAULT_CONFIG.cardArtifacts.fastPathMinScore
+      )
+    },
     maxCandidates: clampNumber(cfg.maxCandidates, 1, 50, DEFAULT_CONFIG.maxCandidates),
     maxSelectedChunks: clampNumber(
       cfg.maxSelectedChunks,
@@ -136,6 +165,13 @@ export function resolvePluginConfig(raw) {
         50,
         DEFAULT_CONFIG.memoryDistillation.sessionLimit
       ),
+      indexedHistoryEnabled: memoryDistillation.indexedHistoryEnabled !== false,
+      indexedHistoryFileLimit: clampNumber(
+        memoryDistillation.indexedHistoryFileLimit,
+        0,
+        200,
+        DEFAULT_CONFIG.memoryDistillation.indexedHistoryFileLimit
+      ),
       outputDir:
         typeof memoryDistillation.outputDir === "string"
           ? memoryDistillation.outputDir.trim()
@@ -172,6 +208,10 @@ export function resolvePluginConfig(raw) {
     },
     weights: {
       retrievalScore: Number(weights.retrievalScore ?? DEFAULT_CONFIG.weights.retrievalScore),
+      cardArtifact: Number(weights.cardArtifact ?? DEFAULT_CONFIG.weights.cardArtifact),
+      preferenceConflictPenalty: Number(
+        weights.preferenceConflictPenalty ?? DEFAULT_CONFIG.weights.preferenceConflictPenalty
+      ),
       memoryFile: Number(weights.memoryFile ?? DEFAULT_CONFIG.weights.memoryFile),
       dailyMemory: Number(weights.dailyMemory ?? DEFAULT_CONFIG.weights.dailyMemory),
       sessionRecent: Number(weights.sessionRecent ?? DEFAULT_CONFIG.weights.sessionRecent),

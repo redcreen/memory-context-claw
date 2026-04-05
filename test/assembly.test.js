@@ -50,6 +50,56 @@ test("buildAssemblyResult injects selected memory snippets into systemPromptAddi
   assert.equal(result.selectedCandidates.length, 1);
 });
 
+test("buildAssemblyResult adds guardrail instruction for ambiguous identity values", () => {
+  const result = buildAssemblyResult({
+    messages: [{ role: "user", content: "我的身份证生日是什么？", timestamp: 1 }],
+    tokenBudget: 2048,
+    memoryBudgetRatio: 0.35,
+    recentMessageCount: 8,
+    maxSelectedChunks: 4,
+    maxChunksPerPath: 1,
+    candidates: [
+      {
+        path: "memory/2026-04-05.md",
+        pathKind: "cardArtifact",
+        startLine: 1,
+        endLine: 1,
+        weightedScore: 1.2,
+        finalScore: 1.2,
+        snippet: "身份证生日信息待确认，这条信息暂不作为已确认身份信息使用"
+      }
+    ]
+  });
+
+  assert.match(result.systemPromptAddition, /must not quote, restate, paraphrase, or infer/i);
+  assert.match(result.systemPromptAddition, /pending confirmation/i);
+});
+
+test("buildAssemblyResult adds stable fact override instruction for direct fact cards", () => {
+  const result = buildAssemblyResult({
+    messages: [{ role: "user", content: "我爱吃什么？", timestamp: 1 }],
+    tokenBudget: 2048,
+    memoryBudgetRatio: 0.35,
+    recentMessageCount: 8,
+    maxSelectedChunks: 4,
+    maxChunksPerPath: 1,
+    candidates: [
+      {
+        path: "MEMORY.md",
+        pathKind: "cardArtifact",
+        startLine: 1,
+        endLine: 1,
+        weightedScore: 1.1,
+        finalScore: 1.1,
+        snippet: "你爱吃牛排"
+      }
+    ]
+  });
+
+  assert.match(result.systemPromptAddition, /latest confirmed fact/i);
+  assert.match(result.systemPromptAddition, /older conflicting conversation messages/i);
+});
+
 test("enforcePathDiversity limits repeated chunks from the same file", () => {
   const selected = enforcePathDiversity(
     [

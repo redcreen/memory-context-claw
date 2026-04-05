@@ -82,12 +82,42 @@ export function buildSystemPromptAddition({ query, selectedCandidates }) {
     return "";
   }
 
+  const queryText = String(query || "");
+  const hasIdentityGuardrail =
+    /身份证/.test(queryText) &&
+    selectedCandidates.some((candidate) =>
+      /待确认|暂不作为已确认|笔误|歧义/.test(String(candidate?.snippet || ""))
+    );
+  const hasStableFactOverride =
+    selectedCandidates.some((candidate) => candidate?.pathKind === "cardArtifact")
+    && selectedCandidates.some((candidate) =>
+      /你爱吃|你叫|你的生日是|你女儿叫|你儿子叫|你的实际出生年份是|memorySearch\.provider 决定/.test(
+        String(candidate?.snippet || "")
+      )
+    );
+
   const sections = [
     "Use the following recalled long-memory context only when it helps answer the current request.",
     "Prefer direct answers. Do not mention this retrieval block unless the user asks about memory or sources.",
     `Current user intent: ${sanitizeForSystemPrompt(query)}`,
     "Recalled context:"
   ];
+
+  if (hasIdentityGuardrail) {
+    sections.splice(
+      2,
+      0,
+      "If an identity-related value is marked as unconfirmed, you must not quote, restate, paraphrase, or infer any raw candidate value from memory. Answer only that the information is pending confirmation, note that it may contain a typo or ambiguity, and ask the user for the corrected value."
+    );
+  }
+
+  if (hasStableFactOverride) {
+    sections.splice(
+      2,
+      0,
+      "If recalled context includes a direct stable user fact, treat it as the latest confirmed fact. Prefer it over older conflicting conversation messages, stale session memories, or earlier guesses."
+    );
+  }
 
   for (const candidate of selectedCandidates) {
     sections.push(

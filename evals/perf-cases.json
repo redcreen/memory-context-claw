@@ -1,0 +1,32 @@
+[
+  {
+    "name": "food-preference-latency",
+    "query": "我爱吃什么",
+    "softLimitMs": 3000,
+    "hardLimitMs": 15000
+  },
+  {
+    "name": "identity-name-latency",
+    "query": "你怎么称呼我",
+    "softLimitMs": 3000,
+    "hardLimitMs": 15000
+  },
+  {
+    "name": "memory-md-scope-latency",
+    "query": "MEMORY.md 应该放什么内容",
+    "softLimitMs": 4000,
+    "hardLimitMs": 18000
+  },
+  {
+    "name": "project-positioning-latency",
+    "query": "这个项目主要解决什么问题",
+    "softLimitMs": 4000,
+    "hardLimitMs": 18000
+  },
+  {
+    "name": "daughter-profile-latency",
+    "query": "我女儿叫什么，生日是哪天，现在几年级？",
+    "softLimitMs": 4000,
+    "hardLimitMs": 18000
+  }
+]

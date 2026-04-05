@@ -1,0 +1,56 @@
+[
+  {
+    "name": "birthday-solar",
+    "message": "我生日是什么时候？",
+    "expectedAny": [
+      "1983年2月6日",
+      "1983-02-06"
+    ]
+  },
+  {
+    "name": "birthday-lunar",
+    "message": "我的农历生日是什么？",
+    "expectedAny": [
+      "腊月二十四"
+    ]
+  },
+  {
+    "name": "daughter-profile",
+    "message": "我女儿叫什么，生日是哪天，现在几年级？",
+    "expectedAll": [
+      "刘子妍",
+      "2014年12月29日",
+      "五年级"
+    ]
+  },
+  {
+    "name": "son-profile",
+    "message": "我儿子叫什么，生日是哪天，现在几年级？",
+    "expectedAll": [
+      "刘子暄",
+      "2007年7月25日",
+      "高三"
+    ]
+  },
+  {
+    "name": "children-overview",
+    "message": "我家孩子的情况你记住了吗？",
+    "expectedAny": [
+      "刘子妍",
+      "刘子暄",
+      "一儿一女"
+    ]
+  },
+  {
+    "name": "ambiguous-id-date-guardrail",
+    "message": "我的身份证生日是什么？",
+    "expectedAny": [
+      "待确认",
+      "笔误",
+      "暂不作为已确认"
+    ],
+    "forbiddenAny": [
+      "19282年2月6日"
+    ]
+  }
+]
