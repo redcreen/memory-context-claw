@@ -4,19 +4,37 @@
 
 ## English
 
-### Philosophy
+### What Most Users Need
 
-The plugin should work with sensible defaults.
+Most users only need to do three things:
 
-Most users should only need to configure:
-
-- the plugin install path
-- the `contextEngine` slot
-- long-memory indexing in OpenClaw itself
+1. install the plugin
+2. set it as the active `contextEngine`
+3. make sure OpenClaw long-memory indexing is working
 
 Everything else should stay on defaults until there is a clear reason to tune.
 
-### Minimal Plugin Config
+### Quick Minimal Config
+
+Use this in `~/.openclaw/openclaw.json`:
+
+```json5
+{
+  plugins: {
+    allow: ["memory-context-claw"],
+    slots: {
+      contextEngine: "memory-context-claw"
+    },
+    entries: {
+      "memory-context-claw": {
+        enabled: true
+      }
+    }
+  }
+}
+```
+
+If you are developing locally and want OpenClaw to load this repo directly:
 
 ```json5
 {
@@ -38,6 +56,10 @@ Everything else should stay on defaults until there is a clear reason to tune.
 ```
 
 ### Minimal OpenClaw Memory Config
+
+This plugin assumes OpenClaw long-memory indexing is already configured.
+
+Minimal example:
 
 ```json5
 {
@@ -62,11 +84,28 @@ Everything else should stay on defaults until there is a clear reason to tune.
 }
 ```
 
+### Recommended Setup Order
+
+Set things up in this order:
+
+1. make sure OpenClaw memory indexing works
+2. install and enable `memory-context-claw`
+3. verify the plugin is loaded
+4. only then start tuning plugin config
+
+### Quick Verification
+
+```bash
+openclaw plugins list
+openclaw memory status --json
+openclaw memory search "我爱吃什么"
+```
+
 ### Config Keys
 
 #### `enabled`
 
-Enable or disable the plugin.
+Turn the plugin on or off.
 
 Default:
 
@@ -82,7 +121,7 @@ Default:
 
 #### `maxCandidates`
 
-How many recall candidates to keep before reranking.
+How many recall candidates are kept before reranking.
 
 Default:
 
@@ -90,7 +129,7 @@ Default:
 
 #### `maxSelectedChunks`
 
-How many memory chunks can finally enter assembled context.
+How many chunks can finally enter assembled context.
 
 Default:
 
@@ -98,7 +137,7 @@ Default:
 
 #### `maxChunksPerPath`
 
-Limit repeated chunks from the same file.
+Limit repeated chunks from the same document.
 
 Default:
 
@@ -122,8 +161,8 @@ Default:
 
 #### `excludePaths`
 
-Substring filters applied after recall. Useful for excluding plugin repos,
-engineering directories, and other non-user-facing content.
+Substring filters applied after recall. Useful for keeping engineering or plugin
+repo noise out of user-facing memory context.
 
 Default includes:
 
@@ -146,9 +185,11 @@ Default:
 }
 ```
 
+Use this when you want more stable recall across different phrasings.
+
 #### `memoryDistillation`
 
-Controls async candidate-memory extraction from dialogue.
+Controls async candidate-memory extraction from recent dialogue.
 
 Default:
 
@@ -166,10 +207,10 @@ Default:
 
 Meaning:
 
-- `triggerBeforeCompaction`: trigger asynchronously when message usage approaches compaction
+- `triggerBeforeCompaction`: trigger asynchronously before compaction
 - `preCompactTriggerRatio`: how close to compaction to start pre-triggering
-- `compactFallback`: also fire one async fallback when compaction actually happens
-- `cooldownMs`: minimum gap between triggers for the same session and stage
+- `compactFallback`: fire one async fallback when compaction actually happens
+- `cooldownMs`: minimum gap between triggers for the same session/stage
 - `sessionLimit`: how many recent session files the standalone distill command scans
 - `outputDir`: optional custom output directory for candidate-memory reports
 
@@ -191,43 +232,117 @@ Default:
 }
 ```
 
+Recommended rule:
+
+- keep this off unless first-stage behavior is already understandable
+
 #### `weights`
 
-Advanced heuristic weights for first-stage reranking. Most users should leave
-them unchanged.
+Advanced first-stage heuristic weights.
 
-Current defaults encode this ranking policy:
+Most users should not change these.
+
+Current ranking intent is:
 
 - relevance first
 - recent session memory second
-- `MEMORY.md` still acts as the long-term floor for stable preferences and rules
+- `MEMORY.md` as the stable long-term floor
 
 ### Recommended Tuning Order
 
-Only tune in this order:
+If you need to tune, do it in this order:
 
 1. keep defaults first
-2. adjust `excludePaths` if noise enters recall
+2. adjust `excludePaths` if engineering noise enters recall
 3. adjust `maxCandidates` and `maxSelectedChunks` if recall is too broad or too narrow
-4. enable `llmRerank` only after first-stage behavior is already understandable
-5. tune `memoryDistillation.preCompactTriggerRatio` only if async candidate extraction fires too early or too late
-6. change `weights` only after you have eval cases
+4. enable `llmRerank` only after first-stage behavior is already clear
+5. tune `memoryDistillation.preCompactTriggerRatio` only if async extraction fires too early or too late
+6. change `weights` only after you already have eval cases
+
+### Common Recipes
+
+#### I only want the plugin on
+
+Use only:
+
+- `enabled`
+- `contextEngine`
+
+Leave everything else on defaults.
+
+#### I see too much engineering noise
+
+Tune:
+
+- `excludePaths`
+
+#### I want broader recall before reranking
+
+Tune:
+
+- `maxCandidates`
+
+#### I want fewer chunks entering final context
+
+Tune:
+
+- `maxSelectedChunks`
+- `maxChunksPerPath`
+
+#### I want to experiment with model rerank
+
+Turn on:
+
+- `llmRerank.enabled`
+
+But do that only after non-LLM behavior is already understandable.
+
+### Related Docs
+
+- plugin overview:
+  [README.md](/Users/redcreen/Project/长记忆/context-assembly-claw/README.md)
+- system architecture:
+  [system-architecture.md](/Users/redcreen/Project/长记忆/context-assembly-claw/system-architecture.md)
+- project roadmap:
+  [project-roadmap.md](/Users/redcreen/Project/长记忆/context-assembly-claw/project-roadmap.md)
+- test suite:
+  [testsuite.md](/Users/redcreen/Project/长记忆/context-assembly-claw/testsuite.md)
+
+---
 
 ## 中文
 
-### 配置原则
+### 大多数用户真正需要配什么
 
-这个插件应该尽量依赖默认值工作。
+大多数用户只需要做 3 件事：
 
-对大多数用户来说，真正需要手动配置的通常只有：
+1. 安装插件
+2. 把它设成当前 `contextEngine`
+3. 确保 OpenClaw 自己的长期记忆索引是正常工作的
 
-- 插件安装路径
-- `contextEngine` 插槽
-- OpenClaw 自身的长期记忆索引配置
+除此之外，大部分配置都应该先保持默认值。
 
-除此之外，其它配置项都应该先用默认值，除非你已经明确知道自己为什么要调。
+### 最小可用配置
 
-### 最小插件配置
+把下面这段放到 `~/.openclaw/openclaw.json`：
+
+```json5
+{
+  plugins: {
+    allow: ["memory-context-claw"],
+    slots: {
+      contextEngine: "memory-context-claw"
+    },
+    entries: {
+      "memory-context-claw": {
+        enabled: true
+      }
+    }
+  }
+}
+```
+
+如果你是在本地开发，并希望 OpenClaw 直接加载这个仓库：
 
 ```json5
 {
@@ -249,6 +364,10 @@ Only tune in this order:
 ```
 
 ### 最小长期记忆配置
+
+这个插件默认建立在：OpenClaw 长期记忆索引已经正常工作 的前提上。
+
+最小示例：
 
 ```json5
 {
@@ -273,6 +392,23 @@ Only tune in this order:
 }
 ```
 
+### 推荐配置顺序
+
+建议按这个顺序做：
+
+1. 先确认 OpenClaw 自己的 memory index 正常
+2. 再安装并启用 `memory-context-claw`
+3. 再验证插件已经加载
+4. 最后才考虑调插件参数
+
+### 快速验证
+
+```bash
+openclaw plugins list
+openclaw memory status --json
+openclaw memory search "我爱吃什么"
+```
+
 ### 配置项说明
 
 #### `enabled`
@@ -285,7 +421,7 @@ Only tune in this order:
 
 #### `openclawCommand`
 
-用于召回记忆时调用的 `openclaw` 命令。
+用于检索长期记忆时调用哪个 `openclaw` 命令。
 
 默认值：
 
@@ -293,7 +429,7 @@ Only tune in this order:
 
 #### `maxCandidates`
 
-第一阶段召回后保留多少候选，再进入重排。
+重排前最多保留多少个召回候选。
 
 默认值：
 
@@ -301,7 +437,7 @@ Only tune in this order:
 
 #### `maxSelectedChunks`
 
-最终最多多少片段能进入上下文。
+最终最多允许多少个 chunk 进入上下文。
 
 默认值：
 
@@ -309,7 +445,7 @@ Only tune in this order:
 
 #### `maxChunksPerPath`
 
-限制同一个文件最多贡献多少片段。
+限制同一个文件重复进入上下文的 chunk 数量。
 
 默认值：
 
@@ -317,7 +453,7 @@ Only tune in this order:
 
 #### `memoryBudgetRatio`
 
-为召回记忆预留多少 token 预算。
+最终 token budget 里，分给长期记忆上下文的比例。
 
 默认值：
 
@@ -325,7 +461,7 @@ Only tune in this order:
 
 #### `recentMessageCount`
 
-始终保留多少条最近对话消息。
+最近对话里，无论如何都保留多少条消息。
 
 默认值：
 
@@ -333,7 +469,7 @@ Only tune in this order:
 
 #### `excludePaths`
 
-召回后路径过滤规则。适合用来排除插件目录、工程目录以及不该进入用户上下文的文件。
+召回后再做一次路径过滤，用来把工程目录、插件仓库之类的噪音挡在用户上下文之外。
 
 默认包含：
 
@@ -345,7 +481,7 @@ Only tune in this order:
 
 #### `queryRewrite`
 
-控制规则版查询改写召回。
+控制基于规则的 query rewrite。
 
 默认值：
 
@@ -356,9 +492,14 @@ Only tune in this order:
 }
 ```
 
+适用于：
+
+- 同一个问题有多种说法
+- 希望检索稳定性更高
+
 #### `memoryDistillation`
 
-控制“从对话中异步提炼候选记忆”的行为。
+控制最近对话的异步候选记忆提炼。
 
 默认值：
 
@@ -376,12 +517,12 @@ Only tune in this order:
 
 含义：
 
-- `triggerBeforeCompaction`：接近 compaction 阈值时是否异步预触发
-- `preCompactTriggerRatio`：离 compaction 多近开始预触发
-- `compactFallback`：真正进入 compaction 时是否再补一次异步兜底触发
-- `cooldownMs`：同一 session / 同一阶段两次触发之间的最短间隔
-- `sessionLimit`：独立候选提炼命令默认扫描最近多少个 session 文件
-- `outputDir`：候选记忆报告的自定义输出目录，为空时使用默认目录
+- `triggerBeforeCompaction`：接近 compaction 时异步预触发
+- `preCompactTriggerRatio`：离 compaction 多近时开始预触发
+- `compactFallback`：真正 compaction 时再补一次兜底触发
+- `cooldownMs`：同一个 session / stage 的最小触发间隔
+- `sessionLimit`：独立 distill 命令默认扫描多少个最近 session 文件
+- `outputDir`：候选记忆报告的可选自定义输出目录
 
 #### `llmRerank`
 
@@ -401,23 +542,78 @@ Only tune in this order:
 }
 ```
 
+推荐原则：
+
+- 只有在第一阶段行为已经足够可理解时，才考虑打开它
+
 #### `weights`
 
-第一阶段规则重排的高级权重。绝大多数用户都不需要改。
+高级启发式权重。
 
-当前默认权重体现的排序原则是：
+大多数用户不应该改它。
+
+当前默认权重的意图是：
 
 - 相关性第一
-- 最近 session 第二
-- `MEMORY.md` 仍然作为长期规则和稳定偏好的保底层
+- 近期 session-memory 第二
+- `MEMORY.md` 作为稳定长期事实的底座
 
 ### 推荐调参顺序
 
-建议只按这个顺序调：
+如果你真的要调，建议按这个顺序：
 
-1. 先保持默认值
-2. 如果召回有噪音，再调整 `excludePaths`
-3. 如果召回过宽或过窄，再调整 `maxCandidates` 和 `maxSelectedChunks`
-4. 第一阶段行为已经可理解后，再考虑启用 `llmRerank`
-5. 只有在异步候选提炼触发得过早或过晚时，再调 `memoryDistillation.preCompactTriggerRatio`
-6. 只有你已经有评测样本时，再去改 `weights`
+1. 先保留默认值
+2. 如果工程噪音进入召回，先调 `excludePaths`
+3. 如果候选太宽或太窄，再调 `maxCandidates` / `maxSelectedChunks`
+4. 只有在第一阶段已经可理解时，才考虑打开 `llmRerank`
+5. 只有在异步提炼触发过早或过晚时，才调 `memoryDistillation.preCompactTriggerRatio`
+6. 只有在你已经有 eval case 时，才考虑改 `weights`
+
+### 常见场景
+
+#### 我只想把插件启起来
+
+只需要关心：
+
+- `enabled`
+- `contextEngine`
+
+其它全部保持默认。
+
+#### 我看到太多工程噪音
+
+优先调：
+
+- `excludePaths`
+
+#### 我想让重排前的候选更多一点
+
+优先调：
+
+- `maxCandidates`
+
+#### 我想让最终上下文更短一点
+
+优先调：
+
+- `maxSelectedChunks`
+- `maxChunksPerPath`
+
+#### 我想试试模型重排
+
+开启：
+
+- `llmRerank.enabled`
+
+但前提是，非 LLM 路径已经足够可理解。
+
+### 相关文档
+
+- 插件总览：
+  [README.md](/Users/redcreen/Project/长记忆/context-assembly-claw/README.md)
+- 总体架构：
+  [system-architecture.md](/Users/redcreen/Project/长记忆/context-assembly-claw/system-architecture.md)
+- 总 roadmap：
+  [project-roadmap.md](/Users/redcreen/Project/长记忆/context-assembly-claw/project-roadmap.md)
+- 测试说明：
+  [testsuite.md](/Users/redcreen/Project/长记忆/context-assembly-claw/testsuite.md)
