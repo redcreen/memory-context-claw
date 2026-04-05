@@ -23,6 +23,24 @@ Each layer answers a different question:
 - is the host formal memory layer still clean enough to trust?
 - are conflict / duplicate / exit-governance signals still within expected bounds?
 
+### If You Only Want The Important Commands
+
+Use this as the shortest practical path:
+
+```bash
+npm test
+npm run smoke:eval
+npm run eval:memory-search:cases
+npm run memory:governance-cycle -- --write
+```
+
+Meaning:
+
+- `npm test`: core function and logic safety
+- `npm run smoke:eval`: user-facing regression baseline
+- `npm run eval:memory-search:cases`: memory-search workstream baseline
+- `npm run memory:governance-cycle -- --write`: formal memory + governance health
+
 ### Where The Tests Live
 
 Core scripts:
@@ -375,6 +393,24 @@ Current baseline:
 - `full smoke = 19/19`
 
 ## 中文
+
+### 先看结论
+
+如果你只想跑最重要的一组检查，直接用这 4 个命令：
+
+```bash
+npm test
+npm run smoke:eval
+npm run eval:memory-search:cases
+npm run memory:governance-cycle -- --write
+```
+
+它们分别覆盖：
+
+- `npm test`：核心函数和逻辑安全
+- `npm run smoke:eval`：用户侧回归基线
+- `npm run eval:memory-search:cases`：memory-search 专项基线
+- `npm run memory:governance-cycle -- --write`：正式记忆层和治理健康度
 
 ### 总览
 

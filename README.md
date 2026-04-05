@@ -2,94 +2,98 @@
 
 [English](#english) | [中文](#中文)
 
-Memory-first context assembly and reranking for OpenClaw.
-
-面向 OpenClaw 的长期记忆上下文组装与重排插件。
-
 ## English
 
-### Overview
+**What This Plugin Is**
 
-`memory-context-claw` is an OpenClaw `context engine` plugin. It does not
-replace OpenClaw's built-in long memory. Instead, it improves the layer between
-long-memory retrieval and the final prompt the model actually sees.
+`memory-context-claw` is an OpenClaw `contextEngine` plugin.
 
-The project exists for one reason:
+It does not replace OpenClaw's builtin long memory. It improves the layer
+between:
+
+- long-memory retrieval
+- stable fact/rule selection
+- the final context that actually reaches the model
+
+One-line goal:
 
 `turn long memory into better working context`
 
-### Why This Project Exists
+**Good Fit / Not A Fit**
 
-OpenClaw already has long memory and memory search. But real usage quickly runs
-into a second problem:
+Good fit:
 
-- finding something is not the same as selecting the best context
-- long-term rules, recent notes, and topic documents should not have equal weight
-- different phrasings of the same question can lead to unstable recall
-- engineering files and plugin docs can pollute results when the workspace is broad
+- you already use OpenClaw long memory
+- you keep stable rules in `MEMORY.md`
+- you want better fact/rule prioritization
+- you want more stable answers for high-value memory questions
 
-This plugin is designed to solve that layer.
+Not the best fit:
 
-### What It Does
+- you expect this plugin to replace builtin OpenClaw memory
+- you want to patch host-side `memory_search`
+- you do not use long memory, daily memory, or workspace docs at all
 
-Current capabilities include:
+**Who This Is For**
 
-- recall through `openclaw memory search --json`
-- structure-aware heuristic reranking for `MEMORY.md`, `memory/`, and workspace docs
-- optional second-stage LLM rerank
-- token-budget-aware context packing
-- query rewrite recall for more stable retrieval across phrasing differences
-- post-retrieval path filtering to keep engineering noise out of user-facing context
-- validation tooling for tests, smoke checks, and golden-case evaluation
+Use this plugin if you already have:
 
-### Project Status
+- `MEMORY.md`
+- `memory/YYYY-MM-DD.md`
+- workspace docs
+- real long-term memory in OpenClaw
 
-Current status:
+and you want:
 
-`usable alpha / early beta`
+- more stable recall for important facts and rules
+- better prioritization between formal memory, daily memory, and docs
+- fast-path answers for high-value questions
+- less engineering-noise pollution in the final context
 
-The project is beyond proof-of-concept. It is installable, testable, and
-already useful in real usage, but it is not yet a fully polished public
-release.
+**What It Does**
 
-### Architecture
+From a user point of view, it mainly gives you:
 
-Current pipeline:
+- fact-first context assembly
+- stable rule / identity / preference prioritization
+- retrieval policy instead of flat “everything has equal weight”
+- fast paths for important memory questions
+- governance and regression tooling for maintainers
 
-1. Recall memory candidates from the current OpenClaw agent memory index.
-2. Rewrite the query into a few nearby retrieval variants when useful.
-3. Filter noisy paths such as plugin repos or engineering directories.
-4. Rerank with heuristics tuned for long-term rules, daily notes, and topic docs.
-5. Optionally rerank top candidates again with an LLM.
-6. Pack final snippets into `systemPromptAddition`.
+**Quick Start**
 
-### Installation
+If you only want the shortest path, do just these three things:
 
-Install it like a normal OpenClaw plugin:
+1. install the plugin
+2. set `contextEngine: "memory-context-claw"`
+3. run `openclaw plugins list`
+
+Quick mental model:
+
+- `MEMORY.md` = stable long-term rules and facts
+- `memory/*.md` = daily / recent memory
+- workspace docs = project or domain context
+- this plugin = chooses what should matter most right now
+
+**1. One-Command Remote Install**
+
+Recommended remote install command:
 
 ```bash
-openclaw plugins install -l .
+openclaw plugins install git+https://github.com/redcreen/memory-context-claw.git
 ```
 
-Then configure it as the active `contextEngine` in `~/.openclaw/openclaw.json`.
+OpenClaw `plugins install` accepts npm-style package specs, and this repo can be
+installed directly from GitHub that way.
 
-For a safer local workflow, keep development and runtime separate:
+**2. Minimal Config**
 
-```bash
-npm run deploy:local
-```
-
-This copies the current repo into `~/.openclaw/extensions/memory-context-claw`, so editing the repo does not immediately change the live OpenClaw plugin.
-
-Minimal example:
+Set it as the active `contextEngine` in `~/.openclaw/openclaw.json`:
 
 ```json5
 {
   plugins: {
     allow: ["memory-context-claw"],
-    load: {
-      paths: ["/ABSOLUTE/PATH/TO/memory-context-claw"]
-    },
     slots: {
       contextEngine: "memory-context-claw"
     },
@@ -102,29 +106,101 @@ Minimal example:
 }
 ```
 
-Templates:
+**3. Verify It Loaded**
+
+```bash
+openclaw plugins list
+```
+
+You should see `memory-context-claw` in the loaded plugin list.
+
+**Normal User Flow**
+
+After installation, daily usage is simple:
+
+- put stable long-term rules in `MEMORY.md`
+- keep daily notes in `memory/*.md`
+- keep project/reference docs in the workspace
+- keep chatting with OpenClaw
+
+You normally do not need special plugin commands.
+
+**For Maintainers**
+
+Use the sections below if you are:
+
+- developing this repo
+- tuning config
+- running tests and governance checks
+
+**Local Development Install**
+
+If you are developing this repo locally:
+
+```bash
+openclaw plugins install -l .
+```
+
+For a safer development/runtime split:
+
+```bash
+npm run deploy:local
+```
+
+That copies the repo into:
+
+`~/.openclaw/extensions/memory-context-claw`
+
+so editing this repo does not immediately change the live plugin.
+
+**What This Plugin Does Not Do**
+
+This plugin does not:
+
+- replace builtin OpenClaw memory
+- patch the OpenClaw host
+- patch other plugins
+- magically “fix” builtin `memory_search` at the host level
+
+What it does do:
+
+- build better plugin-side retrieval policy
+- produce stable fact/card artifacts
+- prefer important facts over noisy flat recall
+- give you a governed memory-context layer
+
+**Architecture**
+
+If you want the whole-system view:
+
+- overall architecture:
+  [system-architecture.md](/Users/redcreen/Project/长记忆/context-assembly-claw/system-architecture.md)
+- project roadmap:
+  [project-roadmap.md](/Users/redcreen/Project/长记忆/context-assembly-claw/project-roadmap.md)
+
+If you specifically care about memory search:
+
+- architecture:
+  [memory-search-architecture.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/memory-search-architecture.md)
+- roadmap:
+  [memory-search-roadmap.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/memory-search-roadmap.md)
+- orchestration vs tool-agent:
+  [memory-search-orchestration-vs-tool-agent.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/memory-search-orchestration-vs-tool-agent.md)
+
+**Configuration**
+
+Detailed configuration reference:
+
+- [configuration.md](/Users/redcreen/Project/长记忆/context-assembly-claw/configuration.md)
+
+Example config templates:
 
 - [openclaw.context-assembly.example.json](/Users/redcreen/Project/长记忆/context-assembly-claw/templates/openclaw.context-assembly.example.json)
 - [openclaw.context-assembly.llm-rerank.example.json](/Users/redcreen/Project/长记忆/context-assembly-claw/templates/openclaw.context-assembly.llm-rerank.example.json)
 
-Configuration details:
+**Validation**
 
-- [configuration.md](/Users/redcreen/Project/长记忆/context-assembly-claw/configuration.md)
-
-### Normal Usage
-
-After installation, users should not need special plugin commands.
-
-Normal flow:
-
-- keep stable rules in `MEMORY.md`
-- keep daily notes in `memory/*.md`
-- keep topic docs in the workspace
-- keep chatting with OpenClaw
-
-### Validation
-
-OpenClaw-native checks:
+Basic checks:
 
 ```bash
 openclaw plugins list
@@ -136,177 +212,132 @@ Maintainer checks:
 
 ```bash
 npm test
-npm run eval
-npm run eval:hot
-npm run eval:hot:critical
-npm run eval:toggle
-npm run memory:distill
-npm run smoke:compare -- "Lossless plugin vs long memory"
-npm run verify
+npm run smoke:eval
+npm run eval:memory-search:cases
+npm run eval:memory-search:governance -- --write
+npm run memory:governance-cycle -- --write
 ```
 
-`npm run eval:hot` runs live questions against the real `main` agent. It
-reports both content quality and source checks when configured, but the default
-pass/fail focuses on answer quality to keep the suite stable across normal
-answer phrasing differences.
+Full testing reference:
 
-`npm run eval:hot:critical` is the lighter hot-session regression path for the two
-most important user-fact cases right now:
+- [testsuite.md](/Users/redcreen/Project/长记忆/context-assembly-claw/testsuite.md)
 
-- `我爱吃什么？`
-- `你怎么称呼我？`
+**Project Status**
 
-Important caveat:
+Current status:
 
-`eval:hot*` is currently a **hot-session check**, not a guaranteed isolated-session baseline for `main`.
-The output now includes:
+`usable + governed + regression-protected`
 
-- `requestedSessionId`
-- `observedSessionKey`
-- `observedSessionId`
-- `hotSession.isolated`
+Meaning:
 
-On this machine, the `main` agent still tends to collapse back to `agent:main:main`.
+- not just a proof of concept
+- already usable in real OpenClaw setups
+- still evolving, especially around builtin `memory_search` compensation
 
-### Local Embeddings Note
+**Naming**
 
-If OpenClaw uses `memorySearch.provider = "local"` on Apple Silicon, runtime
-stability should be handled at the service level, not by polluting `~/.zshrc`.
+Selected public-facing name:
 
-This repo includes helper scripts for maintainers:
+`memory-context-claw`
 
-```bash
-npm run runtime:check
-npm run runtime:apply
-npm run runtime:remove
-```
+Other name options:
 
-### Roadmap
+- [name-candidates.md](/Users/redcreen/Project/长记忆/context-assembly-claw/name-candidates.md)
 
-The short roadmap is:
-
-- public repo readiness
-- performance control for query rewrite and multi-recall flows
-- better evaluation coverage for rerank and rewrite quality
-- stronger query rewrite, including optional LLM-assisted rewriting
-- stronger final context assembly and token allocation
-
-See [project-roadmap.md](/Users/redcreen/Project/长记忆/context-assembly-claw/project-roadmap.md) for details.
-
-### Naming
-
-The selected public-facing name is `memory-context-claw`.
-
-Other naming options are collected in:
-
-[name-candidates.md](/Users/redcreen/Project/长记忆/context-assembly-claw/name-candidates.md)
+---
 
 ## 中文
 
-### 项目概览
+**这是什么**
 
-`memory-context-claw` 是一个 OpenClaw 的 `context engine` 插件。它不替代
-OpenClaw 内置的长期记忆，而是专门优化“长期记忆检索结果”到“当前轮真正进入模型上下文”
-之间的这一层。
+`memory-context-claw` 是一个 OpenClaw 的 `contextEngine` 插件。
 
-这个项目的核心目标只有一个：
+它不替代 OpenClaw 内置长期记忆，而是专门优化这几层之间的衔接：
+
+- 长期记忆检索
+- 稳定事实 / 规则选择
+- 最终真正进入模型的上下文
+
+一句话目标：
 
 `把长期记忆更稳定地变成当前轮可用的上下文`
 
-### 为什么要做这个项目
+**适合 / 不适合**
 
-OpenClaw 已经有长期记忆和 `memory search`，但真实使用时很快会出现另一层问题：
+适合：
 
-- 搜得到，不等于能拿到最合适的上下文
-- 长期规则、近期过程、专题资料，不应该一视同仁
-- 同一个问题的不同说法，可能导致召回不稳定
-- 当工作区很大时，工程文件和插件文档也可能污染召回结果
+- 你已经在用 OpenClaw 长期记忆
+- 你会把稳定规则放进 `MEMORY.md`
+- 你希望事实 / 规则优先级更稳定
+- 你希望高价值记忆问题回答更稳
 
-这个插件就是为了解决这一层而设计的。
+不太适合：
 
-### 对话记忆沉淀
+- 你期待这个插件直接替代 OpenClaw 内置 memory
+- 你希望它直接修改宿主侧 `memory_search`
+- 你根本不用长期记忆、daily memory 或 workspace 文档
 
-当前仓库也提供了一个“从最近对话里抽取候选记忆”的维护命令：
+**适合谁用**
 
-```bash
-npm run memory:distill
-```
+如果你已经在 OpenClaw 里有这些东西：
 
-它不会把整段聊天直接写进 `MEMORY.md`，而是先把最近会话里更像“可沉淀记忆”的内容抽成一份审阅文件，分成：
+- `MEMORY.md`
+- `memory/YYYY-MM-DD.md`
+- workspace 文档
+- 真实长期记忆
 
-- 长期规则候选
-- 当日过程记忆候选
+并且你希望：
 
-默认输出文件：
+- 关键事实和规则召回更稳定
+- 正式记忆、daily memory、项目文档之间有更合理的优先级
+- 高频重要问题尽量走快路径
+- 最终上下文少一些工程噪音
 
-- [conversation-memory-candidates.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/conversation-memory-candidates.md)
+那这个插件就是为你准备的。
 
-默认还会在两种时机异步触发候选提炼：
+**它主要解决什么**
 
-- 接近 compaction 阈值时预触发
-- 真正 compaction 时再补一次兜底触发
+从用户视角看，这个插件主要提供：
 
-这两次触发都不会阻塞 compaction，本身是后台动作。
+- 事实优先的上下文组装
+- 对规则 / 身份 / 偏好 / 项目事实的稳定优先
+- 不再把所有召回结果“平铺看待”
+- 对高价值记忆问题的快路径
+- 一套可治理、可回归验证的长期记忆上下文层
 
-### 当前能力
+**快速开始**
 
-当前版本已经具备：
+如果你只想先把它用起来，最短路径就是这 3 步：
 
-- 基于 `openclaw memory search --json` 的长期记忆召回
-- 面向 `MEMORY.md`、`memory/`、Workspace 文档的结构化规则重排
-- 可选的第二阶段 LLM 重排
-- 基于 token 预算的上下文装配
-- 查询改写召回，用来提高不同表达方式下的检索稳定性
-- 召回后路径过滤，避免工程噪音进入用户上下文
-- 自动化验证工具，包括测试、smoke 和黄金样本评测
+1. 安装插件
+2. 把 `contextEngine` 设成 `memory-context-claw`
+3. 执行 `openclaw plugins list`
 
-### 项目状态
+一个最简单的理解方式：
 
-当前状态：
+- `MEMORY.md` = 稳定长期规则 / 事实
+- `memory/*.md` = 当日 / 近期记忆
+- workspace 文档 = 项目或专题上下文
+- 这个插件 = 帮你决定“当前轮到底该优先带什么进去”
 
-`可用的 alpha / 早期 beta`
+**1. 一键远程安装**
 
-这个项目已经不是概念验证，而是一个能安装、能测试、能在真实场景中使用的早期版本。
-不过它还没有到“打磨完成的公开发布版”。
-
-### 架构思路
-
-当前主链路是：
-
-1. 从当前 OpenClaw agent 的记忆索引里召回候选内容。
-2. 在合适时先把问题改写成几个相近检索问法。
-3. 过滤插件目录、工程目录等噪音路径。
-4. 用面向长期规则、每日笔记、专题资料的规则分数进行重排。
-5. 可选地用 LLM 对 top candidates 做第二阶段重排。
-6. 把最终片段装配进 `systemPromptAddition`。
-
-### 安装方式
-
-按照 OpenClaw 普通插件的方式安装：
+推荐的远程安装命令：
 
 ```bash
-openclaw plugins install -l .
+openclaw plugins install git+https://github.com/redcreen/memory-context-claw.git
 ```
 
-然后在 `~/.openclaw/openclaw.json` 里把它配置为当前激活的 `contextEngine`。
+`openclaw plugins install` 支持 npm 风格的 package spec，这个仓库可以直接通过 GitHub 地址安装。
 
-如果你想把“开发态”和“运行态”分开，推荐本地用这条命令显式发布：
+**2. 最小配置**
 
-```bash
-npm run deploy:local
-```
-
-它会把当前仓库复制到 `~/.openclaw/extensions/memory-context-claw`，这样你继续改仓库代码时，不会直接影响正在运行的 OpenClaw 插件。
-
-最小示例：
+在 `~/.openclaw/openclaw.json` 里把它设为当前激活的 `contextEngine`：
 
 ```json5
 {
   plugins: {
     allow: ["memory-context-claw"],
-    load: {
-      paths: ["/ABSOLUTE/PATH/TO/memory-context-claw"]
-    },
     slots: {
       contextEngine: "memory-context-claw"
     },
@@ -319,29 +350,101 @@ npm run deploy:local
 }
 ```
 
-模板文件：
+**3. 验证是否生效**
+
+```bash
+openclaw plugins list
+```
+
+你应该能在已加载插件列表里看到 `memory-context-claw`。
+
+**普通用户日常使用**
+
+装好以后，日常使用其实很简单：
+
+- 稳定长期规则放进 `MEMORY.md`
+- 日常过程记忆放进 `memory/*.md`
+- 项目资料放在 workspace 文档里
+- 正常继续和 OpenClaw 对话
+
+大多数情况下，你不需要记特殊插件命令。
+
+**维护者入口**
+
+后面的内容更适合这几类场景：
+
+- 你在开发这个仓库
+- 你在调配置
+- 你在跑测试和治理命令
+
+**本地开发安装**
+
+如果你是在本地开发这个仓库：
+
+```bash
+openclaw plugins install -l .
+```
+
+更安全的开发 / 运行分离方式：
+
+```bash
+npm run deploy:local
+```
+
+它会把当前仓库复制到：
+
+`~/.openclaw/extensions/memory-context-claw`
+
+这样你改仓库代码时，不会立刻影响正在运行的插件副本。
+
+**这个插件不做什么**
+
+它不做这些事：
+
+- 替换 OpenClaw 内置 memory
+- 魔改 OpenClaw 宿主
+- 魔改别的插件
+- 从宿主层“彻底修好” builtin `memory_search`
+
+它真正做的是：
+
+- 在插件层补强 retrieval policy
+- 生成稳定的 fact/card 工件
+- 让重要事实优先于噪音召回
+- 把长期记忆变成一层可治理的上下文系统
+
+**架构文档**
+
+如果你想看全局架构：
+
+- 总体架构：
+  [system-architecture.md](/Users/redcreen/Project/长记忆/context-assembly-claw/system-architecture.md)
+- 总 roadmap：
+  [project-roadmap.md](/Users/redcreen/Project/长记忆/context-assembly-claw/project-roadmap.md)
+
+如果你特别关心 memory search：
+
+- 专项架构：
+  [memory-search-architecture.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/memory-search-architecture.md)
+- 专项 roadmap：
+  [memory-search-roadmap.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/memory-search-roadmap.md)
+- 固定编排 vs 工具调度：
+  [memory-search-orchestration-vs-tool-agent.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/memory-search-orchestration-vs-tool-agent.md)
+
+**配置**
+
+详细配置说明：
+
+- [configuration.md](/Users/redcreen/Project/长记忆/context-assembly-claw/configuration.md)
+
+配置模板：
 
 - [openclaw.context-assembly.example.json](/Users/redcreen/Project/长记忆/context-assembly-claw/templates/openclaw.context-assembly.example.json)
 - [openclaw.context-assembly.llm-rerank.example.json](/Users/redcreen/Project/长记忆/context-assembly-claw/templates/openclaw.context-assembly.llm-rerank.example.json)
 
-配置说明文档：
+**验证与测试**
 
-- [configuration.md](/Users/redcreen/Project/长记忆/context-assembly-claw/configuration.md)
-
-### 日常使用
-
-安装完成后，用户正常使用时不需要额外记插件命令。
-
-日常流程就是：
-
-- 把稳定规则写到 `MEMORY.md`
-- 把每日过程记录写到 `memory/*.md`
-- 把专题资料放在 Workspace 中
-- 继续像平时一样使用 OpenClaw
-
-### 如何验证
-
-优先用 OpenClaw 原生检查：
+基础验证：
 
 ```bash
 openclaw plugins list
@@ -349,57 +452,38 @@ openclaw memory status --json
 openclaw memory search "你的测试问题"
 ```
 
-项目维护者常用验证：
+维护者常用验证：
 
 ```bash
 npm test
-npm run eval
-npm run eval:hot
-npm run eval:hot:critical
-npm run eval:toggle
-npm run smoke:compare -- "Lossless 插件 和 长期记忆 的区别"
-npm run verify
+npm run smoke:eval
+npm run eval:memory-search:cases
+npm run eval:memory-search:governance -- --write
+npm run memory:governance-cycle -- --write
 ```
 
-`npm run eval:hot` 会直接向真实的 `main` agent 发送回归问题。它会同时
-报告内容命中和来源命中；如果某个 case 没有显式要求来源，默认是否通过以
-回答内容质量为主，避免真实链路回归因为措辞变化而过于脆弱。
+完整测试说明：
 
-`npm run eval:hot:critical` 是更轻量的热会话回归路径，当前专门盯两类最关键的
-主体事实问题：
+- [testsuite.md](/Users/redcreen/Project/长记忆/context-assembly-claw/testsuite.md)
 
-- `我爱吃什么？`
-- `你怎么称呼我？`
+**当前状态**
 
-### 本地 Embedding 说明
+当前状态可以概括成：
 
-如果在 Apple Silicon 上使用 `memorySearch.provider = "local"`，稳定性策略应该放在
-服务级，而不是把环境变量写进 `~/.zshrc` 之类的全局 shell 配置。
+`可用 + 已治理 + 有回归保护`
 
-仓库里已经提供了对应的维护脚本：
+也就是说：
 
-```bash
-npm run runtime:check
-npm run runtime:apply
-npm run runtime:remove
-```
+- 已经不是概念验证
+- 在真实 OpenClaw 环境里已经能用
+- 但 builtin `memory_search` 这条线仍然在持续补强
 
-### 路线图
+**名称**
 
-当前短期路线图是：
+当前对外名称：
 
-- 公开仓库打磨
-- 查询改写与多次召回链路的性能治理
-- 扩展对 rerank 与查询改写效果的评测覆盖
-- 更强的查询改写能力，包括可选的 LLM 改写
-- 更强的最终上下文装配与 token 分配策略
+`memory-context-claw`
 
-完整路线图见 [project-roadmap.md](/Users/redcreen/Project/长记忆/context-assembly-claw/project-roadmap.md)。
+备选命名：
 
-### 命名
-
-当前对外命名采用 `memory-context-claw`。
-
-其他命名备选见：
-
-[name-candidates.md](/Users/redcreen/Project/长记忆/context-assembly-claw/name-candidates.md)
+- [name-candidates.md](/Users/redcreen/Project/长记忆/context-assembly-claw/name-candidates.md)
