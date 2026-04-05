@@ -823,7 +823,7 @@ npm run memory:distill
 
 输出文件：
 
-- [conversation-memory-candidates.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/conversation-memory-candidates.md)
+- [conversation-memory-candidates.md](conversation-memory-candidates.md)
 
 ### 现在更准确的完整链路
 

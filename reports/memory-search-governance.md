@@ -164,14 +164,14 @@ flowchart LR
 
 现在已经新增：
 
-- [memory-search-governance.js](/Users/redcreen/Project/长记忆/context-assembly-claw/src/memory-search-governance.js)
-- [run-memory-search-governance.js](/Users/redcreen/Project/长记忆/context-assembly-claw/scripts/run-memory-search-governance.js)
-- [memory-search-governance.test.js](/Users/redcreen/Project/长记忆/context-assembly-claw/test/memory-search-governance.test.js)
+- [memory-search-governance.js](../src/memory-search-governance.js)
+- [run-memory-search-governance.js](../scripts/run-memory-search-governance.js)
+- [memory-search-governance.test.js](../test/memory-search-governance.test.js)
 
 并且已接入：
 
-- [governance-cycle.js](/Users/redcreen/Project/长记忆/context-assembly-claw/src/governance-cycle.js)
-- [run-governance-cycle.js](/Users/redcreen/Project/长记忆/context-assembly-claw/scripts/run-governance-cycle.js)
+- [governance-cycle.js](../src/governance-cycle.js)
+- [run-governance-cycle.js](../scripts/run-governance-cycle.js)
 
 ---
 

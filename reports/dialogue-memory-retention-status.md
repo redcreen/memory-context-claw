@@ -51,13 +51,13 @@ npm run memory:distill
 
 输出文件：
 
-- [conversation-memory-candidates.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/conversation-memory-candidates.md)
+- [conversation-memory-candidates.md](conversation-memory-candidates.md)
 
 ### 3. 已补说明文档
 
 工作原理和完整链路说明在：
 
-- [how-memory-context-claw-works.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/how-memory-context-claw-works.md)
+- [how-memory-context-claw-works.md](how-memory-context-claw-works.md)
 
 ---
 

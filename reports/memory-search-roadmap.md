@@ -15,21 +15,21 @@
 相关配套文档：
 
 - 架构与问题说明：
-  [memory-search-architecture.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/memory-search-architecture.md)
+  [memory-search-architecture.md](memory-search-architecture.md)
 - 工作流说明：
-  [memory-search-workstream.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/memory-search-workstream.md)
+  [memory-search-workstream.md](memory-search-workstream.md)
 - 专项 case：
-  [memory-search-cases.json](/Users/redcreen/Project/长记忆/context-assembly-claw/evals/memory-search-cases.json)
+  [memory-search-cases.json](../evals/memory-search-cases.json)
 - baseline 报告：
-  [memory-search-baseline-report.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/memory-search-baseline-report.md)
+  [memory-search-baseline-report.md](memory-search-baseline-report.md)
 - session-memory 形态策略：
-  [session-memory-shape-strategy.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/session-memory-shape-strategy.md)
+  [session-memory-shape-strategy.md](session-memory-shape-strategy.md)
 - retrieval policy：
-  [retrieval-policy.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/retrieval-policy.md)
+  [retrieval-policy.md](retrieval-policy.md)
 - governance：
-  [memory-search-governance.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/memory-search-governance.md)
+  [memory-search-governance.md](memory-search-governance.md)
 - 后续蓝图：
-  [memory-search-next-blueprint.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/memory-search-next-blueprint.md)
+  [memory-search-next-blueprint.md](memory-search-next-blueprint.md)
 
 ## roadmap 总览图
 
@@ -151,7 +151,7 @@ flowchart TB
   - `scripts/eval-memory-search-cases.js`
   - `npm run eval:memory-search:cases`
 - 已有正式 baseline：
-  - [memory-search-baseline-report.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/memory-search-baseline-report.md)
+  - [memory-search-baseline-report.md](memory-search-baseline-report.md)
 
 阶段结论：
 
@@ -239,7 +239,7 @@ flowchart TB
 已完成：
 
 - 已有独立文档：
-  - [session-memory-shape-strategy.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/session-memory-shape-strategy.md)
+  - [session-memory-shape-strategy.md](session-memory-shape-strategy.md)
 - 已明确双格式职责：
   - `raw summary`
   - `fact/card artifact`
@@ -293,7 +293,7 @@ flowchart TB
 已完成：
 
 - 已有独立文档：
-  - [retrieval-policy.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/retrieval-policy.md)
+  - [retrieval-policy.md](retrieval-policy.md)
 - 已有统一策略入口：
   - `src/retrieval-policy.js`
 - 已明确 4 类 mode：
@@ -339,7 +339,7 @@ flowchart TB
 已完成：
 
 - 已有独立治理文档：
-  - [memory-search-governance.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/memory-search-governance.md)
+  - [memory-search-governance.md](memory-search-governance.md)
 - 已有单独入口：
   - `npm run eval:memory-search:governance`
 - 已接入主治理周期：
@@ -373,7 +373,7 @@ flowchart TB
 
 主 case 集：
 
-- [memory-search-cases.json](/Users/redcreen/Project/长记忆/context-assembly-claw/evals/memory-search-cases.json)
+- [memory-search-cases.json](../evals/memory-search-cases.json)
 
 当前包括：
 

@@ -13,8 +13,8 @@
 
 - [/Users/redcreen/Project/长记忆/MEMORY.md](/Users/redcreen/Project/长记忆/MEMORY.md)
 - [/Users/redcreen/Project/长记忆/memory/2026-04-04.md](/Users/redcreen/Project/长记忆/memory/2026-04-04.md)
-- [/Users/redcreen/Project/长记忆/context-assembly-claw/reports/conversation-memory-candidates.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/conversation-memory-candidates.md)
-- [/Users/redcreen/Project/长记忆/context-assembly-claw/reports/conversation-memory-cards.json](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/conversation-memory-cards.json)
+- [reports/conversation-memory-candidates.md](conversation-memory-candidates.md)
+- [reports/conversation-memory-cards.json](conversation-memory-cards.json)
 
 ## 总体判断
 

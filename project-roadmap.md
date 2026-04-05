@@ -71,7 +71,7 @@ It is not responsible for:
 
 Related top-level architecture document:
 
-- [system-architecture.md](/Users/redcreen/Project/长记忆/context-assembly-claw/system-architecture.md)
+- [system-architecture.md](system-architecture.md)
 
 ### 2. Workstream roadmaps
 
@@ -84,7 +84,7 @@ Use these when one topic becomes large enough to need its own:
 
 Current workstream roadmap:
 
-- [memory-search-roadmap.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/memory-search-roadmap.md)
+- [memory-search-roadmap.md](reports/memory-search-roadmap.md)
 
 ### 3. Blueprints
 
@@ -96,7 +96,7 @@ Use these when a workstream phase-plan is already complete, but the topic still 
 
 Current blueprint:
 
-- [memory-search-next-blueprint.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/memory-search-next-blueprint.md)
+- [memory-search-next-blueprint.md](reports/memory-search-next-blueprint.md)
 
 ### Recommended management model
 
@@ -229,9 +229,9 @@ Still ongoing:
 Workstream documents:
 
 - roadmap:
-  [memory-search-roadmap.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/memory-search-roadmap.md)
+  [memory-search-roadmap.md](reports/memory-search-roadmap.md)
 - next blueprint:
-  [memory-search-next-blueprint.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/memory-search-next-blueprint.md)
+  [memory-search-next-blueprint.md](reports/memory-search-next-blueprint.md)
 
 ### Current state
 
@@ -245,11 +245,11 @@ Workstream documents:
 ## Related Architecture Docs
 
 - overall architecture:
-  [system-architecture.md](/Users/redcreen/Project/长记忆/context-assembly-claw/system-architecture.md)
+  [system-architecture.md](system-architecture.md)
 - memory-search architecture:
-  [memory-search-architecture.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/memory-search-architecture.md)
+  [memory-search-architecture.md](reports/memory-search-architecture.md)
 - orchestration vs tool-agent comparison:
-  [memory-search-orchestration-vs-tool-agent.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/memory-search-orchestration-vs-tool-agent.md)
+  [memory-search-orchestration-vs-tool-agent.md](reports/memory-search-orchestration-vs-tool-agent.md)
 
 ## 中文
 
@@ -320,7 +320,7 @@ Workstream documents:
 
 相关的顶层架构文档：
 
-- [system-architecture.md](/Users/redcreen/Project/长记忆/context-assembly-claw/system-architecture.md)
+- [system-architecture.md](system-architecture.md)
 
 ### 2. Workstream roadmaps
 
@@ -333,7 +333,7 @@ Workstream documents:
 
 当前 workstream roadmap：
 
-- [memory-search-roadmap.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/memory-search-roadmap.md)
+- [memory-search-roadmap.md](reports/memory-search-roadmap.md)
 
 ### 3. Blueprints
 
@@ -347,7 +347,7 @@ Workstream documents:
 
 当前 blueprint：
 
-- [memory-search-next-blueprint.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/memory-search-next-blueprint.md)
+- [memory-search-next-blueprint.md](reports/memory-search-next-blueprint.md)
 
 ### 推荐的管理模型
 
@@ -480,9 +480,9 @@ flowchart TB
 相关文档：
 
 - roadmap：
-  [memory-search-roadmap.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/memory-search-roadmap.md)
+  [memory-search-roadmap.md](reports/memory-search-roadmap.md)
 - next blueprint：
-  [memory-search-next-blueprint.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/memory-search-next-blueprint.md)
+  [memory-search-next-blueprint.md](reports/memory-search-next-blueprint.md)
 
 ### 当前状态
 
@@ -496,11 +496,11 @@ flowchart TB
 ## 相关架构文档
 
 - 总体架构：
-  [system-architecture.md](/Users/redcreen/Project/长记忆/context-assembly-claw/system-architecture.md)
+  [system-architecture.md](system-architecture.md)
 - memory-search 专项架构：
-  [memory-search-architecture.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/memory-search-architecture.md)
+  [memory-search-architecture.md](reports/memory-search-architecture.md)
 - 固定编排 vs 工具调度对比：
-  [memory-search-orchestration-vs-tool-agent.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/memory-search-orchestration-vs-tool-agent.md)
+  [memory-search-orchestration-vs-tool-agent.md](reports/memory-search-orchestration-vs-tool-agent.md)
 
 ### Immediate priorities
 
@@ -594,7 +594,7 @@ Short:
 
 当前子 roadmap：
 
-- [memory-search-roadmap.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/memory-search-roadmap.md)
+- [memory-search-roadmap.md](reports/memory-search-roadmap.md)
 
 它负责：
 
@@ -607,7 +607,7 @@ Short:
 
 当前 blueprint：
 
-- [memory-search-next-blueprint.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/memory-search-next-blueprint.md)
+- [memory-search-next-blueprint.md](reports/memory-search-next-blueprint.md)
 
 它负责：
 
@@ -752,9 +752,9 @@ flowchart TB
 相关文档入口：
 
 - 子 roadmap：
-  [memory-search-roadmap.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/memory-search-roadmap.md)
+  [memory-search-roadmap.md](reports/memory-search-roadmap.md)
 - 后续蓝图：
-  [memory-search-next-blueprint.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/memory-search-next-blueprint.md)
+  [memory-search-next-blueprint.md](reports/memory-search-next-blueprint.md)
 
 ### 当前状态
 

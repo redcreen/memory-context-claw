@@ -91,7 +91,7 @@ flowchart TB
 
 - `done`
 - 已形成独立策略文档：
-  - [session-memory-shape-strategy.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/session-memory-shape-strategy.md)
+  - [session-memory-shape-strategy.md](session-memory-shape-strategy.md)
 - 当前结论：
   - `raw summary` 保留为审计底稿
   - `fact/card artifact` 作为 retrieval-friendly 输入层
@@ -115,7 +115,7 @@ flowchart TB
 
 - `done`
 - 已形成独立策略文档：
-  - [retrieval-policy.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/retrieval-policy.md)
+  - [retrieval-policy.md](retrieval-policy.md)
 - 已有统一代码入口：
   - `src/retrieval-policy.js`
 - 当前结论：

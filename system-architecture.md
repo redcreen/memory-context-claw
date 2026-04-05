@@ -18,8 +18,8 @@ It answers:
 
 This document is the architectural companion to:
 
-- [project-roadmap.md](/Users/redcreen/Project/长记忆/context-assembly-claw/project-roadmap.md)
-- [memory-search-architecture.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/memory-search-architecture.md)
+- [project-roadmap.md](project-roadmap.md)
+- [memory-search-architecture.md](reports/memory-search-architecture.md)
 
 ## One Diagram
 
@@ -450,10 +450,10 @@ Disallowed as main path:
 
 ## Related Documents
 
-- [project-roadmap.md](/Users/redcreen/Project/长记忆/context-assembly-claw/project-roadmap.md)
-- [memory-search-roadmap.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/memory-search-roadmap.md)
-- [memory-search-architecture.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/memory-search-architecture.md)
-- [memory-search-next-blueprint.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/memory-search-next-blueprint.md)
+- [project-roadmap.md](project-roadmap.md)
+- [memory-search-roadmap.md](reports/memory-search-roadmap.md)
+- [memory-search-architecture.md](reports/memory-search-architecture.md)
+- [memory-search-next-blueprint.md](reports/memory-search-next-blueprint.md)
 
 ---
 
@@ -473,8 +473,8 @@ Disallowed as main path:
 
 这份文档是下面这些文档的总架构入口：
 
-- [project-roadmap.md](/Users/redcreen/Project/长记忆/context-assembly-claw/project-roadmap.md)
-- [memory-search-architecture.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/memory-search-architecture.md)
+- [project-roadmap.md](project-roadmap.md)
+- [memory-search-architecture.md](reports/memory-search-architecture.md)
 
 ## 一图看懂
 
@@ -905,7 +905,7 @@ OpenClaw 宿主负责：
 
 ## 相关文档
 
-- [project-roadmap.md](/Users/redcreen/Project/长记忆/context-assembly-claw/project-roadmap.md)
-- [memory-search-roadmap.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/memory-search-roadmap.md)
-- [memory-search-architecture.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/memory-search-architecture.md)
-- [memory-search-next-blueprint.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/memory-search-next-blueprint.md)
+- [project-roadmap.md](project-roadmap.md)
+- [memory-search-roadmap.md](reports/memory-search-roadmap.md)
+- [memory-search-architecture.md](reports/memory-search-architecture.md)
+- [memory-search-next-blueprint.md](reports/memory-search-next-blueprint.md)

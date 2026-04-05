@@ -75,16 +75,31 @@ Quick mental model:
 - workspace docs = project or domain context
 - this plugin = chooses what should matter most right now
 
-**1. One-Command Remote Install**
+**1. Install**
 
-Recommended remote install command:
+Recommended approach:
+
+- stable users: install a release tag
+- early adopters: install the current `main`
+
+**Stable release install**
+
+After the first tagged release exists, install like this:
+
+```bash
+openclaw plugins install git+https://github.com/redcreen/memory-context-claw.git#v0.1.0
+```
+
+**Current development install**
+
+If you intentionally want the latest `main` branch:
 
 ```bash
 openclaw plugins install git+https://github.com/redcreen/memory-context-claw.git
 ```
 
-OpenClaw `plugins install` accepts npm-style package specs, and this repo can be
-installed directly from GitHub that way.
+OpenClaw `plugins install` accepts npm-style package specs, so this repo can be
+installed directly from GitHub either as a tag or as the current branch head.
 
 **2. Minimal Config**
 
@@ -174,29 +189,33 @@ What it does do:
 If you want the whole-system view:
 
 - overall architecture:
-  [system-architecture.md](/Users/redcreen/Project/长记忆/context-assembly-claw/system-architecture.md)
+  [system-architecture.md](system-architecture.md)
 - project roadmap:
-  [project-roadmap.md](/Users/redcreen/Project/长记忆/context-assembly-claw/project-roadmap.md)
+  [project-roadmap.md](project-roadmap.md)
 
 If you specifically care about memory search:
 
 - architecture:
-  [memory-search-architecture.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/memory-search-architecture.md)
+  [memory-search-architecture.md](reports/memory-search-architecture.md)
 - roadmap:
-  [memory-search-roadmap.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/memory-search-roadmap.md)
+  [memory-search-roadmap.md](reports/memory-search-roadmap.md)
 - orchestration vs tool-agent:
-  [memory-search-orchestration-vs-tool-agent.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/memory-search-orchestration-vs-tool-agent.md)
+  [memory-search-orchestration-vs-tool-agent.md](reports/memory-search-orchestration-vs-tool-agent.md)
 
 **Configuration**
 
 Detailed configuration reference:
 
-- [configuration.md](/Users/redcreen/Project/长记忆/context-assembly-claw/configuration.md)
+- [configuration.md](configuration.md)
 
 Example config templates:
 
-- [openclaw.context-assembly.example.json](/Users/redcreen/Project/长记忆/context-assembly-claw/templates/openclaw.context-assembly.example.json)
-- [openclaw.context-assembly.llm-rerank.example.json](/Users/redcreen/Project/长记忆/context-assembly-claw/templates/openclaw.context-assembly.llm-rerank.example.json)
+- [openclaw.context-assembly.example.json](templates/openclaw.context-assembly.example.json)
+- [openclaw.context-assembly.llm-rerank.example.json](templates/openclaw.context-assembly.llm-rerank.example.json)
+
+Release policy and versioning:
+
+- [release.md](release.md)
 
 **Validation**
 
@@ -220,7 +239,7 @@ npm run memory:governance-cycle -- --write
 
 Full testing reference:
 
-- [testsuite.md](/Users/redcreen/Project/长记忆/context-assembly-claw/testsuite.md)
+- [testsuite.md](testsuite.md)
 
 **Project Status**
 
@@ -242,7 +261,7 @@ Selected public-facing name:
 
 Other name options:
 
-- [name-candidates.md](/Users/redcreen/Project/长记忆/context-assembly-claw/name-candidates.md)
+- [name-candidates.md](name-candidates.md)
 
 ---
 
@@ -320,15 +339,30 @@ Other name options:
 - workspace 文档 = 项目或专题上下文
 - 这个插件 = 帮你决定“当前轮到底该优先带什么进去”
 
-**1. 一键远程安装**
+**1. 安装方式**
 
-推荐的远程安装命令：
+推荐做法：
+
+- 稳定用户：安装 release tag
+- 愿意吃最新开发版本的用户：安装当前 `main`
+
+**稳定版安装**
+
+等第一个 tag 发布之后，推荐这样安装：
+
+```bash
+openclaw plugins install git+https://github.com/redcreen/memory-context-claw.git#v0.1.0
+```
+
+**当前开发版安装**
+
+如果你就是要跟当前 `main` 走，可以这样装：
 
 ```bash
 openclaw plugins install git+https://github.com/redcreen/memory-context-claw.git
 ```
 
-`openclaw plugins install` 支持 npm 风格的 package spec，这个仓库可以直接通过 GitHub 地址安装。
+`openclaw plugins install` 支持 npm 风格的 package spec，所以这个仓库既可以按 tag 安装，也可以直接按当前分支头安装。
 
 **2. 最小配置**
 
@@ -418,29 +452,33 @@ npm run deploy:local
 如果你想看全局架构：
 
 - 总体架构：
-  [system-architecture.md](/Users/redcreen/Project/长记忆/context-assembly-claw/system-architecture.md)
+  [system-architecture.md](system-architecture.md)
 - 总 roadmap：
-  [project-roadmap.md](/Users/redcreen/Project/长记忆/context-assembly-claw/project-roadmap.md)
+  [project-roadmap.md](project-roadmap.md)
 
 如果你特别关心 memory search：
 
 - 专项架构：
-  [memory-search-architecture.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/memory-search-architecture.md)
+  [memory-search-architecture.md](reports/memory-search-architecture.md)
 - 专项 roadmap：
-  [memory-search-roadmap.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/memory-search-roadmap.md)
+  [memory-search-roadmap.md](reports/memory-search-roadmap.md)
 - 固定编排 vs 工具调度：
-  [memory-search-orchestration-vs-tool-agent.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/memory-search-orchestration-vs-tool-agent.md)
+  [memory-search-orchestration-vs-tool-agent.md](reports/memory-search-orchestration-vs-tool-agent.md)
 
 **配置**
 
 详细配置说明：
 
-- [configuration.md](/Users/redcreen/Project/长记忆/context-assembly-claw/configuration.md)
+- [configuration.md](configuration.md)
 
 配置模板：
 
-- [openclaw.context-assembly.example.json](/Users/redcreen/Project/长记忆/context-assembly-claw/templates/openclaw.context-assembly.example.json)
-- [openclaw.context-assembly.llm-rerank.example.json](/Users/redcreen/Project/长记忆/context-assembly-claw/templates/openclaw.context-assembly.llm-rerank.example.json)
+- [openclaw.context-assembly.example.json](templates/openclaw.context-assembly.example.json)
+- [openclaw.context-assembly.llm-rerank.example.json](templates/openclaw.context-assembly.llm-rerank.example.json)
+
+发布策略与版本说明：
+
+- [release.md](release.md)
 
 **验证与测试**
 
@@ -464,7 +502,7 @@ npm run memory:governance-cycle -- --write
 
 完整测试说明：
 
-- [testsuite.md](/Users/redcreen/Project/长记忆/context-assembly-claw/testsuite.md)
+- [testsuite.md](testsuite.md)
 
 **当前状态**
 
@@ -486,4 +524,4 @@ npm run memory:governance-cycle -- --write
 
 备选命名：
 
-- [name-candidates.md](/Users/redcreen/Project/长记忆/context-assembly-claw/name-candidates.md)
+- [name-candidates.md](name-candidates.md)

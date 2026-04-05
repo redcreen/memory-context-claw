@@ -114,7 +114,7 @@ npm run smoke:eval
 
 当前 smoke case 文件：
 
-- [smoke-cases.json](/Users/redcreen/Project/长记忆/context-assembly-claw/evals/smoke-cases.json)
+- [smoke-cases.json](../evals/smoke-cases.json)
 
 ### C. 轻量真实 agent 回归
 

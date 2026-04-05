@@ -252,7 +252,7 @@ flowchart TB
 
 现在代码里已经有统一入口：
 
-- [retrieval-policy.js](/Users/redcreen/Project/长记忆/context-assembly-claw/src/retrieval-policy.js)
+- [retrieval-policy.js](../src/retrieval-policy.js)
 
 它负责：
 
@@ -261,11 +261,11 @@ flowchart TB
 
 并且已经接回：
 
-- [retrieval.js](/Users/redcreen/Project/长记忆/context-assembly-claw/src/retrieval.js)
+- [retrieval.js](../src/retrieval.js)
 
 对应测试：
 
-- [retrieval-policy.test.js](/Users/redcreen/Project/长记忆/context-assembly-claw/test/retrieval-policy.test.js)
+- [retrieval-policy.test.js](../test/retrieval-policy.test.js)
 
 ---
 

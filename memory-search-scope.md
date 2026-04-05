@@ -23,31 +23,31 @@
 ### 已经独立出来的
 
 - 工作流说明：
-  [memory-search-workstream.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/memory-search-workstream.md)
+  [memory-search-workstream.md](reports/memory-search-workstream.md)
 - 专项案例：
-  [memory-search-cases.json](/Users/redcreen/Project/长记忆/context-assembly-claw/evals/memory-search-cases.json)
+  [memory-search-cases.json](evals/memory-search-cases.json)
 - Roadmap 主焦点：
-  [project-roadmap.md](/Users/redcreen/Project/长记忆/context-assembly-claw/project-roadmap.md)
+  [project-roadmap.md](project-roadmap.md)
 - Todo 主线：
-  [investigation-todo.md](/Users/redcreen/Project/长记忆/context-assembly-claw/reports/investigation-todo.md)
+  [investigation-todo.md](reports/investigation-todo.md)
 
 ### 还没有物理独立的
 
 核心逻辑目前仍散落在这些源文件里：
 
-- [retrieval.js](/Users/redcreen/Project/长记忆/context-assembly-claw/src/retrieval.js)
-- [scoring.js](/Users/redcreen/Project/长记忆/context-assembly-claw/src/scoring.js)
-- [query-rewrite.js](/Users/redcreen/Project/长记忆/context-assembly-claw/src/query-rewrite.js)
-- [conversation-memory.js](/Users/redcreen/Project/长记忆/context-assembly-claw/src/conversation-memory.js)
-- [engine.js](/Users/redcreen/Project/长记忆/context-assembly-claw/src/engine.js)
+- [retrieval.js](src/retrieval.js)
+- [scoring.js](src/scoring.js)
+- [query-rewrite.js](src/query-rewrite.js)
+- [conversation-memory.js](src/conversation-memory.js)
+- [engine.js](src/engine.js)
 
 对应测试也还是分散的：
 
-- [retrieval.test.js](/Users/redcreen/Project/长记忆/context-assembly-claw/test/retrieval.test.js)
-- [scoring.test.js](/Users/redcreen/Project/长记忆/context-assembly-claw/test/scoring.test.js)
-- [query-rewrite.test.js](/Users/redcreen/Project/长记忆/context-assembly-claw/test/query-rewrite.test.js)
-- [conversation-memory.test.js](/Users/redcreen/Project/长记忆/context-assembly-claw/test/conversation-memory.test.js)
-- [engine.test.js](/Users/redcreen/Project/长记忆/context-assembly-claw/test/engine.test.js)
+- [retrieval.test.js](test/retrieval.test.js)
+- [scoring.test.js](test/scoring.test.js)
+- [query-rewrite.test.js](test/query-rewrite.test.js)
+- [conversation-memory.test.js](test/conversation-memory.test.js)
+- [engine.test.js](test/engine.test.js)
 
 ## 为什么现在不建议立刻大搬家
 

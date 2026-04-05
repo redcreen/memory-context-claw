@@ -300,13 +300,13 @@ But do that only after non-LLM behavior is already understandable.
 ### Related Docs
 
 - plugin overview:
-  [README.md](/Users/redcreen/Project/长记忆/context-assembly-claw/README.md)
+  [README.md](README.md)
 - system architecture:
-  [system-architecture.md](/Users/redcreen/Project/长记忆/context-assembly-claw/system-architecture.md)
+  [system-architecture.md](system-architecture.md)
 - project roadmap:
-  [project-roadmap.md](/Users/redcreen/Project/长记忆/context-assembly-claw/project-roadmap.md)
+  [project-roadmap.md](project-roadmap.md)
 - test suite:
-  [testsuite.md](/Users/redcreen/Project/长记忆/context-assembly-claw/testsuite.md)
+  [testsuite.md](testsuite.md)
 
 ---
 
@@ -610,10 +610,10 @@ openclaw memory search "我爱吃什么"
 ### 相关文档
 
 - 插件总览：
-  [README.md](/Users/redcreen/Project/长记忆/context-assembly-claw/README.md)
+  [README.md](README.md)
 - 总体架构：
-  [system-architecture.md](/Users/redcreen/Project/长记忆/context-assembly-claw/system-architecture.md)
+  [system-architecture.md](system-architecture.md)
 - 总 roadmap：
-  [project-roadmap.md](/Users/redcreen/Project/长记忆/context-assembly-claw/project-roadmap.md)
+  [project-roadmap.md](project-roadmap.md)
 - 测试说明：
-  [testsuite.md](/Users/redcreen/Project/长记忆/context-assembly-claw/testsuite.md)
+  [testsuite.md](testsuite.md)

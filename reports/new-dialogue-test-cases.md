@@ -74,7 +74,7 @@
 
 这批用例已经整理进：
 
-- [fact-growth-cases.json](/Users/redcreen/Project/长记忆/context-assembly-claw/evals/fact-growth-cases.json)
+- [fact-growth-cases.json](../evals/fact-growth-cases.json)
 
 当前更建议先把它们当作：
 
