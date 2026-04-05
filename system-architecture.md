@@ -111,18 +111,10 @@ sequenceDiagram
 
 ### Legend
 
-```mermaid
-flowchart LR
-    A["Host-side behavior"]:::host
-    B["Plugin-side behavior"]:::plugin
-    C["Retrieval-friendly artifact"]:::card
-    D["Governance / regression"]:::ops
-
-    classDef host fill:#f3e8ff,stroke:#7c3aed,color:#4c1d95,stroke-width:1.5px;
-    classDef plugin fill:#e8f1ff,stroke:#2f6feb,color:#123a73,stroke-width:1.5px;
-    classDef card fill:#eefce8,stroke:#2f855a,color:#1c4532,stroke-width:1.5px;
-    classDef ops fill:#fff4e8,stroke:#d97706,color:#7c2d12,stroke-width:1.5px;
-```
+- purple: host-side behavior
+- blue: plugin-side behavior
+- green: retrieval-friendly artifact
+- orange: governance / regression
 
 ## System Goal
 
@@ -566,18 +558,10 @@ sequenceDiagram
 
 ### 图例
 
-```mermaid
-flowchart LR
-    A["宿主侧行为"]:::host
-    B["插件侧行为"]:::plugin
-    C["检索友好型工件"]:::card
-    D["治理 / 回归"]:::ops
-
-    classDef host fill:#f3e8ff,stroke:#7c3aed,color:#4c1d95,stroke-width:1.5px;
-    classDef plugin fill:#e8f1ff,stroke:#2f6feb,color:#123a73,stroke-width:1.5px;
-    classDef card fill:#eefce8,stroke:#2f855a,color:#1c4532,stroke-width:1.5px;
-    classDef ops fill:#fff4e8,stroke:#d97706,color:#7c2d12,stroke-width:1.5px;
-```
+- 紫色：宿主侧行为
+- 蓝色：插件侧行为
+- 绿色：检索友好型工件
+- 橙色：治理 / 回归
 
 ## 系统目标
 
