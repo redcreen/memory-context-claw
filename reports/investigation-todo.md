@@ -561,3 +561,17 @@
 - 只做插件层 / 接口层改进
 - 性能必须长期受控
 - 数据治理是常规任务，不是一次性工作
+
+---
+
+## Workspace consolidation
+
+现状：
+
+- 高相关工作区文件已经从仓库外层并入项目内 `workspace/`
+
+后续动作：
+
+- 把主文档里的默认路径统一收敛到 `workspace/`
+- 评估 `workspace/notes/context-assembly-claw-roadmap.md` 是否应继续保留，还是归档为历史稿
+- 保持外层 `.obsidian` 暂不并入，除非后续明确要把个人知识库配置和项目绑定

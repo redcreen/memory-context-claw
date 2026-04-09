@@ -24,7 +24,7 @@ One-line goal:
 Good fit:
 
 - you already use OpenClaw long memory
-- you keep stable rules in `MEMORY.md`
+- you keep stable rules in `workspace/MEMORY.md`
 - you want better fact/rule prioritization
 - you want more stable answers for high-value memory questions
 
@@ -32,21 +32,21 @@ Not the best fit:
 
 - you expect this plugin to replace builtin OpenClaw memory
 - you want to patch host-side `memory_search`
-- you do not use long memory, daily memory, or workspace docs at all
+- you do not use long memory, daily memory, or workspace notes/docs at all
 
 **Who This Is For**
 
 Use this plugin if you already have:
 
-- `MEMORY.md`
-- `memory/YYYY-MM-DD.md`
-- workspace docs
+- `workspace/MEMORY.md`
+- `workspace/memory/YYYY-MM-DD.md`
+- `workspace/notes/*.md` or other project docs
 - real long-term memory in OpenClaw
 
 and you want:
 
 - more stable recall for important facts and rules
-- better prioritization between formal memory, daily memory, and docs
+- better prioritization between formal memory, daily memory, and notes/docs
 - fast-path answers for high-value questions
 - less engineering-noise pollution in the final context
 
@@ -70,9 +70,9 @@ If you only want the shortest path, do just these three things:
 
 Quick mental model:
 
-- `MEMORY.md` = stable long-term rules and facts
-- `memory/*.md` = daily / recent memory
-- workspace docs = project or domain context
+- `workspace/MEMORY.md` = stable long-term rules and facts
+- `workspace/memory/*.md` = daily / recent memory
+- `workspace/notes/*.md` = project or domain notes
 - this plugin = chooses what should matter most right now
 
 **1. Install**
@@ -129,13 +129,27 @@ openclaw plugins list
 
 You should see `memory-context-claw` in the loaded plugin list.
 
+**Bundled Workspace Layout**
+
+If you keep memory and supporting notes inside this repo, the recommended layout is:
+
+```text
+workspace/
+├── MEMORY.md
+├── memory/
+│   └── YYYY-MM-DD.md
+└── notes/
+    ├── memory-context-claw-config.md
+    └── openclaw-memory-vs-lossless.md
+```
+
 **Normal User Flow**
 
 After installation, daily usage is simple:
 
-- put stable long-term rules in `MEMORY.md`
-- keep daily notes in `memory/*.md`
-- keep project/reference docs in the workspace
+- put stable long-term rules in `workspace/MEMORY.md`
+- keep daily notes in `workspace/memory/*.md`
+- keep project/reference docs in `workspace/notes/`
 - keep chatting with OpenClaw
 
 You normally do not need special plugin commands.
@@ -286,7 +300,7 @@ Other name options:
 适合：
 
 - 你已经在用 OpenClaw 长期记忆
-- 你会把稳定规则放进 `MEMORY.md`
+- 你会把稳定规则放进 `workspace/MEMORY.md`
 - 你希望事实 / 规则优先级更稳定
 - 你希望高价值记忆问题回答更稳
 
@@ -294,21 +308,21 @@ Other name options:
 
 - 你期待这个插件直接替代 OpenClaw 内置 memory
 - 你希望它直接修改宿主侧 `memory_search`
-- 你根本不用长期记忆、daily memory 或 workspace 文档
+- 你根本不用长期记忆、daily memory 或 workspace notes / 文档
 
 **适合谁用**
 
 如果你已经在 OpenClaw 里有这些东西：
 
-- `MEMORY.md`
-- `memory/YYYY-MM-DD.md`
-- workspace 文档
+- `workspace/MEMORY.md`
+- `workspace/memory/YYYY-MM-DD.md`
+- `workspace/notes/*.md` 或其他项目文档
 - 真实长期记忆
 
 并且你希望：
 
 - 关键事实和规则召回更稳定
-- 正式记忆、daily memory、项目文档之间有更合理的优先级
+- 正式记忆、daily memory、notes / 项目文档之间有更合理的优先级
 - 高频重要问题尽量走快路径
 - 最终上下文少一些工程噪音
 
@@ -334,9 +348,9 @@ Other name options:
 
 一个最简单的理解方式：
 
-- `MEMORY.md` = 稳定长期规则 / 事实
-- `memory/*.md` = 当日 / 近期记忆
-- workspace 文档 = 项目或专题上下文
+- `workspace/MEMORY.md` = 稳定长期规则 / 事实
+- `workspace/memory/*.md` = 当日 / 近期记忆
+- `workspace/notes/*.md` = 项目或专题笔记
 - 这个插件 = 帮你决定“当前轮到底该优先带什么进去”
 
 **1. 安装方式**
@@ -392,13 +406,27 @@ openclaw plugins list
 
 你应该能在已加载插件列表里看到 `memory-context-claw`。
 
+**内置 workspace 目录建议**
+
+如果你希望把记忆和说明笔记也跟项目放在一起，建议使用这套目录：
+
+```text
+workspace/
+├── MEMORY.md
+├── memory/
+│   └── YYYY-MM-DD.md
+└── notes/
+    ├── memory-context-claw-config.md
+    └── openclaw-memory-vs-lossless.md
+```
+
 **普通用户日常使用**
 
 装好以后，日常使用其实很简单：
 
-- 稳定长期规则放进 `MEMORY.md`
-- 日常过程记忆放进 `memory/*.md`
-- 项目资料放在 workspace 文档里
+- 稳定长期规则放进 `workspace/MEMORY.md`
+- 日常过程记忆放进 `workspace/memory/*.md`
+- 项目资料和背景笔记放进 `workspace/notes/`
 - 正常继续和 OpenClaw 对话
 
 大多数情况下，你不需要记特殊插件命令。

@@ -7642,3 +7642,31 @@ summary 结果是：
 - `20/20` 通过
 
 所以这轮不是单纯的文档美化，而是一次“文档命名 + 引用 + 代码路径”一起收口的整理。
+
+---
+
+## 2026-04-09 - Workspace absorbed into repo
+
+这轮做了一次实际的项目边界收口：
+
+- 把原来位于 `/Users/redcreen/Project/长记忆/` 顶层的高相关内容并入仓库内的 `workspace/`
+- 新结构是：
+  - `workspace/MEMORY.md`
+  - `workspace/memory/*.md`
+  - `workspace/notes/*.md`
+- 先不动外层 `.obsidian`，避免把个人工作区配置和项目仓库耦合在一起
+
+这次并入的内容包括：
+
+- `MEMORY.md`
+- `memory/2026-04-04.md`
+- `memory/2026-04-05.md`
+- `memory-context-claw-config.md`
+- `openclaw-memory-vs-lossless.md`
+- `context-assembly-claw-roadmap.md`
+
+同时补了两类收尾：
+
+- `.gitignore` 增加 `.DS_Store`
+- `README.md` / `configuration.md` 开始改为显式使用 `workspace/` 路径，避免仓库外散落资料继续被当作默认结构
+- `project-roadmap.md` / `system-architecture.md` / `testsuite.md` 也开始统一改成 `workspace/` 结构，避免入口文档继续沿用旧的仓库外路径心智模型

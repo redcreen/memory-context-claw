@@ -1,3 +1,4 @@
 node_modules
 *.tgz
 .obsidian
+.DS_Store

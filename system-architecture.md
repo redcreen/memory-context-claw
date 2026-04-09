@@ -30,14 +30,19 @@ flowchart TB
     C --> D["Consumption Layer"]
     D --> E["Final context for model"]
 
-    C --> F["Regression Layer"]
-    D --> F
-    C --> G["Governance Layer"]
-    B --> G
-    G --> C
+    subgraph OPS["Governance and validation"]
+        F["Regression Layer"]
+        G["Governance Layer"]
+    end
 
-    H["Memory Search Workstream"] --> D
-    H --> G
+    H["Memory Search Workstream"]
+
+    C -. validates retrieval behavior .-> F
+    D -. validates output quality .-> F
+    B -. audits source quality .-> G
+    C -. audits fact/card quality .-> G
+    H -. improves search strategy .-> C
+    H -. hardens retrieval policy .-> D
 
     classDef input fill:#f7f1e3,stroke:#b58105,color:#4a3a00,stroke-width:1.5px;
     classDef plugin fill:#e8f1ff,stroke:#2f6feb,color:#123a73,stroke-width:1.5px;
@@ -65,7 +70,7 @@ flowchart LR
     R --> A["Context assembly"]
     A --> O["Final answer context"]
 
-    C1["Stable cards\nMEMORY.md / daily memory / docs"] --> F
+    C1["Stable cards\nworkspace/MEMORY.md / workspace/memory / docs"] --> F
     C2["Session-derived cards"] --> F
     H1["Host memory index"] --> S
 
@@ -166,8 +171,8 @@ flowchart TB
     subgraph L1["Capture Layer"]
         A1["Sessions"]
         A2["Session-memory files"]
-        A3["MEMORY.md"]
-        A4["memory/YYYY-MM-DD.md"]
+        A3["workspace/MEMORY.md"]
+        A4["workspace/memory/YYYY-MM-DD.md"]
         A5["Project / config docs"]
     end
 
@@ -221,8 +226,8 @@ The capture layer collects candidate information from:
 
 - sessions
 - host-generated session-memory files
-- `MEMORY.md`
-- `memory/YYYY-MM-DD.md`
+- `workspace/MEMORY.md`
+- `workspace/memory/YYYY-MM-DD.md`
 - project docs / config docs
 
 Responsibilities:
@@ -252,8 +257,8 @@ Key artifacts:
 - `conversation-memory-cards.md`
 - `conversation-memory-cards.json`
 - stable cards derived from:
-  - `MEMORY.md`
-  - `memory/YYYY-MM-DD.md`
+  - `workspace/MEMORY.md`
+  - `workspace/memory/YYYY-MM-DD.md`
   - policy/config/project docs
 
 ## 3. Consumption Layer
@@ -477,14 +482,19 @@ flowchart TB
     C --> D["Consumption Layer"]
     D --> E["最终上下文"]
 
-    C --> F["Regression Layer"]
-    D --> F
-    C --> G["Governance Layer"]
-    B --> G
-    G --> C
+    subgraph OPS["治理与验证"]
+        F["Regression Layer"]
+        G["Governance Layer"]
+    end
 
-    H["Memory Search Workstream"] --> D
-    H --> G
+    H["Memory Search Workstream"]
+
+    C -. 校验检索行为 .-> F
+    D -. 校验输出质量 .-> F
+    B -. 巡检输入源质量 .-> G
+    C -. 巡检 fact/card 质量 .-> G
+    H -. 改进搜索策略 .-> C
+    H -. 加固 retrieval policy .-> D
 
     classDef input fill:#f7f1e3,stroke:#b58105,color:#4a3a00,stroke-width:1.5px;
     classDef plugin fill:#e8f1ff,stroke:#2f6feb,color:#123a73,stroke-width:1.5px;
@@ -512,7 +522,7 @@ flowchart LR
     R --> A["上下文组装"]
     A --> O["最终回答上下文"]
 
-    C1["Stable cards\nMEMORY.md / daily memory / docs"] --> F
+    C1["Stable cards\nworkspace/MEMORY.md / workspace/memory / docs"] --> F
     C2["Session-derived cards"] --> F
     H1["宿主 memory index"] --> S
 
@@ -613,8 +623,8 @@ flowchart TB
     subgraph L1["Capture Layer"]
         A1["Sessions"]
         A2["Session-memory files"]
-        A3["MEMORY.md"]
-        A4["memory/YYYY-MM-DD.md"]
+        A3["workspace/MEMORY.md"]
+        A4["workspace/memory/YYYY-MM-DD.md"]
         A5["项目文档 / 配置文档"]
     end
 
@@ -668,8 +678,8 @@ flowchart TB
 
 - sessions
 - 宿主生成的 session-memory 文件
-- `MEMORY.md`
-- `memory/YYYY-MM-DD.md`
+- `workspace/MEMORY.md`
+- `workspace/memory/YYYY-MM-DD.md`
 - 项目文档 / 配置文档
 
 职责：
@@ -699,8 +709,8 @@ flowchart TB
 - `conversation-memory-cards.md`
 - `conversation-memory-cards.json`
 - 从以下来源派生的 stable card：
-  - `MEMORY.md`
-  - `memory/YYYY-MM-DD.md`
+  - `workspace/MEMORY.md`
+  - `workspace/memory/YYYY-MM-DD.md`
   - policy/config/project docs
 
 ## 3. Consumption Layer

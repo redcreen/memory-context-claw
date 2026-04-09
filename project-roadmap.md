@@ -128,7 +128,7 @@ It does not:
 The architecture stays organized into four layers:
 
 1. **Capture**
-   - collect candidates from sessions, daily memory, `MEMORY.md`, and intermediate artifacts
+   - collect candidates from sessions, `workspace/memory/*.md`, `workspace/MEMORY.md`, and intermediate artifacts
 
 2. **Fact/Card**
    - distill raw text into stable facts, rules, background, and project cards
@@ -163,8 +163,8 @@ Done:
 
 - fact sentence extraction
 - `conversation-memory-cards.md/json`
-- stable cards from `MEMORY.md`
-- stable cards from `memory/YYYY-MM-DD.md`
+- stable cards from `workspace/MEMORY.md`
+- stable cards from `workspace/memory/YYYY-MM-DD.md`
 - project cards from plugin docs
 
 ### Phase 3: Consumption Layer
@@ -379,7 +379,7 @@ flowchart TB
 整体架构保持四层：
 
 1. **Capture**
-   - 从 sessions、daily memory、`MEMORY.md` 和中间工件中收集候选
+   - 从 sessions、`workspace/memory/*.md`、`workspace/MEMORY.md` 和中间工件中收集候选
 
 2. **Fact/Card**
    - 把原始文本提炼成稳定事实、规则、背景和项目 card
@@ -414,8 +414,8 @@ flowchart TB
 
 - fact 句提炼
 - `conversation-memory-cards.md/json`
-- 从 `MEMORY.md` 生成 stable card
-- 从 `memory/YYYY-MM-DD.md` 生成 stable card
+- 从 `workspace/MEMORY.md` 生成 stable card
+- 从 `workspace/memory/YYYY-MM-DD.md` 生成 stable card
 - 从项目文档生成 project card
 
 ### Phase 3: Consumption Layer
@@ -651,7 +651,7 @@ flowchart TB
 整体架构仍然围绕 4 层：
 
 1. **Capture**
-   - 从 sessions、daily memory、`MEMORY.md`、中间工件抓候选信息
+   - 从 sessions、`workspace/memory/*.md`、`workspace/MEMORY.md`、中间工件抓候选信息
 
 2. **Fact/Card**
    - 把原始文本提炼成主体事实、规则、背景、项目 card
@@ -686,8 +686,8 @@ flowchart TB
 
 - 主体事实句提炼
 - `conversation-memory-cards.md/json`
-- stable cards from `MEMORY.md`
-- stable cards from `memory/YYYY-MM-DD.md`
+- stable cards from `workspace/MEMORY.md`
+- stable cards from `workspace/memory/YYYY-MM-DD.md`
 - project cards from plugin docs
 
 ### Phase 3：Consumption Layer

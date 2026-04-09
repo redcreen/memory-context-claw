@@ -252,7 +252,7 @@ Current smoke cases are grouped into categories.
 
 - `workspace-layering`
   Query: `长期记忆目录规则是什么`
-  Expectation: selected paths include `memory/2026-04-04.md` or `MEMORY.md`
+  Expectation: selected paths include `workspace/memory/2026-04-04.md` or `workspace/MEMORY.md`
 
 #### `concepts`
 
@@ -606,7 +606,7 @@ npm run verify
 
 - `workspace-layering`
   查询：`长期记忆目录规则是什么`
-  期望：selected paths 包含 `memory/2026-04-04.md` 或 `MEMORY.md`
+  期望：selected paths 包含 `workspace/memory/2026-04-04.md` 或 `workspace/MEMORY.md`
 
 #### `concepts`
 

@@ -76,13 +76,16 @@ Minimal example:
           sync: {
             watch: true
           },
-          extraPaths: ["/ABSOLUTE/PATH/TO/YOUR-WORKSPACE"]
+          extraPaths: ["/ABSOLUTE/PATH/TO/context-assembly-claw/workspace"]
         }
       }
     ]
   }
 }
 ```
+
+If you keep memory files inside this repo, point `extraPaths` at the bundled
+`workspace/` directory.
 
 ### Recommended Setup Order
 
@@ -246,7 +249,7 @@ Current ranking intent is:
 
 - relevance first
 - recent session memory second
-- `MEMORY.md` as the stable long-term floor
+- `workspace/MEMORY.md` as the stable long-term floor
 
 ### Recommended Tuning Order
 
@@ -384,13 +387,16 @@ But do that only after non-LLM behavior is already understandable.
           sync: {
             watch: true
           },
-          extraPaths: ["/ABSOLUTE/PATH/TO/YOUR-WORKSPACE"]
+          extraPaths: ["/ABSOLUTE/PATH/TO/context-assembly-claw/workspace"]
         }
       }
     ]
   }
 }
 ```
+
+如果你把记忆文件也收进这个仓库，`extraPaths` 就直接指向项目里的
+`workspace/` 目录。
 
 ### 推荐配置顺序
 
@@ -556,7 +562,7 @@ openclaw memory search "我爱吃什么"
 
 - 相关性第一
 - 近期 session-memory 第二
-- `MEMORY.md` 作为稳定长期事实的底座
+- `workspace/MEMORY.md` 作为稳定长期事实的底座
 
 ### 推荐调参顺序
 
