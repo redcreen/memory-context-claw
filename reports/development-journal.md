@@ -7670,3 +7670,18 @@ summary 结果是：
 - `.gitignore` 增加 `.DS_Store`
 - `README.md` / `configuration.md` 开始改为显式使用 `workspace/` 路径，避免仓库外散落资料继续被当作默认结构
 - `project-roadmap.md` / `system-architecture.md` / `testsuite.md` 也开始统一改成 `workspace/` 结构，避免入口文档继续沿用旧的仓库外路径心智模型
+
+---
+
+## 2026-04-09 - Repo relocation prep
+
+这轮把两件事并到一起处理：
+
+- 将 `todo.md` 正式纳入项目，避免继续停留在仓库外的临时状态
+- 把仓库从 `/Users/redcreen/Project/长记忆/context-assembly-claw` 迁到 `/Users/redcreen/Project/context-assembly-claw`
+
+目标是让：
+
+- 代码仓库直接位于 `Project/` 下
+- `长记忆/` 不再承担代码项目目录这一层角色
+- 外层只保留个人知识库配置（例如 `.obsidian`）这类不应直接并入仓库的内容
