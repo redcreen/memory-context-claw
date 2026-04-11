@@ -84,3 +84,55 @@ test("standalone CLI reflect dry-run returns reflection output without persistin
   assert.equal(result.reflection.candidate_records.length, 0);
   assert.equal(result.reflection.outputs[0].primary_label, "stable_rule_candidate");
 });
+
+test("standalone CLI govern audit renders markdown output", async () => {
+  const registryRoot = await fs.mkdtemp(path.join(os.tmpdir(), "umc-standalone-govern-"));
+  const runtime = createStandaloneRuntime({
+    config: {
+      registryDir: registryRoot,
+      tenant: "local",
+      scope: "workspace",
+      resource: "unified-memory-core",
+      key: "govern-audit",
+      visibility: "workspace"
+    },
+    clock: () => new Date("2026-04-11T00:00:00.000Z")
+  });
+
+  await runtime.reflectDeclaredSource({
+    declaredSource: {
+      sourceType: "manual",
+      declaredBy: "test",
+      content: "The user prefers short progress reports."
+    },
+    promoteCandidates: true,
+    decidedBy: "standalone-test"
+  });
+
+  const cliPath = path.join(process.cwd(), "scripts", "unified-memory-core-cli.js");
+  const { stdout } = await execFileAsync(
+    "node",
+    [
+      cliPath,
+      "govern",
+      "audit",
+      "--registry-dir",
+      registryRoot,
+      "--tenant",
+      "local",
+      "--scope",
+      "workspace",
+      "--resource",
+      "unified-memory-core",
+      "--key",
+      "govern-audit",
+      "--format",
+      "markdown"
+    ],
+    {
+      cwd: process.cwd()
+    }
+  );
+
+  assert.match(String(stdout || ""), /Unified Memory Core Governance Audit/);
+});

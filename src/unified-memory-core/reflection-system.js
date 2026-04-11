@@ -180,7 +180,9 @@ export function createReflectionSystem(options = {}) {
     const priorRecords = await listPriorRecords(sourceArtifact.namespace);
     const sourceRecords = priorRecords.filter((record) => record.record_type === "source_artifact");
     const repeatedSourceCount = sourceRecords.filter(
-      (record) => record.payload?.fingerprint === sourceArtifact.fingerprint
+      (record) =>
+        record.payload?.fingerprint === sourceArtifact.fingerprint &&
+        record.record_id !== sourceArtifact.artifact_id
     ).length;
     const text = getSourceText(sourceArtifact);
     const labels = detectLabels(sourceArtifact, text);

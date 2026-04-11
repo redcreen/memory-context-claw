@@ -39,10 +39,11 @@ Build a governed daily-learning system for `unified-memory-core` that can:
 
 - status: `planning-complete / development-ready`
 - architecture baseline: `defined`
-- implementation baseline: `not started`
+- implementation baseline: `started`
 - dependency status:
   - core memory-context backbone: `ready`
   - memory-search governance loop: `ready but not a hard coupling target`
+  - daily reflection baseline: `implemented`
 
 ## Phase Map
 

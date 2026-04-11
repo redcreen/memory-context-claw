@@ -37,6 +37,7 @@
     "memory:audit-duplicates": "node scripts/audit-fact-duplicates.js",
     "memory:governance-cycle": "node scripts/run-governance-cycle.js",
     "umc:cli": "node scripts/unified-memory-core-cli.js",
+    "umc:daily-reflection": "node scripts/run-daily-reflection.js",
     "verify": "node scripts/verify-suite.js",
     "deploy:local": "node scripts/deploy-openclaw-local.js",
     "runtime:check": "node scripts/configure-local-runtime.js --check",

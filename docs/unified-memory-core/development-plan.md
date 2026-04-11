@@ -397,17 +397,18 @@ Current implementation status:
 - `Tranche 2`: complete
 - `Tranche 3`: started
 - `Reflection System` MVP is implemented
+- `self-learning` daily reflection loop baseline is implemented
 - standalone runtime and CLI baseline are implemented
-- next focus is the daily reflection loop and wider repair / replay command surface
+- next focus is standalone export / audit / repair hardening and wider repair / replay command surface
 
 ## Immediate Next Build
 
 The immediate next build should be:
 
-1. `self-learning` daily reflection loop
-2. standalone export / audit / repair command hardening
-3. repair / replay paths for early artifacts
-4. split-readiness review inputs for standalone execution
+1. standalone export / audit / repair command hardening
+2. repair / replay paths for early artifacts
+3. split-readiness review inputs for standalone execution
+4. keep advanced policy adaptation deferred
 
 Do not start with:
 
@@ -844,17 +845,18 @@ flowchart LR
 - `Tranche 2`：已完成
 - `Tranche 3`：已启动
 - `Reflection System` MVP 已实现
+- `self-learning` 的 daily reflection loop 基线已实现
 - standalone runtime 与 CLI 基线已实现
-- 下一步聚焦 `daily reflection loop` 与更完整的 repair / replay 命令面
+- 下一步聚焦 standalone export / audit / repair 的补齐，以及更完整的 repair / replay 命令面
 
 ## 当前建议立刻开做的内容
 
 下一步最适合直接开做的是：
 
-1. `self-learning` 的 daily reflection loop
-2. standalone export / audit / repair command 的补齐与加固
-3. 给早期 artifacts 补 repair / replay 路径
-4. 为 split-ready 的独立执行补审查输入
+1. standalone export / audit / repair command 的补齐与加固
+2. 给早期 artifacts 补 repair / replay 路径
+3. 为 split-ready 的独立执行补审查输入
+4. 继续延后高阶 policy adaptation
 
 当前不要优先做：
 

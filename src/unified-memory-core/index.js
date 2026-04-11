@@ -20,6 +20,10 @@ export {
 export { createSourceSystem } from "./source-system.js";
 export { createMemoryRegistry } from "./memory-registry.js";
 export { createReflectionSystem } from "./reflection-system.js";
+export {
+  createDailyReflectionRunner,
+  renderDailyReflectionReport
+} from "./daily-reflection.js";
 export { createProjectionSystem } from "./projection-system.js";
 export {
   createGovernanceSystem,

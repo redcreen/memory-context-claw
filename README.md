@@ -182,6 +182,7 @@ Current implementation entrypoints:
 - Memory Registry MVP: [src/unified-memory-core/memory-registry.js](src/unified-memory-core/memory-registry.js)
 - local source-to-candidate pipeline: [src/unified-memory-core/pipeline.js](src/unified-memory-core/pipeline.js)
 - Reflection System MVP: [src/unified-memory-core/reflection-system.js](src/unified-memory-core/reflection-system.js)
+- daily reflection runner: [src/unified-memory-core/daily-reflection.js](src/unified-memory-core/daily-reflection.js)
 - Projection System MVP: [src/unified-memory-core/projection-system.js](src/unified-memory-core/projection-system.js)
 - OpenClaw / Codex adapter bridges: [src/unified-memory-core/adapter-bridges.js](src/unified-memory-core/adapter-bridges.js)
 - Governance System MVP: [src/unified-memory-core/governance-system.js](src/unified-memory-core/governance-system.js)
@@ -195,6 +196,12 @@ Current standalone path:
 
 ```bash
 npm run umc:cli -- reflect run --source-type manual --content "Prefer deterministic exports." --dry-run
+```
+
+Current self-learning path:
+
+```bash
+npm run umc:daily-reflection -- --source-type manual --content "Remember this: prefer concise summaries." --dry-run
 ```
 
 **Local Development Install**
@@ -525,6 +532,7 @@ workspace/
 - Memory Registry MVP: [src/unified-memory-core/memory-registry.js](src/unified-memory-core/memory-registry.js)
 - 本地 source-to-candidate pipeline: [src/unified-memory-core/pipeline.js](src/unified-memory-core/pipeline.js)
 - Reflection System MVP: [src/unified-memory-core/reflection-system.js](src/unified-memory-core/reflection-system.js)
+- daily reflection runner: [src/unified-memory-core/daily-reflection.js](src/unified-memory-core/daily-reflection.js)
 - Projection System MVP: [src/unified-memory-core/projection-system.js](src/unified-memory-core/projection-system.js)
 - Governance System MVP: [src/unified-memory-core/governance-system.js](src/unified-memory-core/governance-system.js)
 - OpenClaw / Codex adapter bridge: [src/unified-memory-core/adapter-bridges.js](src/unified-memory-core/adapter-bridges.js)
@@ -538,6 +546,12 @@ workspace/
 
 ```bash
 npm run umc:cli -- reflect run --source-type manual --content "Prefer deterministic exports." --dry-run
+```
+
+当前 self-learning 最短路径：
+
+```bash
+npm run umc:daily-reflection -- --source-type manual --content "Remember this: prefer concise summaries." --dry-run
 ```
 
 **本地开发安装**

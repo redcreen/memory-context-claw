@@ -1,7 +1,10 @@
 #!/usr/bin/env node
 
 import { createStandaloneRuntime } from "../src/unified-memory-core/standalone-runtime.js";
-import { renderGovernanceAuditReport } from "../src/unified-memory-core/index.js";
+import {
+  renderDailyReflectionReport,
+  renderGovernanceAuditReport
+} from "../src/unified-memory-core/index.js";
 
 function parseArgs(argv) {
   const flags = {};
@@ -100,6 +103,15 @@ async function run() {
     result = await runtime.addSource(buildDeclaredSource(flags), {
       persist: true
     });
+  } else if (family === "learn" && action === "daily-run") {
+    const report = await runtime.runDailyReflection({
+      declaredSources: [buildDeclaredSource(flags)],
+      dryRun: Boolean(flags["dry-run"]),
+      autoPromote: Boolean(flags.promote)
+    });
+    result = flags.format === "markdown"
+      ? renderDailyReflectionReport(report)
+      : report;
   } else if (family === "reflect" && action === "run") {
     result = await runtime.reflectDeclaredSource({
       declaredSource: buildDeclaredSource(flags),
@@ -126,6 +138,7 @@ async function run() {
     result = {
       usage: [
         "source add --source-type manual --content 'text'",
+        "learn daily-run --source-type manual --content 'text' [--dry-run] [--promote]",
         "reflect run --source-type manual --content 'text' [--dry-run] [--promote]",
         "export build --consumer generic",
         "govern audit [--format markdown]"

@@ -6,6 +6,7 @@ import { createSourceSystem } from "./source-system.js";
 import { createProjectionSystem } from "./projection-system.js";
 import { createGovernanceSystem } from "./governance-system.js";
 import { createReflectionSystem } from "./reflection-system.js";
+import { createDailyReflectionRunner } from "./daily-reflection.js";
 import { parseNamespace, parseVisibility } from "./contracts.js";
 
 const DEFAULT_REGISTRY_DIR = path.join(
@@ -52,6 +53,12 @@ export function createStandaloneRuntime(options = {}) {
     defaultVisibility: config.visibility
   });
   const reflectionSystem = createReflectionSystem({
+    registry,
+    clock
+  });
+  const dailyReflectionRunner = createDailyReflectionRunner({
+    sourceSystem,
+    reflectionSystem,
     registry,
     clock
   });
@@ -139,10 +146,14 @@ export function createStandaloneRuntime(options = {}) {
     registry,
     sourceSystem,
     reflectionSystem,
+    dailyReflectionRunner,
     projectionSystem,
     governanceSystem,
     addSource,
     reflectDeclaredSource,
+    runDailyReflection(params) {
+      return dailyReflectionRunner.runDailyReflection(params);
+    },
     buildExport,
     auditNamespace,
     getStats() {
