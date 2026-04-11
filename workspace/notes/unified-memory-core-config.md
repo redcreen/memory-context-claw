@@ -1,11 +1,11 @@
-# Memory Context Claw 配置说明
+# Unified Memory Core 配置说明
 
 ## 一句话结论
-`memory-context-claw` 的主配置分成两层：OpenClaw 插件挂载配置，以及插件自己的可选参数配置。
+`unified-memory-core` 的主配置分成两层：OpenClaw 插件挂载配置，以及插件自己的可选参数配置。
 
 ## 适用场景
 - 当用户问“这个项目的配置应该怎么写”
-- 当需要解释 `memory-context-claw` 怎么在 OpenClaw 里启用
+- 当需要解释 `unified-memory-core` 怎么在 OpenClaw 里启用
 - 当需要给出最小可用配置示例
 
 ## 最小配置
@@ -20,15 +20,15 @@ openclaw plugins install -l .
 ```json5
 {
   plugins: {
-    allow: ["memory-context-claw"],
+    allow: ["unified-memory-core"],
     load: {
-      paths: ["/ABSOLUTE/PATH/TO/memory-context-claw"]
+      paths: ["/ABSOLUTE/PATH/TO/unified-memory-core"]
     },
     slots: {
-      contextEngine: "memory-context-claw"
+      contextEngine: "unified-memory-core"
     },
     entries: {
-      "memory-context-claw": {
+      "unified-memory-core": {
         enabled: true
       }
     }
@@ -56,7 +56,7 @@ openclaw plugins install -l .
 如果要写插件自己的配置，位置在：
 
 ```json5
-plugins.entries["memory-context-claw"].config
+plugins.entries["unified-memory-core"].config
 ```
 
 常见参数包括：
@@ -70,4 +70,4 @@ plugins.entries["memory-context-claw"].config
 ## 判断标准
 - 只想启用插件：先写 `plugins.*`
 - 想把长期记忆和 Workspace 一起接进来：再写 `agents.defaults.memorySearch.*`
-- 想调插件行为：改 `plugins.entries["memory-context-claw"].config`
+- 想调插件行为：改 `plugins.entries["unified-memory-core"].config`

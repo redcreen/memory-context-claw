@@ -17,7 +17,7 @@ function usage() {
       "",
       "Options:",
       "  --config <path>         OpenClaw config path",
-      "  --plugin-path <path>    memory-context-claw directory path",
+      "  --plugin-path <path>    unified-memory-core directory path",
       "  --agent <id>            Agent id to configure (default: main)",
       "  --model-path <path>     Local GGUF embedding model path",
       `  --preset <name>         Plugin config preset (${listPresetNames().join(", ")})`,
@@ -92,7 +92,7 @@ async function main() {
         agentId: options.agentId,
         preset: options.preset,
         modelPath: options.modelPath,
-        contextEngine: "memory-context-claw"
+        contextEngine: "unified-memory-core"
       },
       null,
       2

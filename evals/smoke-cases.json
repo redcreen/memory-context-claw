@@ -180,9 +180,9 @@
   },
   {
     "name": "plugin-config",
-    "query": "memory-context-claw 这个插件的配置应该怎么写",
+    "query": "unified-memory-core 这个插件的配置应该怎么写",
     "expectedSelectedAny": [
-      "memory-context-claw",
+      "unified-memory-core",
       "contextEngine",
       "enabled: true"
     ],
@@ -203,7 +203,7 @@
     "query": "安装后怎么确认插件已经生效",
     "expectedSelectedAny": [
       "openclaw plugins list",
-      "memory-context-claw",
+      "unified-memory-core",
       "openclaw memory status --json"
     ],
     "expectedTopSource": "cardArtifact",

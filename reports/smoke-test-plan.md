@@ -74,7 +74,7 @@
 
 当前必测：
 
-- `memory-context-claw 这个插件的配置应该怎么写`
+- `unified-memory-core 这个插件的配置应该怎么写`
 - `这个项目主要解决什么问题`
 
 ## 当前建议分层

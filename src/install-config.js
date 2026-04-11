@@ -70,11 +70,11 @@ export function mergeInstallConfig(config, options) {
   next.agents = { ...agents, list };
 
   const plugins = ensureObject(next.plugins);
-  const allow = Array.from(new Set([...ensureArray(plugins.allow), "memory-context-claw"]));
+  const allow = Array.from(new Set([...ensureArray(plugins.allow), "unified-memory-core"]));
   const load = ensureObject(plugins.load);
   const loadPaths = Array.from(new Set([...ensureArray(load.paths), options.pluginPath]));
   const entries = ensureObject(plugins.entries);
-  const existingEntry = ensureObject(entries["memory-context-claw"]);
+  const existingEntry = ensureObject(entries["unified-memory-core"]);
   const existingConfig = ensureObject(existingEntry.config);
 
   next.plugins = {
@@ -86,11 +86,11 @@ export function mergeInstallConfig(config, options) {
     },
     slots: {
       ...ensureObject(plugins.slots),
-      contextEngine: "memory-context-claw"
+      contextEngine: "unified-memory-core"
     },
     entries: {
       ...entries,
-      "memory-context-claw": {
+      "unified-memory-core": {
         ...existingEntry,
         enabled: true,
         config: mergePluginEntryConfig(existingConfig, presetConfig)

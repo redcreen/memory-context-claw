@@ -24,7 +24,7 @@ Related documents:
 
 ## Workstream Goal
 
-Build a governed daily-learning system for `memory-context-claw` that can:
+Build a governed daily-learning system for `unified-memory-core` that can:
 
 - detect repeated signals
 - run daily reflection
@@ -337,7 +337,7 @@ flowchart TB
 
 ## 专项目标
 
-为 `memory-context-claw` 做出一套受治理的每日学习系统，能够：
+为 `unified-memory-core` 做出一套受治理的每日学习系统，能够：
 
 - 识别重复信号
 - 执行 daily reflection

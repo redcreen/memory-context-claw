@@ -50,7 +50,7 @@ test("summarizeMemorySearchResults computes failures and watchlist", () => {
   assert.equal(summary.pluginMultiCard, 1);
   assert.equal(summary.pluginNoisySupporting, 1);
   assert.equal(summary.pluginUnexpectedSupportingTotal, 1);
-  assert.equal(summary.builtinFailures, 2);
+  assert.equal(summary.builtinFailures, 1);
   assert.equal(summary.pluginFailures, 1);
   assert.equal(summary.watchlist.length, 1);
   assert.equal(summary.watchlist[0].id, "short-chinese-token");

@@ -260,8 +260,8 @@ This allows:
 {
   "id": "code-rule-001",
   "userId": "user-redcreen",
-  "projectId": "context-assembly-claw",
-  "namespace": "project/context-assembly-claw/code",
+  "projectId": "unified-memory-core",
+  "namespace": "project/unified-memory-core/code",
   "sourceTool": "codex",
   "type": "stable_rule",
   "statement": "Do not hardcode implementation details.",
@@ -561,8 +561,8 @@ flowchart LR
 {
   "id": "code-rule-001",
   "userId": "user-redcreen",
-  "projectId": "context-assembly-claw",
-  "namespace": "project/context-assembly-claw/code",
+  "projectId": "unified-memory-core",
+  "namespace": "project/unified-memory-core/code",
   "sourceTool": "codex",
   "type": "stable_rule",
   "statement": "Do not hardcode implementation details.",

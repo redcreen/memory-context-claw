@@ -72,13 +72,13 @@ test("extractConversationMemoryCandidates boosts fresh live daily candidates ove
   const { daily } = extractConversationMemoryCandidates([
     {
       role: "assistant",
-      text: "今天我们已经完成 memory-context-claw 的候选提炼优化。",
+      text: "今天我们已经完成 unified-memory-core 的候选提炼优化。",
       timestamp: now,
       filePath: "/tmp/live-session.jsonl"
     },
     {
       role: "assistant",
-      text: "今天我们已经完成 memory-context-claw 的候选提炼优化（旧版）。",
+      text: "今天我们已经完成 unified-memory-core 的候选提炼优化（旧版）。",
       timestamp: stale,
       filePath: "sessions/old-session.jsonl"
     }
@@ -353,7 +353,7 @@ test("renderConversationMemoryReport includes both long-term and daily sections"
     }]
   }, {
     agentId: "main",
-    workspaceRoot: "/Users/redcreen/Project/context-assembly-claw/workspace"
+    workspaceRoot: "/Users/redcreen/Project/unified-memory-core/workspace"
   });
 
   assert.match(markdown, /建议进入 MEMORY\.md/);

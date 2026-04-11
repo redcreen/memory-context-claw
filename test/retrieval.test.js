@@ -26,7 +26,7 @@ test("extractJsonPayload ignores leading plugin log lines", () => {
   const parsed = extractJsonPayload(
     [
       "[plugins] [task-system] plugin loaded (enabled=true)",
-      "[plugins] [memory-context-claw] loaded (enabled=true)",
+      "[plugins] [unified-memory-core] loaded (enabled=true)",
       '{"results":[{"path":"memory/2026-04-04.md","score":0.82}]}'
     ].join("\n")
   );
@@ -39,13 +39,13 @@ test("extractJsonPayload ignores leading plugin log lines", () => {
 test("shouldExcludeMemoryPath filters plugin repo paths", () => {
   assert.equal(
     shouldExcludeMemoryPath(
-      "../../Project/context-assembly-claw/README.md",
-      ["/context-assembly-claw/"]
+      "../../Project/unified-memory-core/README.md",
+      ["/unified-memory-core/"]
     ),
     true
   );
   assert.equal(
-    shouldExcludeMemoryPath("workspace/MEMORY.md", ["/context-assembly-claw/"]),
+    shouldExcludeMemoryPath("workspace/MEMORY.md", ["/unified-memory-core/"]),
     false
   );
 });
@@ -55,7 +55,7 @@ test("resolvePluginConfig enables query rewrite by default", () => {
   assert.equal(config.queryRewrite.enabled, true);
   assert.equal(config.queryRewrite.maxQueries, 4);
   assert.equal(
-    config.excludePaths.includes("/memory-context-claw-enabled-vs-disabled-report.md"),
+    config.excludePaths.includes("/unified-memory-core-enabled-vs-disabled-report.md"),
     true
   );
 });
@@ -64,7 +64,7 @@ test("resolvePluginConfig merges default and preset exclude paths", () => {
   const config = resolvePluginConfig({
     excludePaths: ["/custom-report.md"]
   });
-  assert.equal(config.excludePaths.includes("/memory-context-claw-enabled-vs-disabled-report.md"), true);
+  assert.equal(config.excludePaths.includes("/unified-memory-core-enabled-vs-disabled-report.md"), true);
   assert.equal(config.excludePaths.includes("/custom-report.md"), true);
 });
 
@@ -290,7 +290,7 @@ test("buildCardArtifactCandidates promotes project cards for project-style queri
     },
     {
       title: "项目定位",
-      fact: "这是一个面向 OpenClaw 的 context engine 插件，负责把长期记忆更稳定地变成当前轮可用的上下文。",
+      fact: "Unified Memory Core 是共享记忆产品层；当前仓库里的 unified-memory-core 负责 OpenClaw adapter，把统一记忆底座里的稳定事实和规则投影成当前轮可用上下文。",
       tags: ["long-term", "project", "memory"],
       sourcePath: "memory/2026-04-05-project-positioning.md",
       sourceChannel: "assistant-conclusion",
@@ -300,7 +300,7 @@ test("buildCardArtifactCandidates promotes project cards for project-style queri
 
   assert.ok(candidates.length >= 1);
   assert.equal(candidates[0].path, "memory/2026-04-05-project-positioning.md");
-  assert.match(candidates[0].snippet, /context engine|长期记忆更稳定地变成当前轮可用的上下文/);
+  assert.match(candidates[0].snippet, /共享记忆产品层|OpenClaw adapter|投影成当前轮可用上下文/);
   assert.equal(candidates[0].source, "cardArtifact");
 });
 
@@ -586,18 +586,18 @@ test("buildCardArtifactCandidates prefers provider-role config cards for provide
 test("buildProjectCardsFromMarkdown derives stable project positioning cards", () => {
   const cards = buildProjectCardsFromMarkdown(
     [
-      "# memory-context-claw",
+      "# unified-memory-core",
       "",
-      "`memory-context-claw` is an OpenClaw `context engine` plugin.",
+      "`Unified Memory Core` is the shared-memory product layer.",
       "",
-      "它负责把长期记忆更稳定地变成当前轮可用的上下文。"
+      "当前仓库里的 `unified-memory-core` 负责 OpenClaw adapter，把统一记忆底座里的稳定事实和规则投影成当前轮可用上下文。"
     ].join("\n"),
     "README.md"
   );
 
   assert.ok(cards.length >= 1);
   assert.equal(cards[0].title, "项目定位");
-  assert.match(cards[0].fact, /OpenClaw.+context engine.+长期记忆更稳定地变成当前轮可用的上下文/);
+  assert.match(cards[0].fact, /共享记忆产品层|OpenClaw adapter|投影成当前轮可用上下文/);
 });
 
 test("buildProjectCardsFromMarkdown derives workspace-structure project card", () => {
@@ -619,8 +619,8 @@ test("buildProjectCardsFromMarkdown derives release-install project card", () =>
     [
       "stable users: install the published release tag",
       "early adopters: install the current `main`",
-      "openclaw plugins install git+https://github.com/redcreen/memory-context-claw.git#v0.1.0",
-      "openclaw plugins install git+https://github.com/redcreen/memory-context-claw.git"
+      "openclaw plugins install git+https://github.com/redcreen/unified-memory-core.git#v0.1.0",
+      "openclaw plugins install git+https://github.com/redcreen/unified-memory-core.git"
     ].join("\n"),
     "README.md"
   );
@@ -680,21 +680,21 @@ test("classifyWorkspaceNoteCardEligibility accepts stable concept notes with cle
 test("classifyWorkspaceNoteCardEligibility rejects historical roadmap notes", () => {
   const result = classifyWorkspaceNoteCardEligibility(
     [
-      "# Context Assembly Claw 项目 Roadmap",
+      "# Unified Memory Core 项目 Roadmap",
       "",
       "## 一句话结论",
-      "这是一个面向 OpenClaw 的 context engine 插件。",
+      "Unified Memory Core 是共享记忆产品层。",
       "",
       "## 适用场景",
       "- 看项目阶段推进",
       "",
       "## 当前已经做完的事情",
-      "- 插件骨架已经完成",
+      "- 产品骨架已经完成",
       "",
       "## 接下来要做什么",
       "- 发布前整理"
     ].join("\n"),
-    "workspace/notes/context-assembly-claw-roadmap.md"
+    "workspace/notes/unified-memory-core-roadmap.md"
   );
 
   assert.equal(result.eligible, false);
@@ -705,19 +705,19 @@ test("classifyWorkspaceNoteCardEligibility rejects historical roadmap notes", ()
 test("classifyWorkspaceNoteCardEligibility rejects config notes covered by canonical docs", () => {
   const result = classifyWorkspaceNoteCardEligibility(
     [
-      "# Memory Context Claw 配置说明",
+      "# Unified Memory Core 配置说明",
       "",
       "## 一句话结论",
-      "memory-context-claw 的主配置分成两层。",
+      "unified-memory-core 的主配置分成两层。",
       "",
       "## 适用场景",
       "- 当需要解释配置应该怎么写",
       "",
       "## 最小配置",
       "openclaw.json",
-      "plugins.entries[\"memory-context-claw\"].config"
+      "plugins.entries[\"unified-memory-core\"].config"
     ].join("\n"),
-    "workspace/notes/memory-context-claw-config.md"
+    "workspace/notes/unified-memory-core-config.md"
   );
 
   assert.equal(result.eligible, false);
@@ -736,7 +736,9 @@ test("buildPolicyCardsFromMarkdown derives stable formal memory policy cards", (
       "",
       "2. `memory/YYYY-MM-DD.md`",
       "   - 已确认",
-      "   - 适合保留阶段事实、近期确认信息、项目结论"
+      "   - 适合保留阶段事实、近期确认信息、项目结论",
+      "",
+      "3. 待确认信息必须优先进入 pending，不得默认写入 `MEMORY.md` 或 `memory/YYYY-MM-DD.md`"
     ].join("\n"),
     "formal-memory-policy.md"
   );
@@ -750,12 +752,12 @@ test("buildConfigCardsFromMarkdown derives stable plugin config cards", () => {
   const cards = buildConfigCardsFromMarkdown(
     [
       "plugins: {",
-      '  allow: [\"memory-context-claw\"],',
+      '  allow: [\"unified-memory-core\"],',
       "  slots: {",
-      '    contextEngine: \"memory-context-claw\"',
+      '    contextEngine: \"unified-memory-core\"',
       "  },",
       "  entries: {",
-      '    \"memory-context-claw\": {',
+      '    \"unified-memory-core\": {',
       "      enabled: true",
       "    }",
       "  }",
@@ -770,8 +772,8 @@ test("buildConfigCardsFromMarkdown derives stable plugin config cards", () => {
 test("buildConfigCardsFromMarkdown derives release-install config card", () => {
   const cards = buildConfigCardsFromMarkdown(
     [
-      "openclaw plugins install git+https://github.com/redcreen/memory-context-claw.git#v0.1.0",
-      "openclaw plugins install git+https://github.com/redcreen/memory-context-claw.git"
+      "openclaw plugins install git+https://github.com/redcreen/unified-memory-core.git#v0.1.0",
+      "openclaw plugins install git+https://github.com/redcreen/unified-memory-core.git"
     ].join("\n"),
     "README.md"
   );
@@ -795,7 +797,7 @@ test("buildCardArtifactCandidates prefers config cards over project cards for co
   const candidates = buildCardArtifactCandidates([
     {
       title: "项目定位",
-      fact: "这是一个面向 OpenClaw 的 context engine 插件，负责把长期记忆更稳定地变成当前轮可用的上下文。",
+      fact: "Unified Memory Core 是共享记忆产品层；当前仓库里的 unified-memory-core 负责 OpenClaw adapter，把统一记忆底座里的稳定事实和规则投影成当前轮可用上下文。",
       tags: ["long-term", "project", "memory"],
       sourcePath: "README.md",
       sourceChannel: "project-doc",
@@ -803,13 +805,13 @@ test("buildCardArtifactCandidates prefers config cards over project cards for co
     },
     {
       title: "插件最小配置",
-      fact: "memory-context-claw 的最小配置是：把它挂到 contextEngine，并在 entries 里 enabled: true。",
+      fact: "unified-memory-core 的最小配置是：把它挂到 contextEngine，并在 entries 里 enabled: true。",
       tags: ["long-term", "project", "config", "memory"],
       sourcePath: "configuration.md",
       sourceChannel: "config-doc",
       recommendation: { action: "review-memory-md", confidence: "high" }
     }
-  ], "memory-context-claw 这个插件的配置应该怎么写", 6);
+  ], "unified-memory-core 这个插件的配置应该怎么写", 6);
 
   assert.ok(candidates.length >= 2);
   assert.equal(candidates[0].path, "configuration.md");
@@ -820,7 +822,7 @@ test("buildCardArtifactCandidates prefers project cards over config cards for pr
   const candidates = buildCardArtifactCandidates([
     {
       title: "项目定位",
-      fact: "这是一个面向 OpenClaw 的 context engine 插件，负责把长期记忆更稳定地变成当前轮可用的上下文。",
+      fact: "Unified Memory Core 是共享记忆产品层；当前仓库里的 unified-memory-core 负责 OpenClaw adapter，把统一记忆底座里的稳定事实和规则投影成当前轮可用上下文。",
       tags: ["long-term", "project", "memory"],
       sourcePath: "README.md",
       sourceChannel: "project-doc",
@@ -828,7 +830,7 @@ test("buildCardArtifactCandidates prefers project cards over config cards for pr
     },
     {
       title: "插件最小配置",
-      fact: "memory-context-claw 的最小配置是：把它挂到 contextEngine，并在 entries 里 enabled: true。",
+      fact: "unified-memory-core 的最小配置是：把它挂到 contextEngine，并在 entries 里 enabled: true。",
       tags: ["long-term", "project", "config", "memory"],
       sourcePath: "configuration.md",
       sourceChannel: "config-doc",
@@ -838,7 +840,7 @@ test("buildCardArtifactCandidates prefers project cards over config cards for pr
 
   assert.ok(candidates.length >= 2);
   assert.equal(candidates[0].path, "README.md");
-  assert.match(candidates[0].snippet, /context engine|长期记忆更稳定地变成当前轮可用的上下文/);
+  assert.match(candidates[0].snippet, /共享记忆产品层|OpenClaw adapter|投影成当前轮可用上下文/);
 });
 
 test("buildCardArtifactCandidates prefers release-install cards for install queries", () => {
@@ -853,7 +855,7 @@ test("buildCardArtifactCandidates prefers release-install cards for install quer
     },
     {
       title: "项目定位",
-      fact: "这是一个面向 OpenClaw 的 context engine 插件，负责把长期记忆更稳定地变成当前轮可用的上下文。",
+      fact: "Unified Memory Core 是共享记忆产品层；当前仓库里的 unified-memory-core 负责 OpenClaw adapter，把统一记忆底座里的稳定事实和规则投影成当前轮可用上下文。",
       tags: ["long-term", "project", "memory"],
       sourcePath: "README.md",
       sourceChannel: "project-doc",
@@ -870,7 +872,7 @@ test("buildCardArtifactCandidates prefers install-verify cards for verification 
   const candidates = buildCardArtifactCandidates([
     {
       title: "安装验证步骤",
-      fact: "安装后先运行 openclaw plugins list，确认 memory-context-claw 已加载；再运行 openclaw memory status --json，确认长期记忆索引正常。",
+      fact: "安装后先运行 openclaw plugins list，确认 unified-memory-core 已加载；再运行 openclaw memory status --json，确认长期记忆索引正常。",
       tags: ["long-term", "project", "config", "verify"],
       sourcePath: "configuration.md",
       sourceChannel: "config-doc",
@@ -878,7 +880,7 @@ test("buildCardArtifactCandidates prefers install-verify cards for verification 
     },
     {
       title: "插件最小配置",
-      fact: "memory-context-claw 的最小配置是：把它挂到 contextEngine，并在 entries 里 enabled: true。",
+      fact: "unified-memory-core 的最小配置是：把它挂到 contextEngine，并在 entries 里 enabled: true。",
       tags: ["long-term", "project", "config", "memory"],
       sourcePath: "configuration.md",
       sourceChannel: "config-doc",
@@ -903,7 +905,7 @@ test("buildCardArtifactCandidates prefers workspace-layout project cards for wor
     },
     {
       title: "项目定位",
-      fact: "这是一个面向 OpenClaw 的 context engine 插件，负责把长期记忆更稳定地变成当前轮可用的上下文。",
+      fact: "Unified Memory Core 是共享记忆产品层；当前仓库里的 unified-memory-core 负责 OpenClaw adapter，把统一记忆底座里的稳定事实和规则投影成当前轮可用上下文。",
       tags: ["long-term", "project", "memory"],
       sourcePath: "README.md",
       sourceChannel: "project-doc",
@@ -1025,7 +1027,7 @@ test("buildCardArtifactCandidates prefers lossless concept cards for lossless-un
     },
     {
       title: "项目定位",
-      fact: "这是一个面向 OpenClaw 的 context engine 插件，负责把长期记忆更稳定地变成当前轮可用的上下文。",
+      fact: "Unified Memory Core 是共享记忆产品层；当前仓库里的 unified-memory-core 负责 OpenClaw adapter，把统一记忆底座里的稳定事实和规则投影成当前轮可用上下文。",
       tags: ["long-term", "project", "memory"],
       sourcePath: "README.md",
       sourceChannel: "project-doc",
@@ -1059,7 +1061,7 @@ test("buildCardArtifactCandidates keeps project-positioning cards ahead of lossl
   const candidates = buildCardArtifactCandidates([
     {
       title: "项目定位",
-      fact: "这是一个面向 OpenClaw 的 context engine 插件，负责把长期记忆更稳定地变成当前轮可用的上下文。",
+      fact: "Unified Memory Core 是共享记忆产品层；当前仓库里的 unified-memory-core 负责 OpenClaw adapter，把统一记忆底座里的稳定事实和规则投影成当前轮可用上下文。",
       tags: ["long-term", "project", "memory"],
       sourcePath: "README.md",
       sourceChannel: "project-doc",
@@ -1080,7 +1082,7 @@ test("buildCardArtifactCandidates keeps project-positioning cards ahead of lossl
 });
 
 test("readCardArtifactCandidates loads lossless concept cards from workspace notes", async () => {
-  const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "memory-context-claw-lossless-notes-"));
+  const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "unified-memory-core-lossless-notes-"));
   const artifactPath = path.join(tempDir, "cards.json");
   const workspaceRoot = path.join(tempDir, "workspace");
   const pluginRoot = path.join(tempDir, "plugin");
@@ -1096,6 +1098,14 @@ test("readCardArtifactCandidates loads lossless concept cards from workspace not
   await fs.writeFile(
     path.join(pluginRoot, "workspace", "notes", "openclaw-memory-vs-lossless.md"),
     [
+      "# OpenClaw 内置长期记忆 vs Lossless 类插件",
+      "",
+      "## 一句话结论",
+      "OpenClaw 内置长期记忆负责长期保存和检索，Lossless 更偏向上下文编排与信息保真。",
+      "",
+      "## 适用场景",
+      "- 当需要解释为什么已经有长期记忆还会推荐 Lossless",
+      "",
       "OpenClaw 内置长期记忆负责长期保存和检索。",
       "Lossless 更偏向上下文编排与信息保真。"
     ].join("\n"),
@@ -1118,7 +1128,7 @@ test("readCardArtifactCandidates loads lossless concept cards from workspace not
 });
 
 test("readCardArtifactCandidates skips ineligible workspace notes", async () => {
-  const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "memory-context-claw-notes-eligibility-"));
+  const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "unified-memory-core-notes-eligibility-"));
   const artifactPath = path.join(tempDir, "cards.json");
   const workspaceRoot = path.join(tempDir, "workspace");
   const pluginRoot = path.join(tempDir, "plugin");
@@ -1132,25 +1142,25 @@ test("readCardArtifactCandidates skips ineligible workspace notes", async () => 
   await fs.writeFile(path.join(pluginRoot, "configuration.md"), "# config\n", "utf8");
   await fs.writeFile(artifactPath, "[]", "utf8");
   await fs.writeFile(
-    path.join(pluginRoot, "workspace", "notes", "context-assembly-claw-roadmap.md"),
+    path.join(pluginRoot, "workspace", "notes", "unified-memory-core-roadmap.md"),
     [
-      "# Context Assembly Claw 项目 Roadmap",
+      "# Unified Memory Core 项目 Roadmap",
       "",
       "## 一句话结论",
-      "这是一个面向 OpenClaw 的 context engine 插件。",
+      "Unified Memory Core 是共享记忆产品层。",
       "",
       "## 适用场景",
       "- 看项目阶段推进",
       "",
       "## 当前已经做完的事情",
-      "- 插件骨架已经完成"
+      "- 产品骨架已经完成"
     ].join("\n"),
     "utf8"
   );
   await fs.writeFile(
-    path.join(pluginRoot, "workspace", "notes", "memory-context-claw-config.md"),
+    path.join(pluginRoot, "workspace", "notes", "unified-memory-core-config.md"),
     [
-      "# Memory Context Claw 配置说明",
+      "# Unified Memory Core 配置说明",
       "",
       "## 一句话结论",
       "配置分成两层。",
@@ -1160,7 +1170,7 @@ test("readCardArtifactCandidates skips ineligible workspace notes", async () => 
       "",
       "## 最小配置",
       "openclaw.json",
-      "plugins.entries[\"memory-context-claw\"].config"
+      "plugins.entries[\"unified-memory-core\"].config"
     ].join("\n"),
     "utf8"
   );
@@ -1175,7 +1185,7 @@ test("readCardArtifactCandidates skips ineligible workspace notes", async () => 
     logger: {}
   });
 
-  assert.ok(candidates.every((item) => !/workspace\/notes\/context-assembly-claw-roadmap\.md|workspace\/notes\/memory-context-claw-config\.md/.test(item.path)));
+  assert.ok(candidates.every((item) => !/workspace\/notes\/unified-memory-core-roadmap\.md|workspace\/notes\/unified-memory-core-config\.md/.test(item.path)));
 });
 
 test("buildCardArtifactCandidates promotes birthday and family cards for personal fact queries", () => {
@@ -1214,7 +1224,7 @@ test("buildCardArtifactCandidates keeps slot-specific family facts ahead of sibl
 });
 
 test("retrieveMemoryCandidates uses card fast path for strong fact intents", async () => {
-  const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "memory-context-claw-cards-"));
+  const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "unified-memory-core-cards-"));
   const artifactPath = path.join(tempDir, "cards.json");
 
   await fs.writeFile(
@@ -1258,7 +1268,7 @@ test("retrieveMemoryCandidates uses card fast path for strong fact intents", asy
 });
 
 test("readCardArtifactCandidates prefers formal policy over session-derived duplicate facts", async () => {
-  const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "memory-context-claw-read-cards-"));
+  const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "unified-memory-core-read-cards-"));
   const artifactPath = path.join(tempDir, "cards.json");
   const workspaceRoot = path.join(tempDir, "workspace");
   const pluginRoot = path.join(tempDir, "plugin");

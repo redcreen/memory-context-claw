@@ -152,7 +152,7 @@ export async function retrieveMemoryCandidates({
 
     if (shouldUseCardFastPath(query, cardCandidates, cardArtifacts)) {
       logger?.debug?.(
-        `[memory-context-claw] card fast path hit for query="${query}" with ${cardCandidates.length} cards`
+        `[unified-memory-core] card fast path hit for query="${query}" with ${cardCandidates.length} cards`
       );
       return cardCandidates
         .slice(0, maxCandidates)
@@ -230,11 +230,11 @@ export async function retrieveMemoryCandidates({
       }));
   } catch (error) {
     logger?.warn?.(
-      `[memory-context-claw] memory retrieval failed for agent=${agentId}: ${String(error)}`
+      `[unified-memory-core] memory retrieval failed for agent=${agentId}: ${String(error)}`
     );
     if (Array.isArray(cardCandidates) && cardCandidates.length > 0) {
       logger?.warn?.(
-        `[memory-context-claw] falling back to card artifacts for query="${query}" after builtin retrieval failure`
+        `[unified-memory-core] falling back to card artifacts for query="${query}" after builtin retrieval failure`
       );
       return cardCandidates
         .slice(0, maxCandidates)
@@ -310,7 +310,7 @@ function shouldUseCardFastPath(query, cardCandidates, cardArtifacts) {
     matchers.push((item) => /生日|农历|女儿|儿子|孩子|家庭|身份证/.test(String(item?.snippet || "")));
   }
   if (intents.project) {
-    matchers.push((item) => /项目|context engine|上下文引擎|memory-context-claw|长期记忆|上下文/.test(String(item?.snippet || "")));
+    matchers.push((item) => /项目|context engine|上下文引擎|unified-memory-core|长期记忆|上下文/.test(String(item?.snippet || "")));
   }
 
   const matchedCard = cardCandidates.find((item) => matchers.some((matcher) => matcher(item)));
@@ -455,7 +455,7 @@ export function buildCardArtifactCandidates(cards, query, maxCandidates = 6) {
       const projectBoost =
         projectIntent &&
         (
-          /项目|定位|目标|解决什么问题|context engine|上下文引擎|memory-context-claw|上下文层/.test(fact)
+          /项目|定位|目标|解决什么问题|context engine|上下文引擎|unified-memory-core|上下文层/.test(fact)
           || sourceChannel === "project-doc"
           || (tagsList.includes("project") && !tagsList.includes("config"))
         )
@@ -1260,10 +1260,13 @@ export function buildProjectCardsFromMarkdown(markdown = "", filePath = "README.
   const text = String(markdown || "");
 
   const projectPatterns = [
-    /memory-context-claw.+?OpenClaw.+?context engine plugin/i,
+    /unified-memory-core.+?OpenClaw.+?context engine plugin/i,
     /面向 OpenClaw 的 [`']?context engine[`']? 插件/,
+    /共享记忆产品|共享记忆底座|长期记忆上下文层/,
+    /OpenClaw adapter|OpenClaw 适配层/,
     /把长期记忆更稳定地变成当前轮可用的上下文/,
-    /负责把长期记忆更稳定地变成当前轮可用的上下文/
+    /负责把长期记忆更稳定地变成当前轮可用的上下文/,
+    /负责把统一记忆底座里的稳定事实和规则投影成当前轮可用上下文/
   ];
 
   const hasProjectSignal = projectPatterns.some((pattern) => pattern.test(text));
@@ -1271,7 +1274,7 @@ export function buildProjectCardsFromMarkdown(markdown = "", filePath = "README.
     cards.push({
       title: "项目定位",
       type: "longTerm",
-      fact: "这是一个面向 OpenClaw 的 context engine 插件，负责把长期记忆更稳定地变成当前轮可用的上下文。",
+      fact: "Unified Memory Core 是共享记忆产品层；当前仓库里的 unified-memory-core 负责 OpenClaw adapter，把统一记忆底座里的稳定事实和规则投影成当前轮可用上下文。",
       tags: ["long-term", "project", "memory"],
       sourceFile: path.basename(filePath),
       sourcePath: filePath,
@@ -1363,8 +1366,8 @@ export function buildProjectCardsFromMarkdown(markdown = "", filePath = "README.
   }
 
   if (
-    /plugins install git\+https:\/\/github\.com\/redcreen\/memory-context-claw\.git#v/i.test(text)
-    && /git\+https:\/\/github\.com\/redcreen\/memory-context-claw\.git/.test(text)
+    /plugins install git\+https:\/\/github\.com\/redcreen\/unified-memory-core\.git#v/i.test(text)
+    && /git\+https:\/\/github\.com\/redcreen\/unified-memory-core\.git/.test(text)
     && (/release tag|稳定版|当前 `main`|current `main`|开发版安装/i.test(text))
   ) {
     cards.push({
@@ -1405,13 +1408,13 @@ export function classifyWorkspaceNoteCardEligibility(markdown = "", filePath = "
     /roadmap/i.test(baseName) || /##\s*当前已经做完的事情|##\s*接下来要做什么/.test(text);
   const isConfigDuplicate =
     /config/i.test(baseName)
-    || (/##\s*最小配置/.test(text) && /openclaw\.json|plugins\.entries\["memory-context-claw"\]/.test(text));
+    || (/##\s*最小配置/.test(text) && /openclaw\.json|plugins\.entries\["unified-memory-core"\]/.test(text));
   const hasLosslessConceptSignal =
     /openclaw 内置长期记忆负责长期保存和检索/i.test(text)
     && /lossless.+上下文编排|信息保真/i.test(text);
   const hasProjectRationaleSignal =
-    /面向 OpenClaw 的 [`']?context engine[`']? 插件|memory-context-claw.+?OpenClaw.+?context engine plugin/i.test(text)
-    && /把长期记忆更稳定地变成当前轮可用的上下文|上下文组装/.test(text);
+    /面向 OpenClaw 的 [`']?context engine[`']? 插件|unified-memory-core.+?OpenClaw.+?context engine plugin|共享记忆产品|共享记忆底座|长期记忆上下文层|OpenClaw adapter|OpenClaw 适配层/i.test(text)
+    && /把长期记忆更稳定地变成当前轮可用的上下文|上下文组装|投影成当前轮可用上下文/.test(text);
 
   if (!hasStableStructure) {
     return {
@@ -1465,14 +1468,14 @@ export function buildConfigCardsFromMarkdown(markdown = "", filePath = "configur
   const text = String(markdown || "");
 
   if (
-    /allow:\s*\["memory-context-claw"\]/.test(text)
-    && /contextEngine:\s*"memory-context-claw"/.test(text)
+    /allow:\s*\["unified-memory-core"\]/.test(text)
+    && /contextEngine:\s*"unified-memory-core"/.test(text)
     && /enabled:\s*true/.test(text)
   ) {
     cards.push({
       title: "插件最小配置",
       type: "longTerm",
-      fact: "memory-context-claw 的最小配置是：把它挂到 contextEngine，并在 entries 里 enabled: true。",
+      fact: "unified-memory-core 的最小配置是：把它挂到 contextEngine，并在 entries 里 enabled: true。",
       tags: ["long-term", "project", "config", "memory"],
       sourceFile: path.basename(filePath),
       sourcePath: filePath,
@@ -1505,8 +1508,8 @@ export function buildConfigCardsFromMarkdown(markdown = "", filePath = "configur
   }
 
   if (
-    /plugins install git\+https:\/\/github\.com\/redcreen\/memory-context-claw\.git#v/i.test(text)
-    && /git\+https:\/\/github\.com\/redcreen\/memory-context-claw\.git/.test(text)
+    /plugins install git\+https:\/\/github\.com\/redcreen\/unified-memory-core\.git#v/i.test(text)
+    && /git\+https:\/\/github\.com\/redcreen\/unified-memory-core\.git/.test(text)
   ) {
     cards.push({
       title: "安装发布规则",
@@ -1530,7 +1533,7 @@ export function buildConfigCardsFromMarkdown(markdown = "", filePath = "configur
     cards.push({
       title: "安装验证步骤",
       type: "longTerm",
-      fact: "安装后先运行 openclaw plugins list，确认 memory-context-claw 已加载；再运行 openclaw memory status --json，确认长期记忆索引正常。",
+      fact: "安装后先运行 openclaw plugins list，确认 unified-memory-core 已加载；再运行 openclaw memory status --json，确认长期记忆索引正常。",
       tags: ["long-term", "project", "config", "verify"],
       sourceFile: path.basename(filePath),
       sourcePath: filePath,
@@ -1620,7 +1623,7 @@ async function readWorkspaceStableMemoryCards(workspaceRoot, logger) {
     cards.push(...buildStableMemoryCardsFromMarkdown(raw, "MEMORY.md"));
   } catch (error) {
     logger?.debug?.(
-      `[memory-context-claw] workspace MEMORY card load skipped (${rootMemoryPath}): ${String(error)}`
+      `[unified-memory-core] workspace MEMORY card load skipped (${rootMemoryPath}): ${String(error)}`
     );
   }
 
@@ -1637,7 +1640,7 @@ async function readWorkspaceStableMemoryCards(workspaceRoot, logger) {
     }
   } catch (error) {
     logger?.debug?.(
-      `[memory-context-claw] workspace daily card load skipped (${dailyDir}): ${String(error)}`
+      `[unified-memory-core] workspace daily card load skipped (${dailyDir}): ${String(error)}`
     );
   }
 
@@ -1655,7 +1658,7 @@ async function readPluginStableProjectCards(pluginRoot, logger) {
       cards.push(...buildProjectCardsFromMarkdown(raw, fileName));
     } catch (error) {
       logger?.debug?.(
-        `[memory-context-claw] project card load skipped (${fullPath}): ${String(error)}`
+        `[unified-memory-core] project card load skipped (${fullPath}): ${String(error)}`
       );
     }
   }
@@ -1674,20 +1677,20 @@ async function readPluginStableProjectCards(pluginRoot, logger) {
         const eligibility = classifyWorkspaceNoteCardEligibility(raw, relativePath);
         if (!eligibility.eligible) {
           logger?.debug?.(
-            `[memory-context-claw] project note card skipped (${relativePath}): ${eligibility.reason}`
+            `[unified-memory-core] project note card skipped (${relativePath}): ${eligibility.reason}`
           );
           continue;
         }
         cards.push(...buildProjectCardsFromMarkdown(raw, relativePath));
       } catch (error) {
         logger?.debug?.(
-          `[memory-context-claw] project note card load skipped (${fullPath}): ${String(error)}`
+          `[unified-memory-core] project note card load skipped (${fullPath}): ${String(error)}`
         );
       }
     }
   } catch (error) {
     logger?.debug?.(
-      `[memory-context-claw] project note card load skipped (${notesDir}): ${String(error)}`
+      `[unified-memory-core] project note card load skipped (${notesDir}): ${String(error)}`
     );
   }
 
@@ -1705,7 +1708,7 @@ async function readPluginStableConfigCards(pluginRoot, logger) {
       cards.push(...buildConfigCardsFromMarkdown(raw, fileName));
     } catch (error) {
       logger?.debug?.(
-        `[memory-context-claw] config card load skipped (${fullPath}): ${String(error)}`
+        `[unified-memory-core] config card load skipped (${fullPath}): ${String(error)}`
       );
     }
   }
@@ -1724,7 +1727,7 @@ async function readPluginStablePolicyCards(pluginRoot, logger) {
       cards.push(...buildPolicyCardsFromMarkdown(raw, fileName));
     } catch (error) {
       logger?.debug?.(
-        `[memory-context-claw] policy card load skipped (${fullPath}): ${String(error)}`
+        `[unified-memory-core] policy card load skipped (${fullPath}): ${String(error)}`
       );
     }
   }
@@ -1751,7 +1754,7 @@ export async function readCardArtifactCandidates({
     }
   } catch (error) {
     logger?.debug?.(
-      `[memory-context-claw] card artifact load skipped (${artifactPath}): ${String(error)}`
+      `[unified-memory-core] card artifact load skipped (${artifactPath}): ${String(error)}`
     );
   }
 

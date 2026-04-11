@@ -1,14 +1,14 @@
-# Memory Context Claw 是怎么工作的
+# Unified Memory Core 是怎么工作的
 
 ## 这份文档讲什么
 这份文档用尽量简单的方式说明两件事：
 
-1. `memory-context-claw` 平时是怎么工作的
+1. `unified-memory-core` 平时是怎么工作的
 2. 它嵌进 OpenClaw 之后，一条消息会经过什么调用链路
 
 如果你只想先记住一句话：
 
-> OpenClaw 内置 Memory 负责“存和找”，`memory-context-claw` 负责“这一轮怎么更好地喂给模型”。
+> OpenClaw 内置 Memory 负责“存和找”，`unified-memory-core` 负责“这一轮怎么更好地喂给模型”。
 
 ---
 
@@ -18,14 +18,14 @@
 
 - `Workspace / MEMORY.md / memory/`：资料库
 - OpenClaw Memory：图书馆检索系统
-- `memory-context-claw`：备课助手
+- `unified-memory-core`：备课助手
 - 主模型：真正回答你的那个人
 
 也就是：
 
 - 资料先被放进库里
 - OpenClaw 先把相关资料找出来
-- `memory-context-claw` 再决定哪些最该放到当前桌面上
+- `unified-memory-core` 再决定哪些最该放到当前桌面上
 - 最后模型基于“当前桌面上的资料”回答
 
 ---
@@ -41,7 +41,7 @@
 
 ### 图 1：异步索引链路
 
-这条链路主要是 **OpenClaw 原生 Memory** 在做，`memory-context-claw` 不负责建索引。
+这条链路主要是 **OpenClaw 原生 Memory** 在做，`unified-memory-core` 不负责建索引。
 
 ```mermaid
 flowchart TB
@@ -88,7 +88,7 @@ flowchart TB
         O4["把增强上下文发给主模型"]
     end
 
-    subgraph MCC["memory-context-claw 在做的事"]
+    subgraph MCC["unified-memory-core 在做的事"]
         C1["读问题"]
         C2["查询改写"]
         C3["调用检索"]
@@ -118,13 +118,13 @@ flowchart TB
 这张图里要特别注意：
 
 - `memory search` 能力本身属于 **OpenClaw**
-- 调用这个能力、拿到结果后继续过滤/重排/装配，属于 **memory-context-claw**
+- 调用这个能力、拿到结果后继续过滤/重排/装配，属于 **unified-memory-core**
 - 最终把增强后的上下文发给主模型，再次属于 **OpenClaw**
 
 一句话拆分职责：
 
 - **OpenClaw**：存、索引、检索、发给模型
-- **memory-context-claw**：决定这一轮“检索结果里哪些最该进上下文”
+- **unified-memory-core**：决定这一轮“检索结果里哪些最该进上下文”
 
 ---
 
@@ -145,7 +145,7 @@ flowchart TB
 ├── MEMORY.md
 ├── memory/
 ├── openclaw-memory-vs-lossless.md
-├── memory-context-claw-config.md
+├── unified-memory-core-config.md
 └── 其他专题文档...
 ```
 
@@ -167,11 +167,11 @@ flowchart TB
 
 > 找到的内容里，哪几个最该进入“这一轮”的上下文？
 
-这就是 `memory-context-claw` 要补上的层。
+这就是 `unified-memory-core` 要补上的层。
 
 ---
 
-## `memory-context-claw` 自己做什么
+## `unified-memory-core` 自己做什么
 
 ### 它不是另一个记忆库
 
@@ -209,10 +209,10 @@ flowchart TB
 因为现在 `openclaw.json` 里已经把：
 
 ```json5
-plugins.slots.contextEngine = "memory-context-claw"
+plugins.slots.contextEngine = "unified-memory-core"
 ```
 
-所以这条消息会先经过 `memory-context-claw`。
+所以这条消息会先经过 `unified-memory-core`。
 
 ### 第三步：提取当前问题
 
@@ -323,7 +323,7 @@ query -> memory search -> 返回候选片段
 
 - 当前问题
 - 最近对话
-- `memory-context-claw` 筛过的一小批长期记忆片段
+- `unified-memory-core` 筛过的一小批长期记忆片段
 
 所以回答会更容易表现出：
 
@@ -370,7 +370,7 @@ flowchart TB
 
 ## 为什么不是直接把这些逻辑都塞进 `memorySearch`
 
-因为 `memorySearch` 和 `memory-context-claw` 解决的是两层不同的问题。
+因为 `memorySearch` 和 `unified-memory-core` 解决的是两层不同的问题。
 
 ### `memorySearch` 的职责
 
@@ -385,7 +385,7 @@ flowchart TB
 
 > 哪些内容“可能相关”？
 
-### `memory-context-claw` 的职责
+### `unified-memory-core` 的职责
 
 它更像上下文编排器，负责：
 
@@ -411,13 +411,13 @@ flowchart TB
 所以更合理的分层是：
 
 - `memorySearch`：检索层
-- `memory-context-claw`：编排层
+- `unified-memory-core`：编排层
 
 ### 它和 Lossless 的区别
 
 如果再说得更直白一点：
 
-- `memory-context-claw` 更偏：**已有长期记忆怎么更好进入当前上下文**
+- `unified-memory-core` 更偏：**已有长期记忆怎么更好进入当前上下文**
 - `Lossless` 更偏：**当前会话过程本身别丢，并且以后还能回收再用**
 
 也就是：
@@ -603,7 +603,7 @@ sync: {
 
 - 对话过程本身现在也会进入可检索范围
 - 不必等很久才被索引
-- 后面 `memory-context-claw` 在组装上下文时，也更有机会拿到这些“刚在对话里出现的重要信息”
+- 后面 `unified-memory-core` 在组装上下文时，也更有机会拿到这些“刚在对话里出现的重要信息”
 
 ---
 
@@ -659,7 +659,7 @@ sync: {
 
 对应详细报告见：
 
-- `reports/memory-context-claw-enabled-vs-disabled-report.md`
+- `reports/unified-memory-core-enabled-vs-disabled-report.md`
 
 ---
 
@@ -734,7 +734,7 @@ sync: {
 
 但即便如此，它已经足够稳定地证明一件事：
 
-> `memory-context-claw` 的价值，不是再造长期记忆，而是把长期记忆稳定地转成当前轮真正可用的上下文。
+> `unified-memory-core` 的价值，不是再造长期记忆，而是把长期记忆稳定地转成当前轮真正可用的上下文。
 
 ---
 
@@ -742,7 +742,7 @@ sync: {
 
 如果要用最简单的话说：
 
-> OpenClaw Memory 负责“把东西记住并找出来”，`memory-context-claw` 负责“把最该看的那几段，在这一轮摆到模型面前”。
+> OpenClaw Memory 负责“把东西记住并找出来”，`unified-memory-core` 负责“把最该看的那几段，在这一轮摆到模型面前”。
 
 ---
 
@@ -831,7 +831,7 @@ npm run memory:distill
 flowchart TB
     A["聊天过程"] --> B["OpenClaw session log"]
     B --> C["sessionMemory 纳入可检索范围"]
-    C --> D["memory-context-claw 参与当前轮上下文组装"]
+    C --> D["unified-memory-core 参与当前轮上下文组装"]
     B --> E["memory:distill 抽取候选记忆"]
     E --> F["人工审阅"]
     F --> G["写入 MEMORY.md 或 memory/YYYY-MM-DD.md"]
@@ -841,7 +841,7 @@ flowchart TB
 这条链路里：
 
 - **OpenClaw** 负责日志、Memory、索引、检索
-- **memory-context-claw** 负责当前轮上下文编排
+- **unified-memory-core** 负责当前轮上下文编排
 - **memory:distill** 负责把聊天里像“记忆”的内容先抽出来
 
 ### 当前真实状态

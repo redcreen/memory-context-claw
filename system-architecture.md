@@ -11,7 +11,7 @@ This is the top-level system architecture document for the current repo.
 It explains the latest official model:
 
 - `Unified Memory Core` is the product-level shared memory foundation
-- `memory-context-claw` is the OpenClaw-facing adapter and consumption layer
+- `unified-memory-core` is the OpenClaw-facing adapter and consumption layer
 - `Codex Adapter` is a first-class integration target from day one
 - `memory search` is now one workstream inside a broader multi-product architecture
 
@@ -51,7 +51,7 @@ flowchart TB
     end
 
     subgraph ADAPTERS["Adapters"]
-        OA["OpenClaw Adapter\nmemory-context-claw"]
+        OA["OpenClaw Adapter\nunified-memory-core"]
         CA["Codex Adapter"]
         TA["Other Tool Adapters"]
     end
@@ -77,8 +77,8 @@ flowchart TB
 The current official architecture is:
 
 1. `Unified Memory Core` is the shared-memory product
-2. `memory-context-claw` is not the whole product anymore
-3. `memory-context-claw` is the OpenClaw adapter and OpenClaw-specific consumption layer
+2. `unified-memory-core` is not the whole product anymore
+3. `unified-memory-core` is the OpenClaw adapter and OpenClaw-specific consumption layer
 4. `Codex Adapter` is part of the intended first-class architecture, not a later afterthought
 5. product logic and tool-specific logic should stay separated through adapters
 
@@ -131,7 +131,7 @@ flowchart LR
 
 ### 2. OpenClaw boundary
 
-`memory-context-claw` owns:
+`unified-memory-core` owns:
 
 - OpenClaw-specific retrieval policy
 - OpenClaw-specific context assembly
@@ -222,7 +222,7 @@ sequenceDiagram
     autonumber
     participant User
     participant Host as "OpenClaw Host"
-    participant Adapter as "memory-context-claw"
+    participant Adapter as "unified-memory-core"
     participant Core as "Unified Memory Core"
     participant Search as "builtin memory_search"
 
@@ -272,7 +272,7 @@ Its role is now:
 
 - one workstream inside the OpenClaw adapter
 - one consumption-layer concern
-- one area of governance and regression inside `memory-context-claw`
+- one area of governance and regression inside `unified-memory-core`
 
 It does not define the whole shared-memory product.
 
@@ -330,7 +330,7 @@ The latest repo direction is:
 它描述的是最新的正式架构：
 
 - `Unified Memory Core` 是产品级共享记忆底座
-- `memory-context-claw` 是面向 OpenClaw 的 adapter 和消费层
+- `unified-memory-core` 是面向 OpenClaw 的 adapter 和消费层
 - `Codex Adapter` 从第一天就是一等集成目标
 - `memory search` 现在只是更大体系中的一个 workstream
 
@@ -370,7 +370,7 @@ flowchart TB
     end
 
     subgraph ADAPTERS["Adapters"]
-        OA["OpenClaw Adapter\nmemory-context-claw"]
+        OA["OpenClaw Adapter\nunified-memory-core"]
         CA["Codex Adapter"]
         TA["Other Tool Adapters"]
     end
@@ -396,8 +396,8 @@ flowchart TB
 当前正式架构可以概括成：
 
 1. `Unified Memory Core` 是共享记忆产品
-2. `memory-context-claw` 不再代表整个产品本体
-3. `memory-context-claw` 负责 OpenClaw adapter 与 OpenClaw 专属消费层
+2. `unified-memory-core` 不再代表整个产品本体
+3. `unified-memory-core` 负责 OpenClaw adapter 与 OpenClaw 专属消费层
 4. `Codex Adapter` 是第一天就存在的一等架构目标
 5. 产品逻辑和工具专属逻辑通过 adapter 分开
 
@@ -450,7 +450,7 @@ flowchart LR
 
 ### 2. OpenClaw boundary
 
-`memory-context-claw` 负责：
+`unified-memory-core` 负责：
 
 - OpenClaw 专属 retrieval policy
 - OpenClaw 专属 context assembly
@@ -541,7 +541,7 @@ sequenceDiagram
     autonumber
     participant User
     participant Host as "OpenClaw Host"
-    participant Adapter as "memory-context-claw"
+    participant Adapter as "unified-memory-core"
     participant Core as "Unified Memory Core"
     participant Search as "builtin memory_search"
 
@@ -591,7 +591,7 @@ sequenceDiagram
 
 - OpenClaw adapter 内部的一条 workstream
 - consumption layer 的一个重点问题
-- `memory-context-claw` 内部的一条治理与回归线
+- `unified-memory-core` 内部的一条治理与回归线
 
 它不再定义整个共享记忆产品。
 

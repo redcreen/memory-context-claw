@@ -7,8 +7,8 @@ export const PLUGIN_CONFIG_PRESETS = {
     memoryBudgetRatio: 0.35,
     recentMessageCount: 8,
     excludePaths: [
-      "/memory-context-claw/",
-      "/context-assembly-claw/",
+      "/unified-memory-core/",
+      "/unified-memory-core/",
       "/openclaw-task-system/",
       "/node_modules/",
       "/.git/"
@@ -34,8 +34,8 @@ export const PLUGIN_CONFIG_PRESETS = {
     memoryBudgetRatio: 0.35,
     recentMessageCount: 8,
     excludePaths: [
-      "/memory-context-claw/",
-      "/context-assembly-claw/",
+      "/unified-memory-core/",
+      "/unified-memory-core/",
       "/openclaw-task-system/",
       "/node_modules/",
       "/.git/"

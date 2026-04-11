@@ -1,7 +1,7 @@
-# Memory Context Claw 开启 / 关闭 对比测试报告
+# Unified Memory Core 开启 / 关闭 对比测试报告
 
 ## 结论
-开启 `memory-context-claw` 后，OpenClaw 在这组测试里会稳定拿到额外的长期记忆上下文；关闭后，这一层上下文组装完全消失。
+开启 `unified-memory-core` 后，OpenClaw 在这组测试里会稳定拿到额外的长期记忆上下文；关闭后，这一层上下文组装完全消失。
 
 一句话说：
 
@@ -12,11 +12,11 @@
 使用脚本：
 
 ```bash
-cd /Users/redcreen/Project/长记忆/context-assembly-claw
+cd /Users/redcreen/Project/长记忆/unified-memory-core
 npm run eval:toggle
 ```
 
-这组对比不是改动主模型，而是只比较 `memory-context-claw` 这层 **context assembly** 是否工作：
+这组对比不是改动主模型，而是只比较 `unified-memory-core` 这层 **context assembly** 是否工作：
 
 - 开启：使用插件默认 `safe-local` 配置
 - 关闭：保持同样的问题输入，但把插件 `enabled=false`
@@ -54,12 +54,12 @@ npm run eval:toggle
 ### 2. 配置说明类
 问题：
 
-`memory-context-claw 这个插件的配置应该怎么写？`
+`unified-memory-core 这个插件的配置应该怎么写？`
 
 开启插件时，选中了：
 
-- `memory-context-claw-config.md`
-- `context-assembly-claw-roadmap.md`
+- `unified-memory-core-config.md`
+- `unified-memory-core-roadmap.md`
 
 关闭插件时：
 
@@ -76,8 +76,8 @@ npm run eval:toggle
 
 - `MEMORY.md`
 - `openclaw-memory-vs-lossless.md`
-- `memory-context-claw-config.md`
-- `context-assembly-claw-roadmap.md`
+- `unified-memory-core-config.md`
+- `unified-memory-core-roadmap.md`
 
 关闭插件时：
 
@@ -113,4 +113,4 @@ npm run eval:toggle
 
 但这份测试已经足够说明：
 
-**`memory-context-claw` 打开的核心价值，不是另一个记忆库，而是把长期记忆稳定地转成当前轮真正可用的上下文。**
+**`unified-memory-core` 打开的核心价值，不是另一个记忆库，而是把长期记忆稳定地转成当前轮真正可用的上下文。**

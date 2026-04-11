@@ -7,7 +7,7 @@ import { promisify } from "node:util";
 const execFileAsync = promisify(execFile);
 
 const CONFIG_PATH = "/Users/redcreen/.openclaw/openclaw.json";
-const REPORT_PATH = "/Users/redcreen/Project/context-assembly-claw/reports/memory-search-param-eval.md";
+const REPORT_PATH = "/Users/redcreen/Project/unified-memory-core/reports/memory-search-param-eval.md";
 const AGENT_ID = "main";
 const QUERY = "用户爱吃什么 饮食 喜欢吃 刘超 超哥";
 

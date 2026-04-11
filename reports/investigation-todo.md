@@ -13,7 +13,7 @@
 
 ## Final Goal
 
-把 `memory-context-claw` 做成一层：
+把 `unified-memory-core` 做成一层：
 
 - 持续抓记忆
 - 提炼 fact/card
@@ -196,8 +196,8 @@
 - `workspace/notes` stable-card 准入规则已显式化：
   - `一句话结论 + 适用场景` 是基础结构门槛
   - `openclaw-memory-vs-lossless.md` 这类稳定概念 note 允许进入 stable card
-  - `context-assembly-claw-roadmap.md` 这类历史 roadmap note 不进入 stable card
-  - `memory-context-claw-config.md` 这类已被 canonical config 文档覆盖的 note 不进入 stable card
+  - `unified-memory-core-roadmap.md` 这类历史 roadmap note 不进入 stable card
+  - `unified-memory-core-config.md` 这类已被 canonical config 文档覆盖的 note 不进入 stable card
 - `workspace-notes-rule` 已正式进入 smoke：
   - `workspace/notes 里的笔记什么时候能进入 stable card`
   - top1 稳定是 `README.md`
@@ -212,7 +212,7 @@
 
 目标：
 
-- 把仓库从 `/Users/redcreen/Project/长记忆/...` 迁到 `/Users/redcreen/Project/context-assembly-claw` 之后留下的旧路径残留继续收干净
+- 把仓库从 `/Users/redcreen/Project/长记忆/...` 迁到 `/Users/redcreen/Project/unified-memory-core` 之后留下的旧路径残留继续收干净
 
 重点：
 
@@ -687,7 +687,7 @@
 后续动作：
 
 - 把主文档里的默认路径统一收敛到 `workspace/`
-- 评估 `workspace/notes/context-assembly-claw-roadmap.md` 是否应继续保留，还是归档为历史稿
+- 评估 `workspace/notes/unified-memory-core-roadmap.md` 是否应继续保留，还是归档为历史稿
 - 保持外层 `.obsidian` 暂不并入，除非后续明确要把个人知识库配置和项目绑定
 
 ---

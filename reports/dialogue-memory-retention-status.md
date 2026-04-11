@@ -57,7 +57,7 @@ npm run memory:distill
 
 工作原理和完整链路说明在：
 
-- [how-memory-context-claw-works.md](how-memory-context-claw-works.md)
+- [how-unified-memory-core-works.md](how-unified-memory-core-works.md)
 
 ---
 

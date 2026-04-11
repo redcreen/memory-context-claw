@@ -8,7 +8,7 @@ import { fileURLToPath } from "node:url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const repoRoot = path.resolve(__dirname, "..");
-const deployRoot = path.join(process.env.HOME || "", ".openclaw", "extensions", "memory-context-claw");
+const deployRoot = path.join(process.env.HOME || "", ".openclaw", "extensions", "unified-memory-core");
 
 function run(cmd, args) {
   execFileSync(cmd, args, {
@@ -29,4 +29,4 @@ run("rsync", [
   `${deployRoot}/`
 ]);
 
-console.log(`Deployed memory-context-claw to ${deployRoot}`);
+console.log(`Deployed unified-memory-core to ${deployRoot}`);

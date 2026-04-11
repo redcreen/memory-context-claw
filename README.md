@@ -1,12 +1,14 @@
-# Memory Context Claw
+# Unified Memory Core
 
 [English](#english) | [中文](#中文)
 
 ## English
 
-**What This Plugin Is**
+**What This Is**
 
-`memory-context-claw` is an OpenClaw `contextEngine` plugin.
+`Unified Memory Core` is the product-level shared-memory foundation now being incubated in this repo.
+
+This repo currently ships the OpenClaw-facing adapter `unified-memory-core`, which runs in the `contextEngine` slot.
 
 It does not replace OpenClaw's builtin long memory. It improves the layer
 between:
@@ -30,13 +32,13 @@ Good fit:
 
 Not the best fit:
 
-- you expect this plugin to replace builtin OpenClaw memory
+- you expect the OpenClaw adapter to replace builtin OpenClaw memory
 - you want to patch host-side `memory_search`
 - you do not use long memory, daily memory, or workspace notes/docs at all
 
 **Who This Is For**
 
-Use this plugin if you already have:
+Use this system if you already have:
 
 - `workspace/MEMORY.md`
 - `workspace/memory/YYYY-MM-DD.md`
@@ -65,7 +67,7 @@ From a user point of view, it mainly gives you:
 If you only want the shortest path, do just these three things:
 
 1. install the plugin
-2. set `contextEngine: "memory-context-claw"`
+2. set `contextEngine: "unified-memory-core"`
 3. run `openclaw plugins list`
 
 Quick mental model:
@@ -73,7 +75,7 @@ Quick mental model:
 - `workspace/MEMORY.md` = stable long-term rules and facts
 - `workspace/memory/*.md` = daily / recent memory
 - `workspace/notes/*.md` = project or domain notes
-- this plugin = chooses what should matter most right now
+- OpenClaw adapter = chooses what should matter most right now
 
 Notes rule of thumb:
 
@@ -93,7 +95,7 @@ Recommended approach:
 Recommended for normal users:
 
 ```bash
-openclaw plugins install git+https://github.com/redcreen/memory-context-claw.git#v0.1.0
+openclaw plugins install git+https://github.com/redcreen/unified-memory-core.git#v0.1.0
 ```
 
 **Current development install**
@@ -101,7 +103,7 @@ openclaw plugins install git+https://github.com/redcreen/memory-context-claw.git
 If you intentionally want the latest `main` branch:
 
 ```bash
-openclaw plugins install git+https://github.com/redcreen/memory-context-claw.git
+openclaw plugins install git+https://github.com/redcreen/unified-memory-core.git
 ```
 
 OpenClaw `plugins install` accepts npm-style package specs, so this repo can be
@@ -114,12 +116,12 @@ Set it as the active `contextEngine` in `~/.openclaw/openclaw.json`:
 ```json5
 {
   plugins: {
-    allow: ["memory-context-claw"],
+    allow: ["unified-memory-core"],
     slots: {
-      contextEngine: "memory-context-claw"
+      contextEngine: "unified-memory-core"
     },
     entries: {
-      "memory-context-claw": {
+      "unified-memory-core": {
         enabled: true
       }
     }
@@ -133,7 +135,7 @@ Set it as the active `contextEngine` in `~/.openclaw/openclaw.json`:
 openclaw plugins list
 ```
 
-You should see `memory-context-claw` in the loaded plugin list.
+You should see `unified-memory-core` in the loaded plugin list.
 
 **Bundled Workspace Layout**
 
@@ -145,7 +147,7 @@ workspace/
 ├── memory/
 │   └── YYYY-MM-DD.md
 └── notes/
-    ├── memory-context-claw-config.md
+    ├── unified-memory-core-config.md
     └── openclaw-memory-vs-lossless.md
 ```
 
@@ -163,7 +165,7 @@ For `workspace/notes/`, use this boundary:
 - durable concept/project rationale notes can become stable card inputs
 - history docs, old roadmaps, and temporary config drafts should remain background notes
 
-You normally do not need special plugin commands.
+You normally do not need special adapter commands.
 
 **For Maintainers**
 
@@ -189,13 +191,13 @@ npm run deploy:local
 
 That copies the repo into:
 
-`~/.openclaw/extensions/memory-context-claw`
+`~/.openclaw/extensions/unified-memory-core`
 
 so editing this repo does not immediately change the live plugin.
 
-**What This Plugin Does Not Do**
+**What This System Does Not Do**
 
-This plugin does not:
+This system does not:
 
 - replace builtin OpenClaw memory
 - patch the OpenClaw host
@@ -204,7 +206,7 @@ This plugin does not:
 
 What it does do:
 
-- build better plugin-side retrieval policy
+- build better OpenClaw-adapter retrieval policy
 - produce stable fact/card artifacts
 - prefer important facts over noisy flat recall
 - give you a governed memory-context layer
@@ -298,7 +300,7 @@ Meaning:
 
 Selected public-facing name:
 
-`memory-context-claw`
+`unified-memory-core`
 
 Other name options:
 
@@ -310,7 +312,9 @@ Other name options:
 
 **这是什么**
 
-`memory-context-claw` 是一个 OpenClaw 的 `contextEngine` 插件。
+`Unified Memory Core` 是当前在这个仓库里孵化的共享记忆产品层。
+
+这个仓库当前同时提供它的 OpenClaw 适配层 `unified-memory-core`，运行在 `contextEngine` slot 上。
 
 它不替代 OpenClaw 内置长期记忆，而是专门优化这几层之间的衔接：
 
@@ -333,7 +337,7 @@ Other name options:
 
 不太适合：
 
-- 你期待这个插件直接替代 OpenClaw 内置 memory
+- 你期待 OpenClaw 适配层直接替代 OpenClaw 内置 memory
 - 你希望它直接修改宿主侧 `memory_search`
 - 你根本不用长期记忆、daily memory 或 workspace notes / 文档
 
@@ -353,11 +357,11 @@ Other name options:
 - 高频重要问题尽量走快路径
 - 最终上下文少一些工程噪音
 
-那这个插件就是为你准备的。
+那这套系统就是为你准备的。
 
 **它主要解决什么**
 
-从用户视角看，这个插件主要提供：
+从用户视角看，这套系统当前主要提供：
 
 - 事实优先的上下文组装
 - 对规则 / 身份 / 偏好 / 项目事实的稳定优先
@@ -370,7 +374,7 @@ Other name options:
 如果你只想先把它用起来，最短路径就是这 3 步：
 
 1. 安装插件
-2. 把 `contextEngine` 设成 `memory-context-claw`
+2. 把 `contextEngine` 设成 `unified-memory-core`
 3. 执行 `openclaw plugins list`
 
 一个最简单的理解方式：
@@ -378,7 +382,7 @@ Other name options:
 - `workspace/MEMORY.md` = 稳定长期规则 / 事实
 - `workspace/memory/*.md` = 当日 / 近期记忆
 - `workspace/notes/*.md` = 项目或专题笔记
-- 这个插件 = 帮你决定“当前轮到底该优先带什么进去”
+- OpenClaw 适配层 = 帮你决定“当前轮到底该优先带什么进去”
 
 关于 `workspace/notes/`，一个实用边界是：
 
@@ -398,7 +402,7 @@ Other name options:
 普通用户推荐直接这样安装：
 
 ```bash
-openclaw plugins install git+https://github.com/redcreen/memory-context-claw.git#v0.1.0
+openclaw plugins install git+https://github.com/redcreen/unified-memory-core.git#v0.1.0
 ```
 
 **当前开发版安装**
@@ -406,7 +410,7 @@ openclaw plugins install git+https://github.com/redcreen/memory-context-claw.git
 如果你就是要跟当前 `main` 走，可以这样装：
 
 ```bash
-openclaw plugins install git+https://github.com/redcreen/memory-context-claw.git
+openclaw plugins install git+https://github.com/redcreen/unified-memory-core.git
 ```
 
 `openclaw plugins install` 支持 npm 风格的 package spec，所以这个仓库既可以按 tag 安装，也可以直接按当前分支头安装。
@@ -418,12 +422,12 @@ openclaw plugins install git+https://github.com/redcreen/memory-context-claw.git
 ```json5
 {
   plugins: {
-    allow: ["memory-context-claw"],
+    allow: ["unified-memory-core"],
     slots: {
-      contextEngine: "memory-context-claw"
+      contextEngine: "unified-memory-core"
     },
     entries: {
-      "memory-context-claw": {
+      "unified-memory-core": {
         enabled: true
       }
     }
@@ -437,7 +441,7 @@ openclaw plugins install git+https://github.com/redcreen/memory-context-claw.git
 openclaw plugins list
 ```
 
-你应该能在已加载插件列表里看到 `memory-context-claw`。
+你应该能在已加载插件列表里看到 `unified-memory-core`。
 
 **内置 workspace 目录建议**
 
@@ -449,7 +453,7 @@ workspace/
 ├── memory/
 │   └── YYYY-MM-DD.md
 └── notes/
-    ├── memory-context-claw-config.md
+    ├── unified-memory-core-config.md
     └── openclaw-memory-vs-lossless.md
 ```
 
@@ -467,7 +471,7 @@ workspace/
 - 稳定概念/项目分工类笔记：可以作为 stable card 输入
 - 历史稿、旧 roadmap、临时配置说明：只保留为背景 notes，不进入 stable card
 
-大多数情况下，你不需要记特殊插件命令。
+大多数情况下，你不需要记特殊适配层命令。
 
 **维护者入口**
 
@@ -493,11 +497,11 @@ npm run deploy:local
 
 它会把当前仓库复制到：
 
-`~/.openclaw/extensions/memory-context-claw`
+`~/.openclaw/extensions/unified-memory-core`
 
 这样你改仓库代码时，不会立刻影响正在运行的插件副本。
 
-**这个插件不做什么**
+**这套系统不做什么**
 
 它不做这些事：
 
@@ -508,7 +512,7 @@ npm run deploy:local
 
 它真正做的是：
 
-- 在插件层补强 retrieval policy
+- 在 OpenClaw 适配层补强 retrieval policy
 - 生成稳定的 fact/card 工件
 - 让重要事实优先于噪音召回
 - 把长期记忆变成一层可治理的上下文系统
@@ -601,7 +605,7 @@ npm run memory:governance-cycle -- --write
 
 当前对外名称：
 
-`memory-context-claw`
+`unified-memory-core`
 
 备选命名：
 

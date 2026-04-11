@@ -191,7 +191,7 @@ test("buildAssemblyResult keeps only workspace-structure supporting docs for dir
 
 test("buildAssemblyResult keeps only config-supporting docs for config queries", () => {
   const result = buildAssemblyResult({
-    messages: [{ role: "user", content: "memory-context-claw 这个插件的配置应该怎么写", timestamp: 1 }],
+    messages: [{ role: "user", content: "unified-memory-core 这个插件的配置应该怎么写", timestamp: 1 }],
     tokenBudget: 2048,
     memoryBudgetRatio: 0.35,
     recentMessageCount: 8,
@@ -205,7 +205,7 @@ test("buildAssemblyResult keeps only config-supporting docs for config queries",
         endLine: 1,
         weightedScore: 1.21,
         finalScore: 1.21,
-        snippet: "memory-context-claw 的最小配置是：把它挂到 contextEngine，并在 entries 里 enabled: true。"
+        snippet: "unified-memory-core 的最小配置是：把它挂到 contextEngine，并在 entries 里 enabled: true。"
       },
       {
         path: "README.md",
@@ -286,7 +286,7 @@ test("buildAssemblyResult prefers a single stable fact card for short token look
         endLine: 1,
         weightedScore: 0.66,
         finalScore: 0.66,
-        snippet: "memory-context-claw 的最小配置是：把它挂到 contextEngine，并在 entries 里 enabled: true。"
+        snippet: "unified-memory-core 的最小配置是：把它挂到 contextEngine，并在 entries 里 enabled: true。"
       },
       {
         path: "formal-memory-policy.md",
@@ -584,7 +584,7 @@ test("buildAssemblyResult keeps only preference-supporting cards for preference 
         endLine: 1,
         weightedScore: 0.36,
         finalScore: 0.36,
-        snippet: "memory-context-claw 的最小配置是：把它挂到 contextEngine，并在 entries 里 enabled: true。"
+        snippet: "unified-memory-core 的最小配置是：把它挂到 contextEngine，并在 entries 里 enabled: true。"
       },
       {
         path: "formal-memory-policy.md",
@@ -629,7 +629,7 @@ test("buildAssemblyResult keeps only identity-supporting cards for identity quer
         endLine: 1,
         weightedScore: 0.49,
         finalScore: 0.49,
-        snippet: "memory-context-claw 的最小配置是：把它挂到 contextEngine，并在 entries 里 enabled: true。"
+        snippet: "unified-memory-core 的最小配置是：把它挂到 contextEngine，并在 entries 里 enabled: true。"
       }
     ]
   });

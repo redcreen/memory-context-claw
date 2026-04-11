@@ -273,8 +273,8 @@ Current smoke cases are grouped into categories.
 #### `project`
 
 - `plugin-config`
-  Query: `memory-context-claw 这个插件的配置应该怎么写`
-  Expectation: selected context includes `memory-context-claw`, `contextEngine`, `enabled: true`
+  Query: `unified-memory-core 这个插件的配置应该怎么写`
+  Expectation: selected context includes `unified-memory-core`, `contextEngine`, `enabled: true`
 
 - `project-positioning-smoke`
   Query: `这个项目主要解决什么问题`
@@ -651,8 +651,8 @@ npm run verify
 #### `project`
 
 - `plugin-config`
-  查询：`memory-context-claw 这个插件的配置应该怎么写`
-  期望：selected context 包含 `memory-context-claw`、`contextEngine`、`enabled: true`
+  查询：`unified-memory-core 这个插件的配置应该怎么写`
+  期望：selected context 包含 `unified-memory-core`、`contextEngine`、`enabled: true`
 
 ### Golden 检索案例
 

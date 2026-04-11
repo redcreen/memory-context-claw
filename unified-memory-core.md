@@ -16,15 +16,15 @@ It is intended to become:
 
 Current repo role:
 
-- this repo continues to host `memory-context-claw`
+- this repo continues to host `unified-memory-core`
 - this repo also becomes the incubation home for `Unified Memory Core`
-- `memory-context-claw` should gradually become the OpenClaw adapter for the core
+- `unified-memory-core` should gradually become the OpenClaw adapter for the core
 
 ## Product Position
 
 ```mermaid
 flowchart LR
-    A["Unified Memory Core\nofficial product"] --> B["OpenClaw Adapter\nmemory-context-claw"]
+    A["Unified Memory Core\nofficial product"] --> B["OpenClaw Adapter\nunified-memory-core"]
     A --> C["Codex Adapter"]
     A --> D["Future Tool Adapters"]
 
@@ -124,15 +124,15 @@ flowchart LR
 
 当前仓库的角色是：
 
-- 这个仓库继续承载 `memory-context-claw`
+- 这个仓库继续承载 `unified-memory-core`
 - 同时也作为 `Unified Memory Core` 的孵化仓
-- `memory-context-claw` 后续应逐步收成这个核心层的 OpenClaw adapter
+- `unified-memory-core` 后续应逐步收成这个核心层的 OpenClaw adapter
 
 ## 产品定位图
 
 ```mermaid
 flowchart LR
-    A["Unified Memory Core\n正式产品"] --> B["OpenClaw Adapter\nmemory-context-claw"]
+    A["Unified Memory Core\n正式产品"] --> B["OpenClaw Adapter\nunified-memory-core"]
     A --> C["Codex Adapter"]
     A --> D["Future Tool Adapters"]
 

@@ -21,12 +21,12 @@ Use this in `~/.openclaw/openclaw.json`:
 ```json5
 {
   plugins: {
-    allow: ["memory-context-claw"],
+    allow: ["unified-memory-core"],
     slots: {
-      contextEngine: "memory-context-claw"
+      contextEngine: "unified-memory-core"
     },
     entries: {
-      "memory-context-claw": {
+      "unified-memory-core": {
         enabled: true
       }
     }
@@ -39,15 +39,15 @@ If you are developing locally and want OpenClaw to load this repo directly:
 ```json5
 {
   plugins: {
-    allow: ["memory-context-claw"],
+    allow: ["unified-memory-core"],
     load: {
-      paths: ["/ABSOLUTE/PATH/TO/memory-context-claw"]
+      paths: ["/ABSOLUTE/PATH/TO/unified-memory-core"]
     },
     slots: {
-      contextEngine: "memory-context-claw"
+      contextEngine: "unified-memory-core"
     },
     entries: {
-      "memory-context-claw": {
+      "unified-memory-core": {
         enabled: true
       }
     }
@@ -76,7 +76,7 @@ Minimal example:
           sync: {
             watch: true
           },
-          extraPaths: ["/ABSOLUTE/PATH/TO/context-assembly-claw/workspace"]
+          extraPaths: ["/ABSOLUTE/PATH/TO/unified-memory-core/workspace"]
         }
       }
     ]
@@ -92,7 +92,7 @@ If you keep memory files inside this repo, point `extraPaths` at the bundled
 Set things up in this order:
 
 1. make sure OpenClaw memory indexing works
-2. install and enable `memory-context-claw`
+2. install and enable `unified-memory-core`
 3. verify the plugin is loaded
 4. only then start tuning plugin config
 
@@ -169,8 +169,8 @@ repo noise out of user-facing memory context.
 
 Default includes:
 
-- `/memory-context-claw/`
-- `/context-assembly-claw/`
+- `/unified-memory-core/`
+- `/unified-memory-core/`
 - `/openclaw-task-system/`
 - `/node_modules/`
 - `/.git/`
@@ -332,12 +332,12 @@ But do that only after non-LLM behavior is already understandable.
 ```json5
 {
   plugins: {
-    allow: ["memory-context-claw"],
+    allow: ["unified-memory-core"],
     slots: {
-      contextEngine: "memory-context-claw"
+      contextEngine: "unified-memory-core"
     },
     entries: {
-      "memory-context-claw": {
+      "unified-memory-core": {
         enabled: true
       }
     }
@@ -350,15 +350,15 @@ But do that only after non-LLM behavior is already understandable.
 ```json5
 {
   plugins: {
-    allow: ["memory-context-claw"],
+    allow: ["unified-memory-core"],
     load: {
-      paths: ["/ABSOLUTE/PATH/TO/memory-context-claw"]
+      paths: ["/ABSOLUTE/PATH/TO/unified-memory-core"]
     },
     slots: {
-      contextEngine: "memory-context-claw"
+      contextEngine: "unified-memory-core"
     },
     entries: {
-      "memory-context-claw": {
+      "unified-memory-core": {
         enabled: true
       }
     }
@@ -387,7 +387,7 @@ But do that only after non-LLM behavior is already understandable.
           sync: {
             watch: true
           },
-          extraPaths: ["/ABSOLUTE/PATH/TO/context-assembly-claw/workspace"]
+          extraPaths: ["/ABSOLUTE/PATH/TO/unified-memory-core/workspace"]
         }
       }
     ]
@@ -403,7 +403,7 @@ But do that only after non-LLM behavior is already understandable.
 建议按这个顺序做：
 
 1. 先确认 OpenClaw 自己的 memory index 正常
-2. 再安装并启用 `memory-context-claw`
+2. 再安装并启用 `unified-memory-core`
 3. 再验证插件已经加载
 4. 最后才考虑调插件参数
 
@@ -479,8 +479,8 @@ openclaw memory search "我爱吃什么"
 
 默认包含：
 
-- `/memory-context-claw/`
-- `/context-assembly-claw/`
+- `/unified-memory-core/`
+- `/unified-memory-core/`
 - `/openclaw-task-system/`
 - `/node_modules/`
 - `/.git/`

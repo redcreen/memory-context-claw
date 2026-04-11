@@ -218,7 +218,7 @@ const THEMATIC_CORE_PATTERNS = [
   /plugin/i,
   /插件/,
   /context engine/i,
-  /memory-context-claw/i,
+  /unified-memory-core/i,
   /长期记忆/,
   /长记忆/,
   /workspace/i,
@@ -1736,7 +1736,7 @@ export function renderDailyPromotionBlock(candidates, { date } = {}) {
   if (date) {
     lines.push(`> 生成日期：${date}`);
   }
-  lines.push("> 这些条目来自 memory-context-claw 的候选提炼，建议人工快速扫一眼；确认无误后可保留。");
+  lines.push("> 这些条目来自 unified-memory-core 的候选提炼，建议人工快速扫一眼；确认无误后可保留。");
   lines.push("");
   for (const item of candidates) {
     lines.push(`- ${item.text}`);
@@ -2023,7 +2023,7 @@ function buildMemoryCardTitle(candidate) {
   if (/工厂|实体制造业|毛绒玩具|职业|转型/.test(text)) {
     return "职业背景";
   }
-  if (/项目|定位|目标|解决什么问题|context engine|上下文引擎|memory-context-claw|上下文层/.test(text)) {
+  if (/项目|定位|目标|解决什么问题|context engine|上下文引擎|unified-memory-core|上下文层/.test(text)) {
     return "项目定位";
   }
   if (/lossless|长期记忆|长记忆|memory/i.test(text)) {
@@ -2060,7 +2060,7 @@ function buildMemoryCardTags(candidate) {
   if (/工厂|实体制造业|毛绒玩具|职业|转型/.test(text)) {
     tags.push("work");
   }
-  if (/项目|定位|目标|解决什么问题|context engine|上下文引擎|memory-context-claw|上下文层/.test(text)) {
+  if (/项目|定位|目标|解决什么问题|context engine|上下文引擎|unified-memory-core|上下文层/.test(text)) {
     tags.push("project");
   }
   if (/lossless|长期记忆|长记忆|memory/i.test(text)) {

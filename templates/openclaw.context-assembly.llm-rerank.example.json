@@ -21,18 +21,18 @@
   },
   "plugins": {
     "allow": [
-      "memory-context-claw"
+      "unified-memory-core"
     ],
     "load": {
       "paths": [
-        "/ABSOLUTE/PATH/TO/memory-context-claw"
+        "/ABSOLUTE/PATH/TO/unified-memory-core"
       ]
     },
     "slots": {
-      "contextEngine": "memory-context-claw"
+      "contextEngine": "unified-memory-core"
     },
     "entries": {
-      "memory-context-claw": {
+      "unified-memory-core": {
         "enabled": true,
         "config": {
           "enabled": true,
@@ -42,8 +42,8 @@
           "memoryBudgetRatio": 0.35,
           "recentMessageCount": 8,
           "excludePaths": [
-            "/memory-context-claw/",
-            "/context-assembly-claw/",
+            "/unified-memory-core/",
+            "/unified-memory-core/",
             "/openclaw-task-system/",
             "/node_modules/",
             "/.git/"

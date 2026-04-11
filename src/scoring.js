@@ -99,7 +99,7 @@ function isRuleIntent(prompt) {
 }
 
 function isBackgroundIntent(prompt) {
-  return /几个孩子|一儿一女|孩子|家庭|家里|做什么|做哪行|工厂|实体制造业|毛绒玩具|背景|职业|转型|生日|农历|女儿|儿子/.test(
+  return /几个孩子|一儿一女|孩子|家庭|家里|你.*做什么行业|你做哪行|工厂|实体制造业|毛绒玩具|背景|职业|转型|生日|农历|女儿|儿子/.test(
     String(prompt || "").toLowerCase()
   );
 }
@@ -109,7 +109,7 @@ function isBirthdayIntent(prompt) {
 }
 
 function isProjectIntent(prompt) {
-  return /项目定位|项目背景|这个项目|做什么用|解决什么问题|项目目标|插件定位|context engine|上下文引擎|memory-context-claw/.test(
+  return /项目定位|项目背景|这个项目|做什么用|解决什么问题|项目目标|插件定位|context engine|上下文引擎|unified-memory-core/.test(
     String(prompt || "").toLowerCase()
   );
 }
@@ -164,7 +164,7 @@ function computeIntentBoost(prompt, canonicalPath, snippet) {
     if (/install|安装|启用|enabled|contextengine|plugins\.entries|最小配置/.test(haystack)) {
       boost += 0.08;
     }
-    if (/memory-context-claw/.test(haystack)) {
+    if (/unified-memory-core/.test(haystack)) {
       boost += 0.08;
     }
   }
@@ -320,7 +320,7 @@ function computeIntentBoost(prompt, canonicalPath, snippet) {
   }
 
   if (projectIntent) {
-    if (/项目|定位|目标|解决什么问题|context engine|上下文引擎|memory-context-claw|长期记忆|上下文层/.test(haystack)) {
+    if (/项目|定位|目标|解决什么问题|context engine|上下文引擎|unified-memory-core|长期记忆|上下文层/.test(haystack)) {
       boost += 0.16;
     }
     if (/插件|openclaw|context engine|contextengine/.test(haystack)) {
@@ -332,6 +332,29 @@ function computeIntentBoost(prompt, canonicalPath, snippet) {
   }
 
   return boost;
+}
+
+function computeIntentMismatchPenalty(prompt, canonicalPath, snippet) {
+  const haystack = `${canonicalPath}\n${snippet}`.toLowerCase();
+  let penalty = 0;
+
+  const applyPenalty = (intent, pattern, amount) => {
+    if (intent && !pattern.test(haystack)) {
+      penalty += amount;
+    }
+  };
+
+  applyPenalty(isTimezoneIntent(prompt), /时区|timezone|北京时间|gmt\+?8|utc\+?8/, 0.12);
+  applyPenalty(isStyleIntent(prompt), /沟通风格|交流风格|说话风格|直接|实用|不废话/, 0.16);
+  applyPenalty(isReminderIntent(prompt), /提醒|提醒事项|飞书任务|苹果日历|日历提醒|双通道/, 0.18);
+  applyPenalty(isExecutionRuleIntent(prompt), /默认推进|风险动作再确认|低风险|可逆操作|可直接执行|高风险动作|先确认/, 0.18);
+  applyPenalty(isToolRoleIntent(prompt), /openviking|长期记忆检索补充工具|查询个人信息|偏好|历史片段/, 0.18);
+  applyPenalty(isAgentRoleIntent(prompt), /编程工作|文档工作|订单工作|健康工作|code agent|document agent|order agent|health agent|main 先处理/, 0.18);
+  applyPenalty(isMainBoundaryIntent(prompt), /main 负责|总协调|任务判断|任务分派|结果汇总|不长期承接/, 0.18);
+  applyPenalty(isMainNegativeBoundaryIntent(prompt), /main 不长期承接|不负责/, 0.18);
+  applyPenalty(isStatusRuleIntent(prompt), /已开始|等待确认|排队中|已暂停|真实状态|阻塞态/, 0.16);
+
+  return penalty;
 }
 
 function computeKeywordOverlap(promptKeywords, candidateText) {
@@ -384,6 +407,7 @@ export function scoreCandidates(candidates, prompt, weights, now = new Date()) {
         ? scoreRecencyFromDate(extractSessionTimestamp(path), now)
         : scoreRecencyFromIsoDate(toIsoDateFromMemoryPath(canonicalPath), now);
       const intentBoost = computeIntentBoost(prompt, canonicalPath, snippet);
+      const intentMismatchPenalty = computeIntentMismatchPenalty(prompt, canonicalPath, snippet);
       const sessionBoost = pathKind === "sessionMemory" ? 1 : 0;
       const sessionIntentPenalty =
         pathKind !== "sessionMemory"
@@ -407,7 +431,8 @@ export function scoreCandidates(candidates, prompt, weights, now = new Date()) {
         (pathKind === "memoryFile" ? weights.memoryFile : 0) +
         (pathKind === "dailyMemory" ? weights.dailyMemory : 0) +
         (pathKind === "workspaceDoc" ? weights.workspaceDoc : 0) -
-        sessionIntentPenalty;
+        sessionIntentPenalty -
+        intentMismatchPenalty;
 
       return {
         id: `cand-${index + 1}`,

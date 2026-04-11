@@ -65,7 +65,7 @@ test("shouldTrigger respects pre-compaction ratio and cooldown", async () => {
 });
 
 test("run writes candidate memory artifact", async () => {
-  const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "memory-context-claw-"));
+  const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "unified-memory-core-"));
   const manager = new DistillationManager({
     logger: { info() {}, warn() {} },
     config: makeConfig({

@@ -2,8 +2,8 @@ import { ContextAssemblyEngine } from "../engine.js";
 import { resolvePluginConfig } from "../config.js";
 
 export default {
-  id: "memory-context-claw",
-  name: "Memory Context Claw",
+  id: "unified-memory-core",
+  name: "Unified Memory Core",
   description: "Memory-first reranking and context assembly for OpenClaw",
 
   configSchema: {
@@ -20,10 +20,10 @@ export default {
       pluginConfig
     });
 
-    api.registerContextEngine("memory-context-claw", () => engine);
+    api.registerContextEngine("unified-memory-core", () => engine);
 
     api.logger.info(
-      `[memory-context-claw] loaded (enabled=${pluginConfig.enabled}, llmRerank=${pluginConfig.llmRerank.enabled}, maxCandidates=${pluginConfig.maxCandidates})`
+      `[unified-memory-core] loaded (enabled=${pluginConfig.enabled}, llmRerank=${pluginConfig.llmRerank.enabled}, maxCandidates=${pluginConfig.maxCandidates})`
     );
   }
 };

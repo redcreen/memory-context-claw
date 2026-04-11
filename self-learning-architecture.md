@@ -32,7 +32,7 @@ Related documents:
 
 ## One-Line Goal
 
-Turn `memory-context-claw` from a fact-first memory context layer into a:
+Turn `unified-memory-core` from a fact-first memory context layer into a:
 
 `governed daily-learning system that can extract stable patterns, reflect on outcomes, and improve how it serves the user over time`
 
@@ -109,7 +109,7 @@ That means:
 
 Current integration target:
 
-- `memory-context-claw` consumes learning outputs and inserts them into the OpenClaw-facing memory/context flow
+- `unified-memory-core` consumes learning outputs and inserts them into the OpenClaw-facing memory/context flow
 
 Cross-adapter target:
 
@@ -235,7 +235,7 @@ It should also separate:
 The subsystem should support at least two runtime modes:
 
 1. `embedded mode`
-   - runs as part of the `memory-context-claw` workflow
+   - runs as part of the `unified-memory-core` workflow
    - exports results into OpenClaw-facing memory/context consumption
 2. `standalone mode`
    - runs from CLI or scheduled jobs
@@ -357,13 +357,13 @@ flowchart TB
 The clean boundary should be:
 
 - `self-learning component` owns ingestion, candidate generation, promotion lifecycle, audit trail, and exports
-- `memory-context-claw` owns OpenClaw-specific retrieval, assembly, and plugin-side consumption
+- `unified-memory-core` owns OpenClaw-specific retrieval, assembly, and plugin-side consumption
 
 In other words:
 
 `self-learning decides what was learned`
 
-`memory-context-claw decides how OpenClaw should consume it`
+`unified-memory-core decides how OpenClaw should consume it`
 
 ## Reflection Engine
 
@@ -587,7 +587,7 @@ This workstream is successful when:
 
 ## 文档目的
 
-这份文档定义 `memory-context-claw` 的下一条专项主线。
+这份文档定义 `unified-memory-core` 的下一条专项主线。
 
 它同时定义一个未来可独立拆分的学习子系统边界：
 
@@ -613,7 +613,7 @@ This workstream is successful when:
 
 ## 一句话目标
 
-把 `memory-context-claw` 从“事实优先的记忆上下文层”继续收成一套：
+把 `unified-memory-core` 从“事实优先的记忆上下文层”继续收成一套：
 
 `受治理的每日学习系统，能够持续提炼稳定模式、进行结果反思，并逐步优化对用户的服务方式`
 
@@ -690,7 +690,7 @@ This workstream is successful when:
 
 当前集成目标：
 
-- `memory-context-claw` 消费学习结果，并把它们接入 OpenClaw 面向的 memory/context 流程
+- `unified-memory-core` 消费学习结果，并把它们接入 OpenClaw 面向的 memory/context 流程
 
 未来兼容目标：
 
@@ -816,7 +816,7 @@ flowchart TB
 这个子系统至少应该支持两种运行模式：
 
 1. `embedded mode`
-   - 作为 `memory-context-claw` 的一部分运行
+   - 作为 `unified-memory-core` 的一部分运行
    - 将结果导出给 OpenClaw 面向的 memory/context 消费链路
 2. `standalone mode`
    - 通过 CLI 或定时任务独立运行
@@ -938,13 +938,13 @@ flowchart TB
 最干净的边界应该是：
 
 - `self-learning component` 负责 ingestion、candidate generation、promotion lifecycle、audit trail 和 exports
-- `memory-context-claw` 负责 OpenClaw 专属的 retrieval、assembly 和 plugin-side consumption
+- `unified-memory-core` 负责 OpenClaw 专属的 retrieval、assembly 和 plugin-side consumption
 
 换句话说：
 
 `self-learning 决定学到了什么`
 
-`memory-context-claw 决定 OpenClaw 怎么消费这些结果`
+`unified-memory-core 决定 OpenClaw 怎么消费这些结果`
 
 ## 反思引擎
 

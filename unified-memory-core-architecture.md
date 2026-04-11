@@ -19,7 +19,7 @@ It is the top-level architecture reference for the new product direction.
 Recommended direction:
 
 - `Unified Memory Core` becomes the long-term shared memory foundation
-- `memory-context-claw` becomes the OpenClaw adapter / consumer
+- `unified-memory-core` becomes the OpenClaw adapter / consumer
 - future Codex integration becomes the Codex adapter / consumer
 - other tools connect through explicit adapters instead of direct coupling
 
@@ -67,7 +67,7 @@ flowchart TB
 
 The important shift is:
 
-`memory-context-claw` should not carry the entire long-term product direction by itself`
+`unified-memory-core` should not carry the entire long-term product direction by itself`
 
 Instead:
 
@@ -307,7 +307,7 @@ Confirmed decisions reflected in this architecture:
 建议方向：
 
 - `Unified Memory Core` 作为长期共享记忆底座
-- `memory-context-claw` 作为 OpenClaw adapter / consumer
+- `unified-memory-core` 作为 OpenClaw adapter / consumer
 - 后续 Codex 集成作为 Codex adapter / consumer
 - 其他工具通过显式 adapter 接入，而不是直接耦合到核心里
 
@@ -355,7 +355,7 @@ flowchart TB
 
 这里最关键的转向是：
 
-`memory-context-claw` 不应该继续独自承载整个长期产品方向`
+`unified-memory-core` 不应该继续独自承载整个长期产品方向`
 
 更合理的是：
 

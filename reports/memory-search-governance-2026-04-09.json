@@ -107,7 +107,7 @@
             "path": "configuration.md",
             "source": "cardArtifact",
             "score": 0.3672463768115942,
-            "snippet": "memory-context-claw 的最小配置是：把它挂到 contextEngine，并在 entries 里 enabled: true。"
+            "snippet": "unified-memory-core 的最小配置是：把它挂到 contextEngine，并在 entries 里 enabled: true。"
           }
         ]
       }
@@ -186,7 +186,7 @@
             "path": "configuration.md",
             "source": "cardArtifact",
             "score": 0.4910185185185185,
-            "snippet": "memory-context-claw 的最小配置是：把它挂到 contextEngine，并在 entries 里 enabled: true。"
+            "snippet": "unified-memory-core 的最小配置是：把它挂到 contextEngine，并在 entries 里 enabled: true。"
           },
           {
             "path": "formal-memory-policy.md",
@@ -270,7 +270,7 @@
             "path": "configuration.md",
             "source": "cardArtifact",
             "score": 0.3662500000000001,
-            "snippet": "memory-context-claw 的最小配置是：把它挂到 contextEngine，并在 entries 里 enabled: true。"
+            "snippet": "unified-memory-core 的最小配置是：把它挂到 contextEngine，并在 entries 里 enabled: true。"
           },
           {
             "path": "formal-memory-policy.md",
@@ -351,7 +351,7 @@
             "path": "configuration.md",
             "source": "cardArtifact",
             "score": 0.4030684326710817,
-            "snippet": "memory-context-claw 的最小配置是：把它挂到 contextEngine，并在 entries 里 enabled: true。"
+            "snippet": "unified-memory-core 的最小配置是：把它挂到 contextEngine，并在 entries 里 enabled: true。"
           }
         ]
       }

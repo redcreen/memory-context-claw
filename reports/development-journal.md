@@ -1,4 +1,4 @@
-# memory-context-claw 开发日记
+# unified-memory-core 开发日记
 
 这份日记用于持续记录插件开发过程中的关键决策、实验结果、问题演进与下一步判断。
 
@@ -1363,7 +1363,7 @@ critical live regression 仍然通过：
 
 这轮改动已经部署到运行副本：
 
-- `/Users/redcreen/.openclaw/extensions/memory-context-claw`
+- `/Users/redcreen/.openclaw/extensions/unified-memory-core`
 
 ### 下一步
 
@@ -1475,7 +1475,7 @@ critical live regression 仍然通过：
 
 这轮已部署到运行副本：
 
-- `/Users/redcreen/.openclaw/extensions/memory-context-claw`
+- `/Users/redcreen/.openclaw/extensions/unified-memory-core`
 
 ### 下一步
 
@@ -1520,7 +1520,7 @@ critical live regression 仍然通过：
 - `插件定位`
 - `context engine`
 - `上下文引擎`
-- `memory-context-claw`
+- `unified-memory-core`
 
 并对含有这些信号的候选做背景式加权。
 
@@ -1575,7 +1575,7 @@ critical live regression 仍然通过：
 
 这轮已部署到运行副本：
 
-- `/Users/redcreen/.openclaw/extensions/memory-context-claw`
+- `/Users/redcreen/.openclaw/extensions/unified-memory-core`
 
 ### 下一步
 
@@ -1644,7 +1644,7 @@ critical live regression 仍然通过：
 
 这轮已部署到运行副本：
 
-- `/Users/redcreen/.openclaw/extensions/memory-context-claw`
+- `/Users/redcreen/.openclaw/extensions/unified-memory-core`
 
 ### 下一步
 
@@ -1949,7 +1949,7 @@ critical live regression 仍然通过：
 
 这一阶段前半段已经部署到 OpenClaw 运行副本，随后又确认：
 
-- `memory-context-claw` 插件在运行态为 `loaded`
+- `unified-memory-core` 插件在运行态为 `loaded`
 - 运行副本路径正常
 
 ### 测试结果
@@ -2431,7 +2431,7 @@ critical live regression 仍然通过：
 - `Feishu / 飞书 / 图片发送 / image_key`
 - `OAuth / watchdog`
 
-这样处理后，和 `memory-context-claw` 主线更贴的候选会自然往前排。
+这样处理后，和 `unified-memory-core` 主线更贴的候选会自然往前排。
 
 2. 修正近义候选收敛
 
@@ -4162,7 +4162,7 @@ OpenClaw 的 FTS 查询构造是：
   - 更大 candidateMultiplier
   - MMR
 - 报告在：
-  - `/Users/redcreen/Project/长记忆/context-assembly-claw/reports/memory-search-param-eval.md`
+  - `/Users/redcreen/Project/长记忆/unified-memory-core/reports/memory-search-param-eval.md`
 - 结果一致：
 - `top 10 / top 20 / top 30` 都没有把 `food-preference.md` 拉进候选池
 - 同时我还验证了更直接的查询：
@@ -4590,7 +4590,7 @@ OpenClaw 的 FTS 查询构造是：
 
 所以这轮的目标是：
 
-> 先不碰宿主，也不改别的插件，只在 `memory-context-claw` 内部把 session-memory 候选额外输出成一份 retrieval-friendly memory cards。
+> 先不碰宿主，也不改别的插件，只在 `unified-memory-core` 内部把 session-memory 候选额外输出成一份 retrieval-friendly memory cards。
 
 ### 这轮先做了一个回归验证
 
@@ -5398,7 +5398,7 @@ OpenClaw 的 FTS 查询构造是：
 
 这轮已部署到运行副本：
 
-- `/Users/redcreen/.openclaw/extensions/memory-context-claw`
+- `/Users/redcreen/.openclaw/extensions/unified-memory-core`
 
 ### 下一步
 
@@ -6723,7 +6723,7 @@ smoke 现在的排序已经从：
   - `project-doc` 在缺少配置信号时轻微降权
 - 项目意图下：
   - `project-doc` 明确优先
-  - `config-doc` 不再因为带 `memory-context-claw` 就压过项目定位 card
+  - `config-doc` 不再因为带 `unified-memory-core` 就压过项目定位 card
 
 同时补了两条针对性测试：
 
@@ -8112,9 +8112,9 @@ summary 结果是：
 - `MEMORY.md`
 - `memory/2026-04-04.md`
 - `memory/2026-04-05.md`
-- `memory-context-claw-config.md`
+- `unified-memory-core-config.md`
 - `openclaw-memory-vs-lossless.md`
-- `context-assembly-claw-roadmap.md`
+- `unified-memory-core-roadmap.md`
 
 同时补了两类收尾：
 
@@ -8129,7 +8129,7 @@ summary 结果是：
 这轮把两件事并到一起处理：
 
 - 将 `todo.md` 正式纳入项目，避免继续停留在仓库外的临时状态
-- 把仓库从 `/Users/redcreen/Project/长记忆/context-assembly-claw` 迁到 `/Users/redcreen/Project/context-assembly-claw`
+- 把仓库从 `/Users/redcreen/Project/长记忆/unified-memory-core` 迁到 `/Users/redcreen/Project/unified-memory-core`
 
 目标是让：
 
@@ -8197,7 +8197,7 @@ summary 结果是：
 - 旧结构：
   - `/Users/redcreen/Project/长记忆/...`
 - 新结构：
-  - `/Users/redcreen/Project/context-assembly-claw/...`
+  - `/Users/redcreen/Project/unified-memory-core/...`
   - 项目内 memory/workspace 统一使用 `workspace/`
 
 这轮处理的范围是：
@@ -8304,9 +8304,9 @@ summary 结果是：
 
 - `workspace/notes/openclaw-memory-vs-lossless.md`
   - 允许进入 stable card
-- `workspace/notes/context-assembly-claw-roadmap.md`
+- `workspace/notes/unified-memory-core-roadmap.md`
   - 不进入 stable card
-- `workspace/notes/memory-context-claw-config.md`
+- `workspace/notes/unified-memory-core-config.md`
   - 不进入 stable card
 
 验证：

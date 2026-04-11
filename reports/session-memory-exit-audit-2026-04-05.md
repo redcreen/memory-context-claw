@@ -1,7 +1,7 @@
 # Session-Memory Exit Audit
 - 生成时间：2026-04-05T05:38:02.042Z
 - 工作区：/Users/redcreen/.openclaw/workspace
-- Card 源：/Users/redcreen/Project/长记忆/context-assembly-claw/reports/conversation-memory-cards.json
+- Card 源：/Users/redcreen/Project/长记忆/unified-memory-core/reports/conversation-memory-cards.json
 
 ## Summary
 - session-memory 文件数：`1`

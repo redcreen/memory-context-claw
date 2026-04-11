@@ -1,4 +1,4 @@
-# Memory Context Claw Roadmap
+# Unified Memory Core Roadmap
 
 [English](#english) | [中文](#中文)
 
@@ -6,7 +6,7 @@
 
 ## Positioning
 
-`memory-context-claw` is not meant to be “just another memory plugin.”
+`unified-memory-core` is not meant to be “just another memory plugin.”
 
 The target is a **continuously running, governed, fact-first long-term memory context layer** for OpenClaw.
 
@@ -228,7 +228,7 @@ Planned project stages:
 The long-term architecture is now best understood as:
 
 - `Unified Memory Core` as the product-level memory foundation
-- `memory-context-claw` as the OpenClaw adapter
+- `unified-memory-core` as the OpenClaw adapter
 - `Codex Adapter` as a first-class adapter track
 
 Inside the product, the first-class modules are:
@@ -274,7 +274,7 @@ Inside the product, the first-class modules are:
 
 ## 项目定位
 
-`memory-context-claw` 不是“又一个记忆插件”。
+`unified-memory-core` 不是“又一个记忆插件”。
 
 它的目标是成为 OpenClaw 一层**持续运行、可治理、事实优先的长期记忆上下文层**。
 
@@ -480,7 +480,7 @@ flowchart TB
 
 项目下一步的大方向是：
 
-`把 memory-context-claw 从“可治理的事实优先上下文层”，继续推进成“可治理的自学习与反思系统”`
+`把 unified-memory-core 从“可治理的事实优先上下文层”，继续推进成“可治理的自学习与反思系统”`
 
 当前计划中的阶段是：
 
@@ -496,7 +496,7 @@ flowchart TB
 当前更适合把整体架构理解为：
 
 - `Unified Memory Core` 产品层
-- `memory-context-claw` 作为 OpenClaw adapter
+- `unified-memory-core` 作为 OpenClaw adapter
 - `Codex Adapter` 作为一等 adapter
 
 在产品内部，建议按 7 条一等模块组织：

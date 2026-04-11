@@ -20,9 +20,9 @@ const PATTERNS = {
   mainNegativeBoundary: /main 不负责什么|main 不长期承接|不长期承接|不负责/i,
   statusRule: /已开始是什么意思|等待确认是什么意思|排队中是什么意思|已暂停是什么意思|状态词|真实状态|阻塞态/,
   rule: /规则|原则|工作方式|写作偏好|长期偏好|习惯|memory\.md|应该放|适合放|不适合放|长期稳定/i,
-  background: /几个孩子|一儿一女|孩子|家庭|家里|做什么|做哪行|工厂|实体制造业|毛绒玩具|背景|职业|转型/,
+  background: /几个孩子|一儿一女|孩子|家庭|家里|你.*做什么行业|你做哪行|工厂|实体制造业|毛绒玩具|背景|职业|转型/,
   birthday: /生日|农历生日|农历|女儿|儿子|孩子|家庭|身份证/,
-  project: /项目定位|项目背景|这个项目|做什么用|解决什么问题|项目目标|插件定位|context engine|上下文引擎|memory-context-claw|workspace 目录|目录结构|内置 workspace/i
+  project: /项目定位|项目背景|这个项目|做什么用|解决什么问题|项目目标|插件定位|context engine|上下文引擎|unified-memory-core|workspace 目录|目录结构|内置 workspace/i
 };
 
 export function classifyQueryIntent(query = "") {
@@ -64,7 +64,11 @@ export function resolveRetrievalPolicy(query = "", options = {}) {
   let rationale = "unclassified-query";
   let sourcePriority = ["builtin-search", "workspace-doc", "sessions"];
 
-  if (
+  if (intents.background || intents.birthday) {
+    mode = "mixed-mode";
+    rationale = "stable-facts-plus-supporting-history";
+    sourcePriority = ["cardArtifact", "memory/%", "builtin-search", "sessions"];
+  } else if (
     intents.preference ||
     intents.identity ||
     intents.timezone ||
@@ -84,10 +88,6 @@ export function resolveRetrievalPolicy(query = "", options = {}) {
     mode = "formal-memory-first";
     rationale = "formal-or-project-doc-priority";
     sourcePriority = ["cardArtifact", "formal-memory-policy.md", "MEMORY.md", "README.md", "configuration.md", "builtin-search"];
-  } else if (intents.background || intents.birthday) {
-    mode = "mixed-mode";
-    rationale = "stable-facts-plus-supporting-history";
-    sourcePriority = ["cardArtifact", "memory/%", "builtin-search", "sessions"];
   }
 
   return {

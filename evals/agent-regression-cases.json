@@ -50,9 +50,9 @@
   },
   {
     "name": "plugin-config",
-    "message": "memory-context-claw 这个插件的配置应该怎么写？",
+    "message": "unified-memory-core 这个插件的配置应该怎么写？",
     "expectedAll": [
-      "memory-context-claw",
+      "unified-memory-core",
       "contextEngine",
       "enabled: true"
     ]
@@ -68,9 +68,9 @@
   },
   {
     "name": "plugin-minimal-config",
-    "message": "只说 memory-context-claw 这个插件本身，最小配置怎么写？",
+    "message": "只说 unified-memory-core 这个插件本身，最小配置怎么写？",
     "expectedAll": [
-      "memory-context-claw",
+      "unified-memory-core",
       "contextEngine",
       "openclaw plugins install -l ."
     ],

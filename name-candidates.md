@@ -39,7 +39,7 @@ Weakness:
 - sounds a bit functional and plain
 - 略偏功能名，个性不强
 
-## Candidate 2: Memory Context Claw
+## Candidate 2: Unified Memory Core
 
 Why it works:
 
@@ -177,7 +177,7 @@ Weakness:
 
 ### Most practical choice
 
-`memory-context-claw`
+`unified-memory-core`
 
 Reason:
 
@@ -192,7 +192,7 @@ Reason:
 
 ### Best alternative if you want a stronger public-facing name
 
-`context-assembly-claw`
+`unified-memory-core`
 
 Reason:
 
@@ -218,12 +218,12 @@ Reason:
 
 ### Conservative option
 
-- Repo: `context-assembly-claw`
+- Repo: `unified-memory-core`
 - Subtitle: `Memory-first context assembly for OpenClaw`
 
 ### Slightly more product-facing option
 
-- Repo: `memory-context-claw`
+- Repo: `unified-memory-core`
 - Subtitle: `Memory-first context assembly and reranking for OpenClaw`
 
 ### Broader long-term option

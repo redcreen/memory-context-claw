@@ -129,7 +129,7 @@ npm run smoke:eval
 - `MEMORY.md 应该放什么内容`
   - top1: `formal-memory-policy.md`
   - `MEMORY.md 应该放的是长期稳定、会被反复复用的内容。`
-- `memory-context-claw 这个插件的配置应该怎么写`
+- `unified-memory-core 这个插件的配置应该怎么写`
   - top1: `configuration.md`
   - `把它挂到 contextEngine，并在 entries 里 enabled: true`
 - `普通用户应该安装稳定版还是 main`

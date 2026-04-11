@@ -40,7 +40,7 @@ async function loadPlistJson(plistPath) {
 }
 
 async function savePlistJson(plistPath, value) {
-  const tempDir = await fs.mkdtemp(`${process.env.TMPDIR || "/tmp/"}memory-context-claw-`);
+  const tempDir = await fs.mkdtemp(`${process.env.TMPDIR || "/tmp/"}unified-memory-core-`);
   const tempJsonPath = `${tempDir}/${randomUUID()}.json`;
   await fs.writeFile(tempJsonPath, JSON.stringify(value, null, 2));
   try {

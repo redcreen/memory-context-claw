@@ -79,12 +79,12 @@ test("scoreCandidates prefers config docs for config-intent prompts", () => {
       source: "memory"
     },
     {
-      path: "workspace/notes/memory-context-claw-config.md",
+      path: "workspace/notes/unified-memory-core-config.md",
       startLine: 1,
       endLine: 30,
       score: 0.43,
       snippet:
-        "## 一句话结论\nmemory-context-claw 的主配置分成两层。\n## 最小配置\nplugins.entries[\"memory-context-claw\"]\ncontextEngine\n安装",
+        "## 一句话结论\nunified-memory-core 的主配置分成两层。\n## 最小配置\nplugins.entries[\"unified-memory-core\"]\ncontextEngine\n安装",
       source: "memory"
     }
   ];
@@ -100,7 +100,7 @@ test("scoreCandidates prefers config docs for config-intent prompts", () => {
     recency: 0.07
   });
 
-  assert.equal(ranked[0].path, "workspace/notes/memory-context-claw-config.md");
+  assert.equal(ranked[0].path, "workspace/notes/unified-memory-core-config.md");
 });
 
 test("scoreCandidates prefers recent session memory over workspace docs when relevance is close", () => {
@@ -709,7 +709,7 @@ test("scoreCandidates prefers card artifacts for project prompts", () => {
       path: "memory/2026-04-05-project-positioning.md",
       source: "cardArtifact",
       score: 0.6,
-      snippet: "这是一个面向 OpenClaw 的 context engine 插件，负责把长期记忆更稳定地变成当前轮可用的上下文。",
+      snippet: "Unified Memory Core 是共享记忆产品层；当前仓库里的 unified-memory-core 负责 OpenClaw adapter，把统一记忆底座里的稳定事实和规则投影成当前轮可用上下文。",
       startLine: 1,
       endLine: 1
     }
@@ -728,7 +728,7 @@ test("scoreCandidates prefers card artifacts for project prompts", () => {
   }, new Date("2026-04-05T12:00:00Z"));
 
   assert.equal(ranked[0].source, "cardArtifact");
-  assert.match(ranked[0].snippet, /context engine|长期记忆更稳定地变成当前轮可用的上下文/);
+  assert.match(ranked[0].snippet, /共享记忆产品层|OpenClaw adapter|投影成当前轮可用上下文/);
 });
 
 test("scoreCandidates prefers provider-role config explanations for provider prompts", () => {

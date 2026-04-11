@@ -14,9 +14,9 @@ const DEFAULT_CONFIG = {
   memoryBudgetRatio: 0.35,
   recentMessageCount: 8,
   excludePaths: [
-    "/memory-context-claw/",
-    "/context-assembly-claw/",
-    "/memory-context-claw-enabled-vs-disabled-report.md",
+    "/unified-memory-core/",
+    "/unified-memory-core/",
+    "/unified-memory-core-enabled-vs-disabled-report.md",
     "/openclaw-task-system/",
     "/node_modules/",
     "/.git/"

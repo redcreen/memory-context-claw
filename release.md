@@ -9,7 +9,7 @@
 If users install directly from:
 
 ```bash
-openclaw plugins install git+https://github.com/redcreen/memory-context-claw.git
+openclaw plugins install git+https://github.com/redcreen/unified-memory-core.git
 ```
 
 they get whatever the default branch points to at install time.
@@ -23,7 +23,7 @@ That means:
 So the recommended public install path should be:
 
 ```bash
-openclaw plugins install git+https://github.com/redcreen/memory-context-claw.git#v0.1.0
+openclaw plugins install git+https://github.com/redcreen/unified-memory-core.git#v0.1.0
 ```
 
 ### Recommended Release Model
@@ -85,13 +85,13 @@ If you also want a GitHub Release, create it from the same tag.
 #### Stable
 
 ```bash
-openclaw plugins install git+https://github.com/redcreen/memory-context-claw.git#v0.1.0
+openclaw plugins install git+https://github.com/redcreen/unified-memory-core.git#v0.1.0
 ```
 
 #### Development Head
 
 ```bash
-openclaw plugins install git+https://github.com/redcreen/memory-context-claw.git
+openclaw plugins install git+https://github.com/redcreen/unified-memory-core.git
 ```
 
 ### Current State
@@ -115,7 +115,7 @@ That means:
 如果用户直接这样安装：
 
 ```bash
-openclaw plugins install git+https://github.com/redcreen/memory-context-claw.git
+openclaw plugins install git+https://github.com/redcreen/unified-memory-core.git
 ```
 
 那他拿到的是：**安装当时默认分支指向的代码**。
@@ -129,7 +129,7 @@ openclaw plugins install git+https://github.com/redcreen/memory-context-claw.git
 所以更推荐的公开安装方式应该是：
 
 ```bash
-openclaw plugins install git+https://github.com/redcreen/memory-context-claw.git#v0.1.0
+openclaw plugins install git+https://github.com/redcreen/unified-memory-core.git#v0.1.0
 ```
 
 ### 推荐发布模型
@@ -191,13 +191,13 @@ git push origin v0.1.0
 #### 稳定版
 
 ```bash
-openclaw plugins install git+https://github.com/redcreen/memory-context-claw.git#v0.1.0
+openclaw plugins install git+https://github.com/redcreen/unified-memory-core.git#v0.1.0
 ```
 
 #### 开发头部版本
 
 ```bash
-openclaw plugins install git+https://github.com/redcreen/memory-context-claw.git
+openclaw plugins install git+https://github.com/redcreen/unified-memory-core.git
 ```
 
 ### 当前状态

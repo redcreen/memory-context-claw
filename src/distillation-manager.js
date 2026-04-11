@@ -87,7 +87,7 @@ export class DistillationManager {
     await fs.mkdir(path.dirname(outputPath), { recursive: true });
     await fs.writeFile(outputPath, markdown, "utf8");
     this.logger?.info?.(
-      `[memory-context-claw] wrote async candidate memory (${stage}, usage=${usageRatio.toFixed(3)}) to ${outputPath}`
+      `[unified-memory-core] wrote async candidate memory (${stage}, usage=${usageRatio.toFixed(3)}) to ${outputPath}`
     );
     return { outputPath, usageRatio, stage };
   }
@@ -95,7 +95,7 @@ export class DistillationManager {
   schedule(params) {
     void this.run(params).catch((error) => {
       this.logger?.warn?.(
-        `[memory-context-claw] async distillation failed: ${String(error)}`
+        `[unified-memory-core] async distillation failed: ${String(error)}`
       );
     });
   }

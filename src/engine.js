@@ -31,8 +31,8 @@ export class ContextAssemblyEngine {
       config: this.config
     });
     this.info = {
-      id: "memory-context-claw",
-      name: "Memory Context Claw",
+      id: "unified-memory-core",
+      name: "Unified Memory Core",
       version: "0.1.0",
       ownsCompaction: false
     };
@@ -125,7 +125,7 @@ export class ContextAssemblyEngine {
         }
       } catch (error) {
         this.logger?.warn?.(
-          `[memory-context-claw] llm rerank failed, falling back to heuristic ranking: ${String(error)}`
+          `[unified-memory-core] llm rerank failed, falling back to heuristic ranking: ${String(error)}`
         );
       }
     }

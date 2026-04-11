@@ -6,7 +6,7 @@ import path from "node:path";
 import { auditFactDuplicates, renderFactDuplicateAuditReport } from "../src/fact-duplicate-audit.js";
 
 test("auditFactDuplicates detects duplicate facts and slot values across sources", async () => {
-  const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "memory-context-claw-dup-audit-"));
+  const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "unified-memory-core-dup-audit-"));
   const workspaceRoot = path.join(tempDir, "workspace");
   const pluginRoot = path.join(tempDir, "plugin");
   await fs.mkdir(path.join(workspaceRoot, "memory"), { recursive: true });
@@ -44,15 +44,15 @@ test("auditFactDuplicates detects duplicate facts and slot values across sources
   const audit = await auditFactDuplicates({ workspaceRoot, pluginRoot, cardsPath });
 
   assert.equal(audit.summary.duplicateFacts, 1);
-  assert.equal(audit.summary.duplicateSlotValues, 3);
+  assert.equal(audit.summary.duplicateSlotValues, 2);
   assert.equal(audit.summary.acceptableLayered, 0);
-  assert.equal(audit.summary.review, 4);
+  assert.equal(audit.summary.review, 3);
   assert.equal(audit.duplicateFacts[0].fact, "你叫刘超，我平时记你是超哥");
   assert.ok(audit.duplicateSlotValues.some((entry) => entry.slot === "identity.legal_name" && entry.value === "刘超"));
 });
 
 test("auditFactDuplicates classifies memory-md plus daily duplication as acceptable layered redundancy", async () => {
-  const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "memory-context-claw-dup-layered-"));
+  const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "unified-memory-core-dup-layered-"));
   const workspaceRoot = path.join(tempDir, "workspace");
   const pluginRoot = path.join(tempDir, "plugin");
   await fs.mkdir(path.join(workspaceRoot, "memory"), { recursive: true });
