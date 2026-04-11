@@ -19,6 +19,9 @@ Related documents:
 
 - [../repo-layout.md](../repo-layout.md)
 - [../development-plan.md](../development-plan.md)
+- [../ownership-map.md](../ownership-map.md)
+- [../release-boundary.md](../release-boundary.md)
+- [../migration-checklist.md](../migration-checklist.md)
 - [../../unified-memory-core-architecture.md](../../unified-memory-core-architecture.md)
 
 ## What It Owns
@@ -97,6 +100,9 @@ This module is ready for implementation when:
 
 - [../repo-layout.md](../repo-layout.md)
 - [../development-plan.md](../development-plan.md)
+- [../ownership-map.md](../ownership-map.md)
+- [../release-boundary.md](../release-boundary.md)
+- [../migration-checklist.md](../migration-checklist.md)
 - [../../unified-memory-core-architecture.md](../../unified-memory-core-architecture.md)
 
 ## 它负责什么

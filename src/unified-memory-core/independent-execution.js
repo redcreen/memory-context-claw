@@ -100,6 +100,18 @@ function buildMigrationChecklist(readinessChecks) {
     {
       item: "align repo layout with future core/adapter split shape",
       status: readinessChecks.repo_layout_matches_target.status
+    },
+    {
+      item: "document release boundary before migration",
+      status: readinessChecks.release_boundary_documented.status
+    },
+    {
+      item: "document migration checklist before migration",
+      status: readinessChecks.migration_checklist_documented.status
+    },
+    {
+      item: "document ownership map before migration",
+      status: readinessChecks.ownership_map_documented.status
     }
   ];
 }
@@ -133,6 +145,15 @@ export function renderIndependentExecutionReview(review, { format = "markdown" }
   lines.push(`- productBoundary: ${review.release_boundary.product_boundary}`);
   lines.push(`- adapterBoundary: ${review.release_boundary.adapter_boundary}`);
   lines.push("");
+  lines.push("## Migration Checklist");
+  if (!Array.isArray(review.migration_checklist) || review.migration_checklist.length === 0) {
+    lines.push("- none");
+  } else {
+    for (const item of review.migration_checklist) {
+      lines.push(`- ${item.item}: \`${item.status}\``);
+    }
+  }
+  lines.push("");
 
   return `${lines.join("\n").trimEnd()}\n`;
 }
@@ -155,6 +176,18 @@ export async function createIndependentExecutionReview(options = {}) {
       evidence: []
     },
     standalone_operations_available: {
+      status: "needs_followup",
+      evidence: []
+    },
+    ownership_map_documented: {
+      status: "needs_followup",
+      evidence: []
+    },
+    release_boundary_documented: {
+      status: "needs_followup",
+      evidence: []
+    },
+    migration_checklist_documented: {
       status: "needs_followup",
       evidence: []
     },
@@ -198,6 +231,24 @@ export async function createIndependentExecutionReview(options = {}) {
     `standalone command surface present: ${standaloneScripts.join(", ") || "none"}`
   ];
 
+  const ownershipMapPath = path.join(repoRoot, "docs", "unified-memory-core", "ownership-map.md");
+  checks.ownership_map_documented.status = toStatus(await exists(ownershipMapPath));
+  checks.ownership_map_documented.evidence = [
+    `ownership map documented: ${await exists(ownershipMapPath)}`
+  ];
+
+  const releaseBoundaryPath = path.join(repoRoot, "docs", "unified-memory-core", "release-boundary.md");
+  checks.release_boundary_documented.status = toStatus(await exists(releaseBoundaryPath));
+  checks.release_boundary_documented.evidence = [
+    `release boundary documented: ${await exists(releaseBoundaryPath)}`
+  ];
+
+  const migrationChecklistPath = path.join(repoRoot, "docs", "unified-memory-core", "migration-checklist.md");
+  checks.migration_checklist_documented.status = toStatus(await exists(migrationChecklistPath));
+  checks.migration_checklist_documented.evidence = [
+    `migration checklist documented: ${await exists(migrationChecklistPath)}`
+  ];
+
   const adapterBoundaryFiles = normalizeList([
     await exists(path.join(repoRoot, "src", "openclaw-adapter.js")) ? "src/openclaw-adapter.js" : "",
     await exists(path.join(repoRoot, "src", "codex-adapter.js")) ? "src/codex-adapter.js" : "",
@@ -211,14 +262,24 @@ export async function createIndependentExecutionReview(options = {}) {
   const layoutMatches = [
     await exists(path.join(repoRoot, "docs", "unified-memory-core")),
     await exists(path.join(repoRoot, "src", "unified-memory-core")),
+    await exists(path.join(repoRoot, "src", "adapters")),
+    await exists(path.join(repoRoot, "scripts", "adapters")),
+    await exists(path.join(repoRoot, "scripts", "unified-memory-core")),
     await exists(path.join(repoRoot, "test", "unified-memory-core")),
+    await exists(path.join(repoRoot, "test", "adapters")),
+    await exists(path.join(repoRoot, "evals", "adapters")),
     await exists(path.join(repoRoot, "evals"))
   ].every(Boolean);
   checks.repo_layout_matches_target.status = toStatus(layoutMatches);
   checks.repo_layout_matches_target.evidence = [
     `docs/unified-memory-core present: ${await exists(path.join(repoRoot, "docs", "unified-memory-core"))}`,
     `src/unified-memory-core present: ${await exists(path.join(repoRoot, "src", "unified-memory-core"))}`,
+    `src/adapters present: ${await exists(path.join(repoRoot, "src", "adapters"))}`,
+    `scripts/adapters present: ${await exists(path.join(repoRoot, "scripts", "adapters"))}`,
+    `scripts/unified-memory-core present: ${await exists(path.join(repoRoot, "scripts", "unified-memory-core"))}`,
     `test/unified-memory-core present: ${await exists(path.join(repoRoot, "test", "unified-memory-core"))}`,
+    `test/adapters present: ${await exists(path.join(repoRoot, "test", "adapters"))}`,
+    `evals/adapters present: ${await exists(path.join(repoRoot, "evals", "adapters"))}`,
     `evals present: ${await exists(path.join(repoRoot, "evals"))}`
   ];
 

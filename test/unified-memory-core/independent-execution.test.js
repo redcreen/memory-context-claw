@@ -17,9 +17,14 @@ async function createFixtureRepo() {
   const repoRoot = await fs.mkdtemp(path.join(os.tmpdir(), "umc-independent-"));
   await fs.mkdir(path.join(repoRoot, "docs", "unified-memory-core"), { recursive: true });
   await fs.mkdir(path.join(repoRoot, "src", "unified-memory-core"), { recursive: true });
+  await fs.mkdir(path.join(repoRoot, "src", "adapters"), { recursive: true });
   await fs.mkdir(path.join(repoRoot, "test", "unified-memory-core"), { recursive: true });
+  await fs.mkdir(path.join(repoRoot, "test", "adapters"), { recursive: true });
   await fs.mkdir(path.join(repoRoot, "evals"), { recursive: true });
+  await fs.mkdir(path.join(repoRoot, "evals", "adapters"), { recursive: true });
   await fs.mkdir(path.join(repoRoot, "scripts"), { recursive: true });
+  await fs.mkdir(path.join(repoRoot, "scripts", "adapters"), { recursive: true });
+  await fs.mkdir(path.join(repoRoot, "scripts", "unified-memory-core"), { recursive: true });
   await fs.writeFile(
     path.join(repoRoot, "package.json"),
     JSON.stringify({
@@ -31,6 +36,9 @@ async function createFixtureRepo() {
     "utf8"
   );
   await fs.writeFile(path.join(repoRoot, "scripts", "unified-memory-core-cli.js"), "", "utf8");
+  await fs.writeFile(path.join(repoRoot, "docs", "unified-memory-core", "ownership-map.md"), "", "utf8");
+  await fs.writeFile(path.join(repoRoot, "docs", "unified-memory-core", "release-boundary.md"), "", "utf8");
+  await fs.writeFile(path.join(repoRoot, "docs", "unified-memory-core", "migration-checklist.md"), "", "utf8");
   await fs.writeFile(path.join(repoRoot, "src", "openclaw-adapter.js"), "", "utf8");
   await fs.writeFile(path.join(repoRoot, "src", "codex-adapter.js"), "", "utf8");
   await fs.writeFile(path.join(repoRoot, "src", "unified-memory-core", "contracts.js"), "", "utf8");
@@ -54,9 +62,12 @@ test("independent execution review summarizes split readiness from repo facts", 
   });
 
   assert.equal(review.readiness_checks.contracts_are_portable.status, "ready");
+  assert.equal(review.readiness_checks.ownership_map_documented.status, "ready");
+  assert.equal(review.readiness_checks.release_boundary_documented.status, "ready");
+  assert.equal(review.readiness_checks.migration_checklist_documented.status, "ready");
   assert.equal(review.readiness_checks.adapter_boundaries_explicit.status, "ready");
   assert.equal(review.readiness_checks.repo_layout_matches_target.status, "ready");
-  assert.equal(review.migration_checklist.length, 4);
+  assert.equal(review.migration_checklist.length, 7);
 });
 
 test("independent execution review renders markdown", async () => {
@@ -85,6 +96,7 @@ test("independent execution review renders markdown", async () => {
   assert.match(markdown, /Unified Memory Core Independent Execution Review/);
   assert.match(markdown, /contracts_are_portable: `ready`/);
   assert.match(markdown, /product_core: portable contracts/);
+  assert.match(markdown, /Migration Checklist/);
 });
 
 test("CLI can render independent execution review in markdown", async () => {

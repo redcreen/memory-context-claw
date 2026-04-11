@@ -11,8 +11,8 @@ Make `Unified Memory Core` structurally ready for independent long-term executio
 Current status:
 
 - `step-12 design package complete`
-- implementation started with split-readiness review baseline
-- release planning is the next phase
+- implementation baseline complete
+- release planning is the next phase only if a future split is chosen
 
 ## Phases
 
@@ -49,8 +49,8 @@ Current status:
 当前状态：
 
 - `step-12 设计包已完成`
-- split-readiness review 基线已开始实现
-- 下一阶段进入 release planning
+- implementation baseline 已完成
+- 只有在未来选择拆分时，才进入 release planning
 
 ## 分阶段计划
 

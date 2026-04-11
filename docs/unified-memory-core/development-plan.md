@@ -395,23 +395,24 @@ Current implementation status:
 
 - `Tranche 1`: complete
 - `Tranche 2`: complete
-- `Tranche 3`: started
+- `Tranche 3`: complete
 - `Reflection System` MVP is implemented
 - `self-learning` daily reflection loop baseline is implemented
 - standalone runtime and CLI baseline are implemented
 - standalone audit / repair / replay command baseline is implemented
 - standalone export inspect command baseline is implemented
 - independent execution / split-readiness review baseline is implemented
-- next focus is ownership clarity, release-boundary notes, and deeper repair / replay paths
+- ownership map, release-boundary note, and migration checklist are implemented
+- current local-first implementation plan baseline is complete
 
 ## Immediate Next Build
 
 The immediate next build should be:
 
-1. make core / adapter ownership clarity explicit
-2. add release-boundary notes and migration checklist draft
-3. deeper repair / replay paths for early artifacts
-4. keep advanced policy adaptation deferred
+1. no further work is required for the current local-first plan baseline
+2. any next work should be treated as a new enhancement phase
+3. deeper repair / replay paths remain optional hardening
+4. advanced policy adaptation remains deferred
 
 Do not start with:
 
@@ -846,23 +847,24 @@ flowchart LR
 
 - `Tranche 1`：已完成
 - `Tranche 2`：已完成
-- `Tranche 3`：已启动
+- `Tranche 3`：已完成
 - `Reflection System` MVP 已实现
 - `self-learning` 的 daily reflection loop 基线已实现
 - standalone runtime 与 CLI 基线已实现
 - standalone audit / repair / replay 命令基线已实现
 - standalone export inspect 命令基线已实现
 - independent execution / split-readiness review 基线已实现
-- 下一步聚焦 ownership clarity 文档收口、release boundary note，以及更深的 repair / replay 路径
+- ownership map、release-boundary note、migration checklist 已实现
+- 当前 local-first implementation plan baseline 已闭环
 
 ## 当前建议立刻开做的内容
 
 下一步最适合直接开做的是：
 
-1. 明确 core / adapter ownership clarity
-2. 补 release boundary note 与 migration checklist draft
-3. 给早期 artifacts 继续补更深的 repair / replay 路径
-4. 继续延后高阶 policy adaptation
+1. 当前 local-first plan baseline 已完成，不需要继续硬推
+2. 如果继续，应当视为新的增强阶段
+3. 更深的 repair / replay 路径属于可选加固项
+4. 高阶 policy adaptation 继续延后
 
 当前不要优先做：
 
