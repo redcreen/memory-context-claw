@@ -133,6 +133,12 @@ Run memory-search to smoke promotion suggestions:
 npm run eval:smoke-promotion
 ```
 
+Current output separates:
+
+- `eligibleNewSuggestions`: 技术上已稳定但还没进 smoke 的候选
+- `recommendedForSmoke`: 既稳定、又像自然用户问题的推荐升级项
+- `reviewRequired`: 技术上已稳定，但 query 更像专项治理/关键词拼接，仍需人工复核
+
 Run formal memory audit:
 
 ```bash

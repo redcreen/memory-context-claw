@@ -166,6 +166,13 @@ npm run eval:smoke-promotion
 - 满足“stable-single-card”但还没进 smoke 的候选
 - 还不够稳定、暂不建议升级的 case
 
+当前还会再分一层：
+
+- `recommendedForSmoke`
+  - 既稳定、又像自然用户问题，适合优先考虑升进 smoke
+- `reviewRequired`
+  - 技术上已稳定，但 query 更像专项治理 query / 关键词拼接，需要人工判断是否值得进入长期保护面
+
 注意：
 
 - 这是**升级建议工具**

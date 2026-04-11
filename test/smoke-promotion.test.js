@@ -2,8 +2,16 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   buildSmokePromotionSuggestions,
-  isSmokePromotionEligible
+  isSmokePromotionEligible,
+  looksLikeNaturalSmokeQuery
 } from "../src/smoke-promotion.js";
+
+test("looksLikeNaturalSmokeQuery prefers natural questions over keyword bags", () => {
+  assert.equal(looksLikeNaturalSmokeQuery("我爱吃什么"), true);
+  assert.equal(looksLikeNaturalSmokeQuery("项目路线图应该看哪个文档"), true);
+  assert.equal(looksLikeNaturalSmokeQuery("牛排 刘超"), false);
+  assert.equal(looksLikeNaturalSmokeQuery("用户爱吃什么 饮食 喜欢吃 刘超 超哥"), false);
+});
 
 test("isSmokePromotionEligible only accepts stable single-card results", () => {
   assert.equal(
@@ -91,10 +99,14 @@ test("buildSmokePromotionSuggestions separates existing smoke cases and new elig
   assert.equal(result.total, 3);
   assert.equal(result.alreadyInSmoke, 1);
   assert.equal(result.eligibleNewSuggestions, 1);
+  assert.equal(result.recommendedForSmoke, 0);
+  assert.equal(result.reviewRequired, 1);
   assert.equal(result.pending, 1);
 
   const shortChinese = result.suggestions.find((item) => item.id === "short-chinese-token");
   assert.equal(shortChinese?.eligible, true);
   assert.equal(shortChinese?.alreadyInSmoke, false);
-  assert.equal(shortChinese?.reason, "stable-single-card");
+  assert.equal(shortChinese?.naturalQueryLikely, false);
+  assert.equal(shortChinese?.recommendedForSmoke, false);
+  assert.equal(shortChinese?.reason, "synthetic-query-review");
 });
