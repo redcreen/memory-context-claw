@@ -12,6 +12,10 @@ The target is a **continuously running, governed, fact-first long-term memory co
 
 The next learning subsystem should be designed as a separable component that can later become its own subproject.
 
+That future product is now officially named:
+
+`Unified Memory Core`
+
 One-line summary:
 
 `Turn OpenClaw long memory into a governed, fact-first, task-ready context system.`
@@ -36,6 +40,8 @@ Use specialized roadmap documents for that.
 ```mermaid
 flowchart TB
     A["project-roadmap.md\nmaster roadmap / index"] --> B["system-architecture.md\ntop-level architecture"]
+    A --> U["unified-memory-core.md\nproduct index"]
+    A --> V["unified-memory-core-roadmap.md\nproduct roadmap"]
     A --> C["reports/memory-search-roadmap.md\nmemory-search roadmap"]
     A --> D["reports/self-learning-roadmap.md\nself-learning roadmap"]
     C --> E["reports/memory-search-next-blueprint.md\nmemory-search blueprint"]
@@ -45,7 +51,7 @@ flowchart TB
     classDef work fill:#eefce8,stroke:#2f855a,color:#1c4532,stroke-width:1.5px;
     classDef arch fill:#fff4e8,stroke:#d97706,color:#7c2d12,stroke-width:1.5px;
     class A top;
-    class B,F arch;
+    class B,F,U,V arch;
     class C,D,E work;
 ```
 
@@ -67,6 +73,7 @@ flowchart TB
 | Core capture / fact-card / assembly | `completed` | maintain + tune |
 | Memory search | `phase-complete` | governance + incremental expansion |
 | Self-learning / reflection | `planning-updated` | architecture separation + phased implementation ready |
+| Unified Memory Core | `phase-1-active` | product framing + master structure setup |
 
 ## Completed Foundation
 
@@ -167,6 +174,10 @@ Key documents:
   [self-learning-architecture.md](self-learning-architecture.md)
 - roadmap:
   [reports/self-learning-roadmap.md](reports/self-learning-roadmap.md)
+- product:
+  [unified-memory-core.md](unified-memory-core.md)
+- product roadmap:
+  [unified-memory-core-roadmap.md](unified-memory-core-roadmap.md)
 
 ### Parallel maintenance focus
 
@@ -241,6 +252,8 @@ Inside the project, the layers are:
 - [system-architecture.md](system-architecture.md)
 - [project-roadmap.md](project-roadmap.md)
 - [self-learning-architecture.md](self-learning-architecture.md)
+- [unified-memory-core.md](unified-memory-core.md)
+- [unified-memory-core-roadmap.md](unified-memory-core-roadmap.md)
 
 ### Current workstream documents
 
@@ -268,6 +281,10 @@ Inside the project, the layers are:
 
 下一步的 learning 子系统还应按“可独立组件”来设计，未来可以单独拆成子项目。
 
+这个未来产品现在已经正式命名为：
+
+`Unified Memory Core`
+
 一句话总结：
 
 `把 OpenClaw 的长期记忆，变成一层可治理、事实优先、可直接服务任务的上下文系统。`
@@ -292,6 +309,8 @@ Inside the project, the layers are:
 ```mermaid
 flowchart TB
     A["project-roadmap.md\n主 roadmap / 总索引"] --> B["system-architecture.md\n顶层架构"]
+    A --> U["unified-memory-core.md\n产品索引"]
+    A --> V["unified-memory-core-roadmap.md\n产品 roadmap"]
     A --> C["reports/memory-search-roadmap.md\nmemory-search roadmap"]
     A --> D["reports/self-learning-roadmap.md\nself-learning roadmap"]
     C --> E["reports/memory-search-next-blueprint.md\nmemory-search blueprint"]
@@ -301,7 +320,7 @@ flowchart TB
     classDef work fill:#eefce8,stroke:#2f855a,color:#1c4532,stroke-width:1.5px;
     classDef arch fill:#fff4e8,stroke:#d97706,color:#7c2d12,stroke-width:1.5px;
     class A top;
-    class B,F arch;
+    class B,F,U,V arch;
     class C,D,E work;
 ```
 
@@ -323,6 +342,7 @@ flowchart TB
 | 核心 capture / fact-card / assembly | `completed` | maintain + tune |
 | Memory Search | `phase-complete` | governance + incremental expansion |
 | Self-Learning / Reflection | `planning-updated` | architecture separation + phased implementation ready |
+| Unified Memory Core | `phase-1-active` | product framing + master structure setup |
 
 ## 已完成的项目基础
 
@@ -423,6 +443,10 @@ flowchart TB
   [self-learning-architecture.md](self-learning-architecture.md)
 - roadmap：
   [reports/self-learning-roadmap.md](reports/self-learning-roadmap.md)
+- 产品：
+  [unified-memory-core.md](unified-memory-core.md)
+- 产品 roadmap：
+  [unified-memory-core-roadmap.md](unified-memory-core-roadmap.md)
 
 ### 并行维护主线
 
@@ -497,6 +521,8 @@ flowchart TB
 - [system-architecture.md](system-architecture.md)
 - [project-roadmap.md](project-roadmap.md)
 - [self-learning-architecture.md](self-learning-architecture.md)
+- [unified-memory-core.md](unified-memory-core.md)
+- [unified-memory-core-roadmap.md](unified-memory-core-roadmap.md)
 
 ### 当前专题文档
 
@@ -504,11 +530,17 @@ flowchart TB
 - [reports/memory-search-roadmap.md](reports/memory-search-roadmap.md)
 - [reports/memory-search-next-blueprint.md](reports/memory-search-next-blueprint.md)
 - [reports/self-learning-roadmap.md](reports/self-learning-roadmap.md)
+- [unified-memory-core.md](unified-memory-core.md)
+- [unified-memory-core-roadmap.md](unified-memory-core-roadmap.md)
 
 ## 建议接着读
 
 - 如果想看整体系统形态：
   [system-architecture.md](system-architecture.md)
+- 如果想看新的产品主线：
+  [unified-memory-core.md](unified-memory-core.md)
+- 如果想看产品级 roadmap：
+  [unified-memory-core-roadmap.md](unified-memory-core-roadmap.md)
 - 如果想看下一条主线的架构设计：
   [self-learning-architecture.md](self-learning-architecture.md)
 - 如果想看接下来怎么分阶段开发：

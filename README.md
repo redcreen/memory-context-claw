@@ -214,6 +214,12 @@ What it does do:
 
 If you want the whole-system view:
 
+- Unified Memory Core:
+  [unified-memory-core.md](unified-memory-core.md)
+- Unified Memory Core architecture:
+  [unified-memory-core-architecture.md](unified-memory-core-architecture.md)
+- Unified Memory Core roadmap:
+  [unified-memory-core-roadmap.md](unified-memory-core-roadmap.md)
 - overall architecture:
   [system-architecture.md](system-architecture.md)
 - self-learning architecture:
@@ -231,6 +237,11 @@ If you specifically care about memory search:
   [memory-search-roadmap.md](reports/memory-search-roadmap.md)
 - orchestration vs tool-agent:
   [memory-search-orchestration-vs-tool-agent.md](reports/memory-search-orchestration-vs-tool-agent.md)
+
+If you specifically care about shared coding memory:
+
+- code-memory binding:
+  [code-memory-binding-architecture.md](code-memory-binding-architecture.md)
 
 **Configuration**
 
@@ -506,8 +517,18 @@ npm run deploy:local
 
 如果你想看全局架构：
 
+- Unified Memory Core：
+  [unified-memory-core.md](unified-memory-core.md)
+- Unified Memory Core 架构：
+  [unified-memory-core-architecture.md](unified-memory-core-architecture.md)
+- Unified Memory Core roadmap：
+  [unified-memory-core-roadmap.md](unified-memory-core-roadmap.md)
 - 总体架构：
   [system-architecture.md](system-architecture.md)
+- self-learning 架构：
+  [self-learning-architecture.md](self-learning-architecture.md)
+- self-learning roadmap：
+  [reports/self-learning-roadmap.md](reports/self-learning-roadmap.md)
 - 总 roadmap：
   [project-roadmap.md](project-roadmap.md)
 
@@ -519,6 +540,11 @@ npm run deploy:local
   [memory-search-roadmap.md](reports/memory-search-roadmap.md)
 - 固定编排 vs 工具调度：
   [memory-search-orchestration-vs-tool-agent.md](reports/memory-search-orchestration-vs-tool-agent.md)
+
+如果你特别关心共享 code memory：
+
+- 绑定架构：
+  [code-memory-binding-architecture.md](code-memory-binding-architecture.md)
 
 **配置**
 
