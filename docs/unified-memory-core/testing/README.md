@@ -25,6 +25,7 @@ Current required surfaces:
 - governance audit / repair / replay correctness
 - OpenClaw adapter compatibility
 - Codex adapter compatibility
+- multi-runtime namespace / visibility / concurrency correctness
 
 ## 中文
 
@@ -49,3 +50,4 @@ Step 4 的 testing surfaces 分成 4 层：
 - governance audit / repair / replay correctness
 - OpenClaw adapter compatibility
 - Codex adapter compatibility
+- multi-runtime namespace / visibility / concurrency correctness

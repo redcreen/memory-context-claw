@@ -29,6 +29,7 @@ Related documents:
 - [project-roadmap.md](project-roadmap.md)
 - [unified-memory-core.md](unified-memory-core.md)
 - [unified-memory-core-architecture.md](unified-memory-core-architecture.md)
+- [docs/unified-memory-core/deployment-topology.md](docs/unified-memory-core/deployment-topology.md)
 - [self-learning-architecture.md](self-learning-architecture.md)
 - [reports/memory-search-architecture.md](reports/memory-search-architecture.md)
 
@@ -89,6 +90,24 @@ The combined system is meant to do three things well:
 1. build governed memory from controlled sources
 2. preserve high traceability and repairability
 3. project stable memory differently for different tools without coupling the core to any one tool
+
+## Deployment Position
+
+The current architecture should support:
+
+- one OpenClaw with multiple agents
+- multiple OpenClaw runtimes
+- multiple Codex runtimes
+- multiple Claude or future tool runtimes
+
+Current implementation target:
+
+- support local and shared-workspace modes first
+- keep contracts ready for later shared-service and runtime-API phases
+
+See:
+
+- [docs/unified-memory-core/deployment-topology.md](docs/unified-memory-core/deployment-topology.md)
 
 ## End-To-End Flow
 

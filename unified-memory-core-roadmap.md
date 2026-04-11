@@ -20,7 +20,7 @@ It should become:
 
 ## Current Phase
 
-Status: `phase 4 / module documentation and testing surfaces ready`
+Status: `phase 5 / contracts and backbone definition ready`
 
 What is happening now:
 
@@ -31,6 +31,8 @@ What is happening now:
 - module architecture docs
 - module roadmaps / blueprints / todo
 - testing surfaces and case matrix
+- deployment topology and multi-runtime model
+- shared contracts and backbone definitions for steps 5-7
 
 ## Program Roadmap
 
@@ -128,7 +130,7 @@ Goal:
 
 ## 当前阶段
 
-状态：`phase 4 / 模块文档与测试面已就绪`
+状态：`phase 5 / contracts 与主骨架定义已就绪`
 
 当前正在做：
 
@@ -139,6 +141,8 @@ Goal:
 - 模块架构文档补齐
 - 模块 roadmap / blueprint / todo 补齐
 - testing surfaces 与 case matrix 建立
+- deployment topology 与多 runtime 模型补齐
+- Step 5-7 的 shared contracts 与 backbone definitions 定稿
 
 ## 项目路线图
 

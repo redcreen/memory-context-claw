@@ -13,6 +13,7 @@ Module architecture documents:
 - [governance-system.md](governance-system.md)
 - [openclaw-adapter.md](openclaw-adapter.md)
 - [codex-adapter.md](codex-adapter.md)
+- [../deployment-topology.md](../deployment-topology.md)
 
 Recommended implementation review order:
 
@@ -35,6 +36,7 @@ Recommended implementation review order:
 - [governance-system.md](governance-system.md)
 - [openclaw-adapter.md](openclaw-adapter.md)
 - [codex-adapter.md](codex-adapter.md)
+- [../deployment-topology.md](../deployment-topology.md)
 
 推荐 review / 实现顺序：
 

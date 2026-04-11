@@ -38,6 +38,9 @@
 - OpenClaw adapter consumption cases
 - Codex adapter binding cases
 - Codex adapter write-back cases
+- multi-runtime namespace collision cases
+- multi-agent concurrent write serialization cases
+- visibility filtering across OpenClaw / Codex / Claude cases
 
 ## Notes
 
@@ -80,6 +83,9 @@
 - OpenClaw adapter consumption cases
 - Codex adapter binding cases
 - Codex adapter write-back cases
+- multi-runtime namespace collision cases
+- multi-agent concurrent write serialization cases
+- OpenClaw / Codex / Claude visibility filtering cases
 
 ## Notes
 

@@ -20,6 +20,7 @@ Related documents:
 - [../../system-architecture.md](../../system-architecture.md)
 - [../../unified-memory-core-architecture.md](../../unified-memory-core-architecture.md)
 - [../../unified-memory-core-roadmap.md](../../unified-memory-core-roadmap.md)
+- [deployment-topology.md](deployment-topology.md)
 - [architecture/README.md](architecture/README.md)
 - [roadmaps/README.md](roadmaps/README.md)
 - [blueprints/README.md](blueprints/README.md)
@@ -50,6 +51,17 @@ The next step is no longer “discuss the shape”.
 The next step is:
 
 `turn the agreed architecture into module-level contracts, test surfaces, and then incremental implementation`
+
+## Current Execution Status
+
+- `Step 1-4`: completed
+- `Step 5-7`: completed at the document / contract / backbone-definition level
+- `Step 8`: next implementation entry
+
+Important note:
+
+- multi-runtime and multi-tool topology is now part of the execution baseline
+- current implementation should be `network-ready`, but not `network-required`
 
 ## Program Map
 
@@ -172,6 +184,7 @@ Done when:
 
 - adapters and core can reference one shared contract set
 - tests exist for contract parsing / validation
+- the contracts remain valid for single-host and future multi-host operation
 
 ### Step 6. Build source + registry backbone
 
@@ -195,6 +208,7 @@ Done when:
 
 - one or more controlled sources can become persisted candidate artifacts
 - the registry can store and query lifecycle state cleanly
+- the registry shape is still compatible with future shared-service coordination
 
 ### Step 7. Build projection + governance backbone
 
@@ -218,6 +232,7 @@ Done when:
 
 - a stable artifact can be exported deterministically
 - exported outputs can be audited and repaired
+- projection and governance rules remain usable for multi-runtime sharing
 
 ### Step 8. Build OpenClaw adapter integration
 
@@ -370,6 +385,7 @@ Review this document with these questions:
 - [../../system-architecture.md](../../system-architecture.md)
 - [../../unified-memory-core-architecture.md](../../unified-memory-core-architecture.md)
 - [../../unified-memory-core-roadmap.md](../../unified-memory-core-roadmap.md)
+- [deployment-topology.md](deployment-topology.md)
 - [architecture/README.md](architecture/README.md)
 - [roadmaps/README.md](roadmaps/README.md)
 - [blueprints/README.md](blueprints/README.md)
@@ -400,6 +416,17 @@ Review this document with these questions:
 下一步应该进入：
 
 `把已经达成共识的架构，收成模块级契约、测试面和分阶段实现计划`
+
+## 当前执行状态
+
+- `Step 1-4`：已完成
+- `Step 5-7`：已在文档 / 契约 / 主骨架定义层完成
+- `Step 8`：下一步正式实现入口
+
+补充决策：
+
+- 多 runtime / 多工具链拓扑现在已经纳入执行基线
+- 当前实现要做到 `network-ready`，但不要求 `network-required`
 
 ## 总体路径图
 
@@ -522,6 +549,7 @@ flowchart LR
 
 - core 与 adapters 可以共用一套契约
 - 至少有 contract parsing / validation 测试
+- 这套契约在单机与未来多主机模式下都成立
 
 ### Step 6. 建立 source + registry 主骨架
 
@@ -545,6 +573,7 @@ flowchart LR
 
 - 一个或多个可控 source 能进入 candidate artifacts
 - registry 能清晰存储和查询生命周期状态
+- registry 结构仍然兼容后续 shared-service 协调
 
 ### Step 7. 建立 projection + governance 主骨架
 
@@ -568,6 +597,7 @@ flowchart LR
 
 - stable artifact 能被稳定导出
 - 导出结果能被审计、修复、回放
+- projection / governance 规则能支撑多 runtime 共享
 
 ### Step 8. 建立 OpenClaw adapter 集成
 

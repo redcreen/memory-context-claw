@@ -14,6 +14,10 @@ It is meant to answer one question first:
 
 It is the top-level architecture reference for the new product direction.
 
+Related deployment reference:
+
+- [docs/unified-memory-core/deployment-topology.md](docs/unified-memory-core/deployment-topology.md)
+
 ## Executive View
 
 Recommended direction:
@@ -215,6 +219,24 @@ flowchart LR
     class A,B,C,D core;
     class O,X,T,O1,X1,T1 adapter;
 ```
+
+## Runtime Topology Position
+
+`Unified Memory Core` should support four deployment stages:
+
+1. single host, local artifacts
+2. multiple runtimes, shared workspace
+3. shared registry service across hosts
+4. runtime API layer on top of governed artifacts
+
+Current recommended implementation target:
+
+- build for `Stage 1 + Stage 2`
+- keep contracts ready for `Stage 3 + Stage 4`
+
+See:
+
+- [docs/unified-memory-core/deployment-topology.md](docs/unified-memory-core/deployment-topology.md)
 
 ## Governance Loop
 

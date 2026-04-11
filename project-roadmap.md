@@ -42,6 +42,7 @@ flowchart TB
     A["project-roadmap.md\nmaster roadmap / index"] --> B["system-architecture.md\ntop-level architecture"]
     A --> U["unified-memory-core.md\nproduct index"]
     A --> V["unified-memory-core-roadmap.md\nproduct roadmap"]
+    A --> W["docs/unified-memory-core/deployment-topology.md\ndeployment topology"]
     A --> C["reports/memory-search-roadmap.md\nmemory-search roadmap"]
     A --> D["reports/self-learning-roadmap.md\nself-learning roadmap"]
     C --> E["reports/memory-search-next-blueprint.md\nmemory-search blueprint"]
@@ -51,7 +52,7 @@ flowchart TB
     classDef work fill:#eefce8,stroke:#2f855a,color:#1c4532,stroke-width:1.5px;
     classDef arch fill:#fff4e8,stroke:#d97706,color:#7c2d12,stroke-width:1.5px;
     class A top;
-    class B,F,U,V arch;
+    class B,F,U,V,W arch;
     class C,D,E work;
 ```
 
@@ -73,7 +74,7 @@ flowchart TB
 | Core capture / fact-card / assembly | `completed` | maintain + tune |
 | Memory search | `phase-complete` | governance + incremental expansion |
 | Self-learning / reflection | `planning-updated` | architecture separation + phased implementation ready |
-| Unified Memory Core | `phase-1-active` | product framing + master structure setup |
+| Unified Memory Core | `phase-5-active` | contracts + backbone definition complete, adapter implementation next |
 
 ## Completed Foundation
 
@@ -178,6 +179,8 @@ Key documents:
   [unified-memory-core.md](unified-memory-core.md)
 - product roadmap:
   [unified-memory-core-roadmap.md](unified-memory-core-roadmap.md)
+- deployment:
+  [docs/unified-memory-core/deployment-topology.md](docs/unified-memory-core/deployment-topology.md)
 
 ### Parallel maintenance focus
 
@@ -222,6 +225,7 @@ Planned project stages:
 4. keep self-learning as a workstream inside the new product shape
 5. continue OpenClaw adapter hardening while starting Codex adapter design
 6. add long-term audit, repair, comparison, and regression around product artifacts
+7. keep the first implementation local-first but network-ready for multi-runtime growth
 
 ## Architecture Direction
 
@@ -248,6 +252,7 @@ Inside the product, the first-class modules are:
 - [README.md](README.md)
 - [system-architecture.md](system-architecture.md)
 - [project-roadmap.md](project-roadmap.md)
+- [docs/unified-memory-core/deployment-topology.md](docs/unified-memory-core/deployment-topology.md)
 - [self-learning-architecture.md](self-learning-architecture.md)
 - [unified-memory-core.md](unified-memory-core.md)
 - [unified-memory-core-roadmap.md](unified-memory-core-roadmap.md)
