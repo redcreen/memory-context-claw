@@ -19,6 +19,13 @@ export {
 
 export { createSourceSystem } from "./source-system.js";
 export { createMemoryRegistry } from "./memory-registry.js";
+export { createProjectionSystem } from "./projection-system.js";
+export {
+  resolveOpenClawNamespace,
+  resolveCodexNamespace,
+  createOpenClawAdapterBridge,
+  createCodexAdapterBridge
+} from "./adapter-bridges.js";
 export {
   buildPassThroughCandidateArtifact,
   ingestDeclaredSourceToCandidate

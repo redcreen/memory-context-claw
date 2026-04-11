@@ -65,6 +65,8 @@ The next step is:
   - `Source System` MVP landed in [../../src/unified-memory-core/source-system.js](../../src/unified-memory-core/source-system.js)
   - `Memory Registry` MVP landed in [../../src/unified-memory-core/memory-registry.js](../../src/unified-memory-core/memory-registry.js)
   - local `source -> candidate` loop landed in [../../src/unified-memory-core/pipeline.js](../../src/unified-memory-core/pipeline.js)
+  - `Projection System` MVP landed in [../../src/unified-memory-core/projection-system.js](../../src/unified-memory-core/projection-system.js)
+  - OpenClaw / Codex adapter bridges landed in [../../src/unified-memory-core/adapter-bridges.js](../../src/unified-memory-core/adapter-bridges.js)
   - tranche-1 tests landed in [../../test/unified-memory-core](../../test/unified-memory-core)
 
 Important note:
@@ -497,6 +499,8 @@ Review this document with these questions:
   - `Source System` MVP 已落地到 [../../src/unified-memory-core/source-system.js](../../src/unified-memory-core/source-system.js)
   - `Memory Registry` MVP 已落地到 [../../src/unified-memory-core/memory-registry.js](../../src/unified-memory-core/memory-registry.js)
   - 本地 `source -> candidate` 闭环已落地到 [../../src/unified-memory-core/pipeline.js](../../src/unified-memory-core/pipeline.js)
+  - `Projection System` MVP 已落地到 [../../src/unified-memory-core/projection-system.js](../../src/unified-memory-core/projection-system.js)
+  - OpenClaw / Codex adapter bridge 已落地到 [../../src/unified-memory-core/adapter-bridges.js](../../src/unified-memory-core/adapter-bridges.js)
   - tranche-1 测试已落地到 [../../test/unified-memory-core](../../test/unified-memory-core)
 
 补充决策：

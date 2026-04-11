@@ -181,6 +181,8 @@ Current Tranche 1 implementation entrypoints:
 - Source System MVP: [src/unified-memory-core/source-system.js](src/unified-memory-core/source-system.js)
 - Memory Registry MVP: [src/unified-memory-core/memory-registry.js](src/unified-memory-core/memory-registry.js)
 - local source-to-candidate pipeline: [src/unified-memory-core/pipeline.js](src/unified-memory-core/pipeline.js)
+- Projection System MVP: [src/unified-memory-core/projection-system.js](src/unified-memory-core/projection-system.js)
+- OpenClaw / Codex adapter bridges: [src/unified-memory-core/adapter-bridges.js](src/unified-memory-core/adapter-bridges.js)
 - contract and registry tests: [test/unified-memory-core](test/unified-memory-core)
 
 **Local Development Install**
@@ -385,6 +387,8 @@ Other name options:
 - Source System MVP: [src/unified-memory-core/source-system.js](src/unified-memory-core/source-system.js)
 - Memory Registry MVP: [src/unified-memory-core/memory-registry.js](src/unified-memory-core/memory-registry.js)
 - 本地 `source -> candidate` 闭环: [src/unified-memory-core/pipeline.js](src/unified-memory-core/pipeline.js)
+- Projection System MVP: [src/unified-memory-core/projection-system.js](src/unified-memory-core/projection-system.js)
+- OpenClaw / Codex adapter bridges: [src/unified-memory-core/adapter-bridges.js](src/unified-memory-core/adapter-bridges.js)
 - contract / registry tests: [test/unified-memory-core](test/unified-memory-core)
 
 **快速开始**
