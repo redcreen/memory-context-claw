@@ -73,8 +73,51 @@ flowchart TB
 | --- | --- | --- |
 | Core capture / fact-card / assembly | `completed` | maintain + tune |
 | Memory search | `phase-complete` | governance + incremental expansion |
-| Self-learning / reflection | `design-package-ready` | architecture, roadmap, standalone boundary, and governance path ready |
-| Unified Memory Core | `phase-6-ready` | full design package complete, implementation-ready |
+| Self-learning / reflection | `baseline-implemented` | daily reflection, standalone loop, and governance surfaces available |
+| Unified Memory Core | `baseline-complete` | tranche 1-3 complete; ready for next enhancement phase |
+
+## Progress Map
+
+```mermaid
+flowchart TB
+    A["Unified Memory Core Project\nCurrent state: first baseline complete"] --> B["Foundation Layer\ncompleted"]
+    A --> C["Unified Memory Core Product Line\nTranche 1-3 completed"]
+    A --> D["Memory Search Workstream\nphase-complete / governed"]
+    A --> E["Next Phase\nroadmap alignment + new enhancement plan"]
+
+    B --> B1["Capture Foundation\ncompleted"]
+    B --> B2["Fact / Card Foundation\ncompleted"]
+    B --> B3["Consumption Foundation\ncompleted with tuning"]
+    B --> B4["Regression Foundation\ncompleted"]
+    B --> B5["Governance Foundation\nrunning"]
+
+    C --> C1["Tranche 1\ncontracts + source + registry\ncompleted"]
+    C --> C2["Tranche 2\nprojection + governance + adapters\ncompleted"]
+    C --> C3["Tranche 3\nreflection + standalone + independent execution\ncompleted"]
+
+    C2 --> C21["OpenClaw Adapter Runtime\ncompleted"]
+    C2 --> C22["Codex Adapter Runtime\ncompleted"]
+    C2 --> C23["Adapter Compatibility Tests\ncompleted"]
+
+    C3 --> C31["Daily Reflection Loop Baseline\ncompleted"]
+    C3 --> C32["Standalone CLI\nsource / reflect / export / govern\ncompleted"]
+    C3 --> C33["Independent Execution Review\nownership / release boundary / migration checklist\ncompleted"]
+
+    D --> D1["Memory Search Governance\nongoing"]
+    D --> D2["Case Expansion / Policy Tuning\nas needed"]
+
+    E --> E1["Align roadmap docs with completed baseline"]
+    E --> E2["Open next enhancement phase"]
+    E2 --> E21["Likely first track:\nself-learning phase 3\npromotion / decay / policy-input artifacts"]
+
+    classDef done fill:#e8f7e8,stroke:#2f855a,color:#1c4532,stroke-width:1.5px;
+    classDef active fill:#eef6ff,stroke:#2563eb,color:#123a73,stroke-width:1.5px;
+    classDef next fill:#fff4e8,stroke:#d97706,color:#7c2d12,stroke-width:1.5px;
+
+    class A,B,B1,B2,B3,B4,B5,C,C1,C2,C3,C21,C22,C23,C31,C32,C33 done;
+    class D,D1,D2 active;
+    class E,E1,E2,E21 next;
+```
 
 ## Completed Foundation
 
@@ -160,27 +203,25 @@ Still ongoing:
 
 ### Primary next engineering focus
 
-**Self-Learning / Daily Reflection**
+**Roadmap Alignment + Next Enhancement Planning**
 
 Why this is next:
 
-- the main memory-context backbone is already complete
-- memory-search hardening has moved into regular governance mode
-- the next step is turning stable memory into a governed daily-learning system
-- this subsystem now needs to be built with clear product boundaries instead of staying adapter-internal
+- the current local-first baseline in `development-plan.md` is complete
+- roadmap documents still need to reflect the true implementation state
+- the next move should be a new enhancement-phase plan, not more work appended to the old baseline plan
+- the most likely first coding track in that next phase is deeper self-learning policy work
 
 Key documents:
 
-- architecture:
-  [self-learning-architecture.md](self-learning-architecture.md)
-- roadmap:
-  [reports/self-learning-roadmap.md](reports/self-learning-roadmap.md)
-- product:
-  [unified-memory-core.md](unified-memory-core.md)
+- master roadmap:
+  [project-roadmap.md](project-roadmap.md)
 - product roadmap:
   [unified-memory-core-roadmap.md](unified-memory-core-roadmap.md)
-- deployment:
-  [docs/unified-memory-core/deployment-topology.md](docs/unified-memory-core/deployment-topology.md)
+- implementation plan:
+  [docs/unified-memory-core/development-plan.md](docs/unified-memory-core/development-plan.md)
+- self-learning roadmap:
+  [reports/self-learning-roadmap.md](reports/self-learning-roadmap.md)
 
 ### Parallel maintenance focus
 
@@ -215,19 +256,15 @@ Key documents:
 
 The next major project move is:
 
-`grow the repo from a governed OpenClaw memory-context adapter into the product skeleton of Unified Memory Core plus first-class adapters`
+`close the roadmap gap between documents and implementation, then open a fresh enhancement phase`
 
-Planned project stages:
+Planned project stages from here:
 
-1. finalize top-level product architecture and document chain
-2. finalize module splits and module-level documentation
-3. build Source / Registry / Adapter contracts first
-4. keep self-learning as a workstream inside the new product shape
-5. continue OpenClaw adapter hardening while starting Codex adapter design
-6. add long-term audit, repair, comparison, and regression around product artifacts
-7. keep the first implementation local-first but network-ready for multi-runtime growth
-8. move from adapter design packages into real implementation with shared contracts preserved
-9. keep self-learning / standalone / independent execution governed by the same document baseline
+1. align roadmap documents with the completed baseline
+2. define the next enhancement-phase scope explicitly
+3. choose one primary coding track instead of broad parallel expansion
+4. keep memory-search in governance mode
+5. preserve local-first and network-ready boundaries while planning future growth
 
 ## Architecture Direction
 
@@ -347,8 +384,51 @@ flowchart TB
 | --- | --- | --- |
 | 核心 capture / fact-card / assembly | `completed` | maintain + tune |
 | Memory Search | `phase-complete` | governance + incremental expansion |
-| Self-Learning / Reflection | `planning-updated` | architecture separation + phased implementation ready |
-| Unified Memory Core | `phase-1-active` | product framing + master structure setup |
+| Self-Learning / Reflection | `baseline-implemented` | reflection、daily loop、standalone baseline 已落地 |
+| Unified Memory Core | `baseline-complete` | tranche 1-3 已完成，进入下一阶段前的 roadmap 收口 |
+
+## 进展图
+
+```mermaid
+flowchart TB
+    A["Unified Memory Core 项目总览\n当前状态：第一阶段 baseline 已闭环"] --> B["基础能力层\n已完成"]
+    A --> C["Unified Memory Core 产品主线\nTranche 1-3 已完成"]
+    A --> D["Memory Search Workstream\nphase-complete / 治理中"]
+    A --> E["下一阶段\nroadmap 收口 + 新增强计划"]
+
+    B --> B1["Capture Foundation\n已完成"]
+    B --> B2["Fact / Card Foundation\n已完成"]
+    B --> B3["Consumption Foundation\n已完成，持续调优"]
+    B --> B4["Regression Foundation\n已完成"]
+    B --> B5["Governance Foundation\n运行中"]
+
+    C --> C1["Tranche 1\ncontracts + source + registry\n已完成"]
+    C --> C2["Tranche 2\nprojection + governance + adapters\n已完成"]
+    C --> C3["Tranche 3\nreflection + standalone + independent execution\n已完成"]
+
+    C2 --> C21["OpenClaw Adapter Runtime\n已完成"]
+    C2 --> C22["Codex Adapter Runtime\n已完成"]
+    C2 --> C23["Adapter Compatibility Tests\n已完成"]
+
+    C3 --> C31["Daily Reflection Loop Baseline\n已完成"]
+    C3 --> C32["Standalone CLI\nsource / reflect / export / govern\n已完成"]
+    C3 --> C33["Independent Execution Review\nownership / release boundary / migration checklist\n已完成"]
+
+    D --> D1["Memory Search Governance\n持续进行"]
+    D --> D2["Case Expansion / Policy Tuning\n按需推进"]
+
+    E --> E1["先把 roadmap 文档收口到真实进度"]
+    E --> E2["再开启下一阶段增强计划"]
+    E2 --> E21["优先候选主线：\nself-learning phase 3\npromotion / decay / policy-input artifacts"]
+
+    classDef done fill:#e8f7e8,stroke:#2f855a,color:#1c4532,stroke-width:1.5px;
+    classDef active fill:#eef6ff,stroke:#2563eb,color:#123a73,stroke-width:1.5px;
+    classDef next fill:#fff4e8,stroke:#d97706,color:#7c2d12,stroke-width:1.5px;
+
+    class A,B,B1,B2,B3,B4,B5,C,C1,C2,C3,C21,C22,C23,C31,C32,C33 done;
+    class D,D1,D2 active;
+    class E,E1,E2,E21 next;
+```
 
 ## 已完成的项目基础
 
@@ -434,25 +514,25 @@ flowchart TB
 
 ### 下一条主要工程主线
 
-**Self-Learning / Daily Reflection**
+**Roadmap 收口 + 下一阶段增强计划**
 
-为什么现在切到这条线：
+为什么先做这个：
 
-- 记忆上下文主骨架已经完成
-- memory-search 补强已经进入常规治理模式
-- 下一步应该把稳定记忆继续收成“受治理的每日学习系统”
-- 这条线现在需要按“独立产品边界”来设计，而不是继续混在 adapter 内部
+- `development-plan.md` 这条 local-first baseline 已经做完
+- 现在的主要缺口不是实现，而是 roadmap 文档状态还没有完全对齐真实进展
+- 下一步应该新开增强阶段计划，而不是继续往旧 baseline 计划里追加内容
+- 新阶段最可能的首条编码主线，是更深一层的 self-learning policy 能力
 
 关键文档：
 
-- 架构：
-  [self-learning-architecture.md](self-learning-architecture.md)
-- roadmap：
-  [reports/self-learning-roadmap.md](reports/self-learning-roadmap.md)
-- 产品：
-  [unified-memory-core.md](unified-memory-core.md)
+- 主 roadmap：
+  [project-roadmap.md](project-roadmap.md)
 - 产品 roadmap：
   [unified-memory-core-roadmap.md](unified-memory-core-roadmap.md)
+- 实施计划：
+  [docs/unified-memory-core/development-plan.md](docs/unified-memory-core/development-plan.md)
+- self-learning roadmap：
+  [reports/self-learning-roadmap.md](reports/self-learning-roadmap.md)
 
 ### 并行维护主线
 
@@ -487,16 +567,15 @@ flowchart TB
 
 项目下一步的大方向是：
 
-`把 unified-memory-core 从“可治理的事实优先上下文层”，继续推进成“可治理的自学习与反思系统”`
+`先把文档与实现之间的状态差补齐，再单独开启新的增强阶段`
 
-当前计划中的阶段是：
+从这里开始的计划阶段是：
 
-1. 定稿顶层产品架构和文档链路
-2. 定稿模块拆分和模块级文档
-3. 先做 Source / Registry / Adapter contracts
-4. 让 self-learning 作为新产品形态中的一条 workstream 继续推进
-5. 一边继续加固 OpenClaw adapter，一边启动 Codex adapter 设计
-6. 为产品级 artifacts 补 audit、repair、对比和回归保护
+1. 把 roadmap 文档收口到已完成 baseline 的真实状态
+2. 明确下一阶段 enhancement plan 的边界和范围
+3. 只选一条主编码线推进，避免重新摊大并行面
+4. 继续把 memory-search 维持在治理模式
+5. 在规划未来扩展时继续守住 local-first 和 network-ready 边界
 
 ## 架构方向
 

@@ -20,21 +20,58 @@ It should become:
 
 ## Current Phase
 
-Status: `phase 6 / design-complete and implementation-ready`
+Status: `phase 6 / current baseline complete`
 
 What is happening now:
 
-- official product naming
-- product/module split alignment
-- top-level architecture correction
-- master documentation alignment
-- module architecture docs
-- module roadmaps / blueprints / todo
-- testing surfaces and case matrix
-- deployment topology and multi-runtime model
-- shared contracts and backbone definitions for steps 5-7
-- OpenClaw / Codex adapter design packages for steps 8-9
-- self-learning / standalone / independent-execution design packages for steps 10-12
+- product naming and boundary alignment are complete
+- module architecture docs, roadmaps, blueprints, and testing surfaces are complete
+- tranche 1 implementation is complete:
+  - shared contracts
+  - Source System MVP
+  - Memory Registry MVP
+  - contract / registry tests
+- tranche 2 implementation is complete:
+  - Projection System MVP
+  - Governance System MVP
+  - OpenClaw adapter runtime
+  - Codex adapter runtime
+  - adapter compatibility tests
+- tranche 3 implementation is complete:
+  - Reflection System MVP
+  - daily reflection loop baseline
+  - standalone CLI and command surface
+  - independent execution review
+- the current local-first, network-ready baseline is closed
+
+## Progress Map
+
+```mermaid
+flowchart TB
+    A["Unified Memory Core Product\nphase 6 baseline complete"] --> B["Tranche 1\ncontracts + source + registry\ncompleted"]
+    A --> C["Tranche 2\nprojection + governance + adapters\ncompleted"]
+    A --> D["Tranche 3\nreflection + standalone + independent execution\ncompleted"]
+    A --> E["Next Phase\nroadmap alignment + enhancement planning"]
+
+    C --> C1["OpenClaw Adapter Runtime\ncompleted"]
+    C --> C2["Codex Adapter Runtime\ncompleted"]
+    C --> C3["Adapter Compatibility\ncompleted"]
+
+    D --> D1["Daily Reflection Loop\ncompleted"]
+    D --> D2["Standalone CLI\ncompleted"]
+    D --> D3["Audit / Repair / Replay / Export Inspect\ncompleted"]
+    D --> D4["Independent Execution Review\ncompleted"]
+
+    E --> E1["Align roadmap state with implementation"]
+    E --> E2["Define next enhancement-phase scope"]
+    E --> E3["Likely first coding focus:\nself-learning phase 3"]
+
+    classDef done fill:#e8f7e8,stroke:#2f855a,color:#1c4532,stroke-width:1.5px;
+    classDef next fill:#fff4e8,stroke:#d97706,color:#7c2d12,stroke-width:1.5px;
+
+    class A,B,C,D,C1,C2,C3,D1,D2,D3,D4 done;
+    class E,E1,E2,E3 next;
+```
 
 ## Program Roadmap
 
@@ -132,21 +169,58 @@ Goal:
 
 ## 当前阶段
 
-状态：`phase 6 / 设计包已完成，可进入实现`
+状态：`phase 6 / 当前 baseline 已完成`
 
 当前正在做：
 
-- 正式产品命名
-- 产品 / 模块拆分对齐
-- 顶层架构纠偏
-- 主文档体系对齐
-- 模块架构文档补齐
-- 模块 roadmap / blueprint / todo 补齐
-- testing surfaces 与 case matrix 建立
-- deployment topology 与多 runtime 模型补齐
-- Step 5-7 的 shared contracts 与 backbone definitions 定稿
-- Step 8-9 的 OpenClaw / Codex adapter 设计包定稿
-- Step 10-12 的 self-learning / standalone / independent-execution 设计包定稿
+- 产品命名和边界对齐已完成
+- 模块架构文档、roadmap、blueprint、testing surfaces 已完成
+- tranche 1 实现已完成：
+  - shared contracts
+  - Source System MVP
+  - Memory Registry MVP
+  - contract / registry tests
+- tranche 2 实现已完成：
+  - Projection System MVP
+  - Governance System MVP
+  - OpenClaw adapter runtime
+  - Codex adapter runtime
+  - adapter compatibility tests
+- tranche 3 实现已完成：
+  - Reflection System MVP
+  - daily reflection loop baseline
+  - standalone CLI 与命令面
+  - independent execution review
+- 当前这条 local-first、network-ready 的 baseline 已经闭环
+
+## 进展图
+
+```mermaid
+flowchart TB
+    A["Unified Memory Core 产品线\nphase 6 baseline 已完成"] --> B["Tranche 1\ncontracts + source + registry\n已完成"]
+    A --> C["Tranche 2\nprojection + governance + adapters\n已完成"]
+    A --> D["Tranche 3\nreflection + standalone + independent execution\n已完成"]
+    A --> E["下一阶段\nroadmap 收口 + 新增强计划"]
+
+    C --> C1["OpenClaw Adapter Runtime\n已完成"]
+    C --> C2["Codex Adapter Runtime\n已完成"]
+    C --> C3["Adapter Compatibility\n已完成"]
+
+    D --> D1["Daily Reflection Loop\n已完成"]
+    D --> D2["Standalone CLI\n已完成"]
+    D --> D3["Audit / Repair / Replay / Export Inspect\n已完成"]
+    D --> D4["Independent Execution Review\n已完成"]
+
+    E --> E1["先对齐 roadmap 与实现状态"]
+    E --> E2["再定义下一阶段 enhancement plan"]
+    E --> E3["优先候选编码主线：\nself-learning phase 3"]
+
+    classDef done fill:#e8f7e8,stroke:#2f855a,color:#1c4532,stroke-width:1.5px;
+    classDef next fill:#fff4e8,stroke:#d97706,color:#7c2d12,stroke-width:1.5px;
+
+    class A,B,C,D,C1,C2,C3,D1,D2,D3,D4 done;
+    class E,E1,E2,E3 next;
+```
 
 ## 项目路线图
 
