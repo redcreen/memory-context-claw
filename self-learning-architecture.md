@@ -6,9 +6,9 @@
 
 ## Purpose
 
-This document defines the next major workstream for `memory-context-claw`.
+This document defines the self-learning workstream inside the current `Unified Memory Core` product direction.
 
-It also defines the boundary of a future standalone learning subsystem:
+It defines the boundary of the learning subsystem that feeds OpenClaw, Codex, and future adapters:
 
 `daily self-learning + daily reflection + policy adaptation`
 
@@ -38,7 +38,7 @@ Turn `memory-context-claw` from a fact-first memory context layer into a:
 
 At the architecture level, this system should be designed as:
 
-`a separable, governable learning component that currently feeds OpenClaw, but is not permanently tied to OpenClaw`
+`a governable learning subsystem inside Unified Memory Core that feeds OpenClaw, Codex, and future adapters`
 
 ## What Problem This Workstream Solves
 
@@ -97,7 +97,7 @@ This workstream does not:
 
 ## Product Boundary
 
-This self-learning subsystem should be designed as a distinct product-shaped component.
+This self-learning subsystem should be designed as a distinct product module inside `Unified Memory Core`.
 
 That means:
 
@@ -111,9 +111,9 @@ Current integration target:
 
 - `memory-context-claw` consumes learning outputs and inserts them into the OpenClaw-facing memory/context flow
 
-Future-compatible target:
+Cross-adapter target:
 
-- the same learning outputs can be consumed by other plugins, services, or local tools
+- the same learning outputs can be consumed by OpenClaw, Codex, and future consumers
 
 ## Design Principles
 

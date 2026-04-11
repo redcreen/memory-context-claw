@@ -6,916 +6,636 @@
 
 ## Purpose
 
-This is the top-level architecture document for `memory-context-claw`.
+This is the top-level system architecture document for the current repo.
 
-It answers:
+It explains the latest official model:
 
-- what the system is
-- which major layers it contains
-- how data moves across the layers
-- where `memory search` fits in the overall design
-- where the self-learning component boundary sits
-- which parts are host behavior vs plugin behavior
+- `Unified Memory Core` is the product-level shared memory foundation
+- `memory-context-claw` is the OpenClaw-facing adapter and consumption layer
+- `Codex Adapter` is a first-class integration target from day one
+- `memory search` is now one workstream inside a broader multi-product architecture
 
-This document is the architectural companion to:
+This document should answer:
 
+- what the overall system is now
+- which boundaries are stable
+- how data moves from sources to tools
+- how the current repo is organized around product core and adapters
+- where governance and testing sit
+
+Related documents:
+
+- [README.md](README.md)
 - [project-roadmap.md](project-roadmap.md)
+- [unified-memory-core.md](unified-memory-core.md)
+- [unified-memory-core-architecture.md](unified-memory-core-architecture.md)
 - [self-learning-architecture.md](self-learning-architecture.md)
-- [memory-search-architecture.md](reports/memory-search-architecture.md)
+- [reports/memory-search-architecture.md](reports/memory-search-architecture.md)
 
-## One Diagram
+## Architecture At A Glance
 
 ```mermaid
 flowchart TB
-    A["User conversation / host memory / docs"] --> B["memory-context-claw core"]
-    X["Controlled learning sources / CLI"] --> Y["Self-learning component"]
-    Y --> Z["Learning exports / adapters"]
-    Z --> B
-    B --> E["Final context for model"]
+    subgraph CORE["Unified Memory Core"]
+        S["Source System"]
+        R["Reflection System"]
+        M["Memory Registry"]
+        P["Projection System"]
+        G["Governance System"]
 
-    subgraph OPS["Governance and validation"]
-        F["Regression Layer"]
-        G["Governance Layer"]
+        S --> R --> M --> P
+        G -. audit / repair / replay .-> S
+        G -. audit / repair / replay .-> R
+        G -. audit / repair / replay .-> M
+        G -. audit / repair / replay .-> P
     end
 
-    H["Memory Search Workstream"]
-    I["Self-Learning Workstream"]
+    subgraph ADAPTERS["Adapters"]
+        OA["OpenClaw Adapter\nmemory-context-claw"]
+        CA["Codex Adapter"]
+        TA["Other Tool Adapters"]
+    end
 
-    B -. validates retrieval behavior .-> F
-    B -. validates output quality .-> F
-    Y -. audits learning quality .-> G
-    B -. audits context quality .-> G
-    H -. improves search strategy .-> B
-    H -. hardens retrieval policy .-> B
-    I -. promotes stable patterns .-> Y
-    I -. adapts policy safely .-> Z
+    P --> OA
+    P --> CA
+    P --> TA
 
-    classDef input fill:#f7f1e3,stroke:#b58105,color:#4a3a00,stroke-width:1.5px;
-    classDef plugin fill:#e8f1ff,stroke:#2f6feb,color:#123a73,stroke-width:1.5px;
-    classDef learning fill:#eefce8,stroke:#2f855a,color:#1c4532,stroke-width:1.5px;
-    classDef ops fill:#e8fff2,stroke:#1f8f5f,color:#0f5132,stroke-width:1.5px;
-    classDef workstream fill:#fff4e8,stroke:#d97706,color:#7c2d12,stroke-width:1.5px;
-    class A,X,E input;
-    class B,Z plugin;
-    class Y learning;
-    class F,G ops;
-    class H,I workstream;
+    OA --> O1["OpenClaw retrieval / context assembly"]
+    CA --> C1["Codex prompt / task / code workflow"]
+    TA --> T1["CLI / agents / services / apps"]
+
+    classDef core fill:#eefce8,stroke:#2f855a,color:#1c4532,stroke-width:1.6px;
+    classDef adapter fill:#e8f1ff,stroke:#2563eb,color:#0f172a,stroke-width:1.6px;
+    classDef ops fill:#fff4e8,stroke:#d97706,color:#7c2d12,stroke-width:1.6px;
+    class S,R,M,P core;
+    class OA,CA,TA,O1,C1,T1 adapter;
+    class G ops;
 ```
 
-## End-to-End Flow
+## Official Position
+
+The current official architecture is:
+
+1. `Unified Memory Core` is the shared-memory product
+2. `memory-context-claw` is not the whole product anymore
+3. `memory-context-claw` is the OpenClaw adapter and OpenClaw-specific consumption layer
+4. `Codex Adapter` is part of the intended first-class architecture, not a later afterthought
+5. product logic and tool-specific logic should stay separated through adapters
+
+## System Goal
+
+The combined system is meant to do three things well:
+
+1. build governed memory from controlled sources
+2. preserve high traceability and repairability
+3. project stable memory differently for different tools without coupling the core to any one tool
+
+## End-To-End Flow
 
 ```mermaid
 flowchart LR
-    U["User Query"] --> I{"Intent / Policy\nclassification"}
-    I -->|Fact-first| F["CardArtifact fast path"]
-    I -->|Formal-first| M["Formal memory candidates"]
-    I -->|Mixed / Search-first| S["Builtin search + plugin retrieval"]
+    A["Controlled sources\nconversation / file / URL / dir / image / CLI"] --> B["Source adapters"]
+    B --> C["Normalization + fingerprinting"]
+    C --> D["Reflection + extraction"]
+    D --> E["Candidate artifacts"]
+    E --> F["Promotion / decay / conflict handling"]
+    F --> G["Stable memory registry"]
+    G --> H["Projection / export adapters"]
+    H --> I["OpenClaw / Codex / future tools"]
 
-    F --> R["Rerank / selection"]
-    M --> R
-    S --> R
+    J["Audit / repair / replay"] -.-> E
+    J -.-> F
+    J -.-> G
+    J -.-> H
 
-    R --> A["Context assembly"]
-    A --> O["Final answer context"]
-
-    C1["Stable cards\nworkspace/MEMORY.md / workspace/memory / docs"] --> F
-    C2["Session-derived cards"] --> F
-    H1["Host memory index"] --> S
-
-    classDef user fill:#f7f1e3,stroke:#b58105,color:#4a3a00,stroke-width:1.5px;
-    classDef plugin fill:#e8f1ff,stroke:#2f6feb,color:#123a73,stroke-width:1.5px;
-    classDef card fill:#eefce8,stroke:#2f855a,color:#1c4532,stroke-width:1.5px;
-    classDef host fill:#f3e8ff,stroke:#7c3aed,color:#4c1d95,stroke-width:1.5px;
-    class U user;
-    class I,F,M,R,A,O plugin;
-    class C1,C2 card;
-    class S,H1 host;
+    classDef input fill:#f7f1e3,stroke:#b58105,color:#4a3a00,stroke-width:1.6px;
+    classDef core fill:#eefce8,stroke:#2f855a,color:#1c4532,stroke-width:1.6px;
+    classDef ops fill:#fff4e8,stroke:#d97706,color:#7c2d12,stroke-width:1.6px;
+    class A,I input;
+    class B,C,D,E,F,G,H core;
+    class J ops;
 ```
 
-## Sequence View
+## Stable Boundaries
+
+### 1. Product boundary
+
+`Unified Memory Core` owns:
+
+- source ingestion
+- candidate generation
+- artifact lifecycle
+- decision trail
+- exports
+- governance controls
+
+### 2. OpenClaw boundary
+
+`memory-context-claw` owns:
+
+- OpenClaw-specific retrieval policy
+- OpenClaw-specific context assembly
+- OpenClaw-facing export consumption
+- plugin integration with OpenClaw host behavior
+
+### 3. Codex boundary
+
+`Codex Adapter` owns:
+
+- Codex-facing code memory projection
+- Codex-specific task guidance consumption
+- Codex write-back event mapping
+
+## Module Stack
+
+```mermaid
+flowchart TB
+    subgraph M1["1. Source System"]
+        A1["Conversation Adapter"]
+        A2["File Adapter"]
+        A3["URL Adapter"]
+        A4["Directory Adapter"]
+        A5["Image Adapter"]
+        A6["Manual CLI Input"]
+    end
+
+    subgraph M2["2. Reflection System"]
+        B1["Event Labeling"]
+        B2["Pattern Extraction"]
+        B3["Fact / Rule / Habit Candidates"]
+        B4["Evidence Scoring"]
+    end
+
+    subgraph M3["3. Memory Registry"]
+        C1["Source Artifacts"]
+        C2["Candidate Artifacts"]
+        C3["Stable Artifacts"]
+        C4["Decision Trail"]
+        C5["Conflict / Superseded Records"]
+    end
+
+    subgraph M4["4. Projection System"]
+        D1["OpenClaw Export"]
+        D2["Codex Export"]
+        D3["Generic Export Artifacts"]
+        D4["Policy Projection"]
+    end
+
+    subgraph M5["5. Governance System"]
+        E1["Audit"]
+        E2["Repair"]
+        E3["Replay"]
+        E4["Diff / History"]
+        E5["Regression Surfaces"]
+    end
+
+    subgraph M6["6. Adapters"]
+        F1["OpenClaw Adapter"]
+        F2["Codex Adapter"]
+        F3["Other Tool Adapters"]
+    end
+
+    M1 --> M2 --> M3 --> M4 --> M6
+    M5 -. governs .-> M1
+    M5 -. governs .-> M2
+    M5 -. governs .-> M3
+    M5 -. governs .-> M4
+
+    classDef source fill:#f7f1e3,stroke:#b58105,color:#4a3a00,stroke-width:1.6px;
+    classDef reflect fill:#e8f1ff,stroke:#2563eb,color:#0f172a,stroke-width:1.6px;
+    classDef memory fill:#eefce8,stroke:#2f855a,color:#1c4532,stroke-width:1.6px;
+    classDef proj fill:#f3e8ff,stroke:#7c3aed,color:#4c1d95,stroke-width:1.6px;
+    classDef govern fill:#fff4e8,stroke:#d97706,color:#7c2d12,stroke-width:1.6px;
+    classDef adapter fill:#dbeafe,stroke:#2563eb,color:#0f172a,stroke-width:1.6px;
+    class A1,A2,A3,A4,A5,A6 source;
+    class B1,B2,B3,B4 reflect;
+    class C1,C2,C3,C4,C5 memory;
+    class D1,D2,D3,D4 proj;
+    class E1,E2,E3,E4,E5 govern;
+    class F1,F2,F3 adapter;
+```
+
+## OpenClaw Flow
 
 ```mermaid
 sequenceDiagram
     autonumber
     participant User
     participant Host as "OpenClaw Host"
-    participant Plugin as "memory-context-claw"
-    participant Cards as "Fact/Card Layer"
-    participant Search as "Builtin memory_search"
+    participant Adapter as "memory-context-claw"
+    participant Core as "Unified Memory Core"
+    participant Search as "builtin memory_search"
 
     User->>Host: Ask a question
-    Host->>Plugin: Request context assembly
-    Plugin->>Plugin: Classify intent / resolve retrieval policy
+    Host->>Adapter: Request context assembly
+    Adapter->>Core: Load relevant stable memory exports
+    Adapter->>Adapter: Classify intent and choose retrieval mode
 
-    alt "Fast-path-first or formal-memory-first"
-        Plugin->>Cards: Load stable card candidates
-        Cards-->>Plugin: Fact / rule / project cards
-    else "Mixed-mode or search-first"
-        Plugin->>Search: Query builtin memory_search
-        Search-->>Plugin: Raw search hits
-        Plugin->>Cards: Merge with card candidates
-        Cards-->>Plugin: Retrieval-friendly fact cards
+    alt Fact-first / formal-first path
+        Adapter->>Adapter: Prefer exported stable facts and rules
+    else Mixed / search-first path
+        Adapter->>Search: Query builtin memory_search
+        Search-->>Adapter: Raw host hits
+        Adapter->>Adapter: Merge host hits with core exports
     end
 
-    Plugin->>Plugin: Score, dedupe, and assemble final context
-    Plugin-->>Host: Return context package
+    Adapter->>Adapter: Score, dedupe, and assemble final context
+    Adapter-->>Host: Return context package
     Host-->>User: Final answer
 ```
 
-### Legend
+## Codex Flow
 
-- purple: host-side behavior
-- blue: plugin-side behavior
-- green: retrieval-friendly artifact
-- orange: governance / regression
+```mermaid
+sequenceDiagram
+    autonumber
+    participant User
+    participant Codex as "Codex Runtime"
+    participant Adapter as "Codex Adapter"
+    participant Core as "Unified Memory Core"
 
-## System Goal
+    User->>Codex: Start coding task
+    Codex->>Adapter: Resolve project + code namespace
+    Adapter->>Core: Load stable code memory exports
+    Core-->>Adapter: Rules / facts / lessons / project constraints
+    Adapter-->>Codex: Codex-specific memory projection
+    Codex->>Codex: Plan and execute task
+    Codex->>Adapter: Emit write-back events
+    Adapter->>Core: Submit source events / candidates
+```
 
-`memory-context-claw` is a governed, fact-first context engine for OpenClaw.
+## Where Memory Search Fits
 
-Its next major extension should connect to a separable self-learning component rather than absorbing all learning logic into plugin-internal code.
+`memory search` is important, but it is no longer the top-level architecture story.
 
-It is designed to:
+Its role is now:
 
-1. capture useful information from real interaction
-2. distill it into stable facts/cards
-3. prefer stable facts during retrieval and assembly
-4. continuously validate and govern the memory layer
-5. gradually learn stable patterns and feed them back into plugin-side policy
+- one workstream inside the OpenClaw adapter
+- one consumption-layer concern
+- one area of governance and regression inside `memory-context-claw`
 
-## What The Plugin Does Not Do
+It does not define the whole shared-memory product.
 
-The plugin does **not**:
-
-- replace OpenClaw builtin memory
-- patch the OpenClaw host
-- patch other plugins
-
-The plugin **does**:
-
-- consume existing host/session artifacts
-- distill fact/card artifacts
-- apply retrieval policy and assembly logic
-- run governance and regression tooling around the memory layer
-- integrate learning outputs from a standalone-capable learning subsystem
-
-## Layer Overview
-
-### Architecture Map
+## Governance And Testing Position
 
 ```mermaid
 flowchart LR
-    A["Self-Learning Component"] --> B["Fact/Card"]
-    B --> C["Consumption"]
-    C --> D["Regression"]
-    A --> E["Learning Governance"]
-    B --> F["Context Governance"]
-    E --> A
-    F --> B
-    F --> C
+    A["Source correctness"] --> E["Regression surfaces"]
+    B["Candidate correctness"] --> E
+    C["Registry correctness"] --> E
+    D["Projection correctness"] --> E
+    E --> F["OpenClaw adapter checks"]
+    E --> G["Codex adapter checks"]
 
-    classDef plugin fill:#e8f1ff,stroke:#2f6feb,color:#123a73,stroke-width:1.5px;
-    classDef learning fill:#eefce8,stroke:#2f855a,color:#1c4532,stroke-width:1.5px;
-    classDef ops fill:#fff4e8,stroke:#d97706,color:#7c2d12,stroke-width:1.5px;
-    class B,C plugin;
-    class A learning;
-    class D,E,F ops;
+    H["Audit / repair / replay"] -. improves .-> A
+    H -. improves .-> B
+    H -. improves .-> C
+    H -. improves .-> D
+
+    classDef core fill:#eefce8,stroke:#2f855a,color:#1c4532,stroke-width:1.6px;
+    classDef ops fill:#fff4e8,stroke:#d97706,color:#7c2d12,stroke-width:1.6px;
+    class A,B,C,D,E,F,G core;
+    class H ops;
 ```
 
-```mermaid
-flowchart TB
-    subgraph L1["Capture Layer"]
-        A1["Sessions"]
-        A2["Session-memory files"]
-        A3["workspace/MEMORY.md"]
-        A4["workspace/memory/YYYY-MM-DD.md"]
-        A5["Project / config docs"]
-    end
-
-    subgraph L2["Fact/Card Layer"]
-        B1["Candidate distillation"]
-        B2["Stable fact extraction"]
-        B3["Card artifacts"]
-    end
-
-    subgraph L3["Consumption Layer"]
-        C1["Policy routing"]
-        C2["Search / merge"]
-        C3["Scoring / assembly"]
-    end
-
-    subgraph L4["Governance + Regression"]
-        D1["Smoke / perf / hot-session"]
-        D2["Audit / duplicate / conflict"]
-        D3["Governance cycle"]
-    end
-
-    A1 --> B1
-    A2 --> B1
-    A3 --> B2
-    A4 --> B2
-    A5 --> B2
-    B1 --> B3
-    B2 --> B3
-    B3 --> C1
-    C1 --> C2
-    C2 --> C3
-    B3 --> D1
-    B3 --> D2
-    C3 --> D1
-    D2 --> D3
-    D3 --> B3
-
-    classDef capture fill:#f7f1e3,stroke:#b58105,color:#4a3a00,stroke-width:1.5px;
-    classDef fact fill:#eefce8,stroke:#2f855a,color:#1c4532,stroke-width:1.5px;
-    classDef consume fill:#e8f1ff,stroke:#2f6feb,color:#123a73,stroke-width:1.5px;
-    classDef govern fill:#fff4e8,stroke:#d97706,color:#7c2d12,stroke-width:1.5px;
-    class A1,A2,A3,A4,A5 capture;
-    class B1,B2,B3 fact;
-    class C1,C2,C3 consume;
-    class D1,D2,D3 govern;
-```
-
-## 1. Capture Layer
-
-The capture layer collects candidate information from:
-
-- sessions
-- host-generated session-memory files
-- `workspace/MEMORY.md`
-- `workspace/memory/YYYY-MM-DD.md`
-- project docs / config docs
-
-Responsibilities:
-
-- preserve raw session traces
-- collect candidate facts before they disappear
-- support pre-compaction distillation
-
-Outputs:
-
-- candidate memory inputs
-- raw session artifacts
-
-## 2. Fact/Card Layer
-
-The fact/card layer converts noisy memory inputs into stable units.
-
-Responsibilities:
-
-- extract subject facts
-- extract stable rules
-- derive background/project cards
-- keep one card focused on one main idea when possible
-
-Key artifacts:
-
-- `conversation-memory-cards.md`
-- `conversation-memory-cards.json`
-- stable cards derived from:
-  - `workspace/MEMORY.md`
-  - `workspace/memory/YYYY-MM-DD.md`
-  - policy/config/project docs
-
-## 3. Consumption Layer
-
-The consumption layer is where retrieval and context assembly happen.
-
-Responsibilities:
-
-- route certain queries into `cardArtifact fast path`
-- apply fact-first / formal-first / mixed / search-first policy
-- score and select candidates
-- build token-budget-aware final context
-
-Key point:
-
-This layer is where most of the practical “system feels smart” behavior comes from.
-
-## 4. Regression Layer
-
-The regression layer ensures the system does not quietly drift.
-
-Responsibilities:
-
-- smoke checks
-- perf checks
-- hot-session health checks
-- stable-facts regression
-
-Key outputs:
-
-- `smoke`
-- `perf`
-- `eval:hot*`
-- targeted `memory-search` evaluation
-
-## 5. Governance Layer
-
-The governance layer keeps the memory system healthy over time.
-
-Responsibilities:
-
-- separate confirmed / pending / noise
-- audit formal memory
-- audit duplicates and conflicts
-- review session-memory exit conditions
-- run periodic governance cycles
-
-Key outputs:
-
-- audit reports
-- governance-cycle reports
-- watchlists
-
-## Memory Search In The Big Picture
-
-`memory search` is not the whole system.
-
-It is one workstream inside the broader architecture:
-
-```mermaid
-flowchart TB
-    A["Overall system"] --> B["Capture"]
-    A --> C["Fact/Card"]
-    A --> D["Consumption"]
-    A --> E["Regression"]
-    A --> F["Governance"]
-    D --> G["Memory Search Workstream"]
-    F --> G
-```
-
-Why it matters:
-
-- memory search affects the consumption layer directly
-- memory search affects governance through watchlists, baselines, and source-quality checks
-- but memory search is still only one part of the whole plugin
-
-## Raw Summary vs Fact/Card
-
-One of the most important architectural decisions is this separation:
-
-```mermaid
-flowchart LR
-    A["Raw summary"] --> A1["Audit / replay / re-distillation"]
-    B["Fact/Card artifact"] --> B1["Fast retrieval / stable answer support"]
-```
-
-Meaning:
-
-- raw summary is preserved
-- fact/card artifacts carry retrieval-friendly responsibility
-
-This is why the system can stay both:
-
-- auditable
-- efficient for high-value fact queries
-
-## Host vs Plugin Boundary
-
-```mermaid
-flowchart LR
-    subgraph Host["OpenClaw Host"]
-        H1["Builtin memory_search"]
-        H2["Session-memory writer"]
-        H3["Base memory index"]
-        H4["Agent runtime / sessions"]
-    end
-
-    subgraph Plugin["memory-context-claw"]
-        P1["Fact/card distillation"]
-        P2["Retrieval policy"]
-        P3["Source prioritization"]
-        P4["Assembly logic"]
-        P5["Governance / regression tooling"]
-    end
-
-    H1 --> P2
-    H2 --> P1
-    H3 --> P2
-    H4 --> P4
-    P1 --> P2
-    P2 --> P4
-    P4 --> P5
-
-    classDef host fill:#f3e8ff,stroke:#7c3aed,color:#4c1d95,stroke-width:1.5px;
-    classDef plugin fill:#e8f1ff,stroke:#2f6feb,color:#123a73,stroke-width:1.5px;
-    class H1,H2,H3,H4 host;
-    class P1,P2,P3,P4,P5 plugin;
-```
-
-### Host Side
-
-OpenClaw host is responsible for:
-
-- builtin `memory_search`
-- writing some session-memory files
-- base memory indexing
-- agent runtime/session behavior
-
-### Plugin Side
-
-`memory-context-claw` is responsible for:
-
-- fact/card distillation
-- retrieval policy
-- source prioritization
-- assembly logic
-- governance reporting
-
-This boundary is important because:
-
-- host limitations must not be misreported as plugin fixes
-- plugin compensation must not be described as host repair
-
-## LLM Boundary
-
-Default architecture:
-
-- `0-LLM default`
-
-Allowed optional enhancement:
-
-- `1-LLM optional`
-- configurable
-- disabled by default
-
-Disallowed as main path:
-
-- multi-step LLM orchestration chain
-
-## Current Maturity
-
-### Stable
-
-- capture foundation
-- fact/card layer
-- fact-first consumption skeleton
-- smoke/perf/governance baseline
-- memory-search A-E workstream closure
-
-### Still evolving
-
-- builtin memory-search gap handling
-- watchlist reduction
-- stable fact expansion
-- governance ergonomics
-
-## Related Documents
-
-- [project-roadmap.md](project-roadmap.md)
-- [memory-search-roadmap.md](reports/memory-search-roadmap.md)
-- [memory-search-architecture.md](reports/memory-search-architecture.md)
-- [memory-search-next-blueprint.md](reports/memory-search-next-blueprint.md)
-
----
+## Repo Direction
+
+The latest repo direction is:
+
+- preserve prior plugin-first shape through the branch `unified-memory-core-bootstrap`
+- use `main` to move the system toward the official `Unified Memory Core` product shape
+- keep product docs, module docs, and adapter docs aligned before deep implementation
+
+## Document Map
+
+- product index:
+  [unified-memory-core.md](unified-memory-core.md)
+- product architecture:
+  [unified-memory-core-architecture.md](unified-memory-core-architecture.md)
+- product roadmap:
+  [unified-memory-core-roadmap.md](unified-memory-core-roadmap.md)
+- OpenClaw code-memory binding:
+  [code-memory-binding-architecture.md](code-memory-binding-architecture.md)
+- self-learning workstream:
+  [self-learning-architecture.md](self-learning-architecture.md)
+- memory-search workstream:
+  [reports/memory-search-architecture.md](reports/memory-search-architecture.md)
 
 ## 中文
 
 ## 文档目的
 
-这是 `memory-context-claw` 的总架构文档。
+这是当前仓库的顶层系统架构文档。
 
-它用来回答：
+它描述的是最新的正式架构：
 
-- 这个系统整体是什么
-- 它包含哪些主要层
-- 数据在各层之间怎么流动
-- `memory search` 在整体里处于什么位置
-- 哪些能力属于宿主，哪些属于插件
+- `Unified Memory Core` 是产品级共享记忆底座
+- `memory-context-claw` 是面向 OpenClaw 的 adapter 和消费层
+- `Codex Adapter` 从第一天就是一等集成目标
+- `memory search` 现在只是更大体系中的一个 workstream
 
-这份文档是下面这些文档的总架构入口：
+这份文档主要回答：
 
+- 现在整体系统到底是什么
+- 哪些边界已经稳定
+- 数据如何从 source 流到不同工具
+- 当前仓库如何围绕产品 core 与 adapters 组织
+- governance 和 testing 放在什么位置
+
+相关文档：
+
+- [README.md](README.md)
 - [project-roadmap.md](project-roadmap.md)
-- [memory-search-architecture.md](reports/memory-search-architecture.md)
+- [unified-memory-core.md](unified-memory-core.md)
+- [unified-memory-core-architecture.md](unified-memory-core-architecture.md)
+- [self-learning-architecture.md](self-learning-architecture.md)
+- [reports/memory-search-architecture.md](reports/memory-search-architecture.md)
 
 ## 一图看懂
 
 ```mermaid
 flowchart TB
-    A["用户对话 / 宿主记忆 / 项目文档"] --> B["Capture Layer"]
-    B --> C["Fact/Card Layer"]
-    C --> D["Consumption Layer"]
-    D --> E["最终上下文"]
+    subgraph CORE["Unified Memory Core"]
+        S["Source System"]
+        R["Reflection System"]
+        M["Memory Registry"]
+        P["Projection System"]
+        G["Governance System"]
 
-    subgraph OPS["治理与验证"]
-        F["Regression Layer"]
-        G["Governance Layer"]
+        S --> R --> M --> P
+        G -. audit / repair / replay .-> S
+        G -. audit / repair / replay .-> R
+        G -. audit / repair / replay .-> M
+        G -. audit / repair / replay .-> P
     end
 
-    H["Memory Search Workstream"]
+    subgraph ADAPTERS["Adapters"]
+        OA["OpenClaw Adapter\nmemory-context-claw"]
+        CA["Codex Adapter"]
+        TA["Other Tool Adapters"]
+    end
 
-    C -. 校验检索行为 .-> F
-    D -. 校验输出质量 .-> F
-    B -. 巡检输入源质量 .-> G
-    C -. 巡检 fact/card 质量 .-> G
-    H -. 改进搜索策略 .-> C
-    H -. 加固 retrieval policy .-> D
+    P --> OA
+    P --> CA
+    P --> TA
 
-    classDef input fill:#f7f1e3,stroke:#b58105,color:#4a3a00,stroke-width:1.5px;
-    classDef plugin fill:#e8f1ff,stroke:#2f6feb,color:#123a73,stroke-width:1.5px;
-    classDef ops fill:#e8fff2,stroke:#1f8f5f,color:#0f5132,stroke-width:1.5px;
-    classDef workstream fill:#fff4e8,stroke:#d97706,color:#7c2d12,stroke-width:1.5px;
-    class A input;
-    class B,C,D,E plugin;
-    class F,G ops;
-    class H workstream;
+    OA --> O1["OpenClaw retrieval / context assembly"]
+    CA --> C1["Codex prompt / task / code workflow"]
+    TA --> T1["CLI / agents / services / apps"]
+
+    classDef core fill:#eefce8,stroke:#2f855a,color:#1c4532,stroke-width:1.6px;
+    classDef adapter fill:#e8f1ff,stroke:#2563eb,color:#0f172a,stroke-width:1.6px;
+    classDef ops fill:#fff4e8,stroke:#d97706,color:#7c2d12,stroke-width:1.6px;
+    class S,R,M,P core;
+    class OA,CA,TA,O1,C1,T1 adapter;
+    class G ops;
 ```
 
-## 端到端流程
+## 正式定位
+
+当前正式架构可以概括成：
+
+1. `Unified Memory Core` 是共享记忆产品
+2. `memory-context-claw` 不再代表整个产品本体
+3. `memory-context-claw` 负责 OpenClaw adapter 与 OpenClaw 专属消费层
+4. `Codex Adapter` 是第一天就存在的一等架构目标
+5. 产品逻辑和工具专属逻辑通过 adapter 分开
+
+## 系统目标
+
+整个体系的目标是把三件事做好：
+
+1. 从可控 source 中构建受治理的记忆
+2. 保持高可追踪、可修复、可回放能力
+3. 在不把 core 绑死给单一工具的前提下，把稳定记忆投影给不同工具
+
+## 从输入到输出的主链
 
 ```mermaid
 flowchart LR
-    U["用户问题"] --> I{"意图 / 策略\n判断"}
-    I -->|Fact-first| F["CardArtifact 快路径"]
-    I -->|Formal-first| M["正式记忆候选"]
-    I -->|Mixed / Search-first| S["Builtin search + 插件检索层"]
+    A["可控 source\nconversation / file / URL / dir / image / CLI"] --> B["Source adapters"]
+    B --> C["Normalization + fingerprinting"]
+    C --> D["Reflection + extraction"]
+    D --> E["Candidate artifacts"]
+    E --> F["Promotion / decay / conflict handling"]
+    F --> G["Stable memory registry"]
+    G --> H["Projection / export adapters"]
+    H --> I["OpenClaw / Codex / future tools"]
 
-    F --> R["重排 / 选中"]
-    M --> R
-    S --> R
+    J["Audit / repair / replay"] -.-> E
+    J -.-> F
+    J -.-> G
+    J -.-> H
 
-    R --> A["上下文组装"]
-    A --> O["最终回答上下文"]
-
-    C1["Stable cards\nworkspace/MEMORY.md / workspace/memory / docs"] --> F
-    C2["Session-derived cards"] --> F
-    H1["宿主 memory index"] --> S
-
-    classDef user fill:#f7f1e3,stroke:#b58105,color:#4a3a00,stroke-width:1.5px;
-    classDef plugin fill:#e8f1ff,stroke:#2f6feb,color:#123a73,stroke-width:1.5px;
-    classDef card fill:#eefce8,stroke:#2f855a,color:#1c4532,stroke-width:1.5px;
-    classDef host fill:#f3e8ff,stroke:#7c3aed,color:#4c1d95,stroke-width:1.5px;
-    class U user;
-    class I,F,M,R,A,O plugin;
-    class C1,C2 card;
-    class S,H1 host;
+    classDef input fill:#f7f1e3,stroke:#b58105,color:#4a3a00,stroke-width:1.6px;
+    classDef core fill:#eefce8,stroke:#2f855a,color:#1c4532,stroke-width:1.6px;
+    classDef ops fill:#fff4e8,stroke:#d97706,color:#7c2d12,stroke-width:1.6px;
+    class A,I input;
+    class B,C,D,E,F,G,H core;
+    class J ops;
 ```
 
-## 时序图
+## 稳定边界
+
+### 1. Product boundary
+
+`Unified Memory Core` 负责：
+
+- source ingestion
+- candidate generation
+- artifact lifecycle
+- decision trail
+- exports
+- governance controls
+
+### 2. OpenClaw boundary
+
+`memory-context-claw` 负责：
+
+- OpenClaw 专属 retrieval policy
+- OpenClaw 专属 context assembly
+- OpenClaw 面向的 export consumption
+- 与 OpenClaw host 行为的插件集成
+
+### 3. Codex boundary
+
+`Codex Adapter` 负责：
+
+- 面向 Codex 的 code memory projection
+- Codex 专属任务提示消费
+- Codex write-back event 映射
+
+## 模块栈
+
+```mermaid
+flowchart TB
+    subgraph M1["1. Source System"]
+        A1["Conversation Adapter"]
+        A2["File Adapter"]
+        A3["URL Adapter"]
+        A4["Directory Adapter"]
+        A5["Image Adapter"]
+        A6["Manual CLI Input"]
+    end
+
+    subgraph M2["2. Reflection System"]
+        B1["Event Labeling"]
+        B2["Pattern Extraction"]
+        B3["Fact / Rule / Habit Candidates"]
+        B4["Evidence Scoring"]
+    end
+
+    subgraph M3["3. Memory Registry"]
+        C1["Source Artifacts"]
+        C2["Candidate Artifacts"]
+        C3["Stable Artifacts"]
+        C4["Decision Trail"]
+        C5["Conflict / Superseded Records"]
+    end
+
+    subgraph M4["4. Projection System"]
+        D1["OpenClaw Export"]
+        D2["Codex Export"]
+        D3["Generic Export Artifacts"]
+        D4["Policy Projection"]
+    end
+
+    subgraph M5["5. Governance System"]
+        E1["Audit"]
+        E2["Repair"]
+        E3["Replay"]
+        E4["Diff / History"]
+        E5["Regression Surfaces"]
+    end
+
+    subgraph M6["6. Adapters"]
+        F1["OpenClaw Adapter"]
+        F2["Codex Adapter"]
+        F3["Other Tool Adapters"]
+    end
+
+    M1 --> M2 --> M3 --> M4 --> M6
+    M5 -. governs .-> M1
+    M5 -. governs .-> M2
+    M5 -. governs .-> M3
+    M5 -. governs .-> M4
+
+    classDef source fill:#f7f1e3,stroke:#b58105,color:#4a3a00,stroke-width:1.6px;
+    classDef reflect fill:#e8f1ff,stroke:#2563eb,color:#0f172a,stroke-width:1.6px;
+    classDef memory fill:#eefce8,stroke:#2f855a,color:#1c4532,stroke-width:1.6px;
+    classDef proj fill:#f3e8ff,stroke:#7c3aed,color:#4c1d95,stroke-width:1.6px;
+    classDef govern fill:#fff4e8,stroke:#d97706,color:#7c2d12,stroke-width:1.6px;
+    classDef adapter fill:#dbeafe,stroke:#2563eb,color:#0f172a,stroke-width:1.6px;
+    class A1,A2,A3,A4,A5,A6 source;
+    class B1,B2,B3,B4 reflect;
+    class C1,C2,C3,C4,C5 memory;
+    class D1,D2,D3,D4 proj;
+    class E1,E2,E3,E4,E5 govern;
+    class F1,F2,F3 adapter;
+```
+
+## OpenClaw 流程
 
 ```mermaid
 sequenceDiagram
     autonumber
-    participant User as "用户"
-    participant Host as "OpenClaw 宿主"
-    participant Plugin as "memory-context-claw"
-    participant Cards as "Fact/Card Layer"
-    participant Search as "Builtin memory_search"
+    participant User
+    participant Host as "OpenClaw Host"
+    participant Adapter as "memory-context-claw"
+    participant Core as "Unified Memory Core"
+    participant Search as "builtin memory_search"
 
-    User->>Host: 提问
-    Host->>Plugin: 请求组装上下文
-    Plugin->>Plugin: 识别意图 / 决定 retrieval policy
+    User->>Host: 发起问题
+    Host->>Adapter: 请求组装上下文
+    Adapter->>Core: 加载相关稳定记忆导出
+    Adapter->>Adapter: 分类 intent 并决定 retrieval mode
 
-    alt "Fast-path-first 或 formal-memory-first"
-        Plugin->>Cards: 读取 stable card 候选
-        Cards-->>Plugin: 返回事实 / 规则 / 项目 card
-    else "Mixed-mode 或 search-first"
-        Plugin->>Search: 调 builtin memory_search
-        Search-->>Plugin: 返回原始 search hits
-        Plugin->>Cards: 合并 card 候选
-        Cards-->>Plugin: 返回 retrieval-friendly fact cards
+    alt Fact-first / formal-first path
+        Adapter->>Adapter: 优先使用导出的稳定事实与规则
+    else Mixed / search-first path
+        Adapter->>Search: 查询 builtin memory_search
+        Search-->>Adapter: 返回宿主 raw hits
+        Adapter->>Adapter: 将宿主 hits 与 core exports 合并
     end
 
-    Plugin->>Plugin: 打分、去重、组装最终上下文
-    Plugin-->>Host: 返回 context package
+    Adapter->>Adapter: 打分、去重、组装最终上下文
+    Adapter-->>Host: 返回 context package
     Host-->>User: 最终回答
 ```
 
-### 图例
+## Codex 流程
 
-- 紫色：宿主侧行为
-- 蓝色：插件侧行为
-- 绿色：检索友好型工件
-- 橙色：治理 / 回归
+```mermaid
+sequenceDiagram
+    autonumber
+    participant User
+    participant Codex as "Codex Runtime"
+    participant Adapter as "Codex Adapter"
+    participant Core as "Unified Memory Core"
 
-## 系统目标
+    User->>Codex: 发起 coding task
+    Codex->>Adapter: 解析 project + code namespace
+    Adapter->>Core: 加载稳定 code memory exports
+    Core-->>Adapter: 规则 / 事实 / 经验 / 项目约束
+    Adapter-->>Codex: 转成 Codex 专属 memory projection
+    Codex->>Codex: 计划并执行任务
+    Codex->>Adapter: 发出 write-back events
+    Adapter->>Core: 提交 source events / candidates
+```
 
-`memory-context-claw` 是一层面向 OpenClaw 的、可治理的、事实优先的上下文引擎。
+## Memory Search 在哪里
 
-它的核心目标是：
+`memory search` 很重要，但它已经不是顶层架构故事本身。
 
-1. 从真实交互里抓出有价值的信息
-2. 把它们提炼成稳定的 fact/card
-3. 在检索和组装时优先消费稳定事实
-4. 持续验证并治理整层记忆系统
+它现在的位置是：
 
-## 插件不做什么
+- OpenClaw adapter 内部的一条 workstream
+- consumption layer 的一个重点问题
+- `memory-context-claw` 内部的一条治理与回归线
 
-这个插件**不做**：
+它不再定义整个共享记忆产品。
 
-- 替代 OpenClaw 内置 memory
-- 魔改 OpenClaw 宿主
-- 魔改其他插件
-
-这个插件**负责做**：
-
-- 消费宿主已有的 session/memory 工件
-- 提炼 fact/card
-- 应用 retrieval policy 和 assembly 逻辑
-- 围绕记忆层做治理和回归工具链
-
-## 分层总览
-
-### 架构图
+## Governance 与 Testing 在哪里
 
 ```mermaid
 flowchart LR
-    A["Capture"] --> B["Fact/Card"]
-    B --> C["Consumption"]
-    C --> D["Regression"]
-    B --> E["Governance"]
-    E --> B
-    C --> E
+    A["Source correctness"] --> E["Regression surfaces"]
+    B["Candidate correctness"] --> E
+    C["Registry correctness"] --> E
+    D["Projection correctness"] --> E
+    E --> F["OpenClaw adapter checks"]
+    E --> G["Codex adapter checks"]
 
-    classDef plugin fill:#e8f1ff,stroke:#2f6feb,color:#123a73,stroke-width:1.5px;
-    classDef ops fill:#fff4e8,stroke:#d97706,color:#7c2d12,stroke-width:1.5px;
-    class A,B,C plugin;
-    class D,E ops;
+    H["Audit / repair / replay"] -. improves .-> A
+    H -. improves .-> B
+    H -. improves .-> C
+    H -. improves .-> D
+
+    classDef core fill:#eefce8,stroke:#2f855a,color:#1c4532,stroke-width:1.6px;
+    classDef ops fill:#fff4e8,stroke:#d97706,color:#7c2d12,stroke-width:1.6px;
+    class A,B,C,D,E,F,G core;
+    class H ops;
 ```
 
-```mermaid
-flowchart TB
-    subgraph L1["Capture Layer"]
-        A1["Sessions"]
-        A2["Session-memory files"]
-        A3["workspace/MEMORY.md"]
-        A4["workspace/memory/YYYY-MM-DD.md"]
-        A5["项目文档 / 配置文档"]
-    end
-
-    subgraph L2["Fact/Card Layer"]
-        B1["候选提炼"]
-        B2["稳定事实提炼"]
-        B3["Card artifacts"]
-    end
-
-    subgraph L3["Consumption Layer"]
-        C1["策略路由"]
-        C2["Search / Merge"]
-        C3["打分 / 组装"]
-    end
-
-    subgraph L4["Governance + Regression"]
-        D1["Smoke / Perf / Hot-session"]
-        D2["Audit / Duplicate / Conflict"]
-        D3["Governance Cycle"]
-    end
-
-    A1 --> B1
-    A2 --> B1
-    A3 --> B2
-    A4 --> B2
-    A5 --> B2
-    B1 --> B3
-    B2 --> B3
-    B3 --> C1
-    C1 --> C2
-    C2 --> C3
-    B3 --> D1
-    B3 --> D2
-    C3 --> D1
-    D2 --> D3
-    D3 --> B3
-
-    classDef capture fill:#f7f1e3,stroke:#b58105,color:#4a3a00,stroke-width:1.5px;
-    classDef fact fill:#eefce8,stroke:#2f855a,color:#1c4532,stroke-width:1.5px;
-    classDef consume fill:#e8f1ff,stroke:#2f6feb,color:#123a73,stroke-width:1.5px;
-    classDef govern fill:#fff4e8,stroke:#d97706,color:#7c2d12,stroke-width:1.5px;
-    class A1,A2,A3,A4,A5 capture;
-    class B1,B2,B3 fact;
-    class C1,C2,C3 consume;
-    class D1,D2,D3 govern;
-```
-
-## 1. Capture Layer
-
-这一层负责从各类输入源收集候选信息，包括：
-
-- sessions
-- 宿主生成的 session-memory 文件
-- `workspace/MEMORY.md`
-- `workspace/memory/YYYY-MM-DD.md`
-- 项目文档 / 配置文档
-
-职责：
-
-- 保留原始 session 轨迹
-- 在信息消失前抓住候选事实
-- 支持 pre-compaction distillation
-
-输出：
-
-- 候选记忆输入
-- 原始 session 工件
-
-## 2. Fact/Card Layer
-
-这一层把噪音较大的原始输入提炼成稳定单元。
-
-职责：
-
-- 提取主体事实
-- 提取稳定规则
-- 生成背景 / 项目定位 card
-- 尽量让一张 card 只表达一个主题
-
-关键工件：
-
-- `conversation-memory-cards.md`
-- `conversation-memory-cards.json`
-- 从以下来源派生的 stable card：
-  - `workspace/MEMORY.md`
-  - `workspace/memory/YYYY-MM-DD.md`
-  - policy/config/project docs
-
-## 3. Consumption Layer
-
-这一层负责真正的 retrieval 和 context assembly。
-
-职责：
-
-- 把某些查询路由到 `cardArtifact fast path`
-- 应用 fact-first / formal-first / mixed / search-first 策略
-- 对候选做 scoring 和 selection
-- 在 token budget 下构建最终上下文
-
-关键点：
-
-这层决定了系统在真实使用中“看起来聪不聪明”。
-
-## 4. Regression Layer
-
-这一层保证系统不会悄悄漂移。
-
-职责：
-
-- smoke 检查
-- perf 检查
-- hot-session 健康检查
-- stable-facts regression
-
-关键产物：
-
-- `smoke`
-- `perf`
-- `eval:hot*`
-- `memory-search` 专项验证
-
-## 5. Governance Layer
-
-这一层保证记忆系统长期健康。
-
-职责：
-
-- 区分 confirmed / pending / noise
-- 巡检正式记忆层
-- 审计 duplicate / conflict
-- 审计 session-memory 退出条件
-- 定期运行治理周期
-
-关键产物：
-
-- audit 报告
-- governance-cycle 报告
-- watchlist
-
-## Memory Search 在整体里的位置
-
-`memory search` 不是整个系统本身。
-
-它是整体架构里的一个 workstream：
-
-```mermaid
-flowchart TB
-    A["整体系统"] --> B["Capture"]
-    A --> C["Fact/Card"]
-    A --> D["Consumption"]
-    A --> E["Regression"]
-    A --> F["Governance"]
-    D --> G["Memory Search Workstream"]
-    F --> G
-```
-
-为什么要这样看：
-
-- memory search 直接影响 consumption
-- memory search 通过 baseline / watchlist / source-quality 影响 governance
-- 但它依然只是整个插件中的一部分
-
-## Raw Summary 与 Fact/Card 的分工
-
-最重要的架构决策之一，就是把这两者分开：
-
-```mermaid
-flowchart LR
-    A["Raw summary"] --> A1["审计 / 回放 / 再提炼"]
-    B["Fact/Card artifact"] --> B1["快路径检索 / 稳定回答支持"]
-```
-
-含义是：
-
-- raw summary 保留
-- retrieval-friendly 的职责交给 fact/card artifact
-
-这也是为什么系统可以同时做到：
-
-- 可审计
-- 对高价值事实问答又足够高效
-
-## 宿主与插件的边界
-
-```mermaid
-flowchart LR
-    subgraph Host["OpenClaw 宿主"]
-        H1["Builtin memory_search"]
-        H2["Session-memory 写出"]
-        H3["基础 memory index"]
-        H4["Agent runtime / sessions"]
-    end
-
-    subgraph Plugin["memory-context-claw"]
-        P1["Fact/Card 提炼"]
-        P2["Retrieval policy"]
-        P3["Source priority"]
-        P4["Assembly 逻辑"]
-        P5["治理 / 回归工具链"]
-    end
-
-    H1 --> P2
-    H2 --> P1
-    H3 --> P2
-    H4 --> P4
-    P1 --> P2
-    P2 --> P4
-    P4 --> P5
-
-    classDef host fill:#f3e8ff,stroke:#7c3aed,color:#4c1d95,stroke-width:1.5px;
-    classDef plugin fill:#e8f1ff,stroke:#2f6feb,color:#123a73,stroke-width:1.5px;
-    class H1,H2,H3,H4 host;
-    class P1,P2,P3,P4,P5 plugin;
-```
-
-### 宿主侧
-
-OpenClaw 宿主负责：
-
-- builtin `memory_search`
-- 写出部分 session-memory 文件
-- 基础记忆索引
-- agent 运行时 / session 行为
-
-### 插件侧
-
-`memory-context-claw` 负责：
-
-- fact/card 提炼
-- retrieval policy
-- source priority
-- assembly 逻辑
-- governance 报告
-
-这个边界很重要，因为：
-
-- 宿主限制不能误说成插件已修好
-- 插件补强也不能误说成宿主内核已修复
-
-## LLM 边界
-
-默认架构：
-
-- `0-LLM default`
-
-允许的增强路径：
-
-- `1-LLM optional`
-- 必须可配置
-- 默认关闭
-
-不允许作为主路径的：
-
-- 多步 LLM orchestration chain
-
-## 当前成熟度
-
-### 已稳定
-
-- capture foundation
-- fact/card layer
-- fact-first consumption 主骨架
-- smoke/perf/governance baseline
-- memory-search A-E workstream 完整收口
-
-### 仍在演化
-
-- builtin memory-search 缺口处理
-- watchlist 持续压缩
-- stable fact 扩面
-- 治理体验优化
-
-## 相关文档
-
-- [project-roadmap.md](project-roadmap.md)
-- [memory-search-roadmap.md](reports/memory-search-roadmap.md)
-- [memory-search-architecture.md](reports/memory-search-architecture.md)
-- [memory-search-next-blueprint.md](reports/memory-search-next-blueprint.md)
+## 仓库方向
+
+当前最新的仓库方向是：
+
+- 用 `unified-memory-core-bootstrap` 保留旧的 plugin-first 形态
+- 用 `main` 按正式 `Unified Memory Core` 产品方向继续推进
+- 在深度实现前，优先把产品文档、模块文档和 adapter 文档对齐
+
+## 文档地图
+
+- 产品索引：
+  [unified-memory-core.md](unified-memory-core.md)
+- 产品架构：
+  [unified-memory-core-architecture.md](unified-memory-core-architecture.md)
+- 产品 roadmap：
+  [unified-memory-core-roadmap.md](unified-memory-core-roadmap.md)
+- OpenClaw code-memory 绑定：
+  [code-memory-binding-architecture.md](code-memory-binding-architecture.md)
+- self-learning workstream：
+  [self-learning-architecture.md](self-learning-architecture.md)
+- memory-search workstream：
+  [reports/memory-search-architecture.md](reports/memory-search-architecture.md)

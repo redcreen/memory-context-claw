@@ -20,14 +20,14 @@ It should become:
 
 ## Current Phase
 
-Status: `phase 1 / product and structure framing`
+Status: `phase 2 / master documentation and structure alignment`
 
 What is happening now:
 
 - official product naming
-- future module split
-- repo layout planning
-- master documentation planning
+- product/module split alignment
+- top-level architecture correction
+- master documentation alignment
 - module documentation skeletons
 
 ## Program Roadmap
@@ -38,7 +38,7 @@ flowchart LR
     B --> C["Phase 3\nModule Documentation"]
     C --> D["Phase 4\nTesting Surfaces"]
     D --> E["Phase 5\nIncremental Development"]
-    E --> F["Phase 6\nSplit Readiness Review"]
+    E --> F["Phase 6\nIndependent Product Execution"]
 
     classDef phase fill:#e8f1ff,stroke:#2563eb,color:#0f172a,stroke-width:1.6px;
     class A,B,C,D,E,F phase;
@@ -88,13 +88,13 @@ Goal:
 - start with contracts and source model
 - keep docs and testing aligned from day one
 
-### Phase 6: Split Readiness Review
+### Phase 6: Independent Product Execution
 
 Goal:
 
-- judge whether contracts are stable enough
-- judge whether adapter boundaries are stable enough
-- decide whether to move to a separate repository
+- continue executing the independent product direction from the current main branch
+- preserve old plugin-first shape through branch snapshot when needed
+- keep adapters and core evolving under one product roadmap
 
 ## First-Class Module Tracks
 
@@ -126,14 +126,14 @@ Goal:
 
 ## 当前阶段
 
-状态：`phase 1 / 产品与结构定型`
+状态：`phase 2 / 主文档与结构对齐`
 
 当前正在做：
 
 - 正式产品命名
-- 未来模块拆分
-- 仓库目录结构规划
-- 主文档体系规划
+- 产品 / 模块拆分对齐
+- 顶层架构纠偏
+- 主文档体系对齐
 - 模块文档骨架建立
 
 ## 项目路线图
@@ -144,7 +144,7 @@ flowchart LR
     B --> C["Phase 3\n模块文档体系"]
     C --> D["Phase 4\n测试面"]
     D --> E["Phase 5\n逐步开发"]
-    E --> F["Phase 6\n拆仓准备评审"]
+    E --> F["Phase 6\n独立产品执行"]
 
     classDef phase fill:#e8f1ff,stroke:#2563eb,color:#0f172a,stroke-width:1.6px;
     class A,B,C,D,E,F phase;
@@ -194,13 +194,13 @@ flowchart LR
 - 从 contracts 和 source model 开始
 - 从第一天起保持文档和测试同步
 
-### Phase 6：拆仓准备评审
+### Phase 6：独立产品执行
 
 目标：
 
-- 判断 contracts 是否足够稳定
-- 判断 adapter 边界是否足够稳定
-- 决定是否迁移成独立仓库
+- 在当前主干上持续执行独立产品方向
+- 通过分支快照保留旧的 plugin-first 形态
+- 让 core 与 adapters 在同一产品 roadmap 下持续演进
 
 ## 一等模块主线
 

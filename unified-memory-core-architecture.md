@@ -6,19 +6,13 @@
 
 ## Purpose
 
-This document is a discussion draft for the next-level architecture beyond `memory-context-claw`.
+This document defines the official product-level architecture for `Unified Memory Core`.
 
 It is meant to answer one question first:
 
 `if memory should become the shared foundation across OpenClaw, Codex, and future tools, what should the overall architecture look like?`
 
-This is not yet the implementation contract.
-
-It is a review-first architecture sketch for judging:
-
-- whether the system boundary is correct
-- whether the module split is reasonable
-- whether the product should become an independent subproject
+It is the top-level architecture reference for the new product direction.
 
 ## Executive View
 
@@ -250,23 +244,9 @@ flowchart LR
 
 ## Recommended Product Decision
 
-Current recommendation:
+Current decision:
 
-`yes, this should be designed as an independent subproject direction`
-
-But the implementation strategy should be staged:
-
-1. architect it as independent now
-2. document it as independent now
-3. keep initial code incubation inside the current repo if that reduces migration cost
-4. physically split into its own repo only after contracts and adapters stabilize
-
-In short:
-
-- `architecturally independent`: yes
-- `document-independent`: yes
-- `roadmap-independent`: yes
-- `immediately split repository`: not required yet
+`Unified Memory Core` is now the official independent product direction, and the current `main` branch is the active execution trunk for that direction.
 
 ## Suggested Future Document Tree
 
@@ -302,31 +282,25 @@ flowchart TB
 
 ## Review Questions
 
-Before turning this into formal project documentation, the main questions to review are:
+Confirmed decisions reflected in this architecture:
 
-1. Should `Unified Memory Core` be the official product name, or should it be framed as a codename for now?
-2. Is the five-module split correct, or should `Projection` and `Governance` be merged early?
-3. Should Codex integration be treated as a first-class adapter from day one, or a later adapter?
-4. Should the core expose only artifact exports first, or both exports and runtime APIs?
-5. At what point should the subproject be physically split from this repo?
+1. `Unified Memory Core` is the official product name
+2. `Projection` and `Governance` remain separate modules
+3. `Codex Adapter` is first-class from day one
+4. runtime API is a later roadmap item
+5. prior plugin-first shape is preserved through branch snapshot rather than blocking current main-branch progress
 
 ## 中文
 
 ## 文档目的
 
-这份文档是对下一层产品架构的讨论草案。
+这份文档定义 `Unified Memory Core` 的正式产品级架构。
 
 它先回答一个问题：
 
 `如果记忆系统要成为 OpenClaw、Codex 以及后续其他工具共享的统一记忆底座，整体架构应该长什么样？`
 
-这份文档还不是实现契约。
-
-它的定位是先给你审结构：
-
-- 系统边界对不对
-- 模块拆分是否合理
-- 是否应该作为独立子项目推进
+它是这条新产品线的顶层架构参考。
 
 ## 总览图
 
@@ -558,23 +532,9 @@ flowchart LR
 
 ## 是否应该做成独立子项目
 
-我当前的建议是：
+当前已经确认的决策是：
 
-`对，方向上应该按独立子项目来设计`
-
-但实施上建议分阶段：
-
-1. 先在架构上独立
-2. 先在文档上独立
-3. 初期代码仍可先在当前仓库孵化，降低迁移成本
-4. 等契约、adapter、CLI 形态稳定后，再决定是否物理拆仓库
-
-也就是说：
-
-- `架构独立`：是
-- `文档独立`：是
-- `roadmap 独立`：是
-- `现在立刻拆仓库`：不一定
+`Unified Memory Core` 现在就是正式独立产品方向，当前仓库的 `main` 分支就是这条方向的执行主干。
 
 ## 建议的后续文档树
 
@@ -610,10 +570,10 @@ flowchart TB
 
 ## 需要你重点审的几个问题
 
-在把它正式收成项目文档前，最值得先确认的是：
+这份架构已经反映以下已确认决策：
 
-1. `Unified Memory Core` 这个名字，是正式产品名，还是先只当内部代号？
-2. 现在这 5 个模块的拆分是否合适，还是应该先把 `Projection` 和 `Governance` 合并？
-3. Codex integration 要不要从第一天就当成一等 adapter？
-4. 核心层早期是只导出 artifacts，还是同时暴露 runtime API？
-5. 到什么阶段再物理拆成独立仓库最合适？
+1. `Unified Memory Core` 是正式产品名
+2. `Projection` 和 `Governance` 保持分开
+3. `Codex Adapter` 从第一天就是一等 adapter
+4. runtime API 放到后续 roadmap 阶段
+5. 旧的 plugin-first 形态通过分支快照保留，不再阻塞当前主干推进

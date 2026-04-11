@@ -65,7 +65,7 @@ Confirmed decisions:
 - `Unified Memory Core` is the official product name
 - Codex integration is a first-class adapter from day one
 - runtime API is a later phase, not required for early delivery
-- a separate repository direction is valid, but incubation can continue here while contracts stabilize
+- an independent product direction is now active from the current main branch
 - a branch snapshot of the old shape has already been preserved: `unified-memory-core-bootstrap`
 
 ## Program Steps
@@ -173,7 +173,7 @@ flowchart LR
 - `Unified Memory Core` 是正式产品名
 - Codex integration 从第一天就是一等 adapter
 - runtime API 放到后续阶段，不要求前期先做
-- 未来独立仓库方向成立，但在契约稳定前可继续在当前仓库孵化
+- 独立产品方向已经启动，当前主干就是新的产品推进主线
 - 当前旧形态代码已保留分支：`unified-memory-core-bootstrap`
 
 ## 总体步骤

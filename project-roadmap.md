@@ -10,9 +10,9 @@
 
 The target is a **continuously running, governed, fact-first long-term memory context layer** for OpenClaw.
 
-The next learning subsystem should be designed as a separable component that can later become its own subproject.
+The next learning subsystem has now been lifted into an official product direction.
 
-That future product is now officially named:
+That product is now officially named:
 
 `Unified Memory Core`
 
@@ -212,37 +212,34 @@ Key documents:
 
 The next major project move is:
 
-`turn memory-context-claw from a governed fact-first context layer into a governed self-learning and reflection system`
+`grow the repo from a governed OpenClaw memory-context plugin into the product skeleton of Unified Memory Core plus first-class adapters`
 
 Planned project stages:
 
-1. define a standalone self-learning component boundary, source model, and export model
-2. build source adapters and standalone CLI workflows
-3. build a daily reflection MVP with traceable artifacts
-4. add promotion / decay / conflict handling for learned candidates
-5. integrate outputs into OpenClaw through adapters
-6. add long-term audit, repair, comparison, and regression around self-learning
+1. finalize top-level product architecture and document chain
+2. finalize module splits and module-level documentation
+3. build Source / Registry / Adapter contracts first
+4. keep self-learning as a workstream inside the new product shape
+5. continue OpenClaw adapter hardening while starting Codex adapter design
+6. add long-term audit, repair, comparison, and regression around product artifacts
 
 ## Architecture Direction
 
 The long-term architecture is now best understood as:
 
-- a reusable self-learning component
-- plus an OpenClaw-specific consumption layer inside `memory-context-claw`
+- `Unified Memory Core` as the product-level memory foundation
+- `memory-context-claw` as the OpenClaw adapter
+- `Codex Adapter` as a first-class adapter track
 
-Inside the project, the layers are:
+Inside the product, the first-class modules are:
 
-1. **Capture**
-   - collect candidate signals from sessions, workspace memory, notes, and artifacts
-2. **Fact/Card**
-   - distill raw inputs into stable facts, rules, background, and cards
-3. **Consumption**
-   - route, score, rerank, and assemble task-ready context
-4. **Governance**
-   - audit quality, control noise, and protect regressions
-5. **Self-Learning**
-   - reflect on repeated signals, promote stable patterns, and adapt policy safely
-   - keep source control, traceability, exportability, and CLI operation explicit
+1. **Source System**
+2. **Reflection System**
+3. **Memory Registry**
+4. **Projection System**
+5. **Governance System**
+6. **OpenClaw Adapter**
+7. **Codex Adapter**
 
 ## Document Map
 
@@ -266,10 +263,12 @@ Inside the project, the layers are:
 
 - If you want overall system shape:
   [system-architecture.md](system-architecture.md)
-- If you want the next major project:
+- If you want the product direction:
+  [unified-memory-core.md](unified-memory-core.md)
+- If you want the product-level roadmap:
+  [unified-memory-core-roadmap.md](unified-memory-core-roadmap.md)
+- If you want the self-learning workstream inside that product:
   [self-learning-architecture.md](self-learning-architecture.md)
-- If you want the next implementation phases:
-  [reports/self-learning-roadmap.md](reports/self-learning-roadmap.md)
 
 ## 中文
 
@@ -279,9 +278,9 @@ Inside the project, the layers are:
 
 它的目标是成为 OpenClaw 一层**持续运行、可治理、事实优先的长期记忆上下文层**。
 
-下一步的 learning 子系统还应按“可独立组件”来设计，未来可以单独拆成子项目。
+下一步的 learning 子系统已经被提升为正式产品方向的一部分。
 
-这个未来产品现在已经正式命名为：
+这个产品现在已经正式命名为：
 
 `Unified Memory Core`
 
@@ -485,33 +484,30 @@ flowchart TB
 
 当前计划中的阶段是：
 
-1. 定义独立 self-learning 组件边界、source model 和 export model
-2. 做出 source adapters 和 standalone CLI workflows
-3. 做出带可追踪工件的 daily reflection MVP
-4. 为学习候选补 promotion / decay / conflict handling
-5. 通过 adapter 把结果接入 OpenClaw
-6. 为 self-learning 补长期 audit、repair、对比和回归保护
+1. 定稿顶层产品架构和文档链路
+2. 定稿模块拆分和模块级文档
+3. 先做 Source / Registry / Adapter contracts
+4. 让 self-learning 作为新产品形态中的一条 workstream 继续推进
+5. 一边继续加固 OpenClaw adapter，一边启动 Codex adapter 设计
+6. 为产品级 artifacts 补 audit、repair、对比和回归保护
 
 ## 架构方向
 
 当前更适合把整体架构理解为：
 
-- 一个可复用的 self-learning component
-- 加一个 `memory-context-claw` 内部的 OpenClaw 专属消费层
+- `Unified Memory Core` 产品层
+- `memory-context-claw` 作为 OpenClaw adapter
+- `Codex Adapter` 作为一等 adapter
 
-在项目内部，可以继续拆成五层：
+在产品内部，建议按 7 条一等模块组织：
 
-1. **Capture**
-   - 从 sessions、workspace memory、notes 和中间工件中采集候选信号
-2. **Fact/Card**
-   - 把原始输入提炼成稳定事实、规则、背景和 card
-3. **Consumption**
-   - 路由、打分、rerank，并装配出可直接服务任务的上下文
-4. **Governance**
-   - 做质量巡检、噪音控制和回归保护
-5. **Self-Learning**
-   - 对重复信号做反思、升级稳定模式，并安全地更新策略
-   - 显式保证 source control、traceability、exportability 和 CLI operation
+1. **Source System**
+2. **Reflection System**
+3. **Memory Registry**
+4. **Projection System**
+5. **Governance System**
+6. **OpenClaw Adapter**
+7. **Codex Adapter**
 
 ## 文档地图
 
