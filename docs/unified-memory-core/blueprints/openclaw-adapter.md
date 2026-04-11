@@ -1,5 +1,5 @@
 # OpenClaw Adapter Blueprint
 
-- plugin consumption boundary
+- OpenClaw adapter consumption boundary
 - export mapping
 - namespace alignment

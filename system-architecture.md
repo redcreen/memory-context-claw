@@ -136,7 +136,7 @@ flowchart LR
 - OpenClaw-specific retrieval policy
 - OpenClaw-specific context assembly
 - OpenClaw-facing export consumption
-- plugin integration with OpenClaw host behavior
+- integration with OpenClaw host behavior through the OpenClaw adapter
 
 ### 3. Codex boundary
 
@@ -302,7 +302,7 @@ flowchart LR
 
 The latest repo direction is:
 
-- preserve prior plugin-first shape through the branch `unified-memory-core-bootstrap`
+- preserve the prior adapter-bootstrap shape through the branch `unified-memory-core-bootstrap`
 - use `main` to move the system toward the official `Unified Memory Core` product shape
 - keep product docs, module docs, and adapter docs aligned before deep implementation
 
@@ -455,7 +455,7 @@ flowchart LR
 - OpenClaw 专属 retrieval policy
 - OpenClaw 专属 context assembly
 - OpenClaw 面向的 export consumption
-- 与 OpenClaw host 行为的插件集成
+- 通过 OpenClaw adapter 与 OpenClaw host 行为集成
 
 ### 3. Codex boundary
 
@@ -621,7 +621,7 @@ flowchart LR
 
 当前最新的仓库方向是：
 
-- 用 `unified-memory-core-bootstrap` 保留旧的 plugin-first 形态
+- 用 `unified-memory-core-bootstrap` 保留旧的 adapter-bootstrap 形态
 - 用 `main` 按正式 `Unified Memory Core` 产品方向继续推进
 - 在深度实现前，优先把产品文档、模块文档和 adapter 文档对齐
 

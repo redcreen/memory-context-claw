@@ -26,16 +26,16 @@ This document records the future-facing repository structure for incubating `Uni
 │       ├── todo/
 │       └── testing/
 ├── src/
-│   ├── plugin/
+│   ├── adapters/
 │   └── unified-memory-core/
 ├── scripts/
-│   ├── plugin/
+│   ├── adapters/
 │   └── unified-memory-core/
 ├── test/
-│   ├── plugin/
+│   ├── adapters/
 │   └── unified-memory-core/
 └── evals/
-    ├── plugin/
+    ├── adapters/
     └── unified-memory-core/
 ```
 
@@ -63,15 +63,15 @@ This document records the future-facing repository structure for incubating `Uni
 │       ├── todo/
 │       └── testing/
 ├── src/
-│   ├── plugin/
+│   ├── adapters/
 │   └── unified-memory-core/
 ├── scripts/
-│   ├── plugin/
+│   ├── adapters/
 │   └── unified-memory-core/
 ├── test/
-│   ├── plugin/
+│   ├── adapters/
 │   └── unified-memory-core/
 └── evals/
-    ├── plugin/
+    ├── adapters/
     └── unified-memory-core/
 ```

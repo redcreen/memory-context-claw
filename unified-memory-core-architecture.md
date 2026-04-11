@@ -106,7 +106,7 @@ flowchart LR
 
 This shape is meant to preserve five properties:
 
-1. shared memory is not trapped inside one plugin
+1. shared memory is not trapped inside one adapter
 2. learning sources remain explicit and controllable
 3. stable memory is not written directly from raw inputs
 4. outputs can be projected differently for different tools
@@ -288,7 +288,7 @@ Confirmed decisions reflected in this architecture:
 2. `Projection` and `Governance` remain separate modules
 3. `Codex Adapter` is first-class from day one
 4. runtime API is a later roadmap item
-5. prior plugin-first shape is preserved through branch snapshot rather than blocking current main-branch progress
+5. the prior adapter-bootstrap shape is preserved through branch snapshot rather than blocking current main-branch progress
 
 ## 中文
 
@@ -394,7 +394,7 @@ flowchart LR
 
 这个形状主要是为了保住 5 个性质：
 
-1. 共享记忆不被困死在某一个插件内部
+1. 共享记忆不被困死在某一个 adapter 内部
 2. 学习源保持显式、可控
 3. 原始输入不能直接写 stable memory
 4. 不同工具可以吃到不同投影结果
@@ -576,4 +576,4 @@ flowchart TB
 2. `Projection` 和 `Governance` 保持分开
 3. `Codex Adapter` 从第一天就是一等 adapter
 4. runtime API 放到后续 roadmap 阶段
-5. 旧的 plugin-first 形态通过分支快照保留，不再阻塞当前主干推进
+5. 旧的 adapter-bootstrap 形态通过分支快照保留，不再阻塞当前主干推进

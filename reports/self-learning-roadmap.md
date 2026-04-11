@@ -29,7 +29,7 @@ Build a governed daily-learning system for `unified-memory-core` that can:
 - detect repeated signals
 - run daily reflection
 - promote stable learning candidates safely
-- adapt plugin-side policy using verified patterns
+- adapt adapter-side policy using verified patterns
 - keep learned behavior testable and reviewable
 - stay separable from `memory search`
 - expose standalone CLI-driven workflows
@@ -342,7 +342,7 @@ flowchart TB
 - 识别重复信号
 - 执行 daily reflection
 - 安全升级稳定学习候选
-- 用已验证模式更新插件层策略
+- 用已验证模式更新 adapter 层策略
 - 让学习行为本身可测试、可评审
 - 尽可能与 `memory search` 解耦
 - 通过独立 CLI 驱动运行

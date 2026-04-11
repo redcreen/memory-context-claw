@@ -51,7 +51,7 @@ The current system is already good at:
 
 But that is only the first half of a longer-term memory system.
 
-Without a dedicated self-learning layer, the plugin still has several gaps:
+Without a dedicated self-learning layer, the current OpenClaw adapter path still has several gaps:
 
 1. repeated user expressions are not yet turned into governed habit signals
 2. explicit `remember this` instructions are not yet treated as a first-class promotion path
@@ -73,7 +73,7 @@ After this workstream is complete, the system should be able to:
   - behavioral patterns
   - operating rules
   - observations still under review
-- adapt plugin-side policy using learned patterns
+- adapt adapter-side policy using learned patterns
 - keep all of the above governed, testable, and reversible
 
 ## Scope Boundary
@@ -81,7 +81,7 @@ After this workstream is complete, the system should be able to:
 This workstream does:
 
 - define a standalone learning component boundary
-- improve plugin-side learning and reflection integration
+- improve adapter-side learning and reflection integration
 - create structured, portable learning artifacts
 - adjust retrieval / scoring / assembly policy from governed signals
 - add governance and regression around learned behavior
@@ -91,7 +91,7 @@ This workstream does:
 This workstream does not:
 
 - patch the OpenClaw host
-- patch other plugins
+- patch other adapters or unrelated extensions
 - let the model freely rewrite its own personality
 - allow unverified free-form reflections to directly become stable memory
 
@@ -357,7 +357,7 @@ flowchart TB
 The clean boundary should be:
 
 - `self-learning component` owns ingestion, candidate generation, promotion lifecycle, audit trail, and exports
-- `unified-memory-core` owns OpenClaw-specific retrieval, assembly, and plugin-side consumption
+- `unified-memory-core` owns OpenClaw-specific retrieval, assembly, and adapter-side consumption
 
 In other words:
 
@@ -425,7 +425,7 @@ The important part is the operational model:
 
 Learning should not stop at storage.
 
-The plugin should gradually learn how to serve the user better by adapting:
+The OpenClaw adapter should gradually learn how to serve the user better by adapting:
 
 - retrieval priority
 - fast-path routing
@@ -654,7 +654,7 @@ This workstream is successful when:
   - 行为模式
   - 操作规则
   - 观察中结论
-- 用学习结果调整插件层策略
+- 用学习结果调整 adapter 层策略
 - 并且让这一切都保持可治理、可测试、可回滚
 
 ## 边界
@@ -662,7 +662,7 @@ This workstream is successful when:
 这条专项会做：
 
 - 定义独立学习组件的边界
-- 强化插件层的学习与反思集成能力
+- 强化 adapter 层的学习与反思集成能力
 - 生成结构化、可移植的学习产物
 - 用受治理的信号调整 retrieval / scoring / assembly policy
 - 为学习行为补治理和回归保护
@@ -672,7 +672,7 @@ This workstream is successful when:
 这条专项不会做：
 
 - 魔改 OpenClaw 宿主
-- 修改别的插件
+- 修改别的 adapter 或无关扩展
 - 让模型随意重写自己的“人格”
 - 让未经验证的自由反思直接进入 stable memory
 
@@ -686,7 +686,7 @@ This workstream is successful when:
 - 它可以脱离 OpenClaw runtime 单独运行
 - 它要通过稳定工件暴露学习结果，而不是把状态藏在运行时内存里
 - 它和 OpenClaw 的关系应该是 adapter 集成，而不是深度耦合
-- 它未来应该可以复用给其他插件、服务或本地工具
+- 它未来应该可以复用给其他 adapter、服务或本地工具
 
 当前集成目标：
 
@@ -938,7 +938,7 @@ flowchart TB
 最干净的边界应该是：
 
 - `self-learning component` 负责 ingestion、candidate generation、promotion lifecycle、audit trail 和 exports
-- `unified-memory-core` 负责 OpenClaw 专属的 retrieval、assembly 和 plugin-side consumption
+- `unified-memory-core` 负责 OpenClaw 专属的 retrieval、assembly 和 adapter-side consumption
 
 换句话说：
 
@@ -1006,7 +1006,7 @@ stateDiagram-v2
 
 学习不能只停在“写入 memory”。
 
-更重要的是，插件应该逐步学会“怎样更好地服务这个用户”，也就是让学习结果反哺：
+更重要的是，OpenClaw adapter 应该逐步学会“怎样更好地服务这个用户”，也就是让学习结果反哺：
 
 - retrieval priority
 - fast-path routing

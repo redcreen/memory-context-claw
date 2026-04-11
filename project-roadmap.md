@@ -6,7 +6,7 @@
 
 ## Positioning
 
-`unified-memory-core` is not meant to be “just another memory plugin.”
+`Unified Memory Core` is not meant to be “just another memory plugin.”
 
 The target is a **continuously running, governed, fact-first long-term memory context layer** for OpenClaw.
 
@@ -100,7 +100,7 @@ Completed:
 - `conversation-memory-cards.md/json`
 - stable cards from `workspace/MEMORY.md`
 - stable cards from `workspace/memory/YYYY-MM-DD.md`
-- project cards from plugin docs / notes
+- project cards from adapter docs / notes
 
 ### 3. Consumption foundation
 
@@ -166,7 +166,7 @@ Why this is next:
 - the main memory-context backbone is already complete
 - memory-search hardening has moved into regular governance mode
 - the next step is turning stable memory into a governed daily-learning system
-- this subsystem now needs to be built with clear product boundaries instead of staying plugin-internal
+- this subsystem now needs to be built with clear product boundaries instead of staying adapter-internal
 
 Key documents:
 
@@ -212,7 +212,7 @@ Key documents:
 
 The next major project move is:
 
-`grow the repo from a governed OpenClaw memory-context plugin into the product skeleton of Unified Memory Core plus first-class adapters`
+`grow the repo from a governed OpenClaw memory-context adapter into the product skeleton of Unified Memory Core plus first-class adapters`
 
 Planned project stages:
 
@@ -274,7 +274,7 @@ Inside the product, the first-class modules are:
 
 ## 项目定位
 
-`unified-memory-core` 不是“又一个记忆插件”。
+`Unified Memory Core` 不是“又一个记忆插件”。
 
 它的目标是成为 OpenClaw 一层**持续运行、可治理、事实优先的长期记忆上下文层**。
 
@@ -368,7 +368,7 @@ flowchart TB
 - `conversation-memory-cards.md/json`
 - 从 `workspace/MEMORY.md` 生成 stable cards
 - 从 `workspace/memory/YYYY-MM-DD.md` 生成 stable cards
-- 从插件文档 / notes 生成 project cards
+- 从 adapter 文档 / notes 生成 project cards
 
 ### 3. Consumption 基础层
 
@@ -434,7 +434,7 @@ flowchart TB
 - 记忆上下文主骨架已经完成
 - memory-search 补强已经进入常规治理模式
 - 下一步应该把稳定记忆继续收成“受治理的每日学习系统”
-- 这条线现在需要按“独立产品边界”来设计，而不是继续混在插件内部
+- 这条线现在需要按“独立产品边界”来设计，而不是继续混在 adapter 内部
 
 关键文档：
 

@@ -7,4 +7,4 @@ Purpose: consume Unified Memory Core outputs for OpenClaw retrieval and context 
 - namespace mapping
 - export consumption
 - OpenClaw-specific projection
-- plugin integration boundary
+- OpenClaw adapter integration boundary
