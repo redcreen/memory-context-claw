@@ -87,6 +87,50 @@ function filterRecords(records, { namespace, allowedVisibilities, allowedStates 
     });
 }
 
+function countPayloadItems(exportResult) {
+  if (Array.isArray(exportResult?.payload?.memory_items)) {
+    return exportResult.payload.memory_items.length;
+  }
+  if (Array.isArray(exportResult?.payload?.code_memory)) {
+    return exportResult.payload.code_memory.length;
+  }
+  if (Array.isArray(exportResult?.payload?.artifacts)) {
+    return exportResult.payload.artifacts.length;
+  }
+  return 0;
+}
+
+export function renderExportReport(exportResult, { format = "markdown" } = {}) {
+  if (format === "json") {
+    return JSON.stringify(exportResult, null, 2);
+  }
+
+  const lines = [];
+  lines.push("# Unified Memory Core Export Report");
+  lines.push(`- exportId: \`${exportResult.exportContract.export_id}\``);
+  lines.push(`- consumer: \`${exportResult.exportContract.consumer}\``);
+  lines.push(`- namespace: \`${createNamespaceKey(exportResult.exportContract.namespace)}\``);
+  lines.push(`- exportVersion: \`${exportResult.exportVersion}\``);
+  lines.push(`- generatedAt: \`${exportResult.exportContract.generated_at}\``);
+  lines.push(`- artifactCount: \`${countPayloadItems(exportResult)}\``);
+  lines.push("");
+  lines.push("## Filters");
+  lines.push(`- allowedVisibilities: \`${(exportResult.exportContract.metadata?.allowed_visibilities || []).join(", ")}\``);
+  lines.push(`- allowedStates: \`${(exportResult.exportContract.metadata?.allowed_states || []).join(", ")}\``);
+  lines.push("");
+  lines.push("## Artifacts");
+  if (!Array.isArray(exportResult.artifacts) || exportResult.artifacts.length === 0) {
+    lines.push("- none");
+  } else {
+    for (const artifact of exportResult.artifacts) {
+      lines.push(`- ${artifact.title}: ${artifact.summary}`);
+    }
+  }
+  lines.push("");
+
+  return `${lines.join("\n").trimEnd()}\n`;
+}
+
 export function createProjectionSystem(options = {}) {
   const registry = options.registry;
   if (!registry || typeof registry.listRecords !== "function") {

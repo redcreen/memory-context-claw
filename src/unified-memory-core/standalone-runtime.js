@@ -129,6 +129,10 @@ export function createStandaloneRuntime(options = {}) {
     });
   }
 
+  async function inspectExport(params = {}) {
+    return buildExport(params);
+  }
+
   async function auditNamespace({
     namespace = config.namespace,
     allowedVisibilities,
@@ -218,6 +222,7 @@ export function createStandaloneRuntime(options = {}) {
       return dailyReflectionRunner.runDailyReflection(params);
     },
     buildExport,
+    inspectExport,
     auditNamespace,
     planRepair,
     planReplay,

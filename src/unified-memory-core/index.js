@@ -24,7 +24,10 @@ export {
   createDailyReflectionRunner,
   renderDailyReflectionReport
 } from "./daily-reflection.js";
-export { createProjectionSystem } from "./projection-system.js";
+export {
+  createProjectionSystem,
+  renderExportReport
+} from "./projection-system.js";
 export {
   createGovernanceSystem,
   renderGovernanceAuditReport,

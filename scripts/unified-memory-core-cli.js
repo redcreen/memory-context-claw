@@ -3,6 +3,7 @@
 import { createStandaloneRuntime } from "../src/unified-memory-core/standalone-runtime.js";
 import {
   renderDailyReflectionReport,
+  renderExportReport,
   renderGovernanceAuditReport,
   renderGovernanceRepairRecord,
   renderGovernanceReplayRun
@@ -127,6 +128,16 @@ async function run() {
       allowedVisibilities: parseListFlag(flags["allowed-visibilities"], undefined),
       allowedStates: parseListFlag(flags["allowed-states"], undefined)
     });
+  } else if (family === "export" && action === "inspect") {
+    const exportResult = await runtime.inspectExport({
+      consumer: normalizeString(flags.consumer, "generic"),
+      namespace: parseNamespaceFromFlags(flags),
+      allowedVisibilities: parseListFlag(flags["allowed-visibilities"], undefined),
+      allowedStates: parseListFlag(flags["allowed-states"], undefined)
+    });
+    result = flags.format === "markdown"
+      ? renderExportReport(exportResult)
+      : exportResult;
   } else if (family === "govern" && action === "audit") {
     const report = await runtime.auditNamespace({
       namespace: parseNamespaceFromFlags(flags),
@@ -172,6 +183,7 @@ async function run() {
         "learn daily-run --source-type manual --content 'text' [--dry-run] [--promote]",
         "reflect run --source-type manual --content 'text' [--dry-run] [--promote]",
         "export build --consumer generic",
+        "export inspect --consumer generic [--format markdown]",
         "govern audit [--format markdown]",
         "govern repair --finding-code candidate_missing_decision_trail --action mark_for_review [--format markdown]",
         "govern replay [--result queued] [--format markdown]"

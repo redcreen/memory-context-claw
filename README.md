@@ -210,6 +210,12 @@ Current governance repair path:
 npm run umc:cli -- govern repair --finding-code candidate_missing_decision_trail --action mark_for_review --format markdown
 ```
 
+Current export inspect path:
+
+```bash
+npm run umc:cli -- export inspect --consumer generic --format markdown
+```
+
 **Local Development Install**
 
 If you are developing this repo locally:
@@ -564,6 +570,12 @@ npm run umc:daily-reflection -- --source-type manual --content "Remember this: p
 
 ```bash
 npm run umc:cli -- govern repair --finding-code candidate_missing_decision_trail --action mark_for_review --format markdown
+```
+
+当前 export inspect 最短路径：
+
+```bash
+npm run umc:cli -- export inspect --consumer generic --format markdown
 ```
 
 **本地开发安装**
