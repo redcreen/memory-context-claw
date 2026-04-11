@@ -45,12 +45,13 @@ The repo has already completed:
 - master roadmap alignment
 - self-learning boundary definition
 - module-document skeleton setup
+- step 1-12 design-package completion
 
 The next step is no longer “discuss the shape”.
 
 The next step is:
 
-`turn the agreed architecture into module-level contracts, test surfaces, and then incremental implementation`
+`use the current document set as the implementation baseline and start incremental development`
 
 ## Current Execution Status
 
@@ -64,6 +65,20 @@ Important note:
 
 - multi-runtime and multi-tool topology is now part of the execution baseline
 - current implementation should be `network-ready`, but not `network-required`
+
+## Implementation Baseline
+
+From this point onward, `development-plan.md` should be read as:
+
+- the implementation kickoff guide
+- the sequencing guide for the first coding waves
+- the coordination baseline across core, adapters, self-learning, and standalone mode
+
+That means:
+
+- steps `1-12` are now design-complete
+- implementation should start from the existing contracts and test surfaces
+- the document should now answer `what should we code first, second, and third`
 
 ## Program Map
 
@@ -327,16 +342,60 @@ Done when:
 - the core is no longer conceptually trapped inside the OpenClaw adapter
 - moving to a fully separate product repo becomes an operational choice, not an architecture rewrite
 
-## Recommended Immediate Build Order
+## Recommended Implementation Tranches
 
-If implementation starts now, the recommended short-term order is:
+If implementation starts now, the recommended coding order is:
 
-1. finish `Source System` architecture / roadmap / blueprint / todo
-2. finish `Memory Registry` architecture / roadmap / blueprint / todo
-3. finish `OpenClaw Adapter` architecture / roadmap / blueprint / todo
-4. finish `Codex Adapter` architecture / roadmap / blueprint / todo
-5. define shared contracts and testing surfaces
-6. start code implementation with `Source System + Memory Registry`
+### Tranche 1. Core contracts and persistence baseline
+
+1. implement shared contracts from `Step 5`
+2. implement `Source System` MVP
+3. implement `Memory Registry` MVP
+4. add contract / registry tests first
+
+Goal:
+
+- one or more controlled sources can produce governed candidate artifacts
+
+### Tranche 2. Export and adapter baseline
+
+1. implement `Projection System` MVP
+2. implement `Governance System` MVP
+3. implement `OpenClaw Adapter` consumption boundary
+4. implement `Codex Adapter` read-side boundary
+
+Goal:
+
+- stable artifacts can be exported deterministically and consumed by OpenClaw and Codex through adapter boundaries
+
+### Tranche 3. Learning and standalone baseline
+
+1. implement `Reflection System` MVP
+2. implement `self-learning` daily reflection loop
+3. implement `Standalone Mode` command surface
+4. add repair / replay / audit paths around early artifacts
+
+Goal:
+
+- one local-first ingest -> reflect -> export path runs end to end without host-only coupling
+
+## Immediate Next Build
+
+The immediate next build should be:
+
+1. `shared contracts`
+2. `Source System`
+3. `Memory Registry`
+4. `contract + registry tests`
+
+Do not start with:
+
+- runtime API
+- multi-host network service
+- advanced self-learning policy adaptation
+- split execution mechanics beyond documentation
+
+These stay later until the first local-first product loop is stable.
 
 ## Dependency Map
 
@@ -412,12 +471,13 @@ Review this document with these questions:
 - 主 roadmap 对齐
 - self-learning 边界定义
 - 模块文档骨架建立
+- Step 1-12 的设计包收口
 
 现在已经不再是“继续讨论形状”的阶段。
 
 下一步应该进入：
 
-`把已经达成共识的架构，收成模块级契约、测试面和分阶段实现计划`
+`把当前文档集当成实现基线，开始按顺序逐步落代码`
 
 ## 当前执行状态
 
@@ -431,6 +491,20 @@ Review this document with these questions:
 
 - 多 runtime / 多工具链拓扑现在已经纳入执行基线
 - 当前实现要做到 `network-ready`，但不要求 `network-required`
+
+## 实现基线
+
+从现在开始，这份 `development-plan.md` 应当被当成：
+
+- 第一阶段实现启动指引
+- 前几轮编码顺序指引
+- core / adapters / self-learning / standalone 协作基线
+
+也就是说：
+
+- `Step 1-12` 现在都已经在设计层完成
+- 实现应直接从现有 contracts 和 testing surfaces 起步
+- 这份文档现在更应该回答 `第一步写什么，第二步写什么，第三步写什么`
 
 ## 总体路径图
 
@@ -694,16 +768,60 @@ flowchart LR
 - core 不再概念上困在 OpenClaw adapter 里面
 - 未来是否彻底拆成独立产品仓，变成执行选择，而不是必须重写架构
 
-## 现在最适合的短期开发顺序
+## 推荐的分批实现顺序
 
-如果现在就正式开始开发，建议的短期顺序是：
+如果现在正式开始开发，建议按 3 个 tranche 推进：
 
-1. 先补齐 `Source System` 的 architecture / roadmap / blueprint / todo
-2. 再补齐 `Memory Registry` 的 architecture / roadmap / blueprint / todo
-3. 再补齐 `OpenClaw Adapter` 的 architecture / roadmap / blueprint / todo
-4. 再补齐 `Codex Adapter` 的 architecture / roadmap / blueprint / todo
-5. 然后定义 shared contracts 和 testing surfaces
-6. 最后从 `Source System + Memory Registry` 开始写第一阶段代码
+### Tranche 1. Core contracts 与持久化基线
+
+1. 先实现 `Step 5` 里定义的 shared contracts
+2. 再实现 `Source System` MVP
+3. 再实现 `Memory Registry` MVP
+4. 先把 contract / registry tests 补上
+
+目标：
+
+- 让一个或多个可控 source 能稳定产出 governed candidate artifacts
+
+### Tranche 2. Export 与 adapter 基线
+
+1. 实现 `Projection System` MVP
+2. 实现 `Governance System` MVP
+3. 实现 `OpenClaw Adapter` 的 consumption boundary
+4. 实现 `Codex Adapter` 的 read-side boundary
+
+目标：
+
+- stable artifacts 能稳定导出，并通过 adapter 边界被 OpenClaw / Codex 消费
+
+### Tranche 3. Learning 与 standalone 基线
+
+1. 实现 `Reflection System` MVP
+2. 实现 `self-learning` 的 daily reflection loop
+3. 实现 `Standalone Mode` 的 command surface
+4. 给早期 artifacts 补上 repair / replay / audit 路径
+
+目标：
+
+- 至少一条 local-first 的 ingest -> reflect -> export 路径，能在不依赖宿主的情况下端到端跑通
+
+## 当前建议立刻开做的内容
+
+下一步最适合直接开做的是：
+
+1. `shared contracts`
+2. `Source System`
+3. `Memory Registry`
+4. `contract + registry tests`
+
+当前不要优先做：
+
+- runtime API
+- 多主机网络服务
+- 高阶 self-learning policy adaptation
+- 超出文档阶段之外的 split execution mechanics
+
+这些都应该放到第一条 local-first 产品闭环稳定之后。
 
 ## 依赖关系图
 
