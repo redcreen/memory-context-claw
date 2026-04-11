@@ -60,6 +60,12 @@ The next step is:
 - `Step 8-9`: completed at the adapter design-package level
 - `Step 10-12`: completed at the workstream / standalone / independent-execution design-package level
 - next phase: implementation kickoff with the current document set as baseline
+- current implementation progress:
+  - shared contracts landed in [../../src/unified-memory-core/contracts.js](../../src/unified-memory-core/contracts.js)
+  - `Source System` MVP landed in [../../src/unified-memory-core/source-system.js](../../src/unified-memory-core/source-system.js)
+  - `Memory Registry` MVP landed in [../../src/unified-memory-core/memory-registry.js](../../src/unified-memory-core/memory-registry.js)
+  - local `source -> candidate` loop landed in [../../src/unified-memory-core/pipeline.js](../../src/unified-memory-core/pipeline.js)
+  - tranche-1 tests landed in [../../test/unified-memory-core](../../test/unified-memory-core)
 
 Important note:
 
@@ -486,6 +492,12 @@ Review this document with these questions:
 - `Step 8-9`：已在 adapter 设计包层完成
 - `Step 10-12`：已在 workstream / standalone / independent-execution 设计包层完成
 - 下一阶段：以当前文档集为基线进入实现
+- 当前实现进度：
+  - shared contracts 已落地到 [../../src/unified-memory-core/contracts.js](../../src/unified-memory-core/contracts.js)
+  - `Source System` MVP 已落地到 [../../src/unified-memory-core/source-system.js](../../src/unified-memory-core/source-system.js)
+  - `Memory Registry` MVP 已落地到 [../../src/unified-memory-core/memory-registry.js](../../src/unified-memory-core/memory-registry.js)
+  - 本地 `source -> candidate` 闭环已落地到 [../../src/unified-memory-core/pipeline.js](../../src/unified-memory-core/pipeline.js)
+  - tranche-1 测试已落地到 [../../test/unified-memory-core](../../test/unified-memory-core)
 
 补充决策：
 

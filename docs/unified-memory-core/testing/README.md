@@ -30,6 +30,12 @@ Current required surfaces:
 - standalone CLI contract correctness
 - independent execution / split-readiness review correctness
 
+Current implemented suites:
+
+- contract parsing and validation: [../../../test/unified-memory-core/contracts.test.js](../../../test/unified-memory-core/contracts.test.js)
+- source normalization and replay snapshot: [../../../test/unified-memory-core/source-system.test.js](../../../test/unified-memory-core/source-system.test.js)
+- registry persistence and local-first lifecycle loop: [../../../test/unified-memory-core/memory-registry.test.js](../../../test/unified-memory-core/memory-registry.test.js)
+
 ## 中文
 
 测试规划入口：
@@ -57,3 +63,9 @@ Step 4 的 testing surfaces 分成 4 层：
 - self-learning reflection / promotion / decay correctness
 - standalone CLI contract correctness
 - independent execution / split-readiness review correctness
+
+当前已经落地的测试套件：
+
+- contract parsing / validation: [../../../test/unified-memory-core/contracts.test.js](../../../test/unified-memory-core/contracts.test.js)
+- source normalization / replay snapshot: [../../../test/unified-memory-core/source-system.test.js](../../../test/unified-memory-core/source-system.test.js)
+- registry persistence / local-first lifecycle loop: [../../../test/unified-memory-core/memory-registry.test.js](../../../test/unified-memory-core/memory-registry.test.js)

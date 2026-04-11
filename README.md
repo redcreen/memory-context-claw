@@ -175,6 +175,14 @@ Use the sections below if you are:
 - tuning config
 - running tests and governance checks
 
+Current Tranche 1 implementation entrypoints:
+
+- shared contracts: [src/unified-memory-core/contracts.js](src/unified-memory-core/contracts.js)
+- Source System MVP: [src/unified-memory-core/source-system.js](src/unified-memory-core/source-system.js)
+- Memory Registry MVP: [src/unified-memory-core/memory-registry.js](src/unified-memory-core/memory-registry.js)
+- local source-to-candidate pipeline: [src/unified-memory-core/pipeline.js](src/unified-memory-core/pipeline.js)
+- contract and registry tests: [test/unified-memory-core](test/unified-memory-core)
+
 **Local Development Install**
 
 If you are developing this repo locally:
@@ -368,6 +376,16 @@ Other name options:
 - 不再把所有召回结果“平铺看待”
 - 对高价值记忆问题的快路径
 - 一套可治理、可回归验证的长期记忆上下文层
+
+**当前实现入口**
+
+当前 `Tranche 1` 已经开始落第一批本地优先实现，主要入口如下：
+
+- shared contracts: [src/unified-memory-core/contracts.js](src/unified-memory-core/contracts.js)
+- Source System MVP: [src/unified-memory-core/source-system.js](src/unified-memory-core/source-system.js)
+- Memory Registry MVP: [src/unified-memory-core/memory-registry.js](src/unified-memory-core/memory-registry.js)
+- 本地 `source -> candidate` 闭环: [src/unified-memory-core/pipeline.js](src/unified-memory-core/pipeline.js)
+- contract / registry tests: [test/unified-memory-core](test/unified-memory-core)
 
 **快速开始**
 
