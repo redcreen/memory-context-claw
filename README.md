@@ -175,18 +175,27 @@ Use the sections below if you are:
 - tuning config
 - running tests and governance checks
 
-Current Tranche 1 implementation entrypoints:
+Current implementation entrypoints:
 
 - shared contracts: [src/unified-memory-core/contracts.js](src/unified-memory-core/contracts.js)
 - Source System MVP: [src/unified-memory-core/source-system.js](src/unified-memory-core/source-system.js)
 - Memory Registry MVP: [src/unified-memory-core/memory-registry.js](src/unified-memory-core/memory-registry.js)
 - local source-to-candidate pipeline: [src/unified-memory-core/pipeline.js](src/unified-memory-core/pipeline.js)
+- Reflection System MVP: [src/unified-memory-core/reflection-system.js](src/unified-memory-core/reflection-system.js)
 - Projection System MVP: [src/unified-memory-core/projection-system.js](src/unified-memory-core/projection-system.js)
 - OpenClaw / Codex adapter bridges: [src/unified-memory-core/adapter-bridges.js](src/unified-memory-core/adapter-bridges.js)
 - Governance System MVP: [src/unified-memory-core/governance-system.js](src/unified-memory-core/governance-system.js)
+- standalone runtime boundary: [src/unified-memory-core/standalone-runtime.js](src/unified-memory-core/standalone-runtime.js)
+- standalone CLI entrypoint: [scripts/unified-memory-core-cli.js](scripts/unified-memory-core-cli.js)
 - OpenClaw adapter runtime integration: [src/openclaw-adapter.js](src/openclaw-adapter.js)
 - Codex adapter runtime integration: [src/codex-adapter.js](src/codex-adapter.js)
-- contract and registry tests: [test/unified-memory-core](test/unified-memory-core)
+- unified-memory-core tests: [test/unified-memory-core](test/unified-memory-core)
+
+Current standalone path:
+
+```bash
+npm run umc:cli -- reflect run --source-type manual --content "Prefer deterministic exports." --dry-run
+```
 
 **Local Development Install**
 
@@ -508,6 +517,28 @@ workspace/
 - 你在开发这个仓库
 - 你在调配置
 - 你在跑测试和治理命令
+
+当前实现入口：
+
+- shared contracts: [src/unified-memory-core/contracts.js](src/unified-memory-core/contracts.js)
+- Source System MVP: [src/unified-memory-core/source-system.js](src/unified-memory-core/source-system.js)
+- Memory Registry MVP: [src/unified-memory-core/memory-registry.js](src/unified-memory-core/memory-registry.js)
+- 本地 source-to-candidate pipeline: [src/unified-memory-core/pipeline.js](src/unified-memory-core/pipeline.js)
+- Reflection System MVP: [src/unified-memory-core/reflection-system.js](src/unified-memory-core/reflection-system.js)
+- Projection System MVP: [src/unified-memory-core/projection-system.js](src/unified-memory-core/projection-system.js)
+- Governance System MVP: [src/unified-memory-core/governance-system.js](src/unified-memory-core/governance-system.js)
+- OpenClaw / Codex adapter bridge: [src/unified-memory-core/adapter-bridges.js](src/unified-memory-core/adapter-bridges.js)
+- standalone runtime 边界: [src/unified-memory-core/standalone-runtime.js](src/unified-memory-core/standalone-runtime.js)
+- standalone CLI 入口: [scripts/unified-memory-core-cli.js](scripts/unified-memory-core-cli.js)
+- OpenClaw adapter runtime: [src/openclaw-adapter.js](src/openclaw-adapter.js)
+- Codex adapter runtime: [src/codex-adapter.js](src/codex-adapter.js)
+- unified-memory-core 测试目录: [test/unified-memory-core](test/unified-memory-core)
+
+当前 standalone 最短路径：
+
+```bash
+npm run umc:cli -- reflect run --source-type manual --content "Prefer deterministic exports." --dry-run
+```
 
 **本地开发安装**
 

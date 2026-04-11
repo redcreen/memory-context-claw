@@ -19,6 +19,7 @@ export {
 
 export { createSourceSystem } from "./source-system.js";
 export { createMemoryRegistry } from "./memory-registry.js";
+export { createReflectionSystem } from "./reflection-system.js";
 export { createProjectionSystem } from "./projection-system.js";
 export {
   createGovernanceSystem,
@@ -34,3 +35,7 @@ export {
   buildPassThroughCandidateArtifact,
   ingestDeclaredSourceToCandidate
 } from "./pipeline.js";
+export {
+  createStandaloneRuntime,
+  resolveStandaloneConfig
+} from "./standalone-runtime.js";

@@ -391,14 +391,23 @@ Goal:
 
 - one local-first ingest -> reflect -> export path runs end to end without host-only coupling
 
+Current implementation status:
+
+- `Tranche 1`: complete
+- `Tranche 2`: complete
+- `Tranche 3`: started
+- `Reflection System` MVP is implemented
+- standalone runtime and CLI baseline are implemented
+- next focus is the daily reflection loop and wider repair / replay command surface
+
 ## Immediate Next Build
 
 The immediate next build should be:
 
-1. `shared contracts`
-2. `Source System`
-3. `Memory Registry`
-4. `contract + registry tests`
+1. `self-learning` daily reflection loop
+2. standalone export / audit / repair command hardening
+3. repair / replay paths for early artifacts
+4. split-readiness review inputs for standalone execution
 
 Do not start with:
 
@@ -829,14 +838,23 @@ flowchart LR
 
 - 至少一条 local-first 的 ingest -> reflect -> export 路径，能在不依赖宿主的情况下端到端跑通
 
+当前实现状态：
+
+- `Tranche 1`：已完成
+- `Tranche 2`：已完成
+- `Tranche 3`：已启动
+- `Reflection System` MVP 已实现
+- standalone runtime 与 CLI 基线已实现
+- 下一步聚焦 `daily reflection loop` 与更完整的 repair / replay 命令面
+
 ## 当前建议立刻开做的内容
 
 下一步最适合直接开做的是：
 
-1. `shared contracts`
-2. `Source System`
-3. `Memory Registry`
-4. `contract + registry tests`
+1. `self-learning` 的 daily reflection loop
+2. standalone export / audit / repair command 的补齐与加固
+3. 给早期 artifacts 补 repair / replay 路径
+4. 为 split-ready 的独立执行补审查输入
 
 当前不要优先做：
 

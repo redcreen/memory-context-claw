@@ -213,11 +213,13 @@ export function createGovernanceSystem(options = {}) {
       source_system: ["test/unified-memory-core/source-system.test.js"],
       memory_registry: ["test/unified-memory-core/memory-registry.test.js"],
       projection_system: ["test/unified-memory-core/projection-system.test.js"],
+      reflection_system: ["test/unified-memory-core/reflection-system.test.js"],
       adapter_bridges: ["test/unified-memory-core/adapter-bridges.test.js"],
       openclaw_adapter_runtime: ["test/openclaw-adapter.test.js"],
       codex_adapter_runtime: ["test/codex-adapter.test.js"],
       adapter_compatibility: ["test/adapter-compatibility.test.js"],
-      governance_system: ["test/unified-memory-core/governance-system.test.js"]
+      governance_system: ["test/unified-memory-core/governance-system.test.js"],
+      standalone_runtime: ["test/unified-memory-core/standalone-runtime.test.js"]
     };
   }
 
