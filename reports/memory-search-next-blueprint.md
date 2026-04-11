@@ -64,6 +64,21 @@ flowchart LR
 
 **memory-search 现在已经不是“要不要做”的问题，而是“按什么蓝图持续做”的问题。**
 
+### 2026-04-09 快照
+
+这条线的第一轮 watchlist 已经收口：
+
+- `pluginSignalHits = 6/6`
+- `pluginSourceHits = 6/6`
+- `pluginFailures = 0`
+- `watchlist = []`
+
+所以这份蓝图从现在开始，重点不再是“把旧 watchlist 打完”，而是：
+
+- 继续扩新的稳定事实 / 规则
+- 清理迁移后残留的旧路径 / 旧 case
+- 持续用 governance 保持不回退
+
 ---
 
 ## 当前我们已经有什么
@@ -117,7 +132,9 @@ flowchart TB
 
 ## 要解决的问题
 
-当前 watchlist 里仍有 3 条：
+第一轮 watchlist 已经清空。
+
+上一轮已经收口的条目：
 
 1. `food-preference-recall`
 2. `short-chinese-token`
@@ -131,47 +148,26 @@ flowchart TB
 ## 目标
 
 把 watchlist 从“已知问题列表”变成“逐条消灭”的工程面。
+当前这一轮已经达到 `watchlist = []`，后续重点是继续保持它为空。
 
 ## 拆解任务
 
-### 1. `short-chinese-token`
+### 1. 下一批 watchlist 候选
 
 目标：
 
-- 搞清楚短 query 下，为什么 signal 和 source 都不稳
+- 不再盯旧的 3 条，而是继续找新的高价值薄弱点
 
 重点看：
 
-- `牛排 刘超` 这类 query 为什么会串到身份 card
-- 当前 intent 分类是否过于宽泛
-- 是否需要更细的 token/slot 规则
-
-### 2. `session-memory-source-competition`
-
-目标：
-
-- 搞清楚为什么 `memory/%` / raw summary 在 source competition 下几乎永远输给 `sessions/%`
-
-重点看：
-
-- builtin 返回的 top-N source 分布
-- plugin 为什么能兜住 fact，但仍没把原始 `memory/%` 拉成优先 source
-
-### 3. `food-preference-recall`
-
-目标：
-
-- 把“能答对，但 signal/source 还不够理想”的 case 收得更稳
-
-重点看：
-
-- case 的 expectedSignals 是否应进一步区分“必须命中”与“可选增强”
-- plugin top1 已经对时，baseline 怎么更合理反映真实效果
+- 中文概念型 query
+- 迁移后旧路径污染的 session / report case
+- plugin top1 正确但 supporting candidates 仍然偏噪的 query
 
 ## 完成标准
 
-- watchlist 至少减少一半
-- 或明确把其中部分改成“合理例外”，不再反复误报
+- governance 持续保持 `watchlist = []`
+- 新出现的弱点被尽快收成 case，而不是重新回到“大黑盒”
 
 ---
 
@@ -212,6 +208,16 @@ flowchart TB
 
 - 项目之间的角色关系
 - 长期路线判断
+
+### 4. `workspace/notes` 准入规则继续保持显式化
+
+当前已经落地第一版：
+
+- `一句话结论 + 适用场景` 作为基础结构门槛
+- 稳定概念 / 项目分工 note 可以进入 stable card
+- 历史 roadmap / 临时配置 note 不进入 stable card
+
+后续重点不是再“开放更多 note 自动进入”，而是继续保持这条边界清晰、可解释、可测试。
 
 ## 完成标准
 
@@ -258,6 +264,16 @@ flowchart TB
   - 是否进入 smoke
   - 是否进入 perf
   - 是否进入 hot-session health check
+
+当前已落地第一版：
+
+- `npm run eval:smoke-promotion`
+
+它会把 memory-search 治理结果和现有 smoke case 对照，给出：
+
+- 已经在 smoke 里的 case
+- 满足 `stable-single-card`、可人工复核是否升进 smoke 的候选
+- 仍不够稳定、继续留在专项治理池里的 case
 
 ## 完成标准
 

@@ -179,3 +179,39 @@ export function buildKeywordSet(prompt) {
   }
   return uniq([...(latinTokens || []), ...cjkBigrams]);
 }
+
+export function buildOrderedKeywordSet(prompt) {
+  const raw = String(prompt || "");
+  const ordered = [];
+  const push = (value) => {
+    const normalized = String(value || "").trim().toLowerCase();
+    if (!normalized) {
+      return;
+    }
+    if (!ordered.includes(normalized)) {
+      ordered.push(normalized);
+    }
+  };
+
+  const latinTokens = raw.match(/[a-z0-9][a-z0-9_-]{1,}/gi) || [];
+  for (const token of latinTokens) {
+    push(token);
+  }
+
+  const segments = raw
+    .split(/\s+/)
+    .map((item) => item.replace(/[^\p{Script=Han}a-zA-Z0-9_-]/gu, ""))
+    .filter(Boolean);
+
+  for (const segment of segments) {
+    const cjkChars = [...segment].filter((char) => /[\u4e00-\u9fff]/.test(char));
+    if (cjkChars.length >= 2 && cjkChars.length <= 4) {
+      push(cjkChars.join(""));
+    }
+    for (let index = 0; index < cjkChars.length - 1; index += 1) {
+      push(`${cjkChars[index]}${cjkChars[index + 1]}`);
+    }
+  }
+
+  return ordered;
+}

@@ -3,24 +3,24 @@
     "name": "lossless-vs-memory",
     "query": "Lossless 插件 和 长期记忆 的区别",
     "expectedPaths": [
-      "../../Project/长记忆/openclaw-memory-vs-lossless.md",
-      "../../Project/长记忆/MEMORY.md"
+      "workspace/notes/openclaw-memory-vs-lossless.md",
+      "workspace/MEMORY.md"
     ]
   },
   {
     "name": "workspace-layering",
     "query": "长期记忆目录规则",
     "expectedPaths": [
-      "../../Project/长记忆/memory/2026-04-04.md",
-      "../../Project/长记忆/MEMORY.md"
+      "workspace/memory/2026-04-04.md",
+      "workspace/MEMORY.md"
     ]
   },
   {
     "name": "memory-usage",
     "query": "MEMORY.md 的使用原则",
     "expectedPaths": [
-      "../../Project/长记忆/MEMORY.md",
-      "../../Project/长记忆/memory/2026-04-04.md"
+      "workspace/MEMORY.md",
+      "workspace/memory/2026-04-04.md"
     ]
   }
 ]

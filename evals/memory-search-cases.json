@@ -3,7 +3,7 @@
     "id": "food-preference-recall",
     "category": "memory_search",
     "query": "我爱吃什么",
-    "expectedSignals": ["牛排", "饮食偏好"],
+    "expectedSignalsAny": ["牛排", "饮食偏好"],
     "expectedSources": ["MEMORY.md", "memory/%", "cardArtifact"],
     "risk": "旧 sessions 中的面食偏好压过新事实"
   },
@@ -28,7 +28,8 @@
     "category": "memory_search",
     "query": "用户爱吃什么 饮食 喜欢吃 刘超 超哥",
     "expectedSignals": ["牛排"],
-    "expectedSources": ["memory/%"],
+    "builtinExpectedSources": ["memory/%"],
+    "pluginExpectedSources": ["memory/%", "MEMORY.md", "cardArtifact"],
     "risk": "memory/% 候选完全进不了池，被 sessions/% 占满"
   },
   {

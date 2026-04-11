@@ -60,6 +60,12 @@ function textIncludesAll(text, patterns = []) {
   return patterns.every((pattern) => text.includes(pattern));
 }
 
+function expectedSignalsHit(text, testCase) {
+  const all = Array.isArray(testCase.expectedSignals) ? testCase.expectedSignals : [];
+  const any = Array.isArray(testCase.expectedSignalsAny) ? testCase.expectedSignalsAny : [];
+  return textIncludesAll(text, all) && textIncludesAny(text, any);
+}
+
 function valueMatchesExpectedSource(value, expectedSources = []) {
   if (!expectedSources.length) {
     return true;
@@ -102,6 +108,27 @@ function summarizeSources(items) {
 
 function inferFastPath(candidates) {
   return Array.isArray(candidates) && candidates.length > 0 && candidates.every((item) => item?.source === "cardArtifact");
+}
+
+function buildSelectionQuality(selectedCandidates = [], expectedSources = []) {
+  const items = Array.isArray(selectedCandidates) ? selectedCandidates : [];
+  const selectedCount = items.length;
+  const singleCard = selectedCount === 1;
+  const multiCard = selectedCount > 1;
+  const supporting = items.slice(1);
+  const unexpectedSupporting = supporting.filter(
+    (item) =>
+      !valueMatchesExpectedSource(item?.path, expectedSources) &&
+      !valueMatchesExpectedSource(item?.source, expectedSources)
+  );
+
+  return {
+    selectedCount,
+    singleCard,
+    multiCard,
+    noisySupporting: unexpectedSupporting.length > 0,
+    unexpectedSupportingCount: unexpectedSupporting.length
+  };
 }
 
 async function runBuiltinSearch(query, config, options) {
@@ -159,10 +186,11 @@ async function runCase(testCase, config, options) {
   const builtinText = builtinResults
     .map((item) => `${item?.path || ""}\n${item?.snippet || ""}`)
     .join("\n");
-  const builtinExpectedSignalsHit = textIncludesAll(builtinText, testCase.expectedSignals || []);
-  const builtinExpectedSourceHit = (testCase.expectedSources || []).length === 0
+  const builtinExpectedSignalsHit = expectedSignalsHit(builtinText, testCase);
+  const builtinExpectedSources = testCase.builtinExpectedSources || testCase.expectedSources || [];
+  const builtinExpectedSourceHit = builtinExpectedSources.length === 0
     ? true
-    : builtinResults.some((item) => valueMatchesExpectedSource(item?.path, testCase.expectedSources));
+    : builtinResults.some((item) => valueMatchesExpectedSource(item?.path, builtinExpectedSources));
 
   const rawCandidates = await retrieveMemoryCandidates({
     openclawCommand: config.openclawCommand,
@@ -191,14 +219,16 @@ async function runCase(testCase, config, options) {
   const selectedText = assembly.selectedCandidates
     .map((item) => `${item?.path || ""}\n${item?.snippet || ""}`)
     .join("\n");
-  const pluginExpectedSignalsHit = textIncludesAll(selectedText, testCase.expectedSignals || []);
-  const pluginExpectedSourceHit = (testCase.expectedSources || []).length === 0
+  const pluginExpectedSignalsHit = expectedSignalsHit(selectedText, testCase);
+  const pluginExpectedSources = testCase.pluginExpectedSources || testCase.expectedSources || [];
+  const pluginExpectedSourceHit = pluginExpectedSources.length === 0
     ? true
     : assembly.selectedCandidates.some(
         (item) =>
-          valueMatchesExpectedSource(item?.path, testCase.expectedSources) ||
-          valueMatchesExpectedSource(item?.source, testCase.expectedSources)
+          valueMatchesExpectedSource(item?.path, pluginExpectedSources) ||
+          valueMatchesExpectedSource(item?.source, pluginExpectedSources)
       );
+  const selectionQuality = buildSelectionQuality(assembly.selectedCandidates, pluginExpectedSources);
 
   return {
     id: testCase.id,
@@ -226,6 +256,7 @@ async function runCase(testCase, config, options) {
       candidateCount: rawCandidates.length,
       expectedSignalsHit: pluginExpectedSignalsHit,
       expectedSourceHit: pluginExpectedSourceHit,
+      selectionQuality,
       topSources: summarizeSources(assembly.selectedCandidates),
       selected: assembly.selectedCandidates.slice(0, 5).map((item) => ({
         path: item?.path || "",

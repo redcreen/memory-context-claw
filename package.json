@@ -16,6 +16,7 @@
     "eval:perf": "node scripts/eval-performance.js",
     "eval:memory-search:cases": "node scripts/eval-memory-search-cases.js",
     "eval:memory-search:governance": "node scripts/run-memory-search-governance.js",
+    "eval:smoke-promotion": "node scripts/eval-smoke-promotion.js",
     "eval:agent": "node scripts/agent-regression.js",
     "eval:agent:critical": "node scripts/agent-regression.js --only food-preference-latest,identity-preferred-name",
     "eval:agent:stable-facts": "node scripts/agent-regression.js --only birthday-solar,birthday-lunar,daughter-profile,son-profile,children-overview,identity-birthyear-dual",

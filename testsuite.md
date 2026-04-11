@@ -127,6 +127,12 @@ Run memory-search governance baseline:
 npm run eval:memory-search:governance -- --write
 ```
 
+Run memory-search to smoke promotion suggestions:
+
+```bash
+npm run eval:smoke-promotion
+```
+
 Run formal memory audit:
 
 ```bash
@@ -171,6 +177,10 @@ The governance cycle now also includes a memory-search summary:
 - `pluginSignalHits`
 - `pluginSourceHits`
 - `pluginFastPathLikely`
+- `pluginSingleCard`
+- `pluginMultiCard`
+- `pluginNoisySupporting`
+- `pluginUnexpectedSupportingTotal`
 - `pluginFailures`
 
 Run lightweight live hot-session regression:
@@ -390,7 +400,7 @@ The smoke suite is still intentionally split:
 Current baseline:
 
 - `critical smoke = 10/10`
-- `full smoke = 19/19`
+- `full smoke = 22/22`
 
 ## 中文
 
@@ -788,7 +798,7 @@ That means:
 当前基线：
 
 - `critical smoke = 10/10`
-- `full smoke = 19/19`
+- `full smoke = 22/22`
 ## Memory Search Workstream
 
 这组不是“宿主 `memory_search` 已修好”的证明，而是后续收口 builtin `memory_search` 缺口的专项 case 集。

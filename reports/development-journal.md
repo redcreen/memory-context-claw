@@ -25,6 +25,457 @@
 
 ---
 
+## 2026-04-10 10:35 +0800
+
+### 阶段主题
+
+Memory Search 增量优化：把 `Lossless` 概念说明从“测试里能导出”推进到“真实 smoke 能稳定命中”。
+
+### 触发原因
+
+前一轮已经补了：
+
+- `lossless` intent
+- `Lossless` 概念 card
+- 对应 retrieval boost
+
+但真实 smoke 还是出现了一个典型错位：
+
+- `buildProjectCardsFromMarkdown()` 的单测是通过的
+- `buildCardArtifactCandidates()` 的单测也是通过的
+- 但 `npm run smoke -- "为什么已经有长期记忆了，还需要 Lossless"` 里，top1 仍然是 `README.md` 的项目定位 card
+
+这说明问题不在“card 怎么排”，而在“这张 card 有没有真的进入候选池”。
+
+### 这轮做了什么
+
+1. 调整 `buildProjectCardsFromMarkdown()`
+
+之前它有一层过早返回：
+
+- 没有 `project positioning` 信号，就直接 `return []`
+
+这会让某些“项目背景说明卡”虽然满足自己的派生条件，但仍然被前置 gate 挡掉。
+
+现在改成：
+
+- `项目定位` card 继续要求 project signal
+- 但其他 project/concept card 各自按自己的条件独立产出
+
+2. 把 `workspace/notes/*.md` 接进 stable project card 读取链
+
+之前 stable project card 只读：
+
+- `README.md`
+- `project-roadmap.md`
+
+这也是这次真实根因。
+
+`workspace/notes/openclaw-memory-vs-lossless.md` 虽然是项目内高相关背景笔记，但根本没有进入 `readPluginStableProjectCards()`。
+
+现在改成：
+
+- 继续保留 `README.md` / `project-roadmap.md`
+- 同时扫描 `workspace/notes/*.md`
+- 对高信号背景笔记提炼 project/concept card
+
+3. 补一条直接覆盖根因的测试
+
+新增测试直接验证：
+
+- `readCardArtifactCandidates()` 会从 `workspace/notes/openclaw-memory-vs-lossless.md` 里读出 `Lossless` 概念 card
+
+### 验证方式
+
+1. targeted tests
+
+```bash
+npm test -- --test-name-pattern 'retrieval|retrieval-policy'
+```
+
+结果：
+
+- `20/20` 通过
+
+2. 单条 smoke
+
+```bash
+npm run smoke -- "为什么已经有长期记忆了，还需要 Lossless"
+```
+
+结果：
+
+- top1 已变成 `workspace/notes/openclaw-memory-vs-lossless.md`
+- snippet：
+  - `长期记忆负责存和找；Lossless / context engine 负责把当前这一轮最该看的内容更好地送进模型。`
+
+3. full smoke
+
+```bash
+npm run smoke:eval
+```
+
+结果：
+
+- `22/22` 全通过
+
+### 当前判断
+
+这次修复证明了一件事：
+
+- `workspace/notes/*.md` 不只是归档笔记
+- 在“项目背景 / 概念分工”类 query 上，它们可以成为稳定、可治理的 `cardArtifact` 来源
+
+但边界也要守住：
+
+- 不是所有 notes 都应该直接进 stable card 池
+- 当前仍然应该按“高信号、可复用、概念稳定”的原则谨慎提炼
+
+### 下一步
+
+- 继续按这个原则扩项目背景类 stable card
+- 但避免把 `workspace/notes/` 变成新的平铺噪音源
+- 后续如果 notes 继续变多，可以再给它加一层更细的准入策略
+
+---
+
+## 2026-04-10 11:10 +0800
+
+### 阶段主题
+
+Memory Search 增量优化：压低 `provider-role` 这类配置/概念 query 的 session 噪音。
+
+### 触发原因
+
+虽然当前 `provider-role` 已经稳定通过 smoke：
+
+- top1 始终是 `configuration.md`
+
+但 supporting candidates 里仍然会挂一条很长的 session 片段。
+
+这不是“答错了”，但会带来两个问题：
+
+- 回忆块可读性差
+- 宿主 builtin 结果中的 session 噪音仍然偏高
+
+### 这轮做了什么
+
+1. 在 `scoring.js` 里新增 session intent penalty 分层
+
+不再只给一个统一常数，而是按意图类型区分：
+
+- `provider`：更强惩罚
+- `config / rule`：中等惩罚
+- `project / lossless`：轻惩罚
+
+目的不是“禁用 session”，而是：
+
+- 当 query 明显更该信正式文档 / stable card 时
+- 不让长 session transcript 一直占住第二名
+
+2. 补了对应 scoring 回归
+
+- `provider-role` 带 session 候选的场景
+- `lossless` 概念题里 stable note card 应继续压过 session
+
+### 验证方式
+
+1. targeted tests
+
+```bash
+npm test -- --test-name-pattern 'scoring|retrieval|retrieval-policy'
+```
+
+结果：
+
+- `20/20` 通过
+
+2. 单条 smoke
+
+```bash
+npm run smoke -- "memorySearch.provider 是做什么的"
+```
+
+结果：
+
+- top1 仍然稳定是 `configuration.md`
+- session 候选分数已从上一轮进一步下降
+
+### 当前判断
+
+这次属于“压噪”，不是“完全消灭”。
+
+当前状态是：
+
+- `provider-role` 的 top1 已经是正确稳定答案
+- 但 supporting candidates 里仍然还有长 session 片段
+- 只是影响已经比之前更小
+
+所以这条不再是阻塞项，但仍值得保留在后续增量优化清单里。
+
+### 下一步
+
+- 如果后面继续打这条线，更合适的方向不是继续加大硬惩罚
+- 而是看 assembly 选择层是否要对“config / concept”类 query 再做一层去噪或多样性约束
+
+---
+
+## 2026-04-10 11:45 +0800
+
+### 阶段主题
+
+Memory Search 增量优化：把“目录结构”类 query 从泛规则解释里分出来，并把 config/provider 的 session 噪音进一步挡在 assemble 之外。
+
+### 触发原因
+
+前一轮虽然已经收了两块：
+
+- `provider-role` top1 稳定正确
+- `workspace-layout-rule` 本身也稳定正确
+
+但还有两个细节不够理想：
+
+1. `长期记忆目录规则是什么`
+   - top1 还会先落到 `formal-memory-policy.md`
+   - 说明这条 query 仍然被当成“泛规则问题”，而不是“目录结构问题”
+
+2. `provider-role`
+   - 虽然 top1 正确
+   - 但最终 `selected` 里仍然会带长 session transcript
+
+### 这轮做了什么
+
+1. 新增 `workspaceStructure` intent
+
+在 `retrieval-policy.js` 中新增：
+
+- `workspace 目录`
+- `目录结构`
+- `怎么组织`
+- `目录规则`
+- `长期记忆目录`
+
+这些表达统一归到一个更稳定的结构意图里。
+
+2. 给 `workspace structure` 意图补 retrieval boost / generic penalty
+
+在 `retrieval.js` 中：
+
+- 对包含 `workspace/MEMORY.md` / `workspace/memory/` / `workspace/notes/` 的 card 提升
+- 对不含这些结构信号的泛规则 card 追加轻量惩罚
+
+这样：
+
+- `这个项目的内置 workspace 目录应该怎么组织`
+- `长期记忆目录规则是什么`
+
+这两类问法都会更稳定地拿到同一张目录结构卡。
+
+3. 在 `assembly.js` 里增加 stable doc intent 去噪
+
+如果 query 属于：
+
+- `config`
+- `provider`
+- `install`
+- `lossless`
+- `project`
+- `rule`
+
+而前面已经有 stable `cardArtifact`，
+
+那么 assemble 最终就不再把 `sessionMemory` 候选塞进 `selectedCandidates`。
+
+这一步不是改 top1，而是改“最终给模型看的回忆块质量”。
+
+### 验证方式
+
+1. targeted tests
+
+```bash
+npm test -- --test-name-pattern 'assembly|scoring|retrieval|retrieval-policy'
+```
+
+结果：
+
+- `20/20` 通过
+
+2. 单条 smoke
+
+```bash
+npm run smoke -- "长期记忆目录规则是什么"
+```
+
+结果：
+
+- top1 已变成 `README.md`
+- snippet：
+  - `workspace/MEMORY.md 放长期规则，workspace/memory/ 放 daily memory，workspace/notes/ 放背景笔记。`
+
+3. 单条 smoke
+
+```bash
+npm run smoke -- "memorySearch.provider 是做什么的"
+```
+
+结果：
+
+- top1 仍然是 `configuration.md`
+- 最终 `selected` 里不再包含长 session transcript
+
+4. full smoke
+
+```bash
+npm run smoke:eval
+```
+
+结果：
+
+- `22/22` 全通过
+
+### 当前判断
+
+这轮的价值不是“又补了几个 boost”，而是：
+
+- 把“目录结构问题”从泛规则里拆出来
+- 把“稳定文档意图”真正落实到最终 assemble 选择层
+
+这让系统更像：
+
+- 先判断你问的是哪类稳定问题
+- 再尽量给最合适、最干净的 stable card
+- 而不是 top1 对了但后面仍然拖一串 transcript
+
+### 下一步
+
+- 继续沿这种“稳定意图细分 + assemble 去噪”方式扩
+- 但只对高价值长期问题加，不把所有 query 都做成细碎路由
+
+---
+
+## 2026-04-10 12:10 +0800
+
+### 阶段主题
+
+Memory Search 增量优化：把 stable doc 意图下的 supporting candidates 也做成“有边界的相关结果”，而不是只保证 top1 正确。
+
+### 触发原因
+
+前一轮虽然已经做了两件重要的事：
+
+- `provider-role` 最终 selected 不再带 session
+- `workspace-layering` top1 已经回到 `README.md` 的 workspace 结构卡
+
+但还有一个明显问题：
+
+- supporting candidates 仍然会带入一些“不是错，但也不够相关”的 stable card
+
+典型表现：
+
+- `provider-role` 会带 `MEMORY.md` 的时区卡
+- `workspace-layering` 会带 `MEMORY.md` 的 OpenViking 卡和 `configuration.md`
+- `project-positioning` 会带 formal policy / 不相关 stable card
+
+### 这轮做了什么
+
+1. 在 `assembly.js` 中增加 stable doc intent 分类
+
+新增了更细的 intent bucket：
+
+- `provider`
+- `installVerify`
+- `releaseInstall`
+- `workspaceStructure`
+- `lossless`
+- `project`
+- `rule`
+- `config`
+
+2. 在 assemble 选择层增加轻量白名单过滤
+
+不是去动 top1 排序，而是对最终 `selectedCandidates` 再做一层：
+
+- 如果 query 已经属于稳定文档意图
+- 并且前面已经拿到了 stable card
+- 那就只保留该意图真正相关的 supporting docs
+
+例如：
+
+- `provider`：
+  - 只保留 `configuration.md` 这类配置说明
+- `workspaceStructure`：
+  - 保留 `README.md` 的 workspace 结构卡
+  - 保留 `formal-memory-policy.md` 的准入规则
+- `project`：
+  - 保留 `README.md` 的项目定位
+  - 保留 `workspace/notes/openclaw-memory-vs-lossless.md` 这种直接补充项目分工的背景卡
+
+### 验证方式
+
+1. targeted tests
+
+```bash
+npm test -- --test-name-pattern 'assembly|retrieval|retrieval-policy|scoring'
+```
+
+结果：
+
+- `20/20` 通过
+
+2. 单条 smoke
+
+```bash
+npm run smoke -- "memorySearch.provider 是做什么的"
+```
+
+结果：
+
+- 最终 `selected` 只剩：
+  - `configuration.md`
+
+3. 单条 smoke
+
+```bash
+npm run smoke -- "长期记忆目录规则是什么"
+```
+
+结果：
+
+- 最终 `selected` 只剩：
+  - `README.md`
+  - `formal-memory-policy.md`
+
+4. 单条 smoke
+
+```bash
+npm run smoke -- "这个项目主要解决什么问题"
+```
+
+结果：
+
+- 最终 `selected` 只剩：
+  - `README.md`
+  - `workspace/notes/openclaw-memory-vs-lossless.md`
+
+### 当前判断
+
+这一步是这条线里很重要的收口：
+
+- 以前我们更关注 `top1` 对不对
+- 现在开始关注“最终给模型看的整段 recalled context 像不像一组好答案”
+
+也就是说：
+
+- 不只是命中正确
+- 还要 supporting context 干净、相关、可读
+
+### 下一步
+
+- 后面如果继续扩，这层逻辑可以继续用在更多稳定意图
+- 但仍然保持克制，只对高价值长期问题生效
+
+---
+
 ## 2026-04-05 14:40 +0800
 
 ### 阶段主题
@@ -7685,3 +8136,792 @@ summary 结果是：
 - 代码仓库直接位于 `Project/` 下
 - `长记忆/` 不再承担代码项目目录这一层角色
 - 外层只保留个人知识库配置（例如 `.obsidian`）这类不应直接并入仓库的内容
+
+---
+
+## 2026-04-09 - Memory search watchlist v1 cleared
+
+这轮把之前规划里的 3 条主线一口气收了一轮：
+
+1. watchlist 定点优化
+2. 稳定事实 / 稳定规则继续扩面
+3. 治理与报告产品化
+
+具体做的事：
+
+- 在 `src/retrieval.js` 里继续收紧 cardArtifact 候选排序：
+  - 短中文 query 在 builtin 不可用时，不再直接掉空，而是回退到 card candidates
+  - preference / identity 的串味继续拆开
+  - 增加 ordered keyword 命中顺序加分
+- 把 `release-install-rule` 真正做成稳定项目规则：
+  - 新增 `releaseInstall` intent
+  - `README.md` 现在也能稳定长出“安装发布规则” card
+  - 对“普通用户应该安装稳定版还是 main”这类 query，top1 已回到正确的发布规则，而不是再误落到“最小配置”
+- 把治理报告正式产品化：
+  - governance summary 现在显式区分 `builtinUnavailable`
+  - 支持 `Delta vs Previous`
+  - 支持 `Watchlist Changes`
+  - 生成 `memory-search-governance-latest.json`
+
+这轮实际跑下来的结果：
+
+- targeted tests：
+  - `retrieval|retrieval-policy|memory-search-governance`
+  - `20/20` 通过
+- full smoke：
+  - `21/21` 通过
+- memory-search governance：
+  - `cases = 6`
+  - `builtinUnavailable = 6`
+  - `pluginSignalHits = 6`
+  - `pluginSourceHits = 6`
+  - `pluginFastPathLikely = 6`
+  - `pluginFailures = 0`
+  - `watchlist = []`
+
+这轮的核心结论是：
+
+- 第一批 `memory search` watchlist 已经清空
+- builtin `memory_search` 本体仍未修复，但在当前本地环境下，plugin 层已经把这批高价值 query 完整兜住
+- 后面主线不再是“修这 3 条旧 watchlist”，而是：
+  - 继续扩稳定事实 / 稳定规则
+  - 继续清理迁移后残留的旧路径 / 旧 case
+  - 持续跑治理基线，避免回退
+
+---
+
+## 2026-04-10 - Active path cleanup after repo relocation
+
+这轮没有继续扩新功能，而是把仓库迁移后的 active 维护面彻底对齐到了新结构：
+
+- 旧结构：
+  - `/Users/redcreen/Project/长记忆/...`
+- 新结构：
+  - `/Users/redcreen/Project/context-assembly-claw/...`
+  - 项目内 memory/workspace 统一使用 `workspace/`
+
+这轮处理的范围是：
+
+- active tests
+- eval cases / golden cases
+- active scripts
+
+明确没有动的范围：
+
+- 历史报告 / 历史快照类文档
+- 这些内容允许继续保留旧路径，只作为历史记录存在
+
+具体收掉的包括：
+
+- `evals/golden-cases.json`
+- `test/engine.test.js`
+- `test/assembly.test.js`
+- `test/retrieval.test.js`
+- `test/scoring.test.js`
+- `test/conversation-memory.test.js`
+- `scripts/eval-memory-search-params.js`
+
+结果：
+
+- active 代码与测试层已经不再残留旧的 `长记忆/` 路径
+- `rg` 扫描 active 维护面时，旧路径命中为 `0`
+- 相关测试：
+  - `assembly|engine|retrieval|scoring|conversation-memory`
+  - `20/20` 通过
+
+这轮的意义是：
+
+- 迁移不再只是“仓库目录搬了”
+- 而是日常开发、评测、测试、脚本这层也真正完成了路径收口
+
+---
+
+## 2026-04-10 - Added install verification stable rule
+
+这轮继续做的是“稳定规则扩面”，重点不是再补 memory-search watchlist，而是把一个高频用户问题正式收进 stable card：
+
+- `安装后怎么确认插件已经生效`
+
+这次增加的内容：
+
+- 新 intent：
+  - `installVerify`
+- 新 stable card：
+  - `安装验证步骤`
+  - 内容是：
+    - `openclaw plugins list`
+    - `openclaw memory status --json`
+
+同时还顺手把相邻的两条项目意图重新拆开，避免互相串味：
+
+- `release-install-rule`
+  - 继续由 `README.md` 的发布规则卡负责
+- `install-verify-rule`
+  - 由 `configuration.md` 的验证步骤卡负责
+
+验证结果：
+
+- targeted：
+  - `retrieval|retrieval-policy`
+  - `20/20` 通过
+- 单条 smoke：
+  - `普通用户应该安装稳定版还是 main`
+    - top1: `README.md`
+  - `安装后怎么确认插件已经生效`
+    - top1: `configuration.md`
+- full smoke：
+  - `22/22`
+
+这轮的意义是：
+
+- 安装体验相关的问题，不再只靠 README 段落
+- 已经进入 stable retrieval / smoke 保护面
+
+---
+
+## 2026-04-10 - Formalized workspace notes admissibility for stable cards
+
+这轮继续做的是第二条主线：给 `workspace/notes` 建更明确的 stable-card 准入边界，避免 notes 目录以后慢慢变成新的噪音池。
+
+这次落地的规则是：
+
+- 只有 `workspace/notes/*.md` 才会进入这层判断
+- note 至少要有：
+  - `## 一句话结论`
+  - `## 适用场景`
+- 只有带稳定概念/项目分工信号的 notes 才允许进入 stable card
+- 明确排除两类：
+  - 历史 roadmap / 阶段推进类 notes
+  - 已被 canonical config 文档覆盖的配置说明 notes
+
+代码改动：
+
+- 在 `src/retrieval.js` 新增：
+  - `classifyWorkspaceNoteCardEligibility()`
+- `readPluginStableProjectCards()` 现在读取 `workspace/notes/*.md` 前，会先跑这层 eligibility 判断
+
+当前明确结果：
+
+- `workspace/notes/openclaw-memory-vs-lossless.md`
+  - 允许进入 stable card
+- `workspace/notes/context-assembly-claw-roadmap.md`
+  - 不进入 stable card
+- `workspace/notes/memory-context-claw-config.md`
+  - 不进入 stable card
+
+验证：
+
+- `npm test -- --test-name-pattern 'retrieval'`
+  - `20/20` 通过
+- `npm run smoke -- "为什么已经有长期记忆了，还需要 Lossless"`
+  - top1 仍然是 `workspace/notes/openclaw-memory-vs-lossless.md`
+
+这轮的意义是：
+
+- `workspace/notes` 不再只是“先全接进来再看会不会出问题”
+- 而是开始有显式准入规则
+- 后面新增 notes 时，也更容易判断它应不应该进入 stable card 池
+
+---
+
+## 2026-04-10 - Added workspace-notes and pending placement stable rules
+
+这轮继续做的是第三条主线：再扩一批“已经有文档依据，但还没进入 smoke 保护面”的稳定规则。
+
+这次选的两条是：
+
+- `workspace-notes-rule`
+  - 问题：`workspace/notes 里的笔记什么时候能进入 stable card`
+- `pending-rule-smoke`
+  - 问题：`待确认信息应该放哪里`
+
+原因很直接：
+
+- 这两条都已经有明确的 canonical 文档依据
+- 但之前还只是“文档里写了”，没有正式进入稳定 retrieval / smoke 保护面
+
+### 这轮做了什么
+
+1. 在 `README.md` 的 project card 里新增：
+
+- `workspace notes 准入规则`
+
+事实句收成：
+
+- `workspace/notes 里只有带明确总结和适用场景、并且表达稳定概念或项目分工的 notes，才适合进入 stable card；历史 roadmap 和临时配置说明应只保留为背景 notes。`
+
+2. 在 `formal-memory-policy.md` 的 policy card 里新增：
+
+- `待确认信息准入规则`
+
+事实句收成：
+
+- `待确认信息应该先进入 pending，不得默认写入 MEMORY.md 或 memory/YYYY-MM-DD.md。`
+
+3. 为这两条加了独立 intent / weighting
+
+新增：
+
+- `workspaceNotesRule`
+- `pendingRule`
+
+并把它们接进：
+
+- `retrieval-policy`
+- `retrieval scoring`
+- `assembly stable-doc filtering`
+
+4. 把它们正式加进 `smoke-cases.json`
+
+新增 case：
+
+- `workspace-notes-rule`
+- `pending-rule-smoke`
+
+### 中间出现的问题
+
+第一次加完之后，`workspace notes 准入规则` 这张新卡出现了“反串位”：
+
+- 它开始抢 `workspace-layout-rule` 的 top1
+- 也会抢 `project-positioning-smoke` 的 top1
+
+根因是：
+
+- 这张卡也来自 `README.md`
+- 并且含有大量 `workspace / project / notes` 关键词
+
+所以我又补了一层更明确的反串位惩罚：
+
+- 当 query 是 `workspaceStructure` 或 `project`
+- 且当前卡是 `workspace-notes` 类型
+- 就给它轻量降权
+
+这样它只在自己的槽位里强势，不去抢目录结构卡和项目定位卡。
+
+### 最终验证
+
+1. targeted tests
+
+```bash
+npm test -- --test-name-pattern 'retrieval|retrieval-policy|assembly'
+```
+
+结果：
+
+- `20/20` 通过
+
+2. 单条 smoke
+
+```bash
+npm run smoke -- "workspace/notes 里的笔记什么时候能进入 stable card"
+```
+
+结果：
+
+- top1: `README.md`
+- snippet 正确命中 notes 准入规则
+
+3. 单条 smoke
+
+```bash
+npm run smoke -- "待确认信息应该放哪里"
+```
+
+结果：
+
+- top1: `formal-memory-policy.md`
+- snippet：
+  - `待确认信息应该先进入 pending，不得默认写入 MEMORY.md 或 memory/YYYY-MM-DD.md。`
+
+4. full smoke
+
+```bash
+npm run smoke:eval
+```
+
+结果：
+
+- `24/24` 全通过
+
+5. 运行副本
+
+```bash
+npm run deploy:local
+```
+
+结果：
+
+- 已同步到本机 OpenClaw 副本
+
+### 这轮的意义
+
+- `workspace notes` 的边界不再只是“准入规则”
+- 它现在已经进入 smoke 保护面
+- `pending` 的准入原则也不再只是 policy 文本，而是正式变成可检索、可回归验证的 stable rule
+
+---
+
+## 2026-04-10 - Cleaned final selected context for stable fact intents
+
+这轮继续做的是“最终给模型看的 recalled context 更干净”，重点不再是补新的规则，而是把已经稳定的事实类 query 再收一层 supporting-candidate 清洁化。
+
+### 触发原因
+
+前面的 retrieval / top1 已经没问题了，但 final selected 里仍然有一个不太舒服的现象：
+
+- `我爱吃什么`
+  - 会带 `configuration.md`
+- `你怎么称呼我`
+  - 会带 `configuration.md` / `formal-memory-policy.md`
+- `我的时区是什么`
+  - 会带 `configuration.md` / `formal-memory-policy.md`
+
+这些都不是“答错”，但它们会让最终 recalled context 看起来偏脏。
+
+### 这轮做了什么
+
+1. 在 `assembly.js` 里新增 stable fact intent 分类
+
+新增的槽位包括：
+
+- `preference`
+- `identity`
+- `timezone`
+- `style`
+- `reminder`
+- `execution`
+- `toolRole`
+- `agentRole`
+- `mainBoundary`
+- `mainNegativeBoundary`
+- `statusRule`
+
+2. 在 assemble 选择层增加 stable fact supporting filter
+
+不再只对 stable doc intents 做 supporting candidates 清洗，也对 stable fact intents 做：
+
+- 如果当前 query 已经是稳定事实问题
+- 并且前面已经拿到了 cardArtifact
+- 最终 selected 只保留真正属于当前槽位的 supporting cards
+
+3. 修正一个误命中根因
+
+第一次实现时，我在 stable fact filter 里直接用 `memory.md` 文本去匹配整段 haystack。
+
+这会导致：
+
+- `formal-memory-policy.md` 的 snippet 里只要出现 `MEMORY.md`
+- 就会被误判成“stable memory fact source”
+
+后面我把它收成：
+
+- 用真实路径判断是否来自 stable memory
+- 事实文本再单独按槽位关键词判断
+
+这样 `formal-memory-policy.md` 不会再因为写了 `MEMORY.md` 这个词而误命中 identity / timezone 等槽位。
+
+### 验证
+
+1. targeted tests
+
+```bash
+npm test -- --test-name-pattern 'assembly'
+```
+
+结果：
+
+- `20/20` 通过
+
+2. 单条 smoke
+
+```bash
+node scripts/smoke-assemble.js 我爱吃什么
+```
+
+结果：
+
+- selected 现在只剩：
+  - `MEMORY.md`
+
+3. 单条 smoke
+
+```bash
+node scripts/smoke-assemble.js 你怎么称呼我
+```
+
+结果：
+
+- selected 现在只剩：
+  - `MEMORY.md`
+
+4. 单条 smoke
+
+```bash
+node scripts/smoke-assemble.js 我的时区是什么
+```
+
+结果：
+
+- selected 现在只剩：
+  - `MEMORY.md`
+
+5. 单条 smoke
+
+```bash
+node scripts/smoke-assemble.js OpenViking 是做什么的
+```
+
+结果：
+
+- selected 现在只剩：
+  - `MEMORY.md`
+
+6. full smoke
+
+```bash
+npm run smoke:eval
+```
+
+结果：
+
+- `24/24` 全通过
+
+### 这轮的意义
+
+- “top1 对了”进一步升级成“最终 recalled context 也更像人类会想给模型看的上下文”
+- user-fact / stable fact 这条线现在已经明显比之前干净
+- 接下来如果还要继续做清洁化，更值得继续打的是：
+  - `project / workspace / rule` 类 supporting docs
+  - 而不是再回头补稳定事实类 query
+
+## 2026-04-10 - Split project navigation from generic project positioning
+
+这轮继续把 `project / workspace / rule` 这条线往前收了一步，重点是把“项目文档导航”从泛 `project` 意图里拆出来。
+
+### 做了什么
+
+1. 新增 `projectNavigation` stable intent
+
+- 覆盖：
+  - `项目路线图应该看哪个文档`
+  - `roadmap 看哪个文档`
+  - `项目主文档/总入口看哪里`
+
+2. 新增 stable card
+
+- title: `项目文档导航`
+- fact: `项目总 roadmap 看 project-roadmap.md；memory search 专项 roadmap 看 reports/memory-search-roadmap.md。`
+
+3. 收紧 assemble supporting 选择
+
+- `projectNavigation` 现在只保留真正的项目导航类 stable card
+- 不再把 session transcript 或无关 policy 混进最终 `selected`
+- `project-positioning` 也进一步收纯：
+  - 最终 `selected` 现在只剩 `README.md` 的项目定位卡
+  - 不再继续带 `Lossless` note 尾巴
+
+### 验证
+
+1. 单条 smoke
+
+```bash
+node scripts/smoke-assemble.js "项目路线图应该看哪个文档"
+```
+
+结果：
+
+- top1: `project-roadmap.md`
+- selected 只剩：
+  - `project-roadmap.md`
+
+2. 单条 smoke
+
+```bash
+node scripts/smoke-assemble.js "这个项目主要解决什么问题"
+```
+
+结果：
+
+- selected 只剩：
+  - `README.md`
+
+3. full smoke
+
+```bash
+npm run smoke:eval
+```
+
+结果：
+
+- `25/25` 全通过
+
+### 这轮的意义
+
+- 项目文档导航题不再掉进 session 噪音
+- 项目定位题和概念解释题进一步解耦
+- `project / workspace / rule` 这条 supporting context 清洁化又往前走了一步
+
+## 2026-04-11 - Cleaned mixed-mode family and remaining project/supporting tails
+
+这轮继续做的不是扩更多 card，而是把剩下几条“top1 已经对了，但 supporting context 还不够纯”的尾巴收掉。
+
+### 做了什么
+
+1. mixed-mode 家庭/生日问题做了槽位过滤
+
+- 把 mixed-mode 进一步拆成：
+  - `selfBirthday`
+  - `daughter`
+  - `son`
+  - `children`
+- 这样：
+  - `我生日是什么时候`
+  - `我女儿叫什么，生日是哪天，现在几年级`
+  - `我的孩子情况是什么`
+  这类问题不会再把“身份证登记年份说明”混进最终 selected
+
+2. `workspaceStructure` 改成单卡优先
+
+- `长期记忆目录规则是什么`
+  现在最终只保留：
+  - `README.md` 的 workspace 结构卡
+- 不再额外带 formal policy 解释卡
+
+3. `lossless` 改成单卡优先
+
+- `为什么已经有长期记忆了，还需要 Lossless`
+  现在最终只保留：
+  - `workspace/notes/openclaw-memory-vs-lossless.md`
+- 不再额外带 `README.md` 的项目定位卡
+
+### 验证
+
+1. 单条 smoke
+
+```bash
+node scripts/smoke-assemble.js "我生日是什么时候"
+node scripts/smoke-assemble.js "我女儿叫什么，生日是哪天，现在几年级"
+node scripts/smoke-assemble.js "我的孩子情况是什么"
+node scripts/smoke-assemble.js "长期记忆目录规则是什么"
+node scripts/smoke-assemble.js "为什么已经有长期记忆了，还需要 Lossless"
+```
+
+结果：
+
+- 都已经收成更纯的单主题 selected
+
+2. full smoke
+
+```bash
+npm run smoke:eval
+```
+
+结果：
+
+- `25/25` 全通过
+
+### 这轮的意义
+
+- mixed-mode 终于不再“答对但带错尾巴”
+- `workspace / lossless` 这两条最后的明显 supporting 尾巴也已经收掉
+- 当前 recalled context 比之前更接近“每类问题只给模型看最相关的一两张卡”
+
+## 2026-04-11 - Added selection-quality metrics to memory-search governance
+
+这轮没有再改 retrieval 主逻辑，而是把治理层补成了“能看上下文纯度”的状态。
+
+### 做了什么
+
+1. 给 `eval:memory-search:cases` 增加 selection quality
+
+- 每条 case 现在都会额外产出：
+  - `selectedCount`
+  - `singleCard`
+  - `multiCard`
+  - `noisySupporting`
+  - `unexpectedSupportingCount`
+
+2. 给 `memory-search governance` 补 summary / delta / report 指标
+
+- summary 现在新增：
+  - `pluginSingleCard`
+  - `pluginMultiCard`
+  - `pluginNoisySupporting`
+  - `pluginUnexpectedSupportingTotal`
+- delta 里也同步加入了这些指标，方便看“是不是越来越纯”
+
+3. 重跑治理报告
+
+- 最新治理报告：
+  - `reports/memory-search-governance-2026-04-11.md`
+  - `reports/memory-search-governance-2026-04-11.json`
+  - `reports/memory-search-governance-latest.json`
+
+### 验证
+
+1. 治理相关测试
+
+```bash
+npm test -- --test-name-pattern 'memory-search-governance|governance-cycle'
+```
+
+结果：
+
+- `20/20` 通过
+
+2. 最新治理 summary
+
+- `pluginSignalHits = 6/6`
+- `pluginSourceHits = 6/6`
+- `pluginFailures = 0`
+- `pluginSingleCard = 5/6`
+- `pluginMultiCard = 1/6`
+- `pluginNoisySupporting = 0/6`
+- `pluginUnexpectedSupportingTotal = 0`
+
+### 这轮的意义
+
+- 现在治理层终于不只是看“答没答对”
+- 还能看“最终给模型的 recalled context 干不干净”
+- 后面继续做清洁化时，可以直接用这些指标看趋势，而不是只靠肉眼比对 smoke 输出
+
+## 2026-04-11 - Reduced short token memory-search case to a single stable card
+
+这轮继续顺着治理指标做，不再泛泛地“看起来更干净”，而是直接把当前唯一的 `multi-card` case 打掉。
+
+### 做了什么
+
+1. 给 assembly 增加了超短事实查找过滤
+
+- 新增了一个很克制的短词分支：
+  - 只对超短、非文档型 query 生效
+  - 只有当前 top 区域已经出现 direct stable fact card 时才启用
+- 这样 `牛排 刘超` 这种 query 不会再把：
+  - `configuration.md`
+  - `formal-memory-policy.md`
+  一起塞进最终 selected
+
+2. 给 assembly 补了对应测试
+
+- 新增了 `short token lookups` 的单卡测试
+
+3. 重跑治理报告
+
+- 最新 summary 已变成：
+  - `pluginSingleCard = 6/6`
+  - `pluginMultiCard = 0/6`
+  - `pluginNoisySupporting = 0/6`
+  - `pluginUnexpectedSupportingTotal = 0`
+
+### 验证
+
+1. assembly / governance 测试
+
+```bash
+npm test -- --test-name-pattern 'assembly|memory-search-governance'
+```
+
+结果：
+
+- `20/20` 通过
+
+2. 单条 smoke
+
+```bash
+node scripts/smoke-assemble.js "牛排 刘超"
+```
+
+结果：
+
+- `selected` 现在只剩：
+  - `MEMORY.md`
+
+3. full smoke
+
+```bash
+npm run smoke:eval
+```
+
+结果：
+
+- `25/25` 全通过
+
+### 这轮的意义
+
+- memory-search 治理里的 `single-card` 指标终于到 `6/6`
+- 当前这批专项 case 不只是“答对”
+- 而且已经全部收成“单卡或无噪音 supporting”的状态
+
+## 2026-04-11 - Added first-pass smoke promotion rule tooling
+
+这轮继续往治理产品化走，把“什么时候该从 memory-search case 升进 smoke”收成了一个固定入口。
+
+### 做了什么
+
+1. 新增 smoke promotion helper
+
+- 新增：
+  - `src/smoke-promotion.js`
+  - `scripts/eval-smoke-promotion.js`
+  - `test/smoke-promotion.test.js`
+- 规则目前很克制：
+  - `expectedSignalsHit = true`
+  - `expectedSourceHit = true`
+  - `fastPathLikely = true`
+  - `singleCard = true`
+  - `noisySupporting = false`
+
+2. 增加命令入口
+
+```bash
+npm run eval:smoke-promotion
+```
+
+它会把：
+
+- `reports/memory-search-governance-latest.json`
+- `evals/smoke-cases.json`
+
+做交叉比对，然后输出：
+
+- 已经在 smoke 里的 case
+- 满足 `stable-single-card`、可人工复核的新增候选
+- 仍不够稳定的 pending case
+
+### 当前结果
+
+```bash
+npm run eval:smoke-promotion
+```
+
+结果：
+
+- `alreadyInSmoke = 4`
+- `eligibleNewSuggestions = 2`
+- `pending = 0`
+
+当前被标成“可考虑升格”的是：
+
+- `short-chinese-token`
+- `session-memory-source-competition`
+
+这里我没有自动把它们写进 smoke，因为这一步仍然需要人工判断：
+
+- query 是否足够自然
+- 是否适合作为长期用户向保护面
+
+### 验证
+
+```bash
+npm test -- --test-name-pattern 'smoke-promotion|memory-search-governance'
+```
+
+结果：
+
+- `21/21` 通过
+
+### 这轮的意义
+
+- “case 升级规则”不再只写在文档里
+- 现在已经有了一个可以直接跑的第一版建议工具
+- 后面继续扩 stable fact / stable rule 时，可以更低成本地判断“是不是该进 smoke”

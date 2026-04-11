@@ -353,7 +353,7 @@ test("renderConversationMemoryReport includes both long-term and daily sections"
     }]
   }, {
     agentId: "main",
-    workspaceRoot: "/Users/redcreen/Project/长记忆"
+    workspaceRoot: "/Users/redcreen/Project/context-assembly-claw/workspace"
   });
 
   assert.match(markdown, /建议进入 MEMORY\.md/);

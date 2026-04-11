@@ -95,7 +95,8 @@
     "name": "workspace-layering",
     "query": "长期记忆目录规则是什么",
     "expectedSelectedPathsAny": [
-      "../../Project/长记忆/memory/2026-04-04.md",
+      "README.md",
+      "workspace/MEMORY.md",
       "MEMORY.md"
     ],
     "category": "rules"
@@ -108,6 +109,7 @@
       "长期记忆",
       "context"
     ],
+    "expectedTopSource": "cardArtifact",
     "category": "concepts"
   },
   {
@@ -187,6 +189,59 @@
     "category": "project"
   },
   {
+    "name": "release-install-rule",
+    "query": "普通用户应该安装稳定版还是 main",
+    "expectedSelectedAny": [
+      "release tag",
+      "main"
+    ],
+    "expectedTopSource": "cardArtifact",
+    "category": "project"
+  },
+  {
+    "name": "install-verify-rule",
+    "query": "安装后怎么确认插件已经生效",
+    "expectedSelectedAny": [
+      "openclaw plugins list",
+      "memory-context-claw",
+      "openclaw memory status --json"
+    ],
+    "expectedTopSource": "cardArtifact",
+    "category": "project"
+  },
+  {
+    "name": "workspace-layout-rule",
+    "query": "这个项目的内置 workspace 目录应该怎么组织",
+    "expectedSelectedAny": [
+      "workspace/MEMORY.md",
+      "workspace/memory/",
+      "workspace/notes/"
+    ],
+    "expectedTopSource": "cardArtifact",
+    "category": "project"
+  },
+  {
+    "name": "project-roadmap-nav",
+    "query": "项目路线图应该看哪个文档",
+    "expectedSelectedAny": [
+      "project-roadmap.md",
+      "memory-search-roadmap.md"
+    ],
+    "expectedTopSource": "cardArtifact",
+    "category": "project"
+  },
+  {
+    "name": "workspace-notes-rule",
+    "query": "workspace/notes 里的笔记什么时候能进入 stable card",
+    "expectedSelectedAny": [
+      "stable card",
+      "历史 roadmap",
+      "背景 notes"
+    ],
+    "expectedTopSource": "cardArtifact",
+    "category": "project"
+  },
+  {
     "name": "project-positioning-smoke",
     "query": "这个项目主要解决什么问题",
     "expectedSelectedAny": [
@@ -195,5 +250,16 @@
     ],
     "expectedTopSource": "cardArtifact",
     "category": "project"
+  },
+  {
+    "name": "pending-rule-smoke",
+    "query": "待确认信息应该放哪里",
+    "expectedSelectedAny": [
+      "pending",
+      "不得默认写入",
+      "memory/YYYY-MM-DD.md"
+    ],
+    "expectedTopSource": "cardArtifact",
+    "category": "rules"
   }
 ]

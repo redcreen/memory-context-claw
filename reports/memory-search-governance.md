@@ -105,9 +105,24 @@ flowchart LR
 - `pluginSignalHits`
 - `pluginSourceHits`
 - `pluginFastPathLikely`
+- `pluginSingleCard`
+- `pluginMultiCard`
+- `pluginNoisySupporting`
+- `pluginUnexpectedSupportingTotal`
 - `builtinFailures`
 - `pluginFailures`
 - `watchlist`
+
+补充解释：
+
+- `pluginSingleCard`
+  - 最终 selected 只剩 1 张稳定卡，适合观察“是否已经收成单主题”
+- `pluginMultiCard`
+  - 最终 selected 仍然有多张卡，不一定是坏事，但说明还不是最纯状态
+- `pluginNoisySupporting`
+  - 最终 selected 里仍混入了超出预期 source 的 supporting candidates
+- `pluginUnexpectedSupportingTotal`
+  - 超预期 supporting candidates 的总数量，适合看“脏尾巴”是不是在下降
 
 ---
 
@@ -138,6 +153,24 @@ flowchart LR
 - top1 行为应该高度确定
 
 就适合升进 smoke。
+
+为了把这条规则收成固定入口，现在新增了：
+
+```bash
+npm run eval:smoke-promotion
+```
+
+它会基于最新 `memory-search-governance-latest.json` 和当前 `evals/smoke-cases.json` 给出：
+
+- 已经在 smoke 里的 case
+- 满足“stable-single-card”但还没进 smoke 的候选
+- 还不够稳定、暂不建议升级的 case
+
+注意：
+
+- 这是**升级建议工具**
+- 不是自动升格器
+- 最终是否进入 smoke，仍然要人工看 query 是否足够高频、语义是否自然、是否适合成为长期保护面
 
 ### 升进 perf
 

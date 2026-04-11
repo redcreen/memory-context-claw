@@ -7,7 +7,7 @@ import { promisify } from "node:util";
 const execFileAsync = promisify(execFile);
 
 const CONFIG_PATH = "/Users/redcreen/.openclaw/openclaw.json";
-const REPORT_PATH = "/Users/redcreen/Project/长记忆/context-assembly-claw/reports/memory-search-param-eval.md";
+const REPORT_PATH = "/Users/redcreen/Project/context-assembly-claw/reports/memory-search-param-eval.md";
 const AGENT_ID = "main";
 const QUERY = "用户爱吃什么 饮食 喜欢吃 刘超 超哥";
 
@@ -186,7 +186,7 @@ async function runSearch({ maxResults, minScore }) {
     "--query",
     QUERY
   ], {
-    cwd: "/Users/redcreen/Project/长记忆",
+    cwd: "/Users/redcreen/Project",
     maxBuffer: 1024 * 1024 * 8,
     timeout: 30000
   });

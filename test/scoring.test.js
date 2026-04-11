@@ -13,7 +13,7 @@ test("scoreCandidates prefers MEMORY.md over generic workspace docs when relevan
       source: "memory"
     },
     {
-      path: "../../Project/长记忆/openclaw-memory-vs-lossless.md",
+      path: "workspace/notes/openclaw-memory-vs-lossless.md",
       startLine: 1,
       endLine: 20,
       score: 0.46,
@@ -38,7 +38,7 @@ test("scoreCandidates prefers MEMORY.md over generic workspace docs when relevan
 
 test("scoreCandidates boosts recent daily memory", () => {
   const recent = {
-    path: "../../Project/长记忆/memory/2026-04-04.md",
+    path: "workspace/memory/2026-04-04.md",
     startLine: 1,
     endLine: 10,
     score: 0.38,
@@ -46,7 +46,7 @@ test("scoreCandidates boosts recent daily memory", () => {
     source: "memory"
   };
   const old = {
-    path: "../../Project/长记忆/memory/2026-01-01.md",
+    path: "workspace/memory/2026-01-01.md",
     startLine: 1,
     endLine: 10,
     score: 0.38,
@@ -79,7 +79,7 @@ test("scoreCandidates prefers config docs for config-intent prompts", () => {
       source: "memory"
     },
     {
-      path: "../../Project/长记忆/memory-context-claw-config.md",
+      path: "workspace/notes/memory-context-claw-config.md",
       startLine: 1,
       endLine: 30,
       score: 0.43,
@@ -100,7 +100,7 @@ test("scoreCandidates prefers config docs for config-intent prompts", () => {
     recency: 0.07
   });
 
-  assert.equal(ranked[0].path, "../../Project/长记忆/memory-context-claw-config.md");
+  assert.equal(ranked[0].path, "workspace/notes/memory-context-claw-config.md");
 });
 
 test("scoreCandidates prefers recent session memory over workspace docs when relevance is close", () => {
@@ -114,7 +114,7 @@ test("scoreCandidates prefers recent session memory over workspace docs when rel
       source: "sessions"
     },
     {
-      path: "../../Project/长记忆/openclaw-memory-vs-lossless.md",
+      path: "workspace/notes/openclaw-memory-vs-lossless.md",
       startLine: 1,
       endLine: 20,
       score: 0.45,
@@ -734,6 +734,14 @@ test("scoreCandidates prefers card artifacts for project prompts", () => {
 test("scoreCandidates prefers provider-role config explanations for provider prompts", () => {
   const candidates = [
     {
+      path: "sessions/live-session.jsonl",
+      source: "sessions",
+      score: 0.93,
+      snippet: "Assistant: memorySearch.provider 是做什么的？它决定长期记忆检索使用哪个 embedding / memory_search provider，不影响主聊天模型。",
+      startLine: 1,
+      endLine: 10
+    },
+    {
       path: "MEMORY.md",
       source: "cardArtifact",
       score: 0.88,
@@ -765,4 +773,40 @@ test("scoreCandidates prefers provider-role config explanations for provider pro
 
   assert.equal(ranked[0].path, "configuration.md");
   assert.match(ranked[0].snippet, /embedding|memory_search/);
+});
+
+test("scoreCandidates suppresses session noise for lossless concept prompts when stable note cards exist", () => {
+  const candidates = [
+    {
+      path: "sessions/live-session.jsonl",
+      source: "sessions",
+      score: 0.94,
+      snippet: "Assistant: Lossless 更像上下文插件，长期记忆负责保存和检索。",
+      startLine: 1,
+      endLine: 12
+    },
+    {
+      path: "workspace/notes/openclaw-memory-vs-lossless.md",
+      source: "cardArtifact",
+      score: 0.74,
+      snippet: "长期记忆负责存和找；Lossless / context engine 负责把当前这一轮最该看的内容更好地送进模型。",
+      startLine: 1,
+      endLine: 1
+    }
+  ];
+
+  const ranked = scoreCandidates(candidates, "为什么已经有长期记忆了，还需要 Lossless", {
+    retrievalScore: 0.55,
+    cardArtifact: 0.16,
+    memoryFile: 0.18,
+    dailyMemory: 0.12,
+    sessionRecent: 0.1,
+    workspaceDoc: 0.08,
+    summarySection: 0.08,
+    keywordOverlap: 0.12,
+    recency: 0.07
+  });
+
+  assert.equal(ranked[0].path, "workspace/notes/openclaw-memory-vs-lossless.md");
+  assert.equal(ranked[0].source, "cardArtifact");
 });

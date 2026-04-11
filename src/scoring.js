@@ -360,6 +360,13 @@ function extractPreferenceSlotValue(text) {
 
 export function scoreCandidates(candidates, prompt, weights, now = new Date()) {
   const preferenceIntent = isPreferenceIntent(prompt);
+  const configIntent = isConfigIntent(prompt);
+  const providerIntent = isProviderIntent(prompt);
+  const ruleIntent = isRuleIntent(prompt);
+  const projectIntent = isProjectIntent(prompt);
+  const losslessIntent = /lossless|上下文插件|context engine|长期记忆.*区别|为什么已经有长期记忆了/i.test(
+    String(prompt || "").toLowerCase()
+  );
   const promptKeywords = buildKeywordSet(prompt);
   const maxRetrievalScore = Math.max(1e-9, ...candidates.map((item) => Number(item.score || 0)));
 
@@ -378,6 +385,16 @@ export function scoreCandidates(candidates, prompt, weights, now = new Date()) {
         : scoreRecencyFromIsoDate(toIsoDateFromMemoryPath(canonicalPath), now);
       const intentBoost = computeIntentBoost(prompt, canonicalPath, snippet);
       const sessionBoost = pathKind === "sessionMemory" ? 1 : 0;
+      const sessionIntentPenalty =
+        pathKind !== "sessionMemory"
+          ? 0
+          : providerIntent
+            ? (weights.providerSessionPenalty ?? 0.34)
+            : (configIntent || ruleIntent)
+              ? (weights.ruleConfigSessionPenalty ?? 0.24)
+              : (projectIntent || losslessIntent)
+                ? (weights.projectConceptSessionPenalty ?? 0.2)
+                : 0;
 
       const weightedScore =
         retrievalScore * weights.retrievalScore +
@@ -389,7 +406,8 @@ export function scoreCandidates(candidates, prompt, weights, now = new Date()) {
         (pathKind === "cardArtifact" ? (weights.cardArtifact ?? 0) : 0) +
         (pathKind === "memoryFile" ? weights.memoryFile : 0) +
         (pathKind === "dailyMemory" ? weights.dailyMemory : 0) +
-        (pathKind === "workspaceDoc" ? weights.workspaceDoc : 0);
+        (pathKind === "workspaceDoc" ? weights.workspaceDoc : 0) -
+        sessionIntentPenalty;
 
       return {
         id: `cand-${index + 1}`,
@@ -403,6 +421,7 @@ export function scoreCandidates(candidates, prompt, weights, now = new Date()) {
         summaryBoost,
         recency,
         sessionBoost,
+        sessionIntentPenalty,
         intentBoost,
         weightedScore,
         snippet,

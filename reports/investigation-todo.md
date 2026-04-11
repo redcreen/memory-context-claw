@@ -122,6 +122,115 @@
 
 ## Now
 
+### 0. Memory Search v1 watchlist 已清空，进入下一轮增量优化
+
+当前状态：
+
+- `memory-search governance` 已达到：
+  - `pluginSignalHits = 6/6`
+  - `pluginSourceHits = 6/6`
+  - `pluginFailures = 0`
+  - `watchlist = []`
+- `pluginSingleCard = 6/6`
+- `pluginMultiCard = 0/6`
+- `pluginNoisySupporting = 0/6`
+- `pluginUnexpectedSupportingTotal = 0`
+- `full smoke = 25/25`
+
+当前判断：
+
+- 第一轮 watchlist 收口已完成
+- 后续不再围绕旧的 3 条 case 反复打转
+- 下一步应转到：
+  - 新稳定事实 / 规则继续扩面
+  - 迁移后的旧路径 / 旧 case 清理
+  - 治理基线继续保持全绿
+  - `workspace/notes/*.md` 这类项目背景笔记继续按“高信号才出 stable card”原则扩面，而不是平铺所有笔记
+  - 把 `workspace/notes` 的“高信号”定义继续保持为显式规则，而不是靠文件名猜测
+  - `provider-role` 这类配置/概念 query 虽然 top1 已稳定，但 supporting candidates 里仍可能混入长 session 片段，后续继续做噪音压制
+
+补充状态：
+
+- 安装体验相关规则已继续扩面：
+  - `release-install-rule`
+  - `install-verify-rule`
+- stable 规则扩面已继续收口：
+  - `workspace-notes-rule`
+  - `pending-rule-smoke`
+- full smoke 已到 `25/25`
+- `lossless-understanding` 已稳定命中：
+  - `workspace/notes/openclaw-memory-vs-lossless.md`
+- `provider-role` 已进一步收口：
+  - top1 稳定是 `configuration.md`
+  - assemble selected 已不再带长 session transcript
+  - 最终 selected 现在只保留配置说明本身
+- 稳定 user-fact / stable-rule 槽位的 selected 已进一步收口：
+  - `我爱吃什么`
+  - `你怎么称呼我`
+  - `我的时区是什么`
+  - `OpenViking 是做什么的`
+  - 最终 selected 现在已不再夹带无关 `configuration.md` / `formal-memory-policy.md`
+- `workspace-layering` 已进一步收口：
+  - `长期记忆目录规则是什么` 现在会优先回到 `README.md` 的 workspace 结构卡
+  - 最终 selected 现在只保留目录结构卡
+- `project-positioning-smoke` 已进一步收口：
+  - 最终 selected 现在只保留 `README.md` 项目定位卡
+- mixed-mode 家庭 / 生日问题已进一步收口：
+  - `我生日是什么时候`
+  - `我女儿叫什么，生日是哪天，现在几年级`
+  - `我的孩子情况是什么`
+  - 最终 selected 已不再混入“身份证登记年份说明”卡
+- `memory-search governance` 现在已能看“上下文纯度”，不只看 pass/fail：
+  - `pluginSingleCard`
+  - `pluginMultiCard`
+  - `pluginNoisySupporting`
+  - `pluginUnexpectedSupportingTotal`
+- `short-chinese-token` 已进一步收口：
+  - `牛排 刘超` 现在最终 selected 只剩 `MEMORY.md`
+  - 这使得当前专项治理 summary 已到：
+    - `pluginSingleCard = 6/6`
+    - `pluginMultiCard = 0/6`
+- `case 升级规则` 已落地第一版工具：
+  - `npm run eval:smoke-promotion`
+  - 当前会给出“已在 smoke / 可考虑升格 / 继续留在专项治理池”三类建议
+- `workspace/notes` stable-card 准入规则已显式化：
+  - `一句话结论 + 适用场景` 是基础结构门槛
+  - `openclaw-memory-vs-lossless.md` 这类稳定概念 note 允许进入 stable card
+  - `context-assembly-claw-roadmap.md` 这类历史 roadmap note 不进入 stable card
+  - `memory-context-claw-config.md` 这类已被 canonical config 文档覆盖的 note 不进入 stable card
+- `workspace-notes-rule` 已正式进入 smoke：
+  - `workspace/notes 里的笔记什么时候能进入 stable card`
+  - top1 稳定是 `README.md`
+- `pending-rule-smoke` 已正式进入 smoke：
+  - `待确认信息应该放哪里`
+  - top1 稳定是 `formal-memory-policy.md`
+- 当前剩余更值得继续优化的 supporting-candidate 清洁化，主要集中在：
+  - `project / workspace / rule` 类问题
+  - 而不再是 `user-facts / stable facts` 类问题
+
+### 0.1 清理迁移后残留的旧路径与旧 case
+
+目标：
+
+- 把仓库从 `/Users/redcreen/Project/长记忆/...` 迁到 `/Users/redcreen/Project/context-assembly-claw` 之后留下的旧路径残留继续收干净
+
+重点：
+
+- smoke / golden / test fixture 里的旧路径
+- reports 里仍然指向旧工作区结构的描述
+- 让 `workspace/` 成为唯一默认心智模型
+
+产出：
+
+- 一轮路径清理 commit
+- smoke / golden / testsuite 与当前结构重新对齐
+
+当前状态：
+
+- active 维护面已完成
+- tests / evals / scripts 已不再残留旧的 `长记忆/` 路径
+- 后续只需要在新增 case / 新脚本时继续保持新结构，不再专门为这件事开一轮工程
+
 ### 1. 拆清宿主 builtin `memory_search` 的真实缺口
 
 目标：
@@ -202,6 +311,11 @@
   - `retrieval-policy.md`
   - `src/retrieval-policy.js`
   - `test/retrieval-policy.test.js`
+
+补充状态：
+
+- 第一轮 watchlist 已清空
+- 当前进入常规治理 + 增量 case 阶段
 
 ### 4. 继续升格稳定事实进主回归
 
@@ -575,3 +689,14 @@
 - 把主文档里的默认路径统一收敛到 `workspace/`
 - 评估 `workspace/notes/context-assembly-claw-roadmap.md` 是否应继续保留，还是归档为历史稿
 - 保持外层 `.obsidian` 暂不并入，除非后续明确要把个人知识库配置和项目绑定
+
+---
+
+## Current focus
+
+目前重点已经从“补更多 phase”切到：
+
+- 继续收干净 `project / workspace / rule` 类问题的最终 recalled context
+- 保持 `projectNavigation / projectPositioning / lossless / workspaceStructure / workspaceNotesRule` 这些相近意图彼此解耦
+- watchlist 继续保持空，不再让新的项目文档导航题掉回 session 噪音
+- 继续把 mixed-mode `birthday / daughter / son / children` 这类问题的最终 supporting context 保持在同槽位卡，不再回退到身份证年份说明

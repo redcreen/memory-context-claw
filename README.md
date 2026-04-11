@@ -75,6 +75,12 @@ Quick mental model:
 - `workspace/notes/*.md` = project or domain notes
 - this plugin = chooses what should matter most right now
 
+Notes rule of thumb:
+
+- not every file in `workspace/notes/` becomes a stable card source
+- only notes with clear summary/use-case structure and durable concept/project signals should be promoted
+- historical roadmaps, temporary config notes, and migration drafts should stay as notes only
+
 **1. Install**
 
 Recommended approach:
@@ -151,6 +157,11 @@ After installation, daily usage is simple:
 - keep daily notes in `workspace/memory/*.md`
 - keep project/reference docs in `workspace/notes/`
 - keep chatting with OpenClaw
+
+For `workspace/notes/`, use this boundary:
+
+- durable concept/project rationale notes can become stable card inputs
+- history docs, old roadmaps, and temporary config drafts should remain background notes
 
 You normally do not need special plugin commands.
 
@@ -353,6 +364,12 @@ Other name options:
 - `workspace/notes/*.md` = 项目或专题笔记
 - 这个插件 = 帮你决定“当前轮到底该优先带什么进去”
 
+关于 `workspace/notes/`，一个实用边界是：
+
+- 不是所有笔记都会进入 stable card
+- 只有带明确总结/适用场景结构、并且表达稳定项目概念/分工的笔记，才适合进入 stable card
+- 历史 roadmap、临时配置草稿、迁移记录这类内容应继续只作为 notes 保存
+
 **1. 安装方式**
 
 推荐做法：
@@ -428,6 +445,11 @@ workspace/
 - 日常过程记忆放进 `workspace/memory/*.md`
 - 项目资料和背景笔记放进 `workspace/notes/`
 - 正常继续和 OpenClaw 对话
+
+对 `workspace/notes/`，推荐这样理解：
+
+- 稳定概念/项目分工类笔记：可以作为 stable card 输入
+- 历史稿、旧 roadmap、临时配置说明：只保留为背景 notes，不进入 stable card
 
 大多数情况下，你不需要记特殊插件命令。
 

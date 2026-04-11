@@ -31,7 +31,7 @@ One-line summary:
 - Current engineering focus: `Memory Search`
 - Current regression baseline:
   - `critical smoke = 10/10`
-  - `full smoke = 19/19`
+  - `full smoke = 25/25`
 
 ### Memory Search Status
 
@@ -197,7 +197,7 @@ Done:
 Current baseline:
 
 - `critical smoke = 10/10`
-- `full smoke = 19/19`
+- `full smoke = 25/25`
 
 ### Phase 5: Governance Layer
 
@@ -241,6 +241,13 @@ Workstream documents:
   - incremental case expansion
   - policy tuning when needed
   - blueprint-driven execution
+- current governance quality:
+  - `pluginSignalHits = 6/6`
+  - `pluginSourceHits = 6/6`
+  - `pluginFailures = 0`
+  - `pluginSingleCard = 6/6`
+  - `pluginMultiCard = 0/6`
+  - `pluginNoisySupporting = 0/6`
 
 ## Related Architecture Docs
 
@@ -280,7 +287,7 @@ Workstream documents:
 - 当前工程主焦点：`Memory Search`
 - 当前回归基线：
   - `critical smoke = 10/10`
-  - `full smoke = 19/19`
+  - `full smoke = 25/25`
 
 ### Memory Search 状态
 
@@ -448,7 +455,7 @@ flowchart TB
 当前基线：
 
 - `critical smoke = 10/10`
-- `full smoke = 19/19`
+- `full smoke = 25/25`
 
 ### Phase 5: Governance Layer
 
@@ -492,6 +499,13 @@ flowchart TB
   - 增量 case 扩充
   - 按需 policy 调整
   - blueprint 驱动执行
+- 当前治理质量：
+  - `pluginSignalHits = 6/6`
+  - `pluginSourceHits = 6/6`
+  - `pluginFailures = 0`
+  - `pluginSingleCard = 6/6`
+  - `pluginMultiCard = 0/6`
+  - `pluginNoisySupporting = 0/6`
 
 ## 相关架构文档
 
@@ -508,6 +522,13 @@ flowchart TB
 2. Keep expanding stable facts / stable rules into regression protection
 3. Improve governance and reporting ergonomics
 4. Keep governance-cycle running without letting it dominate engineering focus
+
+### 接下来做什么
+
+1. 继续把新的稳定事实 / 稳定规则扩进 smoke
+2. 用 `eval:smoke-promotion` 作为第一版“是否可升进 smoke”的固定建议入口
+3. 让 `memory-search governance` 长期关注“上下文纯度”，不只关注 pass/fail
+4. 继续保持 `workspace/notes` 的准入规则显式化，避免 notes 重新变成噪音池
 
 ## Suggested GitHub Description
 

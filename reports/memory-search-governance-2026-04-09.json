@@ -1,0 +1,533 @@
+{
+  "generatedAt": "2026-04-09T16:15:23.247Z",
+  "summary": {
+    "cases": 6,
+    "builtinUnavailable": 0,
+    "builtinSignalHits": 4,
+    "builtinSourceHits": 0,
+    "pluginSignalHits": 6,
+    "pluginSourceHits": 6,
+    "pluginFastPathLikely": 6,
+    "builtinFailures": 6,
+    "pluginFailures": 0,
+    "watchlist": []
+  },
+  "baselineSummary": {
+    "preset": "safe-local",
+    "cases": 6,
+    "builtinSignalHits": 4,
+    "builtinSourceHits": 0,
+    "pluginSignalHits": 6,
+    "pluginSourceHits": 6,
+    "pluginFastPathLikely": 6
+  },
+  "comparison": {
+    "builtinUnavailableDelta": -6,
+    "builtinSignalHitsDelta": 4,
+    "builtinSourceHitsDelta": 0,
+    "pluginSignalHitsDelta": 0,
+    "pluginSourceHitsDelta": 0,
+    "pluginFastPathLikelyDelta": 0,
+    "builtinFailuresDelta": 6,
+    "pluginFailuresDelta": 0,
+    "watchlistAdded": [],
+    "watchlistResolved": [],
+    "watchlistPersisting": []
+  },
+  "results": [
+    {
+      "id": "food-preference-recall",
+      "category": "memory_search",
+      "query": "我爱吃什么",
+      "risk": "旧 sessions 中的面食偏好压过新事实",
+      "expectedSignals": [],
+      "expectedSources": [
+        "MEMORY.md",
+        "memory/%",
+        "cardArtifact"
+      ],
+      "builtin": {
+        "commandOk": true,
+        "error": null,
+        "totalResults": 20,
+        "expectedSignalsHit": true,
+        "expectedSourceHit": false,
+        "topSources": {
+          "sessions": 20
+        },
+        "topResults": [
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.747023764669343,
+            "snippet": "Assistant: [[reply_to_current]] 你女儿叫 **刘子妍**，生日是 **2014年12月29日**，现在上 **五年级**。\nUser: [Sun 2026-04-05 12:47 GMT+8] 我儿子叫什么，生日是哪天，现在几年级？\nAssistant: [[reply_to_current]] 你儿子叫 **刘子暄**，生日是 **2007年7月25日**，现在上 **高三**。\nUser: [Sun 2026-04-05 12:47 GMT+8] 我家孩子的情况你记住了吗？\nAssistant: [[reply_to_current]] 记住了。 - 女儿：**刘子妍**，**2014年12月29日**生，**五年级** - 儿子：**刘子暄**，**2007年7月25日**生，**高三**\nUser: [Sun 2026-04-05 12:54 GMT+8] 我的实际出生年份和身份证登记生日年份分别是什么？\nAssistant: [[reply_to_current]] 你**实际出生年份**是 **1983**，**身份证登记生日年份**是 **1982**。\nUser: [Sun 2026-04-05 13:01 GMT+8] 我爱吃什么？\nAssistant: [[reply_to_current]] 你爱吃**牛排**。\nUser: [Sun 2026-04-05 13:01 GMT+8] 你怎么称呼我？\nAssistant: [[reply_to_current]] 我一般叫你**超哥**。\nUser: [Sun 2026-04-"
+          },
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.7248513560015237,
+            "snippet": "User: [Sun 2026-04-05 13:16 GMT+8] 你怎么称呼我？\nAssistant: [[reply_to_current]] 我一般叫你**超哥**。\nUser: [Sun 2026-04-05 13:16 GMT+8] 我女儿叫什么，生日是哪天，现在几年级？\nAssistant: [[reply_to_current]] 你女儿叫 **刘子妍**，生日是 **2014年12月29日**，现在上 **五年级**。\nUser: [Sun 2026-04-05 13:16 GMT+8] 我儿子叫什么，生日是哪天，现在几年级？\nAssistant: [[reply_to_current]] 你儿子叫 **刘子暄**，生日是 **2007年7月25日**，现在上 **高三**。\nUser: [Sun 2026-04-05 13:16 GMT+8] 我家孩子的情况你记住了吗？\nAssistant: [[reply_to_current]] 记住了。 - 女儿：**刘子妍**，**2014年12月29日**生，**五年级** - 儿子：**刘子暄**，**2007年7月25日**生，**高三**\nUser: [Sun 2026-04-05 13:17 GMT+8] 我的实际出生年份和身份证登记生日年份分别是什么？\nAssistant: [[reply_to_current]] 你的**实际出生年份**是 **1983**，**身份证登记生日年份**是 **1982**。\nUser: [Sun 2026-04-05 13:23 GMT+8] 我爱吃什么？\nAssist"
+          },
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.7054453425126102,
+            "snippet": "User: [Sun 2026-04-05 13:42 GMT+8] 我爱吃什么？\nAssistant: [[reply_to_current]] 你爱吃**牛排**。\nUser: [Sun 2026-04-05 13:42 GMT+8] 你怎么称呼我？\nAssistant: [[reply_to_current]] 我一般叫你**超哥**。\nUser: [Sun 2026-04-05 13:43 GMT+8] 我爱吃什么？\nAssistant: [[reply_to_current]] 你爱吃**牛排**。\nUser: [Sun 2026-04-05 13:43 GMT+8] 你怎么称呼我？\nAssistant: [[reply_to_current]] 我一般叫你**超哥**。\nUser: [Sun 2026-04-05 14:05 GMT+8] 我爱吃什么？\nAssistant: [[reply_to_current]] 你爱吃**牛排**。\nUser: [Sun 2026-04-05 14:05 GMT+8] 你怎么称呼我？\nAssistant: [[reply_to_current]] 我一般叫你**超哥**。\nUser: [Sun 2026-04-05 14:07 GMT+8] 我爱吃什么？\nAssistant: [[reply_to_current]] 我这边更稳的记录是：你爱吃**面食**，像**面条、馒头**这些。\nUser: [Sun 2026-04-05 14:07 GMT+8] 你怎么称呼我？\nAssistant: [[reply_to_current]"
+          },
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.6724370483327515,
+            "snippet": "User: [Sun 2026-04-05 14:13 GMT+8] 你怎么称呼我？\nAssistant: [[reply_to_current]] 我一般叫你**超哥**。\nUser: [Sun 2026-04-05 14:14 GMT+8] 我爱吃什么？\nAssistant: [[reply_to_current]] 你爱吃**面食**，像**面条、馒头**这些。\nUser: [Sun 2026-04-05 14:14 GMT+8] 你怎么称呼我？\nAssistant: [[reply_to_current]] 我一般叫你**超哥**。\nUser: [Sun 2026-04-05 14:15 GMT+8] 我爱吃什么？\nAssistant: [[reply_to_current]] 我一般叫你**超哥**。\nUser: [Sun 2026-04-05 14:16 GMT+8] 你怎么称呼我？\nAssistant: [[reply_to_current]] 我一般叫你**超哥**。\nUser: [Sun 2026-04-05 14:16 GMT+8] 我爱吃什么？\nAssistant: [[reply_to_current]] 你爱吃**面食**，像**面条、馒头**这些。"
+          },
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.6552896797225658,
+            "snippet": "Assistant: [[reply_to_current]] 你爱吃**牛排**。\nUser: [Sun 2026-04-05 13:23 GMT+8] 你怎么称呼我？\nAssistant: [[reply_to_current]] 我一般叫你**超哥**。\nUser: [Sun 2026-04-05 13:25 GMT+8] 我爱吃什么？\nAssistant: [[reply_to_current]] 你爱吃**牛排**。\nUser: [Sun 2026-04-05 13:26 GMT+8] 你怎么称呼我？\nAssistant: [[reply_to_current]] 我一般叫你**超哥**。\nUser: [Sun 2026-04-05 13:28 GMT+8] 我爱吃什么？\nAssistant: [[reply_to_current]] 你爱吃**牛排**。\nUser: [Sun 2026-04-05 13:28 GMT+8] 你怎么称呼我？\nAssistant: [[reply_to_current]] 我一般叫你**超哥**。\nUser: [Sun 2026-04-05 13:33 GMT+8] 我爱吃什么？\nAssistant: [[reply_to_current]] 你爱吃**牛排**。\nUser: [Sun 2026-04-05 13:33 GMT+8] 你怎么称呼我？\nAssistant: [[reply_to_current]] 我一般叫你**超哥**。\nUser: [Sun 2026-04-05 13:38 GMT+8] 我爱吃什么？\nAssistan"
+          }
+        ]
+      },
+      "plugin": {
+        "fastPathLikely": true,
+        "candidateCount": 6,
+        "expectedSignalsHit": true,
+        "expectedSourceHit": true,
+        "topSources": {
+          "cardArtifact": 2
+        },
+        "selected": [
+          {
+            "path": "MEMORY.md",
+            "source": "cardArtifact",
+            "score": 0.9400000000000001,
+            "snippet": "你爱吃牛排"
+          },
+          {
+            "path": "configuration.md",
+            "source": "cardArtifact",
+            "score": 0.3672463768115942,
+            "snippet": "memory-context-claw 的最小配置是：把它挂到 contextEngine，并在 entries 里 enabled: true。"
+          }
+        ]
+      }
+    },
+    {
+      "id": "identity-name-recall",
+      "category": "memory_search",
+      "query": "你怎么称呼我",
+      "risk": "热会话污染或身份意图串到其他事实",
+      "expectedSignals": [
+        "刘超",
+        "超哥"
+      ],
+      "expectedSources": [
+        "MEMORY.md",
+        "cardArtifact"
+      ],
+      "builtin": {
+        "commandOk": true,
+        "error": null,
+        "totalResults": 20,
+        "expectedSignalsHit": true,
+        "expectedSourceHit": false,
+        "topSources": {
+          "sessions": 20
+        },
+        "topResults": [
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.6514902575492354,
+            "snippet": "User: [Sun 2026-04-05 14:13 GMT+8] 你怎么称呼我？\nAssistant: [[reply_to_current]] 我一般叫你**超哥**。\nUser: [Sun 2026-04-05 14:14 GMT+8] 我爱吃什么？\nAssistant: [[reply_to_current]] 你爱吃**面食**，像**面条、馒头**这些。\nUser: [Sun 2026-04-05 14:14 GMT+8] 你怎么称呼我？\nAssistant: [[reply_to_current]] 我一般叫你**超哥**。\nUser: [Sun 2026-04-05 14:15 GMT+8] 我爱吃什么？\nAssistant: [[reply_to_current]] 我一般叫你**超哥**。\nUser: [Sun 2026-04-05 14:16 GMT+8] 你怎么称呼我？\nAssistant: [[reply_to_current]] 我一般叫你**超哥**。\nUser: [Sun 2026-04-05 14:16 GMT+8] 我爱吃什么？\nAssistant: [[reply_to_current]] 你爱吃**面食**，像**面条、馒头**这些。"
+          },
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.6469898569496928,
+            "snippet": "User: [Sun 2026-04-05 13:16 GMT+8] 你怎么称呼我？\nAssistant: [[reply_to_current]] 我一般叫你**超哥**。\nUser: [Sun 2026-04-05 13:16 GMT+8] 我女儿叫什么，生日是哪天，现在几年级？\nAssistant: [[reply_to_current]] 你女儿叫 **刘子妍**，生日是 **2014年12月29日**，现在上 **五年级**。\nUser: [Sun 2026-04-05 13:16 GMT+8] 我儿子叫什么，生日是哪天，现在几年级？\nAssistant: [[reply_to_current]] 你儿子叫 **刘子暄**，生日是 **2007年7月25日**，现在上 **高三**。\nUser: [Sun 2026-04-05 13:16 GMT+8] 我家孩子的情况你记住了吗？\nAssistant: [[reply_to_current]] 记住了。 - 女儿：**刘子妍**，**2014年12月29日**生，**五年级** - 儿子：**刘子暄**，**2007年7月25日**生，**高三**\nUser: [Sun 2026-04-05 13:17 GMT+8] 我的实际出生年份和身份证登记生日年份分别是什么？\nAssistant: [[reply_to_current]] 你的**实际出生年份**是 **1983**，**身份证登记生日年份**是 **1982**。\nUser: [Sun 2026-04-05 13:23 GMT+8] 我爱吃什么？\nAssist"
+          },
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.6446157544563526,
+            "snippet": "Assistant: [[reply_to_current]] 你爱吃**牛排**。\nUser: [Sun 2026-04-05 13:23 GMT+8] 你怎么称呼我？\nAssistant: [[reply_to_current]] 我一般叫你**超哥**。\nUser: [Sun 2026-04-05 13:25 GMT+8] 我爱吃什么？\nAssistant: [[reply_to_current]] 你爱吃**牛排**。\nUser: [Sun 2026-04-05 13:26 GMT+8] 你怎么称呼我？\nAssistant: [[reply_to_current]] 我一般叫你**超哥**。\nUser: [Sun 2026-04-05 13:28 GMT+8] 我爱吃什么？\nAssistant: [[reply_to_current]] 你爱吃**牛排**。\nUser: [Sun 2026-04-05 13:28 GMT+8] 你怎么称呼我？\nAssistant: [[reply_to_current]] 我一般叫你**超哥**。\nUser: [Sun 2026-04-05 13:33 GMT+8] 我爱吃什么？\nAssistant: [[reply_to_current]] 你爱吃**牛排**。\nUser: [Sun 2026-04-05 13:33 GMT+8] 你怎么称呼我？\nAssistant: [[reply_to_current]] 我一般叫你**超哥**。\nUser: [Sun 2026-04-05 13:38 GMT+8] 我爱吃什么？\nAssistan"
+          },
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.6404058428020138,
+            "snippet": "User: [Sun 2026-04-05 13:42 GMT+8] 我爱吃什么？\nAssistant: [[reply_to_current]] 你爱吃**牛排**。\nUser: [Sun 2026-04-05 13:42 GMT+8] 你怎么称呼我？\nAssistant: [[reply_to_current]] 我一般叫你**超哥**。\nUser: [Sun 2026-04-05 13:43 GMT+8] 我爱吃什么？\nAssistant: [[reply_to_current]] 你爱吃**牛排**。\nUser: [Sun 2026-04-05 13:43 GMT+8] 你怎么称呼我？\nAssistant: [[reply_to_current]] 我一般叫你**超哥**。\nUser: [Sun 2026-04-05 14:05 GMT+8] 我爱吃什么？\nAssistant: [[reply_to_current]] 你爱吃**牛排**。\nUser: [Sun 2026-04-05 14:05 GMT+8] 你怎么称呼我？\nAssistant: [[reply_to_current]] 我一般叫你**超哥**。\nUser: [Sun 2026-04-05 14:07 GMT+8] 我爱吃什么？\nAssistant: [[reply_to_current]] 我这边更稳的记录是：你爱吃**面食**，像**面条、馒头**这些。\nUser: [Sun 2026-04-05 14:07 GMT+8] 你怎么称呼我？\nAssistant: [[reply_to_current]"
+          },
+          {
+            "path": "sessions/b81eaa15-64b0-40df-97fc-3f8da643f426.jsonl.reset.2026-03-21T12-32-21.416Z",
+            "source": "sessions",
+            "score": 0.5228057533502578,
+            "snippet": "动调用"
+          }
+        ]
+      },
+      "plugin": {
+        "fastPathLikely": true,
+        "candidateCount": 6,
+        "expectedSignalsHit": true,
+        "expectedSourceHit": true,
+        "topSources": {
+          "cardArtifact": 3
+        },
+        "selected": [
+          {
+            "path": "MEMORY.md",
+            "source": "cardArtifact",
+            "score": 0.9700000000000001,
+            "snippet": "你叫刘超，我平时记你是超哥"
+          },
+          {
+            "path": "configuration.md",
+            "source": "cardArtifact",
+            "score": 0.4910185185185185,
+            "snippet": "memory-context-claw 的最小配置是：把它挂到 contextEngine，并在 entries 里 enabled: true。"
+          },
+          {
+            "path": "formal-memory-policy.md",
+            "source": "cardArtifact",
+            "score": 0.4655555555555556,
+            "snippet": "MEMORY.md 应该放的是长期稳定、会被反复复用的内容。"
+          }
+        ]
+      }
+    },
+    {
+      "id": "short-chinese-token",
+      "category": "memory_search",
+      "query": "牛排 刘超",
+      "risk": "unicode61 与中文短词 FTS 失效",
+      "expectedSignals": [
+        "牛排"
+      ],
+      "expectedSources": [
+        "memory/%",
+        "cardArtifact"
+      ],
+      "builtin": {
+        "commandOk": true,
+        "error": null,
+        "totalResults": 20,
+        "expectedSignalsHit": false,
+        "expectedSourceHit": false,
+        "topSources": {
+          "sessions": 20
+        },
+        "topResults": [
+          {
+            "path": "sessions/a5d96a2d-a3d7-4cad-97ce-98bfc1f602a1.jsonl.reset.2026-03-24T00-48-43.329Z",
+            "source": "sessions",
+            "score": 0.5563372284173965,
+            "snippet": "刘超\" } ``` ？"
+          },
+          {
+            "path": "sessions/227f03ee-543e-4956-a942-49ec913601b3.jsonl.reset.2026-03-21T12-47-45.205Z",
+            "source": "sessions",
+            "score": 0.49810037314891814,
+            "snippet": "。"
+          },
+          {
+            "path": "sessions/0b53c1f3-b355-4045-8419-b43a0a667362.jsonl.reset.2026-03-21T13-25-15.119Z",
+            "source": "sessions",
+            "score": 0.48754065632820126,
+            "snippet": "相"
+          },
+          {
+            "path": "sessions/755fdf79-387a-4ec1-ab63-673ca480d068.jsonl.reset.2026-04-01T13-14-24.695Z",
+            "source": "sessions",
+            "score": 0.4815784245729446,
+            "snippet": " 1. **模型侧还在生成，流式内容很慢** 2. **Feishu streaming card 的收尾阶段没及时完成**，也就是前面字已经在流了，但最后定稿/结束状态没落下来 还有一个背景问题我顺手看到： - 之前日志里出现过几次 **gateway 重启 / config 变更 / 插件版本不匹配** 的痕迹 - 不过**不是当前这次的直接死因**，因为你现在这条消息已经成功进到 agent 并开始流式回复了 所以当前结论很直接： **不是 control UI 完全卡死，是这次回复链路在“流式输出中但未完成收尾”这一步拖住了。** 如果你要，我下一步可以继续直接帮你查两件事里的哪一个： - **A. 查是不是模型响应慢** - **B. 查是不是 Feishu streaming card 收尾卡住** 你回我 **A** 或 **B**，我直接继续往下刨。\nUser: System: [2026-04-01 21:09:15 GMT+8] Feishu[feishu1-main] DM | 刘超 (ou_6c145a01736fe57abb5290e6f1baaafa) [msg:om_x100b53e5c161d0bcc4e1134930f164d] Conversation info (untrusted metadata): ```json { \"message_id\": \"om_x100b53e5c161d0bcc4e1134930f164d\", \"sender_id\": \"ou_6c145a01736fe57abb5290e6f1baaafa\", \"send"
+          },
+          {
+            "path": "sessions/8bac92da-8353-4185-aa9f-f7104734fcea.jsonl.reset.2026-04-02T09-32-06.814Z",
+            "source": "sessions",
+            "score": 0.4798158049583435,
+            "snippet": "py` 并且成功打出了一个通知 payload，里面已经包含： - `task_id` - `channel` - `chat_id` - `session_key` - `message` ### 这代表当前阶段 现在相比上一轮，又往前推进到了： - **状态存储层：完成** - **超时识别层：完成原型** - **通知 payload 层：完成原型** - **通知状态回写：完成原型** ### 还差的关键一步 现在还没接上的，是： **真正调用消息发送，把这个 payload 发到真实会话里。** 也就是现在已经能： - 找出谁超时 - 生成发给谁的内容 - 标记“我已经通知过了” 但还没有把它真正接到： - `message` 或 - `sessions_send` 这类实际发送动作上。 所以如果只说“刚才之后新增了什么”，最准确的新增就是： **notify 层和已通知状态回写\n已经补出来，并且样例跑通了。**\nUser: System: [2026-04-02 13:25:02 GMT+8] Feishu[feishu1-main] DM | 刘超 (ou_6c145a01736fe57abb5290e6f1baaafa) [msg:om_x100b53eb942f2c84c36053dad72b876] Conversation info (untrusted metadata): ```json { \"message_id\": \"om_x100b53eb942f2c84c36053dad72b876\", \"sender_id\": \"ou_6c145a01736"
+          }
+        ]
+      },
+      "plugin": {
+        "fastPathLikely": true,
+        "candidateCount": 6,
+        "expectedSignalsHit": true,
+        "expectedSourceHit": true,
+        "topSources": {
+          "cardArtifact": 3
+        },
+        "selected": [
+          {
+            "path": "MEMORY.md",
+            "source": "cardArtifact",
+            "score": 0.7500000000000001,
+            "snippet": "你爱吃牛排"
+          },
+          {
+            "path": "configuration.md",
+            "source": "cardArtifact",
+            "score": 0.3662500000000001,
+            "snippet": "memory-context-claw 的最小配置是：把它挂到 contextEngine，并在 entries 里 enabled: true。"
+          },
+          {
+            "path": "formal-memory-policy.md",
+            "source": "cardArtifact",
+            "score": 0.3503846153846154,
+            "snippet": "MEMORY.md 应该放的是长期稳定、会被反复复用的内容。"
+          }
+        ]
+      }
+    },
+    {
+      "id": "session-memory-source-competition",
+      "category": "memory_search",
+      "query": "用户爱吃什么 饮食 喜欢吃 刘超 超哥",
+      "risk": "memory/% 候选完全进不了池，被 sessions/% 占满",
+      "expectedSignals": [
+        "牛排"
+      ],
+      "expectedSources": [],
+      "builtin": {
+        "commandOk": true,
+        "error": null,
+        "totalResults": 20,
+        "expectedSignalsHit": true,
+        "expectedSourceHit": false,
+        "topSources": {
+          "sessions": 20
+        },
+        "topResults": [
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.511226925253868,
+            "snippet": "User: [Sun 2026-04-05 13:42 GMT+8] 我爱吃什么？\nAssistant: [[reply_to_current]] 你爱吃**牛排**。\nUser: [Sun 2026-04-05 13:42 GMT+8] 你怎么称呼我？\nAssistant: [[reply_to_current]] 我一般叫你**超哥**。\nUser: [Sun 2026-04-05 13:43 GMT+8] 我爱吃什么？\nAssistant: [[reply_to_current]] 你爱吃**牛排**。\nUser: [Sun 2026-04-05 13:43 GMT+8] 你怎么称呼我？\nAssistant: [[reply_to_current]] 我一般叫你**超哥**。\nUser: [Sun 2026-04-05 14:05 GMT+8] 我爱吃什么？\nAssistant: [[reply_to_current]] 你爱吃**牛排**。\nUser: [Sun 2026-04-05 14:05 GMT+8] 你怎么称呼我？\nAssistant: [[reply_to_current]] 我一般叫你**超哥**。\nUser: [Sun 2026-04-05 14:07 GMT+8] 我爱吃什么？\nAssistant: [[reply_to_current]] 我这边更稳的记录是：你爱吃**面食**，像**面条、馒头**这些。\nUser: [Sun 2026-04-05 14:07 GMT+8] 你怎么称呼我？\nAssistant: [[reply_to_current]"
+          },
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.5075105309486388,
+            "snippet": "Assistant: [[reply_to_current]] 你女儿叫 **刘子妍**，生日是 **2014年12月29日**，现在上 **五年级**。\nUser: [Sun 2026-04-05 12:47 GMT+8] 我儿子叫什么，生日是哪天，现在几年级？\nAssistant: [[reply_to_current]] 你儿子叫 **刘子暄**，生日是 **2007年7月25日**，现在上 **高三**。\nUser: [Sun 2026-04-05 12:47 GMT+8] 我家孩子的情况你记住了吗？\nAssistant: [[reply_to_current]] 记住了。 - 女儿：**刘子妍**，**2014年12月29日**生，**五年级** - 儿子：**刘子暄**，**2007年7月25日**生，**高三**\nUser: [Sun 2026-04-05 12:54 GMT+8] 我的实际出生年份和身份证登记生日年份分别是什么？\nAssistant: [[reply_to_current]] 你**实际出生年份**是 **1983**，**身份证登记生日年份**是 **1982**。\nUser: [Sun 2026-04-05 13:01 GMT+8] 我爱吃什么？\nAssistant: [[reply_to_current]] 你爱吃**牛排**。\nUser: [Sun 2026-04-05 13:01 GMT+8] 你怎么称呼我？\nAssistant: [[reply_to_current]] 我一般叫你**超哥**。\nUser: [Sun 2026-04-"
+          },
+          {
+            "path": "sessions/057887b4-38eb-42ca-9a5e-873d06b8bf4d.jsonl.reset.2026-03-20T16-30-35.305Z",
+            "source": "sessions",
+            "score": 0.505959677696228,
+            "snippet": "确性 | ✅ | 爱吃面食的信息正确 | | 整体 | **✅ 正确** | 回答是对的，因为有记忆支撑\"刘超=超哥\" | --- 所以刚才的回答是**靠谱的**，不是瞎猜的。"
+          },
+          {
+            "path": "sessions/057887b4-38eb-42ca-9a5e-873d06b8bf4d.jsonl.reset.2026-03-20T16-30-35.305Z",
+            "source": "sessions",
+            "score": 0.5002335160970688,
+            "snippet": "Assistant: 嘿，超哥！三德子刚睡醒，这会儿精神着呢～这么晚了还没睡呀？有啥事儿需要我帮忙的？\nUser: Sender (untrusted metadata): ```json { \"label\": \"openclaw-control-ui\", \"id\": \"openclaw-control-ui\" } ``` [Sat 2026-03-21 00:24 GMT+8] 刘超爱吃什么 并且告诉我你怎么知道的 详细过程告诉我\nAssistant: 根据我的记忆，超哥你非常爱吃面食，比如面条、馒头这些。 我是这样知道的： 1. **先搜索记忆** — 你问完问题后，我先用 `memory_search` 工具搜索了关于\"刘超\"、\"超哥\"和\"爱吃\"相关的记忆片段。 2. **找到相关信息** — 搜索结果显示有几条记忆提到了你的饮食偏好： - 一条记忆明确说\"用户（被称为'超哥'）在饮食方面有明确的偏好：非常喜爱面食，包括面条、馒头等\" - 另一条也提到\"其特点是喜爱面食\" 3. **确认信息** — 虽然找到了这些记忆，但为了更全面，我还用 `memory_get` 工具读取了 MEMORY.md 文件的详细内容，确认了这些信息都记录在里面。 4. **综合回答** — 基于这些记忆，我知道你爱吃面食，不过目前为了控制体重和血压，你在严格管控饮食，暂时不吃面食了。 所以答案就是：**超哥你爱吃面食（面条、馒头等）**，但目前为了健康在克制自己。👍"
+          },
+          {
+            "path": "sessions/07bf7a32-4c9b-43b2-b214-f0bafb08919a.jsonl.reset.2026-03-21T03-47-23.984Z",
+            "source": "sessions",
+            "score": 0.4980023652315139,
+            "snippet": " - [] 刘超在饮食上偏好面食，具体包括面条和馒头。然而，出于重要的健康考量，特别是为了严格控制体重和有效管理血压，用户目前正处于严格的饮食控制阶段，因此主动暂停了食用这类高碳水化合物的主食。这一行为表明，用户能够为了长期的健康目标（血压和体重控制）而克制短期的饮食偏好，将健康置于口腹之欲之上，体现了高度的自律性和对健康的主动管理意识。 </relevant-memories> Sender (untrusted metadata): ```json { \"label\": \"openclaw-control-ui\", \"id\": \"openclaw-control-ui\" } ``` [Sat 2026-03-21 09:32 GMT+8] 超哥喜欢吃什么\nAssistant: 超哥爱吃面食 — 面条、馒头这些。不过他现在为了控制体重和血压，暂时不吃这些了。"
+          }
+        ]
+      },
+      "plugin": {
+        "fastPathLikely": true,
+        "candidateCount": 6,
+        "expectedSignalsHit": true,
+        "expectedSourceHit": true,
+        "topSources": {
+          "cardArtifact": 2
+        },
+        "selected": [
+          {
+            "path": "MEMORY.md",
+            "source": "cardArtifact",
+            "score": 0.9185714285714287,
+            "snippet": "你爱吃牛排"
+          },
+          {
+            "path": "configuration.md",
+            "source": "cardArtifact",
+            "score": 0.4030684326710817,
+            "snippet": "memory-context-claw 的最小配置是：把它挂到 contextEngine，并在 entries 里 enabled: true。"
+          }
+        ]
+      }
+    },
+    {
+      "id": "rule-formal-memory-priority",
+      "category": "memory_search",
+      "query": "MEMORY.md 应该放什么内容",
+      "risk": "session-derived rule duplicate 压过正式来源",
+      "expectedSignals": [
+        "长期稳定",
+        "反复复用"
+      ],
+      "expectedSources": [
+        "formal-memory-policy.md",
+        "MEMORY.md",
+        "cardArtifact"
+      ],
+      "builtin": {
+        "commandOk": true,
+        "error": null,
+        "totalResults": 20,
+        "expectedSignalsHit": true,
+        "expectedSourceHit": false,
+        "topSources": {
+          "sessions": 20
+        },
+        "topResults": [
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.7805608660520386,
+            "snippet": "Assistant: [[reply_to_current]] 你之前定下来的长期记忆目录规则是这套： - **根目录**：作为整个知识库目录 - **`MEMORY.md`**：只放**长期稳定**、会反复复用的信息 - **`memory/`**：放**每日沉淀 / 过程性内容** - **其他 `.md` 文档**：作为**可索引的专题知识资料** 对应分工可以直接理解成： - `MEMORY.md` = 稳定规则、长期偏好、固定背景 - `memory/` = 每天发生了什么、过程记录、阶段结论 - 普通文档 = 某个专题的成型资料、说明文、方案文档 你当时还补了一个维护原则： - **稳定的进 `MEMORY.md`** - **频繁变化的先放 `memory/`** - **重要专题单独写成普通文档，方便索引和检索组装** Source: ../../Project/长记忆/memory/2026-04-04.md#L1-L26 Source: ../../Project/长记忆/MEMORY.md#L1-L28\nUser: [Sat 2026-04-04 20:41 GMT+8] MEMORY.md 应该放什么内容？"
+          },
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.7698099514921466,
+            "snippet": "Assistant: [[reply_to_current]] 你之前定下来的长期记忆目录规则是这套： - **根目录**：作为整个知识库目录 - **`MEMORY.md`**：只放**长期稳定**、会反复复用的信息 - **`memory/`**：放**每日沉淀 / 过程性内容** - **其他 `.md` 文档**：作为**可索引的专题知识资料** 对应分工可以直接理解成： - `MEMORY.md` = 稳定规则、长期偏好、固定背景 - `memory/` = 每天发生了什么、过程记录、阶段结论 - 普通文档 = 某个专题的成型资料、说明文、方案文档 你当时还补了一个维护原则： - **稳定的进 `MEMORY.md`** - **频繁变化的先放 `memory/`** - **重要专题单独写成普通文档，方便索引和检索组装** Source: ../../Project/长记忆/memory/2026-04-04.md#L1-L26 Source: ../../Project/长记忆/MEMORY.md#L1-L28\nUser: [Sat 2026-04-04 20:41 GMT+8] MEMORY.md 应该放什么内容？\nAssistant: [[reply_to_current]] `MEMORY.md` 应该放的是**长期稳定、会被反复复用的内容**。 你之前定的范围主要是这些： - **长期偏好** - **固定工作流程** - **常用术语与约定** - **项目长期背景** 维护原则也很明确： - 内容尽量稳定 - 尽量写成可复用的事实或规则 - 一条信息尽"
+          },
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.7476599979845611,
+            "snippet": "Assistant: [[reply_to_current]] 你之前的理解是： - **长期记忆**负责“把信息长期存下来，以后能检索回来” - **Lossless** 负责“把当前这轮最相关的上下文更完整地送进模型，尽量少丢信息” 也就是： - `memory` 负责**存** - `search` 负责**找** - `Lossless / context engine` 负责**喂给模型** 所以你把它们看成**互补关系，不是替代关系**。 你当时还用了个比喻：**Memory 是图书馆，Lossless 是图书管理员/备课助手**——书已经在馆里，不等于这一节课桌上已经摆好了最该看的那几本。\nUser: [Sun 2026-04-05 11:19 GMT+8] MEMORY.md 应该放什么内容？\nAssistant: [[reply_to_current]] `MEMORY.md` 应该放 **长期稳定、会被反复复用的规则、偏好和背景信息**。 主要包括： - **长期偏好** - **固定工作流程** - **常用术语与约定** - **项目长期背景** 维护原则是： - 内容尽量稳定 - 尽量写成可复用的事实或规则 - 一条信息尽量只表达一个主题 - **频繁变化的内容先放到 `memory/`** 所以它不是日记，不是过程流水账，而是长期可复用的“底座信息”。\nUser: [Sun 2026-04-05 11:20 GMT+8] 长期记忆目录规则是什么？"
+          },
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.7391706799742335,
+            "snippet": "Assistant: [[reply_to_current]] 你之前的理解是： - **长期记忆**负责“把信息长期存下来，以后能检索回来” - **Lossless** 负责“把当前这轮最相关的上下文更完整地送进模型，尽量少丢信息” 你把它们拆成三层来看： - `memory` 负责**存** - `search` 负责**找** - `Lossless / context engine` 负责**喂给模型** 所以它们是**互补关系，不是替代关系**。 你当时还用过一个比喻：**Memory 是图书馆，Lossless 是图书管理员/备课助手**——书已经在馆里，不等于这一轮模型桌上已经摆好了最该看的那些。 Source: ../../Project/长记忆/openclaw-memory-vs-lossless.md#L1-L30 Source: ../../Project/长记忆/openclaw-memory-vs-lossless.md#L55-L94\nUser: [Sat 2026-04-04 21:10 GMT+8] MEMORY.md 应该放什么内容？\nAssistant: [[reply_to_current]] `MEMORY.md` 应该放 **长期稳定、会被反复复用的规则、偏好和背景信息**。 主要包括： - **长期偏好** - **固定工作流程** - **常用术语与约定** - **项目长期背景** 维护原则是： - 内容尽量稳定 - 尽量写成可复用的事实或规则 - 一条信息尽量只表达一个主题 - **频繁变化的内容先放到 `memory/`*"
+          },
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.732139768086614,
+            "snippet": "Assistant: [[reply_to_current]] 你之前的理解是： - **长期记忆**负责“把信息长期存下来，以后能检索回来” - **Lossless** 负责“把当前这轮最相关的上下文更完整地送进模型，尽量少丢信息” 你把它们拆成三层来看： - `memory` 负责**存** - `search` 负责**找** - `Lossless / context engine` 负责**喂给模型** 所以它们是**互补关系，不是替代关系**。 你当时还用过一个比喻：**Memory 是图书馆，Lossless 是图书管理员/备课助手**——书已经在馆里，不等于这一轮模型桌上已经摆好了最该看的那些。 Source: ../../Project/长记忆/openclaw-memory-vs-lossless.md#L1-L30 Source: ../../Project/长记忆/openclaw-memory-vs-lossless.md#L55-L94\nUser: [Sat 2026-04-04 21:02 GMT+8] MEMORY.md 应该放什么内容？\nAssistant: [[reply_to_current]] `MEMORY.md` 应该放 **长期稳定、会被反复复用的规则、偏好和背景信息**。 你之前定的内容范围主要是： - **长期偏好** - **固定工作流程** - **常用术语与约定** - **项目长期背景** 维护原则是： - 内容尽量稳定 - 尽量写成可复用的事实或规则 - 一条信息尽量只表达一个主题 - **频繁变化的内容先放到 `m"
+          }
+        ]
+      },
+      "plugin": {
+        "fastPathLikely": true,
+        "candidateCount": 6,
+        "expectedSignalsHit": true,
+        "expectedSourceHit": true,
+        "topSources": {
+          "cardArtifact": 2
+        },
+        "selected": [
+          {
+            "path": "formal-memory-policy.md",
+            "source": "cardArtifact",
+            "score": 1.065,
+            "snippet": "MEMORY.md 应该放的是长期稳定、会被反复复用的内容。"
+          },
+          {
+            "path": "MEMORY.md",
+            "source": "cardArtifact",
+            "score": 0.6488715953307393,
+            "snippet": "OpenViking 是主要长期记忆检索补充工具，用于查询个人信息、偏好、历史片段等。"
+          }
+        ]
+      }
+    },
+    {
+      "id": "project-positioning-priority",
+      "category": "memory_search",
+      "query": "这个项目主要解决什么问题",
+      "risk": "project card 不稳定，退回慢检索",
+      "expectedSignals": [
+        "context engine",
+        "长期记忆",
+        "当前轮可用的上下文"
+      ],
+      "expectedSources": [
+        "README.md",
+        "project-roadmap.md",
+        "cardArtifact"
+      ],
+      "builtin": {
+        "commandOk": true,
+        "error": null,
+        "totalResults": 20,
+        "expectedSignalsHit": false,
+        "expectedSourceHit": false,
+        "topSources": {
+          "sessions": 20
+        },
+        "topResults": [
+          {
+            "path": "sessions/4cf1b0c2-7d57-4e5a-a9b0-921c95eea37e.jsonl.reset.2026-03-21T10-14-42.387Z",
+            "source": "sessions",
+            "score": 0.4643529385328293,
+            "snippet": "的个"
+          },
+          {
+            "path": "sessions/227f03ee-543e-4956-a942-49ec913601b3.jsonl.reset.2026-03-21T12-47-45.205Z",
+            "source": "sessions",
+            "score": 0.4613280028104782,
+            "snippet": "。"
+          },
+          {
+            "path": "sessions/8bac92da-8353-4185-aa9f-f7104734fcea.jsonl.reset.2026-04-02T09-32-06.814Z",
+            "source": "sessions",
+            "score": 0.45636598169803616,
+            "snippet": "`AGENTS.md` 这次也已经提交： - commit: `3939ad9` - message: `add shared execution checklist for all agents` 顺手说一句，这一轮里还刚好出现了一个很典型的实战案例： 我前面批量改 AGENTS 时，部分 edit 因为文本不完全一致失败了。这个时候我没有把“批量方案失败”说成“已经全部做完”，而是明确告诉你：**checklist 已建好，根规则已接上，当前卡在逐个修 agent 的 AGENTS**，然后继续补完。 也就是说，这套规范不只是写下来了，刚才已经现场用了一次。 如果你要，下一步我可以再做最后一层： **给这套规范起一个正式名字**，比如“执行透明规范”或者“任务真实状态协议”，以后你一提名字，我就知道整套要求。\nUser: System: [2026-04-02 12:12:37 GMT+8] Feishu[feishu1-main] DM | 刘超 (ou_6c145a01736fe57abb5290e6f1baaafa) [msg:om_x100b53ea858a10b4b3cbd0561be9a88] Conversation info (untrusted metadata): ```json { \"message_id\": \"om_x100b53ea858a10b4b3cbd0561be9a88\", \"sender_id\": \"ou_6c145a01736fe57abb5290e6f1baaafa\", \"sender\": \"刘超\", \"timestamp\": \"Th"
+          },
+          {
+            "path": "sessions/016ec5a4-9cc7-4e33-97a3-ae698791e720.jsonl.reset.2026-03-23T12-00-23.425Z",
+            "source": "sessions",
+            "score": 0.4529136538505554,
+            "snippet": "在沟通中"
+          },
+          {
+            "path": "sessions/016ec5a4-9cc7-4e33-97a3-ae698791e720.jsonl.reset.2026-03-23T12-00-23.425Z",
+            "source": "sessions",
+            "score": 0.4499410808086395,
+            "snippet": "答"
+          }
+        ]
+      },
+      "plugin": {
+        "fastPathLikely": true,
+        "candidateCount": 6,
+        "expectedSignalsHit": true,
+        "expectedSourceHit": true,
+        "topSources": {
+          "cardArtifact": 4
+        },
+        "selected": [
+          {
+            "path": "README.md",
+            "source": "cardArtifact",
+            "score": 0.9500000000000001,
+            "snippet": "这是一个面向 OpenClaw 的 context engine 插件，负责把长期记忆更稳定地变成当前轮可用的上下文。"
+          },
+          {
+            "path": "MEMORY.md",
+            "source": "cardArtifact",
+            "score": 0.782437475188567,
+            "snippet": "OpenViking 是主要长期记忆检索补充工具，用于查询个人信息、偏好、历史片段等。"
+          },
+          {
+            "path": "workspace/notes/openclaw-memory-vs-lossless.md",
+            "source": "cardArtifact",
+            "score": 0.7434497816593887,
+            "snippet": "长期记忆负责存和找；Lossless / context engine 负责把当前这一轮最该看的内容更好地送进模型。"
+          },
+          {
+            "path": "formal-memory-policy.md",
+            "source": "cardArtifact",
+            "score": 0.4770305676855895,
+            "snippet": "MEMORY.md 应该放的是长期稳定、会被反复复用的内容。"
+          }
+        ]
+      }
+    }
+  ]
+}

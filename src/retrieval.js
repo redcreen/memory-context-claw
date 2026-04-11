@@ -6,7 +6,7 @@ import { fileURLToPath } from "node:url";
 import { promisify } from "node:util";
 import { rewriteRetrievalQueries } from "./query-rewrite.js";
 import { classifyQueryIntent, resolveRetrievalPolicy } from "./retrieval-policy.js";
-import { buildKeywordSet, shouldExcludeMemoryPath } from "./utils.js";
+import { buildKeywordSet, buildOrderedKeywordSet, shouldExcludeMemoryPath } from "./utils.js";
 
 const execFileAsync = promisify(execFile);
 const __filename = fileURLToPath(import.meta.url);
@@ -138,8 +138,9 @@ export async function retrieveMemoryCandidates({
     return [];
   }
 
+  let cardCandidates = [];
   try {
-    const cardCandidates = await readCardArtifactCandidates({
+    cardCandidates = await readCardArtifactCandidates({
       query,
       maxCandidates: cardArtifacts?.maxCandidates ?? 6,
       artifactPath: cardArtifacts?.path || DEFAULT_CARDS_PATH,
@@ -231,6 +232,19 @@ export async function retrieveMemoryCandidates({
     logger?.warn?.(
       `[memory-context-claw] memory retrieval failed for agent=${agentId}: ${String(error)}`
     );
+    if (Array.isArray(cardCandidates) && cardCandidates.length > 0) {
+      logger?.warn?.(
+        `[memory-context-claw] falling back to card artifacts for query="${query}" after builtin retrieval failure`
+      );
+      return cardCandidates
+        .slice(0, maxCandidates)
+        .map((item) => ({
+          ...item,
+          score: Number(item.score || 0),
+          sourceQuery: query,
+          fusionScore: Number(item.fusionScore || item.score || 0)
+        }));
+    }
     return [];
   }
 }
@@ -247,10 +261,6 @@ function shouldUseCardFastPath(query, cardCandidates, cardArtifacts) {
   const policy = resolveRetrievalPolicy(query);
   const intents = policy.intents;
 
-  if (policy.mode === "search-first") {
-    return false;
-  }
-
   const threshold = Number(cardArtifacts?.fastPathMinScore || 0.3);
   const matchers = [];
 
@@ -265,6 +275,9 @@ function shouldUseCardFastPath(query, cardCandidates, cardArtifacts) {
   }
   if (intents.style) {
     matchers.push((item) => /沟通风格|交流风格|说话风格|直接|实用|不废话/.test(String(item?.snippet || "")));
+  }
+  if (intents.projectNavigation) {
+    matchers.push((item) => /project-roadmap\.md|memory-search-roadmap\.md|system-architecture\.md|testsuite\.md|configuration\.md|主 roadmap|总索引|专项 roadmap|看哪个文档/i.test(String(item?.snippet || "")));
   }
   if (intents.reminder) {
     matchers.push((item) => /提醒|飞书任务|苹果日历|日历提醒|双通道/.test(String(item?.snippet || "")));
@@ -305,17 +318,35 @@ function shouldUseCardFastPath(query, cardCandidates, cardArtifacts) {
     return Number(matchedCard?.score || 0) >= threshold;
   }
 
+  if (policy.mode === "search-first") {
+    const queryText = String(query || "").trim();
+    const shortQuery = queryText.length <= 12 && buildOrderedKeywordSet(queryText).length <= 4;
+    const topScore = Number(cardCandidates[0]?.score || 0);
+    const secondScore = Number(cardCandidates[1]?.score || 0);
+    const hasStrongLeader = topScore >= Math.max(threshold + 0.08, 0.42) && topScore - secondScore >= 0.08;
+    return shortQuery && hasStrongLeader;
+  }
+
   const topScore = Number(cardCandidates[0]?.score || 0);
   return topScore >= threshold;
 }
 
 export function buildCardArtifactCandidates(cards, query, maxCandidates = 6) {
   const keywords = buildKeywordSet(query);
+  const orderedKeywords = buildOrderedKeywordSet(query);
   const queryText = String(query || "");
   const intents = classifyQueryIntent(queryText);
   const configIntent = intents.config;
+  const releaseInstallIntent = intents.releaseInstall;
+  const installVerifyIntent = intents.installVerify;
+  const projectNavigationIntent = intents.projectNavigation;
+  const workspaceStructureIntent = intents.workspaceStructure;
+  const workspaceNotesRuleIntent = intents.workspaceNotesRule;
+  const losslessIntent = intents.lossless;
   const providerIntent = intents.provider;
+  const pendingRuleIntent = intents.pendingRule;
   const preferenceIntent = intents.preference;
+  const identityIntent = intents.identity;
   const timezoneIntent = intents.timezone;
   const styleIntent = intents.style;
   const reminderIntent = intents.reminder;
@@ -370,9 +401,21 @@ export function buildCardArtifactCandidates(cards, query, maxCandidates = 6) {
       const haystack = `${title}\n${fact}\n${tags}`.toLowerCase();
       const hits = keywords.reduce((sum, keyword) => sum + (haystack.includes(keyword) ? 1 : 0), 0);
       const overlap = keywords.length ? hits / keywords.length : 0;
+      const earliestKeywordIndex = orderedKeywords.findIndex((keyword) => haystack.includes(keyword));
+      const keywordOrderBoost = earliestKeywordIndex >= 0
+        ? ((orderedKeywords.length - earliestKeywordIndex) / Math.max(orderedKeywords.length, 1)) * 0.08
+        : 0;
       const preferenceBoost =
-        preferenceIntent && (/爱吃|偏好|喜欢|称呼|身份/.test(fact) || tagsList.includes("preference") || tagsList.includes("identity"))
+        preferenceIntent && (/爱吃|偏好|喜欢|饮食|口味|食物/.test(fact) || tagsList.includes("preference"))
           ? 0.18
+          : 0;
+      const preferenceKeywordBoost =
+        !preferenceIntent && tagsList.includes("preference") && overlap > 0
+          ? 0.08
+          : 0;
+      const identityKeywordPenalty =
+        !identityIntent && tagsList.includes("identity") && overlap > 0 && orderedKeywords.length > 1
+          ? 0.04
           : 0;
       const ruleBoost =
         ruleIntent &&
@@ -418,11 +461,58 @@ export function buildCardArtifactCandidates(cards, query, maxCandidates = 6) {
         )
           ? 0.18
           : 0;
+      const workspaceStructureBoost =
+        workspaceStructureIntent &&
+        (
+          /workspace\/memory|workspace\/notes|workspace\/memory\.md|目录规则|目录结构|怎么组织|如何组织/i.test(fact)
+          || tagsList.includes("workspace")
+        )
+          ? 0.38
+          : 0;
+      const projectNavigationBoost =
+        projectNavigationIntent &&
+        (
+          /project-roadmap\.md|memory-search-roadmap\.md|system-architecture\.md|testsuite\.md|configuration\.md|主 roadmap|总索引|专项 roadmap|看哪个文档/i.test(fact)
+          || tagsList.includes("project-nav")
+        )
+          ? 0.42
+          : 0;
+      const workspaceNotesRuleBoost =
+        workspaceNotesRuleIntent &&
+        (
+          /stable card|背景 notes|背景笔记|项目分工类笔记|历史 roadmap|临时配置说明|一句话结论|适用场景/i.test(fact)
+          || tagsList.includes("workspace-notes")
+        )
+          ? 0.36
+          : 0;
+      const losslessBoost =
+        losslessIntent &&
+        (
+          /lossless|context engine|上下文编排|信息保真|长期记忆负责|存和找|当前这一轮/i.test(fact)
+          || tagsList.includes("lossless")
+          || tagsList.includes("context")
+          || tagsList.includes("concept")
+        )
+          ? 0.28
+          : 0;
       const configBoost =
         configIntent &&
         (/配置|config|安装|install|启用|enable|contextengine|entries|enabled:\s*true/.test(fact) ||
           tagsList.includes("config"))
           ? 0.22
+          : 0;
+      const installVerifyBoost =
+        installVerifyIntent &&
+        (/plugins list|memory status|已加载|loaded plugin|验证插件|确认 long memory indexing|确认.*已加载/i.test(fact) ||
+          tagsList.includes("verify") ||
+          tagsList.includes("install"))
+          ? 0.3
+          : 0;
+      const releaseInstallBoost =
+        releaseInstallIntent &&
+        (/release tag|稳定版|发布版|当前 main|开发版安装|main 分支|直接安装 main|安装 release tag/i.test(fact) ||
+          tagsList.includes("release"))
+          ? 0.32
           : 0;
       const providerBoost =
         providerIntent &&
@@ -430,6 +520,13 @@ export function buildCardArtifactCandidates(cards, query, maxCandidates = 6) {
           tagsList.includes("provider") ||
           tagsList.includes("embedding"))
           ? 0.24
+          : 0;
+      const pendingRuleBoost =
+        pendingRuleIntent &&
+        (/待确认信息|pending|未确认信息|不得默认写入|memory\/yyyy-mm-dd\.md|memory\/yyyy-mm-dd/i.test(fact) ||
+          tagsList.includes("pending") ||
+          tagsList.includes("policy"))
+          ? 0.42
           : 0;
       const timezoneBoost =
         timezoneIntent &&
@@ -608,22 +705,107 @@ export function buildCardArtifactCandidates(cards, query, maxCandidates = 6) {
         providerIntent && sourceChannel === "config-doc"
           ? 0.22
           : 0;
+      const installVerifySourceBoost =
+        installVerifyIntent && sourceChannel === "config-doc"
+          ? 0.22
+          : 0;
+      const projectNavigationSourceBoost =
+        projectNavigationIntent && sourceChannel === "project-doc"
+          ? 0.22
+          : 0;
+      const losslessSourceBoost =
+        losslessIntent && (sourceChannel === "project-doc" || sourceChannel === "memory-md")
+          ? 0.18
+          : 0;
+      const workspaceNotesRuleSourceBoost =
+        workspaceNotesRuleIntent && sourceChannel === "project-doc"
+          ? 0.14
+          : 0;
+      const pendingRuleSourceBoost =
+        pendingRuleIntent && sourceChannel === "formal-policy"
+          ? 0.2
+          : 0;
       const configProjectPenalty =
         hasStableConfigCard
-        && (configIntent || providerIntent)
+        && (configIntent || releaseInstallIntent || installVerifyIntent || providerIntent)
         && sourceChannel === "project-doc"
         && !(
-          /配置|config|安装|install|启用|enable|contextengine|entries|enabled:\s*true|memorysearch\.provider|embedding|memory_search|不影响主聊天模型/i.test(
+          /配置|config|安装|install|启用|enable|contextengine|entries|enabled:\s*true|memorysearch\.provider|embedding|memory_search|不影响主聊天模型|release tag|稳定版|当前 main|main 分支|plugins list|memory status|已加载|验证插件/i.test(
             fact
-          ) || tagsList.includes("config") || tagsList.includes("provider") || tagsList.includes("embedding")
+          ) || tagsList.includes("config") || tagsList.includes("provider") || tagsList.includes("embedding") || tagsList.includes("release") || tagsList.includes("verify")
         )
           ? 0.18
+          : 0;
+      const losslessGenericPenalty =
+        losslessIntent &&
+        !(/lossless|context engine|上下文编排|信息保真|长期记忆负责|存和找|当前这一轮/i.test(fact) ||
+          tagsList.includes("lossless") ||
+          tagsList.includes("context") ||
+          tagsList.includes("concept"))
+          ? 0.2
+          : 0;
+      const workspaceStructureGenericPenalty =
+        workspaceStructureIntent &&
+        !(
+          /workspace\/memory|workspace\/notes|workspace\/memory\.md|目录规则|目录结构|怎么组织|如何组织/i.test(fact)
+          || tagsList.includes("workspace")
+        )
+          ? 0.22
+          : 0;
+      const workspaceNotesRuleGenericPenalty =
+        workspaceNotesRuleIntent &&
+        !(/stable card|背景 notes|背景笔记|项目分工类笔记|历史 roadmap|临时配置说明|一句话结论|适用场景/i.test(fact) ||
+          tagsList.includes("workspace-notes"))
+          ? 0.16
+          : 0;
+      const installVerifyGenericPenalty =
+        installVerifyIntent &&
+        !(/plugins list|memory status|已加载|loaded plugin|验证插件|确认 long memory indexing|确认.*已加载/i.test(fact) ||
+          tagsList.includes("verify"))
+          ? 0.22
+          : 0;
+      const projectNavigationGenericPenalty =
+        projectNavigationIntent &&
+        !(/project-roadmap\.md|memory-search-roadmap\.md|system-architecture\.md|testsuite\.md|configuration\.md|主 roadmap|总索引|专项 roadmap|看哪个文档/i.test(fact) ||
+          tagsList.includes("project-nav"))
+          ? 0.3
+          : 0;
+      const pendingRuleGenericPenalty =
+        pendingRuleIntent &&
+        !(/待确认信息|pending|未确认信息|不得默认写入|memory\/yyyy-mm-dd\.md|memory\/yyyy-mm-dd/i.test(fact) ||
+          tagsList.includes("pending") ||
+          tagsList.includes("policy"))
+          ? 0.32
+          : 0;
+      const releaseInstallGenericPenalty =
+        releaseInstallIntent &&
+        !(/release tag|稳定版|发布版|当前 main|开发版安装|main 分支|直接安装 main|安装 release tag/i.test(fact) ||
+          tagsList.includes("release"))
+          ? 0.22
           : 0;
       const projectConfigPenalty =
         projectIntent
         && !configIntent
         && sourceChannel === "config-doc"
           ? 0.2
+          : 0;
+      const projectWorkspaceNotesPenalty =
+        projectIntent
+        && !workspaceNotesRuleIntent
+        && tagsList.includes("workspace-notes")
+          ? 0.24
+          : 0;
+      const projectLosslessPenalty =
+        projectIntent
+        && !losslessIntent
+        && (tagsList.includes("lossless") || tagsList.includes("context") || tagsList.includes("concept"))
+          ? 0.22
+          : 0;
+      const workspaceStructureNotesPenalty =
+        workspaceStructureIntent
+        && !workspaceNotesRuleIntent
+        && tagsList.includes("workspace-notes")
+          ? 0.28
           : 0;
       const ruleSourceBoost =
         ruleIntent && (sourceChannel === "memory-md" || sourceChannel === "formal-policy")
@@ -647,15 +829,24 @@ export function buildCardArtifactCandidates(cards, query, maxCandidates = 6) {
         : 0;
       const score =
         overlap +
+        keywordOrderBoost +
         preferenceBoost +
+        preferenceKeywordBoost +
         ruleBoost +
         backgroundBoost +
         birthdayBoost +
         slotBoost -
         slotPenalty +
         projectBoost +
+        workspaceStructureBoost +
+        projectNavigationBoost +
+        workspaceNotesRuleBoost +
+        losslessBoost +
         configBoost +
+        installVerifyBoost +
+        releaseInstallBoost +
         providerBoost +
+        pendingRuleBoost +
         timezoneBoost +
         styleBoost +
         reminderBoost +
@@ -675,9 +866,15 @@ export function buildCardArtifactCandidates(cards, query, maxCandidates = 6) {
         statusRuleSourceBoost +
         sourceBoost +
         configSourceBoost +
+        installVerifySourceBoost +
+        projectNavigationSourceBoost +
+        losslessSourceBoost +
+        workspaceNotesRuleSourceBoost +
+        pendingRuleSourceBoost +
         providerSourceBoost +
         ruleSourceBoost +
         recommendationBoost -
+        identityKeywordPenalty -
         styleGenericPenalty -
         styleSessionPenalty -
         reminderPenalty -
@@ -687,7 +884,17 @@ export function buildCardArtifactCandidates(cards, query, maxCandidates = 6) {
         mainBoundaryPenalty -
         mainNegativeBoundaryPenalty -
         statusRulePenalty -
+        installVerifyGenericPenalty -
+        projectNavigationGenericPenalty -
+        workspaceStructureGenericPenalty -
+        workspaceNotesRuleGenericPenalty -
+        losslessGenericPenalty -
+        releaseInstallGenericPenalty -
+        pendingRuleGenericPenalty -
+        projectLosslessPenalty -
         configProjectPenalty -
+        projectWorkspaceNotesPenalty -
+        workspaceStructureNotesPenalty -
         projectConfigPenalty -
         ruleSessionPenalty;
       return {
@@ -1060,25 +1267,197 @@ export function buildProjectCardsFromMarkdown(markdown = "", filePath = "README.
   ];
 
   const hasProjectSignal = projectPatterns.some((pattern) => pattern.test(text));
-  if (!hasProjectSignal) {
-    return cards;
+  if (hasProjectSignal) {
+    cards.push({
+      title: "项目定位",
+      type: "longTerm",
+      fact: "这是一个面向 OpenClaw 的 context engine 插件，负责把长期记忆更稳定地变成当前轮可用的上下文。",
+      tags: ["long-term", "project", "memory"],
+      sourceFile: path.basename(filePath),
+      sourcePath: filePath,
+      sourceChannel: "project-doc",
+      recommendation: {
+        action: "review-memory-md",
+        confidence: "high"
+      }
+    });
   }
 
-  cards.push({
-    title: "项目定位",
-    type: "longTerm",
-    fact: "这是一个面向 OpenClaw 的 context engine 插件，负责把长期记忆更稳定地变成当前轮可用的上下文。",
-    tags: ["long-term", "project", "memory"],
-    sourceFile: path.basename(filePath),
-    sourcePath: filePath,
-    sourceChannel: "project-doc",
-    recommendation: {
-      action: "review-memory-md",
-      confidence: "high"
-    }
-  });
+  if (
+    path.basename(filePath) === "project-roadmap.md"
+    && /project-roadmap\.md|master roadmap|主 roadmap|总索引/i.test(text)
+    && /memory-search-roadmap\.md|专项 roadmap|workstream roadmap/i.test(text)
+  ) {
+    cards.push({
+      title: "项目文档导航",
+      type: "longTerm",
+      fact: "项目总 roadmap 看 project-roadmap.md；memory search 专项 roadmap 看 reports/memory-search-roadmap.md。",
+      tags: ["long-term", "project", "project-nav", "roadmap", "docs"],
+      sourceFile: path.basename(filePath),
+      sourcePath: filePath,
+      sourceChannel: "project-doc",
+      recommendation: {
+        action: "review-memory-md",
+        confidence: "high"
+      }
+    });
+  }
+
+  if (
+    /workspace\//.test(text)
+    && /MEMORY\.md/.test(text)
+    && /notes\//.test(text)
+  ) {
+    cards.push({
+      title: "项目内置 workspace 结构",
+      type: "longTerm",
+      fact: "项目内置 workspace 建议是：workspace/MEMORY.md 放长期规则，workspace/memory/ 放 daily memory，workspace/notes/ 放背景笔记。",
+      tags: ["long-term", "project", "workspace", "memory"],
+      sourceFile: path.basename(filePath),
+      sourcePath: filePath,
+      sourceChannel: "project-doc",
+      recommendation: {
+        action: "review-memory-md",
+        confidence: "high"
+      }
+    });
+  }
+
+  if (
+    /不是所有笔记都会进入 stable card|不是所有文件都会进入 stable card/i.test(text)
+    && /一句话结论|适用场景/.test(text)
+    && /历史 roadmap|临时配置说明|背景 notes|背景笔记/.test(text)
+  ) {
+    cards.push({
+      title: "workspace notes 准入规则",
+      type: "longTerm",
+      fact: "workspace/notes 里只有带明确总结和适用场景、并且表达稳定概念或项目分工的 notes，才适合进入 stable card；历史 roadmap 和临时配置说明应只保留为背景 notes。",
+      tags: ["long-term", "project", "workspace-notes", "rule"],
+      sourceFile: path.basename(filePath),
+      sourcePath: filePath,
+      sourceChannel: "project-doc",
+      recommendation: {
+        action: "review-memory-md",
+        confidence: "high"
+      }
+    });
+  }
+
+  if (
+    /openclaw 内置长期记忆负责长期保存和检索/i.test(text)
+    && /lossless.+上下文编排|信息保真/i.test(text)
+  ) {
+    cards.push({
+      title: "长期记忆与 Lossless 分工",
+      type: "longTerm",
+      fact: "长期记忆负责存和找；Lossless / context engine 负责把当前这一轮最该看的内容更好地送进模型。",
+      tags: ["long-term", "project", "lossless", "context", "concept"],
+      sourceFile: path.basename(filePath),
+      sourcePath: filePath,
+      sourceChannel: "project-doc",
+      recommendation: {
+        action: "review-memory-md",
+        confidence: "high"
+      }
+    });
+  }
+
+  if (
+    /plugins install git\+https:\/\/github\.com\/redcreen\/memory-context-claw\.git#v/i.test(text)
+    && /git\+https:\/\/github\.com\/redcreen\/memory-context-claw\.git/.test(text)
+    && (/release tag|稳定版|当前 `main`|current `main`|开发版安装/i.test(text))
+  ) {
+    cards.push({
+      title: "安装发布规则",
+      type: "longTerm",
+      fact: "普通用户默认应安装 release tag；只有主动跟进最新开发时才直接安装 main。",
+      tags: ["long-term", "project", "config", "release", "install"],
+      sourceFile: path.basename(filePath),
+      sourcePath: filePath,
+      sourceChannel: "project-doc",
+      recommendation: {
+        action: "review-memory-md",
+        confidence: "high"
+      }
+    });
+  }
 
   return cards;
+}
+
+export function classifyWorkspaceNoteCardEligibility(markdown = "", filePath = "") {
+  const relativePath = String(filePath || "").replace(/\\/g, "/");
+  const text = String(markdown || "");
+  const baseName = path.posix.basename(relativePath);
+
+  if (!relativePath.startsWith("workspace/notes/")) {
+    return {
+      eligible: false,
+      reason: "outside-workspace-notes",
+      noteType: "non-note"
+    };
+  }
+
+  const hasSummarySection = /##\s*一句话结论/.test(text);
+  const hasUseCasesSection = /##\s*适用场景/.test(text);
+  const hasStableStructure = hasSummarySection && hasUseCasesSection;
+  const isHistoricalRoadmap =
+    /roadmap/i.test(baseName) || /##\s*当前已经做完的事情|##\s*接下来要做什么/.test(text);
+  const isConfigDuplicate =
+    /config/i.test(baseName)
+    || (/##\s*最小配置/.test(text) && /openclaw\.json|plugins\.entries\["memory-context-claw"\]/.test(text));
+  const hasLosslessConceptSignal =
+    /openclaw 内置长期记忆负责长期保存和检索/i.test(text)
+    && /lossless.+上下文编排|信息保真/i.test(text);
+  const hasProjectRationaleSignal =
+    /面向 OpenClaw 的 [`']?context engine[`']? 插件|memory-context-claw.+?OpenClaw.+?context engine plugin/i.test(text)
+    && /把长期记忆更稳定地变成当前轮可用的上下文|上下文组装/.test(text);
+
+  if (!hasStableStructure) {
+    return {
+      eligible: false,
+      reason: "missing-stable-note-structure",
+      noteType: "unstructured-note"
+    };
+  }
+
+  if (isHistoricalRoadmap) {
+    return {
+      eligible: false,
+      reason: "historical-roadmap-note",
+      noteType: "historical-note"
+    };
+  }
+
+  if (isConfigDuplicate) {
+    return {
+      eligible: false,
+      reason: "covered-by-canonical-config-doc",
+      noteType: "config-note"
+    };
+  }
+
+  if (hasLosslessConceptSignal) {
+    return {
+      eligible: true,
+      reason: "stable-concept-note",
+      noteType: "concept-note"
+    };
+  }
+
+  if (hasProjectRationaleSignal) {
+    return {
+      eligible: true,
+      reason: "stable-project-rationale-note",
+      noteType: "project-note"
+    };
+  }
+
+  return {
+    eligible: false,
+    reason: "no-stable-card-signal",
+    noteType: "background-note"
+  };
 }
 
 export function buildConfigCardsFromMarkdown(markdown = "", filePath = "configuration.md") {
@@ -1115,6 +1494,44 @@ export function buildConfigCardsFromMarkdown(markdown = "", filePath = "configur
       type: "longTerm",
       fact: "memorySearch.provider 决定长期记忆检索使用哪个 embedding / memory_search provider，不影响主聊天模型。",
       tags: ["long-term", "project", "config", "provider", "embedding", "memory"],
+      sourceFile: path.basename(filePath),
+      sourcePath: filePath,
+      sourceChannel: "config-doc",
+      recommendation: {
+        action: "review-memory-md",
+        confidence: "high"
+      }
+    });
+  }
+
+  if (
+    /plugins install git\+https:\/\/github\.com\/redcreen\/memory-context-claw\.git#v/i.test(text)
+    && /git\+https:\/\/github\.com\/redcreen\/memory-context-claw\.git/.test(text)
+  ) {
+    cards.push({
+      title: "安装发布规则",
+      type: "longTerm",
+      fact: "普通用户默认应安装 release tag；只有主动跟进最新开发时才直接安装 main。",
+      tags: ["long-term", "project", "config", "release", "install"],
+      sourceFile: path.basename(filePath),
+      sourcePath: filePath,
+      sourceChannel: "config-doc",
+      recommendation: {
+        action: "review-memory-md",
+        confidence: "high"
+      }
+    });
+  }
+
+  if (
+    /openclaw plugins list/.test(text)
+    && /openclaw memory status --json/.test(text)
+  ) {
+    cards.push({
+      title: "安装验证步骤",
+      type: "longTerm",
+      fact: "安装后先运行 openclaw plugins list，确认 memory-context-claw 已加载；再运行 openclaw memory status --json，确认长期记忆索引正常。",
+      tags: ["long-term", "project", "config", "verify"],
       sourceFile: path.basename(filePath),
       sourcePath: filePath,
       sourceChannel: "config-doc",
@@ -1172,6 +1589,26 @@ export function buildPolicyCardsFromMarkdown(markdown = "", filePath = "formal-m
     });
   }
 
+  if (
+    /待确认信息必须优先进入 pending/.test(text)
+    && /不得默认写入 `?MEMORY\.md`?/.test(text)
+    && /memory\/YYYY-MM-DD\.md/.test(text)
+  ) {
+    cards.push({
+      title: "待确认信息准入规则",
+      type: "longTerm",
+      fact: "待确认信息应该先进入 pending，不得默认写入 MEMORY.md 或 memory/YYYY-MM-DD.md。",
+      tags: ["long-term", "memory", "rule", "policy", "pending"],
+      sourceFile: path.basename(filePath),
+      sourcePath: filePath,
+      sourceChannel: "formal-policy",
+      recommendation: {
+        action: "review-memory-md",
+        confidence: "high"
+      }
+    });
+  }
+
   return cards;
 }
 
@@ -1221,6 +1658,37 @@ async function readPluginStableProjectCards(pluginRoot, logger) {
         `[memory-context-claw] project card load skipped (${fullPath}): ${String(error)}`
       );
     }
+  }
+
+  const notesDir = path.join(pluginRoot, "workspace", "notes");
+  try {
+    const noteFiles = (await fs.readdir(notesDir))
+      .filter((entry) => entry.endsWith(".md"))
+      .sort();
+
+    for (const entry of noteFiles) {
+      const fullPath = path.join(notesDir, entry);
+      const relativePath = path.posix.join("workspace", "notes", entry);
+      try {
+        const raw = await fs.readFile(fullPath, "utf8");
+        const eligibility = classifyWorkspaceNoteCardEligibility(raw, relativePath);
+        if (!eligibility.eligible) {
+          logger?.debug?.(
+            `[memory-context-claw] project note card skipped (${relativePath}): ${eligibility.reason}`
+          );
+          continue;
+        }
+        cards.push(...buildProjectCardsFromMarkdown(raw, relativePath));
+      } catch (error) {
+        logger?.debug?.(
+          `[memory-context-claw] project note card load skipped (${fullPath}): ${String(error)}`
+        );
+      }
+    }
+  } catch (error) {
+    logger?.debug?.(
+      `[memory-context-claw] project note card load skipped (${notesDir}): ${String(error)}`
+    );
   }
 
   return cards;

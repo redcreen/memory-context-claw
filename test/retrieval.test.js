@@ -6,10 +6,12 @@ import path from "node:path";
 import {
   buildStableMemoryCardsFromMarkdown,
   buildCardArtifactCandidates,
+  classifyWorkspaceNoteCardEligibility,
   buildConfigCardsFromMarkdown,
   buildPolicyCardsFromMarkdown,
   buildProjectCardsFromMarkdown,
   extractJsonPayload,
+  readCardArtifactCandidates,
   retrieveMemoryCandidates
 } from "../src/retrieval.js";
 import { shouldExcludeMemoryPath } from "../src/utils.js";
@@ -37,13 +39,13 @@ test("extractJsonPayload ignores leading plugin log lines", () => {
 test("shouldExcludeMemoryPath filters plugin repo paths", () => {
   assert.equal(
     shouldExcludeMemoryPath(
-      "../../Project/长记忆/context-assembly-claw/README.md",
+      "../../Project/context-assembly-claw/README.md",
       ["/context-assembly-claw/"]
     ),
     true
   );
   assert.equal(
-    shouldExcludeMemoryPath("../../Project/长记忆/MEMORY.md", ["/context-assembly-claw/"]),
+    shouldExcludeMemoryPath("workspace/MEMORY.md", ["/context-assembly-claw/"]),
     false
   );
 });
@@ -598,6 +600,131 @@ test("buildProjectCardsFromMarkdown derives stable project positioning cards", (
   assert.match(cards[0].fact, /OpenClaw.+context engine.+长期记忆更稳定地变成当前轮可用的上下文/);
 });
 
+test("buildProjectCardsFromMarkdown derives workspace-structure project card", () => {
+  const cards = buildProjectCardsFromMarkdown(
+    [
+      "workspace/",
+      "├── MEMORY.md",
+      "├── memory/",
+      "└── notes/"
+    ].join("\n"),
+    "README.md"
+  );
+
+  assert.ok(cards.some((card) => card.title === "项目内置 workspace 结构" && /workspace\/MEMORY\.md/.test(card.fact)));
+});
+
+test("buildProjectCardsFromMarkdown derives release-install project card", () => {
+  const cards = buildProjectCardsFromMarkdown(
+    [
+      "stable users: install the published release tag",
+      "early adopters: install the current `main`",
+      "openclaw plugins install git+https://github.com/redcreen/memory-context-claw.git#v0.1.0",
+      "openclaw plugins install git+https://github.com/redcreen/memory-context-claw.git"
+    ].join("\n"),
+    "README.md"
+  );
+
+  assert.ok(cards.some((card) => card.title === "安装发布规则" && /release tag.*main/.test(card.fact)));
+});
+
+test("buildProjectCardsFromMarkdown derives lossless-understanding concept card", () => {
+  const cards = buildProjectCardsFromMarkdown(
+    [
+      "OpenClaw 内置长期记忆负责长期保存和检索。",
+      "Lossless 更偏向上下文编排与信息保真。"
+    ].join("\n"),
+    "workspace/notes/openclaw-memory-vs-lossless.md"
+  );
+
+  assert.ok(cards.some((card) => card.title === "长期记忆与 Lossless 分工" && /长期记忆负责存和找.*Lossless.*送进模型/.test(card.fact)));
+});
+
+test("buildProjectCardsFromMarkdown derives workspace-notes admissibility card", () => {
+  const cards = buildProjectCardsFromMarkdown(
+    [
+      "不是所有笔记都会进入 stable card。",
+      "只有带明确总结和适用场景结构、并且表达稳定项目概念/分工的笔记，才适合进入 stable card。",
+      "历史 roadmap、临时配置说明只保留为背景 notes。",
+      "一句话结论",
+      "适用场景"
+    ].join("\n"),
+    "README.md"
+  );
+
+  assert.ok(cards.some((card) => card.title === "workspace notes 准入规则" && /历史 roadmap.*背景 notes/.test(card.fact)));
+});
+
+test("classifyWorkspaceNoteCardEligibility accepts stable concept notes with clear structure", () => {
+  const result = classifyWorkspaceNoteCardEligibility(
+    [
+      "# OpenClaw 内置长期记忆 vs Lossless 类插件",
+      "",
+      "## 一句话结论",
+      "OpenClaw 内置长期记忆负责长期保存和检索，Lossless 更偏向上下文编排与信息保真。",
+      "",
+      "## 适用场景",
+      "- 当需要解释为什么已经有长期记忆还会推荐 Lossless",
+      "",
+      "OpenClaw 内置长期记忆负责长期保存和检索。",
+      "Lossless 更偏向上下文编排与信息保真。"
+    ].join("\n"),
+    "workspace/notes/openclaw-memory-vs-lossless.md"
+  );
+
+  assert.equal(result.eligible, true);
+  assert.equal(result.noteType, "concept-note");
+  assert.equal(result.reason, "stable-concept-note");
+});
+
+test("classifyWorkspaceNoteCardEligibility rejects historical roadmap notes", () => {
+  const result = classifyWorkspaceNoteCardEligibility(
+    [
+      "# Context Assembly Claw 项目 Roadmap",
+      "",
+      "## 一句话结论",
+      "这是一个面向 OpenClaw 的 context engine 插件。",
+      "",
+      "## 适用场景",
+      "- 看项目阶段推进",
+      "",
+      "## 当前已经做完的事情",
+      "- 插件骨架已经完成",
+      "",
+      "## 接下来要做什么",
+      "- 发布前整理"
+    ].join("\n"),
+    "workspace/notes/context-assembly-claw-roadmap.md"
+  );
+
+  assert.equal(result.eligible, false);
+  assert.equal(result.noteType, "historical-note");
+  assert.equal(result.reason, "historical-roadmap-note");
+});
+
+test("classifyWorkspaceNoteCardEligibility rejects config notes covered by canonical docs", () => {
+  const result = classifyWorkspaceNoteCardEligibility(
+    [
+      "# Memory Context Claw 配置说明",
+      "",
+      "## 一句话结论",
+      "memory-context-claw 的主配置分成两层。",
+      "",
+      "## 适用场景",
+      "- 当需要解释配置应该怎么写",
+      "",
+      "## 最小配置",
+      "openclaw.json",
+      "plugins.entries[\"memory-context-claw\"].config"
+    ].join("\n"),
+    "workspace/notes/memory-context-claw-config.md"
+  );
+
+  assert.equal(result.eligible, false);
+  assert.equal(result.noteType, "config-note");
+  assert.equal(result.reason, "covered-by-canonical-config-doc");
+});
+
 test("buildPolicyCardsFromMarkdown derives stable formal memory policy cards", () => {
   const cards = buildPolicyCardsFromMarkdown(
     [
@@ -616,6 +743,7 @@ test("buildPolicyCardsFromMarkdown derives stable formal memory policy cards", (
 
   assert.ok(cards.some((card) => card.title === "正式记忆准入规则" && /长期稳定.*反复复用/.test(card.fact)));
   assert.ok(cards.some((card) => card.title === "正式 daily 准入规则" && /已确认.*阶段事实|近期确认信息/.test(card.fact)));
+  assert.ok(cards.some((card) => card.title === "待确认信息准入规则" && /待确认信息应该先进入 pending/.test(card.fact)));
 });
 
 test("buildConfigCardsFromMarkdown derives stable plugin config cards", () => {
@@ -637,6 +765,30 @@ test("buildConfigCardsFromMarkdown derives stable plugin config cards", () => {
   );
 
   assert.ok(cards.some((card) => card.title === "插件最小配置" && /contextEngine.*enabled: true/.test(card.fact)));
+});
+
+test("buildConfigCardsFromMarkdown derives release-install config card", () => {
+  const cards = buildConfigCardsFromMarkdown(
+    [
+      "openclaw plugins install git+https://github.com/redcreen/memory-context-claw.git#v0.1.0",
+      "openclaw plugins install git+https://github.com/redcreen/memory-context-claw.git"
+    ].join("\n"),
+    "README.md"
+  );
+
+  assert.ok(cards.some((card) => card.title === "安装发布规则" && /release tag.*main/.test(card.fact)));
+});
+
+test("buildConfigCardsFromMarkdown derives install-verify config card", () => {
+  const cards = buildConfigCardsFromMarkdown(
+    [
+      "openclaw plugins list",
+      "openclaw memory status --json"
+    ].join("\n"),
+    "configuration.md"
+  );
+
+  assert.ok(cards.some((card) => card.title === "安装验证步骤" && /plugins list.*memory status --json/.test(card.fact)));
 });
 
 test("buildCardArtifactCandidates prefers config cards over project cards for config queries", () => {
@@ -687,6 +839,343 @@ test("buildCardArtifactCandidates prefers project cards over config cards for pr
   assert.ok(candidates.length >= 2);
   assert.equal(candidates[0].path, "README.md");
   assert.match(candidates[0].snippet, /context engine|长期记忆更稳定地变成当前轮可用的上下文/);
+});
+
+test("buildCardArtifactCandidates prefers release-install cards for install queries", () => {
+  const candidates = buildCardArtifactCandidates([
+    {
+      title: "安装发布规则",
+      fact: "普通用户默认应安装 release tag；只有主动跟进最新开发时才直接安装 main。",
+      tags: ["long-term", "project", "config", "release", "install"],
+      sourcePath: "README.md",
+      sourceChannel: "config-doc",
+      recommendation: { action: "review-memory-md", confidence: "high" }
+    },
+    {
+      title: "项目定位",
+      fact: "这是一个面向 OpenClaw 的 context engine 插件，负责把长期记忆更稳定地变成当前轮可用的上下文。",
+      tags: ["long-term", "project", "memory"],
+      sourcePath: "README.md",
+      sourceChannel: "project-doc",
+      recommendation: { action: "review-memory-md", confidence: "high" }
+    }
+  ], "普通用户应该安装稳定版还是 main", 6);
+
+  assert.ok(candidates.length >= 1);
+  assert.equal(candidates[0].path, "README.md");
+  assert.match(candidates[0].snippet, /release tag|main/);
+});
+
+test("buildCardArtifactCandidates prefers install-verify cards for verification queries", () => {
+  const candidates = buildCardArtifactCandidates([
+    {
+      title: "安装验证步骤",
+      fact: "安装后先运行 openclaw plugins list，确认 memory-context-claw 已加载；再运行 openclaw memory status --json，确认长期记忆索引正常。",
+      tags: ["long-term", "project", "config", "verify"],
+      sourcePath: "configuration.md",
+      sourceChannel: "config-doc",
+      recommendation: { action: "review-memory-md", confidence: "high" }
+    },
+    {
+      title: "插件最小配置",
+      fact: "memory-context-claw 的最小配置是：把它挂到 contextEngine，并在 entries 里 enabled: true。",
+      tags: ["long-term", "project", "config", "memory"],
+      sourcePath: "configuration.md",
+      sourceChannel: "config-doc",
+      recommendation: { action: "review-memory-md", confidence: "high" }
+    }
+  ], "安装后怎么确认插件已经生效", 6);
+
+  assert.ok(candidates.length >= 1);
+  assert.equal(candidates[0].path, "configuration.md");
+  assert.match(candidates[0].snippet, /plugins list|memory status --json|已加载/);
+});
+
+test("buildCardArtifactCandidates prefers workspace-layout project cards for workspace structure queries", () => {
+  const candidates = buildCardArtifactCandidates([
+    {
+      title: "项目内置 workspace 结构",
+      fact: "项目内置 workspace 建议是：workspace/MEMORY.md 放长期规则，workspace/memory/ 放 daily memory，workspace/notes/ 放背景笔记。",
+      tags: ["long-term", "project", "workspace", "memory"],
+      sourcePath: "README.md",
+      sourceChannel: "project-doc",
+      recommendation: { action: "review-memory-md", confidence: "high" }
+    },
+    {
+      title: "项目定位",
+      fact: "这是一个面向 OpenClaw 的 context engine 插件，负责把长期记忆更稳定地变成当前轮可用的上下文。",
+      tags: ["long-term", "project", "memory"],
+      sourcePath: "README.md",
+      sourceChannel: "project-doc",
+      recommendation: { action: "review-memory-md", confidence: "high" }
+    }
+  ], "这个项目的内置 workspace 目录应该怎么组织", 6);
+
+  assert.ok(candidates.length >= 1);
+  assert.match(candidates[0].snippet, /workspace\/MEMORY\.md|workspace\/memory\/|workspace\/notes\//);
+});
+
+test("buildCardArtifactCandidates prefers workspace-layout cards for long-memory directory rule queries", () => {
+  const candidates = buildCardArtifactCandidates([
+    {
+      title: "项目内置 workspace 结构",
+      fact: "项目内置 workspace 建议是：workspace/MEMORY.md 放长期规则，workspace/memory/ 放 daily memory，workspace/notes/ 放背景笔记。",
+      tags: ["long-term", "project", "workspace", "memory"],
+      sourcePath: "README.md",
+      sourceChannel: "project-doc",
+      recommendation: { action: "review-memory-md", confidence: "high" }
+    },
+    {
+      title: "正式记忆准入规则",
+      fact: "MEMORY.md 应该放的是长期稳定、会被反复复用的内容。",
+      tags: ["long-term", "memory", "rule", "workflow", "policy"],
+      sourcePath: "formal-memory-policy.md",
+      sourceChannel: "formal-policy",
+      recommendation: { action: "review-memory-md", confidence: "high" }
+    }
+  ], "长期记忆目录规则是什么", 6);
+
+  assert.ok(candidates.length >= 1);
+  assert.equal(candidates[0].path, "README.md");
+  assert.match(candidates[0].snippet, /workspace\/MEMORY\.md|workspace\/memory\/|workspace\/notes\//);
+});
+
+test("buildCardArtifactCandidates prefers workspace-notes admissibility cards for workspace notes rule queries", () => {
+  const candidates = buildCardArtifactCandidates([
+    {
+      title: "workspace notes 准入规则",
+      fact: "workspace/notes 里只有带明确总结和适用场景、并且表达稳定概念或项目分工的 notes，才适合进入 stable card；历史 roadmap 和临时配置说明应只保留为背景 notes。",
+      tags: ["long-term", "project", "workspace-notes", "rule"],
+      sourcePath: "README.md",
+      sourceChannel: "project-doc",
+      recommendation: { action: "review-memory-md", confidence: "high" }
+    },
+    {
+      title: "项目内置 workspace 结构",
+      fact: "项目内置 workspace 建议是：workspace/MEMORY.md 放长期规则，workspace/memory/ 放 daily memory，workspace/notes/ 放背景笔记。",
+      tags: ["long-term", "project", "workspace", "memory"],
+      sourcePath: "README.md",
+      sourceChannel: "project-doc",
+      recommendation: { action: "review-memory-md", confidence: "high" }
+    }
+  ], "workspace/notes 里的笔记什么时候能进入 stable card", 6);
+
+  assert.ok(candidates.length >= 1);
+  assert.match(candidates[0].snippet, /stable card|历史 roadmap|背景 notes/);
+});
+
+test("buildCardArtifactCandidates prefers pending-rule cards for pending placement queries", () => {
+  const candidates = buildCardArtifactCandidates([
+    {
+      title: "待确认信息准入规则",
+      fact: "待确认信息应该先进入 pending，不得默认写入 MEMORY.md 或 memory/YYYY-MM-DD.md。",
+      tags: ["long-term", "memory", "rule", "policy", "pending"],
+      sourcePath: "formal-memory-policy.md",
+      sourceChannel: "formal-policy",
+      recommendation: { action: "review-memory-md", confidence: "high" }
+    },
+    {
+      title: "正式记忆准入规则",
+      fact: "MEMORY.md 应该放的是长期稳定、会被反复复用的内容。",
+      tags: ["long-term", "memory", "rule", "workflow", "policy"],
+      sourcePath: "formal-memory-policy.md",
+      sourceChannel: "formal-policy",
+      recommendation: { action: "review-memory-md", confidence: "high" }
+    }
+  ], "待确认信息应该放哪里", 6);
+
+  assert.ok(candidates.length >= 1);
+  assert.match(candidates[0].snippet, /待确认信息应该先进入 pending|不得默认写入/);
+});
+
+test("buildCardArtifactCandidates prefers project-navigation cards for roadmap queries", () => {
+  const candidates = buildCardArtifactCandidates([
+    {
+      title: "项目文档导航",
+      fact: "项目总 roadmap 看 project-roadmap.md；memory search 专项 roadmap 看 reports/memory-search-roadmap.md。",
+      tags: ["long-term", "project", "project-nav", "roadmap", "docs"],
+      sourcePath: "project-roadmap.md",
+      sourceChannel: "project-doc",
+      recommendation: { action: "review-memory-md", confidence: "high" }
+    },
+    {
+      title: "正式记忆准入规则",
+      fact: "MEMORY.md 应该放的是长期稳定、会被反复复用的内容。",
+      tags: ["long-term", "memory", "rule", "workflow", "policy"],
+      sourcePath: "formal-memory-policy.md",
+      sourceChannel: "formal-policy",
+      recommendation: { action: "review-memory-md", confidence: "high" }
+    }
+  ], "项目路线图应该看哪个文档", 6);
+
+  assert.ok(candidates.length >= 1);
+  assert.equal(candidates[0].path, "project-roadmap.md");
+  assert.match(candidates[0].snippet, /project-roadmap\.md|memory-search-roadmap\.md/);
+});
+
+test("buildCardArtifactCandidates prefers lossless concept cards for lossless-understanding queries", () => {
+  const candidates = buildCardArtifactCandidates([
+    {
+      title: "长期记忆与 Lossless 分工",
+      fact: "长期记忆负责存和找；Lossless / context engine 负责把当前这一轮最该看的内容更好地送进模型。",
+      tags: ["long-term", "project", "lossless", "context", "concept"],
+      sourcePath: "workspace/notes/openclaw-memory-vs-lossless.md",
+      sourceChannel: "project-doc",
+      recommendation: { action: "review-memory-md", confidence: "high" }
+    },
+    {
+      title: "项目定位",
+      fact: "这是一个面向 OpenClaw 的 context engine 插件，负责把长期记忆更稳定地变成当前轮可用的上下文。",
+      tags: ["long-term", "project", "memory"],
+      sourcePath: "README.md",
+      sourceChannel: "project-doc",
+      recommendation: { action: "review-memory-md", confidence: "high" }
+    }
+  ], "为什么已经有长期记忆了，还需要 Lossless", 6);
+
+  assert.ok(candidates.length >= 1);
+  assert.equal(candidates[0].path, "workspace/notes/openclaw-memory-vs-lossless.md");
+  assert.match(candidates[0].snippet, /长期记忆负责存和找|Lossless/);
+});
+
+test("buildProjectCardsFromMarkdown derives project navigation card from project roadmap", () => {
+  const cards = buildProjectCardsFromMarkdown(
+    [
+      "This repo now uses three roadmap layers:",
+      "",
+      "- project-roadmap.md",
+      "- reports/memory-search-roadmap.md",
+      "",
+      "master roadmap / index",
+      "workstream roadmap"
+    ].join("\n"),
+    "project-roadmap.md"
+  );
+
+  assert.ok(cards.some((card) => card.title === "项目文档导航" && /project-roadmap\.md.*memory-search-roadmap\.md/.test(card.fact)));
+});
+
+test("buildCardArtifactCandidates keeps project-positioning cards ahead of lossless concept cards for generic project queries", () => {
+  const candidates = buildCardArtifactCandidates([
+    {
+      title: "项目定位",
+      fact: "这是一个面向 OpenClaw 的 context engine 插件，负责把长期记忆更稳定地变成当前轮可用的上下文。",
+      tags: ["long-term", "project", "memory"],
+      sourcePath: "README.md",
+      sourceChannel: "project-doc",
+      recommendation: { action: "review-memory-md", confidence: "high" }
+    },
+    {
+      title: "长期记忆与 Lossless 分工",
+      fact: "长期记忆负责存和找；Lossless / context engine 负责把当前这一轮最该看的内容更好地送进模型。",
+      tags: ["long-term", "project", "lossless", "context", "concept"],
+      sourcePath: "workspace/notes/openclaw-memory-vs-lossless.md",
+      sourceChannel: "project-doc",
+      recommendation: { action: "review-memory-md", confidence: "high" }
+    }
+  ], "这个项目主要解决什么问题", 6);
+
+  assert.ok(candidates.length >= 1);
+  assert.equal(candidates[0].path, "README.md");
+});
+
+test("readCardArtifactCandidates loads lossless concept cards from workspace notes", async () => {
+  const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "memory-context-claw-lossless-notes-"));
+  const artifactPath = path.join(tempDir, "cards.json");
+  const workspaceRoot = path.join(tempDir, "workspace");
+  const pluginRoot = path.join(tempDir, "plugin");
+
+  await fs.mkdir(path.join(workspaceRoot, "memory"), { recursive: true });
+  await fs.mkdir(path.join(pluginRoot, "workspace", "notes"), { recursive: true });
+  await fs.writeFile(path.join(workspaceRoot, "MEMORY.md"), "", "utf8");
+  await fs.writeFile(path.join(pluginRoot, "README.md"), "# readme\n", "utf8");
+  await fs.writeFile(path.join(pluginRoot, "project-roadmap.md"), "# roadmap\n", "utf8");
+  await fs.writeFile(path.join(pluginRoot, "formal-memory-policy.md"), "# policy\n", "utf8");
+  await fs.writeFile(path.join(pluginRoot, "configuration.md"), "# config\n", "utf8");
+  await fs.writeFile(artifactPath, "[]", "utf8");
+  await fs.writeFile(
+    path.join(pluginRoot, "workspace", "notes", "openclaw-memory-vs-lossless.md"),
+    [
+      "OpenClaw 内置长期记忆负责长期保存和检索。",
+      "Lossless 更偏向上下文编排与信息保真。"
+    ].join("\n"),
+    "utf8"
+  );
+
+  const candidates = await readCardArtifactCandidates({
+    query: "为什么已经有长期记忆了，还需要 Lossless",
+    maxCandidates: 6,
+    artifactPath,
+    workspaceRoot,
+    pluginRoot,
+    excludePaths: [],
+    logger: {}
+  });
+
+  assert.ok(candidates.length >= 1);
+  assert.equal(candidates[0].path, "workspace/notes/openclaw-memory-vs-lossless.md");
+  assert.match(candidates[0].snippet, /长期记忆负责存和找|Lossless/);
+});
+
+test("readCardArtifactCandidates skips ineligible workspace notes", async () => {
+  const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "memory-context-claw-notes-eligibility-"));
+  const artifactPath = path.join(tempDir, "cards.json");
+  const workspaceRoot = path.join(tempDir, "workspace");
+  const pluginRoot = path.join(tempDir, "plugin");
+
+  await fs.mkdir(path.join(workspaceRoot, "memory"), { recursive: true });
+  await fs.mkdir(path.join(pluginRoot, "workspace", "notes"), { recursive: true });
+  await fs.writeFile(path.join(workspaceRoot, "MEMORY.md"), "", "utf8");
+  await fs.writeFile(path.join(pluginRoot, "README.md"), "# readme\n", "utf8");
+  await fs.writeFile(path.join(pluginRoot, "project-roadmap.md"), "# roadmap\n", "utf8");
+  await fs.writeFile(path.join(pluginRoot, "formal-memory-policy.md"), "# policy\n", "utf8");
+  await fs.writeFile(path.join(pluginRoot, "configuration.md"), "# config\n", "utf8");
+  await fs.writeFile(artifactPath, "[]", "utf8");
+  await fs.writeFile(
+    path.join(pluginRoot, "workspace", "notes", "context-assembly-claw-roadmap.md"),
+    [
+      "# Context Assembly Claw 项目 Roadmap",
+      "",
+      "## 一句话结论",
+      "这是一个面向 OpenClaw 的 context engine 插件。",
+      "",
+      "## 适用场景",
+      "- 看项目阶段推进",
+      "",
+      "## 当前已经做完的事情",
+      "- 插件骨架已经完成"
+    ].join("\n"),
+    "utf8"
+  );
+  await fs.writeFile(
+    path.join(pluginRoot, "workspace", "notes", "memory-context-claw-config.md"),
+    [
+      "# Memory Context Claw 配置说明",
+      "",
+      "## 一句话结论",
+      "配置分成两层。",
+      "",
+      "## 适用场景",
+      "- 当需要解释配置应该怎么写",
+      "",
+      "## 最小配置",
+      "openclaw.json",
+      "plugins.entries[\"memory-context-claw\"].config"
+    ].join("\n"),
+    "utf8"
+  );
+
+  const candidates = await readCardArtifactCandidates({
+    query: "这个项目主要解决什么问题",
+    maxCandidates: 6,
+    artifactPath,
+    workspaceRoot,
+    pluginRoot,
+    excludePaths: [],
+    logger: {}
+  });
+
+  assert.ok(candidates.every((item) => !/workspace\/notes\/context-assembly-claw-roadmap\.md|workspace\/notes\/memory-context-claw-config\.md/.test(item.path)));
 });
 
 test("buildCardArtifactCandidates promotes birthday and family cards for personal fact queries", () => {

@@ -40,12 +40,12 @@ test("assemble applies llm rerank when enabled and candidates are close", async 
     retrievalFn: async () => [
       makeCandidate({
         id: "cand-1",
-        path: "../../Project/长记忆/openclaw-memory-vs-lossless.md",
+        path: "workspace/notes/openclaw-memory-vs-lossless.md",
         retrievalScore: 0.79
       }),
       makeCandidate({
         id: "cand-2",
-        path: "../../Project/长记忆/MEMORY.md",
+        path: "workspace/MEMORY.md",
         kind: "memoryFile",
         retrievalScore: 0.78
       })
@@ -65,7 +65,7 @@ test("assemble applies llm rerank when enabled and candidates are close", async 
   });
 
   assert.equal(rerankCalls, 1);
-  assert.match(result.systemPromptAddition, /Path: \.\.\/\.\.\/Project\/长记忆\/MEMORY\.md/);
+  assert.match(result.systemPromptAddition, /Path: workspace\/MEMORY\.md/);
   assert.ok(
     result.selectedCandidates.findIndex((item) => item.path.endsWith("/MEMORY.md")) === 0
   );
@@ -88,13 +88,13 @@ test("assemble skips llm rerank when heuristic winner is clearly ahead", async (
     retrievalFn: async () => [
       makeCandidate({
         id: "cand-1",
-        path: "../../Project/长记忆/MEMORY.md",
+        path: "workspace/MEMORY.md",
         kind: "memoryFile",
         retrievalScore: 0.98
       }),
       makeCandidate({
         id: "cand-2",
-        path: "../../Project/长记忆/other.md",
+        path: "workspace/notes/other.md",
         retrievalScore: 0.4
       })
     ],
