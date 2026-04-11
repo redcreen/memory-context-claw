@@ -8,6 +8,29 @@
 
 把 `src/unified-memory-core/` 这条产品主干维持成可扩展的共享记忆核心，而不是只服务当前 OpenClaw 适配层。
 
+## Boundary
+
+`core-product` 不是单独指 `self-learning`。
+
+这里说的 `core-product`，指的是 `src/unified-memory-core/` 这一整条产品主干，包括：
+
+- Source System
+- Reflection System
+- Memory Registry
+- Projection System
+- Governance System
+
+关系是：
+
+- `plugin-runtime` = OpenClaw 侧当前运行时行为
+- `core-product` = 统一记忆核心产品主干
+- `self-learning` = `core-product` 里最可能优先开启的下一增强方向之一，主要落在 Reflection / Registry / Projection / Governance 这几块
+
+所以：
+
+- `core-product` 不等于 `self-learning`
+- `self-learning` 只是 `core-product` 后续 phase 的候选主线
+
 ## Current Slice
 
 `baseline complete; waiting for next enhancement-phase planning`

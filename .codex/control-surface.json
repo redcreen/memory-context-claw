@@ -1,0 +1,18 @@
+{
+  "tier": "large",
+  "officialModules": [
+    "source-system",
+    "reflection-system",
+    "memory-registry",
+    "projection-system",
+    "governance-system",
+    "openclaw-adapter",
+    "codex-adapter"
+  ],
+  "requiredFiles": [
+    ".codex/brief.md",
+    ".codex/plan.md",
+    ".codex/status.md",
+    ".codex/module-dashboard.md"
+  ]
+}

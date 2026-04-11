@@ -11,7 +11,7 @@
 
 ## Active Slice
 
-`plugin-runtime stable-fact expansion under module view`
+`openclaw-adapter stable-fact expansion under module view`
 
 ## Done
 
@@ -41,15 +41,14 @@
 - 模块视角控制面已补齐：
   - `docs/module-map.md`
   - `.codex/module-dashboard.md`
-  - `.codex/subprojects/core-product.md`
-  - `.codex/subprojects/plugin-runtime.md`
-  - `.codex/subprojects/memory-governance.md`
+  - `.codex/modules/*.md`
 - README / COMMANDS / 主 roadmap 已接入模块视角入口
 
 ## In Progress
 
-- 按模块视角继续推进 `plugin-runtime`
-- 保持 `memory-governance` 作为常规维护面运行
+- 按模块视角继续推进 `openclaw-adapter`
+- 保持 `governance-system` 作为常规治理面运行
+- 为 `reflection-system` / `projection-system` / `codex-adapter` 明确下一增强入口
 
 ## Blockers / Open Decisions
 
@@ -58,6 +57,6 @@
 
 ## Next 3 Actions
 
-1. 在 `plugin-runtime` 模块里扩下一批稳定事实 / 稳定规则
+1. 在 `openclaw-adapter` 模块里扩下一批稳定事实 / 稳定规则
 2. 新的 memory-search 专项 case 先过 `eval:smoke-promotion`
-3. 为 `core-product` 明确下一增强 phase，而不是继续挂在 baseline 完成态
+3. 为 `reflection-system` 主导的下一增强 phase 定名并拆出验证方式

@@ -1,31 +1,30 @@
-# 项目助手命令速查
+# Commands
 
-推荐入口：
+## Chinese
 
-- 项目助手
+- `项目助手 菜单`
+- `项目助手 启动这个项目`
+- `项目助手 规划下一阶段`
+- `项目助手 恢复当前状态`
+- `项目助手 告诉我项目进展`
+- `项目助手 先做整改审计`
+- `项目助手 整改这个仓库`
+- `项目助手 文档整改这个仓库`
+- `项目助手 收口当前阶段`
 
-常用命令：
+## English
 
-- `项目助手 恢复`
-- `项目助手 进展`
-- `项目助手 规划`
-- `项目助手 执行`
-- `项目助手 整改`
-- `项目助手 收口`
+- `project assistant menu`
+- `project assistant start this project`
+- `project assistant plan the next phase`
+- `project assistant resume current status`
+- `project assistant progress`
+- `project assistant retrofit audit`
+- `project assistant retrofit this repo`
+- `project assistant docs retrofit this repo`
+- `project assistant close out the current phase`
 
-当前项目常用工程命令：
+## Notes
 
-- `npm test`
-- `npm run smoke:eval`
-- `npm run eval:memory-search:governance -- --write`
-- `npm run eval:smoke-promotion`
-- `npm run deploy:local`
-
-当前控制面入口：
-
-- `.codex/brief.md`
-- `.codex/plan.md`
-- `.codex/status.md`
-- `.codex/module-dashboard.md`
-- `docs/module-map.md`
-- `.codex/subprojects/*.md`
+- Use the language that matches the user.
+- Natural-language variations are fine as long as intent stays clear.
