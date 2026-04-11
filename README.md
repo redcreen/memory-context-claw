@@ -184,6 +184,7 @@ Current implementation entrypoints:
 - Reflection System MVP: [src/unified-memory-core/reflection-system.js](src/unified-memory-core/reflection-system.js)
 - daily reflection runner: [src/unified-memory-core/daily-reflection.js](src/unified-memory-core/daily-reflection.js)
 - Projection System MVP: [src/unified-memory-core/projection-system.js](src/unified-memory-core/projection-system.js)
+- independent execution review: [src/unified-memory-core/independent-execution.js](src/unified-memory-core/independent-execution.js)
 - OpenClaw / Codex adapter bridges: [src/unified-memory-core/adapter-bridges.js](src/unified-memory-core/adapter-bridges.js)
 - Governance System MVP: [src/unified-memory-core/governance-system.js](src/unified-memory-core/governance-system.js)
 - standalone runtime boundary: [src/unified-memory-core/standalone-runtime.js](src/unified-memory-core/standalone-runtime.js)
@@ -214,6 +215,12 @@ Current export inspect path:
 
 ```bash
 npm run umc:cli -- export inspect --consumer generic --format markdown
+```
+
+Current independent execution review path:
+
+```bash
+npm run umc:independent-review -- --format markdown
 ```
 
 **Local Development Install**
@@ -546,6 +553,7 @@ workspace/
 - Reflection System MVP: [src/unified-memory-core/reflection-system.js](src/unified-memory-core/reflection-system.js)
 - daily reflection runner: [src/unified-memory-core/daily-reflection.js](src/unified-memory-core/daily-reflection.js)
 - Projection System MVP: [src/unified-memory-core/projection-system.js](src/unified-memory-core/projection-system.js)
+- independent execution review: [src/unified-memory-core/independent-execution.js](src/unified-memory-core/independent-execution.js)
 - Governance System MVP: [src/unified-memory-core/governance-system.js](src/unified-memory-core/governance-system.js)
 - OpenClaw / Codex adapter bridge: [src/unified-memory-core/adapter-bridges.js](src/unified-memory-core/adapter-bridges.js)
 - standalone runtime 边界: [src/unified-memory-core/standalone-runtime.js](src/unified-memory-core/standalone-runtime.js)
@@ -576,6 +584,12 @@ npm run umc:cli -- govern repair --finding-code candidate_missing_decision_trail
 
 ```bash
 npm run umc:cli -- export inspect --consumer generic --format markdown
+```
+
+当前 independent execution review 最短路径：
+
+```bash
+npm run umc:independent-review -- --format markdown
 ```
 
 **本地开发安装**

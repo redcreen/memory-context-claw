@@ -401,14 +401,15 @@ Current implementation status:
 - standalone runtime and CLI baseline are implemented
 - standalone audit / repair / replay command baseline is implemented
 - standalone export inspect command baseline is implemented
-- next focus is split-readiness review inputs, ownership clarity, and deeper repair / replay paths
+- independent execution / split-readiness review baseline is implemented
+- next focus is ownership clarity, release-boundary notes, and deeper repair / replay paths
 
 ## Immediate Next Build
 
 The immediate next build should be:
 
-1. split-readiness review inputs for standalone execution
-2. make core / adapter ownership clarity explicit
+1. make core / adapter ownership clarity explicit
+2. add release-boundary notes and migration checklist draft
 3. deeper repair / replay paths for early artifacts
 4. keep advanced policy adaptation deferred
 
@@ -851,14 +852,15 @@ flowchart LR
 - standalone runtime 与 CLI 基线已实现
 - standalone audit / repair / replay 命令基线已实现
 - standalone export inspect 命令基线已实现
-- 下一步聚焦 split-ready 审查输入、ownership clarity，以及更深的 repair / replay 路径
+- independent execution / split-readiness review 基线已实现
+- 下一步聚焦 ownership clarity 文档收口、release boundary note，以及更深的 repair / replay 路径
 
 ## 当前建议立刻开做的内容
 
 下一步最适合直接开做的是：
 
-1. 为 split-ready 的独立执行补审查输入
-2. 明确 core / adapter ownership clarity
+1. 明确 core / adapter ownership clarity
+2. 补 release boundary note 与 migration checklist draft
 3. 给早期 artifacts 继续补更深的 repair / replay 路径
 4. 继续延后高阶 policy adaptation
 

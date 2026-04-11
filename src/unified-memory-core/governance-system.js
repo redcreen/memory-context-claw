@@ -268,6 +268,7 @@ export function createGovernanceSystem(options = {}) {
       projection_system: ["test/unified-memory-core/projection-system.test.js"],
       reflection_system: ["test/unified-memory-core/reflection-system.test.js"],
       daily_reflection: ["test/unified-memory-core/daily-reflection.test.js"],
+      independent_execution: ["test/unified-memory-core/independent-execution.test.js"],
       adapter_bridges: ["test/unified-memory-core/adapter-bridges.test.js"],
       openclaw_adapter_runtime: ["test/openclaw-adapter.test.js"],
       codex_adapter_runtime: ["test/codex-adapter.test.js"],

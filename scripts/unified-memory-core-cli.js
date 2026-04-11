@@ -6,7 +6,8 @@ import {
   renderExportReport,
   renderGovernanceAuditReport,
   renderGovernanceRepairRecord,
-  renderGovernanceReplayRun
+  renderGovernanceReplayRun,
+  renderIndependentExecutionReview
 } from "../src/unified-memory-core/index.js";
 
 function parseArgs(argv) {
@@ -176,6 +177,13 @@ async function run() {
     result = flags.format === "markdown"
       ? renderGovernanceReplayRun(replay)
       : replay;
+  } else if (family === "review" && action === "independent-execution") {
+    const review = await runtime.reviewIndependentExecution({
+      repoRoot: normalizeString(flags["repo-root"], process.cwd())
+    });
+    result = flags.format === "markdown"
+      ? renderIndependentExecutionReview(review)
+      : review;
   } else {
     result = {
       usage: [
@@ -186,7 +194,8 @@ async function run() {
         "export inspect --consumer generic [--format markdown]",
         "govern audit [--format markdown]",
         "govern repair --finding-code candidate_missing_decision_trail --action mark_for_review [--format markdown]",
-        "govern replay [--result queued] [--format markdown]"
+        "govern replay [--result queued] [--format markdown]",
+        "review independent-execution [--format markdown]"
       ]
     };
   }

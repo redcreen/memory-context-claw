@@ -7,6 +7,7 @@ import { createProjectionSystem } from "./projection-system.js";
 import { createGovernanceSystem } from "./governance-system.js";
 import { createReflectionSystem } from "./reflection-system.js";
 import { createDailyReflectionRunner } from "./daily-reflection.js";
+import { createIndependentExecutionReview } from "./independent-execution.js";
 import { parseNamespace, parseVisibility } from "./contracts.js";
 
 const DEFAULT_REGISTRY_DIR = path.join(
@@ -43,6 +44,7 @@ export function resolveStandaloneConfig(raw = {}) {
 export function createStandaloneRuntime(options = {}) {
   const clock = options.clock || (() => new Date());
   const config = resolveStandaloneConfig(options.config);
+  const repoRoot = options.repoRoot || process.cwd();
   const registry = createMemoryRegistry({
     rootDir: config.registryDir,
     clock
@@ -226,6 +228,12 @@ export function createStandaloneRuntime(options = {}) {
     auditNamespace,
     planRepair,
     planReplay,
+    reviewIndependentExecution(params = {}) {
+      return createIndependentExecutionReview({
+        repoRoot: params.repoRoot || repoRoot,
+        clock
+      });
+    },
     getStats() {
       return registry.getStats();
     }

@@ -48,3 +48,7 @@ export {
   createStandaloneRuntime,
   resolveStandaloneConfig
 } from "./standalone-runtime.js";
+export {
+  createIndependentExecutionReview,
+  renderIndependentExecutionReview
+} from "./independent-execution.js";
