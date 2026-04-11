@@ -239,6 +239,32 @@ Recommended rule:
 
 - keep this off unless first-stage behavior is already understandable
 
+#### `openclawAdapter`
+
+Controls the OpenClaw-side governed export loading boundary.
+
+Default:
+
+```json5
+{
+  enabled: true,
+  governedExports: {
+    enabled: true,
+    registryDir: "",
+    workspaceId: "",
+    tenant: "local",
+    scope: "workspace",
+    resource: "openclaw-shared-memory",
+    host: "",
+    allowedVisibilities: ["private", "workspace", "shared", "public"],
+    allowedStates: ["stable"],
+    maxCandidates: 4
+  }
+}
+```
+
+Use this when you want the OpenClaw adapter to load governed stable exports from the local registry before merging with builtin recall results.
+
 #### `weights`
 
 Advanced first-stage heuristic weights.
@@ -551,6 +577,32 @@ openclaw memory search "我爱吃什么"
 推荐原则：
 
 - 只有在第一阶段行为已经足够可理解时，才考虑打开它
+
+#### `openclawAdapter`
+
+控制 OpenClaw 侧的 governed export 加载边界。
+
+默认值：
+
+```json5
+{
+  enabled: true,
+  governedExports: {
+    enabled: true,
+    registryDir: "",
+    workspaceId: "",
+    tenant: "local",
+    scope: "workspace",
+    resource: "openclaw-shared-memory",
+    host: "",
+    allowedVisibilities: ["private", "workspace", "shared", "public"],
+    allowedStates: ["stable"],
+    maxCandidates: 4
+  }
+}
+```
+
+当你希望 OpenClaw adapter 在合并内置 recall 结果之前，先从本地 registry 加载 governed stable exports 时，就用这一组配置。
 
 #### `weights`
 

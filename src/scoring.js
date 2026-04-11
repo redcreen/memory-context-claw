@@ -12,6 +12,9 @@ function computePathKind(pathname, source = "memory") {
   if (source === "cardArtifact") {
     return "cardArtifact";
   }
+  if (source === "governedArtifact") {
+    return "governedArtifact";
+  }
   if (source === "sessions") {
     return "sessionMemory";
   }
@@ -427,7 +430,9 @@ export function scoreCandidates(candidates, prompt, weights, now = new Date()) {
         recency * weights.recency +
         sessionBoost * (weights.sessionRecent ?? 0) +
         intentBoost +
-        (pathKind === "cardArtifact" ? (weights.cardArtifact ?? 0) : 0) +
+        ((pathKind === "cardArtifact" || pathKind === "governedArtifact")
+          ? (weights.cardArtifact ?? 0)
+          : 0) +
         (pathKind === "memoryFile" ? weights.memoryFile : 0) +
         (pathKind === "dailyMemory" ? weights.dailyMemory : 0) +
         (pathKind === "workspaceDoc" ? weights.workspaceDoc : 0) -

@@ -68,6 +68,7 @@ The next step is:
   - `Projection System` MVP landed in [../../src/unified-memory-core/projection-system.js](../../src/unified-memory-core/projection-system.js)
   - OpenClaw / Codex adapter bridges landed in [../../src/unified-memory-core/adapter-bridges.js](../../src/unified-memory-core/adapter-bridges.js)
   - `Governance System` MVP landed in [../../src/unified-memory-core/governance-system.js](../../src/unified-memory-core/governance-system.js)
+  - OpenClaw adapter runtime integration landed in [../../src/openclaw-adapter.js](../../src/openclaw-adapter.js)
   - tranche-1 tests landed in [../../test/unified-memory-core](../../test/unified-memory-core)
 
 Important note:

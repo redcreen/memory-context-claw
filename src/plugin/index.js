@@ -23,7 +23,7 @@ export default {
     api.registerContextEngine("unified-memory-core", () => engine);
 
     api.logger.info(
-      `[unified-memory-core] loaded (enabled=${pluginConfig.enabled}, llmRerank=${pluginConfig.llmRerank.enabled}, maxCandidates=${pluginConfig.maxCandidates})`
+      `[unified-memory-core] loaded (enabled=${pluginConfig.enabled}, llmRerank=${pluginConfig.llmRerank.enabled}, maxCandidates=${pluginConfig.maxCandidates}, governedExports=${pluginConfig.openclawAdapter?.governedExports?.enabled !== false})`
     );
   }
 };

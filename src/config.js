@@ -46,6 +46,21 @@ const DEFAULT_CONFIG = {
     maxSnippetChars: 900,
     minScoreDeltaToSkip: 0.18
   },
+  openclawAdapter: {
+    enabled: true,
+    governedExports: {
+      enabled: true,
+      registryDir: "",
+      workspaceId: "",
+      tenant: "local",
+      scope: "workspace",
+      resource: "openclaw-shared-memory",
+      host: "",
+      allowedVisibilities: ["private", "workspace", "shared", "public"],
+      allowedStates: ["stable"],
+      maxCandidates: 4
+    }
+  },
   weights: {
     retrievalScore: 0.55,
     cardArtifact: 0.16,
@@ -89,6 +104,11 @@ export function resolvePluginConfig(raw) {
   const queryRewrite = mergeObject(DEFAULT_CONFIG.queryRewrite, cfg.queryRewrite);
   const memoryDistillation = mergeObject(DEFAULT_CONFIG.memoryDistillation, cfg.memoryDistillation);
   const weights = mergeObject(DEFAULT_CONFIG.weights, cfg.weights);
+  const openclawAdapter = mergeObject(DEFAULT_CONFIG.openclawAdapter, cfg.openclawAdapter);
+  const governedExports = mergeObject(
+    DEFAULT_CONFIG.openclawAdapter.governedExports,
+    openclawAdapter.governedExports
+  );
 
   return {
     enabled: cfg.enabled !== false,
@@ -205,6 +225,44 @@ export function resolvePluginConfig(raw) {
         1,
         DEFAULT_CONFIG.llmRerank.minScoreDeltaToSkip
       )
+    },
+    openclawAdapter: {
+      enabled: openclawAdapter.enabled !== false,
+      governedExports: {
+        enabled: governedExports.enabled !== false,
+        registryDir:
+          typeof governedExports.registryDir === "string"
+            ? governedExports.registryDir.trim()
+            : "",
+        workspaceId:
+          typeof governedExports.workspaceId === "string"
+            ? governedExports.workspaceId.trim()
+            : "",
+        tenant:
+          typeof governedExports.tenant === "string" && governedExports.tenant.trim()
+            ? governedExports.tenant.trim()
+            : DEFAULT_CONFIG.openclawAdapter.governedExports.tenant,
+        scope:
+          typeof governedExports.scope === "string" && governedExports.scope.trim()
+            ? governedExports.scope.trim()
+            : DEFAULT_CONFIG.openclawAdapter.governedExports.scope,
+        resource:
+          typeof governedExports.resource === "string" && governedExports.resource.trim()
+            ? governedExports.resource.trim()
+            : DEFAULT_CONFIG.openclawAdapter.governedExports.resource,
+        host:
+          typeof governedExports.host === "string"
+            ? governedExports.host.trim()
+            : "",
+        allowedVisibilities: mergeStringArrays([], governedExports.allowedVisibilities),
+        allowedStates: mergeStringArrays([], governedExports.allowedStates),
+        maxCandidates: clampNumber(
+          governedExports.maxCandidates,
+          1,
+          20,
+          DEFAULT_CONFIG.openclawAdapter.governedExports.maxCandidates
+        )
+      }
     },
     weights: {
       retrievalScore: Number(weights.retrievalScore ?? DEFAULT_CONFIG.weights.retrievalScore),

@@ -2,6 +2,7 @@ import { delegateCompactionToRuntime } from "openclaw/plugin-sdk";
 import { buildAssemblyResult } from "./assembly.js";
 import { resolvePluginConfig } from "./config.js";
 import { DistillationManager, estimateUsageRatio } from "./distillation-manager.js";
+import { createOpenClawAdapterRuntime } from "./openclaw-adapter.js";
 import { retrieveMemoryCandidates } from "./retrieval.js";
 import {
   applyRerankOrder,
@@ -26,6 +27,10 @@ export class ContextAssemblyEngine {
     this.retrievalFn = retrievalFn;
     this.rerankFn = rerankFn;
     this.scoreFn = scoreFn;
+    this.openclawAdapterRuntime = createOpenClawAdapterRuntime({
+      logger,
+      pluginConfig: this.config
+    });
     this.distillationManager = new DistillationManager({
       logger,
       config: this.config
@@ -78,16 +83,23 @@ export class ContextAssemblyEngine {
     }
 
     const agentId = parseAgentId(params.sessionKey, this.config.forceAgentId);
-    const rawCandidates = await this.retrievalFn({
-      openclawCommand: this.config.openclawCommand,
-      agentId,
-      query,
-      maxCandidates: this.config.maxCandidates,
-      cardArtifacts: this.config.cardArtifacts,
-      excludePaths: this.config.excludePaths,
-      queryRewrite: this.config.queryRewrite,
-      logger: this.logger
-    });
+    const [governedCandidates, retrievalCandidates] = await Promise.all([
+      this.openclawAdapterRuntime.loadGovernedCandidates({
+        query,
+        maxCandidates: this.config.openclawAdapter?.governedExports?.maxCandidates
+      }),
+      this.retrievalFn({
+        openclawCommand: this.config.openclawCommand,
+        agentId,
+        query,
+        maxCandidates: this.config.maxCandidates,
+        cardArtifacts: this.config.cardArtifacts,
+        excludePaths: this.config.excludePaths,
+        queryRewrite: this.config.queryRewrite,
+        logger: this.logger
+      })
+    ]);
+    const rawCandidates = [...governedCandidates, ...retrievalCandidates];
 
     if (rawCandidates.length === 0) {
       return buildAssemblyResult({
