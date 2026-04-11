@@ -87,6 +87,7 @@ flowchart LR
 
 - [unified-memory-core-architecture.md](unified-memory-core-architecture.md)
 - [unified-memory-core-roadmap.md](unified-memory-core-roadmap.md)
+- [docs/unified-memory-core/development-plan.md](docs/unified-memory-core/development-plan.md)
 - [docs/unified-memory-core/repo-layout.md](docs/unified-memory-core/repo-layout.md)
 - [code-memory-binding-architecture.md](code-memory-binding-architecture.md)
 
