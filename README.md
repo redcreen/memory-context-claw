@@ -185,6 +185,7 @@ Current Tranche 1 implementation entrypoints:
 - OpenClaw / Codex adapter bridges: [src/unified-memory-core/adapter-bridges.js](src/unified-memory-core/adapter-bridges.js)
 - Governance System MVP: [src/unified-memory-core/governance-system.js](src/unified-memory-core/governance-system.js)
 - OpenClaw adapter runtime integration: [src/openclaw-adapter.js](src/openclaw-adapter.js)
+- Codex adapter runtime integration: [src/codex-adapter.js](src/codex-adapter.js)
 - contract and registry tests: [test/unified-memory-core](test/unified-memory-core)
 
 **Local Development Install**
@@ -393,6 +394,7 @@ Other name options:
 - OpenClaw / Codex adapter bridges: [src/unified-memory-core/adapter-bridges.js](src/unified-memory-core/adapter-bridges.js)
 - Governance System MVP: [src/unified-memory-core/governance-system.js](src/unified-memory-core/governance-system.js)
 - OpenClaw adapter runtime integration: [src/openclaw-adapter.js](src/openclaw-adapter.js)
+- Codex adapter runtime integration: [src/codex-adapter.js](src/codex-adapter.js)
 - contract / registry tests: [test/unified-memory-core](test/unified-memory-core)
 
 **快速开始**

@@ -39,6 +39,7 @@ Current implemented suites:
 - OpenClaw / Codex adapter bridge compatibility: [../../../test/unified-memory-core/adapter-bridges.test.js](../../../test/unified-memory-core/adapter-bridges.test.js)
 - governance audit / repair / replay primitives: [../../../test/unified-memory-core/governance-system.test.js](../../../test/unified-memory-core/governance-system.test.js)
 - OpenClaw runtime adapter integration: [../../../test/openclaw-adapter.test.js](../../../test/openclaw-adapter.test.js)
+- Codex runtime adapter integration: [../../../test/codex-adapter.test.js](../../../test/codex-adapter.test.js)
 
 ## 中文
 
@@ -77,3 +78,4 @@ Step 4 的 testing surfaces 分成 4 层：
 - OpenClaw / Codex adapter bridge compatibility: [../../../test/unified-memory-core/adapter-bridges.test.js](../../../test/unified-memory-core/adapter-bridges.test.js)
 - governance audit / repair / replay primitives: [../../../test/unified-memory-core/governance-system.test.js](../../../test/unified-memory-core/governance-system.test.js)
 - OpenClaw runtime adapter integration: [../../../test/openclaw-adapter.test.js](../../../test/openclaw-adapter.test.js)
+- Codex runtime adapter integration: [../../../test/codex-adapter.test.js](../../../test/codex-adapter.test.js)

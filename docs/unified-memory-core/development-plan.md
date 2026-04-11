@@ -69,6 +69,7 @@ The next step is:
   - OpenClaw / Codex adapter bridges landed in [../../src/unified-memory-core/adapter-bridges.js](../../src/unified-memory-core/adapter-bridges.js)
   - `Governance System` MVP landed in [../../src/unified-memory-core/governance-system.js](../../src/unified-memory-core/governance-system.js)
   - OpenClaw adapter runtime integration landed in [../../src/openclaw-adapter.js](../../src/openclaw-adapter.js)
+  - Codex adapter runtime integration landed in [../../src/codex-adapter.js](../../src/codex-adapter.js)
   - tranche-1 tests landed in [../../test/unified-memory-core](../../test/unified-memory-core)
 
 Important note:
@@ -504,6 +505,8 @@ Review this document with these questions:
   - `Projection System` MVP 已落地到 [../../src/unified-memory-core/projection-system.js](../../src/unified-memory-core/projection-system.js)
   - OpenClaw / Codex adapter bridge 已落地到 [../../src/unified-memory-core/adapter-bridges.js](../../src/unified-memory-core/adapter-bridges.js)
   - `Governance System` MVP 已落地到 [../../src/unified-memory-core/governance-system.js](../../src/unified-memory-core/governance-system.js)
+  - OpenClaw adapter 运行时集成已落地到 [../../src/openclaw-adapter.js](../../src/openclaw-adapter.js)
+  - Codex adapter 运行时集成已落地到 [../../src/codex-adapter.js](../../src/codex-adapter.js)
   - tranche-1 测试已落地到 [../../test/unified-memory-core](../../test/unified-memory-core)
 
 补充决策：
