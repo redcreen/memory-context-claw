@@ -4,174 +4,100 @@
 
 ## English
 
-## Final Target
+## Positioning
 
-`memory-context-claw` is not meant to be “just another memory plugin.” The target is a **continuously running, governed, fact-first memory context layer** for OpenClaw.
+`memory-context-claw` is not meant to be “just another memory plugin.”
 
-It should:
-
-1. Continuously capture valuable facts, rules, background, and project information from real conversations.
-2. Distill those into stable, retrievable `fact/card` artifacts instead of pushing raw conversation directly into long-term memory.
-3. Keep confirmed facts, pending candidates, and runtime noise clearly separated.
-4. Prefer stable facts in real queries so key questions use fast paths instead of always depending on heavyweight search.
-5. Stay regression-protected with smoke / perf / hot-session checks.
-6. Treat memory governance as regular maintenance rather than a one-off cleanup.
-7. Distinguish real regressions from hot-session/tooling contamination.
+The target is a **continuously running, governed, fact-first long-term memory context layer** for OpenClaw.
 
 One-line summary:
 
-`Turn OpenClaw long memory into a governed, fact-first, task-ready context layer.`
+`Turn OpenClaw long memory into a governed, fact-first, task-ready context system.`
+
+## What This Master Roadmap Does
+
+`project-roadmap.md` is the master roadmap and document index.
+
+It should make four things obvious:
+
+1. what the project is trying to become
+2. what has already been completed
+3. what is currently active
+4. what the next major workstreams are
+
+It is not the place for every detailed phase plan.
+
+Use specialized roadmap documents for that.
+
+## Roadmap Stack
+
+```mermaid
+flowchart TB
+    A["project-roadmap.md\nmaster roadmap / index"] --> B["system-architecture.md\ntop-level architecture"]
+    A --> C["reports/memory-search-roadmap.md\nmemory-search roadmap"]
+    A --> D["reports/self-learning-roadmap.md\nself-learning roadmap"]
+    C --> E["reports/memory-search-next-blueprint.md\nmemory-search blueprint"]
+    D --> F["self-learning-architecture.md\nself-learning architecture"]
+
+    classDef top fill:#e8f1ff,stroke:#2f6feb,color:#123a73,stroke-width:1.5px;
+    classDef work fill:#eefce8,stroke:#2f855a,color:#1c4532,stroke-width:1.5px;
+    classDef arch fill:#fff4e8,stroke:#d97706,color:#7c2d12,stroke-width:1.5px;
+    class A top;
+    class B,F arch;
+    class C,D,E work;
+```
 
 ## Status Snapshot
 
 ### Overall
 
 - Project status: `usable + governed + regression-protected`
-- Governance status: `running as a regular maintenance loop`
-- Current engineering focus: `Memory Search`
+- Architecture status: `core backbone complete`
+- Governance status: `running as regular maintenance`
 - Current regression baseline:
   - `critical smoke = 10/10`
   - `full smoke = 25/25`
 
-### Memory Search Status
+### Workstream Status
 
-- OpenClaw builtin `memory_search`: **not fixed**
-  - We did not patch the host
-  - We did not replace the host algorithm
-  - Short Chinese queries and some session-memory shapes are still host-side weaknesses
+| Workstream | Status | Current mode |
+| --- | --- | --- |
+| Core capture / fact-card / assembly | `completed` | maintain + tune |
+| Memory search | `phase-complete` | governance + incremental expansion |
+| Self-learning / reflection | `planning-complete` | ready for phased implementation |
 
-- `memory-context-claw`: **plugin-side compensation is in place**
-  - done:
-    - `cardArtifact fast path`
-    - fact-first retrieval
-    - stable rule / identity / preference / project / routing priority
-    - millisecond-level perf for critical queries
-  - not done:
-    - full root-cause repair of builtin `memory_search` without host changes
+## Completed Foundation
 
-## Roadmap Management
+The project foundation is already in place.
 
-This repo now uses three roadmap layers:
+### 1. Capture foundation
 
-### 1. `project-roadmap.md`
+Status: `completed`
 
-The **master roadmap / index**.
-
-It is responsible for:
-
-- final target
-- global phases
-- current focus
-- workstream status
-- links to deeper documents
-
-It is not responsible for:
-
-- full detail for every specialized workstream
-
-Related top-level architecture document:
-
-- [system-architecture.md](system-architecture.md)
-
-### 2. Workstream roadmaps
-
-Use these when one topic becomes large enough to need its own:
-
-- phases
-- cases
-- baselines
-- governance rules
-
-Current workstream roadmap:
-
-- [memory-search-roadmap.md](reports/memory-search-roadmap.md)
-
-### 3. Blueprints
-
-Use these when a workstream phase-plan is already complete, but the topic still needs ongoing:
-
-- optimization
-- expansion
-- maintenance
-
-Current blueprint:
-
-- [memory-search-next-blueprint.md](reports/memory-search-next-blueprint.md)
-
-### Recommended management model
-
-```mermaid
-flowchart TB
-    A["project-roadmap.md\nmaster roadmap / index"] --> B["memory-search-roadmap.md\nworkstream roadmap"]
-    B --> C["memory-search-next-blueprint.md\nnext blueprint"]
-```
-
-## Positioning
-
-`memory-context-claw` is an OpenClaw `context engine` plugin.
-
-It does:
-
-- plugin-layer recall policy
-- fact/card distillation
-- context assembly
-- memory governance
-
-It does not:
-
-- replace builtin OpenClaw memory
-- patch the host
-- patch other plugins
-
-## Architecture Direction
-
-The architecture stays organized into four layers:
-
-1. **Capture**
-   - collect candidates from sessions, `workspace/memory/*.md`, `workspace/MEMORY.md`, and intermediate artifacts
-
-2. **Fact/Card**
-   - distill raw text into stable facts, rules, background, and project cards
-
-3. **Consumption**
-   - route suitable questions into `cardArtifact`
-   - keep retrieval, rerank, and assembly stable and fast
-
-4. **Governance**
-   - separate formal memory, pending items, and noise
-   - periodically audit / clean the formal layer
-   - promote stable facts into regression protection
-
-## Global Phases
-
-### Phase 1: Capture Foundation
-
-Status: `done / maintain`
-
-Done:
+Completed:
 
 - session-memory consumption
 - candidate distillation
 - pre-compaction distillation
-- raw session log preservation
+- raw session trace preservation
 
-### Phase 2: Fact/Card Layer
+### 2. Fact/card foundation
 
-Status: `done / maintain`
+Status: `completed`
 
-Done:
+Completed:
 
 - fact sentence extraction
 - `conversation-memory-cards.md/json`
 - stable cards from `workspace/MEMORY.md`
 - stable cards from `workspace/memory/YYYY-MM-DD.md`
-- project cards from plugin docs
+- project cards from plugin docs / notes
 
-### Phase 3: Consumption Layer
+### 3. Consumption foundation
 
-Status: `done / tune`
+Status: `completed with tuning`
 
-Done:
+Completed:
 
 - cardArtifact consumption
 - query rewrite
@@ -183,27 +109,27 @@ Still tuning:
 
 - optional LLM rerank evaluation
 
-### Phase 4: Regression Layer
+### 4. Regression foundation
 
-Status: `active / strong`
+Status: `active + strong`
 
-Done:
+Completed:
 
 - smoke suite
 - perf suite
 - stable-facts regression
-- honest hot-session regression framing
+- hot-session regression framing
 
 Current baseline:
 
 - `critical smoke = 10/10`
 - `full smoke = 25/25`
 
-### Phase 5: Governance Layer
+### 5. Governance foundation
 
 Status: `running as regular maintenance`
 
-Done:
+Completed:
 
 - confirmed vs pending separation
 - pending export pipeline
@@ -218,22 +144,32 @@ Still ongoing:
 
 - conflict handling refinement
 - promotion of more stable facts into regression surfaces
-- reducing remaining overlap between session-derived rule explanations and formal policy
+- continued reduction of overlap between session-derived explanations and formal policy
 
 ## Current Focus
 
-### Primary engineering focus
+### Primary next engineering focus
+
+**Self-Learning / Daily Reflection**
+
+Why this is next:
+
+- the main memory-context backbone is already complete
+- memory-search hardening has moved into regular governance mode
+- the next step is turning stable memory into a governed daily-learning system
+
+Key documents:
+
+- architecture:
+  [self-learning-architecture.md](self-learning-architecture.md)
+- roadmap:
+  [reports/self-learning-roadmap.md](reports/self-learning-roadmap.md)
+
+### Parallel maintenance focus
 
 **Memory Search**
 
-Workstream documents:
-
-- roadmap:
-  [memory-search-roadmap.md](reports/memory-search-roadmap.md)
-- next blueprint:
-  [memory-search-next-blueprint.md](reports/memory-search-next-blueprint.md)
-
-### Current state
+Current state:
 
 - `Memory Search Workstream` phases A-E are complete
 - it is now in:
@@ -241,193 +177,171 @@ Workstream documents:
   - incremental case expansion
   - policy tuning when needed
   - blueprint-driven execution
-- current governance quality:
-  - `pluginSignalHits = 6/6`
-  - `pluginSourceHits = 6/6`
-  - `pluginFailures = 0`
-  - `pluginSingleCard = 6/6`
-  - `pluginMultiCard = 0/6`
-  - `pluginNoisySupporting = 0/6`
 
-## Related Architecture Docs
+Current governance quality:
 
-- overall architecture:
+- `pluginSignalHits = 6/6`
+- `pluginSourceHits = 6/6`
+- `pluginFailures = 0`
+- `pluginSingleCard = 6/6`
+- `pluginMultiCard = 0/6`
+- `pluginNoisySupporting = 0/6`
+
+Key documents:
+
+- roadmap:
+  [reports/memory-search-roadmap.md](reports/memory-search-roadmap.md)
+- blueprint:
+  [reports/memory-search-next-blueprint.md](reports/memory-search-next-blueprint.md)
+
+## What Is Currently Planned
+
+The next major project move is:
+
+`turn memory-context-claw from a governed fact-first context layer into a governed self-learning and reflection system`
+
+Planned project stages:
+
+1. define self-learning boundaries, states, and evidence model
+2. build a daily reflection MVP
+3. add promotion / decay / conflict handling for learned candidates
+4. let governed learning signals update plugin-side policy
+5. add long-term audit, comparison, and regression around self-learning
+
+## Architecture Direction
+
+The long-term architecture is now best understood as five connected layers:
+
+1. **Capture**
+   - collect candidate signals from sessions, workspace memory, notes, and artifacts
+2. **Fact/Card**
+   - distill raw inputs into stable facts, rules, background, and cards
+3. **Consumption**
+   - route, score, rerank, and assemble task-ready context
+4. **Governance**
+   - audit quality, control noise, and protect regressions
+5. **Self-Learning**
+   - reflect on repeated signals, promote stable patterns, and adapt policy safely
+
+## Document Map
+
+### Top-level documents
+
+- [README.md](README.md)
+- [system-architecture.md](system-architecture.md)
+- [project-roadmap.md](project-roadmap.md)
+- [self-learning-architecture.md](self-learning-architecture.md)
+
+### Current workstream documents
+
+- [reports/memory-search-architecture.md](reports/memory-search-architecture.md)
+- [reports/memory-search-roadmap.md](reports/memory-search-roadmap.md)
+- [reports/memory-search-next-blueprint.md](reports/memory-search-next-blueprint.md)
+- [reports/self-learning-roadmap.md](reports/self-learning-roadmap.md)
+
+## Read This Next
+
+- If you want overall system shape:
   [system-architecture.md](system-architecture.md)
-- memory-search architecture:
-  [memory-search-architecture.md](reports/memory-search-architecture.md)
-- orchestration vs tool-agent comparison:
-  [memory-search-orchestration-vs-tool-agent.md](reports/memory-search-orchestration-vs-tool-agent.md)
+- If you want the next major project:
+  [self-learning-architecture.md](self-learning-architecture.md)
+- If you want the next implementation phases:
+  [reports/self-learning-roadmap.md](reports/self-learning-roadmap.md)
 
 ## 中文
 
-## 最终目标
+## 项目定位
 
-`memory-context-claw` 不是“又一个记忆插件”，而是要做成一层**持续运行、可治理、事实优先的长期记忆上下文层**。
+`memory-context-claw` 不是“又一个记忆插件”。
 
-它应该能够：
-
-1. 持续从真实对话中抓取有价值的事实、规则、背景和项目信息。
-2. 把这些内容提炼成稳定、可检索的 `fact/card` 工件，而不是把原始对话直接塞进长期记忆。
-3. 清楚地区分 confirmed facts、pending candidates 和 runtime noise。
-4. 在真实查询里优先消费稳定事实，让关键问题尽量走快路径，而不是每次都依赖重量级 search。
-5. 用 smoke / perf / hot-session 检查持续保护回归。
-6. 把记忆治理当成常规维护，而不是一次性清库。
-7. 能区分真正的功能退化，和 hot-session / 工具链污染。
+它的目标是成为 OpenClaw 一层**持续运行、可治理、事实优先的长期记忆上下文层**。
 
 一句话总结：
 
 `把 OpenClaw 的长期记忆，变成一层可治理、事实优先、可直接服务任务的上下文系统。`
+
+## 这份主 Roadmap 负责什么
+
+`project-roadmap.md` 是主 roadmap，也是文档总索引。
+
+它应该让下面四件事一眼就能看明白：
+
+1. 项目最终想做成什么
+2. 当前已经完成了什么
+3. 当前正在做什么
+4. 下一条主线准备怎么推进
+
+它不负责承载每个专题的全部 phase 细节。
+
+专题细节放到各自的 roadmap 里维护。
+
+## Roadmap 结构
+
+```mermaid
+flowchart TB
+    A["project-roadmap.md\n主 roadmap / 总索引"] --> B["system-architecture.md\n顶层架构"]
+    A --> C["reports/memory-search-roadmap.md\nmemory-search roadmap"]
+    A --> D["reports/self-learning-roadmap.md\nself-learning roadmap"]
+    C --> E["reports/memory-search-next-blueprint.md\nmemory-search blueprint"]
+    D --> F["self-learning-architecture.md\nself-learning architecture"]
+
+    classDef top fill:#e8f1ff,stroke:#2f6feb,color:#123a73,stroke-width:1.5px;
+    classDef work fill:#eefce8,stroke:#2f855a,color:#1c4532,stroke-width:1.5px;
+    classDef arch fill:#fff4e8,stroke:#d97706,color:#7c2d12,stroke-width:1.5px;
+    class A top;
+    class B,F arch;
+    class C,D,E work;
+```
 
 ## 当前状态快照
 
 ### 总体
 
 - 项目状态：`可用 + 已治理 + 有回归保护`
+- 架构状态：`主骨架已完成`
 - 治理状态：`已进入常规维护循环`
-- 当前工程主焦点：`Memory Search`
 - 当前回归基线：
   - `critical smoke = 10/10`
   - `full smoke = 25/25`
 
-### Memory Search 状态
+### Workstream 状态
 
-- OpenClaw 内置 `memory_search`：**没有被修好**
-  - 我们没有改宿主
-  - 我们没有替换宿主算法
-  - 中文短 query 和某些 session-memory 形态，仍然是宿主侧弱点
+| Workstream | 状态 | 当前模式 |
+| --- | --- | --- |
+| 核心 capture / fact-card / assembly | `completed` | maintain + tune |
+| Memory Search | `phase-complete` | governance + incremental expansion |
+| Self-Learning / Reflection | `planning-complete` | ready for phased implementation |
 
-- `memory-context-claw`：**插件层补强已经到位**
-  - 已完成：
-    - `cardArtifact fast path`
-    - fact-first retrieval
-    - 稳定规则 / 身份 / 偏好 / 项目 / 路由优先
-    - 关键查询的毫秒级性能
-  - 未完成：
-    - 在不改宿主前提下，从根上修掉 builtin `memory_search`
+## 已完成的项目基础
 
-## Roadmap 管理方式
+项目的基础层已经搭起来了。
 
-这个仓库现在用三层 roadmap 管理：
+### 1. Capture 基础层
 
-### 1. `project-roadmap.md`
-
-这是**主 roadmap / 总索引**。
-
-负责：
-
-- 最终目标
-- 全局阶段
-- 当前焦点
-- workstream 状态
-- 深入文档入口
-
-不负责：
-
-- 每个专题 workstream 的全部细节
-
-相关的顶层架构文档：
-
-- [system-architecture.md](system-architecture.md)
-
-### 2. Workstream roadmaps
-
-当某个专题足够大时，单独拆出来维护：
-
-- phase
-- case 集
-- baseline
-- governance 规则
-
-当前 workstream roadmap：
-
-- [memory-search-roadmap.md](reports/memory-search-roadmap.md)
-
-### 3. Blueprints
-
-当某个 workstream 的 phase 已经做完，但后面还要持续：
-
-- 优化
-- 扩面
-- 维护
-
-就用 blueprint 承接。
-
-当前 blueprint：
-
-- [memory-search-next-blueprint.md](reports/memory-search-next-blueprint.md)
-
-### 推荐的管理模型
-
-```mermaid
-flowchart TB
-    A["project-roadmap.md\n主 roadmap / 总索引"] --> B["memory-search-roadmap.md\n专题 roadmap"]
-    B --> C["memory-search-next-blueprint.md\n后续蓝图"]
-```
-
-## 定位
-
-`memory-context-claw` 是一个 OpenClaw `context engine` 插件。
-
-它负责：
-
-- 插件层 recall policy
-- fact/card 提炼
-- context assembly
-- memory governance
-
-它不负责：
-
-- 替换 OpenClaw builtin memory
-- 修改宿主
-- 修改其他插件
-
-## 架构方向
-
-整体架构保持四层：
-
-1. **Capture**
-   - 从 sessions、`workspace/memory/*.md`、`workspace/MEMORY.md` 和中间工件中收集候选
-
-2. **Fact/Card**
-   - 把原始文本提炼成稳定事实、规则、背景和项目 card
-
-3. **Consumption**
-   - 把适合的问题路由进 `cardArtifact`
-   - 让 retrieval、rerank 和 assembly 更稳定、更快
-
-4. **Governance**
-   - 区分 formal memory、pending items 和 noise
-   - 周期性巡检 / 清理正式层
-   - 把稳定事实升格进回归保护面
-
-## 全局阶段
-
-### Phase 1: Capture Foundation
-
-状态：`done / maintain`
+状态：`completed`
 
 已完成：
 
 - session-memory 消费
 - candidate distillation
 - pre-compaction distillation
-- 原始 session log 保留
+- 原始 session trace 保留
 
-### Phase 2: Fact/Card Layer
+### 2. Fact/Card 基础层
 
-状态：`done / maintain`
+状态：`completed`
 
 已完成：
 
 - fact 句提炼
 - `conversation-memory-cards.md/json`
-- 从 `workspace/MEMORY.md` 生成 stable card
-- 从 `workspace/memory/YYYY-MM-DD.md` 生成 stable card
-- 从项目文档生成 project card
+- 从 `workspace/MEMORY.md` 生成 stable cards
+- 从 `workspace/memory/YYYY-MM-DD.md` 生成 stable cards
+- 从插件文档 / notes 生成 project cards
 
-### Phase 3: Consumption Layer
+### 3. Consumption 基础层
 
-状态：`done / tune`
+状态：`completed with tuning`
 
 已完成：
 
@@ -441,23 +355,23 @@ flowchart TB
 
 - optional LLM rerank evaluation
 
-### Phase 4: Regression Layer
+### 4. Regression 基础层
 
-状态：`active / strong`
+状态：`active + strong`
 
 已完成：
 
 - smoke suite
 - perf suite
 - stable-facts regression
-- 对 hot-session regression 的真实边界说明
+- hot-session regression 的真实边界说明
 
 当前基线：
 
 - `critical smoke = 10/10`
 - `full smoke = 25/25`
 
-### Phase 5: Governance Layer
+### 5. Governance 基础层
 
 状态：`running as regular maintenance`
 
@@ -465,8 +379,8 @@ flowchart TB
 
 - confirmed vs pending 分层
 - pending export pipeline
-- 正式层准入规则
-- 宿主 workspace 治理
+- formal admission rules
+- host workspace governance
 - 周期性清理工具
 - governance cycle
 - duplicate audit
@@ -475,320 +389,107 @@ flowchart TB
 仍在持续：
 
 - conflict handling refinement
-- 把更多稳定事实升进回归面
-- 继续减少 session-derived 规则解释与 formal policy 的重叠
+- 把更多稳定事实升进回归保护面
+- 继续减少 session-derived explanations 与 formal policy 的重叠
 
-## 当前主焦点
+## 当前焦点
 
-### 主要工程焦点
+### 下一条主要工程主线
+
+**Self-Learning / Daily Reflection**
+
+为什么现在切到这条线：
+
+- 记忆上下文主骨架已经完成
+- memory-search 补强已经进入常规治理模式
+- 下一步应该把稳定记忆继续收成“受治理的每日学习系统”
+
+关键文档：
+
+- 架构：
+  [self-learning-architecture.md](self-learning-architecture.md)
+- roadmap：
+  [reports/self-learning-roadmap.md](reports/self-learning-roadmap.md)
+
+### 并行维护主线
 
 **Memory Search**
 
-相关文档：
+当前状态：
 
-- roadmap：
-  [memory-search-roadmap.md](reports/memory-search-roadmap.md)
-- next blueprint：
-  [memory-search-next-blueprint.md](reports/memory-search-next-blueprint.md)
-
-### 当前状态
-
-- `Memory Search Workstream` 的 Phase A-E 已全部完成
+- `Memory Search Workstream` 的 Phase A-E 已完成
 - 现在已进入：
   - 常规治理
   - 增量 case 扩充
   - 按需 policy 调整
   - blueprint 驱动执行
-- 当前治理质量：
-  - `pluginSignalHits = 6/6`
-  - `pluginSourceHits = 6/6`
-  - `pluginFailures = 0`
-  - `pluginSingleCard = 6/6`
-  - `pluginMultiCard = 0/6`
-  - `pluginNoisySupporting = 0/6`
 
-## 相关架构文档
+当前治理质量：
 
-- 总体架构：
-  [system-architecture.md](system-architecture.md)
-- memory-search 专项架构：
-  [memory-search-architecture.md](reports/memory-search-architecture.md)
-- 固定编排 vs 工具调度对比：
-  [memory-search-orchestration-vs-tool-agent.md](reports/memory-search-orchestration-vs-tool-agent.md)
+- `pluginSignalHits = 6/6`
+- `pluginSourceHits = 6/6`
+- `pluginFailures = 0`
+- `pluginSingleCard = 6/6`
+- `pluginMultiCard = 0/6`
+- `pluginNoisySupporting = 0/6`
 
-### Immediate priorities
+关键文档：
 
-1. Continue reducing the memory-search watchlist
-2. Keep expanding stable facts / stable rules into regression protection
-3. Improve governance and reporting ergonomics
-4. Keep governance-cycle running without letting it dominate engineering focus
+- roadmap：
+  [reports/memory-search-roadmap.md](reports/memory-search-roadmap.md)
+- blueprint：
+  [reports/memory-search-next-blueprint.md](reports/memory-search-next-blueprint.md)
 
-### 接下来做什么
+## 当前已经计划好的下一阶段
 
-1. 继续把新的稳定事实 / 稳定规则扩进 smoke
-2. 用 `eval:smoke-promotion` 作为第一版“是否可升进 smoke”的固定建议入口
-3. 让 `memory-search governance` 长期关注“上下文纯度”，不只关注 pass/fail
-4. 继续保持 `workspace/notes` 的准入规则显式化，避免 notes 重新变成噪音池
+项目下一步的大方向是：
 
-## Suggested GitHub Description
+`把 memory-context-claw 从“可治理的事实优先上下文层”，继续推进成“可治理的自学习与反思系统”`
 
-Long:
+当前计划中的阶段是：
 
-`Memory-first context assembly for OpenClaw. Improve long-memory recall, fact extraction, reranking, governance, and context packing without replacing OpenClaw's built-in memory.`
-
-Short:
-
-`An OpenClaw context-engine plugin for governed, fact-first memory context assembly.`
-
----
-
-## 中文
-
-## 最终目标
-
-`memory-context-claw` 的目标不是“再做一个记忆插件”，而是做成一层 **持续运行、可治理、事实优先消费的长期记忆上下文层**。
-
-它最终应该做到：
-
-1. 能从真实对话中持续抓取用户事实、规则、背景、项目信息。
-2. 能把这些信息提炼成稳定、干净、可检索的 `fact/card`，而不是把原始对话直接塞进长期记忆。
-3. 能把已确认事实、待确认候选、运行噪音明确分层。
-4. 能在真实查询里优先消费稳定事实层，让关键问题走快路径，而不是总依赖重检索。
-5. 能通过 smoke / perf / hot-session 等回归持续验证系统是否退化。
-6. 能把数据治理变成常规任务，而不是一次性清库。
-7. 能明确区分“真实功能退化”和“热会话 / 工具链污染”。
-
-一句话：
-
-`把 OpenClaw 的长期记忆，变成一层可治理、事实优先、随时可用于当前任务的上下文层。`
-
-## 状态快照
-
-### 总体状态
-
-- 项目状态：`usable + governed + regression-protected`
-- 治理状态：`已进入常规维护循环`
-- 当前工程焦点：`Memory Search`
-- 当前回归基线：
-  - `critical smoke = 10/10`
-  - `full smoke = 19/19`
-
-### Memory Search 状态
-
-- OpenClaw 内置 `memory_search`：**没有被修好**
-  - 我们没有魔改宿主
-  - 也没有替换宿主内部算法
-  - 中文短 query 和某些 session-memory 形态仍然是宿主层弱点
-
-- `memory-context-claw`：**插件层补强已经完成**
-  - 已完成：
-    - `cardArtifact fast path`
-    - fact-first retrieval
-    - 稳定规则 / 身份 / 偏好 / 项目 / 路由优先
-    - 关键查询毫秒级返回
-  - 未完成：
-    - 在不改宿主前提下，从根上修掉 builtin `memory_search` 缺口
-
-## Roadmap 管理方式
-
-现在这套项目用 3 层文档来管理 roadmap：
-
-### 1. `project-roadmap.md`
-
-这是**主 roadmap / 总索引**。
-
-它负责：
-
-- 讲项目最终目标
-- 讲全局阶段
-- 讲当前主焦点
-- 讲各 workstream 状态
-- 给出更细文档入口
-
-它不负责：
-
-- 展开每一条复杂专题的全部细节
-
-### 2. workstream 子 roadmap
-
-当某一条线已经复杂到需要单独管理时，拆成子 roadmap。
-
-当前子 roadmap：
-
-- [memory-search-roadmap.md](reports/memory-search-roadmap.md)
-
-它负责：
-
-- 管理 `memory-search` 自己的 phase
-- 管理专项 case、baseline、治理方式
-
-### 3. blueprint 文档
-
-当某条 workstream 的 phase 已经做完，但后面还有持续优化、扩面、维护时，用 blueprint 接后续。
-
-当前 blueprint：
-
-- [memory-search-next-blueprint.md](reports/memory-search-next-blueprint.md)
-
-它负责：
-
-- 讲后续开发任务
-- 讲推荐顺序
-- 讲下一步主攻点
-
-### 当前推荐关系
-
-```mermaid
-flowchart TB
-    A["project-roadmap.md\n主 roadmap / 总索引"] --> B["memory-search-roadmap.md\n子 roadmap"]
-    B --> C["memory-search-next-blueprint.md\n后续蓝图"]
-```
-
-一句话：
-
-- **主 roadmap 放在 `project-roadmap.md`**
-- **复杂专题拆成子 roadmap**
-- **phase 做完后，用 blueprint 接持续工作**
-
-## 项目定位
-
-`memory-context-claw` 是一个 OpenClaw 的 `context engine` 插件。
-
-它做的是：
-
-- 插件层 recall policy
-- fact/card 提炼
-- context assembly
-- memory governance
-
-它不做：
-
-- 替代 OpenClaw 内置 memory
-- 魔改宿主
-- 魔改其他插件
+1. 定义 self-learning 的边界、状态模型和证据模型
+2. 做出 daily reflection MVP
+3. 为学习候选补 promotion / decay / conflict handling
+4. 让受治理的学习信号反哺插件层 policy
+5. 为 self-learning 补长期 audit、对比和回归保护
 
 ## 架构方向
 
-整体架构仍然围绕 4 层：
+当前更适合把整体架构理解为五层：
 
 1. **Capture**
-   - 从 sessions、`workspace/memory/*.md`、`workspace/MEMORY.md`、中间工件抓候选信息
-
+   - 从 sessions、workspace memory、notes 和中间工件中采集候选信号
 2. **Fact/Card**
-   - 把原始文本提炼成主体事实、规则、背景、项目 card
-
+   - 把原始输入提炼成稳定事实、规则、背景和 card
 3. **Consumption**
-   - 让合适的问题优先走 `cardArtifact`
-   - 把 retrieval、rerank、assembly 控制在稳定且足够快的范围内
-
+   - 路由、打分、rerank，并装配出可直接服务任务的上下文
 4. **Governance**
-   - 区分正式记忆、待确认项、噪音
-   - 定期巡检 / 清理正式层
-   - 把稳定事实持续升级进回归保护面
+   - 做质量巡检、噪音控制和回归保护
+5. **Self-Learning**
+   - 对重复信号做反思、升级稳定模式，并安全地更新策略
 
-## 全局阶段
+## 文档地图
 
-### Phase 1：Capture Foundation
+### 顶层文档
 
-状态：`done / maintain`
+- [README.md](README.md)
+- [system-architecture.md](system-architecture.md)
+- [project-roadmap.md](project-roadmap.md)
+- [self-learning-architecture.md](self-learning-architecture.md)
 
-已完成：
+### 当前专题文档
 
-- session-memory 消费
-- 候选记忆提炼
-- pre-compaction distillation
-- 原始 session log 保留
+- [reports/memory-search-architecture.md](reports/memory-search-architecture.md)
+- [reports/memory-search-roadmap.md](reports/memory-search-roadmap.md)
+- [reports/memory-search-next-blueprint.md](reports/memory-search-next-blueprint.md)
+- [reports/self-learning-roadmap.md](reports/self-learning-roadmap.md)
 
-### Phase 2：Fact/Card Layer
+## 建议接着读
 
-状态：`done / maintain`
-
-已完成：
-
-- 主体事实句提炼
-- `conversation-memory-cards.md/json`
-- stable cards from `workspace/MEMORY.md`
-- stable cards from `workspace/memory/YYYY-MM-DD.md`
-- project cards from plugin docs
-
-### Phase 3：Consumption Layer
-
-状态：`done / tune`
-
-已完成：
-
-- cardArtifact consumption
-- query rewrite
-- heuristic rerank
-- perf-critical fast path
-- token-budget-aware assembly
-
-仍在微调：
-
-- optional LLM rerank 的长期效果评估
-
-### Phase 4：Regression Layer
-
-状态：`active / strong`
-
-已完成：
-
-- smoke suite
-- perf suite
-- stable-facts regression
-- hot-session regression 诚实化
-
-当前结果：
-
-- `critical smoke = 10/10`
-- `full smoke = 19/19`
-
-### Phase 5：Governance Layer
-
-状态：`已进入常规维护`
-
-已完成：
-
-- confirmed vs pending separation
-- pending export pipeline
-- formal admission rules
-- host workspace governance
-- periodic cleanup tooling
-- governance cycle
-- duplicate audit
-- conflict audit
-
-仍在持续：
-
-- 冲突治理细化
-- 更多稳定事实升格进回归面
-- 继续压缩 session-derived 规则解释与正式 policy 的重叠
-
-## 当前焦点
-
-### 当前主工程焦点
-
-**Memory Search**
-
-相关文档入口：
-
-- 子 roadmap：
-  [memory-search-roadmap.md](reports/memory-search-roadmap.md)
-- 后续蓝图：
-  [memory-search-next-blueprint.md](reports/memory-search-next-blueprint.md)
-
-### 当前状态
-
-- `Memory Search Workstream` 的 Phase A-E 已全部完成
-- 后续不再按 phase 往下拆，而是进入：
-  - 常规治理
-  - 增量 case 扩充
-  - 必要时的 policy 微调
-  - 按 blueprint 持续推进
-
-### 当前最重要的事
-
-1. 继续压低 memory-search watchlist
-2. 持续把新稳定事实 / 规则纳入回归保护面
-3. 继续优化治理和报告体验
-4. 保持 governance-cycle 持续运行，但不再让它抢占主工程焦点
+- 如果想看整体系统形态：
+  [system-architecture.md](system-architecture.md)
+- 如果想看下一条主线的架构设计：
+  [self-learning-architecture.md](self-learning-architecture.md)
+- 如果想看接下来怎么分阶段开发：
+  [reports/self-learning-roadmap.md](reports/self-learning-roadmap.md)

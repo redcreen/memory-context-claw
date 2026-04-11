@@ -19,6 +19,7 @@ It answers:
 This document is the architectural companion to:
 
 - [project-roadmap.md](project-roadmap.md)
+- [self-learning-architecture.md](self-learning-architecture.md)
 - [memory-search-architecture.md](reports/memory-search-architecture.md)
 
 ## One Diagram
@@ -36,6 +37,7 @@ flowchart TB
     end
 
     H["Memory Search Workstream"]
+    I["Self-Learning Workstream"]
 
     C -. validates retrieval behavior .-> F
     D -. validates output quality .-> F
@@ -43,6 +45,8 @@ flowchart TB
     C -. audits fact/card quality .-> G
     H -. improves search strategy .-> C
     H -. hardens retrieval policy .-> D
+    I -. promotes stable patterns .-> C
+    I -. adapts policy safely .-> D
 
     classDef input fill:#f7f1e3,stroke:#b58105,color:#4a3a00,stroke-width:1.5px;
     classDef plugin fill:#e8f1ff,stroke:#2f6feb,color:#123a73,stroke-width:1.5px;
@@ -51,7 +55,7 @@ flowchart TB
     class A input;
     class B,C,D,E plugin;
     class F,G ops;
-    class H workstream;
+    class H,I workstream;
 ```
 
 ## End-to-End Flow
@@ -131,6 +135,7 @@ It is designed to:
 2. distill it into stable facts/cards
 3. prefer stable facts during retrieval and assembly
 4. continuously validate and govern the memory layer
+5. gradually learn stable patterns and feed them back into plugin-side policy
 
 ## What The Plugin Does Not Do
 

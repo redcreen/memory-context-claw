@@ -215,6 +215,10 @@ If you want the whole-system view:
 
 - overall architecture:
   [system-architecture.md](system-architecture.md)
+- self-learning architecture:
+  [self-learning-architecture.md](self-learning-architecture.md)
+- self-learning roadmap:
+  [reports/self-learning-roadmap.md](reports/self-learning-roadmap.md)
 - project roadmap:
   [project-roadmap.md](project-roadmap.md)
 
