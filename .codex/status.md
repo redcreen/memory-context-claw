@@ -7,11 +7,11 @@
 
 ## Current Phase
 
-`retrofit complete / execution resumed`
+`governed execution / module-view operation`
 
 ## Active Slice
 
-`module-view control surface established; next return to governed execution`
+`module-view control surface wiring`
 
 ## Done
 
@@ -46,7 +46,8 @@
 
 ## In Progress
 
-- 把后续恢复入口从“全局文档视角”切到“模块 + 子项目状态视角”
+- 把模块视角真正接到 README / COMMANDS / 状态入口里
+- 建立 `.codex/module-dashboard.md` 作为模块级总入口
 
 ## Blockers / Open Decisions
 
@@ -55,6 +56,6 @@
 
 ## Next 3 Actions
 
-1. 恢复时优先看 `docs/module-map.md` 和 `.codex/subprojects/*.md`
+1. 恢复时优先看 `.codex/module-dashboard.md`
 2. 继续扩新的稳定事实 / 稳定规则，并同步 smoke / docs / governance
 3. 如果出现新的 memory-search 专项 case，先过 `eval:smoke-promotion`，再决定是否值得升进 smoke

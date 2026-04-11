@@ -81,8 +81,9 @@ Current focus:
 
 配合这些文件一起看：
 
-- 当前执行状态：[..codex/status.md](../.codex/status.md)
-- 当前执行顺序：[..codex/plan.md](../.codex/plan.md)
+- 当前执行状态：[.codex/status.md](../.codex/status.md)
+- 当前执行顺序：[.codex/plan.md](../.codex/plan.md)
+- 模块控制面入口：[.codex/module-dashboard.md](../.codex/module-dashboard.md)
 - 总体架构：[system-architecture.md](../system-architecture.md)
 
 ## 模块总览
@@ -101,9 +102,10 @@ Current focus:
 后续恢复时，按这个顺序看：
 
 1. [.codex/status.md](../.codex/status.md)
-2. 本文档
-3. [.codex/subprojects/](../.codex/subprojects/) 里的活跃模块状态
-4. 再去看更深的 roadmap / reports
+2. [.codex/module-dashboard.md](../.codex/module-dashboard.md)
+3. 本文档
+4. [.codex/subprojects/](../.codex/subprojects/) 里的活跃模块状态
+5. 再去看更深的 roadmap / reports
 
 ## 当前活跃模块
 

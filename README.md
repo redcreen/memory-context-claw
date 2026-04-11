@@ -175,6 +175,14 @@ Use the sections below if you are:
 - tuning config
 - running tests and governance checks
 
+Maintainership entry order:
+
+1. [.codex/status.md](.codex/status.md)
+2. [.codex/module-dashboard.md](.codex/module-dashboard.md)
+3. [docs/module-map.md](docs/module-map.md)
+4. `.codex/subprojects/*.md`
+5. then deeper roadmap / reports if needed
+
 Current implementation entrypoints:
 
 - shared contracts: [src/unified-memory-core/contracts.js](src/unified-memory-core/contracts.js)

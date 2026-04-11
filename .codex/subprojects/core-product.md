@@ -2,7 +2,7 @@
 
 ## Parent Phase / Milestone
 
-`large project / module-view retrofit / core-product perspective`
+`large project / governed execution / core-product`
 
 ## Goal
 

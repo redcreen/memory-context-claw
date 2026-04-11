@@ -2,16 +2,16 @@
 
 ## Current Phase
 
-`retrofit / control-surface alignment`
+`governed execution / module-view operation`
 
 ## Slices
 
-- Slice: `establish-control-surface`
-  - Objective: 建立 `.codex` 最小控制面，让项目目标、当前阶段、下一步顺序有单一入口
-  - Dependencies: 当前主文档已存在且可读
-  - Risks: 如果与现有 roadmap / todo 职责重复，会造成新的控制面冲突
-  - Validation: `.codex/brief.md`、`.codex/plan.md`、`.codex/status.md` 都能独立回答目标/阶段/下一步
-  - Exit Condition: `.codex` 文件落地，且职责边界明确
+- Slice: `operate-from-module-view`
+  - Objective: 后续恢复和执行默认从模块地图与子项目状态出发，而不是先掉进散乱报告
+  - Dependencies: `.codex/module-dashboard.md`、`docs/module-map.md`、`.codex/subprojects/*.md`
+  - Risks: 如果主入口文档不挂模块入口，控制面会重新失效
+  - Validation: 恢复时优先读取模块 dashboard、模块地图与子项目状态即可判断当前执行点
+  - Exit Condition: README / COMMANDS / status 都把模块视角作为默认入口
 
 - Slice: `stabilize-memory-search-governance`
   - Objective: 继续保持 `memory search` 从“能答对”推进到“上下文纯度稳定”
@@ -29,6 +29,6 @@
 
 ## Execution Order
 
-1. 先完成模块视角控制面整改
+1. 先完成模块视角控制面的收口与入口接线
 2. 再继续 `memory search` 治理与 smoke promotion
 3. 然后扩下一批稳定事实 / 稳定规则

@@ -26,3 +26,6 @@
 - `.codex/brief.md`
 - `.codex/plan.md`
 - `.codex/status.md`
+- `.codex/module-dashboard.md`
+- `docs/module-map.md`
+- `.codex/subprojects/*.md`

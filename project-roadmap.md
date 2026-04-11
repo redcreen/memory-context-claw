@@ -37,6 +37,7 @@ Use specialized roadmap documents for that.
 
 Module view:
 
+- [.codex/module-dashboard.md](.codex/module-dashboard.md)
 - [docs/module-map.md](docs/module-map.md)
 
 ## Roadmap Stack
