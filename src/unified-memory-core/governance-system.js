@@ -113,6 +113,59 @@ export function renderGovernanceAuditReport(report, { format = "markdown" } = {}
   return `${lines.join("\n").trimEnd()}\n`;
 }
 
+export function renderGovernanceRepairRecord(record, { format = "markdown" } = {}) {
+  if (format === "json") {
+    return JSON.stringify(record, null, 2);
+  }
+
+  const lines = [];
+  lines.push("# Unified Memory Core Governance Repair");
+  lines.push(`- repairId: \`${record.repair_id}\``);
+  lines.push(`- namespace: \`${createNamespaceKey(record.namespace)}\``);
+  lines.push(`- findingCode: \`${record.finding_code}\``);
+  lines.push(`- action: \`${record.action}\``);
+  lines.push(`- dryRun: \`${record.dry_run}\``);
+  lines.push(`- createdAt: \`${record.created_at}\``);
+  lines.push("");
+  lines.push("## Targets");
+  if (record.target_record_ids.length === 0) {
+    lines.push("- none");
+  } else {
+    for (const recordId of record.target_record_ids) {
+      lines.push(`- ${recordId}`);
+    }
+  }
+  lines.push("");
+
+  return `${lines.join("\n").trimEnd()}\n`;
+}
+
+export function renderGovernanceReplayRun(replay, { format = "markdown" } = {}) {
+  if (format === "json") {
+    return JSON.stringify(replay, null, 2);
+  }
+
+  const lines = [];
+  lines.push("# Unified Memory Core Governance Replay");
+  lines.push(`- replayId: \`${replay.replay_id}\``);
+  lines.push(`- namespace: \`${createNamespaceKey(replay.namespace)}\``);
+  lines.push(`- exportId: \`${replay.export_id}\``);
+  lines.push(`- result: \`${replay.result}\``);
+  lines.push(`- createdAt: \`${replay.created_at}\``);
+  lines.push("");
+  lines.push("## Inputs");
+  if (replay.input_refs.length === 0) {
+    lines.push("- none");
+  } else {
+    for (const inputRef of replay.input_refs) {
+      lines.push(`- ${inputRef}`);
+    }
+  }
+  lines.push("");
+
+  return `${lines.join("\n").trimEnd()}\n`;
+}
+
 export function createGovernanceSystem(options = {}) {
   const registry = options.registry;
   const projectionSystem = options.projectionSystem;

@@ -3,7 +3,9 @@
 import { createStandaloneRuntime } from "../src/unified-memory-core/standalone-runtime.js";
 import {
   renderDailyReflectionReport,
-  renderGovernanceAuditReport
+  renderGovernanceAuditReport,
+  renderGovernanceRepairRecord,
+  renderGovernanceReplayRun
 } from "../src/unified-memory-core/index.js";
 
 function parseArgs(argv) {
@@ -134,6 +136,35 @@ async function run() {
     result = flags.format === "markdown"
       ? renderGovernanceAuditReport(report)
       : report;
+  } else if (family === "govern" && action === "repair") {
+    const record = await runtime.planRepair({
+      namespace: parseNamespaceFromFlags(flags),
+      findingCode: normalizeString(flags["finding-code"]),
+      action: normalizeString(flags.action, "mark_for_review"),
+      decidedBy: normalizeString(flags["decided-by"], "standalone-cli"),
+      targetRecordIds: parseListFlag(flags["target-record-ids"], undefined),
+      dryRun: flags["dry-run"] !== false,
+      notes: parseListFlag(flags.notes, []),
+      allowedVisibilities: parseListFlag(flags["allowed-visibilities"], undefined),
+      allowedStates: parseListFlag(flags["allowed-states"], undefined)
+    });
+    result = flags.format === "markdown"
+      ? renderGovernanceRepairRecord(record)
+      : record;
+  } else if (family === "govern" && action === "replay") {
+    const replay = await runtime.planReplay({
+      namespace: parseNamespaceFromFlags(flags),
+      replayedBy: normalizeString(flags["replayed-by"], "standalone-cli"),
+      exportId: normalizeString(flags["export-id"]),
+      inputRefs: parseListFlag(flags["input-refs"], undefined),
+      result: normalizeString(flags.result, "queued"),
+      notes: parseListFlag(flags.notes, []),
+      allowedVisibilities: parseListFlag(flags["allowed-visibilities"], undefined),
+      allowedStates: parseListFlag(flags["allowed-states"], undefined)
+    });
+    result = flags.format === "markdown"
+      ? renderGovernanceReplayRun(replay)
+      : replay;
   } else {
     result = {
       usage: [
@@ -141,7 +172,9 @@ async function run() {
         "learn daily-run --source-type manual --content 'text' [--dry-run] [--promote]",
         "reflect run --source-type manual --content 'text' [--dry-run] [--promote]",
         "export build --consumer generic",
-        "govern audit [--format markdown]"
+        "govern audit [--format markdown]",
+        "govern repair --finding-code candidate_missing_decision_trail --action mark_for_review [--format markdown]",
+        "govern replay [--result queued] [--format markdown]"
       ]
     };
   }

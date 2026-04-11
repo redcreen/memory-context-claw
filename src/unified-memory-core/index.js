@@ -27,7 +27,9 @@ export {
 export { createProjectionSystem } from "./projection-system.js";
 export {
   createGovernanceSystem,
-  renderGovernanceAuditReport
+  renderGovernanceAuditReport,
+  renderGovernanceRepairRecord,
+  renderGovernanceReplayRun
 } from "./governance-system.js";
 export {
   resolveOpenClawNamespace,

@@ -141,6 +141,69 @@ export function createStandaloneRuntime(options = {}) {
     });
   }
 
+  async function planRepair({
+    namespace = config.namespace,
+    findingCode,
+    action,
+    decidedBy = "standalone-runtime",
+    targetRecordIds,
+    dryRun = true,
+    notes = [],
+    allowedVisibilities,
+    allowedStates
+  } = {}) {
+    const report = await governanceSystem.auditNamespace({
+      namespace,
+      allowedVisibilities,
+      allowedStates
+    });
+    const matchingFinding = report.findings.find(
+      (finding) => finding.code === String(findingCode || "").trim()
+    );
+
+    return governanceSystem.createRepairRecord({
+      namespace,
+      findingCode,
+      action,
+      decidedBy,
+      targetRecordIds:
+        Array.isArray(targetRecordIds) && targetRecordIds.length > 0
+          ? targetRecordIds
+          : matchingFinding?.record_refs || [],
+      dryRun,
+      notes
+    });
+  }
+
+  async function planReplay({
+    namespace = config.namespace,
+    replayedBy = "standalone-runtime",
+    exportId,
+    inputRefs,
+    result = "queued",
+    notes = [],
+    allowedVisibilities,
+    allowedStates
+  } = {}) {
+    const exportResult = await projectionSystem.buildGenericExport({
+      namespace,
+      allowedVisibilities,
+      allowedStates
+    });
+
+    return governanceSystem.createReplayRun({
+      namespace,
+      exportId: exportId || exportResult.exportContract.export_id,
+      replayedBy,
+      inputRefs:
+        Array.isArray(inputRefs) && inputRefs.length > 0
+          ? inputRefs
+          : exportResult.exportContract.artifact_refs,
+      result,
+      notes
+    });
+  }
+
   return {
     config,
     registry,
@@ -156,6 +219,8 @@ export function createStandaloneRuntime(options = {}) {
     },
     buildExport,
     auditNamespace,
+    planRepair,
+    planReplay,
     getStats() {
       return registry.getStats();
     }

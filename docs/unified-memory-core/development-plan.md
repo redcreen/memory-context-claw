@@ -399,14 +399,15 @@ Current implementation status:
 - `Reflection System` MVP is implemented
 - `self-learning` daily reflection loop baseline is implemented
 - standalone runtime and CLI baseline are implemented
-- next focus is standalone export / audit / repair hardening and wider repair / replay command surface
+- standalone audit / repair / replay command baseline is implemented
+- next focus is export command hardening, deeper repair / replay paths, and split-readiness review inputs
 
 ## Immediate Next Build
 
 The immediate next build should be:
 
-1. standalone export / audit / repair command hardening
-2. repair / replay paths for early artifacts
+1. standalone export command hardening
+2. deeper repair / replay paths for early artifacts
 3. split-readiness review inputs for standalone execution
 4. keep advanced policy adaptation deferred
 
@@ -847,14 +848,15 @@ flowchart LR
 - `Reflection System` MVP 已实现
 - `self-learning` 的 daily reflection loop 基线已实现
 - standalone runtime 与 CLI 基线已实现
-- 下一步聚焦 standalone export / audit / repair 的补齐，以及更完整的 repair / replay 命令面
+- standalone audit / repair / replay 命令基线已实现
+- 下一步聚焦 export command hardening、repair/replay 深化，以及 split-ready 审查输入
 
 ## 当前建议立刻开做的内容
 
 下一步最适合直接开做的是：
 
-1. standalone export / audit / repair command 的补齐与加固
-2. 给早期 artifacts 补 repair / replay 路径
+1. standalone export command 的补齐与加固
+2. 给早期 artifacts 继续补 repair / replay 路径
 3. 为 split-ready 的独立执行补审查输入
 4. 继续延后高阶 policy adaptation
 

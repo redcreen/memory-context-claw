@@ -204,6 +204,12 @@ Current self-learning path:
 npm run umc:daily-reflection -- --source-type manual --content "Remember this: prefer concise summaries." --dry-run
 ```
 
+Current governance repair path:
+
+```bash
+npm run umc:cli -- govern repair --finding-code candidate_missing_decision_trail --action mark_for_review --format markdown
+```
+
 **Local Development Install**
 
 If you are developing this repo locally:
@@ -552,6 +558,12 @@ npm run umc:cli -- reflect run --source-type manual --content "Prefer determinis
 
 ```bash
 npm run umc:daily-reflection -- --source-type manual --content "Remember this: prefer concise summaries." --dry-run
+```
+
+当前治理 repair 最短路径：
+
+```bash
+npm run umc:cli -- govern repair --finding-code candidate_missing_decision_trail --action mark_for_review --format markdown
 ```
 
 **本地开发安装**
