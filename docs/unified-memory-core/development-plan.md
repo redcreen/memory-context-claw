@@ -56,7 +56,8 @@ The next step is:
 
 - `Step 1-4`: completed
 - `Step 5-7`: completed at the document / contract / backbone-definition level
-- `Step 8`: next implementation entry
+- `Step 8-9`: completed at the adapter design-package level
+- `Step 10`: next implementation/program entry
 
 Important note:
 
@@ -421,7 +422,8 @@ Review this document with these questions:
 
 - `Step 1-4`：已完成
 - `Step 5-7`：已在文档 / 契约 / 主骨架定义层完成
-- `Step 8`：下一步正式实现入口
+- `Step 8-9`：已在 adapter 设计包层完成
+- `Step 10`：下一步主入口
 
 补充决策：
 

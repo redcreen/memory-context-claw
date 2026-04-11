@@ -41,6 +41,8 @@
 - multi-runtime namespace collision cases
 - multi-agent concurrent write serialization cases
 - visibility filtering across OpenClaw / Codex / Claude cases
+- OpenClaw shared-workspace loading cases
+- Codex multi-runtime code-memory binding cases
 
 ## Notes
 
@@ -86,6 +88,8 @@
 - multi-runtime namespace collision cases
 - multi-agent concurrent write serialization cases
 - OpenClaw / Codex / Claude visibility filtering cases
+- OpenClaw shared-workspace loading cases
+- Codex multi-runtime code-memory binding cases
 
 ## Notes
 

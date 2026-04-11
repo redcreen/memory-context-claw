@@ -20,7 +20,7 @@ It should become:
 
 ## Current Phase
 
-Status: `phase 5 / contracts and backbone definition ready`
+Status: `phase 6 / adapter design packages ready`
 
 What is happening now:
 
@@ -33,6 +33,7 @@ What is happening now:
 - testing surfaces and case matrix
 - deployment topology and multi-runtime model
 - shared contracts and backbone definitions for steps 5-7
+- OpenClaw / Codex adapter design packages for steps 8-9
 
 ## Program Roadmap
 
@@ -130,7 +131,7 @@ Goal:
 
 ## 当前阶段
 
-状态：`phase 5 / contracts 与主骨架定义已就绪`
+状态：`phase 6 / adapter 设计包已就绪`
 
 当前正在做：
 
@@ -143,6 +144,7 @@ Goal:
 - testing surfaces 与 case matrix 建立
 - deployment topology 与多 runtime 模型补齐
 - Step 5-7 的 shared contracts 与 backbone definitions 定稿
+- Step 8-9 的 OpenClaw / Codex adapter 设计包定稿
 
 ## 项目路线图
 
