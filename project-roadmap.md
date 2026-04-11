@@ -10,6 +10,8 @@
 
 The target is a **continuously running, governed, fact-first long-term memory context layer** for OpenClaw.
 
+The next learning subsystem should be designed as a separable component that can later become its own subproject.
+
 One-line summary:
 
 `Turn OpenClaw long memory into a governed, fact-first, task-ready context system.`
@@ -64,7 +66,7 @@ flowchart TB
 | --- | --- | --- |
 | Core capture / fact-card / assembly | `completed` | maintain + tune |
 | Memory search | `phase-complete` | governance + incremental expansion |
-| Self-learning / reflection | `planning-complete` | ready for phased implementation |
+| Self-learning / reflection | `planning-updated` | architecture separation + phased implementation ready |
 
 ## Completed Foundation
 
@@ -157,6 +159,7 @@ Why this is next:
 - the main memory-context backbone is already complete
 - memory-search hardening has moved into regular governance mode
 - the next step is turning stable memory into a governed daily-learning system
+- this subsystem now needs to be built with clear product boundaries instead of staying plugin-internal
 
 Key documents:
 
@@ -202,15 +205,21 @@ The next major project move is:
 
 Planned project stages:
 
-1. define self-learning boundaries, states, and evidence model
-2. build a daily reflection MVP
-3. add promotion / decay / conflict handling for learned candidates
-4. let governed learning signals update plugin-side policy
-5. add long-term audit, comparison, and regression around self-learning
+1. define a standalone self-learning component boundary, source model, and export model
+2. build source adapters and standalone CLI workflows
+3. build a daily reflection MVP with traceable artifacts
+4. add promotion / decay / conflict handling for learned candidates
+5. integrate outputs into OpenClaw through adapters
+6. add long-term audit, repair, comparison, and regression around self-learning
 
 ## Architecture Direction
 
-The long-term architecture is now best understood as five connected layers:
+The long-term architecture is now best understood as:
+
+- a reusable self-learning component
+- plus an OpenClaw-specific consumption layer inside `memory-context-claw`
+
+Inside the project, the layers are:
 
 1. **Capture**
    - collect candidate signals from sessions, workspace memory, notes, and artifacts
@@ -222,6 +231,7 @@ The long-term architecture is now best understood as five connected layers:
    - audit quality, control noise, and protect regressions
 5. **Self-Learning**
    - reflect on repeated signals, promote stable patterns, and adapt policy safely
+   - keep source control, traceability, exportability, and CLI operation explicit
 
 ## Document Map
 
@@ -255,6 +265,8 @@ The long-term architecture is now best understood as five connected layers:
 `memory-context-claw` 不是“又一个记忆插件”。
 
 它的目标是成为 OpenClaw 一层**持续运行、可治理、事实优先的长期记忆上下文层**。
+
+下一步的 learning 子系统还应按“可独立组件”来设计，未来可以单独拆成子项目。
 
 一句话总结：
 
@@ -310,7 +322,7 @@ flowchart TB
 | --- | --- | --- |
 | 核心 capture / fact-card / assembly | `completed` | maintain + tune |
 | Memory Search | `phase-complete` | governance + incremental expansion |
-| Self-Learning / Reflection | `planning-complete` | ready for phased implementation |
+| Self-Learning / Reflection | `planning-updated` | architecture separation + phased implementation ready |
 
 ## 已完成的项目基础
 
@@ -403,6 +415,7 @@ flowchart TB
 - 记忆上下文主骨架已经完成
 - memory-search 补强已经进入常规治理模式
 - 下一步应该把稳定记忆继续收成“受治理的每日学习系统”
+- 这条线现在需要按“独立产品边界”来设计，而不是继续混在插件内部
 
 关键文档：
 
@@ -448,15 +461,21 @@ flowchart TB
 
 当前计划中的阶段是：
 
-1. 定义 self-learning 的边界、状态模型和证据模型
-2. 做出 daily reflection MVP
-3. 为学习候选补 promotion / decay / conflict handling
-4. 让受治理的学习信号反哺插件层 policy
-5. 为 self-learning 补长期 audit、对比和回归保护
+1. 定义独立 self-learning 组件边界、source model 和 export model
+2. 做出 source adapters 和 standalone CLI workflows
+3. 做出带可追踪工件的 daily reflection MVP
+4. 为学习候选补 promotion / decay / conflict handling
+5. 通过 adapter 把结果接入 OpenClaw
+6. 为 self-learning 补长期 audit、repair、对比和回归保护
 
 ## 架构方向
 
-当前更适合把整体架构理解为五层：
+当前更适合把整体架构理解为：
+
+- 一个可复用的 self-learning component
+- 加一个 `memory-context-claw` 内部的 OpenClaw 专属消费层
+
+在项目内部，可以继续拆成五层：
 
 1. **Capture**
    - 从 sessions、workspace memory、notes 和中间工件中采集候选信号
@@ -468,6 +487,7 @@ flowchart TB
    - 做质量巡检、噪音控制和回归保护
 5. **Self-Learning**
    - 对重复信号做反思、升级稳定模式，并安全地更新策略
+   - 显式保证 source control、traceability、exportability 和 CLI operation
 
 ## 文档地图
 

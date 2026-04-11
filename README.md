@@ -208,6 +208,7 @@ What it does do:
 - produce stable fact/card artifacts
 - prefer important facts over noisy flat recall
 - give you a governed memory-context layer
+- prepare for a separable self-learning component that can later serve more than OpenClaw
 
 **Architecture**
 

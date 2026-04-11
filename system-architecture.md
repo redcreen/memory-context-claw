@@ -14,6 +14,7 @@ It answers:
 - which major layers it contains
 - how data moves across the layers
 - where `memory search` fits in the overall design
+- where the self-learning component boundary sits
 - which parts are host behavior vs plugin behavior
 
 This document is the architectural companion to:
@@ -26,10 +27,11 @@ This document is the architectural companion to:
 
 ```mermaid
 flowchart TB
-    A["User conversation / host memory / docs"] --> B["Capture Layer"]
-    B --> C["Fact/Card Layer"]
-    C --> D["Consumption Layer"]
-    D --> E["Final context for model"]
+    A["User conversation / host memory / docs"] --> B["memory-context-claw core"]
+    X["Controlled learning sources / CLI"] --> Y["Self-learning component"]
+    Y --> Z["Learning exports / adapters"]
+    Z --> B
+    B --> E["Final context for model"]
 
     subgraph OPS["Governance and validation"]
         F["Regression Layer"]
@@ -39,21 +41,23 @@ flowchart TB
     H["Memory Search Workstream"]
     I["Self-Learning Workstream"]
 
-    C -. validates retrieval behavior .-> F
-    D -. validates output quality .-> F
-    B -. audits source quality .-> G
-    C -. audits fact/card quality .-> G
-    H -. improves search strategy .-> C
-    H -. hardens retrieval policy .-> D
-    I -. promotes stable patterns .-> C
-    I -. adapts policy safely .-> D
+    B -. validates retrieval behavior .-> F
+    B -. validates output quality .-> F
+    Y -. audits learning quality .-> G
+    B -. audits context quality .-> G
+    H -. improves search strategy .-> B
+    H -. hardens retrieval policy .-> B
+    I -. promotes stable patterns .-> Y
+    I -. adapts policy safely .-> Z
 
     classDef input fill:#f7f1e3,stroke:#b58105,color:#4a3a00,stroke-width:1.5px;
     classDef plugin fill:#e8f1ff,stroke:#2f6feb,color:#123a73,stroke-width:1.5px;
+    classDef learning fill:#eefce8,stroke:#2f855a,color:#1c4532,stroke-width:1.5px;
     classDef ops fill:#e8fff2,stroke:#1f8f5f,color:#0f5132,stroke-width:1.5px;
     classDef workstream fill:#fff4e8,stroke:#d97706,color:#7c2d12,stroke-width:1.5px;
-    class A input;
-    class B,C,D,E plugin;
+    class A,X,E input;
+    class B,Z plugin;
+    class Y learning;
     class F,G ops;
     class H,I workstream;
 ```
@@ -129,6 +133,8 @@ sequenceDiagram
 
 `memory-context-claw` is a governed, fact-first context engine for OpenClaw.
 
+Its next major extension should connect to a separable self-learning component rather than absorbing all learning logic into plugin-internal code.
+
 It is designed to:
 
 1. capture useful information from real interaction
@@ -151,6 +157,7 @@ The plugin **does**:
 - distill fact/card artifacts
 - apply retrieval policy and assembly logic
 - run governance and regression tooling around the memory layer
+- integrate learning outputs from a standalone-capable learning subsystem
 
 ## Layer Overview
 
@@ -158,17 +165,21 @@ The plugin **does**:
 
 ```mermaid
 flowchart LR
-    A["Capture"] --> B["Fact/Card"]
+    A["Self-Learning Component"] --> B["Fact/Card"]
     B --> C["Consumption"]
     C --> D["Regression"]
-    B --> E["Governance"]
-    E --> B
-    C --> E
+    A --> E["Learning Governance"]
+    B --> F["Context Governance"]
+    E --> A
+    F --> B
+    F --> C
 
     classDef plugin fill:#e8f1ff,stroke:#2f6feb,color:#123a73,stroke-width:1.5px;
+    classDef learning fill:#eefce8,stroke:#2f855a,color:#1c4532,stroke-width:1.5px;
     classDef ops fill:#fff4e8,stroke:#d97706,color:#7c2d12,stroke-width:1.5px;
-    class A,B,C plugin;
-    class D,E ops;
+    class B,C plugin;
+    class A learning;
+    class D,E,F ops;
 ```
 
 ```mermaid

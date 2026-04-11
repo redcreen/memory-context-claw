@@ -6,7 +6,9 @@
 
 ## Purpose
 
-This document defines the next major workstream for `memory-context-claw`:
+This document defines the next major workstream for `memory-context-claw`.
+
+It also defines the boundary of a future standalone learning subsystem:
 
 `daily self-learning + daily reflection + policy adaptation`
 
@@ -33,6 +35,10 @@ Related documents:
 Turn `memory-context-claw` from a fact-first memory context layer into a:
 
 `governed daily-learning system that can extract stable patterns, reflect on outcomes, and improve how it serves the user over time`
+
+At the architecture level, this system should be designed as:
+
+`a separable, governable learning component that currently feeds OpenClaw, but is not permanently tied to OpenClaw`
 
 ## What Problem This Workstream Solves
 
@@ -74,10 +80,13 @@ After this workstream is complete, the system should be able to:
 
 This workstream does:
 
-- improve plugin-side learning and reflection
-- create structured learning artifacts
+- define a standalone learning component boundary
+- improve plugin-side learning and reflection integration
+- create structured, portable learning artifacts
 - adjust retrieval / scoring / assembly policy from governed signals
 - add governance and regression around learned behavior
+- support controllable learning inputs beyond conversation memory
+- support CLI-driven learning and governance workflows
 
 This workstream does not:
 
@@ -85,6 +94,26 @@ This workstream does not:
 - patch other plugins
 - let the model freely rewrite its own personality
 - allow unverified free-form reflections to directly become stable memory
+
+## Product Boundary
+
+This self-learning subsystem should be designed as a distinct product-shaped component.
+
+That means:
+
+- it should have its own inputs, outputs, and governance rules
+- it should be able to run independently from the OpenClaw runtime loop
+- it should expose learning results through stable artifacts rather than hidden in-memory state
+- it should integrate with OpenClaw through adapters, not through deep coupling
+- it should remain reusable for future non-OpenClaw consumers
+
+Current integration target:
+
+- `memory-context-claw` consumes learning outputs and inserts them into the OpenClaw-facing memory/context flow
+
+Future-compatible target:
+
+- the same learning outputs can be consumed by other plugins, services, or local tools
 
 ## Design Principles
 
@@ -94,22 +123,28 @@ This workstream does not:
 4. Stable memory, candidate memory, and runtime observations must stay separate.
 5. Policy adaptation must consume confidence-ranked signals instead of raw summaries.
 6. Context quality matters more than memory volume.
+7. Input sources must be explicit and controllable.
+8. Learning outputs must be portable across integrations.
+9. The component should be operable from CLI without the OpenClaw host.
+10. Every result should be traceable, inspectable, and repairable.
 
 ## System View
 
 ```mermaid
 flowchart TB
-    A["Conversations / tool outcomes / memory changes"] --> B["Signal Capture"]
+    A["Controlled learning sources"] --> B["Source Adapters"]
     B --> C["Reflection Engine"]
     C --> D["Candidate Learning Artifacts"]
-    D --> E["Memory Engine"]
+    D --> E["Learning Registry"]
     E --> F["Stable facts / habits / rules / observations"]
-    F --> G["Policy Engine"]
-    G --> H["Retrieval / scoring / assembly"]
-    H --> I["Cleaner recalled context"]
-    I --> J["Observed answer quality"]
-    J --> C
+    F --> G["Integration Adapters"]
+    G --> H["OpenClaw / future consumers"]
+    H --> I["Observed outcome quality"]
+    I --> C
 
+    J["CLI + scheduled jobs"] --> B
+    J --> C
+    J --> E
     K["Governance + regression"] -. audits .-> C
     K -. audits .-> E
     K -. audits .-> G
@@ -118,11 +153,57 @@ flowchart TB
     classDef core fill:#e8f1ff,stroke:#2f6feb,color:#123a73,stroke-width:1.5px;
     classDef memory fill:#eefce8,stroke:#2f855a,color:#1c4532,stroke-width:1.5px;
     classDef ops fill:#fff4e8,stroke:#d97706,color:#7c2d12,stroke-width:1.5px;
-    class A,J input;
-    class B,C,D,G,H core;
-    class E,F,I memory;
+    class A,H,I input;
+    class B,C,D,G,J core;
+    class E,F memory;
     class K ops;
 ```
+
+## Controlled Inputs
+
+Learning sources should be explicit, selectable, and reviewable.
+
+The system should support inputs such as:
+
+- conversations
+- OpenClaw memory artifacts
+- a single document
+- a URL
+- a directory
+- one or more images
+- future structured imports
+
+Important rule:
+
+`the system should learn only from declared sources, not from invisible ambient context`
+
+## Traceability and Repairability
+
+Every learning result should be:
+
+- source-linked
+- timestamped
+- evidence-counted
+- versionable
+- diffable
+- reviewable
+- repairable
+
+This means the system should preserve:
+
+- where the signal came from
+- which extraction rule or reflection pass produced it
+- which promotion decision changed its state
+- which downstream integration consumed it
+
+When something is wrong, maintainers should be able to:
+
+- inspect the source
+- inspect the candidate
+- inspect the decision trail
+- fix the item
+- rerun the pipeline
+- regenerate downstream outputs
 
 ## Learning Model
 
@@ -141,6 +222,25 @@ It should explicitly separate:
 - `behavior_pattern`
 - `observation`
 - `open_question`
+
+It should also separate:
+
+- source artifacts
+- candidate artifacts
+- promoted artifacts
+- integration-facing exports
+
+## Runtime Modes
+
+The subsystem should support at least two runtime modes:
+
+1. `embedded mode`
+   - runs as part of the `memory-context-claw` workflow
+   - exports results into OpenClaw-facing memory/context consumption
+2. `standalone mode`
+   - runs from CLI or scheduled jobs
+   - ingests controlled sources
+   - writes artifacts and reports without requiring OpenClaw runtime participation
 
 ## Daily Reflection Loop
 
@@ -193,32 +293,36 @@ Recommended interpretation:
 
 ```mermaid
 flowchart TB
-    subgraph L1["1. Signal Capture"]
-        A1["Conversation turns"]
-        A2["Tool actions and outcomes"]
-        A3["Memory writes / updates"]
-        A4["User explicit instructions"]
+    subgraph L1["1. Source Layer"]
+        A1["Conversation source"]
+        A2["Document source"]
+        A3["URL source"]
+        A4["Directory source"]
+        A5["Image source"]
+        A6["Future structured source"]
     end
 
-    subgraph L2["2. Reflection Engine"]
+    subgraph L2["2. Ingestion + Reflection"]
         B1["Event labeling"]
         B2["Pattern extraction"]
         B3["Reflection prompts"]
         B4["Candidate generation"]
+        B5["Source fingerprinting"]
     end
 
-    subgraph L3["3. Memory Engine"]
+    subgraph L3["3. Learning Registry"]
         C1["Candidate store"]
         C2["Promotion / decay"]
         C3["Conflict handling"]
         C4["Stable memory registry"]
+        C5["Decision trail"]
     end
 
-    subgraph L4["4. Policy Engine"]
-        D1["Retrieval priority update"]
-        D2["Scoring weights update"]
-        D3["Assembly preferences"]
-        D4["Task execution defaults"]
+    subgraph L4["4. Integration Layer"]
+        D1["OpenClaw adapter"]
+        D2["Export API / artifacts"]
+        D3["Policy projection"]
+        D4["CLI commands"]
     end
 
     subgraph L5["5. Governance"]
@@ -241,12 +345,25 @@ flowchart TB
     classDef memory fill:#eefce8,stroke:#2f855a,color:#1c4532,stroke-width:1.5px;
     classDef policy fill:#f3e8ff,stroke:#7c3aed,color:#4c1d95,stroke-width:1.5px;
     classDef govern fill:#fff4e8,stroke:#d97706,color:#7c2d12,stroke-width:1.5px;
-    class A1,A2,A3,A4 capture;
-    class B1,B2,B3,B4 reflect;
-    class C1,C2,C3,C4 memory;
+    class A1,A2,A3,A4,A5,A6 capture;
+    class B1,B2,B3,B4,B5 reflect;
+    class C1,C2,C3,C4,C5 memory;
     class D1,D2,D3,D4 policy;
     class E1,E2,E3,E4 govern;
 ```
+
+## Integration Boundary
+
+The clean boundary should be:
+
+- `self-learning component` owns ingestion, candidate generation, promotion lifecycle, audit trail, and exports
+- `memory-context-claw` owns OpenClaw-specific retrieval, assembly, and plugin-side consumption
+
+In other words:
+
+`self-learning decides what was learned`
+
+`memory-context-claw decides how OpenClaw should consume it`
 
 ## Reflection Engine
 
@@ -279,6 +396,31 @@ stateDiagram-v2
     stable --> superseded: conflict confirmed
 ```
 
+## CLI Surface
+
+The component should be operable through standalone CLI commands.
+
+Early command directions:
+
+- `learn add --file <path>`
+- `learn add --url <url>`
+- `learn add --dir <path>`
+- `learn add --image <path>`
+- `learn reflect --since <date>`
+- `learn promote --review`
+- `learn audit`
+- `learn export --target openclaw`
+
+The exact command names can change later.
+
+The important part is the operational model:
+
+- source registration is explicit
+- learning runs are scriptable
+- audits are scriptable
+- exports are scriptable
+- the CLI can run without the OpenClaw host
+
 ## Policy Adaptation
 
 Learning should not stop at storage.
@@ -310,6 +452,9 @@ Required controls:
 - every learned item needs last-validated time
 - every learned item must be degradable or expirable
 - conflicts must be explicit, not silently overwritten
+- source scope must be reviewable
+- promotion history must be visible
+- exported integration results must be reproducible
 
 ## Risks To Avoid
 
@@ -408,14 +553,20 @@ Deliverables:
 
 Potential future modules:
 
+- `src/learning-source-adapters.js`
 - `src/daily-reflection.js`
 - `src/learning-candidates.js`
 - `src/learning-promotion.js`
 - `src/policy-adaptation.js`
+- `src/learning-export.js`
+- `src/learning-cli.js`
 - `scripts/run-daily-reflection.js`
+- `scripts/learn-add-source.js`
+- `scripts/learn-export-openclaw.js`
 - `reports/self-learning-*.md`
 - `test/daily-reflection.test.js`
 - `test/learning-promotion.test.js`
+- `test/learning-cli.test.js`
 
 These are suggested directions, not committed file contracts yet.
 
@@ -428,12 +579,17 @@ This workstream is successful when:
 - recalled context becomes cleaner, not noisier
 - policy adaptation is visible and explainable
 - learned behavior remains regression-tested and reviewable
+- learning sources stay explicit and controllable
+- the component can run in standalone CLI mode
+- outputs can be reused outside OpenClaw with minimal adapter work
 
 ## 中文
 
 ## 文档目的
 
-这份文档定义 `memory-context-claw` 的下一条专项主线：
+这份文档定义 `memory-context-claw` 的下一条专项主线。
+
+它同时定义一个未来可独立拆分的学习子系统边界：
 
 `每日自动学习 + 每日反思 + 策略自适应`
 
@@ -460,6 +616,10 @@ This workstream is successful when:
 把 `memory-context-claw` 从“事实优先的记忆上下文层”继续收成一套：
 
 `受治理的每日学习系统，能够持续提炼稳定模式、进行结果反思，并逐步优化对用户的服务方式`
+
+在架构层面，这个系统还应该被设计成：
+
+`一个可独立拆分、可独立治理、当前先服务 OpenClaw、未来也可服务其他项目的学习组件`
 
 ## 这条专项要解决什么问题
 
@@ -501,10 +661,13 @@ This workstream is successful when:
 
 这条专项会做：
 
-- 强化插件层的学习与反思能力
-- 生成结构化学习产物
+- 定义独立学习组件的边界
+- 强化插件层的学习与反思集成能力
+- 生成结构化、可移植的学习产物
 - 用受治理的信号调整 retrieval / scoring / assembly policy
 - 为学习行为补治理和回归保护
+- 支持对话外的可控学习输入
+- 支持 CLI 驱动的学习与治理流程
 
 这条专项不会做：
 
@@ -512,6 +675,26 @@ This workstream is successful when:
 - 修改别的插件
 - 让模型随意重写自己的“人格”
 - 让未经验证的自由反思直接进入 stable memory
+
+## 产品边界
+
+这个 self-learning 子系统应该被设计成一个独立产品形态的组件。
+
+这意味着：
+
+- 它要有自己的输入、输出和治理规则
+- 它可以脱离 OpenClaw runtime 单独运行
+- 它要通过稳定工件暴露学习结果，而不是把状态藏在运行时内存里
+- 它和 OpenClaw 的关系应该是 adapter 集成，而不是深度耦合
+- 它未来应该可以复用给其他插件、服务或本地工具
+
+当前集成目标：
+
+- `memory-context-claw` 消费学习结果，并把它们接入 OpenClaw 面向的 memory/context 流程
+
+未来兼容目标：
+
+- 同一份学习结果可以被其他项目或组件消费
 
 ## 设计原则
 
@@ -521,22 +704,28 @@ This workstream is successful when:
 4. stable memory、候选记忆、运行时观察必须分层。
 5. 策略自适应只能消费带置信度的信号，不能直接吃原始总结。
 6. 上下文质量比记忆总量更重要。
+7. 输入源必须显式且可控。
+8. 学习结果必须可跨集成复用。
+9. 组件必须支持脱离 OpenClaw 的 CLI 运行模式。
+10. 每个结果都必须可追踪、可见、可修复。
 
 ## 整体图
 
 ```mermaid
 flowchart TB
-    A["对话 / 工具结果 / 记忆变化"] --> B["信号采集层"]
+    A["可控学习源"] --> B["Source Adapters"]
     B --> C["反思引擎"]
     C --> D["候选学习产物"]
-    D --> E["记忆引擎"]
+    D --> E["Learning Registry"]
     E --> F["稳定事实 / 习惯 / 规则 / 观察结论"]
-    F --> G["策略引擎"]
-    G --> H["retrieval / scoring / assembly"]
-    H --> I["更干净的 recalled context"]
-    I --> J["结果质量反馈"]
-    J --> C
+    F --> G["Integration Adapters"]
+    G --> H["OpenClaw / 未来其他消费者"]
+    H --> I["结果质量反馈"]
+    I --> C
 
+    J["CLI + 定时任务"] --> B
+    J --> C
+    J --> E
     K["治理 + 回归"] -. 审计 .-> C
     K -. 审计 .-> E
     K -. 审计 .-> G
@@ -545,11 +734,57 @@ flowchart TB
     classDef core fill:#e8f1ff,stroke:#2f6feb,color:#123a73,stroke-width:1.5px;
     classDef memory fill:#eefce8,stroke:#2f855a,color:#1c4532,stroke-width:1.5px;
     classDef ops fill:#fff4e8,stroke:#d97706,color:#7c2d12,stroke-width:1.5px;
-    class A,J input;
-    class B,C,D,G,H core;
-    class E,F,I memory;
+    class A,H,I input;
+    class B,C,D,G,J core;
+    class E,F memory;
     class K ops;
 ```
+
+## 可控输入
+
+学习源应该是显式声明、可选择、可审阅的。
+
+系统应支持的输入源包括：
+
+- 对话
+- OpenClaw memory artifacts
+- 单个文档
+- URL
+- 目录
+- 一张或多张图片
+- 后续的结构化导入源
+
+关键原则：
+
+`系统只能从已声明的来源学习，不能从不可见的环境上下文里“偷偷学习”`
+
+## 可追踪与可修复
+
+每一条学习结果都应该满足：
+
+- 能追溯来源
+- 有时间戳
+- 有证据次数
+- 可版本化
+- 可 diff
+- 可审阅
+- 可修复
+
+也就是说，系统必须保留：
+
+- 信号来自哪里
+- 由哪次提炼 / 反思生成
+- 由哪次升级决策改变了状态
+- 被哪个集成出口消费
+
+一旦结果有问题，维护者应该能够：
+
+- 查看源数据
+- 查看 candidate
+- 查看决策链路
+- 修复条目
+- 重跑流程
+- 重新生成下游输出
 
 ## 学习模型
 
@@ -568,6 +803,25 @@ flowchart TB
 - `behavior_pattern`
 - `observation`
 - `open_question`
+
+还应明确分开：
+
+- source artifacts
+- candidate artifacts
+- promoted artifacts
+- integration-facing exports
+
+## 运行模式
+
+这个子系统至少应该支持两种运行模式：
+
+1. `embedded mode`
+   - 作为 `memory-context-claw` 的一部分运行
+   - 将结果导出给 OpenClaw 面向的 memory/context 消费链路
+2. `standalone mode`
+   - 通过 CLI 或定时任务独立运行
+   - 摄取可控输入源
+   - 在不依赖 OpenClaw runtime 的前提下输出工件和报告
 
 ## 每日反思闭环
 
@@ -620,32 +874,36 @@ flowchart LR
 
 ```mermaid
 flowchart TB
-    subgraph L1["1. 信号采集层"]
-        A1["对话轮次"]
-        A2["工具动作与结果"]
-        A3["记忆写入 / 更新"]
-        A4["用户显式指令"]
+    subgraph L1["1. Source Layer"]
+        A1["Conversation source"]
+        A2["Document source"]
+        A3["URL source"]
+        A4["Directory source"]
+        A5["Image source"]
+        A6["Future structured source"]
     end
 
-    subgraph L2["2. 反思引擎"]
+    subgraph L2["2. Ingestion + Reflection"]
         B1["事件标注"]
         B2["模式提炼"]
         B3["反思问题模板"]
         B4["候选结论生成"]
+        B5["Source fingerprinting"]
     end
 
-    subgraph L3["3. 记忆引擎"]
+    subgraph L3["3. Learning Registry"]
         C1["候选池"]
         C2["升级 / 衰减"]
         C3["冲突处理"]
         C4["稳定记忆注册表"]
+        C5["决策轨迹"]
     end
 
-    subgraph L4["4. 策略引擎"]
-        D1["检索优先级更新"]
-        D2["打分权重更新"]
-        D3["装配偏好更新"]
-        D4["任务执行默认策略"]
+    subgraph L4["4. Integration Layer"]
+        D1["OpenClaw adapter"]
+        D2["Export API / artifacts"]
+        D3["Policy projection"]
+        D4["CLI commands"]
     end
 
     subgraph L5["5. 治理层"]
@@ -668,12 +926,25 @@ flowchart TB
     classDef memory fill:#eefce8,stroke:#2f855a,color:#1c4532,stroke-width:1.5px;
     classDef policy fill:#f3e8ff,stroke:#7c3aed,color:#4c1d95,stroke-width:1.5px;
     classDef govern fill:#fff4e8,stroke:#d97706,color:#7c2d12,stroke-width:1.5px;
-    class A1,A2,A3,A4 capture;
-    class B1,B2,B3,B4 reflect;
-    class C1,C2,C3,C4 memory;
+    class A1,A2,A3,A4,A5,A6 capture;
+    class B1,B2,B3,B4,B5 reflect;
+    class C1,C2,C3,C4,C5 memory;
     class D1,D2,D3,D4 policy;
     class E1,E2,E3,E4 govern;
 ```
+
+## 集成边界
+
+最干净的边界应该是：
+
+- `self-learning component` 负责 ingestion、candidate generation、promotion lifecycle、audit trail 和 exports
+- `memory-context-claw` 负责 OpenClaw 专属的 retrieval、assembly 和 plugin-side consumption
+
+换句话说：
+
+`self-learning 决定学到了什么`
+
+`memory-context-claw 决定 OpenClaw 怎么消费这些结果`
 
 ## 反思引擎
 
@@ -706,6 +977,31 @@ stateDiagram-v2
     stable --> superseded: 冲突确认
 ```
 
+## CLI 形态
+
+这个组件应该支持通过独立 CLI 操作。
+
+早期命令方向例如：
+
+- `learn add --file <path>`
+- `learn add --url <url>`
+- `learn add --dir <path>`
+- `learn add --image <path>`
+- `learn reflect --since <date>`
+- `learn promote --review`
+- `learn audit`
+- `learn export --target openclaw`
+
+命令名后续可以调整。
+
+更重要的是运行模型：
+
+- source registration 是显式的
+- learning runs 可以脚本化
+- audits 可以脚本化
+- exports 可以脚本化
+- CLI 可以脱离 OpenClaw host 运行
+
 ## 策略自适应
 
 学习不能只停在“写入 memory”。
@@ -737,6 +1033,9 @@ stateDiagram-v2
 - 每条学习项都要记录最近验证时间
 - 每条学习项都必须可降级 / 可过期
 - 冲突必须显式处理，不能静默覆盖
+- source scope 必须可审阅
+- promotion history 必须可见
+- export 结果必须可复现
 
 ## 要规避的风险
 
@@ -835,14 +1134,20 @@ flowchart LR
 
 未来可以考虑新增：
 
+- `src/learning-source-adapters.js`
 - `src/daily-reflection.js`
 - `src/learning-candidates.js`
 - `src/learning-promotion.js`
 - `src/policy-adaptation.js`
+- `src/learning-export.js`
+- `src/learning-cli.js`
 - `scripts/run-daily-reflection.js`
+- `scripts/learn-add-source.js`
+- `scripts/learn-export-openclaw.js`
 - `reports/self-learning-*.md`
 - `test/daily-reflection.test.js`
 - `test/learning-promotion.test.js`
+- `test/learning-cli.test.js`
 
 这里是建议方向，不是已经锁死的文件契约。
 
@@ -855,3 +1160,6 @@ flowchart LR
 - recalled context 更干净，而不是更吵
 - 策略自适应是可见、可解释的
 - 学习行为本身也能被回归测试和评审
+- 学习源保持显式且可控
+- 组件可以用 standalone CLI mode 运行
+- 输出能以最小 adapter 成本复用给 OpenClaw 之外的项目
