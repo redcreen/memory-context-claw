@@ -29,6 +29,6 @@
 
 ## Execution Order
 
-1. 先完成 `.codex` 控制面整改
+1. 先完成模块视角控制面整改
 2. 再继续 `memory search` 治理与 smoke promotion
 3. 然后扩下一批稳定事实 / 稳定规则

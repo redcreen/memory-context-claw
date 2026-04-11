@@ -11,7 +11,7 @@
 
 ## Active Slice
 
-`control-surface established; next return to governed execution`
+`module-view control surface established; next return to governed execution`
 
 ## Done
 
@@ -38,10 +38,15 @@
   - `pluginNoisySupporting = 0/6`
 - `eval:smoke-promotion` 已落地，作为是否升格进 smoke 的建议入口
 - 本次整改已补齐 `.codex` 控制面
+- 模块视角控制面已补齐：
+  - `docs/module-map.md`
+  - `.codex/subprojects/core-product.md`
+  - `.codex/subprojects/plugin-runtime.md`
+  - `.codex/subprojects/memory-governance.md`
 
 ## In Progress
 
-- 让 `eval:smoke-promotion` 从“原始建议器”收成“可用于真实升格决策的保守建议器”
+- 把后续恢复入口从“全局文档视角”切到“模块 + 子项目状态视角”
 
 ## Blockers / Open Decisions
 
@@ -50,6 +55,6 @@
 
 ## Next 3 Actions
 
-1. 继续扩新的稳定事实 / 稳定规则，并同步 smoke / docs / governance
-2. 如果出现新的 memory-search 专项 case，先过 `eval:smoke-promotion`，再决定是否值得升进 smoke
-3. 视需要继续做文档职责瘦身，但保持 `project-roadmap.md` 作为主 roadmap，不新增平行主文档
+1. 恢复时优先看 `docs/module-map.md` 和 `.codex/subprojects/*.md`
+2. 继续扩新的稳定事实 / 稳定规则，并同步 smoke / docs / governance
+3. 如果出现新的 memory-search 专项 case，先过 `eval:smoke-promotion`，再决定是否值得升进 smoke

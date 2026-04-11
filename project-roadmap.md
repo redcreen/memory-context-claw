@@ -35,6 +35,10 @@ It is not the place for every detailed phase plan.
 
 Use specialized roadmap documents for that.
 
+Module view:
+
+- [docs/module-map.md](docs/module-map.md)
+
 ## Roadmap Stack
 
 ```mermaid
@@ -346,6 +350,10 @@ Inside the product, the first-class modules are:
 它不负责承载每个专题的全部 phase 细节。
 
 专题细节放到各自的 roadmap 里维护。
+
+模块视角入口：
+
+- [docs/module-map.md](docs/module-map.md)
 
 ## Roadmap 结构
 
