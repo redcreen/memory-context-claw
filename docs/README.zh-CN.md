@@ -20,6 +20,7 @@
 | 理解稳定系统结构 | [architecture.zh-CN.md](architecture.zh-CN.md) |
 | 看官方模块边界 | [module-map.zh-CN.md](module-map.zh-CN.md) |
 | 看里程碑层面的下一步 | [roadmap.zh-CN.md](roadmap.zh-CN.md) |
+| 理解 self-learning 主线与当前基线 | [workstreams/self-learning/README.md](workstreams/self-learning/README.md) |
 | 了解验证和发布门禁 | [test-plan.zh-CN.md](test-plan.zh-CN.md) |
 | 深入查看详细执行队列 | [unified-memory-core/development-plan.md](unified-memory-core/development-plan.md) |
 
@@ -32,6 +33,13 @@
 - 部署拓扑：[unified-memory-core/deployment-topology.md](unified-memory-core/deployment-topology.md)
 - 所有权地图：[unified-memory-core/ownership-map.md](unified-memory-core/ownership-map.md)
 
+
+## Markdown 治理
+
+- 参考文档：[reference/README.zh-CN.md](reference/README.zh-CN.md)
+- 工作流文档：[workstreams/README.zh-CN.md](workstreams/README.zh-CN.md)
+- 归档文档：[archive/README.zh-CN.md](archive/README.zh-CN.md)
+
 ## 维护者恢复边界
 
 当前执行状态不放在这里。
@@ -43,3 +51,6 @@
 3. `../.codex/modules/*.md`
 
 之后再回到这里看稳定参考文档。
+- 参考文档：[reference/README.zh-CN.md](reference/README.zh-CN.md)
+- 工作流文档：[workstreams/README.zh-CN.md](workstreams/README.zh-CN.md)
+- 归档文档：[archive/README.zh-CN.md](archive/README.zh-CN.md)

@@ -13,6 +13,7 @@ Own export/projection behavior, visibility filtering, and consumer-facing artifa
 - projection export contract baseline
 - visibility filtering
 - OpenClaw / Codex / generic projection path
+- promoted stable artifacts can already leave the registry through explicit exports
 - projection-system tests
 
 ## Remaining Steps

@@ -13,11 +13,12 @@ Own source, candidate, and stable artifact storage plus decision trail, conflict
 - registry persistence baseline
 - source/candidate/stable artifact separation
 - local-first lifecycle loop
-- decision trail and registry test coverage
+- candidate -> stable promotion baseline with decision trail
+- registry test coverage for lifecycle primitives
 
 ## Remaining Steps
-1. Add update rules for promoted learning artifacts.
-2. Refine conflict and superseded-record handling for future learning phases.
+1. Add richer update rules for promoted learning artifacts.
+2. Refine conflict, decay, and superseded-record handling for future learning phases.
 3. Keep export compatibility aligned with future projection changes.
 
 ## Completion Signal

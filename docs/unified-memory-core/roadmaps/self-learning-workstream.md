@@ -9,14 +9,14 @@ This document makes the self-learning workstream part of the unified module road
 Use:
 
 - product/workstream roadmap:
-  [../../../reports/self-learning-roadmap.md](../../../reports/self-learning-roadmap.md)
+  [../../workstreams/self-learning/roadmap.md](../../workstreams/self-learning/roadmap.md)
 - product/workstream architecture:
-  [../../../self-learning-architecture.md](../../../self-learning-architecture.md)
+  [../../workstreams/self-learning/architecture.md](../../workstreams/self-learning/architecture.md)
 
 Current status:
 
-- `step-10 design package complete`
-- implementation is the next phase
+- reflection baseline, daily reflection, and standalone learning surfaces are already implemented
+- the next phase is to make promotion / decay / policy adaptation explicit
 
 ## 中文
 
@@ -25,11 +25,11 @@ Current status:
 请直接配合下面两份主文档使用：
 
 - workstream roadmap：
-  [../../../reports/self-learning-roadmap.md](../../../reports/self-learning-roadmap.md)
+  [../../workstreams/self-learning/roadmap.md](../../workstreams/self-learning/roadmap.md)
 - workstream architecture：
-  [../../../self-learning-architecture.md](../../../self-learning-architecture.md)
+  [../../workstreams/self-learning/architecture.md](../../workstreams/self-learning/architecture.md)
 
 当前状态：
 
-- `step-10 设计包已完成`
-- 下一阶段进入实现
+- reflection baseline、daily reflection 和 standalone learning surfaces 已经实现
+- 下一阶段是把 promotion / decay / policy adaptation 明确下来

@@ -20,6 +20,11 @@ One-line summary:
 
 `Turn OpenClaw long memory into a governed, fact-first, task-ready context system.`
 
+What is already true today:
+
+- the self-learning baseline is already implemented across reflection, daily reflection, registry promotion, exports, and governance surfaces
+- the next phase is not to start self-learning from zero, but to make lifecycle rules and policy adaptation explicit
+
 ## What This Master Roadmap Does
 
 `project-roadmap.md` is the master roadmap and document index.
@@ -54,10 +59,10 @@ flowchart TB
     A --> U["unified-memory-core.md\nproduct index"]
     A --> V["unified-memory-core-roadmap.md\nproduct roadmap"]
     A --> W["docs/unified-memory-core/deployment-topology.md\ndeployment topology"]
-    A --> C["reports/memory-search-roadmap.md\nmemory-search roadmap"]
-    A --> D["reports/self-learning-roadmap.md\nself-learning roadmap"]
-    C --> E["reports/memory-search-next-blueprint.md\nmemory-search blueprint"]
-    D --> F["self-learning-architecture.md\nself-learning architecture"]
+    A --> C["docs/workstreams/memory-search/roadmap.md\nmemory-search roadmap"]
+    A --> D["docs/workstreams/self-learning/roadmap.md\nself-learning roadmap"]
+    C --> E["docs/workstreams/memory-search/next-blueprint.md\nmemory-search blueprint"]
+    D --> F["docs/workstreams/self-learning/architecture.md\nself-learning architecture"]
 
     classDef top fill:#e8f1ff,stroke:#2f6feb,color:#123a73,stroke-width:1.5px;
     classDef work fill:#eefce8,stroke:#2f855a,color:#1c4532,stroke-width:1.5px;
@@ -84,7 +89,7 @@ flowchart TB
 | --- | --- | --- |
 | Core capture / fact-card / assembly | `completed` | maintain + tune |
 | Memory search | `phase-complete` | governance + incremental expansion |
-| Self-learning / reflection | `baseline-implemented` | daily reflection, standalone loop, and governance surfaces available |
+| Self-learning / reflection | `baseline-implemented` | declared-source ingestion, daily reflection, candidate -> stable promotion, exports, CLI, and governance surfaces available |
 | Unified Memory Core | `baseline-complete` | tranche 1-3 complete; ready for next enhancement phase |
 
 ## Progress Map
@@ -228,11 +233,11 @@ Key documents:
 - master roadmap:
   [project-roadmap.md](project-roadmap.md)
 - product roadmap:
-  [unified-memory-core-roadmap.md](unified-memory-core-roadmap.md)
+  [unified-memory-core-roadmap.md](docs/archive/unified-memory-core-roadmap.md)
 - implementation plan:
   [docs/unified-memory-core/development-plan.md](docs/unified-memory-core/development-plan.md)
 - self-learning roadmap:
-  [reports/self-learning-roadmap.md](reports/self-learning-roadmap.md)
+  [docs/workstreams/self-learning/roadmap.md](docs/workstreams/self-learning/roadmap.md)
 
 ### Parallel maintenance focus
 
@@ -259,9 +264,9 @@ Current governance quality:
 Key documents:
 
 - roadmap:
-  [reports/memory-search-roadmap.md](reports/memory-search-roadmap.md)
+  [reports/memory-search-roadmap.md](docs/workstreams/memory-search/roadmap.md)
 - blueprint:
-  [reports/memory-search-next-blueprint.md](reports/memory-search-next-blueprint.md)
+  [reports/memory-search-next-blueprint.md](docs/workstreams/memory-search/next-blueprint.md)
 
 ## What Is Currently Planned
 
@@ -303,27 +308,27 @@ Inside the product, the first-class modules are:
 - [system-architecture.md](system-architecture.md)
 - [project-roadmap.md](project-roadmap.md)
 - [docs/unified-memory-core/deployment-topology.md](docs/unified-memory-core/deployment-topology.md)
-- [self-learning-architecture.md](self-learning-architecture.md)
-- [unified-memory-core.md](unified-memory-core.md)
-- [unified-memory-core-roadmap.md](unified-memory-core-roadmap.md)
+- [docs/workstreams/self-learning/architecture.md](docs/workstreams/self-learning/architecture.md)
+- [unified-memory-core.md](docs/archive/unified-memory-core.md)
+- [unified-memory-core-roadmap.md](docs/archive/unified-memory-core-roadmap.md)
 
 ### Current workstream documents
 
-- [reports/memory-search-architecture.md](reports/memory-search-architecture.md)
-- [reports/memory-search-roadmap.md](reports/memory-search-roadmap.md)
-- [reports/memory-search-next-blueprint.md](reports/memory-search-next-blueprint.md)
-- [reports/self-learning-roadmap.md](reports/self-learning-roadmap.md)
+- [reports/memory-search-architecture.md](docs/workstreams/memory-search/architecture.md)
+- [reports/memory-search-roadmap.md](docs/workstreams/memory-search/roadmap.md)
+- [reports/memory-search-next-blueprint.md](docs/workstreams/memory-search/next-blueprint.md)
+- [docs/workstreams/self-learning/roadmap.md](docs/workstreams/self-learning/roadmap.md)
 
 ## Read This Next
 
 - If you want overall system shape:
   [system-architecture.md](system-architecture.md)
 - If you want the product direction:
-  [unified-memory-core.md](unified-memory-core.md)
+  [unified-memory-core.md](docs/archive/unified-memory-core.md)
 - If you want the product-level roadmap:
-  [unified-memory-core-roadmap.md](unified-memory-core-roadmap.md)
+  [unified-memory-core-roadmap.md](docs/archive/unified-memory-core-roadmap.md)
 - If you want the self-learning workstream inside that product:
-  [self-learning-architecture.md](self-learning-architecture.md)
+  [docs/workstreams/self-learning/architecture.md](docs/workstreams/self-learning/architecture.md)
 
 ## 中文
 
@@ -369,10 +374,10 @@ flowchart TB
     A["project-roadmap.md\n主 roadmap / 总索引"] --> B["system-architecture.md\n顶层架构"]
     A --> U["unified-memory-core.md\n产品索引"]
     A --> V["unified-memory-core-roadmap.md\n产品 roadmap"]
-    A --> C["reports/memory-search-roadmap.md\nmemory-search roadmap"]
-    A --> D["reports/self-learning-roadmap.md\nself-learning roadmap"]
-    C --> E["reports/memory-search-next-blueprint.md\nmemory-search blueprint"]
-    D --> F["self-learning-architecture.md\nself-learning architecture"]
+    A --> C["docs/workstreams/memory-search/roadmap.md\nmemory-search roadmap"]
+    A --> D["docs/workstreams/self-learning/roadmap.md\nself-learning roadmap"]
+    C --> E["docs/workstreams/memory-search/next-blueprint.md\nmemory-search blueprint"]
+    D --> F["docs/workstreams/self-learning/architecture.md\nself-learning architecture"]
 
     classDef top fill:#e8f1ff,stroke:#2f6feb,color:#123a73,stroke-width:1.5px;
     classDef work fill:#eefce8,stroke:#2f855a,color:#1c4532,stroke-width:1.5px;
@@ -543,11 +548,11 @@ flowchart TB
 - 主 roadmap：
   [project-roadmap.md](project-roadmap.md)
 - 产品 roadmap：
-  [unified-memory-core-roadmap.md](unified-memory-core-roadmap.md)
+  [unified-memory-core-roadmap.md](docs/archive/unified-memory-core-roadmap.md)
 - 实施计划：
   [docs/unified-memory-core/development-plan.md](docs/unified-memory-core/development-plan.md)
 - self-learning roadmap：
-  [reports/self-learning-roadmap.md](reports/self-learning-roadmap.md)
+  [docs/workstreams/self-learning/roadmap.md](docs/workstreams/self-learning/roadmap.md)
 
 ### 并行维护主线
 
@@ -574,9 +579,9 @@ flowchart TB
 关键文档：
 
 - roadmap：
-  [reports/memory-search-roadmap.md](reports/memory-search-roadmap.md)
+  [reports/memory-search-roadmap.md](docs/workstreams/memory-search/roadmap.md)
 - blueprint：
-  [reports/memory-search-next-blueprint.md](reports/memory-search-next-blueprint.md)
+  [reports/memory-search-next-blueprint.md](docs/workstreams/memory-search/next-blueprint.md)
 
 ## 当前已经计划好的下一阶段
 
@@ -617,28 +622,28 @@ flowchart TB
 - [README.md](README.md)
 - [system-architecture.md](system-architecture.md)
 - [project-roadmap.md](project-roadmap.md)
-- [self-learning-architecture.md](self-learning-architecture.md)
-- [unified-memory-core.md](unified-memory-core.md)
-- [unified-memory-core-roadmap.md](unified-memory-core-roadmap.md)
+- [docs/workstreams/self-learning/architecture.md](docs/workstreams/self-learning/architecture.md)
+- [unified-memory-core.md](docs/archive/unified-memory-core.md)
+- [unified-memory-core-roadmap.md](docs/archive/unified-memory-core-roadmap.md)
 
 ### 当前专题文档
 
-- [reports/memory-search-architecture.md](reports/memory-search-architecture.md)
-- [reports/memory-search-roadmap.md](reports/memory-search-roadmap.md)
-- [reports/memory-search-next-blueprint.md](reports/memory-search-next-blueprint.md)
-- [reports/self-learning-roadmap.md](reports/self-learning-roadmap.md)
-- [unified-memory-core.md](unified-memory-core.md)
-- [unified-memory-core-roadmap.md](unified-memory-core-roadmap.md)
+- [reports/memory-search-architecture.md](docs/workstreams/memory-search/architecture.md)
+- [reports/memory-search-roadmap.md](docs/workstreams/memory-search/roadmap.md)
+- [reports/memory-search-next-blueprint.md](docs/workstreams/memory-search/next-blueprint.md)
+- [docs/workstreams/self-learning/roadmap.md](docs/workstreams/self-learning/roadmap.md)
+- [unified-memory-core.md](docs/archive/unified-memory-core.md)
+- [unified-memory-core-roadmap.md](docs/archive/unified-memory-core-roadmap.md)
 
 ## 建议接着读
 
 - 如果想看整体系统形态：
   [system-architecture.md](system-architecture.md)
 - 如果想看新的产品主线：
-  [unified-memory-core.md](unified-memory-core.md)
+  [unified-memory-core.md](docs/archive/unified-memory-core.md)
 - 如果想看产品级 roadmap：
-  [unified-memory-core-roadmap.md](unified-memory-core-roadmap.md)
+  [unified-memory-core-roadmap.md](docs/archive/unified-memory-core-roadmap.md)
 - 如果想看下一条主线的架构设计：
-  [self-learning-architecture.md](self-learning-architecture.md)
+  [docs/workstreams/self-learning/architecture.md](docs/workstreams/self-learning/architecture.md)
 - 如果想看接下来怎么分阶段开发：
-  [reports/self-learning-roadmap.md](reports/self-learning-roadmap.md)
+  [docs/workstreams/self-learning/roadmap.md](docs/workstreams/self-learning/roadmap.md)

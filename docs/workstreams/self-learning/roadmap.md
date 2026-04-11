@@ -18,9 +18,9 @@ It answers:
 
 Related documents:
 
-- [../project-roadmap.md](../project-roadmap.md)
-- [../self-learning-architecture.md](../self-learning-architecture.md)
-- [memory-search-roadmap.md](memory-search-roadmap.md)
+- [../../../project-roadmap.md](../../../project-roadmap.md)
+- [architecture.md](architecture.md)
+- [../memory-search/roadmap.md](../memory-search/roadmap.md)
 
 ## Workstream Goal
 
@@ -37,13 +37,29 @@ Build a governed daily-learning system for `unified-memory-core` that can:
 
 ## Current Status
 
-- status: `planning-complete / development-ready`
-- architecture baseline: `defined`
-- implementation baseline: `started`
+- status: `baseline-implemented / next-phase active`
+- architecture baseline: `defined and partially realized in the current shared modules`
+- implementation baseline: `already running`
 - dependency status:
   - core memory-context backbone: `ready`
   - memory-search governance loop: `ready but not a hard coupling target`
   - daily reflection baseline: `implemented`
+  - candidate -> stable promotion baseline: `implemented`
+  - standalone CLI / export / governance surfaces: `implemented`
+
+## Implemented Baseline Today
+
+The current repo already has a real self-learning baseline, even though the full lifecycle is not complete yet.
+
+- declared sources already support `manual`, `file`, `directory`, and `conversation`
+- reflection already emits structured candidate artifacts and decision trails
+- daily reflection already detects repeated signals and explicit remember instructions
+- candidate-to-stable promotion already runs through the registry
+- standalone runtime / CLI, exports, and governance audit / repair / replay surfaces are already available
+
+The next phase is not “start self-learning from zero”. The next phase is to make the lifecycle rules explicit and finish the policy-facing parts.
+
+The phase descriptions below are planning envelopes. Parts of Phase 0-2 are already implemented across the current shared modules.
 
 ## Phase Map
 
@@ -332,9 +348,9 @@ flowchart TB
 
 相关文档：
 
-- [../project-roadmap.md](../project-roadmap.md)
-- [../self-learning-architecture.md](../self-learning-architecture.md)
-- [memory-search-roadmap.md](memory-search-roadmap.md)
+- [../../../project-roadmap.md](../../../project-roadmap.md)
+- [architecture.md](architecture.md)
+- [../memory-search/roadmap.md](../memory-search/roadmap.md)
 
 ## 专项目标
 
@@ -351,12 +367,29 @@ flowchart TB
 
 ## 当前状态
 
-- 状态：`planning-complete / development-ready`
-- 架构基线：`已定义`
-- 实现基线：`尚未开始`
+- 状态：`baseline-implemented / next-phase active`
+- 架构基线：`已定义，并且已经在当前共享模块里部分落地`
+- 实现基线：`已经可运行`
 - 依赖状态：
   - memory-context 主骨架：`ready`
   - memory-search 治理循环：`ready but not a hard coupling target`
+  - daily reflection 基线：`implemented`
+  - candidate -> stable promotion 基线：`implemented`
+  - standalone CLI / export / governance 面：`implemented`
+
+## 当前已经落地的基线
+
+当前仓库已经有一条真实可用的 self-learning 基线，只是完整 lifecycle 还没有收口。
+
+- declared sources 已支持 `manual`、`file`、`directory`、`conversation`
+- reflection 已能产出结构化的 candidate artifacts 和 decision trails
+- daily reflection 已能识别 repeated signals 和显式 remember 指令
+- candidate -> stable promotion 已经能走通 registry
+- standalone runtime / CLI、exports、governance audit / repair / replay 已经可用
+
+下一阶段不是“从零开始做 self-learning”，而是把生命周期规则显式化，并补齐 policy-facing 部分。
+
+下面的 phase 描述是规划外壳。Phase 0-2 的一部分，已经通过当前共享模块实现。
 
 ## 阶段图
 

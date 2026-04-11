@@ -27,11 +27,11 @@ Related documents:
 
 - [README.md](README.md)
 - [project-roadmap.md](project-roadmap.md)
-- [unified-memory-core.md](unified-memory-core.md)
-- [unified-memory-core-architecture.md](unified-memory-core-architecture.md)
+- [unified-memory-core.md](docs/archive/unified-memory-core.md)
+- [unified-memory-core-architecture.md](docs/archive/unified-memory-core-architecture.md)
 - [docs/unified-memory-core/deployment-topology.md](docs/unified-memory-core/deployment-topology.md)
-- [self-learning-architecture.md](self-learning-architecture.md)
-- [reports/memory-search-architecture.md](reports/memory-search-architecture.md)
+- [self-learning-architecture.md](docs/workstreams/self-learning/architecture.md)
+- [reports/memory-search-architecture.md](docs/workstreams/memory-search/architecture.md)
 
 ## Architecture At A Glance
 
@@ -328,17 +328,17 @@ The latest repo direction is:
 ## Document Map
 
 - product index:
-  [unified-memory-core.md](unified-memory-core.md)
+  [unified-memory-core.md](docs/archive/unified-memory-core.md)
 - product architecture:
-  [unified-memory-core-architecture.md](unified-memory-core-architecture.md)
+  [unified-memory-core-architecture.md](docs/archive/unified-memory-core-architecture.md)
 - product roadmap:
-  [unified-memory-core-roadmap.md](unified-memory-core-roadmap.md)
+  [unified-memory-core-roadmap.md](docs/archive/unified-memory-core-roadmap.md)
 - OpenClaw code-memory binding:
-  [code-memory-binding-architecture.md](code-memory-binding-architecture.md)
+  [code-memory-binding-architecture.md](docs/reference/code-memory-binding-architecture.md)
 - self-learning workstream:
-  [self-learning-architecture.md](self-learning-architecture.md)
+  [self-learning-architecture.md](docs/workstreams/self-learning/architecture.md)
 - memory-search workstream:
-  [reports/memory-search-architecture.md](reports/memory-search-architecture.md)
+  [reports/memory-search-architecture.md](docs/workstreams/memory-search/architecture.md)
 
 ## 中文
 
@@ -365,10 +365,10 @@ The latest repo direction is:
 
 - [README.md](README.md)
 - [project-roadmap.md](project-roadmap.md)
-- [unified-memory-core.md](unified-memory-core.md)
-- [unified-memory-core-architecture.md](unified-memory-core-architecture.md)
-- [self-learning-architecture.md](self-learning-architecture.md)
-- [reports/memory-search-architecture.md](reports/memory-search-architecture.md)
+- [unified-memory-core.md](docs/archive/unified-memory-core.md)
+- [unified-memory-core-architecture.md](docs/archive/unified-memory-core-architecture.md)
+- [self-learning-architecture.md](docs/workstreams/self-learning/architecture.md)
+- [reports/memory-search-architecture.md](docs/workstreams/memory-search/architecture.md)
 
 ## 一图看懂
 
@@ -647,14 +647,14 @@ flowchart LR
 ## 文档地图
 
 - 产品索引：
-  [unified-memory-core.md](unified-memory-core.md)
+  [unified-memory-core.md](docs/archive/unified-memory-core.md)
 - 产品架构：
-  [unified-memory-core-architecture.md](unified-memory-core-architecture.md)
+  [unified-memory-core-architecture.md](docs/archive/unified-memory-core-architecture.md)
 - 产品 roadmap：
-  [unified-memory-core-roadmap.md](unified-memory-core-roadmap.md)
+  [unified-memory-core-roadmap.md](docs/archive/unified-memory-core-roadmap.md)
 - OpenClaw code-memory 绑定：
-  [code-memory-binding-architecture.md](code-memory-binding-architecture.md)
+  [code-memory-binding-architecture.md](docs/reference/code-memory-binding-architecture.md)
 - self-learning workstream：
-  [self-learning-architecture.md](self-learning-architecture.md)
+  [self-learning-architecture.md](docs/workstreams/self-learning/architecture.md)
 - memory-search workstream：
-  [reports/memory-search-architecture.md](reports/memory-search-architecture.md)
+  [reports/memory-search-architecture.md](docs/workstreams/memory-search/architecture.md)

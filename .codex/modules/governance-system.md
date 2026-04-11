@@ -13,11 +13,12 @@ Own audit, repair, replay, conflict/duplicate handling, governance cycle, and pr
 - formal audit, duplicate audit, and conflict audit
 - governance cycle and repair/replay primitives
 - memory-search governance metrics
+- namespace audit around exported stable artifacts
 - smoke-promotion helper as a conservative suggestion path
 
 ## Remaining Steps
 1. Keep governance signals readable and stable during ongoing work.
-2. Add learning-specific governance reports and repair paths when the next learning phase begins.
+2. Add learning-specific governance reports, decay/conflict review paths, and time-window comparisons.
 3. Optionally split high-frequency reports into clearer durable/generated groups.
 
 ## Completion Signal

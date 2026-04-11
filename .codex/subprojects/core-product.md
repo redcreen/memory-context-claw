@@ -33,21 +33,28 @@
 
 ## Current Slice
 
-`baseline complete; waiting for next enhancement-phase planning`
+`baseline complete; self-learning foundations implemented; next lifecycle-phase planning`
 
 ## Done
 
 - contracts / source / registry / projection / governance baseline 已完成
 - standalone runtime / CLI / daily reflection / independent execution 基线已落地
+- self-learning 基线已落地：
+  - declared-source ingestion
+  - reflection candidate generation
+  - daily reflection
+  - candidate -> stable promotion baseline
+  - export / governance audit baseline
 - 模块视角控制面已建立
 
 ## In Progress
 
+- 对齐 self-learning 实现真相与文档口径
 - 准备下一阶段增强入口，但还没有开启新的产品 phase
 
 ## Blockers / Open Decisions
 
-- 下一阶段优先做 self-learning policy，还是继续扩 projection / governance，还未正式立项
+- 下一阶段优先先补 promotion / decay / lifecycle governance，还是直接推进 policy adaptation，仍需收口
 
 ## Exit Condition
 
@@ -55,6 +62,6 @@
 
 ## Next 3 Actions
 
-1. 把下一增强 phase 的目标从旧 baseline 文档中剥离出来
-2. 明确下一阶段是“self-learning deeper policy”还是“projection/governance hardening”
+1. 把下一增强 phase 的目标从“已实现基线”和“未完成生命周期”里拆开写清
+2. 明确下一阶段先做“promotion / decay / lifecycle governance”还是“policy adaptation”
 3. 保持当前基线测试持续通过

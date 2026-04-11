@@ -12,12 +12,13 @@ Own candidate generation from normalized artifacts: event labeling, pattern extr
 
 - reflection contract baseline
 - candidate extraction and reflection outputs
-- daily reflection runner and report shape
-- repeat-signal scoring baseline
+- daily reflection runner and structured report shape
+- repeated-signal scoring and explicit-remember detection baseline
+- promotion-review baseline through reflection outputs
 
 ## Remaining Steps
 1. Define the next self-learning phase beyond the current baseline.
-2. Add promotion, decay, and conflict behavior for learned artifacts.
+2. Add explicit promotion, decay, and conflict behavior for learned artifacts.
 3. Add learning-specific reports, replay paths, and policy-facing outputs.
 
 ## Completion Signal

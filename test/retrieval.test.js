@@ -619,8 +619,8 @@ test("buildProjectCardsFromMarkdown derives release-install project card", () =>
     [
       "stable users: install the published release tag",
       "early adopters: install the current `main`",
-      "openclaw plugins install git+https://github.com/redcreen/unified-memory-core.git#v0.1.0",
-      "openclaw plugins install git+https://github.com/redcreen/unified-memory-core.git"
+      "openclaw plugins install git+https://github.com/redcreen/Unified-Memory-Core.git#v0.1.0",
+      "openclaw plugins install git+https://github.com/redcreen/Unified-Memory-Core.git"
     ].join("\n"),
     "README.md"
   );
@@ -772,8 +772,8 @@ test("buildConfigCardsFromMarkdown derives stable plugin config cards", () => {
 test("buildConfigCardsFromMarkdown derives release-install config card", () => {
   const cards = buildConfigCardsFromMarkdown(
     [
-      "openclaw plugins install git+https://github.com/redcreen/unified-memory-core.git#v0.1.0",
-      "openclaw plugins install git+https://github.com/redcreen/unified-memory-core.git"
+      "openclaw plugins install git+https://github.com/redcreen/Unified-Memory-Core.git#v0.1.0",
+      "openclaw plugins install git+https://github.com/redcreen/Unified-Memory-Core.git"
     ].join("\n"),
     "README.md"
   );

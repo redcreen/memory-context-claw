@@ -2,7 +2,7 @@
 
 [English](README.md) | [中文](README.zh-CN.md)
 
-> Turn OpenClaw long memory into a governed, fact-first, task-ready context system.
+> A governed shared-memory core for OpenClaw: fact-first context today, self-learning lifecycle next.
 
 ## Who This Is For
 
@@ -28,13 +28,13 @@ Not the primary target:
 Stable release:
 
 ```bash
-openclaw plugins install git+https://github.com/redcreen/unified-memory-core.git#v0.1.0
+openclaw plugins install git+https://github.com/redcreen/Unified-Memory-Core.git#v0.1.0
 ```
 
 Development head:
 
 ```bash
-openclaw plugins install git+https://github.com/redcreen/unified-memory-core.git
+openclaw plugins install git+https://github.com/redcreen/Unified-Memory-Core.git
 ```
 
 ### Minimal Configuration
@@ -89,6 +89,7 @@ workspace/
 - fact-first context assembly for high-value memory questions
 - stable rule, identity, and preference prioritization
 - governed retrieval and assembly instead of flat equal-weight recall
+- a governed self-learning baseline across declared sources, reflection, candidate promotion, and export/audit surfaces
 - export and projection layers for OpenClaw, Codex, and future consumers
 - governance, audit, repair, replay, and regression tooling for maintainers
 
@@ -101,6 +102,33 @@ The system is organized around seven first-class modules:
 - Governance System
 - OpenClaw Adapter
 - Codex Adapter
+
+## Why Self-Learning Already Matters
+
+The long-term differentiator of this repo is `self-learning`, but that baseline is no longer hypothetical.
+
+Today the repo already includes:
+
+- declared learning inputs through `manual`, `file`, `directory`, and `conversation` sources
+- structured reflection and daily reflection pipelines that emit candidate artifacts
+- repeated-signal and explicit `remember this` detection
+- candidate-to-stable promotion baseline with decision trails
+- standalone runtime / CLI flows for reflect, daily-run, export, audit, repair, and replay
+- generic, OpenClaw, and Codex export surfaces around promoted stable artifacts
+
+What is not finished yet:
+
+- explicit promotion / decay / conflict rules beyond today's baseline threshold promotion
+- clearer learning-specific artifact semantics for habits and behavior patterns
+- learning-specific audit reports, time-window comparisons, and smoke surfaces
+- policy adaptation that feeds governed learning outputs back into adapter behavior
+
+So the accurate positioning is:
+
+- current value: better fact-first context and a usable governed learning baseline
+- next phase: finish the self-learning lifecycle and make policy adaptation explicit
+
+If you want the strongest signal about where this project is going, read the self-learning workstream docs alongside the adapter docs.
 
 ## Common Workflows
 
@@ -145,6 +173,7 @@ Deeper repo-specific references:
 - [Top-Level System Architecture](system-architecture.md)
 - [Detailed Development Queue](docs/unified-memory-core/development-plan.md)
 - [Detailed Testing Stack](docs/unified-memory-core/testing/README.md)
+- [Self-Learning Roadmap](docs/workstreams/self-learning/roadmap.md)
 
 ## Development
 

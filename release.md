@@ -7,7 +7,7 @@
 If users install directly from:
 
 ```bash
-openclaw plugins install git+https://github.com/redcreen/unified-memory-core.git
+openclaw plugins install git+https://github.com/redcreen/Unified-Memory-Core.git
 ```
 
 they get whatever the default branch points to at install time.
@@ -21,7 +21,7 @@ That means:
 So the recommended public install path should be:
 
 ```bash
-openclaw plugins install git+https://github.com/redcreen/unified-memory-core.git#v0.1.0
+openclaw plugins install git+https://github.com/redcreen/Unified-Memory-Core.git#v0.1.0
 ```
 
 ### Recommended Release Model
@@ -83,13 +83,13 @@ If you also want a GitHub Release, create it from the same tag.
 #### Stable
 
 ```bash
-openclaw plugins install git+https://github.com/redcreen/unified-memory-core.git#v0.1.0
+openclaw plugins install git+https://github.com/redcreen/Unified-Memory-Core.git#v0.1.0
 ```
 
 #### Development Head
 
 ```bash
-openclaw plugins install git+https://github.com/redcreen/unified-memory-core.git
+openclaw plugins install git+https://github.com/redcreen/Unified-Memory-Core.git
 ```
 
 ### Current State

@@ -16,8 +16,8 @@ Related documents:
 
 - [../../project-roadmap.md](../../project-roadmap.md)
 - [../../system-architecture.md](../../system-architecture.md)
-- [../../unified-memory-core-architecture.md](../../unified-memory-core-architecture.md)
-- [../../unified-memory-core-roadmap.md](../../unified-memory-core-roadmap.md)
+- [../../unified-memory-core-architecture.md](../archive/unified-memory-core-architecture.md)
+- [../../unified-memory-core-roadmap.md](../archive/unified-memory-core-roadmap.md)
 - [deployment-topology.md](deployment-topology.md)
 - [architecture/README.md](architecture/README.md)
 - [roadmaps/README.md](roadmaps/README.md)
@@ -216,8 +216,8 @@ Review this document with these questions:
 
 - [../../project-roadmap.md](../../project-roadmap.md)
 - [../../system-architecture.md](../../system-architecture.md)
-- [../../unified-memory-core-architecture.md](../../unified-memory-core-architecture.md)
-- [../../unified-memory-core-roadmap.md](../../unified-memory-core-roadmap.md)
+- [../../unified-memory-core-architecture.md](../archive/unified-memory-core-architecture.md)
+- [../../unified-memory-core-roadmap.md](../archive/unified-memory-core-roadmap.md)
 - [deployment-topology.md](deployment-topology.md)
 - [architecture/README.md](architecture/README.md)
 - [roadmaps/README.md](roadmaps/README.md)

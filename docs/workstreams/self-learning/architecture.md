@@ -24,11 +24,11 @@ This document is meant to guide future implementation work, not just describe an
 
 Related documents:
 
-- [README.md](README.md)
-- [system-architecture.md](system-architecture.md)
-- [project-roadmap.md](project-roadmap.md)
-- [reports/self-learning-roadmap.md](reports/self-learning-roadmap.md)
-- [reports/memory-search-architecture.md](reports/memory-search-architecture.md)
+- [../../../README.md](../../../README.md)
+- [../../../system-architecture.md](../../../system-architecture.md)
+- [../../../project-roadmap.md](../../../project-roadmap.md)
+- [roadmap.md](roadmap.md)
+- [../memory-search/architecture.md](../memory-search/architecture.md)
 
 ## One-Line Goal
 
@@ -39,6 +39,17 @@ Turn `unified-memory-core` from a fact-first memory context layer into a:
 At the architecture level, this system should be designed as:
 
 `a governable learning subsystem inside Unified Memory Core that feeds OpenClaw, Codex, and future adapters`
+
+## Current Implementation Baseline
+
+This workstream is no longer design-only. The repo already implements a meaningful baseline:
+
+- declared-source ingestion for `manual`, `file`, `directory`, and `conversation`
+- reflection labeling, candidate artifact generation, and decision trails
+- daily reflection runs with repeated-signal and explicit remember detection
+- candidate-to-stable promotion through the registry
+- standalone runtime / CLI flows for reflect, daily-run, export, audit, repair, and replay
+- generic, OpenClaw, and Codex export paths plus governance audit around exported stable artifacts
 
 ## What Problem This Workstream Solves
 
@@ -51,14 +62,14 @@ The current system is already good at:
 
 But that is only the first half of a longer-term memory system.
 
-Without a dedicated self-learning layer, the current OpenClaw adapter path still has several gaps:
+The remaining gaps are now narrower and more specific:
 
-1. repeated user expressions are not yet turned into governed habit signals
-2. explicit `remember this` instructions are not yet treated as a first-class promotion path
-3. daily reflection is not yet formalized into a stable pipeline
-4. behavior patterns are not yet separated from plain facts
+1. repeated user expressions already produce candidates, but habit / behavior-specific lifecycle rules are still shallow
+2. explicit `remember this` instructions are already detected, but they still rely on baseline promotion logic instead of a richer dedicated policy
+3. daily reflection already exists as a structured pipeline, but learning-specific maintenance and reporting are not yet productized
+4. behavior patterns are still not separated cleanly enough from plain facts at the artifact-policy layer
 5. learned patterns do not yet systematically update retrieval and assembly policy
-6. long-term learning can easily become noisy if candidate promotion is not carefully controlled
+6. long-term learning still needs explicit decay, conflict, and time-window governance to avoid turning into a new noise pool
 
 ## Desired Outcome
 
@@ -166,11 +177,10 @@ Learning sources should be explicit, selectable, and reviewable.
 The system should support inputs such as:
 
 - conversations
-- OpenClaw memory artifacts
 - a single document
-- a URL
 - a directory
-- one or more images
+- current implementation baseline: `manual`, `file`, `directory`, and `conversation`
+- future planned adapters such as URL or image sources
 - future structured imports
 
 Important rule:
@@ -605,11 +615,11 @@ This workstream is successful when:
 
 相关文档：
 
-- [README.md](README.md)
-- [system-architecture.md](system-architecture.md)
-- [project-roadmap.md](project-roadmap.md)
-- [reports/self-learning-roadmap.md](reports/self-learning-roadmap.md)
-- [reports/memory-search-architecture.md](reports/memory-search-architecture.md)
+- [../../../README.zh-CN.md](../../../README.zh-CN.md)
+- [../../../system-architecture.md](../../../system-architecture.md)
+- [../../../project-roadmap.md](../../../project-roadmap.md)
+- [roadmap.md](roadmap.md)
+- [../memory-search/architecture.md](../memory-search/architecture.md)
 
 ## 一句话目标
 
@@ -620,6 +630,17 @@ This workstream is successful when:
 在架构层面，这个系统还应该被设计成：
 
 `一个可独立拆分、可独立治理、当前先服务 OpenClaw、未来也可服务其他项目的学习组件`
+
+## 当前已经实现的基线
+
+这条专项已经不是纯设计稿了。当前仓库里已经落地了一条有实际能力的基线：
+
+- `manual`、`file`、`directory`、`conversation` 这些 declared sources 的接入
+- reflection labeling、candidate artifact generation、decision trails
+- 带 repeated signal 和显式 remember 检测的 daily reflection
+- 通过 registry 跑通的 candidate -> stable promotion
+- standalone runtime / CLI，可执行 reflect、daily-run、export、audit、repair、replay
+- generic、OpenClaw、Codex 三条 export 路径，以及围绕 exported stable artifacts 的 governance audit
 
 ## 这条专项要解决什么问题
 
@@ -632,14 +653,14 @@ This workstream is successful when:
 
 但这还只是长期记忆系统的前半段。
 
-如果没有专门的自学习层，当前仍然有几个明显缺口：
+现在剩下的缺口已经更具体了：
 
-1. 用户重复表达的内容，还没有被稳定收成“习惯信号”
-2. 用户明确说“记住”的内容，还没有被当成一条一等公民的升级路径
-3. “每日反思”还没有被正式产品化成固定管线
-4. 行为模式还没有和普通事实清楚分开
+1. 用户重复表达的内容已经会生成 candidate，但 habit / behavior-specific 的生命周期规则还比较浅
+2. 用户明确说“记住”的内容已经能被检测到，但目前仍主要依赖基线 promotion 逻辑，而不是更丰富的专门策略
+3. “每日反思”已经是结构化管线，但 learning-specific 的维护流和报告体系还没有产品化
+4. 行为模式在 artifact-policy 层还没有和普通事实彻底拉开
 5. 学到的模式还没有系统地反哺 retrieval / assembly policy
-6. 如果没有治理，长期学习很容易把 memory 再次做成噪音池
+6. 长期学习仍然需要更明确的 decay、conflict、time-window governance，避免再次变成噪音池
 
 ## 目标结果
 

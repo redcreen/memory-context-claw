@@ -20,8 +20,8 @@ It answers one practical question:
 Related documents:
 
 - [../../system-architecture.md](../../system-architecture.md)
-- [../../unified-memory-core-architecture.md](../../unified-memory-core-architecture.md)
-- [../../code-memory-binding-architecture.md](../../code-memory-binding-architecture.md)
+- [../../unified-memory-core-architecture.md](../archive/unified-memory-core-architecture.md)
+- [../../code-memory-binding-architecture.md](../reference/code-memory-binding-architecture.md)
 - [development-plan.md](development-plan.md)
 
 ## Short Answer
@@ -337,8 +337,8 @@ That means:
 相关文档：
 
 - [../../system-architecture.md](../../system-architecture.md)
-- [../../unified-memory-core-architecture.md](../../unified-memory-core-architecture.md)
-- [../../code-memory-binding-architecture.md](../../code-memory-binding-architecture.md)
+- [../../unified-memory-core-architecture.md](../archive/unified-memory-core-architecture.md)
+- [../../code-memory-binding-architecture.md](../reference/code-memory-binding-architecture.md)
 - [development-plan.md](development-plan.md)
 
 ## 短答案

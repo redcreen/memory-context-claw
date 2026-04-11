@@ -21,7 +21,7 @@ For detailed queues, read:
 | Horizon | Focus | Exit Signal |
 | --- | --- | --- |
 | Now | keep the current OpenClaw adapter and governance baseline clean while module-view execution continues | stable-fact expansion lands without degrading smoke quality |
-| Next | open the next enhancement phase for Reflection, Projection, and Registry learning lifecycle work | the next learning phase is explicitly named and has validation surfaces |
+| Next | finish the next lifecycle phase for Reflection, Projection, and Registry on top of the already-implemented reflection baseline | promotion / decay / learning-governance surfaces are explicitly named and have validation |
 | Later | connect governed learning outputs into consumer policy use and product hardening | policy-input artifacts and independent-product gates are both proven |
 
 ## Milestones
@@ -30,7 +30,7 @@ For detailed queues, read:
 | --- | --- | --- | --- | --- |
 | Stage 1: design baseline | completed | freeze product naming, boundaries, and document stack | none | architecture, module boundaries, and testing surfaces are aligned |
 | Stage 2: local-first baseline | completed | ship one governed local-first end-to-end baseline | Stage 1 | core modules, adapters, standalone CLI, and governance all run |
-| Stage 3: self-learning lifecycle baseline | active | make promotion, decay, and learning-specific governance explicit | Stage 2 | one governed `observation -> stable` loop works end to end |
+| Stage 3: self-learning lifecycle baseline | active | turn the already-implemented reflection baseline into an explicit lifecycle with promotion, decay, and learning-specific governance | Stage 2 | promotion / decay expectations and learning-governance rules are explicit and regression-protected |
 | Stage 4: policy adaptation | later | let governed learning outputs influence consumer behavior | Stage 3 | one reversible policy-adaptation loop is proven |
 | Stage 5: product hardening | later | validate split-ready and independent-product operation | Stage 4 | release boundary, reproducibility, and maintenance workflows are stable |
 

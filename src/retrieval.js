@@ -15,6 +15,9 @@ const DEFAULT_CARDS_PATH = path.resolve(__dirname, "..", "reports", "conversatio
 const DEFAULT_WORKSPACE_ROOT = path.join(os.homedir(), ".openclaw", "workspace");
 const DEFAULT_PLUGIN_ROOT = path.resolve(__dirname, "..");
 const DAILY_MEMORY_LIMIT = 7;
+const REPO_INSTALL_URL_RE = /git\+https:\/\/github\.com\/redcreen\/unified-memory-core\.git/i;
+const REPO_RELEASE_INSTALL_URL_RE = /git\+https:\/\/github\.com\/redcreen\/unified-memory-core\.git#v/i;
+
 function normalizeFact(text) {
   return String(text || "").replace(/\s+/g, " ").trim();
 }
@@ -1366,8 +1369,8 @@ export function buildProjectCardsFromMarkdown(markdown = "", filePath = "README.
   }
 
   if (
-    /plugins install git\+https:\/\/github\.com\/redcreen\/unified-memory-core\.git#v/i.test(text)
-    && /git\+https:\/\/github\.com\/redcreen\/unified-memory-core\.git/.test(text)
+    REPO_RELEASE_INSTALL_URL_RE.test(text)
+    && REPO_INSTALL_URL_RE.test(text)
     && (/release tag|稳定版|当前 `main`|current `main`|开发版安装/i.test(text))
   ) {
     cards.push({
@@ -1508,8 +1511,8 @@ export function buildConfigCardsFromMarkdown(markdown = "", filePath = "configur
   }
 
   if (
-    /plugins install git\+https:\/\/github\.com\/redcreen\/unified-memory-core\.git#v/i.test(text)
-    && /git\+https:\/\/github\.com\/redcreen\/unified-memory-core\.git/.test(text)
+    REPO_RELEASE_INSTALL_URL_RE.test(text)
+    && REPO_INSTALL_URL_RE.test(text)
   ) {
     cards.push({
       title: "安装发布规则",

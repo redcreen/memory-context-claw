@@ -20,6 +20,7 @@
 | Understand the stable system shape | [architecture.md](architecture.md) |
 | See official module boundaries | [module-map.md](module-map.md) |
 | Understand what is next at milestone level | [roadmap.md](roadmap.md) |
+| Understand the self-learning direction and current baseline | [workstreams/self-learning/README.md](workstreams/self-learning/README.md) |
 | Understand verification and release gates | [test-plan.md](test-plan.md) |
 | Dive into detailed implementation sequencing | [unified-memory-core/development-plan.md](unified-memory-core/development-plan.md) |
 
@@ -32,6 +33,13 @@
 - deployment topology: [unified-memory-core/deployment-topology.md](unified-memory-core/deployment-topology.md)
 - ownership map: [unified-memory-core/ownership-map.md](unified-memory-core/ownership-map.md)
 
+
+## Markdown Governance
+
+- reference docs: [reference/README.md](reference/README.md)
+- workstreams: [workstreams/README.md](workstreams/README.md)
+- archive: [archive/README.md](archive/README.md)
+
 ## Maintainer Resume Boundary
 
 Live execution state does not live here.
@@ -43,4 +51,6 @@ When resuming work, read the control surface first:
 3. `../.codex/modules/*.md`
 
 Then come back here for durable references.
-- Release process: [../RELEASE.md](../RELEASE.md)
+- Reference docs: [reference/README.md](reference/README.md)
+- Workstreams: [workstreams/README.md](workstreams/README.md)
+- Archive: [archive/README.md](archive/README.md)

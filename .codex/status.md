@@ -37,6 +37,12 @@
   - `pluginMultiCard = 0/6`
   - `pluginNoisySupporting = 0/6`
 - `eval:smoke-promotion` 已落地，作为是否升格进 smoke 的建议入口
+- self-learning 基线已实现：
+  - declared-source ingestion
+  - reflection / daily reflection
+  - candidate -> stable promotion baseline
+  - standalone CLI / runtime
+  - export / governance audit surfaces
 - 本次整改已补齐 `.codex` 控制面
 - 模块视角控制面已补齐：
   - `docs/module-map.md`
@@ -48,6 +54,7 @@
 
 - 按模块视角继续推进 `openclaw-adapter`
 - 保持 `governance-system` 作为常规治理面运行
+- 把 self-learning 文档口径与当前实现状态重新对齐
 - 为 `reflection-system` / `projection-system` / `codex-adapter` 明确下一增强入口
 
 ## Blockers / Open Decisions
@@ -59,4 +66,4 @@
 
 1. 在 `openclaw-adapter` 模块里扩下一批稳定事实 / 稳定规则
 2. 新的 memory-search 专项 case 先过 `eval:smoke-promotion`
-3. 为 `reflection-system` 主导的下一增强 phase 定名并拆出验证方式
+3. 为 self-learning 下一生命周期 phase 明确定义 promotion / decay / policy adaptation 的验证方式

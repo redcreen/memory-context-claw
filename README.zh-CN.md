@@ -2,7 +2,7 @@
 
 [English](README.md) | [中文](README.zh-CN.md)
 
-> 把 OpenClaw 的长期记忆变成一套可治理、事实优先、可直接用于当前任务的上下文系统。
+> 一套面向 OpenClaw 的受治理共享记忆核心：先把事实优先上下文做好，再把 self-learning lifecycle 做成主亮点。
 
 ## 适用对象
 
@@ -28,13 +28,13 @@
 稳定版：
 
 ```bash
-openclaw plugins install git+https://github.com/redcreen/unified-memory-core.git#v0.1.0
+openclaw plugins install git+https://github.com/redcreen/Unified-Memory-Core.git#v0.1.0
 ```
 
 开发头版本：
 
 ```bash
-openclaw plugins install git+https://github.com/redcreen/unified-memory-core.git
+openclaw plugins install git+https://github.com/redcreen/Unified-Memory-Core.git
 ```
 
 ### 最简配置
@@ -89,6 +89,7 @@ workspace/
 - 面向高价值记忆问题的事实优先上下文组装
 - 对规则、身份、偏好等稳定信号的优先级控制
 - 以治理和策略代替“所有召回结果一视同仁”
+- 一条已经落地基线的受治理 self-learning 路径，覆盖 declared sources、reflection、candidate promotion 和 export/audit surfaces
 - 面向 OpenClaw、Codex 和后续消费者的 export / projection 层
 - 面向维护者的 audit、repair、replay 和回归工具
 
@@ -101,6 +102,33 @@ workspace/
 - Governance System
 - OpenClaw Adapter
 - Codex Adapter
+
+## 为什么 Self-Learning 现在就重要
+
+这套系统的长期最大亮点确实是 `self-learning`，但它已经不是“还没开始的未来概念”了。
+
+现在仓库里已经有这些基线：
+
+- 通过 `manual`、`file`、`directory`、`conversation` 这些 declared sources 接入学习输入
+- 结构化的 reflection / daily reflection 管线，会产出 candidate artifacts
+- repeated signal 和显式 `remember this / 记住这个` 检测
+- candidate -> stable 的升级基线，以及对应 decision trails
+- standalone runtime / CLI，可直接跑 reflect、daily-run、export、audit、repair、replay
+- generic、OpenClaw、Codex 三条 export surface，可围绕 promoted stable artifacts 工作
+
+还没有做完的部分是：
+
+- 比当前阈值式升级更明确的 promotion / decay / conflict 规则
+- 对 habit / behavior pattern 更清晰的学习产物语义
+- learning-specific audit report、time-window comparison 和 smoke 面
+- 让 governed learning outputs 系统性反哺 adapter 行为的 policy adaptation
+
+所以更准确的项目定位应该是：
+
+- 当前价值：事实优先上下文 + 已可用的受治理学习基线
+- 下一阶段：把 self-learning lifecycle 补齐，并把 policy adaptation 明确下来
+
+如果你想理解这个项目真正要走向哪里，不能只看当前 OpenClaw adapter 的效果，也应该直接看 self-learning workstream 文档。
 
 ## 常见工作流
 
@@ -145,6 +173,7 @@ npm run umc:cli -- export inspect --consumer generic --format markdown
 - [顶层系统架构](system-architecture.md)
 - [详细开发队列](docs/unified-memory-core/development-plan.md)
 - [详细测试体系](docs/unified-memory-core/testing/README.md)
+- [Self-Learning 路线图](docs/workstreams/self-learning/roadmap.md)
 
 ## 开发
 
