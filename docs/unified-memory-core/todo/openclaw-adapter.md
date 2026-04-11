@@ -1,5 +1,8 @@
 # OpenClaw Adapter Todo
 
-- define adapter boundary
-- define consumption contract
-- define retrieval/assembly mapping
+- define namespace mapping
+- define export consumption contract
+- define retrieval / assembly mapping
+- define host compatibility boundary
+- define adapter regression fixtures
+- document legacy migration cleanup rules

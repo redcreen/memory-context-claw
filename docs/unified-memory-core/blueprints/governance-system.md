@@ -1,5 +1,20 @@
 # Governance System Blueprint
 
-- audit reports
-- repair flow
-- replay and diff ergonomics
+## MVP Shape
+
+- audit report schema
+- repair record schema
+- replay run schema
+- regression ownership map
+
+## First Outputs
+
+- audit markdown/json reports
+- repair actions ledger
+- replay results
+
+## Key Risks
+
+- destructive repair defaults
+- missing diff surfaces
+- unclear test ownership

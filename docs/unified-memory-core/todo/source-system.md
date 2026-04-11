@@ -1,5 +1,8 @@
 # Source System Todo
 
 - define source manifest schema
-- define supported source types
-- define CLI registration flow
+- define source locator model
+- define file / directory / conversation / CLI adapter MVP
+- define normalization rules
+- define fingerprint rules
+- define replay bundle shape

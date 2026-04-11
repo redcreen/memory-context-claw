@@ -20,7 +20,7 @@ It should become:
 
 ## Current Phase
 
-Status: `phase 2 / master documentation and structure alignment`
+Status: `phase 4 / module documentation and testing surfaces ready`
 
 What is happening now:
 
@@ -28,7 +28,9 @@ What is happening now:
 - product/module split alignment
 - top-level architecture correction
 - master documentation alignment
-- module documentation skeletons
+- module architecture docs
+- module roadmaps / blueprints / todo
+- testing surfaces and case matrix
 
 ## Program Roadmap
 
@@ -126,7 +128,7 @@ Goal:
 
 ## 当前阶段
 
-状态：`phase 2 / 主文档与结构对齐`
+状态：`phase 4 / 模块文档与测试面已就绪`
 
 当前正在做：
 
@@ -134,7 +136,9 @@ Goal:
 - 产品 / 模块拆分对齐
 - 顶层架构纠偏
 - 主文档体系对齐
-- 模块文档骨架建立
+- 模块架构文档补齐
+- 模块 roadmap / blueprint / todo 补齐
+- testing surfaces 与 case matrix 建立
 
 ## 项目路线图
 
