@@ -37,6 +37,7 @@ Current implemented suites:
 - registry persistence and local-first lifecycle loop: [../../../test/unified-memory-core/memory-registry.test.js](../../../test/unified-memory-core/memory-registry.test.js)
 - projection export contract and visibility filtering: [../../../test/unified-memory-core/projection-system.test.js](../../../test/unified-memory-core/projection-system.test.js)
 - OpenClaw / Codex adapter bridge compatibility: [../../../test/unified-memory-core/adapter-bridges.test.js](../../../test/unified-memory-core/adapter-bridges.test.js)
+- governance audit / repair / replay primitives: [../../../test/unified-memory-core/governance-system.test.js](../../../test/unified-memory-core/governance-system.test.js)
 
 ## 中文
 
@@ -73,3 +74,4 @@ Step 4 的 testing surfaces 分成 4 层：
 - registry persistence / local-first lifecycle loop: [../../../test/unified-memory-core/memory-registry.test.js](../../../test/unified-memory-core/memory-registry.test.js)
 - projection export contract / visibility filtering: [../../../test/unified-memory-core/projection-system.test.js](../../../test/unified-memory-core/projection-system.test.js)
 - OpenClaw / Codex adapter bridge compatibility: [../../../test/unified-memory-core/adapter-bridges.test.js](../../../test/unified-memory-core/adapter-bridges.test.js)
+- governance audit / repair / replay primitives: [../../../test/unified-memory-core/governance-system.test.js](../../../test/unified-memory-core/governance-system.test.js)

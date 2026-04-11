@@ -21,6 +21,10 @@ export { createSourceSystem } from "./source-system.js";
 export { createMemoryRegistry } from "./memory-registry.js";
 export { createProjectionSystem } from "./projection-system.js";
 export {
+  createGovernanceSystem,
+  renderGovernanceAuditReport
+} from "./governance-system.js";
+export {
   resolveOpenClawNamespace,
   resolveCodexNamespace,
   createOpenClawAdapterBridge,
