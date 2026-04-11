@@ -95,10 +95,12 @@ flowchart LR
 ### Module architecture
 
 - [docs/unified-memory-core/architecture/README.md](docs/unified-memory-core/architecture/README.md)
+- [self-learning-architecture.md](self-learning-architecture.md)
 
 ### Module roadmaps
 
 - [docs/unified-memory-core/roadmaps/README.md](docs/unified-memory-core/roadmaps/README.md)
+- [reports/self-learning-roadmap.md](reports/self-learning-roadmap.md)
 
 ### Module blueprints
 
@@ -204,10 +206,12 @@ flowchart LR
 ### 模块架构
 
 - [docs/unified-memory-core/architecture/README.md](docs/unified-memory-core/architecture/README.md)
+- [self-learning-architecture.md](self-learning-architecture.md)
 
 ### 模块 roadmap
 
 - [docs/unified-memory-core/roadmaps/README.md](docs/unified-memory-core/roadmaps/README.md)
+- [reports/self-learning-roadmap.md](reports/self-learning-roadmap.md)
 
 ### 模块 blueprint
 

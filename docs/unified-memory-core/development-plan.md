@@ -57,7 +57,8 @@ The next step is:
 - `Step 1-4`: completed
 - `Step 5-7`: completed at the document / contract / backbone-definition level
 - `Step 8-9`: completed at the adapter design-package level
-- `Step 10`: next implementation/program entry
+- `Step 10-12`: completed at the workstream / standalone / independent-execution design-package level
+- next phase: implementation kickoff with the current document set as baseline
 
 Important note:
 
@@ -423,7 +424,8 @@ Review this document with these questions:
 - `Step 1-4`：已完成
 - `Step 5-7`：已在文档 / 契约 / 主骨架定义层完成
 - `Step 8-9`：已在 adapter 设计包层完成
-- `Step 10`：下一步主入口
+- `Step 10-12`：已在 workstream / standalone / independent-execution 设计包层完成
+- 下一阶段：以当前文档集为基线进入实现
 
 补充决策：
 

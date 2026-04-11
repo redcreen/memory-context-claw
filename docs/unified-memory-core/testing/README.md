@@ -26,6 +26,9 @@ Current required surfaces:
 - OpenClaw adapter compatibility
 - Codex adapter compatibility
 - multi-runtime namespace / visibility / concurrency correctness
+- self-learning reflection / promotion / decay correctness
+- standalone CLI contract correctness
+- independent execution / split-readiness review correctness
 
 ## 中文
 
@@ -51,3 +54,6 @@ Step 4 的 testing surfaces 分成 4 层：
 - OpenClaw adapter compatibility
 - Codex adapter compatibility
 - multi-runtime namespace / visibility / concurrency correctness
+- self-learning reflection / promotion / decay correctness
+- standalone CLI contract correctness
+- independent execution / split-readiness review correctness

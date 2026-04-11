@@ -13,6 +13,8 @@ Module architecture documents:
 - [governance-system.md](governance-system.md)
 - [openclaw-adapter.md](openclaw-adapter.md)
 - [codex-adapter.md](codex-adapter.md)
+- [standalone-mode.md](standalone-mode.md)
+- [independent-execution.md](independent-execution.md)
 - [../deployment-topology.md](../deployment-topology.md)
 
 Recommended implementation review order:
@@ -21,9 +23,11 @@ Recommended implementation review order:
 2. `Memory Registry`
 3. `OpenClaw Adapter`
 4. `Codex Adapter`
-5. `Projection System`
-6. `Governance System`
-7. `Reflection System`
+5. `Reflection System`
+6. `Standalone Mode`
+7. `Independent Execution`
+8. `Projection System`
+9. `Governance System`
 
 ## 中文
 
@@ -36,6 +40,8 @@ Recommended implementation review order:
 - [governance-system.md](governance-system.md)
 - [openclaw-adapter.md](openclaw-adapter.md)
 - [codex-adapter.md](codex-adapter.md)
+- [standalone-mode.md](standalone-mode.md)
+- [independent-execution.md](independent-execution.md)
 - [../deployment-topology.md](../deployment-topology.md)
 
 推荐 review / 实现顺序：
@@ -44,6 +50,8 @@ Recommended implementation review order:
 2. `Memory Registry`
 3. `OpenClaw Adapter`
 4. `Codex Adapter`
-5. `Projection System`
-6. `Governance System`
-7. `Reflection System`
+5. `Reflection System`
+6. `Standalone Mode`
+7. `Independent Execution`
+8. `Projection System`
+9. `Governance System`

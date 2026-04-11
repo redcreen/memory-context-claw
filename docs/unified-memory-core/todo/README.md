@@ -1,6 +1,7 @@
 # Unified Memory Core Module Todo
 
 - [../development-plan.md](../development-plan.md)
+- [self-learning-workstream.md](self-learning-workstream.md)
 - [source-system.md](source-system.md)
 - [reflection-system.md](reflection-system.md)
 - [memory-registry.md](memory-registry.md)
@@ -8,3 +9,5 @@
 - [governance-system.md](governance-system.md)
 - [openclaw-adapter.md](openclaw-adapter.md)
 - [codex-adapter.md](codex-adapter.md)
+- [standalone-mode.md](standalone-mode.md)
+- [independent-execution.md](independent-execution.md)

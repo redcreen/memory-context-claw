@@ -73,8 +73,8 @@ flowchart TB
 | --- | --- | --- |
 | Core capture / fact-card / assembly | `completed` | maintain + tune |
 | Memory search | `phase-complete` | governance + incremental expansion |
-| Self-learning / reflection | `planning-updated` | architecture separation + phased implementation ready |
-| Unified Memory Core | `phase-6-active` | adapter design packages complete, implementation next |
+| Self-learning / reflection | `design-package-ready` | architecture, roadmap, standalone boundary, and governance path ready |
+| Unified Memory Core | `phase-6-ready` | full design package complete, implementation-ready |
 
 ## Completed Foundation
 
@@ -227,6 +227,7 @@ Planned project stages:
 6. add long-term audit, repair, comparison, and regression around product artifacts
 7. keep the first implementation local-first but network-ready for multi-runtime growth
 8. move from adapter design packages into real implementation with shared contracts preserved
+9. keep self-learning / standalone / independent execution governed by the same document baseline
 
 ## Architecture Direction
 

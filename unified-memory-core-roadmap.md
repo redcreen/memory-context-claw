@@ -20,7 +20,7 @@ It should become:
 
 ## Current Phase
 
-Status: `phase 6 / adapter design packages ready`
+Status: `phase 6 / design-complete and implementation-ready`
 
 What is happening now:
 
@@ -34,6 +34,7 @@ What is happening now:
 - deployment topology and multi-runtime model
 - shared contracts and backbone definitions for steps 5-7
 - OpenClaw / Codex adapter design packages for steps 8-9
+- self-learning / standalone / independent-execution design packages for steps 10-12
 
 ## Program Roadmap
 
@@ -131,7 +132,7 @@ Goal:
 
 ## 当前阶段
 
-状态：`phase 6 / adapter 设计包已就绪`
+状态：`phase 6 / 设计包已完成，可进入实现`
 
 当前正在做：
 
@@ -145,6 +146,7 @@ Goal:
 - deployment topology 与多 runtime 模型补齐
 - Step 5-7 的 shared contracts 与 backbone definitions 定稿
 - Step 8-9 的 OpenClaw / Codex adapter 设计包定稿
+- Step 10-12 的 self-learning / standalone / independent-execution 设计包定稿
 
 ## 项目路线图
 

@@ -22,6 +22,9 @@
 - evidence scoring cases
 - promotion / decay cases
 - conflict / superseded cases
+- self-learning daily reflection cases
+- standalone command-routing cases
+- split-readiness checklist cases
 
 ## Artifact Cases
 
@@ -48,6 +51,7 @@
 
 - runtime API tests are deferred to a later roadmap phase
 - self-learning execution tests should reuse Source / Reflection / Registry surfaces instead of inventing a separate hidden path
+- standalone mode should be validated against the same artifact contracts as embedded mode
 
 ## 中文
 
@@ -69,6 +73,9 @@
 - evidence scoring cases
 - promotion / decay cases
 - conflict / superseded cases
+- self-learning daily reflection cases
+- standalone command-routing cases
+- split-readiness checklist cases
 
 ## Artifact Cases
 
@@ -95,3 +102,4 @@
 
 - runtime API tests 放到后续 roadmap 阶段
 - self-learning 执行测试应复用 Source / Reflection / Registry 的测试面，不再额外开一条隐藏路径
+- standalone mode 应和 embedded mode 复用同一套 artifact contracts 做校验

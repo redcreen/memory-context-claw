@@ -20,6 +20,7 @@ This document records the future-facing repository structure for incubating `Uni
 ├── docs/
 │   └── unified-memory-core/
 │       ├── repo-layout.md
+│       ├── deployment-topology.md
 │       ├── architecture/
 │       ├── roadmaps/
 │       ├── blueprints/
@@ -57,6 +58,7 @@ This document records the future-facing repository structure for incubating `Uni
 ├── docs/
 │   └── unified-memory-core/
 │       ├── repo-layout.md
+│       ├── deployment-topology.md
 │       ├── architecture/
 │       ├── roadmaps/
 │       ├── blueprints/

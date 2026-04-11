@@ -1,0 +1,77 @@
+# Independent Execution Roadmap
+
+[English](#english) | [中文](#中文)
+
+## English
+
+## Goal
+
+Make `Unified Memory Core` structurally ready for independent long-term execution.
+
+Current status:
+
+- `step-12 design package complete`
+- implementation and release planning are the next phases
+
+## Phases
+
+### Phase 1. Ownership Clarity
+
+- core vs adapter ownership map
+- release boundary note
+- split-readiness checklist
+
+### Phase 2. Operational Readiness
+
+- standalone operation assumptions
+- artifact portability checks
+- repo-layout convergence
+
+### Phase 3. Split Optionality
+
+- migration checklist
+- release cutover note
+- optional repo split preparation
+
+## Exit Criteria
+
+- independent execution no longer depends on plugin-first wording
+- split path is documented and reviewable
+- repo split becomes an operational choice
+
+## 中文
+
+## 目标
+
+让 `Unified Memory Core` 在结构上具备长期独立执行条件。
+
+当前状态：
+
+- `step-12 设计包已完成`
+- 下一阶段进入实现与 release planning
+
+## 分阶段计划
+
+### Phase 1. Ownership Clarity
+
+- core vs adapter ownership map
+- release boundary note
+- split-readiness checklist
+
+### Phase 2. Operational Readiness
+
+- standalone operation assumptions
+- artifact portability checks
+- repo-layout convergence
+
+### Phase 3. Split Optionality
+
+- migration checklist
+- release cutover note
+- optional repo split preparation
+
+## 退出标准
+
+- independent execution 不再依赖 plugin-first 表述
+- split path 已文档化、可 review
+- 是否拆仓库变成执行选择
