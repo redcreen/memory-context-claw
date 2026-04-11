@@ -40,6 +40,7 @@ Current implemented suites:
 - governance audit / repair / replay primitives: [../../../test/unified-memory-core/governance-system.test.js](../../../test/unified-memory-core/governance-system.test.js)
 - OpenClaw runtime adapter integration: [../../../test/openclaw-adapter.test.js](../../../test/openclaw-adapter.test.js)
 - Codex runtime adapter integration: [../../../test/codex-adapter.test.js](../../../test/codex-adapter.test.js)
+- adapter compatibility across OpenClaw / Codex / governance: [../../../test/adapter-compatibility.test.js](../../../test/adapter-compatibility.test.js)
 
 ## 中文
 
@@ -79,3 +80,4 @@ Step 4 的 testing surfaces 分成 4 层：
 - governance audit / repair / replay primitives: [../../../test/unified-memory-core/governance-system.test.js](../../../test/unified-memory-core/governance-system.test.js)
 - OpenClaw runtime adapter integration: [../../../test/openclaw-adapter.test.js](../../../test/openclaw-adapter.test.js)
 - Codex runtime adapter integration: [../../../test/codex-adapter.test.js](../../../test/codex-adapter.test.js)
+- OpenClaw / Codex / governance adapter compatibility: [../../../test/adapter-compatibility.test.js](../../../test/adapter-compatibility.test.js)
