@@ -32,3 +32,4 @@
 1. 先从 [subprojects/plugin-runtime.md](subprojects/plugin-runtime.md) 继续扩下一批稳定事实 / 稳定规则
 2. 新的 memory-search 专项 case 一律先过 `npm run eval:smoke-promotion`
 3. 继续让 `memory-search governance` 维护 recalled context 质量，不只看 pass/fail
+4. 为 [subprojects/core-product.md](subprojects/core-product.md) 打开下一增强 phase

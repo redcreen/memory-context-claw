@@ -2,16 +2,9 @@
 
 ## Current Phase
 
-`governed execution / module-view operation`
+`governed execution / module-view active`
 
 ## Slices
-
-- Slice: `operate-from-module-view`
-  - Objective: 后续恢复和执行默认从模块地图与子项目状态出发，而不是先掉进散乱报告
-  - Dependencies: `.codex/module-dashboard.md`、`docs/module-map.md`、`.codex/subprojects/*.md`
-  - Risks: 如果主入口文档不挂模块入口，控制面会重新失效
-  - Validation: 恢复时优先读取模块 dashboard、模块地图与子项目状态即可判断当前执行点
-  - Exit Condition: README / COMMANDS / status 都把模块视角作为默认入口
 
 - Slice: `stabilize-memory-search-governance`
   - Objective: 继续保持 `memory search` 从“能答对”推进到“上下文纯度稳定”
@@ -27,8 +20,15 @@
   - Validation: `npm run smoke:eval`、相关 targeted tests
   - Exit Condition: 新增事实/规则进入 stable card，并有清晰验证与文档同步
 
+- Slice: `plan-next-core-product-phase`
+  - Objective: 给 `src/unified-memory-core/` 明确下一增强 phase，而不是继续把新目标挂在 baseline 完成态
+  - Dependencies: `.codex/subprojects/core-product.md`、`project-roadmap.md`
+  - Risks: 产品主干长期停留在“等待下一 phase”，后续立项会继续模糊
+  - Validation: 下一增强 phase 被命名，并有单独的目标与验证方式
+  - Exit Condition: `core-product` 不再只写“waiting-next-phase”
+
 ## Execution Order
 
-1. 先完成模块视角控制面的收口与入口接线
-2. 再继续 `memory search` 治理与 smoke promotion
-3. 然后扩下一批稳定事实 / 稳定规则
+1. 先继续 `plugin-runtime` 的稳定事实 / 规则扩面
+2. 同步维持 `memory-search governance` 与 smoke promotion
+3. 再为 `core-product` 打开下一增强 phase

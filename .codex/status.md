@@ -7,11 +7,11 @@
 
 ## Current Phase
 
-`governed execution / module-view operation`
+`governed execution / module-view active`
 
 ## Active Slice
 
-`module-view control surface wiring`
+`plugin-runtime stable-fact expansion under module view`
 
 ## Done
 
@@ -40,14 +40,16 @@
 - 本次整改已补齐 `.codex` 控制面
 - 模块视角控制面已补齐：
   - `docs/module-map.md`
+  - `.codex/module-dashboard.md`
   - `.codex/subprojects/core-product.md`
   - `.codex/subprojects/plugin-runtime.md`
   - `.codex/subprojects/memory-governance.md`
+- README / COMMANDS / 主 roadmap 已接入模块视角入口
 
 ## In Progress
 
-- 把模块视角真正接到 README / COMMANDS / 状态入口里
-- 建立 `.codex/module-dashboard.md` 作为模块级总入口
+- 按模块视角继续推进 `plugin-runtime`
+- 保持 `memory-governance` 作为常规维护面运行
 
 ## Blockers / Open Decisions
 
@@ -56,6 +58,6 @@
 
 ## Next 3 Actions
 
-1. 恢复时优先看 `.codex/module-dashboard.md`
-2. 继续扩新的稳定事实 / 稳定规则，并同步 smoke / docs / governance
-3. 如果出现新的 memory-search 专项 case，先过 `eval:smoke-promotion`，再决定是否值得升进 smoke
+1. 在 `plugin-runtime` 模块里扩下一批稳定事实 / 稳定规则
+2. 新的 memory-search 专项 case 先过 `eval:smoke-promotion`
+3. 为 `core-product` 明确下一增强 phase，而不是继续挂在 baseline 完成态

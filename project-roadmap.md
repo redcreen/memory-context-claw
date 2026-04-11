@@ -35,6 +35,12 @@ It is not the place for every detailed phase plan.
 
 Use specialized roadmap documents for that.
 
+Current execution control:
+
+- current state: [.codex/status.md](.codex/status.md)
+- module dashboard: [.codex/module-dashboard.md](.codex/module-dashboard.md)
+- active module map: [docs/module-map.md](docs/module-map.md)
+
 Module view:
 
 - [.codex/module-dashboard.md](.codex/module-dashboard.md)
