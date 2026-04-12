@@ -16,7 +16,7 @@ It answers:
 
 Related documents:
 
-- [../../../project-roadmap.md](../project/roadmap.md)
+- [../../roadmap.md](../../roadmap.md)
 - [architecture.md](architecture.md)
 - [../memory-search/roadmap.md](../memory-search/roadmap.md)
 

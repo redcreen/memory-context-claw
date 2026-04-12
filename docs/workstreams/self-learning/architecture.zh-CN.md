@@ -23,10 +23,10 @@
 相关文档：
 
 - [../../../README.zh-CN.md](../../../README.zh-CN.md)
-- [../../../system-architecture.md](../system/architecture.md)
-- [../../../project-roadmap.md](../project/roadmap.md)
-- [roadmap.md](roadmap.md)
-- [../memory-search/architecture.md](../memory-search/architecture.md)
+- [../../architecture.zh-CN.md](../../architecture.zh-CN.md)
+- [../../roadmap.zh-CN.md](../../roadmap.zh-CN.md)
+- [roadmap.zh-CN.md](roadmap.zh-CN.md)
+- [../memory-search/architecture.zh-CN.md](../memory-search/architecture.zh-CN.md)
 
 ## 一句话目标
 

@@ -11,29 +11,29 @@ This document records the future-facing repository structure for incubating `Uni
 ```text
 .
 ├── README.md
-├── unified-memory-core.md
-├── unified-memory-core-architecture.md
-├── unified-memory-core-roadmap.md
-├── code-memory-binding-architecture.md
+├── README.zh-CN.md
+├── release.md
+├── RELEASE.zh-CN.md
+├── .codex/
 ├── docs/
-│   └── unified-memory-core/
-│       ├── repo-layout.md
-│       ├── deployment-topology.md
-│       ├── architecture/
-│       ├── roadmaps/
-│       ├── blueprints/
-│       ├── todo/
-│       └── testing/
+│   ├── README.md
+│   ├── architecture.md
+│   ├── roadmap.md
+│   ├── test-plan.md
+│   ├── module-map.md
+│   ├── reference/
+│   │   └── unified-memory-core/
+│   ├── workstreams/
+│   ├── devlog/
+│   └── archive/
 ├── src/
-│   ├── adapters/
-│   └── unified-memory-core/
+│   ├── unified-memory-core/
+│   └── ...
 ├── scripts/
-│   ├── adapters/
-│   └── unified-memory-core/
+│   ├── unified-memory-core/
+│   └── ...
 ├── test/
-│   ├── adapters/
 │   └── unified-memory-core/
-└── evals/
-    ├── adapters/
-    └── unified-memory-core/
+├── evals/
+└── reports/
 ```

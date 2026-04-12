@@ -17,10 +17,10 @@
 
 相关文档：
 
-- [../../system-architecture.md](../../system-architecture.md)
-- [../../unified-memory-core-architecture.md](../archive/unified-memory-core-architecture.md)
-- [../../code-memory-binding-architecture.md](../reference/code-memory-binding-architecture.md)
-- [development-plan.md](development-plan.md)
+- [../../architecture.zh-CN.md](../../architecture.zh-CN.md)
+- [../../workstreams/system/architecture.zh-CN.md](../../workstreams/system/architecture.zh-CN.md)
+- [../code-memory-binding-architecture.zh-CN.md](../code-memory-binding-architecture.zh-CN.md)
+- [development-plan.zh-CN.md](development-plan.zh-CN.md)
 
 ## 短答案
 

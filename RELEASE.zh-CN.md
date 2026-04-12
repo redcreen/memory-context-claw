@@ -1,8 +1,4 @@
-[English](release.md) | [中文](release.zh-CN.md)
-
-[English](RELEASE.md) | [中文](RELEASE.zh-CN.md)
-
-# Release
+# 发布
 
 [English](release.md) | [中文](RELEASE.zh-CN.md)
 
@@ -63,9 +59,10 @@ openclaw plugins install git+https://github.com/redcreen/Unified-Memory-Core.git
    - `npm run eval:memory-search:cases`
 2. 确认关键文档已更新：
    - `README.md`
-   - `configuration.md`
-   - `project-roadmap.md`
-   - `system-architecture.md`
+   - `docs/reference/configuration.zh-CN.md`
+   - `docs/roadmap.zh-CN.md`
+   - `docs/architecture.zh-CN.md`
+   - `docs/test-plan.zh-CN.md`
 3. 确保工作区是干净的
 4. 创建版本 tag
 5. push 这个 tag

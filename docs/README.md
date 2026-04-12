@@ -53,4 +53,4 @@ When resuming work, read the control surface first:
 
 Then come back here for durable references.
 - development log: [devlog/README.md](devlog/README.md)
-- release process: [../RELEASE.md](../RELEASE.md)
+- release process: [../release.md](../release.md)

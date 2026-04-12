@@ -23,13 +23,12 @@ This document should answer:
 
 Related documents:
 
-- [README.md](README.md)
-- [project-roadmap.md](project-roadmap.md)
-- [unified-memory-core.md](docs/archive/unified-memory-core.md)
-- [unified-memory-core-architecture.md](docs/archive/unified-memory-core-architecture.md)
-- [docs/unified-memory-core/deployment-topology.md](docs/unified-memory-core/deployment-topology.md)
-- [self-learning-architecture.md](docs/workstreams/self-learning/architecture.md)
-- [reports/memory-search-architecture.md](docs/workstreams/memory-search/architecture.md)
+- [../../../README.md](../../../README.md)
+- [../../roadmap.md](../../roadmap.md)
+- [../../reference/unified-memory-core/deployment-topology.md](../../reference/unified-memory-core/deployment-topology.md)
+- [../../reference/code-memory-binding-architecture.md](../../reference/code-memory-binding-architecture.md)
+- [../self-learning/architecture.md](../self-learning/architecture.md)
+- [../memory-search/architecture.md](../memory-search/architecture.md)
 
 ## Architecture At A Glance
 
@@ -105,7 +104,7 @@ Current implementation target:
 
 See:
 
-- [docs/unified-memory-core/deployment-topology.md](docs/unified-memory-core/deployment-topology.md)
+- [../../reference/unified-memory-core/deployment-topology.md](../../reference/unified-memory-core/deployment-topology.md)
 
 ## End-To-End Flow
 
@@ -326,14 +325,14 @@ The latest repo direction is:
 ## Document Map
 
 - product index:
-  [unified-memory-core.md](docs/archive/unified-memory-core.md)
-- product architecture:
-  [unified-memory-core-architecture.md](docs/archive/unified-memory-core-architecture.md)
-- product roadmap:
-  [unified-memory-core-roadmap.md](docs/archive/unified-memory-core-roadmap.md)
+  [../../roadmap.md](../../roadmap.md)
+- top-level architecture wrapper:
+  [../../architecture.md](../../architecture.md)
+- deployment topology:
+  [../../reference/unified-memory-core/deployment-topology.md](../../reference/unified-memory-core/deployment-topology.md)
 - OpenClaw code-memory binding:
-  [code-memory-binding-architecture.md](docs/reference/code-memory-binding-architecture.md)
+  [../../reference/code-memory-binding-architecture.md](../../reference/code-memory-binding-architecture.md)
 - self-learning workstream:
-  [self-learning-architecture.md](docs/workstreams/self-learning/architecture.md)
+  [../self-learning/architecture.md](../self-learning/architecture.md)
 - memory-search workstream:
-  [reports/memory-search-architecture.md](docs/workstreams/memory-search/architecture.md)
+  [../memory-search/architecture.md](../memory-search/architecture.md)

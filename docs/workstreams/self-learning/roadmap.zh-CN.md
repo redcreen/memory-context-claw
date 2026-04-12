@@ -16,9 +16,9 @@
 
 相关文档：
 
-- [../../../project-roadmap.md](../project/roadmap.md)
-- [architecture.md](architecture.md)
-- [../memory-search/roadmap.md](../memory-search/roadmap.md)
+- [../../roadmap.zh-CN.md](../../roadmap.zh-CN.md)
+- [architecture.zh-CN.md](architecture.zh-CN.md)
+- [../memory-search/roadmap.zh-CN.md](../memory-search/roadmap.zh-CN.md)
 
 ## 专项目标
 

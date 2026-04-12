@@ -23,12 +23,12 @@
 
 相关文档：
 
-- [README.md](README.md)
-- [project-roadmap.md](project-roadmap.md)
-- [unified-memory-core.md](docs/archive/unified-memory-core.md)
-- [unified-memory-core-architecture.md](docs/archive/unified-memory-core-architecture.md)
-- [self-learning-architecture.md](docs/workstreams/self-learning/architecture.md)
-- [reports/memory-search-architecture.md](docs/workstreams/memory-search/architecture.md)
+- [../../../README.zh-CN.md](../../../README.zh-CN.md)
+- [../../roadmap.zh-CN.md](../../roadmap.zh-CN.md)
+- [../../reference/unified-memory-core/deployment-topology.zh-CN.md](../../reference/unified-memory-core/deployment-topology.zh-CN.md)
+- [../../reference/code-memory-binding-architecture.zh-CN.md](../../reference/code-memory-binding-architecture.zh-CN.md)
+- [../self-learning/architecture.zh-CN.md](../self-learning/architecture.zh-CN.md)
+- [../memory-search/architecture.zh-CN.md](../memory-search/architecture.zh-CN.md)
 
 ## 一图看懂
 
@@ -307,14 +307,14 @@ flowchart LR
 ## 文档地图
 
 - 产品索引：
-  [unified-memory-core.md](docs/archive/unified-memory-core.md)
-- 产品架构：
-  [unified-memory-core-architecture.md](docs/archive/unified-memory-core-architecture.md)
-- 产品 roadmap：
-  [unified-memory-core-roadmap.md](docs/archive/unified-memory-core-roadmap.md)
+  [../../roadmap.zh-CN.md](../../roadmap.zh-CN.md)
+- 顶层架构包装页：
+  [../../architecture.zh-CN.md](../../architecture.zh-CN.md)
+- 部署拓扑：
+  [../../reference/unified-memory-core/deployment-topology.zh-CN.md](../../reference/unified-memory-core/deployment-topology.zh-CN.md)
 - OpenClaw code-memory 绑定：
-  [code-memory-binding-architecture.md](docs/reference/code-memory-binding-architecture.md)
+  [../../reference/code-memory-binding-architecture.zh-CN.md](../../reference/code-memory-binding-architecture.zh-CN.md)
 - self-learning workstream：
-  [self-learning-architecture.md](docs/workstreams/self-learning/architecture.md)
+  [../self-learning/architecture.zh-CN.md](../self-learning/architecture.zh-CN.md)
 - memory-search workstream：
-  [reports/memory-search-architecture.md](docs/workstreams/memory-search/architecture.md)
+  [../memory-search/architecture.zh-CN.md](../memory-search/architecture.zh-CN.md)

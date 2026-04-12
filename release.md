@@ -1,7 +1,3 @@
-[English](release.md) | [中文](release.zh-CN.md)
-
-[English](RELEASE.md) | [中文](RELEASE.zh-CN.md)
-
 # Release
 
 [English](release.md) | [中文](RELEASE.zh-CN.md)
@@ -63,9 +59,10 @@ Before creating a tag:
    - `npm run eval:memory-search:cases`
 2. confirm important docs are updated:
    - `README.md`
-   - `configuration.md`
-   - `project-roadmap.md`
-   - `system-architecture.md`
+   - `docs/reference/configuration.md`
+   - `docs/roadmap.md`
+   - `docs/architecture.md`
+   - `docs/test-plan.md`
 3. make sure working tree is clean
 4. create a version tag
 5. push the tag

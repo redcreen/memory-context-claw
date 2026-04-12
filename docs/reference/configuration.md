@@ -422,12 +422,12 @@ But do that only after non-LLM behavior is already understandable.
 ### Related Docs
 
 - plugin overview:
-  [README.md](README.md)
+  [../README.md](../README.md)
 - system architecture:
-  [system-architecture.md](system-architecture.md)
+  [../architecture.md](../architecture.md)
 - project roadmap:
-  [project-roadmap.md](project-roadmap.md)
+  [../roadmap.md](../roadmap.md)
 - test suite:
-  [testsuite.md](testsuite.md)
+  [../test-plan.md](../test-plan.md)
 
 ---

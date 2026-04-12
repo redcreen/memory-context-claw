@@ -424,10 +424,10 @@ openclaw memory search "我爱吃什么"
 ### 相关文档
 
 - 插件总览：
-  [README.md](README.md)
+  [../README.zh-CN.md](../README.zh-CN.md)
 - 总体架构：
-  [system-architecture.md](system-architecture.md)
+  [../architecture.zh-CN.md](../architecture.zh-CN.md)
 - 总 roadmap：
-  [project-roadmap.md](project-roadmap.md)
+  [../roadmap.zh-CN.md](../roadmap.zh-CN.md)
 - 测试说明：
-  [testsuite.md](testsuite.md)
+  [../test-plan.zh-CN.md](../test-plan.zh-CN.md)

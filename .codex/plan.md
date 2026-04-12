@@ -57,7 +57,7 @@
 
 - Slice: `plan-next-learning-phase`
   - Objective: 给 `reflection-system` 主导的下一增强 phase 明确命名、范围和验证方式
-  - Dependencies: `.codex/modules/reflection-system.md`、`.codex/modules/projection-system.md`、`.codex/modules/memory-registry.md`、`project-roadmap.md`
+  - Dependencies: `.codex/modules/reflection-system.md`、`.codex/modules/projection-system.md`、`.codex/modules/memory-registry.md`、`docs/roadmap.md`
   - Risks: 产品主干长期停留在“等待下一 phase”，后续立项继续模糊
   - Validation: 下一增强 phase 被命名，并有单独的目标与验证方式
   - Exit Condition: 相关模块不再只写“waiting next phase”

@@ -17,9 +17,9 @@ It answers one practical question:
 
 Related documents:
 
-- [../../system-architecture.md](../../system-architecture.md)
-- [../../unified-memory-core-architecture.md](../archive/unified-memory-core-architecture.md)
-- [../../code-memory-binding-architecture.md](../reference/code-memory-binding-architecture.md)
+- [../../architecture.md](../../architecture.md)
+- [../../workstreams/system/architecture.md](../../workstreams/system/architecture.md)
+- [../code-memory-binding-architecture.md](../code-memory-binding-architecture.md)
 - [development-plan.md](development-plan.md)
 
 ## Short Answer

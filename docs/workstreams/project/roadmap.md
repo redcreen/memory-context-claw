@@ -25,7 +25,9 @@ What is already true today:
 
 ## What This Master Roadmap Does
 
-`project-roadmap.md` is the master roadmap and document index.
+`docs/roadmap.md` is the stable roadmap wrapper.
+
+This file is the detailed project workstream roadmap and document index.
 
 It should make four things obvious:
 
@@ -40,33 +42,32 @@ Use specialized roadmap documents for that.
 
 Current execution control:
 
-- current state: [.codex/status.md](.codex/status.md)
-- module dashboard: [.codex/module-dashboard.md](.codex/module-dashboard.md)
-- active module map: [docs/module-map.md](docs/module-map.md)
+- current state: [../../../.codex/status.md](../../../.codex/status.md)
+- module dashboard: [../../../.codex/module-dashboard.md](../../../.codex/module-dashboard.md)
+- active module map: [../../module-map.md](../../module-map.md)
 
 Module view:
 
-- [.codex/module-dashboard.md](.codex/module-dashboard.md)
-- [docs/module-map.md](docs/module-map.md)
+- [../../../.codex/module-dashboard.md](../../../.codex/module-dashboard.md)
+- [../../module-map.md](../../module-map.md)
 
 ## Roadmap Stack
 
 ```mermaid
 flowchart TB
-    A["project-roadmap.md\nmaster roadmap / index"] --> B["system-architecture.md\ntop-level architecture"]
-    A --> U["unified-memory-core.md\nproduct index"]
-    A --> V["unified-memory-core-roadmap.md\nproduct roadmap"]
-    A --> W["docs/unified-memory-core/deployment-topology.md\ndeployment topology"]
-    A --> C["docs/workstreams/memory-search/roadmap.md\nmemory-search roadmap"]
-    A --> D["docs/workstreams/self-learning/roadmap.md\nself-learning roadmap"]
+    A["docs/roadmap.md\nstable roadmap wrapper"] --> B["docs/architecture.md\ntop-level architecture"]
+    A --> P["docs/workstreams/project/roadmap.md\nproject workstream roadmap"]
+    P --> W["docs/reference/unified-memory-core/deployment-topology.md\ndeployment topology"]
+    P --> C["docs/workstreams/memory-search/roadmap.md\nmemory-search roadmap"]
+    P --> D["docs/workstreams/self-learning/roadmap.md\nself-learning roadmap"]
     C --> E["docs/workstreams/memory-search/next-blueprint.md\nmemory-search blueprint"]
     D --> F["docs/workstreams/self-learning/architecture.md\nself-learning architecture"]
 
     classDef top fill:#e8f1ff,stroke:#2f6feb,color:#123a73,stroke-width:1.5px;
     classDef work fill:#eefce8,stroke:#2f855a,color:#1c4532,stroke-width:1.5px;
     classDef arch fill:#fff4e8,stroke:#d97706,color:#7c2d12,stroke-width:1.5px;
-    class A top;
-    class B,F,U,V,W arch;
+    class A,P top;
+    class B,F,W arch;
     class C,D,E work;
 ```
 
@@ -229,13 +230,11 @@ Why this is next:
 Key documents:
 
 - master roadmap:
-  [project-roadmap.md](project-roadmap.md)
-- product roadmap:
-  [unified-memory-core-roadmap.md](docs/archive/unified-memory-core-roadmap.md)
+  [../../roadmap.md](../../roadmap.md)
 - implementation plan:
-  [docs/unified-memory-core/development-plan.md](docs/unified-memory-core/development-plan.md)
+  [../../reference/unified-memory-core/development-plan.md](../../reference/unified-memory-core/development-plan.md)
 - self-learning roadmap:
-  [docs/workstreams/self-learning/roadmap.md](docs/workstreams/self-learning/roadmap.md)
+  [../self-learning/roadmap.md](../self-learning/roadmap.md)
 
 ### Parallel maintenance focus
 
@@ -262,9 +261,9 @@ Current governance quality:
 Key documents:
 
 - roadmap:
-  [reports/memory-search-roadmap.md](docs/workstreams/memory-search/roadmap.md)
+  [../memory-search/roadmap.md](../memory-search/roadmap.md)
 - blueprint:
-  [reports/memory-search-next-blueprint.md](docs/workstreams/memory-search/next-blueprint.md)
+  [../memory-search/next-blueprint.md](../memory-search/next-blueprint.md)
 
 ## What Is Currently Planned
 
@@ -302,28 +301,25 @@ Inside the product, the first-class modules are:
 
 ### Top-level documents
 
-- [README.md](README.md)
-- [system-architecture.md](system-architecture.md)
-- [project-roadmap.md](project-roadmap.md)
-- [docs/unified-memory-core/deployment-topology.md](docs/unified-memory-core/deployment-topology.md)
-- [docs/workstreams/self-learning/architecture.md](docs/workstreams/self-learning/architecture.md)
-- [unified-memory-core.md](docs/archive/unified-memory-core.md)
-- [unified-memory-core-roadmap.md](docs/archive/unified-memory-core-roadmap.md)
+- [../../../README.md](../../../README.md)
+- [../../architecture.md](../../architecture.md)
+- [../../roadmap.md](../../roadmap.md)
+- [../../module-map.md](../../module-map.md)
+- [../../reference/unified-memory-core/deployment-topology.md](../../reference/unified-memory-core/deployment-topology.md)
+- [../self-learning/architecture.md](../self-learning/architecture.md)
 
 ### Current workstream documents
 
-- [reports/memory-search-architecture.md](docs/workstreams/memory-search/architecture.md)
-- [reports/memory-search-roadmap.md](docs/workstreams/memory-search/roadmap.md)
-- [reports/memory-search-next-blueprint.md](docs/workstreams/memory-search/next-blueprint.md)
-- [docs/workstreams/self-learning/roadmap.md](docs/workstreams/self-learning/roadmap.md)
+- [../memory-search/architecture.md](../memory-search/architecture.md)
+- [../memory-search/roadmap.md](../memory-search/roadmap.md)
+- [../memory-search/next-blueprint.md](../memory-search/next-blueprint.md)
+- [../self-learning/roadmap.md](../self-learning/roadmap.md)
 
 ## Read This Next
 
 - If you want overall system shape:
-  [system-architecture.md](system-architecture.md)
-- If you want the product direction:
-  [unified-memory-core.md](docs/archive/unified-memory-core.md)
-- If you want the product-level roadmap:
-  [unified-memory-core-roadmap.md](docs/archive/unified-memory-core-roadmap.md)
+  [../../architecture.md](../../architecture.md)
+- If you want the milestone-level roadmap wrapper:
+  [../../roadmap.md](../../roadmap.md)
 - If you want the self-learning workstream inside that product:
-  [docs/workstreams/self-learning/architecture.md](docs/workstreams/self-learning/architecture.md)
+  [../self-learning/architecture.md](../self-learning/architecture.md)

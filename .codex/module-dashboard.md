@@ -38,7 +38,7 @@
 - 模块边界，以 [../docs/module-map.md](../docs/module-map.md) 为准
 - 模块内状态，以 `modules/*.md` 为准
 - `subprojects/*.md` 只保留给横切工作流，不替代官方模块状态
-- `project-roadmap.md` 负责总 roadmap，不负责当前执行点
+- `docs/roadmap.md` 负责总 roadmap 包装页，不负责当前执行点
 - `reports/*` 负责证据和专题，不负责当前执行点
 
 ## Current Execution Order

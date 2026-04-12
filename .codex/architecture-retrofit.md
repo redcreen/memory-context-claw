@@ -3,104 +3,100 @@
 ## Trigger
 
 - Tier: `large`
-- Active Slice: `openclaw-adapter recall quality / natural-query governance expansion`
-- Current Execution Line: n/a
-- Architecture Signal: `yellow`
-- Escalation Gate: `raise but continue`
+- Active Slice: `canonical-doc-owner-convergence`
+- Current Execution Line: align the control surface and durable docs with the actual canonical `docs/*` owner set
+- Architecture Signal: `green`
+- Escalation Gate: `continue automatically`
 
 ## Primary Symptoms
 
-- duplicate architecture-like docs exist outside the canonical owner set: docs/unified-memory-core/architecture/README.md, docs/unified-memory-core/architecture/codex-adapter.md, docs/unified-memory-core/architecture/governance-system.md, docs/unified-memory-core/architecture/independent-execution.md
-- root markdown clutter is still present: project-roadmap.md, system-architecture.md
-- blockers or open decisions are still recorded: `todo.md` 当前仍是用户自留短记，不应与 `.codex/status.md` 重叠承担当前状态职责
-- architecture signal is yellow: current execution line is missing an objective; execution task board is missing; open blockers or architectural risks are still recorded
+- control-surface docs and durable docs still refer to retired root doc names such as `project-roadmap.md`, `system-architecture.md`, and `testsuite.md` even though the canonical owners already live under `docs/`
+- some durable links still point at nonexistent or archived paths such as `docs/unified-memory-core/*` and `RELEASE.md`
+- the detailed `docs/reference/unified-memory-core/architecture/*` tree is legitimate reference material, but stale retrofit notes still treat it as a competing owner set instead of the deeper reference stack
 
 ## Root-Cause Drivers
 
-- Root Cause Hypothesis: the repo can drift back to local fixes if the current slice loses a visible architectural checkpoint
-- Signal Basis: current execution line is missing an objective; execution task board is missing; open blockers or architectural risks are still recorded
-- Correct Layer: control surface, validators, and reporting
-- Rejected Shortcut: letting execution continue without a visible architecture signal
+- Root Cause Hypothesis: the earlier docs retrofit moved the file tree, but naming convergence across control-surface docs, durable wrappers, and deeper references did not fully close
+- Signal Basis: the same architectural questions were answered by both the current `docs/*` wrappers and retired root-level names, which made the owner set ambiguous
+- Correct Layer: control surface, durable docs, release navigation, and reference-link maintenance
+- Rejected Shortcut: updating only a few visible wrappers while leaving deeper durable docs on stale names
 
 ## Affected Boundaries
 
 - control surface (`.codex/plan.md`, `.codex/status.md`, `.codex/brief.md`)
-- canonical architecture ownership (`docs/architecture*.md` and doc-governance question owners)
-- execution slices and architecture supervision state
-- tests and validation gates that enforce the intended architecture
+- canonical architecture ownership (`docs/architecture*.md`, `docs/roadmap*.md`, `docs/test-plan*.md`, and doc-governance question owners)
 - module layer (`.codex/module-dashboard.md` and `.codex/modules/*.md`)
-- legacy or competing architecture documents that need demotion, merge, move, or archive
+- release and docs landing pages
+- reference and workstream docs that still point to retired names
 
 ## Current Architecture Sources
 
 - Canonical Owners:
 - docs/architecture.md
 - docs/architecture.zh-CN.md
+- docs/roadmap.md
+- docs/roadmap.zh-CN.md
+- docs/test-plan.md
+- docs/test-plan.zh-CN.md
+- docs/module-map.md
+- docs/module-map.zh-CN.md
 - docs/reference/code-memory-binding-architecture.md
 - docs/workstreams/host-neutral-memory/architecture.md
 - docs/workstreams/memory-search/architecture.md
 - docs/workstreams/self-learning/architecture.md
-- Additional Architecture-Like Docs:
-- docs/unified-memory-core/architecture/README.md
-- docs/unified-memory-core/architecture/codex-adapter.md
-- docs/unified-memory-core/architecture/governance-system.md
-- docs/unified-memory-core/architecture/independent-execution.md
-- docs/unified-memory-core/architecture/memory-registry.md
-- docs/unified-memory-core/architecture/openclaw-adapter.md
-- docs/unified-memory-core/architecture/projection-system.md
-- docs/unified-memory-core/architecture/reflection-system.md
-- docs/unified-memory-core/architecture/source-system.md
-- docs/unified-memory-core/architecture/standalone-mode.md
-- system-architecture.md
+- Detailed Reference Stack:
+- docs/reference/unified-memory-core/architecture/README.md
+- docs/reference/unified-memory-core/roadmaps/README.md
+- docs/reference/unified-memory-core/testing/README.md
+- Archived Predecessors:
+- docs/archive/unified-memory-core-architecture.md
+- docs/archive/unified-memory-core-roadmap.md
+- docs/archive/unified-memory-core.md
 
 ## Current Risks / Open Decisions
 
-- `todo.md` 当前仍是用户自留短记，不应与 `.codex/status.md` 重叠承担当前状态职责
-- 是否要把 `reports/` 下部分高频专题文档再进一步按 `durable` / `generated` 分层，目前尚未执行
-- canonical root 何时从 legacy fallback 正式切到 `~/.unified-memory-core/registry`，仍需明确迁移窗口
-- 是否还要把 registry-root consistency 升成独立强门禁，目前仍待决定；但它已进入常规 governance cycle
+- archive 内部仍会保留历史命名；这是可接受的历史痕迹，不再作为 active owner 处理
+- canonical root 何时从 legacy fallback 正式切到 `~/.unified-memory-core/registry`，仍需明确迁移窗口；这属于产品切换决策，不是本次文档 owner 收敛的 blocker
+- 是否把 registry-root consistency 升成独立强门禁仍待决定；这属于治理策略，不是本次架构文档整改的 blocker
 
 ## Target Architecture
 
 - Keep one canonical architecture owner set and make all other architecture-like docs either reference, workstream, or archive material.
-- Ensure execution, validation, and reporting all reflect the same root-cause hypothesis and correct layer.
-- When the repo has first-class modules, keep the module layer aligned with the target architecture instead of letting module docs drift away from the source of truth.
-- Treat architecture retrofit as a boundary correction exercise, not a chain of local bug fixes.
+- Keep the current `docs/*` wrappers as the first answer for top-level architecture, roadmap, module, and test questions.
+- Treat `docs/reference/unified-memory-core/*` as the detailed reference stack, not as a competing public owner set.
+- Ensure the control surface, durable docs, release checklist, and bilingual landing pages all use the same canonical names.
 
 ## Retrofit Scope
 
-- move the architectural source of truth to one canonical owner set and demote duplicates to reference or archive
-- replace local-only fixes with a reusable mechanism in the correct layer
-- align execution slices, documentation, tests, and gates with the corrected architecture direction
-- refresh progress and handoff outputs so the corrected architecture remains visible during execution
-- realign module boundaries, ownership, and module progress artifacts to the target architecture
+- refresh control-surface docs so they point to the real durable owners now in `docs/`
+- normalize durable wrappers and release docs to the current canonical paths
+- update non-archive reference/workstream docs that still rely on retired root-level names
+- leave archive content historical, but stop non-archive docs from competing with the canonical owner set
 
 ## Execution Strategy
 
-- audit the current architecture signal, canonical owner docs, and duplicate architecture-like documents
-- merge, move, or archive duplicate architecture owners so one primary architecture surface remains
-- write down the target boundaries, correct layer, and rejected shortcuts before editing implementation details
-- slice the retrofit so each slice changes one meaningful boundary and has explicit validation
-- run `deep` gates during convergence and `release` gates before any architecture-sensitive release
+- audit non-archive docs for stale owner names and broken durable links
+- update control-surface files before touching deeper references so the canonical owner set is explicit
+- converge durable wrappers and workstream/reference docs onto the same naming model
+- validate by rescanning non-archive docs for retired names and checking the touched navigation links
 
 ## Validation
 
-- `python3 scripts/validate_gate_set.py /path/to/repo --profile deep` passes
-- architecture signal is green or explicitly justified before closing the retrofit
-- release-sensitive changes also pass `python3 scripts/validate_gate_set.py /path/to/repo --profile release`
-- progress and handoff reflect the corrected architecture signal and active execution line
-- module dashboard and module files still match the corrected architecture boundaries
+- non-archive docs no longer use retired owner names such as `project-roadmap.md`, `system-architecture.md`, or `testsuite.md` except for clearly historical archive references
+- docs and release landing pages resolve to existing files instead of nonexistent placeholders such as `RELEASE.md`
+- control-surface docs and module/dashboard notes use the same canonical owner set
+- architecture retrofit note reflects the actual remaining risks instead of already-fixed historical symptoms
 
 ## Exit Conditions
 
 - one canonical architecture owner set answers the main architecture question
-- duplicate or conflicting architecture docs no longer compete as active owners
-- execution slices and control-surface artifacts reflect the corrected layer and root cause
-- the retrofit leaves behind fewer local-only fixes and clearer boundaries than it started with
-- module boundaries, ownership, and progress artifacts match the target architecture
+- non-archive durable docs no longer compete with retired root-level names
+- control-surface artifacts reflect the corrected layer and root cause
+- module boundaries, ownership, and progress artifacts match the target architecture naming
 
 ## Usable Now
 
 - 恢复当前状态与下一步
 - 模块视角进展面板
 - 公开文档中英文切换
+- 一套一致的 `docs/*` canonical owner 命名

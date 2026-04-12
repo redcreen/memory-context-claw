@@ -23,8 +23,8 @@ This document is meant to guide future implementation work, not just describe an
 Related documents:
 
 - [../../../README.md](../../../README.md)
-- [../../../system-architecture.md](../system/architecture.md)
-- [../../../project-roadmap.md](../project/roadmap.md)
+- [../../architecture.md](../../architecture.md)
+- [../../roadmap.md](../../roadmap.md)
 - [roadmap.md](roadmap.md)
 - [../memory-search/architecture.md](../memory-search/architecture.md)
 

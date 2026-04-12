@@ -20,7 +20,9 @@
 
 ## 这份主 Roadmap 负责什么
 
-`project-roadmap.md` 是主 roadmap，也是文档总索引。
+`docs/roadmap.md` 是稳定的 roadmap 包装页。
+
+这份文档是项目 workstream 的详细 roadmap 和文档索引。
 
 它应该让下面四件事一眼就能看明白：
 
@@ -35,25 +37,24 @@
 
 模块视角入口：
 
-- [docs/module-map.md](docs/module-map.md)
+- [../../module-map.zh-CN.md](../../module-map.zh-CN.md)
 
 ## Roadmap 结构
 
 ```mermaid
 flowchart TB
-    A["project-roadmap.md\n主 roadmap / 总索引"] --> B["system-architecture.md\n顶层架构"]
-    A --> U["unified-memory-core.md\n产品索引"]
-    A --> V["unified-memory-core-roadmap.md\n产品 roadmap"]
-    A --> C["docs/workstreams/memory-search/roadmap.md\nmemory-search roadmap"]
-    A --> D["docs/workstreams/self-learning/roadmap.md\nself-learning roadmap"]
+    A["docs/roadmap.zh-CN.md\n稳定 roadmap 包装页"] --> B["docs/architecture.zh-CN.md\n顶层架构"]
+    A --> P["docs/workstreams/project/roadmap.zh-CN.md\n项目 workstream roadmap"]
+    P --> C["docs/workstreams/memory-search/roadmap.zh-CN.md\nmemory-search roadmap"]
+    P --> D["docs/workstreams/self-learning/roadmap.zh-CN.md\nself-learning roadmap"]
     C --> E["docs/workstreams/memory-search/next-blueprint.md\nmemory-search blueprint"]
-    D --> F["docs/workstreams/self-learning/architecture.md\nself-learning architecture"]
+    D --> F["docs/workstreams/self-learning/architecture.zh-CN.md\nself-learning architecture"]
 
     classDef top fill:#e8f1ff,stroke:#2f6feb,color:#123a73,stroke-width:1.5px;
     classDef work fill:#eefce8,stroke:#2f855a,color:#1c4532,stroke-width:1.5px;
     classDef arch fill:#fff4e8,stroke:#d97706,color:#7c2d12,stroke-width:1.5px;
-    class A top;
-    class B,F,U,V arch;
+    class A,P top;
+    class B,F arch;
     class C,D,E work;
 ```
 
@@ -216,13 +217,11 @@ flowchart TB
 关键文档：
 
 - 主 roadmap：
-  [project-roadmap.md](project-roadmap.md)
-- 产品 roadmap：
-  [unified-memory-core-roadmap.md](docs/archive/unified-memory-core-roadmap.md)
+  [../../roadmap.zh-CN.md](../../roadmap.zh-CN.md)
 - 实施计划：
-  [docs/unified-memory-core/development-plan.md](docs/unified-memory-core/development-plan.md)
+  [../../reference/unified-memory-core/development-plan.zh-CN.md](../../reference/unified-memory-core/development-plan.zh-CN.md)
 - self-learning roadmap：
-  [docs/workstreams/self-learning/roadmap.md](docs/workstreams/self-learning/roadmap.md)
+  [../self-learning/roadmap.zh-CN.md](../self-learning/roadmap.zh-CN.md)
 
 ### 并行维护主线
 
@@ -249,9 +248,9 @@ flowchart TB
 关键文档：
 
 - roadmap：
-  [reports/memory-search-roadmap.md](docs/workstreams/memory-search/roadmap.md)
+  [../memory-search/roadmap.zh-CN.md](../memory-search/roadmap.zh-CN.md)
 - blueprint：
-  [reports/memory-search-next-blueprint.md](docs/workstreams/memory-search/next-blueprint.md)
+  [../memory-search/next-blueprint.zh-CN.md](../memory-search/next-blueprint.zh-CN.md)
 
 ## 当前已经计划好的下一阶段
 
@@ -289,31 +288,27 @@ flowchart TB
 
 ### 顶层文档
 
-- [README.md](README.md)
-- [system-architecture.md](system-architecture.md)
-- [project-roadmap.md](project-roadmap.md)
-- [docs/workstreams/self-learning/architecture.md](docs/workstreams/self-learning/architecture.md)
-- [unified-memory-core.md](docs/archive/unified-memory-core.md)
-- [unified-memory-core-roadmap.md](docs/archive/unified-memory-core-roadmap.md)
+- [../../../README.zh-CN.md](../../../README.zh-CN.md)
+- [../../architecture.zh-CN.md](../../architecture.zh-CN.md)
+- [../../roadmap.zh-CN.md](../../roadmap.zh-CN.md)
+- [../../module-map.zh-CN.md](../../module-map.zh-CN.md)
+- [../../reference/unified-memory-core/deployment-topology.zh-CN.md](../../reference/unified-memory-core/deployment-topology.zh-CN.md)
+- [../self-learning/architecture.zh-CN.md](../self-learning/architecture.zh-CN.md)
 
 ### 当前专题文档
 
-- [reports/memory-search-architecture.md](docs/workstreams/memory-search/architecture.md)
-- [reports/memory-search-roadmap.md](docs/workstreams/memory-search/roadmap.md)
-- [reports/memory-search-next-blueprint.md](docs/workstreams/memory-search/next-blueprint.md)
-- [docs/workstreams/self-learning/roadmap.md](docs/workstreams/self-learning/roadmap.md)
-- [unified-memory-core.md](docs/archive/unified-memory-core.md)
-- [unified-memory-core-roadmap.md](docs/archive/unified-memory-core-roadmap.md)
+- [../memory-search/architecture.zh-CN.md](../memory-search/architecture.zh-CN.md)
+- [../memory-search/roadmap.zh-CN.md](../memory-search/roadmap.zh-CN.md)
+- [../memory-search/next-blueprint.zh-CN.md](../memory-search/next-blueprint.zh-CN.md)
+- [../self-learning/roadmap.zh-CN.md](../self-learning/roadmap.zh-CN.md)
 
 ## 建议接着读
 
 - 如果想看整体系统形态：
-  [system-architecture.md](system-architecture.md)
-- 如果想看新的产品主线：
-  [unified-memory-core.md](docs/archive/unified-memory-core.md)
-- 如果想看产品级 roadmap：
-  [unified-memory-core-roadmap.md](docs/archive/unified-memory-core-roadmap.md)
+  [../../architecture.zh-CN.md](../../architecture.zh-CN.md)
+- 如果想看里程碑层面的 roadmap 包装页：
+  [../../roadmap.zh-CN.md](../../roadmap.zh-CN.md)
 - 如果想看下一条主线的架构设计：
-  [docs/workstreams/self-learning/architecture.md](docs/workstreams/self-learning/architecture.md)
+  [../self-learning/architecture.zh-CN.md](../self-learning/architecture.zh-CN.md)
 - 如果想看接下来怎么分阶段开发：
-  [docs/workstreams/self-learning/roadmap.md](docs/workstreams/self-learning/roadmap.md)
+  [../self-learning/roadmap.zh-CN.md](../self-learning/roadmap.zh-CN.md)

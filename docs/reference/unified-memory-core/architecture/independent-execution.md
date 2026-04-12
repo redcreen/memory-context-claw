@@ -20,7 +20,7 @@ Related documents:
 - [../ownership-map.md](../ownership-map.md)
 - [../release-boundary.md](../release-boundary.md)
 - [../migration-checklist.md](../migration-checklist.md)
-- [../../unified-memory-core-architecture.md](../../unified-memory-core-architecture.md)
+- [../../../architecture.md](../../../architecture.md)
 
 ## What It Owns
 

@@ -19,10 +19,11 @@
 - `workspace/` 已并入项目
 - 主文档体系已建立：
   - `README.md`
-  - `configuration.md`
-  - `project-roadmap.md`
-  - `system-architecture.md`
-  - `testsuite.md`
+  - `docs/README.md`
+  - `docs/architecture.md`
+  - `docs/roadmap.md`
+  - `docs/test-plan.md`
+  - `docs/reference/configuration.md`
 - `memory-search governance` 已有上下文纯度指标：
   - `pluginSingleCard`
   - `pluginMultiCard`
@@ -47,7 +48,7 @@
   - `docs/module-map.md`
   - `.codex/module-dashboard.md`
   - `.codex/modules/*.md`
-- README / COMMANDS / 主 roadmap 已接入模块视角入口
+- README / COMMANDS / `docs/roadmap.md` 已接入模块视角入口
 - OpenClaw `code` agent 和 Codex 现在已经可以：
   - 共用同一 registry
   - 共用 `code-workspace`

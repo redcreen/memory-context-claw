@@ -15,12 +15,12 @@
 
 相关文档：
 
-- [../repo-layout.md](../repo-layout.md)
-- [../development-plan.md](../development-plan.md)
-- [../ownership-map.md](../ownership-map.md)
-- [../release-boundary.md](../release-boundary.md)
-- [../migration-checklist.md](../migration-checklist.md)
-- [../../unified-memory-core-architecture.md](../../unified-memory-core-architecture.md)
+- [../repo-layout.zh-CN.md](../repo-layout.zh-CN.md)
+- [../development-plan.zh-CN.md](../development-plan.zh-CN.md)
+- [../ownership-map.zh-CN.md](../ownership-map.zh-CN.md)
+- [../release-boundary.zh-CN.md](../release-boundary.zh-CN.md)
+- [../migration-checklist.zh-CN.md](../migration-checklist.zh-CN.md)
+- [../../../architecture.zh-CN.md](../../../architecture.zh-CN.md)
 
 ## 它负责什么
 

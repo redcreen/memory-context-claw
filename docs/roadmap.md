@@ -13,7 +13,7 @@ For live work state, read:
 
 For detailed queues, read:
 
-- [../project-roadmap.md](workstreams/project/roadmap.md)
+- [project workstream roadmap](workstreams/project/roadmap.md)
 - [unified-memory-core/development-plan.md](reference/unified-memory-core/development-plan.md)
 
 ## Now / Next / Later

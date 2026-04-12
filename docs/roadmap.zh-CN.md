@@ -13,8 +13,8 @@
 
 详细执行队列看这里：
 
-- [../project-roadmap.md](workstreams/project/roadmap.md)
-- [unified-memory-core/development-plan.md](reference/unified-memory-core/development-plan.md)
+- [项目 workstream roadmap](workstreams/project/roadmap.zh-CN.md)
+- [unified-memory-core/development-plan.zh-CN.md](reference/unified-memory-core/development-plan.zh-CN.md)
 
 ## 当前 / 下一步 / 更后面
 
