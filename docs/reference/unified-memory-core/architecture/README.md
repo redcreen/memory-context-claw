@@ -11,6 +11,7 @@ Module architecture documents:
 - [governance-system.md](governance-system.md)
 - [openclaw-adapter.md](openclaw-adapter.md)
 - [codex-adapter.md](codex-adapter.md)
+- [execution-modes.md](execution-modes.md)
 - [standalone-mode.md](standalone-mode.md)
 - [independent-execution.md](independent-execution.md)
 - [../deployment-topology.md](../deployment-topology.md)
