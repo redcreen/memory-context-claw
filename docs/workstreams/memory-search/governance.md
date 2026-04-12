@@ -1,3 +1,5 @@
+[English](governance.md) | [中文](governance.zh-CN.md)
+
 # Memory Search Governance
 
 ## 文档目的

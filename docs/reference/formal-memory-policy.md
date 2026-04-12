@@ -1,3 +1,5 @@
+[English](formal-memory-policy.md) | [中文](formal-memory-policy.zh-CN.md)
+
 # Formal Memory Policy
 
 ## Purpose

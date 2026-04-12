@@ -68,3 +68,53 @@
 2. 再决定 canonical root 的正式 adoption/cutover 方案
 3. 同步维持 `openclaw-adapter` recall quality 与 smoke promotion
 4. 为 `reflection-system` 打开下一增强 phase
+
+## Architecture Supervision
+- Signal: `yellow`
+- Signal Basis: open blockers or architectural risks are still recorded
+- Problem Class: active slice governance and architectural fit
+- Root Cause Hypothesis: the repo can drift back to local fixes if the current slice loses a visible architectural checkpoint
+- Correct Layer: control surface, validators, and reporting
+- Rejected Shortcut: letting execution continue without a visible architecture signal
+- Escalation Gate: raise but continue
+
+## Current Execution Line
+- Objective: 继续扩稳定事实 / 稳定规则，同时保持 recalled context 干净
+- Plan Link: advance-openclaw-adapter-recall-quality
+- Runway: one active-slice checkpoint covering implementation, validation, and state refresh
+- Progress: 0 / 9 tasks complete
+- Stop Conditions:
+  - blocker requires human direction
+  - validation fails and changes the direction
+  - business, compatibility, or cost decision requires user judgment
+- Validation: `npm run smoke:eval`、相关 targeted tests、`npm run eval:smoke-promotion`
+
+## Execution Tasks
+- [ ] EL-1 confirm the checkpoint and objective for `advance-openclaw-adapter-recall-quality`: 继续扩稳定事实 / 稳定规则，同时保持 recalled context 干净
+- [ ] EL-2 verify dependencies and affected boundaries: `.codex/modules/openclaw-adapter.md`、smoke surfaces、promotion helper
+- [ ] EL-3 confirm architecture signal, root-cause hypothesis, and correct layer still hold
+- [ ] EL-4 implement the highest-value change for `advance-openclaw-adapter-recall-quality`
+- [ ] EL-5 address the main execution risk: supporting context 再次变脏，或 smoke 面扩张过快
+- [ ] EL-6 update docs, control-surface notes, or contracts touched by this slice
+- [ ] EL-7 run validation: `npm run smoke:eval`、相关 targeted tests、`npm run eval:smoke-promotion`
+- [ ] EL-8 refresh progress, capabilities, next checkpoint, and next 3 actions
+- [ ] EL-9 capture a devlog entry if the root cause, tradeoff, or rejected shortcut changed
+
+## Development Log Capture
+- Trigger Level: high
+- Auto-Capture When:
+  - the root-cause hypothesis changes
+  - a reusable mechanism replaces repeated local fixes
+  - a retrofit changes governance, architecture, or release policy
+  - a tradeoff or rejected shortcut is likely to matter in future work
+- Skip When:
+  - the change is mechanical or formatting-only
+  - no durable reasoning changed
+  - the work simply followed an already-approved path
+  - the change stayed local and introduced no durable tradeoff
+
+## Escalation Model
+
+- Continue Automatically: implementation and validation work stay within the current direction and do not alter business behavior
+- Raise But Continue: the assistant sees architectural drift or scope pressure but can still converge within the agreed direction
+- Require User Decision: product behavior, compatibility, performance, cost, or UX tradeoffs would change the intended direction

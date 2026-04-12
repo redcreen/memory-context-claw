@@ -1,3 +1,5 @@
+[English](README.md) | [中文](README.zh-CN.md)
+
 # Memory Search
 
 This workstream groups the durable memory-search documents that should not live under `reports/`.

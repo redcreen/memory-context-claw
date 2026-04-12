@@ -17,7 +17,7 @@ Use this together with:
 
 - current execution state: [.codex/status.md](../.codex/status.md)
 - execution order: [.codex/plan.md](../.codex/plan.md)
-- top-level architecture: [system-architecture.md](../system-architecture.md)
+- top-level architecture: [system-architecture.md](workstreams/system/architecture.md)
 
 ## Module Overview
 

@@ -1,3 +1,5 @@
+[English](retrieval-policy.md) | [中文](retrieval-policy.zh-CN.md)
+
 # Retrieval Policy
 
 ## 文档目的

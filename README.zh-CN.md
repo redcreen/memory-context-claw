@@ -191,10 +191,10 @@ npm run umc:cli -- export inspect --consumer generic --format markdown
 
 更深一层的仓库文档：
 
-- [主路线图](project-roadmap.md)
-- [顶层系统架构](system-architecture.md)
-- [详细开发队列](docs/unified-memory-core/development-plan.md)
-- [详细测试体系](docs/unified-memory-core/testing/README.md)
+- [主路线图](docs/workstreams/project/roadmap.md)
+- [顶层系统架构](docs/workstreams/system/architecture.md)
+- [详细开发队列](docs/reference/unified-memory-core/development-plan.md)
+- [详细测试体系](docs/reference/unified-memory-core/testing/README.md)
 - [Self-Learning 路线图](docs/workstreams/self-learning/roadmap.md)
 
 ## 开发

@@ -1,3 +1,5 @@
+[English](session-memory-shape-strategy.md) | [中文](session-memory-shape-strategy.zh-CN.md)
+
 # Session-Memory Shape Strategy
 
 ## 文档目的

@@ -2,6 +2,10 @@ function normalizeQuery(value = "") {
   return String(value || "").trim().toLowerCase();
 }
 
+function normalizeCaseId(value = "") {
+  return String(value || "").trim().toLowerCase();
+}
+
 export function looksLikeNaturalSmokeQuery(query = "") {
   const text = String(query || "").trim();
   if (!text) {
@@ -27,6 +31,30 @@ export function isSmokePromotionEligible(result = {}) {
     quality.singleCard === true &&
     quality.noisySupporting === false
   );
+}
+
+export function compareGovernanceCoverage(governanceResults = [], governanceCases = []) {
+  const reportIds = new Set(
+    (Array.isArray(governanceResults) ? governanceResults : [])
+      .map((item) => normalizeCaseId(item?.id || item?.query))
+      .filter(Boolean)
+  );
+  const currentIds = new Set(
+    (Array.isArray(governanceCases) ? governanceCases : [])
+      .map((item) => normalizeCaseId(item?.id || item?.query))
+      .filter(Boolean)
+  );
+
+  const missingFromReport = [...currentIds].filter((id) => !reportIds.has(id));
+  const extraInReport = [...reportIds].filter((id) => !currentIds.has(id));
+
+  return {
+    stale: missingFromReport.length > 0 || extraInReport.length > 0,
+    reportCaseCount: reportIds.size,
+    currentCaseCount: currentIds.size,
+    missingFromReport,
+    extraInReport
+  };
 }
 
 export function buildSmokePromotionSuggestions(memorySearchResults = [], smokeCases = []) {

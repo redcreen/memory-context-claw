@@ -24,7 +24,7 @@
 | promotion 建议保持保守 | 仓库加新的 memory-search cases | 执行 `npm run eval:smoke-promotion` | promotion 建议不会把 smoke 面搞脆 |
 | governance 仍然可 repair | 仓库含 governance fixtures | 跑 targeted governance tests 和 CLI 路径 | audit、repair、replay、export inspect 仍然可用 |
 
-更细的 case 清单在 [unified-memory-core/testing/case-matrix.md](unified-memory-core/testing/case-matrix.md)。
+更细的 case 清单在 [unified-memory-core/testing/case-matrix.md](reference/unified-memory-core/testing/case-matrix.md)。
 
 ## 自动化覆盖
 
@@ -38,8 +38,8 @@
 
 详细测试栈：
 
-- [unified-memory-core/testing/README.md](unified-memory-core/testing/README.md)
-- [unified-memory-core/testing/case-matrix.md](unified-memory-core/testing/case-matrix.md)
+- [unified-memory-core/testing/README.md](reference/unified-memory-core/testing/README.md)
+- [unified-memory-core/testing/case-matrix.md](reference/unified-memory-core/testing/case-matrix.md)
 
 ## 手工检查
 

@@ -1,3 +1,7 @@
+[English](release.md) | [中文](release.zh-CN.md)
+
+[English](RELEASE.md) | [中文](RELEASE.zh-CN.md)
+
 # Release
 
 [English](release.md) | [中文](RELEASE.zh-CN.md)

@@ -1,3 +1,5 @@
+[English](roadmap.md) | [中文](roadmap.zh-CN.md)
+
 # Memory Search Roadmap
 
 ## 文档目的

@@ -1277,7 +1277,7 @@ export function buildProjectCardsFromMarkdown(markdown = "", filePath = "README.
     cards.push({
       title: "项目定位",
       type: "longTerm",
-      fact: "Unified Memory Core 是共享记忆产品层；当前仓库里的 unified-memory-core 负责 OpenClaw adapter，把统一记忆底座里的稳定事实和规则投影成当前轮可用上下文。",
+      fact: "Unified Memory Core 是共享记忆产品层，也是 OpenClaw 的 context engine adapter；它把长期记忆里的稳定事实和规则投影成当前轮可用的上下文。",
       tags: ["long-term", "project", "memory"],
       sourceFile: path.basename(filePath),
       sourcePath: filePath,
@@ -1292,12 +1292,12 @@ export function buildProjectCardsFromMarkdown(markdown = "", filePath = "README.
   if (
     path.basename(filePath) === "project-roadmap.md"
     && /project-roadmap\.md|master roadmap|主 roadmap|总索引/i.test(text)
-    && /memory-search-roadmap\.md|专项 roadmap|workstream roadmap/i.test(text)
+    && /memory-search-roadmap\.md|专项 roadmap|workstream roadmap|docs\/workstreams\/memory-search\/roadmap\.md/i.test(text)
   ) {
     cards.push({
       title: "项目文档导航",
       type: "longTerm",
-      fact: "项目总 roadmap 看 project-roadmap.md；memory search 专项 roadmap 看 reports/memory-search-roadmap.md。",
+      fact: "项目总 roadmap 看 docs/workstreams/project/roadmap.md；memory search 专项 roadmap 看 docs/workstreams/memory-search/roadmap.md。",
       tags: ["long-term", "project", "project-nav", "roadmap", "docs"],
       sourceFile: path.basename(filePath),
       sourcePath: filePath,
@@ -1656,16 +1656,36 @@ async function readWorkspaceStableMemoryCards(workspaceRoot, logger) {
 
 async function readPluginStableProjectCards(pluginRoot, logger) {
   const cards = [];
-  const projectFiles = ["README.md", "project-roadmap.md"];
+  const projectFiles = [
+    {
+      readPaths: ["README.md"],
+      sourcePath: "README.md"
+    },
+    {
+      readPaths: ["project-roadmap.md", path.join("docs", "workstreams", "project", "roadmap.md")],
+      sourcePath: "project-roadmap.md"
+    }
+  ];
 
-  for (const fileName of projectFiles) {
-    const fullPath = path.join(pluginRoot, fileName);
-    try {
-      const raw = await fs.readFile(fullPath, "utf8");
-      cards.push(...buildProjectCardsFromMarkdown(raw, fileName));
-    } catch (error) {
+  for (const projectFile of projectFiles) {
+    let loaded = false;
+    for (const readPath of projectFile.readPaths) {
+      const fullPath = path.join(pluginRoot, readPath);
+      try {
+        const raw = await fs.readFile(fullPath, "utf8");
+        cards.push(...buildProjectCardsFromMarkdown(raw, projectFile.sourcePath));
+        loaded = true;
+        break;
+      } catch (error) {
+        logger?.debug?.(
+          `[unified-memory-core] project card load skipped (${fullPath}): ${String(error)}`
+        );
+      }
+    }
+
+    if (!loaded) {
       logger?.debug?.(
-        `[unified-memory-core] project card load skipped (${fullPath}): ${String(error)}`
+        `[unified-memory-core] project card load skipped (${projectFile.sourcePath}): no readable source`
       );
     }
   }

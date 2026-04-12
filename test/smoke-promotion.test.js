@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   buildSmokePromotionSuggestions,
+  compareGovernanceCoverage,
   isSmokePromotionEligible,
   looksLikeNaturalSmokeQuery
 } from "../src/smoke-promotion.js";
@@ -109,4 +110,41 @@ test("buildSmokePromotionSuggestions separates existing smoke cases and new elig
   assert.equal(shortChinese?.naturalQueryLikely, false);
   assert.equal(shortChinese?.recommendedForSmoke, false);
   assert.equal(shortChinese?.reason, "synthetic-query-review");
+});
+
+test("compareGovernanceCoverage reports stale governance results when case catalog changed", () => {
+  const stale = compareGovernanceCoverage(
+    [
+      { id: "food-preference-recall", query: "我爱吃什么" },
+      { id: "identity-name-recall", query: "你怎么称呼我" }
+    ],
+    [
+      { id: "food-preference-recall", query: "我爱吃什么" },
+      { id: "identity-name-recall", query: "你怎么称呼我" },
+      { id: "timezone-priority", query: "我的时区是什么" }
+    ]
+  );
+
+  assert.equal(stale.stale, true);
+  assert.equal(stale.reportCaseCount, 2);
+  assert.equal(stale.currentCaseCount, 3);
+  assert.deepEqual(stale.missingFromReport, ["timezone-priority"]);
+  assert.deepEqual(stale.extraInReport, []);
+
+  const fresh = compareGovernanceCoverage(
+    [
+      { id: "food-preference-recall", query: "我爱吃什么" },
+      { id: "identity-name-recall", query: "你怎么称呼我" }
+    ],
+    [
+      { id: "food-preference-recall", query: "我爱吃什么" },
+      { id: "identity-name-recall", query: "你怎么称呼我" }
+    ]
+  );
+
+  assert.equal(fresh.stale, false);
+  assert.equal(fresh.reportCaseCount, 2);
+  assert.equal(fresh.currentCaseCount, 2);
+  assert.deepEqual(fresh.missingFromReport, []);
+  assert.deepEqual(fresh.extraInReport, []);
 });

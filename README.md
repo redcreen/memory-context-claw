@@ -191,10 +191,10 @@ npm run umc:cli -- export inspect --consumer generic --format markdown
 
 Deeper repo-specific references:
 
-- [Master Roadmap](project-roadmap.md)
-- [Top-Level System Architecture](system-architecture.md)
-- [Detailed Development Queue](docs/unified-memory-core/development-plan.md)
-- [Detailed Testing Stack](docs/unified-memory-core/testing/README.md)
+- [Master Roadmap](docs/workstreams/project/roadmap.md)
+- [Top-Level System Architecture](docs/workstreams/system/architecture.md)
+- [Detailed Development Queue](docs/reference/unified-memory-core/development-plan.md)
+- [Detailed Testing Stack](docs/reference/unified-memory-core/testing/README.md)
 - [Self-Learning Roadmap](docs/workstreams/self-learning/roadmap.md)
 
 ## Development

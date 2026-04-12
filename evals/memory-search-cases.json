@@ -111,5 +111,109 @@
     "expectedSignals": ["project-roadmap.md", "memory-search-roadmap.md"],
     "expectedSources": ["project-roadmap.md", "cardArtifact"],
     "risk": "项目导航掉回 generic project card 或无关 policy，失去明确文档导航"
+  },
+  {
+    "id": "birthday-solar-priority",
+    "category": "memory_search",
+    "query": "我生日是什么时候",
+    "expectedSignals": ["1983-02-06", "腊月二十四"],
+    "expectedSources": ["memory/%", "cardArtifact"],
+    "risk": "用户核心事实退回 session 噪音或弱相关历史片段"
+  },
+  {
+    "id": "daughter-profile-priority",
+    "category": "memory_search",
+    "query": "我女儿叫什么，生日是哪天，现在几年级",
+    "expectedSignals": ["刘子妍", "2014-12-29", "五年级"],
+    "expectedSources": ["memory/%", "cardArtifact"],
+    "risk": "组合事实查询被拆散，导致只回一部分家庭信息"
+  },
+  {
+    "id": "timezone-priority",
+    "category": "memory_search",
+    "query": "我的时区是什么",
+    "expectedSignals": ["GMT+8", "北京时间"],
+    "expectedSources": ["MEMORY.md", "cardArtifact"],
+    "risk": "用户时区事实被无关偏好卡或临时时区上下文抢走"
+  },
+  {
+    "id": "communication-style-priority",
+    "category": "memory_search",
+    "query": "你应该怎么跟我沟通",
+    "expectedSignals": ["直接", "实用", "不废话"],
+    "expectedSources": ["MEMORY.md", "cardArtifact"],
+    "risk": "沟通风格规则退回 session 语气片段，失去长期偏好卡优先级"
+  },
+  {
+    "id": "reminder-channel-priority",
+    "category": "memory_search",
+    "query": "我说提醒时默认用什么",
+    "expectedSignals": ["飞书任务", "苹果日历"],
+    "expectedSources": ["MEMORY.md", "cardArtifact"],
+    "risk": "提醒渠道规则被任务执行细节或其他工具偏好抢走"
+  },
+  {
+    "id": "execution-rule-priority",
+    "category": "memory_search",
+    "query": "收到明确任务后，低风险可逆操作应该怎么做",
+    "expectedSignals": ["低风险", "可直接执行", "高风险动作才先确认"],
+    "expectedSources": ["MEMORY.md", "cardArtifact"],
+    "risk": "执行边界规则退回长文说明，导致 selected context 不够直接"
+  },
+  {
+    "id": "openviking-role-priority",
+    "category": "memory_search",
+    "query": "OpenViking 是做什么的",
+    "expectedSignals": ["长期记忆检索补充工具", "个人信息", "历史片段"],
+    "expectedSources": ["MEMORY.md", "cardArtifact"],
+    "risk": "概念定义被项目背景或插件说明抢走，丢失稳定角色卡"
+  },
+  {
+    "id": "agent-routing-rule-priority",
+    "category": "memory_search",
+    "query": "编程工作应该交给哪个 Agent",
+    "expectedSignals": ["编程工作", "code Agent"],
+    "expectedSources": ["MEMORY.md", "cardArtifact"],
+    "risk": "Agent 路由规则退回角色长文，失去直接可执行的分派规则"
+  },
+  {
+    "id": "main-boundary-rule-priority",
+    "category": "memory_search",
+    "query": "main 负责什么",
+    "expectedSignals": ["总协调", "任务判断", "任务分派", "结果汇总"],
+    "expectedSources": ["MEMORY.md", "cardArtifact"],
+    "risk": "main 职责边界被广义角色说明替代，导致路由规则不够明确"
+  },
+  {
+    "id": "main-negative-boundary-rule-priority",
+    "category": "memory_search",
+    "query": "main 不负责什么",
+    "expectedSignals": ["不负责", "专业 Agent", "具体执行"],
+    "expectedSources": ["MEMORY.md", "cardArtifact"],
+    "risk": "职责边界负向规则被正向角色卡掩盖，导致执行边界模糊"
+  },
+  {
+    "id": "status-word-rule-priority",
+    "category": "memory_search",
+    "query": "已开始是什么意思",
+    "expectedSignals": ["已开始", "实际工具调用", "后台任务", "明确执行动作"],
+    "expectedSources": ["MEMORY.md", "cardArtifact"],
+    "risk": "状态词规则退回会话片段，失去统一术语定义"
+  },
+  {
+    "id": "plugin-config-priority",
+    "category": "memory_search",
+    "query": "unified-memory-core 这个插件的配置应该怎么写",
+    "expectedSignals": ["unified-memory-core", "contextEngine", "enabled: true"],
+    "expectedSources": ["configuration.md", "cardArtifact"],
+    "risk": "插件配置说明退回零散安装步骤或 session 解释，失去最小配置卡"
+  },
+  {
+    "id": "workspace-layout-rule-priority",
+    "category": "memory_search",
+    "query": "这个项目的内置 workspace 目录应该怎么组织",
+    "expectedSignals": ["workspace/MEMORY.md", "workspace/memory/", "workspace/notes/"],
+    "expectedSources": ["README.md", "cardArtifact"],
+    "risk": "workspace 布局规则退回背景文档，失去直接结构说明"
   }
 ]

@@ -95,6 +95,6 @@ flowchart LR
 ## 相关 ADR
 
 - [ADR 索引](adr/README.zh-CN.md)
-- [顶层系统架构](../system-architecture.md)
-- [详细架构地图](unified-memory-core/architecture/README.md)
-- [部署拓扑](unified-memory-core/deployment-topology.md)
+- [顶层系统架构](workstreams/system/architecture.md)
+- [详细架构地图](reference/unified-memory-core/architecture/README.md)
+- [部署拓扑](reference/unified-memory-core/deployment-topology.md)

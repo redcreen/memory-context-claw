@@ -1,3 +1,5 @@
+[English](pre-compaction-memory-distillation-design.md) | [中文](pre-compaction-memory-distillation-design.zh-CN.md)
+
 # Compact 前对话记忆沉淀方案
 
 ## 这份文档回答什么问题

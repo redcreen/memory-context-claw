@@ -18,7 +18,7 @@
 - 当前执行状态：[.codex/status.md](../.codex/status.md)
 - 当前执行顺序：[.codex/plan.md](../.codex/plan.md)
 - 模块控制面入口：[.codex/module-dashboard.md](../.codex/module-dashboard.md)
-- 总体架构：[system-architecture.md](../system-architecture.md)
+- 总体架构：[system-architecture.md](workstreams/system/architecture.md)
 
 ## 模块总览
 

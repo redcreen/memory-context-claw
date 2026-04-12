@@ -24,7 +24,7 @@ The highest practical risk is not simple pass/fail breakage. It is quality drift
 | Promotion recommendations stay conservative | repo plus new memory-search cases | run `npm run eval:smoke-promotion` | promotion suggestions do not make smoke brittle |
 | Governance remains repairable | repo with governance fixtures | run targeted governance tests and CLI paths | audit, repair, replay, and export inspect remain available |
 
-Detailed case inventory lives in [unified-memory-core/testing/case-matrix.md](unified-memory-core/testing/case-matrix.md).
+Detailed case inventory lives in [unified-memory-core/testing/case-matrix.md](reference/unified-memory-core/testing/case-matrix.md).
 
 ## Automation Coverage
 
@@ -38,8 +38,8 @@ Primary automated surfaces:
 
 Detailed testing stack:
 
-- [unified-memory-core/testing/README.md](unified-memory-core/testing/README.md)
-- [unified-memory-core/testing/case-matrix.md](unified-memory-core/testing/case-matrix.md)
+- [unified-memory-core/testing/README.md](reference/unified-memory-core/testing/README.md)
+- [unified-memory-core/testing/case-matrix.md](reference/unified-memory-core/testing/case-matrix.md)
 
 ## Manual Checks
 

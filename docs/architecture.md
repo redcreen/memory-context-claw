@@ -95,6 +95,6 @@ This keeps the system traceable and allows replay or repair instead of silent mu
 ## Related ADRs
 
 - [ADR index](adr/README.md)
-- [Top-level system architecture](../system-architecture.md)
-- [Detailed architecture map](unified-memory-core/architecture/README.md)
-- [Deployment topology](unified-memory-core/deployment-topology.md)
+- [Top-level system architecture](workstreams/system/architecture.md)
+- [Detailed architecture map](reference/unified-memory-core/architecture/README.md)
+- [Deployment topology](reference/unified-memory-core/deployment-topology.md)

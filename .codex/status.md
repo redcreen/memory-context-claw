@@ -10,8 +10,7 @@
 `governed execution / module-view active`
 
 ## Active Slice
-
-`openclaw-adapter recall quality / natural-query governance expansion`
+`advance-openclaw-adapter-recall-quality`
 
 ## Done
 
@@ -73,6 +72,8 @@
 - `workspace-layering` / `lossless-understanding` / `provider-role` / `release-install` / `project-roadmap-nav` 五条自然 query 已补进 memory-search governance case 面
 - release/install stable card 提取已兼容当前 README 的 `Stable release` / `Development head` 表述
 - generated smoke baseline 报告里的 case 总数已从陈旧的 `24/24` 校正到 `25/25`
+- smoke 里的剩余 13 条自然 query 已全部补进 governance；当前 `smoke-cases` 与 `memory-search-cases` 的自然 query 缺口已归零
+- 这 13 条新增治理 case 当前结果为 `pluginSignalHits = 13/13`、`pluginSourceHits = 13/13`、`pluginFastPathLikely = 13/13`
 - 按模块视角继续推进 `openclaw-adapter`
 - 保持 `governance-system` 作为常规治理面运行
 - 把 self-learning 文档口径与当前实现状态重新对齐
@@ -87,6 +88,44 @@
 
 ## Next 3 Actions
 
-1. 继续补下一批自然 query 的 recall-quality / governance cases
-2. 评估哪些新增治理 case 值得进入 `eval:smoke-promotion`
+1. 评估这批新增治理 case 中哪些还值得进入 `eval:smoke-promotion`
+2. 继续推进 `openclaw-adapter` 的稳定事实 / 稳定规则扩面
 3. 再决定是否把 registry-root consistency 从 governance cycle 提升成独立强门禁
+
+## Architecture Supervision
+- Signal: `yellow`
+- Signal Basis: open blockers or architectural risks are still recorded
+- Root Cause Hypothesis: the repo can drift back to local fixes if the current slice loses a visible architectural checkpoint
+- Correct Layer: control surface, validators, and reporting
+- Escalation Gate: raise but continue
+
+## Current Escalation State
+- Current Gate: raise but continue
+- Reason: the current direction can continue, but the supervision state should stay visible
+- Next Review Trigger: review again when blockers change, the active slice rolls forward, or release-facing work begins
+
+## Current Execution Line
+- Objective: 继续扩稳定事实 / 稳定规则，同时保持 recalled context 干净
+- Plan Link: advance-openclaw-adapter-recall-quality
+- Runway: one active-slice checkpoint covering implementation, validation, and state refresh
+- Progress: 0 / 9 tasks complete
+- Stop Conditions:
+  - blocker requires human direction
+  - validation fails and changes the direction
+  - business, compatibility, or cost decision requires user judgment
+
+## Execution Tasks
+- [ ] EL-1 confirm the checkpoint and objective for `advance-openclaw-adapter-recall-quality`: 继续扩稳定事实 / 稳定规则，同时保持 recalled context 干净
+- [ ] EL-2 verify dependencies and affected boundaries: `.codex/modules/openclaw-adapter.md`、smoke surfaces、promotion helper
+- [ ] EL-3 confirm architecture signal, root-cause hypothesis, and correct layer still hold
+- [ ] EL-4 implement the highest-value change for `advance-openclaw-adapter-recall-quality`
+- [ ] EL-5 address the main execution risk: supporting context 再次变脏，或 smoke 面扩张过快
+- [ ] EL-6 update docs, control-surface notes, or contracts touched by this slice
+- [ ] EL-7 run validation: `npm run smoke:eval`、相关 targeted tests、`npm run eval:smoke-promotion`
+- [ ] EL-8 refresh progress, capabilities, next checkpoint, and next 3 actions
+- [ ] EL-9 capture a devlog entry if the root cause, tradeoff, or rejected shortcut changed
+
+## Development Log Capture
+- Trigger Level: high
+- Pending Capture: no
+- Last Entry: docs/devlog/2026-04-12-converge-architecture-retrofit-for-unified-memory-core.md

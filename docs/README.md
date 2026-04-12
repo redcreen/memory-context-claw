@@ -23,16 +23,16 @@
 | Understand the self-learning direction and current baseline | [workstreams/self-learning/README.md](workstreams/self-learning/README.md) |
 | Understand how canonical memory will decouple from OpenClaw host storage | [workstreams/host-neutral-memory/README.md](workstreams/host-neutral-memory/README.md) |
 | Understand verification and release gates | [test-plan.md](test-plan.md) |
-| Dive into detailed implementation sequencing | [unified-memory-core/development-plan.md](unified-memory-core/development-plan.md) |
+| Dive into detailed implementation sequencing | [unified-memory-core/development-plan.md](reference/unified-memory-core/development-plan.md) |
 
 ## Detailed Reference Stack
 
-- detailed architecture map: [unified-memory-core/architecture/README.md](unified-memory-core/architecture/README.md)
-- detailed roadmaps: [unified-memory-core/roadmaps/README.md](unified-memory-core/roadmaps/README.md)
-- detailed blueprints: [unified-memory-core/blueprints/README.md](unified-memory-core/blueprints/README.md)
-- detailed testing stack: [unified-memory-core/testing/README.md](unified-memory-core/testing/README.md)
-- deployment topology: [unified-memory-core/deployment-topology.md](unified-memory-core/deployment-topology.md)
-- ownership map: [unified-memory-core/ownership-map.md](unified-memory-core/ownership-map.md)
+- detailed architecture map: [unified-memory-core/architecture/README.md](reference/unified-memory-core/architecture/README.md)
+- detailed roadmaps: [unified-memory-core/roadmaps/README.md](reference/unified-memory-core/roadmaps/README.md)
+- detailed blueprints: [unified-memory-core/blueprints/README.md](reference/unified-memory-core/blueprints/README.md)
+- detailed testing stack: [unified-memory-core/testing/README.md](reference/unified-memory-core/testing/README.md)
+- deployment topology: [unified-memory-core/deployment-topology.md](reference/unified-memory-core/deployment-topology.md)
+- ownership map: [unified-memory-core/ownership-map.md](reference/unified-memory-core/ownership-map.md)
 
 
 ## Markdown Governance
@@ -52,6 +52,5 @@ When resuming work, read the control surface first:
 3. `../.codex/modules/*.md`
 
 Then come back here for durable references.
-- Reference docs: [reference/README.md](reference/README.md)
-- Workstreams: [workstreams/README.md](workstreams/README.md)
-- Archive: [archive/README.md](archive/README.md)
+- development log: [devlog/README.md](devlog/README.md)
+- release process: [../RELEASE.md](../RELEASE.md)

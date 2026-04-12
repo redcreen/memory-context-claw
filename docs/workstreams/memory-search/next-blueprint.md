@@ -1,3 +1,5 @@
+[English](next-blueprint.md) | [中文](next-blueprint.zh-CN.md)
+
 # Memory Search Next Blueprint
 
 ## 为什么单独写这份文档
