@@ -27,7 +27,7 @@ Stage 5 的 testing surfaces 分成 5 层：
 4. adapter compatibility
 5. product hardening 与 split-readiness validation
 
-当前必须补齐的测试面：
+当前需要持续保护、持续为绿的测试面：
 
 - source registration correctness
 - normalization / fingerprint correctness

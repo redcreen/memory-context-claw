@@ -27,7 +27,7 @@ Stage 5 testing surfaces are grouped into five layers:
 4. adapter compatibility
 5. product hardening and split-readiness validation
 
-Current required surfaces:
+Current protected surfaces that must stay green:
 
 - source registration correctness
 - normalization and fingerprint correctness

@@ -2,7 +2,7 @@
 
 [English](README.md) | [中文](README.zh-CN.md)
 
-> A governed shared-memory core for OpenClaw: fact-first context today, self-learning lifecycle next.
+> A governed shared-memory core for OpenClaw: fact-first context, explicit self-learning lifecycle, and CLI-verifiable release gates.
 
 ## Who This Is For
 
@@ -138,17 +138,19 @@ Today the repo already includes:
 - generic, OpenClaw, and Codex export surfaces around promoted stable artifacts
 - plugin-level nightly self-learning: default local `00:00`, startup catch-up, persisted run state, and latest reflection reports
 
-What is not finished yet:
+What is now complete:
 
-- explicit promotion / decay / conflict rules beyond today's baseline threshold promotion
-- clearer learning-specific artifact semantics for habits and behavior patterns
-- learning-specific audit reports, time-window comparisons, and smoke surfaces
-- policy adaptation that feeds governed learning outputs back into adapter behavior
+- explicit learning lifecycle rules for promotion, decay / expiry, conflict detection, and stable registry updates
+- learning-specific audit, replay, repair, time-window comparison, and regression coverage
+- policy adaptation that feeds governed learning outputs back into OpenClaw and Codex behavior
+- Stage 5 hardening for source adapters, maintenance workflow, reproducibility, release boundary, and split rehearsal
+- release bundle build, real OpenClaw install verification, host smoke, and one-command `release-preflight`
 
 So the accurate positioning is:
 
-- current value: better fact-first context and a usable governed learning baseline
-- next phase: finish the self-learning lifecycle and make policy adaptation explicit
+- current value: better fact-first context plus a governed learning and policy-adaptation baseline that is already implemented
+- current state: Stages 1-5 are complete and the repo has a CLI gate that leaves only human acceptance
+- later discussion: runtime API / service mode stays deferred until the documented prerequisites stay green over time
 
 If you want the strongest signal about where this project is going, read the self-learning workstream docs alongside the adapter docs.
 
@@ -176,6 +178,8 @@ If you want the strongest signal about where this project is going, read the sel
 npm test
 npm run smoke:eval
 npm run eval:smoke-promotion
+npm run umc:stage5 -- --format markdown
+npm run umc:release-preflight -- --format markdown
 npm run umc:daily-reflection -- --source-type manual --content "Remember this: prefer concise summaries." --dry-run
 npm run umc:cli -- export inspect --consumer generic --format markdown
 ```

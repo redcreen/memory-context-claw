@@ -2,7 +2,7 @@
 
 [English](README.md) | [中文](README.zh-CN.md)
 
-> 一套面向 OpenClaw 的受治理共享记忆核心：先把事实优先上下文做好，再把 self-learning lifecycle 做成主亮点。
+> 一套面向 OpenClaw 的受治理共享记忆核心：已经具备事实优先上下文、显式 self-learning lifecycle，以及可用 CLI 验证的发版门禁。
 
 ## 适用对象
 
@@ -138,17 +138,19 @@ workspace/
 - generic、OpenClaw、Codex 三条 export surface，可围绕 promoted stable artifacts 工作
 - 插件层 nightly self-learning：默认本地 `00:00`、启动补跑、运行状态持久化、latest reflection reports
 
-还没有做完的部分是：
+现在已经收口的部分是：
 
-- 比当前阈值式升级更明确的 promotion / decay / conflict 规则
-- 对 habit / behavior pattern 更清晰的学习产物语义
-- learning-specific audit report、time-window comparison 和 smoke 面
-- 让 governed learning outputs 系统性反哺 adapter 行为的 policy adaptation
+- promotion、decay / expiry、conflict detection、stable registry update 这些显式 learning lifecycle 规则
+- learning-specific audit、replay、repair、time-window comparison 和 regression coverage
+- 让 governed learning outputs 反哺 OpenClaw 与 Codex 行为的 policy adaptation
+- Stage 5 的 source adapter hardening、maintenance workflow、reproducibility、release boundary、split rehearsal
+- release bundle build、真实 OpenClaw install verification、host smoke，以及一条 `release-preflight` 总门禁
 
 所以更准确的项目定位应该是：
 
-- 当前价值：事实优先上下文 + 已可用的受治理学习基线
-- 下一阶段：把 self-learning lifecycle 补齐，并把 policy adaptation 明确下来
+- 当前价值：事实优先上下文 + 已经落地的受治理学习 / policy adaptation 基线
+- 当前状态：Stage 1-5 都已完成，仓库已经有一条“只剩人类验收”的 CLI 门禁
+- 更后面的讨论：runtime API / service mode 继续延后，直到文档里的 prerequisites 长期保持为绿
 
 如果你想理解这个项目真正要走向哪里，不能只看当前 OpenClaw adapter 的效果，也应该直接看 self-learning workstream 文档。
 
@@ -176,6 +178,8 @@ workspace/
 npm test
 npm run smoke:eval
 npm run eval:smoke-promotion
+npm run umc:stage5 -- --format markdown
+npm run umc:release-preflight -- --format markdown
 npm run umc:daily-reflection -- --source-type manual --content "Remember this: prefer concise summaries." --dry-run
 npm run umc:cli -- export inspect --consumer generic --format markdown
 ```
