@@ -23,3 +23,10 @@ It focuses on:
 
 - [architecture.md](architecture.md)
 - [roadmap.md](roadmap.md)
+
+## Current Operator Conclusion
+
+- the canonical root default is `~/.unified-memory-core/registry`
+- if runtime resolution is already on the canonical root, cutover is treated as adopted
+- `~/.openclaw/unified-memory-core/registry` remains only a compatibility fallback
+- when canonical is active, legacy divergence is advisory and does not become an independent hard gate

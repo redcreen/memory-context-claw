@@ -8,6 +8,7 @@ This directory records durable implementation narratives: what went wrong, what 
 
 ## Entries
 
+- [Make host-neutral root cutover policy explicit](2026-04-12-make-host-neutral-root-cutover-policy-explicit.md)
 - [Close release preflight CLI and deployment verification](2026-04-12-close-release-preflight-cli-and-deployment-verification.md)
 - [Add detailed usage guide entrypoint](2026-04-12-add-detailed-usage-guide-entrypoint.md)
 - [Expand usage guide by role](2026-04-12-expand-usage-guide-by-role.md)

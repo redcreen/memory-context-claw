@@ -38,48 +38,56 @@
   - Exit Condition: human acceptance 完成且 later maintenance 不需要重开 deployment contract work
   - Status: `ongoing`
 
-- Slice: `decide-host-neutral-root-cutover-gate`
-  - Objective: 明确 canonical registry root 的 adoption 窗口，并决定 `registry-root consistency` 是否升成独立强门禁
+- Slice: `close-host-neutral-root-cutover-gate-policy`
+  - Objective: 基于 live topology、migration recommendation 和 split rehearsal，把 canonical root cutover 与 gate rule 写成显式 operator policy
   - Dependencies: `.codex/subprojects/host-neutral-memory.md`、registry topology / migration outputs、Stage 5 split rehearsal evidence
-  - Risks: shared-root 合同长期停在“证据存在但 operator policy 未固定”
-  - Validation: topology inspect、migration rehearsal、governance findings
-  - Exit Condition: cutover window 和 gate level 被明确
-  - Status: `pending`
+  - Risks: 如果继续把 legacy divergence 当成强门禁，operator 会在 cutover 已完成后仍然误判为“未切换”
+  - Validation: `npm run umc:cli -- registry inspect --format markdown`、`npm run umc:cli -- registry migrate --format markdown`、`npm run umc:cli -- review split-rehearsal --format markdown`
+  - Exit Condition: canonical root 的 adoption 规则和独立 block 条件都变成 CLI / docs / control-surface 的显式结论
+  - Status: `completed`
+
+- Slice: `hold-host-neutral-root-policy-stable`
+  - Objective: 保持 canonical root adoption 规则稳定，不让 later changes 把 legacy divergence 重新包装成 hard gate
+  - Dependencies: registry topology output、configuration docs、host-neutral workstream docs、control surface
+  - Risks: later maintenance 如果重新模糊 cutover rule，会让 operator policy 漂移
+  - Validation: `npm run umc:cli -- registry inspect --format markdown`、configuration docs、control-surface status
+  - Exit Condition: later phase work no longer threatens the explicit operator policy
+  - Status: `ongoing`
 
 ## Execution Order
 
 1. 保持 release-preflight / bundle install / host smoke / Stage 5 evidence 稳定
-2. 做人类验收与后续 commit / push / tag 决策
-3. 决定 host-neutral root 的正式 cutover / hard-gate 方案
+2. 保持 host-neutral root operator policy 可见且不回退
+3. 仅在 operator 明确需要时，再决定 legacy root archive / cleanup 窗口
 
 ## Architecture Supervision
 
 - Signal: `green`
-- Signal Basis: 现在不仅有 Stage 5 evidence，还有 release-preflight / bundle install / host smoke 的真实部署证据
+- Signal Basis: 现在不仅有 Stage 5 evidence 和 release-preflight，还有一条 CLI-visible 的 root-cutover operator policy
 - Problem Class: post-stage maintenance, human acceptance, and operator policy
-- Root Cause Hypothesis: 真正的后续风险不在实现本身，而在 preflight 失活、human acceptance 未做、或 root policy 被隐藏处理
+- Root Cause Hypothesis: 真正的后续风险不在实现本身，而在 preflight 失活，或 later changes 重新模糊 canonical-vs-legacy 规则
 - Correct Layer: release preflight evidence, release boundary, registry-root governance, control surface
 - Rejected Shortcut: 跳过 Stage 5 证据面直接讨论 runtime API / service mode
 - Escalation Gate: continue automatically
 
 ## Current Execution Line
 
-- Objective: 保持 release-preflight 刚收口的部署验证证据面持续为绿
-- Plan Link: `hold-release-preflight-evidence-stable`
-- Runway: one stable-maintenance slice covering preflight、bundle install、host smoke、stage5 acceptance、state refresh
+- Objective: 保持 root-cutover operator policy 和 release-preflight 证据面同时稳定
+- Plan Link: `hold-host-neutral-root-policy-stable`
+- Runway: one stable-maintenance slice covering registry inspect、configuration docs、host smoke、release-preflight、state refresh
 - Progress: `4 / 4` tasks complete
 - Stop Conditions:
   - Stage 5 evidence regresses
-  - root cutover policy changes operator assumptions materially
+  - registry inspect regresses to `legacy_fallback` or `migrate_to_canonical_root`
   - later service-mode discussion pressures the repo to bypass current evidence
-- Validation: `npm run umc:release-preflight`、`npm run umc:openclaw-install-verify`、`npm run umc:openclaw-itest`、`npm run umc:stage5`
+- Validation: `npm run umc:release-preflight`、`npm run umc:cli -- registry inspect --format markdown`、`npm run umc:openclaw-itest`、`npm run umc:stage5`
 
 ## Execution Tasks
 
 - [x] EL-1 keep release-preflight green
 - [x] EL-2 keep bundle install / host smoke / Stage 5 surfaces green
-- [x] EL-3 keep public docs and `.codex/*` state aligned with actual completion
-- [x] EL-4 keep root-cutover follow-up visible instead of hiding it inside later product work
+- [x] EL-3 keep public docs and `.codex/*` state aligned with canonical-root policy
+- [x] EL-4 keep root-cutover rule visible instead of hiding it inside later product work
 
 ## Development Log Capture
 
@@ -95,5 +103,5 @@
 ## Escalation Model
 
 - Continue Automatically: normal post-stage regression and operator evidence maintenance
-- Raise But Continue: Stage 5 evidence stays green but root cutover policy remains unresolved
+- Raise But Continue: Stage 5 evidence stays green but root-cutover operator policy starts drifting in docs or CLI
 - Require User Decision: a later phase would bypass or weaken the current Stage 5 contract

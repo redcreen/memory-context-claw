@@ -16,9 +16,9 @@
 
 - Overall: `stage closeout / Stage 5 complete`
 - Average Completion: `98%`
-- Active Module: `Governance System`
-- Main Risk: `registry-root cutover policy` 仍是后续 operator 决策项
-- Active Slice: `hold-release-preflight-evidence-stable`
+- Active Module: `Memory Registry`
+- Main Risk: `legacy_fallback regression` 或 operator 把 legacy divergence 误判成 hard gate
+- Active Slice: `hold-host-neutral-root-policy-stable`
 
 ## Modules
 
@@ -26,7 +26,7 @@
 | --- | --- | --- | --- | --- | --- | --- |
 | Source System | stage5-complete / stable | 98% (stable) | source contracts；local-first source registration；replayable artifacts；`file / directory / url / image` hardening；multi-source manifest support | 保持 source replay shape 稳定 | 用 `umc:stage5` 持续证明 mixed-source acceptance 不回退 | [modules/source-system.md](modules/source-system.md) |
 | Reflection System | stable / maintenance | 97% (stable) | reflection candidate generation；explicit promotion review；daily reflection；lifecycle metadata；new source payloads continue through governed artifacts | 保持 signal extraction readable | 证明 later phase 不需要 reflection-local shortcut | [modules/reflection-system.md](modules/reflection-system.md) |
-| Memory Registry | stable / cutover-watch | 95% (stable) | lifecycle lineage；promotion/decay/conflict/update rules；policy-export compatibility；migration rehearsal compatibility | 明确 canonical root cutover 与 hard-gate policy | 决定 registry-root operator policy | [modules/memory-registry.md](modules/memory-registry.md) |
+| Memory Registry | stable / policy-fixed | 98% (stable) | lifecycle lineage；promotion/decay/conflict/update rules；policy-export compatibility；migration rehearsal compatibility；CLI-visible root operator policy | 保持 canonical root active，不让 legacy divergence 被误升为 hard gate | 继续证明 `registry inspect` 保持 `adopt_canonical_root` / `advisory` | [modules/memory-registry.md](modules/memory-registry.md) |
 | Projection System | stage5-complete / stable | 98% (stable) | generic / OpenClaw / Codex exports；policy inputs；payload fingerprints；reproducibility evidence | 保持 export-level reproducibility 为绿 | 固定 `export reproducibility` audit 为后续证据面 | [modules/projection-system.md](modules/projection-system.md) |
 | Governance System | stage5-complete / monitoring | 98% (stable) | lifecycle audit；policy audit；repair/replay；maintenance workflow；release-boundary and split-readiness evidence；release-preflight gate | 保持报告可读 | 用 `umc:release-preflight` 继续证明 operator path 稳定 | [modules/governance-system.md](modules/governance-system.md) |
 | Openclaw Adapter | stable / regression-held | 95% (stable) | governed export consumption；policy context + assembly adaptation；host smoke path；real bundle install path | 保持 recall quality、host smoke、bundle install 稳定 | 持续通过 `umc:openclaw-itest` 与 `umc:openclaw-install-verify` | [modules/openclaw-adapter.md](modules/openclaw-adapter.md) |
@@ -45,4 +45,4 @@
 
 1. 保持 `umc:release-preflight`、`umc:openclaw-install-verify`、`umc:openclaw-itest`、`umc:stage5` 为绿
 2. 做人类验收与后续提交/发布决策
-3. 决定 registry-root consistency 是否升成独立强门禁
+3. 仅在 operator 需要时，再决定 legacy root archive / cleanup 窗口

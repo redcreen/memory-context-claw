@@ -38,6 +38,8 @@ test("renderGovernanceCycleReport includes audit, safe governance and live regre
           activeSource: "canonical",
           migrationNeeded: false,
           cutoverReady: true,
+          operatorPolicy: "canonical_root_active",
+          consistencyGate: "pass",
           findingCount: 1,
           warningCount: 0,
           errorCount: 0
@@ -76,6 +78,8 @@ test("renderGovernanceCycleReport includes audit, safe governance and live regre
   assert.match(markdown, /pluginFailures: `1`/);
   assert.match(markdown, /Registry Root Governance/);
   assert.match(markdown, /activeSource: `canonical`/);
+  assert.match(markdown, /operatorPolicy: `canonical_root_active`/);
+  assert.match(markdown, /consistencyGate: `pass`/);
   assert.match(markdown, /Registry Root Findings/);
   assert.match(markdown, /registry_roots_mirrored/);
   assert.match(markdown, /cases: `2`/);

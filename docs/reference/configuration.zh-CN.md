@@ -327,6 +327,23 @@ openclaw memory search "我爱吃什么"
 
 这样做的目的是：在朝 host-neutral canonical root 迁移时，不打断当前 OpenClaw 本地安装。
 
+当前 operator policy 也已经明确：
+
+- `~/.unified-memory-core/registry` 是默认 canonical root
+- 如果 runtime 当前已经解析到 canonical root，那么 cutover 就视为已经 adopted
+- `~/.openclaw/unified-memory-core/registry` 只保留 compatibility fallback 语义
+- canonical active 时，legacy root 和 canonical root 不再要求长期保持 mirrored
+- 真正的 block 条件是：
+  - runtime 回退到 `legacy_fallback`
+  - 或 canonical root 缺失
+
+运维判断建议：
+
+- 用 `registry inspect` 看 `operatorPolicy`
+  - `adopt_canonical_root` / `canonical_root_active`：继续运行
+  - `migrate_to_canonical_root`：需要处理
+- 不要把 `registry_roots_diverged` 在 canonical active 场景下误判成“必须停机”的 hard gate
+
 运维命令：
 
 - 查看当前 topology / findings：

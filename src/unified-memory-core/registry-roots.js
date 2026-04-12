@@ -164,6 +164,14 @@ function buildTopologyFindings({ resolution, canonical, legacy, comparison }) {
     });
   }
 
+  if (comparison.diverged && resolution.registryDir === canonical.registry_dir) {
+    findings.push({
+      severity: "info",
+      code: "canonical_root_adopted",
+      message: "Canonical root is active; legacy divergence is advisory unless runtime resolution falls back to the legacy root."
+    });
+  }
+
   if ((resolution.source === "explicit" || resolution.source === "env")
     && resolution.registryDir !== resolution.canonicalRegistryDir) {
     findings.push({
@@ -184,12 +192,45 @@ function buildTopologyFindings({ resolution, canonical, legacy, comparison }) {
   return findings;
 }
 
+function buildOperatorPolicy({ resolution, canonical, legacy, comparison }) {
+  if (resolution.source === "legacy_fallback" || (!canonical.root_exists && legacy.root_exists)) {
+    return {
+      policy: "migrate_to_canonical_root",
+      consistency_gate: "block",
+      rationale: "Legacy fallback is still active or canonical root is missing."
+    };
+  }
+
+  if (resolution.registryDir === canonical.registry_dir) {
+    if (comparison.diverged) {
+      return {
+        policy: "adopt_canonical_root",
+        consistency_gate: "advisory",
+        rationale: "Canonical root is already active; legacy root no longer needs to remain mirrored."
+      };
+    }
+
+    return {
+      policy: "canonical_root_active",
+      consistency_gate: "pass",
+      rationale: "Canonical root is active and no root divergence requires operator follow-up."
+    };
+  }
+
+  return {
+    policy: "review_explicit_override",
+    consistency_gate: "manual_review",
+    rationale: "Registry root is being driven by an explicit override instead of the canonical default."
+  };
+}
+
 function buildTopologySummary({ resolution, canonical, legacy, comparison }) {
   const migrationNeeded = resolution.source === "legacy_fallback"
     || (!canonical.root_exists && legacy.root_exists)
     || comparison.diverged;
   const cutoverReady = canonical.root_exists
     && (!legacy.root_exists || comparison.mirrored || resolution.registryDir === canonical.registry_dir);
+  const operatorPolicy = buildOperatorPolicy({ resolution, canonical, legacy, comparison });
 
   return {
     active_root: resolution.registryDir,
@@ -197,7 +238,10 @@ function buildTopologySummary({ resolution, canonical, legacy, comparison }) {
     canonical_root_exists: canonical.root_exists,
     legacy_root_exists: legacy.root_exists,
     migration_needed: migrationNeeded,
-    cutover_ready: cutoverReady
+    cutover_ready: cutoverReady,
+    operator_policy: operatorPolicy.policy,
+    consistency_gate: operatorPolicy.consistency_gate,
+    policy_rationale: operatorPolicy.rationale
   };
 }
 
@@ -303,10 +347,15 @@ export function renderRegistryTopologyReport(report, { format = "markdown" } = {
   lines.push(`- activeSource: \`${report.summary.active_source}\``);
   lines.push(`- migrationNeeded: \`${report.summary.migration_needed}\``);
   lines.push(`- cutoverReady: \`${report.summary.cutover_ready}\``);
+  lines.push(`- operatorPolicy: \`${report.summary.operator_policy}\``);
+  lines.push(`- consistencyGate: \`${report.summary.consistency_gate}\``);
   lines.push("");
   lines.push("## Roots");
   lines.push(`- canonical: \`${report.canonical_root.registry_dir}\` (exists=\`${report.canonical_root.root_exists}\`, lines=\`${report.canonical_root.total_lines}\`)`);
   lines.push(`- legacy: \`${report.legacy_root.registry_dir}\` (exists=\`${report.legacy_root.root_exists}\`, lines=\`${report.legacy_root.total_lines}\`)`);
+  lines.push("");
+  lines.push("## Operator Policy");
+  lines.push(`- rationale: ${report.summary.policy_rationale}`);
   lines.push("");
   lines.push("## Findings");
   if (!Array.isArray(report.findings) || report.findings.length === 0) {

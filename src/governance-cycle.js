@@ -65,6 +65,8 @@ export function renderGovernanceCycleReport(result, { generatedAt, workspaceRoot
     lines.push(`- activeSource: \`${result.registryRootGovernance.summary.activeSource ?? ""}\``);
     lines.push(`- migrationNeeded: \`${result.registryRootGovernance.summary.migrationNeeded ?? false}\``);
     lines.push(`- cutoverReady: \`${result.registryRootGovernance.summary.cutoverReady ?? false}\``);
+    lines.push(`- operatorPolicy: \`${result.registryRootGovernance.summary.operatorPolicy ?? ""}\``);
+    lines.push(`- consistencyGate: \`${result.registryRootGovernance.summary.consistencyGate ?? ""}\``);
     lines.push(`- findingCount: \`${result.registryRootGovernance.summary.findingCount ?? 0}\``);
     lines.push(`- warningCount: \`${result.registryRootGovernance.summary.warningCount ?? 0}\``);
     lines.push(`- errorCount: \`${result.registryRootGovernance.summary.errorCount ?? 0}\``);

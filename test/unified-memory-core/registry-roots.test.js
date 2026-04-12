@@ -93,8 +93,36 @@ test("inspectRegistryTopology reports legacy fallback and root divergence", asyn
 
   assert.equal(report.summary.active_source, "legacy_fallback");
   assert.equal(report.summary.migration_needed, true);
+  assert.equal(report.summary.operator_policy, "migrate_to_canonical_root");
+  assert.equal(report.summary.consistency_gate, "block");
   assert.ok(report.findings.some((finding) => finding.code === "active_root_uses_legacy_fallback"));
   assert.ok(report.findings.some((finding) => finding.code === "registry_roots_diverged"));
+});
+
+test("inspectRegistryTopology treats canonical-active divergence as advisory after cutover", async () => {
+  const tempRoot = await fs.mkdtemp(path.join(os.tmpdir(), "umc-cutover-"));
+  const canonicalDir = path.join(tempRoot, "canonical");
+  const legacyDir = path.join(tempRoot, "legacy");
+  await fs.mkdir(canonicalDir, { recursive: true });
+  await fs.mkdir(legacyDir, { recursive: true });
+  await fs.writeFile(
+    path.join(canonicalDir, "records.jsonl"),
+    ['{"record_id":"canonical-1"}', '{"record_id":"canonical-2"}'].join("\n") + "\n",
+    "utf8"
+  );
+  await fs.writeFile(path.join(legacyDir, "records.jsonl"), '{"record_id":"legacy-1"}\n', "utf8");
+
+  const report = await inspectRegistryTopology({
+    canonicalRegistryDir: canonicalDir,
+    legacyRegistryDir: legacyDir
+  });
+
+  assert.equal(report.summary.active_source, "canonical");
+  assert.equal(report.summary.cutover_ready, true);
+  assert.equal(report.summary.operator_policy, "adopt_canonical_root");
+  assert.equal(report.summary.consistency_gate, "advisory");
+  assert.ok(report.findings.some((finding) => finding.code === "registry_roots_diverged"));
+  assert.ok(report.findings.some((finding) => finding.code === "canonical_root_adopted"));
 });
 
 test("migrateRegistryRoot can dry-run and then apply a non-destructive legacy to canonical merge", async () => {

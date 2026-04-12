@@ -23,3 +23,10 @@
 
 - [architecture.md](architecture.md)
 - [roadmap.md](roadmap.md)
+
+## 当前 operator 结论
+
+- canonical root 默认目标是 `~/.unified-memory-core/registry`
+- 如果 runtime 当前已经解析到 canonical root，就视为 cutover 已 adopted
+- `~/.openclaw/unified-memory-core/registry` 只保留 compatibility fallback
+- canonical active 时，legacy divergence 只算 advisory，不再升成独立 hard gate

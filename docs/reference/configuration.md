@@ -325,6 +325,23 @@ Registry-root resolution now follows this order:
 
 This keeps existing OpenClaw local installs working while the repo moves toward a host-neutral canonical root.
 
+The operator policy is now explicit:
+
+- `~/.unified-memory-core/registry` is the canonical default root
+- if runtime resolution is already on the canonical root, cutover is treated as adopted
+- `~/.openclaw/unified-memory-core/registry` remains only a compatibility fallback
+- once canonical is active, legacy and canonical roots are not required to stay mirrored forever
+- the real block conditions are:
+  - runtime falls back to `legacy_fallback`
+  - or the canonical root is missing
+
+Recommended operator interpretation:
+
+- inspect `operatorPolicy` in `registry inspect`
+  - `adopt_canonical_root` / `canonical_root_active`: continue
+  - `migrate_to_canonical_root`: act
+- do not treat `registry_roots_diverged` as a stop-the-world hard gate when canonical is already active
+
 Operator commands:
 
 - inspect topology and findings:

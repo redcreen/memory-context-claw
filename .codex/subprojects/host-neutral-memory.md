@@ -27,7 +27,7 @@
 
 ## Current Slice
 
-`migration/reporting hardening implemented; move to cutover decision and live adoption tracking`
+`cutover policy explicit; move to canonical-root monitoring`
 
 ## Done
 
@@ -46,20 +46,20 @@
 - standalone runtime / CLI 已能做 non-destructive registry migration/adoption
 - registry-root findings 现在对 operator 可见
 - registry-root consistency 已进入 governance cycle 输出
+- canonical root cutover policy 已显式化：
+  - `~/.unified-memory-core/registry` 是默认 operator 目标
+  - active root 已可稳定解析到 canonical root
+  - `legacy_fallback` / canonical 缺失 才是 block 条件
+  - legacy divergence 在 canonical active 时只保留 advisory 语义
 
 ## In Progress
 
-- 观察 live topology，决定 canonical root 的正式 adoption 窗口
-- 确认是否把 registry-root consistency 从 governance cycle 提升为独立 governance gate
+- 观察 live topology，确保 active root 不回退到 `legacy_fallback`
+- 保持 CLI、公开文档和控制面里的 cutover 规则一致
 
 ## Blockers / Open Decisions
 
-- canonical registry 默认根目录最终放在哪里：
-  - `~/.unified-memory-core/registry`
-  - 还是继续 env/config 驱动
-- 过渡阶段是否需要：
-  - 只读兼容旧 `~/.openclaw/...`
-  - 或双写 / 一次性迁移
+- 什么时候清理过时的 legacy root 副本，仍属于 operator 选择
 - shared / agent / session 三层里，哪些数据允许长期沉淀，哪些只该停留在短期层
 - Codex 信号应该通过：
   - nightly collector 扫描 registry write-back
@@ -73,6 +73,6 @@
 
 ## Next 3 Actions
 
-1. 决定是否把 registry-root consistency 升成独立强门禁
-2. 持续观察 canonical / legacy 是否保持 mirrored 或完全收敛
+1. 持续观察 `registry inspect` 是否保持 `operatorPolicy = adopt_canonical_root`
+2. 仅在 operator 明确需要时，再决定 legacy root archive / cleanup 窗口
 3. 把下一执行重心切回 recall quality 主线
