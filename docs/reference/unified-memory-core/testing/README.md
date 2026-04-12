@@ -6,11 +6,13 @@ Testing planning entrypoints:
 
 - [case-matrix.md](case-matrix.md)
 - [stage3-stage4-acceptance.md](stage3-stage4-acceptance.md)
+- [openclaw-cli-integration.md](openclaw-cli-integration.md)
 
 Preferred operator flow:
 
 - run `npm run umc:acceptance -- --format markdown` first
-- fall back to the narrower lifecycle / policy / export CLI commands only if that report fails
+- run `npm run umc:openclaw-itest -- --format markdown` next when you need host-level OpenClaw integration confidence
+- fall back to the narrower lifecycle / policy / export CLI commands only if the repo acceptance report fails
 
 Step 4 testing surfaces are grouped into four layers:
 
@@ -48,6 +50,7 @@ Current implemented suites:
 - governance audit / repair / replay primitives: [../../../test/unified-memory-core/governance-system.test.js](../../../../test/unified-memory-core/governance-system.test.js)
 - standalone runtime and CLI contract path: [../../../test/unified-memory-core/standalone-runtime.test.js](../../../../test/unified-memory-core/standalone-runtime.test.js)
 - Stage 3-4 acceptance automation: [../../../test/unified-memory-core/stage3-stage4-acceptance.test.js](../../../../test/unified-memory-core/stage3-stage4-acceptance.test.js)
+- OpenClaw CLI host integration smoke: [../../../test/openclaw-cli-integration.test.js](../../../../test/openclaw-cli-integration.test.js)
 - standalone governance repair / replay command path: [../../../test/unified-memory-core/standalone-governance.test.js](../../../../test/unified-memory-core/standalone-governance.test.js)
 - OpenClaw runtime adapter integration: [../../../test/openclaw-adapter.test.js](../../../../test/openclaw-adapter.test.js)
 - Codex runtime adapter integration: [../../../test/codex-adapter.test.js](../../../../test/codex-adapter.test.js)

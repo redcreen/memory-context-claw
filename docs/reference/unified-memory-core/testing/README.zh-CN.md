@@ -6,11 +6,13 @@
 
 - [case-matrix.md](case-matrix.md)
 - [stage3-stage4-acceptance.zh-CN.md](stage3-stage4-acceptance.zh-CN.md)
+- [openclaw-cli-integration.zh-CN.md](openclaw-cli-integration.zh-CN.md)
 
 推荐操作路径：
 
 - 先跑 `npm run umc:acceptance -- --format markdown`
-- 只有这份报告失败时，再退回更窄的 lifecycle / policy / export CLI 命令定位问题
+- 如果要确认宿主级 OpenClaw 集成，再跑 `npm run umc:openclaw-itest -- --format markdown`
+- 只有 repo acceptance 报告失败时，再退回更窄的 lifecycle / policy / export CLI 命令定位问题
 
 Step 4 的 testing surfaces 分成 4 层：
 
@@ -48,6 +50,7 @@ Step 4 的 testing surfaces 分成 4 层：
 - governance audit / repair / replay primitives: [../../../test/unified-memory-core/governance-system.test.js](../../../../test/unified-memory-core/governance-system.test.js)
 - standalone runtime / CLI contract path: [../../../test/unified-memory-core/standalone-runtime.test.js](../../../../test/unified-memory-core/standalone-runtime.test.js)
 - Stage 3-4 acceptance automation: [../../../test/unified-memory-core/stage3-stage4-acceptance.test.js](../../../../test/unified-memory-core/stage3-stage4-acceptance.test.js)
+- OpenClaw CLI host integration smoke: [../../../test/openclaw-cli-integration.test.js](../../../../test/openclaw-cli-integration.test.js)
 - standalone governance repair / replay command path: [../../../test/unified-memory-core/standalone-governance.test.js](../../../../test/unified-memory-core/standalone-governance.test.js)
 - OpenClaw runtime adapter integration: [../../../test/openclaw-adapter.test.js](../../../../test/openclaw-adapter.test.js)
 - Codex runtime adapter integration: [../../../test/codex-adapter.test.js](../../../../test/codex-adapter.test.js)

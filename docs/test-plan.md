@@ -28,11 +28,14 @@ Detailed case inventory lives in [unified-memory-core/testing/case-matrix.md](re
 
 Preferred Stage 3-4 operator checklist lives in [unified-memory-core/testing/stage3-stage4-acceptance.md](reference/unified-memory-core/testing/stage3-stage4-acceptance.md).
 
+OpenClaw host-level integration smoke lives in [unified-memory-core/testing/openclaw-cli-integration.md](reference/unified-memory-core/testing/openclaw-cli-integration.md).
+
 ## Automation Coverage
 
 Primary automated surfaces:
 
 - `npm run umc:acceptance`
+- `npm run umc:openclaw-itest`
 - `npm test`
 - `npm run smoke:eval`
 - `npm run eval:smoke-promotion`
@@ -44,10 +47,12 @@ Detailed testing stack:
 - [unified-memory-core/testing/README.md](reference/unified-memory-core/testing/README.md)
 - [unified-memory-core/testing/case-matrix.md](reference/unified-memory-core/testing/case-matrix.md)
 - [unified-memory-core/testing/stage3-stage4-acceptance.md](reference/unified-memory-core/testing/stage3-stage4-acceptance.md)
+- [unified-memory-core/testing/openclaw-cli-integration.md](reference/unified-memory-core/testing/openclaw-cli-integration.md)
 
 ## Manual Checks
 
 - prefer `npm run umc:acceptance` before any Stage 3-4 manual validation
+- prefer `npm run umc:openclaw-itest` before any host-level OpenClaw manual validation
 - install the plugin from a release tag and verify it loads in OpenClaw
 - inspect recalled context quality, not only raw test pass/fail
 - confirm stable facts and rules improve recall without adding noisy supporting context
@@ -70,6 +75,7 @@ Before tagging a stable release, run:
 
 ```bash
 npm run umc:acceptance -- --format markdown
+npm run umc:openclaw-itest -- --format markdown
 npm test
 npm run smoke:eval
 npm run eval:smoke-promotion

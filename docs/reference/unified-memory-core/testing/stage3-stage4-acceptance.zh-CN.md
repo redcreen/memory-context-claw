@@ -2,12 +2,12 @@
 
 [English](stage3-stage4-acceptance.md) | [中文](stage3-stage4-acceptance.zh-CN.md)
 
-这份文档是 Stage 3 和 Stage 4 的长期验收清单，覆盖：
+这份文档是 Stage 3 和 Stage 4 的长期仓库内验收清单，覆盖：
 
 - Stage 3 `Self-Learning lifecycle baseline`
 - Stage 4 `Policy Adaptation and multi-consumer use`
 
-当你改了 lifecycle、policy、projection、adapter 或 governance 相关代码时，优先走这里的低人工成本验收流。
+当你改了 lifecycle、policy、projection、adapter 或 governance 相关代码时，优先走这里的低人工成本仓库内验收流。
 
 ## 首选路径
 
@@ -21,7 +21,8 @@ npm run umc:acceptance -- --format markdown
 
 - 如果不传 `--registry-dir`，脚本会自动创建隔离的临时 registry。
 - 默认样例 source 是 `Remember this: the user prefers concise progress reports.`
-- 报告通过，表示 Stage 3 和 Stage 4 的 CLI 面已经是绿的；如果是 release 场景，再补一次 OpenClaw 黑盒 spot check 就够了。
+- 报告通过，表示 Stage 3 和 Stage 4 的仓库内 CLI 面已经是绿的。
+- 如果还要确认 OpenClaw 宿主集成，下一步跑 [openclaw-cli-integration.zh-CN.md](openclaw-cli-integration.zh-CN.md)。
 
 如果你需要固定 namespace 和 registry 便于排查，就用显式参数：
 
@@ -126,12 +127,23 @@ npm run umc:cli -- export inspect \
   --format markdown
 ```
 
+## 宿主集成下一步
+
+`npm run umc:acceptance` 通过之后，推荐的宿主级后续是：
+
+```bash
+npm run umc:openclaw-itest -- --format markdown
+```
+
+这条 OpenClaw CLI smoke 会替代掉大部分原来的人工宿主验证工作。
+
 ## 最少人工工作量
 
 如果 `npm run umc:acceptance` 通过：
 
-1. 如果只是 CLI 级验证，到这里就可以停。
-2. 如果是 release 或 runtime rollout，再做一次 OpenClaw 黑盒 spot check。
+1. 如果只是仓库内 acceptance，到这里就可以停。
+2. 如果要确认真实宿主集成，跑 `npm run umc:openclaw-itest -- --format markdown`。
+3. 如果你还想再补一层 UI 心智确认，再做一次 OpenClaw 黑盒 spot check。
 
 建议黑盒 prompt：
 
@@ -149,4 +161,5 @@ Give me a concise progress update and keep supporting context compact.
 
 - [README.zh-CN.md](README.zh-CN.md)
 - [case-matrix.zh-CN.md](case-matrix.zh-CN.md)
+- [openclaw-cli-integration.zh-CN.md](openclaw-cli-integration.zh-CN.md)
 - [../../../../docs/test-plan.zh-CN.md](../../../../docs/test-plan.zh-CN.md)

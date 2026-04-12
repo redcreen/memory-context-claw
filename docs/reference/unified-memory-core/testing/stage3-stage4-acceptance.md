@@ -2,12 +2,12 @@
 
 [English](stage3-stage4-acceptance.md) | [中文](stage3-stage4-acceptance.zh-CN.md)
 
-This page is the durable operator checklist for:
+This page is the durable repo-level operator checklist for:
 
 - Stage 3 `Self-Learning lifecycle baseline`
 - Stage 4 `Policy Adaptation and multi-consumer use`
 
-Use it when you need the lowest-human-effort validation path after lifecycle, policy, projection, adapter, or governance changes.
+Use it when you need the lowest-human-effort repo acceptance path after lifecycle, policy, projection, adapter, or governance changes.
 
 ## Preferred Path
 
@@ -21,7 +21,8 @@ Notes:
 
 - If you omit `--registry-dir`, the script creates an isolated temp registry automatically.
 - The default sample source is `Remember this: the user prefers concise progress reports.`
-- A passing report means the Stage 3 and Stage 4 CLI surfaces are green; for release work, keep one final OpenClaw black-box spot check.
+- A passing report means the Stage 3 and Stage 4 repo CLI surfaces are green.
+- For host-level OpenClaw integration, run [openclaw-cli-integration.md](openclaw-cli-integration.md) next.
 
 Use an explicit namespace and registry when you want reproducible local inspection:
 
@@ -126,12 +127,23 @@ npm run umc:cli -- export inspect \
   --format markdown
 ```
 
+## Host Integration Next
+
+After `npm run umc:acceptance` passes, the preferred host-level follow-up is:
+
+```bash
+npm run umc:openclaw-itest -- --format markdown
+```
+
+That OpenClaw CLI smoke replaces most of the old manual host verification work.
+
 ## Minimal Human Work
 
 If `npm run umc:acceptance` passes:
 
-1. For CLI validation only, stop there.
-2. For release or runtime rollout, do one OpenClaw black-box spot check against the real plugin/runtime.
+1. For repo acceptance only, stop there.
+2. For real host integration, run `npm run umc:openclaw-itest -- --format markdown`.
+3. Only if you still want extra UI confidence, do one OpenClaw black-box spot check against the real plugin/runtime.
 
 Recommended black-box prompt:
 
@@ -149,4 +161,5 @@ Expected behavior:
 
 - [README.md](README.md)
 - [case-matrix.md](case-matrix.md)
+- [openclaw-cli-integration.md](openclaw-cli-integration.md)
 - [../../../../docs/test-plan.md](../../../../docs/test-plan.md)

@@ -28,11 +28,14 @@
 
 Stage 3-4 的首选操作清单在 [unified-memory-core/testing/stage3-stage4-acceptance.zh-CN.md](reference/unified-memory-core/testing/stage3-stage4-acceptance.zh-CN.md)。
 
+OpenClaw 宿主级集成 smoke 在 [unified-memory-core/testing/openclaw-cli-integration.zh-CN.md](reference/unified-memory-core/testing/openclaw-cli-integration.zh-CN.md)。
+
 ## 自动化覆盖
 
 主要自动化测试面：
 
 - `npm run umc:acceptance`
+- `npm run umc:openclaw-itest`
 - `npm test`
 - `npm run smoke:eval`
 - `npm run eval:smoke-promotion`
@@ -44,10 +47,12 @@ Stage 3-4 的首选操作清单在 [unified-memory-core/testing/stage3-stage4-ac
 - [unified-memory-core/testing/README.zh-CN.md](reference/unified-memory-core/testing/README.zh-CN.md)
 - [unified-memory-core/testing/case-matrix.zh-CN.md](reference/unified-memory-core/testing/case-matrix.zh-CN.md)
 - [unified-memory-core/testing/stage3-stage4-acceptance.zh-CN.md](reference/unified-memory-core/testing/stage3-stage4-acceptance.zh-CN.md)
+- [unified-memory-core/testing/openclaw-cli-integration.zh-CN.md](reference/unified-memory-core/testing/openclaw-cli-integration.zh-CN.md)
 
 ## 手工检查
 
 - Stage 3-4 相关验证优先先跑 `npm run umc:acceptance`
+- OpenClaw 宿主相关验证优先先跑 `npm run umc:openclaw-itest`
 - 从 release tag 安装插件，并确认它能在 OpenClaw 里成功加载
 - 检查 recalled context 质量，不只看测试通过与否
 - 确认稳定事实 / 规则扩面后没有引入脏 supporting context
@@ -70,6 +75,7 @@ Stage 3-4 的首选操作清单在 [unified-memory-core/testing/stage3-stage4-ac
 
 ```bash
 npm run umc:acceptance -- --format markdown
+npm run umc:openclaw-itest -- --format markdown
 npm test
 npm run smoke:eval
 npm run eval:smoke-promotion
