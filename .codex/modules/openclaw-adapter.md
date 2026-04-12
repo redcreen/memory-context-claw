@@ -28,4 +28,4 @@ Operational baseline is complete; current work is iterative hardening and qualit
 
 ## Next Checkpoint
 
-Keep live OpenClaw behavior stable while newly aligned governance coverage moves into candidate smoke-promotion review.
+Keep live OpenClaw behavior stable while the now-fully-aligned natural-query governance surface expands the next stable fact / stable rule batch.

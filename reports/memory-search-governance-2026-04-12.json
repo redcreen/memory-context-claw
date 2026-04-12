@@ -1,37 +1,20 @@
 {
-  "generatedAt": "2026-04-12T04:27:45.272Z",
+  "generatedAt": "2026-04-12T04:32:59.532Z",
   "summary": {
     "cases": 27,
     "builtinUnavailable": 27,
     "builtinSignalHits": 0,
     "builtinSourceHits": 0,
-    "pluginSignalHits": 25,
+    "pluginSignalHits": 27,
     "pluginSourceHits": 27,
     "pluginFastPathLikely": 27,
-    "pluginSingleCard": 25,
-    "pluginMultiCard": 2,
+    "pluginSingleCard": 27,
+    "pluginMultiCard": 0,
     "pluginNoisySupporting": 0,
     "pluginUnexpectedSupportingTotal": 0,
     "builtinFailures": 0,
-    "pluginFailures": 2,
-    "watchlist": [
-      {
-        "id": "project-positioning-priority",
-        "query": "这个项目主要解决什么问题",
-        "pluginSignals": false,
-        "pluginSource": true,
-        "builtinSignals": false,
-        "builtinSource": false
-      },
-      {
-        "id": "project-roadmap-nav-priority",
-        "query": "项目路线图应该看哪个文档",
-        "pluginSignals": false,
-        "pluginSource": true,
-        "builtinSignals": false,
-        "builtinSource": false
-      }
-    ]
+    "pluginFailures": 0,
+    "watchlist": []
   },
   "baselineSummary": {
     "preset": "safe-local",
@@ -46,22 +29,21 @@
     "builtinUnavailableDelta": 0,
     "builtinSignalHitsDelta": 0,
     "builtinSourceHitsDelta": 0,
-    "pluginSignalHitsDelta": -1,
+    "pluginSignalHitsDelta": 2,
     "pluginSourceHitsDelta": 0,
     "pluginFastPathLikelyDelta": 0,
-    "pluginSingleCardDelta": -1,
-    "pluginMultiCardDelta": 1,
+    "pluginSingleCardDelta": 2,
+    "pluginMultiCardDelta": -2,
     "pluginNoisySupportingDelta": 0,
     "pluginUnexpectedSupportingTotalDelta": 0,
     "builtinFailuresDelta": 0,
-    "pluginFailuresDelta": 1,
-    "watchlistAdded": [
+    "pluginFailuresDelta": -2,
+    "watchlistAdded": [],
+    "watchlistResolved": [
+      "project-positioning-priority",
       "project-roadmap-nav-priority"
     ],
-    "watchlistResolved": [],
-    "watchlistPersisting": [
-      "project-positioning-priority"
-    ]
+    "watchlistPersisting": []
   },
   "results": [
     {
@@ -320,42 +302,24 @@
       "plugin": {
         "fastPathLikely": true,
         "candidateCount": 6,
-        "expectedSignalsHit": false,
+        "expectedSignalsHit": true,
         "expectedSourceHit": true,
         "selectionQuality": {
-          "selectedCount": 4,
-          "singleCard": false,
-          "multiCard": true,
+          "selectedCount": 1,
+          "singleCard": true,
+          "multiCard": false,
           "noisySupporting": false,
           "unexpectedSupportingCount": 0
         },
         "topSources": {
-          "cardArtifact": 4
+          "cardArtifact": 1
         },
         "selected": [
           {
             "path": "README.md",
             "source": "cardArtifact",
             "score": 0.9500000000000001,
-            "snippet": "Unified Memory Core 是共享记忆产品层；当前仓库里的 unified-memory-core 负责 OpenClaw adapter，把统一记忆底座里的稳定事实和规则投影成当前轮可用上下文。"
-          },
-          {
-            "path": "project-roadmap.md",
-            "source": "cardArtifact",
-            "score": 0.880909090909091,
-            "snippet": "项目总 roadmap 看 project-roadmap.md；memory search 专项 roadmap 看 reports/memory-search-roadmap.md。"
-          },
-          {
-            "path": "MEMORY.md",
-            "source": "cardArtifact",
-            "score": 0.782437475188567,
-            "snippet": "OpenViking 是主要长期记忆检索补充工具，用于查询个人信息、偏好、历史片段等。"
-          },
-          {
-            "path": "docs/reference/formal-memory-policy.md",
-            "source": "cardArtifact",
-            "score": 0.4770305676855895,
-            "snippet": "MEMORY.md 应该放的是长期稳定、会被反复复用的内容。"
+            "snippet": "Unified Memory Core 是共享记忆产品层，也是 OpenClaw 的 context engine adapter；它把长期记忆里的稳定事实和规则投影成当前轮可用的上下文。"
           }
         ]
       }
@@ -720,36 +684,24 @@
       "plugin": {
         "fastPathLikely": true,
         "candidateCount": 6,
-        "expectedSignalsHit": false,
+        "expectedSignalsHit": true,
         "expectedSourceHit": true,
         "selectionQuality": {
-          "selectedCount": 3,
-          "singleCard": false,
-          "multiCard": true,
+          "selectedCount": 1,
+          "singleCard": true,
+          "multiCard": false,
           "noisySupporting": false,
           "unexpectedSupportingCount": 0
         },
         "topSources": {
-          "cardArtifact": 3
+          "cardArtifact": 1
         },
         "selected": [
           {
-            "path": "README.md",
+            "path": "project-roadmap.md",
             "source": "cardArtifact",
-            "score": 0.8009090909090909,
-            "snippet": "workspace/notes 里只有带明确总结和适用场景、并且表达稳定概念或项目分工的 notes，才适合进入 stable card；历史 roadmap 和临时配置说明应只保留为背景 notes。"
-          },
-          {
-            "path": "workspace/notes/openclaw-memory-vs-lossless.md",
-            "source": "cardArtifact",
-            "score": 0.5804835589941975,
-            "snippet": "长期记忆负责存和找；Lossless / context engine 负责把当前这一轮最该看的内容更好地送进模型。"
-          },
-          {
-            "path": "docs/reference/formal-memory-policy.md",
-            "source": "cardArtifact",
-            "score": 0.41080270793036766,
-            "snippet": "MEMORY.md 应该放的是长期稳定、会被反复复用的内容。"
+            "score": 0.7209090909090909,
+            "snippet": "项目总 roadmap 看 docs/workstreams/project/roadmap.md（原 project-roadmap.md）；memory search 专项 roadmap 看 docs/workstreams/memory-search/roadmap.md（原 memory-search-roadmap.md）。"
           }
         ]
       }

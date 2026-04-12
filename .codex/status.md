@@ -74,6 +74,9 @@
 - generated smoke baseline 报告里的 case 总数已从陈旧的 `24/24` 校正到 `25/25`
 - smoke 里的剩余 13 条自然 query 已全部补进 governance；当前 `smoke-cases` 与 `memory-search-cases` 的自然 query 缺口已归零
 - 这 13 条新增治理 case 当前结果为 `pluginSignalHits = 13/13`、`pluginSourceHits = 13/13`、`pluginFastPathLikely = 13/13`
+- `eval:smoke-promotion` 现在会显式报告 governance freshness，不再静默读取过期的 `memory-search-governance-latest.json`
+- 最新 `memory-search-governance-latest.json` 已刷新到 `27` 条 case：`pluginSignalHits = 27/27`、`pluginSourceHits = 27/27`、`pluginSingleCard = 27/27`、`pluginFailures = 0`、`watchlist = []`
+- project-level stable cards 已对齐当前 docs 结构：`docs/workstreams/project/roadmap.md` 会被读取成稳定 roadmap 导航卡，旧锚点名仍保留在卡片文本里
 - 按模块视角继续推进 `openclaw-adapter`
 - 保持 `governance-system` 作为常规治理面运行
 - 把 self-learning 文档口径与当前实现状态重新对齐
@@ -88,8 +91,8 @@
 
 ## Next 3 Actions
 
-1. 评估这批新增治理 case 中哪些还值得进入 `eval:smoke-promotion`
-2. 继续推进 `openclaw-adapter` 的稳定事实 / 稳定规则扩面
+1. 继续推进 `openclaw-adapter` 的稳定事实 / 稳定规则扩面
+2. 保持新增自然 query 与 governance / smoke 双面同步
 3. 再决定是否把 registry-root consistency 从 governance cycle 提升成独立强门禁
 
 ## Architecture Supervision

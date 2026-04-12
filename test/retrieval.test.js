@@ -290,7 +290,7 @@ test("buildCardArtifactCandidates promotes project cards for project-style queri
     },
     {
       title: "项目定位",
-      fact: "Unified Memory Core 是共享记忆产品层；当前仓库里的 unified-memory-core 负责 OpenClaw adapter，把统一记忆底座里的稳定事实和规则投影成当前轮可用上下文。",
+      fact: "Unified Memory Core 是共享记忆产品层，也是 OpenClaw 的 context engine adapter；它把长期记忆里的稳定事实和规则投影成当前轮可用的上下文。",
       tags: ["long-term", "project", "memory"],
       sourcePath: "memory/2026-04-05-project-positioning.md",
       sourceChannel: "assistant-conclusion",
@@ -797,7 +797,7 @@ test("buildCardArtifactCandidates prefers config cards over project cards for co
   const candidates = buildCardArtifactCandidates([
     {
       title: "项目定位",
-      fact: "Unified Memory Core 是共享记忆产品层；当前仓库里的 unified-memory-core 负责 OpenClaw adapter，把统一记忆底座里的稳定事实和规则投影成当前轮可用上下文。",
+      fact: "Unified Memory Core 是共享记忆产品层，也是 OpenClaw 的 context engine adapter；它把长期记忆里的稳定事实和规则投影成当前轮可用的上下文。",
       tags: ["long-term", "project", "memory"],
       sourcePath: "README.md",
       sourceChannel: "project-doc",
@@ -822,7 +822,7 @@ test("buildCardArtifactCandidates prefers project cards over config cards for pr
   const candidates = buildCardArtifactCandidates([
     {
       title: "项目定位",
-      fact: "Unified Memory Core 是共享记忆产品层；当前仓库里的 unified-memory-core 负责 OpenClaw adapter，把统一记忆底座里的稳定事实和规则投影成当前轮可用上下文。",
+      fact: "Unified Memory Core 是共享记忆产品层，也是 OpenClaw 的 context engine adapter；它把长期记忆里的稳定事实和规则投影成当前轮可用的上下文。",
       tags: ["long-term", "project", "memory"],
       sourcePath: "README.md",
       sourceChannel: "project-doc",
@@ -855,7 +855,7 @@ test("buildCardArtifactCandidates prefers release-install cards for install quer
     },
     {
       title: "项目定位",
-      fact: "Unified Memory Core 是共享记忆产品层；当前仓库里的 unified-memory-core 负责 OpenClaw adapter，把统一记忆底座里的稳定事实和规则投影成当前轮可用上下文。",
+      fact: "Unified Memory Core 是共享记忆产品层，也是 OpenClaw 的 context engine adapter；它把长期记忆里的稳定事实和规则投影成当前轮可用的上下文。",
       tags: ["long-term", "project", "memory"],
       sourcePath: "README.md",
       sourceChannel: "project-doc",
@@ -905,7 +905,7 @@ test("buildCardArtifactCandidates prefers workspace-layout project cards for wor
     },
     {
       title: "项目定位",
-      fact: "Unified Memory Core 是共享记忆产品层；当前仓库里的 unified-memory-core 负责 OpenClaw adapter，把统一记忆底座里的稳定事实和规则投影成当前轮可用上下文。",
+      fact: "Unified Memory Core 是共享记忆产品层，也是 OpenClaw 的 context engine adapter；它把长期记忆里的稳定事实和规则投影成当前轮可用的上下文。",
       tags: ["long-term", "project", "memory"],
       sourcePath: "README.md",
       sourceChannel: "project-doc",
@@ -994,7 +994,7 @@ test("buildCardArtifactCandidates prefers project-navigation cards for roadmap q
   const candidates = buildCardArtifactCandidates([
     {
       title: "项目文档导航",
-      fact: "项目总 roadmap 看 project-roadmap.md；memory search 专项 roadmap 看 reports/memory-search-roadmap.md。",
+      fact: "项目总 roadmap 看 docs/workstreams/project/roadmap.md（原 project-roadmap.md）；memory search 专项 roadmap 看 docs/workstreams/memory-search/roadmap.md（原 memory-search-roadmap.md）。",
       tags: ["long-term", "project", "project-nav", "roadmap", "docs"],
       sourcePath: "project-roadmap.md",
       sourceChannel: "project-doc",
@@ -1012,7 +1012,7 @@ test("buildCardArtifactCandidates prefers project-navigation cards for roadmap q
 
   assert.ok(candidates.length >= 1);
   assert.equal(candidates[0].path, "project-roadmap.md");
-  assert.match(candidates[0].snippet, /project-roadmap\.md|memory-search-roadmap\.md/);
+  assert.match(candidates[0].snippet, /project-roadmap\.md|memory-search-roadmap\.md|docs\/workstreams\/project\/roadmap\.md|docs\/workstreams\/memory-search\/roadmap\.md/);
 });
 
 test("buildCardArtifactCandidates prefers lossless concept cards for lossless-understanding queries", () => {
@@ -1027,7 +1027,7 @@ test("buildCardArtifactCandidates prefers lossless concept cards for lossless-un
     },
     {
       title: "项目定位",
-      fact: "Unified Memory Core 是共享记忆产品层；当前仓库里的 unified-memory-core 负责 OpenClaw adapter，把统一记忆底座里的稳定事实和规则投影成当前轮可用上下文。",
+      fact: "Unified Memory Core 是共享记忆产品层，也是 OpenClaw 的 context engine adapter；它把长期记忆里的稳定事实和规则投影成当前轮可用的上下文。",
       tags: ["long-term", "project", "memory"],
       sourcePath: "README.md",
       sourceChannel: "project-doc",
@@ -1054,14 +1054,14 @@ test("buildProjectCardsFromMarkdown derives project navigation card from project
     "project-roadmap.md"
   );
 
-  assert.ok(cards.some((card) => card.title === "项目文档导航" && /project-roadmap\.md.*memory-search-roadmap\.md/.test(card.fact)));
+  assert.ok(cards.some((card) => card.title === "项目文档导航" && /docs\/workstreams\/project\/roadmap\.md.*project-roadmap\.md.*docs\/workstreams\/memory-search\/roadmap\.md.*memory-search-roadmap\.md/.test(card.fact)));
 });
 
 test("buildCardArtifactCandidates keeps project-positioning cards ahead of lossless concept cards for generic project queries", () => {
   const candidates = buildCardArtifactCandidates([
     {
       title: "项目定位",
-      fact: "Unified Memory Core 是共享记忆产品层；当前仓库里的 unified-memory-core 负责 OpenClaw adapter，把统一记忆底座里的稳定事实和规则投影成当前轮可用上下文。",
+      fact: "Unified Memory Core 是共享记忆产品层，也是 OpenClaw 的 context engine adapter；它把长期记忆里的稳定事实和规则投影成当前轮可用的上下文。",
       tags: ["long-term", "project", "memory"],
       sourcePath: "README.md",
       sourceChannel: "project-doc",
@@ -1189,6 +1189,45 @@ test("readCardArtifactCandidates loads config and policy cards from docs/referen
   assert.ok(pendingCandidates.length >= 1);
   assert.equal(pendingCandidates[0].path, "docs/reference/formal-memory-policy.md");
   assert.match(pendingCandidates[0].snippet, /待确认信息应该先进入 pending|不得默认写入/);
+});
+
+test("readCardArtifactCandidates loads project roadmap cards from docs/workstreams after docs reorganization", async () => {
+  const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "unified-memory-core-project-roadmap-"));
+  const artifactPath = path.join(tempDir, "cards.json");
+  const workspaceRoot = path.join(tempDir, "workspace");
+  const pluginRoot = path.join(tempDir, "plugin");
+
+  await fs.mkdir(path.join(workspaceRoot, "memory"), { recursive: true });
+  await fs.mkdir(path.join(pluginRoot, "docs", "workstreams", "project"), { recursive: true });
+  await fs.writeFile(path.join(workspaceRoot, "MEMORY.md"), "", "utf8");
+  await fs.writeFile(path.join(pluginRoot, "README.md"), "# readme\n", "utf8");
+  await fs.writeFile(artifactPath, "[]", "utf8");
+  await fs.writeFile(
+    path.join(pluginRoot, "docs", "workstreams", "project", "roadmap.md"),
+    [
+      "# Unified Memory Core Roadmap",
+      "",
+      "`project-roadmap.md` is the master roadmap and document index.",
+      "",
+      "- docs/workstreams/memory-search/roadmap.md",
+      "- workstream roadmap"
+    ].join("\n"),
+    "utf8"
+  );
+
+  const candidates = await readCardArtifactCandidates({
+    query: "项目路线图应该看哪个文档",
+    maxCandidates: 6,
+    artifactPath,
+    workspaceRoot,
+    pluginRoot,
+    excludePaths: [],
+    logger: {}
+  });
+
+  assert.ok(candidates.length >= 1);
+  assert.equal(candidates[0].path, "project-roadmap.md");
+  assert.match(candidates[0].snippet, /project-roadmap\.md|docs\/workstreams\/project\/roadmap\.md/);
 });
 
 test("readCardArtifactCandidates skips ineligible workspace notes", async () => {

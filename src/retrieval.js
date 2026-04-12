@@ -1297,7 +1297,7 @@ export function buildProjectCardsFromMarkdown(markdown = "", filePath = "README.
     cards.push({
       title: "项目文档导航",
       type: "longTerm",
-      fact: "项目总 roadmap 看 docs/workstreams/project/roadmap.md；memory search 专项 roadmap 看 docs/workstreams/memory-search/roadmap.md。",
+      fact: "项目总 roadmap 看 docs/workstreams/project/roadmap.md（原 project-roadmap.md）；memory search 专项 roadmap 看 docs/workstreams/memory-search/roadmap.md（原 memory-search-roadmap.md）。",
       tags: ["long-term", "project", "project-nav", "roadmap", "docs"],
       sourceFile: path.basename(filePath),
       sourcePath: filePath,

@@ -530,7 +530,7 @@ test("buildAssemblyResult keeps only project-navigation supporting docs for road
         endLine: 1,
         weightedScore: 0.96,
         finalScore: 0.96,
-        snippet: "项目总 roadmap 看 project-roadmap.md；memory search 专项 roadmap 看 reports/memory-search-roadmap.md。"
+        snippet: "项目总 roadmap 看 docs/workstreams/project/roadmap.md（原 project-roadmap.md）；memory search 专项 roadmap 看 docs/workstreams/memory-search/roadmap.md（原 memory-search-roadmap.md）。"
       },
       {
         path: "formal-memory-policy.md",
