@@ -121,12 +121,37 @@
     "risk": "用户核心事实退回 session 噪音或弱相关历史片段"
   },
   {
+    "id": "birthday-lunar-priority",
+    "category": "memory_search",
+    "query": "我的农历生日是什么",
+    "expectedSignals": ["腊月二十四"],
+    "expectedSources": ["memory/%", "cardArtifact"],
+    "risk": "农历生日这类变体事实掉回弱相关日期片段，失去稳定事实优先级"
+  },
+  {
     "id": "daughter-profile-priority",
     "category": "memory_search",
     "query": "我女儿叫什么，生日是哪天，现在几年级",
     "expectedSignals": ["刘子妍", "2014-12-29", "五年级"],
     "expectedSources": ["memory/%", "cardArtifact"],
     "risk": "组合事实查询被拆散，导致只回一部分家庭信息"
+  },
+  {
+    "id": "son-profile-priority",
+    "category": "memory_search",
+    "query": "我儿子叫什么，生日是哪天，现在几年级",
+    "expectedSignals": ["刘子暄", "2007-07-25", "高三"],
+    "expectedSources": ["memory/%", "cardArtifact"],
+    "risk": "家庭组合事实扩面时，如果儿子 profile 退回 session 噪音，就说明 stable fact 覆盖还不够稳"
+  },
+  {
+    "id": "children-overview-priority",
+    "category": "memory_search",
+    "query": "我家孩子的情况你记住了吗",
+    "expectedSignals": ["刘子妍", "刘子暄"],
+    "expectedSignalsAny": ["五年级", "高三", "一儿一女"],
+    "expectedSources": ["memory/%", "cardArtifact"],
+    "risk": "家庭概览型自然查询如果召回不稳，会让多子女稳定事实无法形成直接可答的单卡入口"
   },
   {
     "id": "timezone-priority",

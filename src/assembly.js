@@ -401,6 +401,27 @@ export function enforcePathDiversity(candidates, maxSelectedChunks, maxChunksPer
   return selected;
 }
 
+function resolveEffectiveMaxChunksPerPath(query, candidates, maxChunksPerPath) {
+  if (classifyMixedFactIntent(query) !== "children") {
+    return maxChunksPerPath;
+  }
+
+  const perPath = new Map();
+  for (const candidate of candidates) {
+    if (candidate?.pathKind !== "cardArtifact") {
+      continue;
+    }
+    const path = String(candidate.canonicalPath || canonicalizeMemoryPath(candidate.path));
+    const used = (perPath.get(path) || 0) + 1;
+    perPath.set(path, used);
+    if (used >= 2) {
+      return Math.max(maxChunksPerPath, 2);
+    }
+  }
+
+  return maxChunksPerPath;
+}
+
 export function buildSystemPromptAddition({ query, selectedCandidates }) {
   if (!selectedCandidates.length) {
     return "";
@@ -485,10 +506,15 @@ export function buildAssemblyResult({
       )
     )
   );
+  const effectiveMaxChunksPerPath = resolveEffectiveMaxChunksPerPath(
+    query,
+    filteredCandidates,
+    maxChunksPerPath
+  );
   const diversifiedCandidates = enforcePathDiversity(
     filteredCandidates,
     maxSelectedChunks || candidates.length,
-    maxChunksPerPath
+    effectiveMaxChunksPerPath
   );
   const selectedCandidates = selectChunksWithinBudget(
     diversifiedCandidates,

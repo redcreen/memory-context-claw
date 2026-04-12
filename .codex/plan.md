@@ -82,7 +82,7 @@
 - Objective: 继续扩稳定事实 / 稳定规则，同时保持 recalled context 干净
 - Plan Link: advance-openclaw-adapter-recall-quality
 - Runway: one active-slice checkpoint covering implementation, validation, and state refresh
-- Progress: 0 / 9 tasks complete
+- Progress: 9 / 9 tasks complete
 - Stop Conditions:
   - blocker requires human direction
   - validation fails and changes the direction
@@ -90,15 +90,15 @@
 - Validation: `npm run smoke:eval`、相关 targeted tests、`npm run eval:smoke-promotion`
 
 ## Execution Tasks
-- [ ] EL-1 confirm the checkpoint and objective for `advance-openclaw-adapter-recall-quality`: 继续扩稳定事实 / 稳定规则，同时保持 recalled context 干净
-- [ ] EL-2 verify dependencies and affected boundaries: `.codex/modules/openclaw-adapter.md`、smoke surfaces、promotion helper
-- [ ] EL-3 confirm architecture signal, root-cause hypothesis, and correct layer still hold
-- [ ] EL-4 implement the highest-value change for `advance-openclaw-adapter-recall-quality`
-- [ ] EL-5 address the main execution risk: supporting context 再次变脏，或 smoke 面扩张过快
-- [ ] EL-6 update docs, control-surface notes, or contracts touched by this slice
-- [ ] EL-7 run validation: `npm run smoke:eval`、相关 targeted tests、`npm run eval:smoke-promotion`
-- [ ] EL-8 refresh progress, capabilities, next checkpoint, and next 3 actions
-- [ ] EL-9 capture a devlog entry if the root cause, tradeoff, or rejected shortcut changed
+- [x] EL-1 confirm the checkpoint and objective for `advance-openclaw-adapter-recall-quality`: 继续扩稳定事实 / 稳定规则，同时保持 recalled context 干净
+- [x] EL-2 verify dependencies and affected boundaries: `.codex/modules/openclaw-adapter.md`、smoke surfaces、promotion helper
+- [x] EL-3 confirm architecture signal, root-cause hypothesis, and correct layer still hold
+- [x] EL-4 implement the highest-value change for `advance-openclaw-adapter-recall-quality`
+- [x] EL-5 address the main execution risk: 用 clean two-card family overview 取代被 path diversity 截断的单卡假通过，同时不放松 supporting-noise 约束
+- [x] EL-6 update docs, control-surface notes, or contracts touched by this slice
+- [x] EL-7 run validation: `node --test test/assembly.test.js`、`npm run smoke:eval`、targeted `eval:memory-search:cases`、`npm run eval:memory-search:governance -- --write`、`npm run eval:smoke-promotion`
+- [x] EL-8 refresh progress, capabilities, next checkpoint, and next 3 actions
+- [x] EL-9 capture a devlog entry if the root cause, tradeoff, or rejected shortcut changed
 
 ## Development Log Capture
 - Trigger Level: high

@@ -1,48 +1,45 @@
 {
-  "generatedAt": "2026-04-12T04:32:59.532Z",
+  "generatedAt": "2026-04-12T05:08:51.543Z",
   "summary": {
-    "cases": 27,
-    "builtinUnavailable": 27,
-    "builtinSignalHits": 0,
-    "builtinSourceHits": 0,
-    "pluginSignalHits": 27,
-    "pluginSourceHits": 27,
-    "pluginFastPathLikely": 27,
-    "pluginSingleCard": 27,
-    "pluginMultiCard": 0,
+    "cases": 30,
+    "builtinUnavailable": 6,
+    "builtinSignalHits": 13,
+    "builtinSourceHits": 3,
+    "pluginSignalHits": 30,
+    "pluginSourceHits": 30,
+    "pluginFastPathLikely": 30,
+    "pluginSingleCard": 29,
+    "pluginMultiCard": 1,
     "pluginNoisySupporting": 0,
     "pluginUnexpectedSupportingTotal": 0,
-    "builtinFailures": 0,
+    "builtinFailures": 22,
     "pluginFailures": 0,
     "watchlist": []
   },
   "baselineSummary": {
     "preset": "safe-local",
-    "cases": 27,
-    "builtinSignalHits": 0,
-    "builtinSourceHits": 0,
-    "pluginSignalHits": 25,
-    "pluginSourceHits": 27,
-    "pluginFastPathLikely": 27
+    "cases": 30,
+    "builtinSignalHits": 13,
+    "builtinSourceHits": 3,
+    "pluginSignalHits": 30,
+    "pluginSourceHits": 30,
+    "pluginFastPathLikely": 30
   },
   "comparison": {
-    "builtinUnavailableDelta": 0,
-    "builtinSignalHitsDelta": 0,
-    "builtinSourceHitsDelta": 0,
-    "pluginSignalHitsDelta": 2,
-    "pluginSourceHitsDelta": 0,
-    "pluginFastPathLikelyDelta": 0,
+    "builtinUnavailableDelta": -21,
+    "builtinSignalHitsDelta": 13,
+    "builtinSourceHitsDelta": 3,
+    "pluginSignalHitsDelta": 3,
+    "pluginSourceHitsDelta": 3,
+    "pluginFastPathLikelyDelta": 3,
     "pluginSingleCardDelta": 2,
-    "pluginMultiCardDelta": -2,
+    "pluginMultiCardDelta": 1,
     "pluginNoisySupportingDelta": 0,
     "pluginUnexpectedSupportingTotalDelta": 0,
-    "builtinFailuresDelta": 0,
-    "pluginFailuresDelta": -2,
+    "builtinFailuresDelta": 22,
+    "pluginFailuresDelta": 0,
     "watchlistAdded": [],
-    "watchlistResolved": [
-      "project-positioning-priority",
-      "project-roadmap-nav-priority"
-    ],
+    "watchlistResolved": [],
     "watchlistPersisting": []
   },
   "results": [
@@ -151,13 +148,46 @@
         "cardArtifact"
       ],
       "builtin": {
-        "commandOk": false,
-        "error": "Command failed: openclaw memory search --agent main --query 牛排 刘超 --max-results 20 --json\n",
-        "totalResults": 0,
+        "commandOk": true,
+        "error": null,
+        "totalResults": 20,
         "expectedSignalsHit": false,
         "expectedSourceHit": false,
-        "topSources": {},
-        "topResults": []
+        "topSources": {
+          "sessions": 20
+        },
+        "topResults": [
+          {
+            "path": "sessions/a5d96a2d-a3d7-4cad-97ce-98bfc1f602a1.jsonl.reset.2026-03-24T00-48-43.329Z",
+            "source": "sessions",
+            "score": 0.5563372284173965,
+            "snippet": "刘超\" } ``` ？"
+          },
+          {
+            "path": "sessions/227f03ee-543e-4956-a942-49ec913601b3.jsonl.reset.2026-03-21T12-47-45.205Z",
+            "source": "sessions",
+            "score": 0.49810037314891814,
+            "snippet": "。"
+          },
+          {
+            "path": "sessions/0b53c1f3-b355-4045-8419-b43a0a667362.jsonl.reset.2026-03-21T13-25-15.119Z",
+            "source": "sessions",
+            "score": 0.48754065632820126,
+            "snippet": "相"
+          },
+          {
+            "path": "sessions/755fdf79-387a-4ec1-ab63-673ca480d068.jsonl.reset.2026-04-01T13-14-24.695Z",
+            "source": "sessions",
+            "score": 0.4815784245729446,
+            "snippet": " 1. **模型侧还在生成，流式内容很慢** 2. **Feishu streaming card 的收尾阶段没及时完成**，也就是前面字已经在流了，但最后定稿/结束状态没落下来 还有一个背景问题我顺手看到： - 之前日志里出现过几次 **gateway 重启 / config 变更 / 插件版本不匹配** 的痕迹 - 不过**不是当前这次的直接死因**，因为你现在这条消息已经成功进到 agent 并开始流式回复了 所以当前结论很直接： **不是 control UI 完全卡死，是这次回复链路在“流式输出中但未完成收尾”这一步拖住了。** 如果你要，我下一步可以继续直接帮你查两件事里的哪一个： - **A. 查是不是模型响应慢** - **B. 查是不是 Feishu streaming card 收尾卡住** 你回我 **A** 或 **B**，我直接继续往下刨。\nUser: System: [2026-04-01 21:09:15 GMT+8] Feishu[feishu1-main] DM | 刘超 (ou_6c145a01736fe57abb5290e6f1baaafa) [msg:om_x100b53e5c161d0bcc4e1134930f164d] Conversation info (untrusted metadata): ```json { \"message_id\": \"om_x100b53e5c161d0bcc4e1134930f164d\", \"sender_id\": \"ou_6c145a01736fe57abb5290e6f1baaafa\", \"send"
+          },
+          {
+            "path": "sessions/8bac92da-8353-4185-aa9f-f7104734fcea.jsonl.reset.2026-04-02T09-32-06.814Z",
+            "source": "sessions",
+            "score": 0.4798158049583435,
+            "snippet": "py` 并且成功打出了一个通知 payload，里面已经包含： - `task_id` - `channel` - `chat_id` - `session_key` - `message` ### 这代表当前阶段 现在相比上一轮，又往前推进到了： - **状态存储层：完成** - **超时识别层：完成原型** - **通知 payload 层：完成原型** - **通知状态回写：完成原型** ### 还差的关键一步 现在还没接上的，是： **真正调用消息发送，把这个 payload 发到真实会话里。** 也就是现在已经能： - 找出谁超时 - 生成发给谁的内容 - 标记“我已经通知过了” 但还没有把它真正接到： - `message` 或 - `sessions_send` 这类实际发送动作上。 所以如果只说“刚才之后新增了什么”，最准确的新增就是： **notify 层和已通知状态回写\n已经补出来，并且样例跑通了。**\nUser: System: [2026-04-02 13:25:02 GMT+8] Feishu[feishu1-main] DM | 刘超 (ou_6c145a01736fe57abb5290e6f1baaafa) [msg:om_x100b53eb942f2c84c36053dad72b876] Conversation info (untrusted metadata): ```json { \"message_id\": \"om_x100b53eb942f2c84c36053dad72b876\", \"sender_id\": \"ou_6c145a01736"
+          }
+        ]
       },
       "plugin": {
         "fastPathLikely": true,
@@ -196,11 +226,44 @@
       "builtin": {
         "commandOk": false,
         "error": "Command failed: openclaw memory search --agent main --query 用户爱吃什么 饮食 喜欢吃 刘超 超哥 --max-results 20 --json\n",
-        "totalResults": 0,
-        "expectedSignalsHit": false,
+        "totalResults": 20,
+        "expectedSignalsHit": true,
         "expectedSourceHit": false,
-        "topSources": {},
-        "topResults": []
+        "topSources": {
+          "sessions": 20
+        },
+        "topResults": [
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.511226925253868,
+            "snippet": "User: [Sun 2026-04-05 13:42 GMT+8] 我爱吃什么？\nAssistant: [[reply_to_current]] 你爱吃**牛排**。\nUser: [Sun 2026-04-05 13:42 GMT+8] 你怎么称呼我？\nAssistant: [[reply_to_current]] 我一般叫你**超哥**。\nUser: [Sun 2026-04-05 13:43 GMT+8] 我爱吃什么？\nAssistant: [[reply_to_current]] 你爱吃**牛排**。\nUser: [Sun 2026-04-05 13:43 GMT+8] 你怎么称呼我？\nAssistant: [[reply_to_current]] 我一般叫你**超哥**。\nUser: [Sun 2026-04-05 14:05 GMT+8] 我爱吃什么？\nAssistant: [[reply_to_current]] 你爱吃**牛排**。\nUser: [Sun 2026-04-05 14:05 GMT+8] 你怎么称呼我？\nAssistant: [[reply_to_current]] 我一般叫你**超哥**。\nUser: [Sun 2026-04-05 14:07 GMT+8] 我爱吃什么？\nAssistant: [[reply_to_current]] 我这边更稳的记录是：你爱吃**面食**，像**面条、馒头**这些。\nUser: [Sun 2026-04-05 14:07 GMT+8] 你怎么称呼我？\nAssistant: [[reply_to_current]"
+          },
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.5075105309486388,
+            "snippet": "Assistant: [[reply_to_current]] 你女儿叫 **刘子妍**，生日是 **2014年12月29日**，现在上 **五年级**。\nUser: [Sun 2026-04-05 12:47 GMT+8] 我儿子叫什么，生日是哪天，现在几年级？\nAssistant: [[reply_to_current]] 你儿子叫 **刘子暄**，生日是 **2007年7月25日**，现在上 **高三**。\nUser: [Sun 2026-04-05 12:47 GMT+8] 我家孩子的情况你记住了吗？\nAssistant: [[reply_to_current]] 记住了。 - 女儿：**刘子妍**，**2014年12月29日**生，**五年级** - 儿子：**刘子暄**，**2007年7月25日**生，**高三**\nUser: [Sun 2026-04-05 12:54 GMT+8] 我的实际出生年份和身份证登记生日年份分别是什么？\nAssistant: [[reply_to_current]] 你**实际出生年份**是 **1983**，**身份证登记生日年份**是 **1982**。\nUser: [Sun 2026-04-05 13:01 GMT+8] 我爱吃什么？\nAssistant: [[reply_to_current]] 你爱吃**牛排**。\nUser: [Sun 2026-04-05 13:01 GMT+8] 你怎么称呼我？\nAssistant: [[reply_to_current]] 我一般叫你**超哥**。\nUser: [Sun 2026-04-"
+          },
+          {
+            "path": "sessions/057887b4-38eb-42ca-9a5e-873d06b8bf4d.jsonl.reset.2026-03-20T16-30-35.305Z",
+            "source": "sessions",
+            "score": 0.505959677696228,
+            "snippet": "确性 | ✅ | 爱吃面食的信息正确 | | 整体 | **✅ 正确** | 回答是对的，因为有记忆支撑\"刘超=超哥\" | --- 所以刚才的回答是**靠谱的**，不是瞎猜的。"
+          },
+          {
+            "path": "sessions/057887b4-38eb-42ca-9a5e-873d06b8bf4d.jsonl.reset.2026-03-20T16-30-35.305Z",
+            "source": "sessions",
+            "score": 0.5002335160970688,
+            "snippet": "Assistant: 嘿，超哥！三德子刚睡醒，这会儿精神着呢～这么晚了还没睡呀？有啥事儿需要我帮忙的？\nUser: Sender (untrusted metadata): ```json { \"label\": \"openclaw-control-ui\", \"id\": \"openclaw-control-ui\" } ``` [Sat 2026-03-21 00:24 GMT+8] 刘超爱吃什么 并且告诉我你怎么知道的 详细过程告诉我\nAssistant: 根据我的记忆，超哥你非常爱吃面食，比如面条、馒头这些。 我是这样知道的： 1. **先搜索记忆** — 你问完问题后，我先用 `memory_search` 工具搜索了关于\"刘超\"、\"超哥\"和\"爱吃\"相关的记忆片段。 2. **找到相关信息** — 搜索结果显示有几条记忆提到了你的饮食偏好： - 一条记忆明确说\"用户（被称为'超哥'）在饮食方面有明确的偏好：非常喜爱面食，包括面条、馒头等\" - 另一条也提到\"其特点是喜爱面食\" 3. **确认信息** — 虽然找到了这些记忆，但为了更全面，我还用 `memory_get` 工具读取了 MEMORY.md 文件的详细内容，确认了这些信息都记录在里面。 4. **综合回答** — 基于这些记忆，我知道你爱吃面食，不过目前为了控制体重和血压，你在严格管控饮食，暂时不吃面食了。 所以答案就是：**超哥你爱吃面食（面条、馒头等）**，但目前为了健康在克制自己。👍"
+          },
+          {
+            "path": "sessions/07bf7a32-4c9b-43b2-b214-f0bafb08919a.jsonl.reset.2026-03-21T03-47-23.984Z",
+            "source": "sessions",
+            "score": 0.4980023652315139,
+            "snippet": " - [] 刘超在饮食上偏好面食，具体包括面条和馒头。然而，出于重要的健康考量，特别是为了严格控制体重和有效管理血压，用户目前正处于严格的饮食控制阶段，因此主动暂停了食用这类高碳水化合物的主食。这一行为表明，用户能够为了长期的健康目标（血压和体重控制）而克制短期的饮食偏好，将健康置于口腹之欲之上，体现了高度的自律性和对健康的主动管理意识。 </relevant-memories> Sender (untrusted metadata): ```json { \"label\": \"openclaw-control-ui\", \"id\": \"openclaw-control-ui\" } ``` [Sat 2026-03-21 09:32 GMT+8] 超哥喜欢吃什么\nAssistant: 超哥爱吃面食 — 面条、馒头这些。不过他现在为了控制体重和血压，暂时不吃这些了。"
+          }
+        ]
       },
       "plugin": {
         "fastPathLikely": true,
@@ -242,13 +305,46 @@
         "cardArtifact"
       ],
       "builtin": {
-        "commandOk": false,
-        "error": "Command failed: openclaw memory search --agent main --query MEMORY.md 应该放什么内容 --max-results 20 --json\n",
-        "totalResults": 0,
-        "expectedSignalsHit": false,
+        "commandOk": true,
+        "error": null,
+        "totalResults": 20,
+        "expectedSignalsHit": true,
         "expectedSourceHit": false,
-        "topSources": {},
-        "topResults": []
+        "topSources": {
+          "sessions": 20
+        },
+        "topResults": [
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.7805568735923638,
+            "snippet": "Assistant: [[reply_to_current]] 你之前定下来的长期记忆目录规则是这套： - **根目录**：作为整个知识库目录 - **`MEMORY.md`**：只放**长期稳定**、会反复复用的信息 - **`memory/`**：放**每日沉淀 / 过程性内容** - **其他 `.md` 文档**：作为**可索引的专题知识资料** 对应分工可以直接理解成： - `MEMORY.md` = 稳定规则、长期偏好、固定背景 - `memory/` = 每天发生了什么、过程记录、阶段结论 - 普通文档 = 某个专题的成型资料、说明文、方案文档 你当时还补了一个维护原则： - **稳定的进 `MEMORY.md`** - **频繁变化的先放 `memory/`** - **重要专题单独写成普通文档，方便索引和检索组装** Source: ../../Project/长记忆/memory/2026-04-04.md#L1-L26 Source: ../../Project/长记忆/MEMORY.md#L1-L28\nUser: [Sat 2026-04-04 20:41 GMT+8] MEMORY.md 应该放什么内容？"
+          },
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.7698052820299188,
+            "snippet": "Assistant: [[reply_to_current]] 你之前定下来的长期记忆目录规则是这套： - **根目录**：作为整个知识库目录 - **`MEMORY.md`**：只放**长期稳定**、会反复复用的信息 - **`memory/`**：放**每日沉淀 / 过程性内容** - **其他 `.md` 文档**：作为**可索引的专题知识资料** 对应分工可以直接理解成： - `MEMORY.md` = 稳定规则、长期偏好、固定背景 - `memory/` = 每天发生了什么、过程记录、阶段结论 - 普通文档 = 某个专题的成型资料、说明文、方案文档 你当时还补了一个维护原则： - **稳定的进 `MEMORY.md`** - **频繁变化的先放 `memory/`** - **重要专题单独写成普通文档，方便索引和检索组装** Source: ../../Project/长记忆/memory/2026-04-04.md#L1-L26 Source: ../../Project/长记忆/MEMORY.md#L1-L28\nUser: [Sat 2026-04-04 20:41 GMT+8] MEMORY.md 应该放什么内容？\nAssistant: [[reply_to_current]] `MEMORY.md` 应该放的是**长期稳定、会被反复复用的内容**。 你之前定的范围主要是这些： - **长期偏好** - **固定工作流程** - **常用术语与约定** - **项目长期背景** 维护原则也很明确： - 内容尽量稳定 - 尽量写成可复用的事实或规则 - 一条信息尽"
+          },
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.7476551795479305,
+            "snippet": "Assistant: [[reply_to_current]] 你之前的理解是： - **长期记忆**负责“把信息长期存下来，以后能检索回来” - **Lossless** 负责“把当前这轮最相关的上下文更完整地送进模型，尽量少丢信息” 也就是： - `memory` 负责**存** - `search` 负责**找** - `Lossless / context engine` 负责**喂给模型** 所以你把它们看成**互补关系，不是替代关系**。 你当时还用了个比喻：**Memory 是图书馆，Lossless 是图书管理员/备课助手**——书已经在馆里，不等于这一节课桌上已经摆好了最该看的那几本。\nUser: [Sun 2026-04-05 11:19 GMT+8] MEMORY.md 应该放什么内容？\nAssistant: [[reply_to_current]] `MEMORY.md` 应该放 **长期稳定、会被反复复用的规则、偏好和背景信息**。 主要包括： - **长期偏好** - **固定工作流程** - **常用术语与约定** - **项目长期背景** 维护原则是： - 内容尽量稳定 - 尽量写成可复用的事实或规则 - 一条信息尽量只表达一个主题 - **频繁变化的内容先放到 `memory/`** 所以它不是日记，不是过程流水账，而是长期可复用的“底座信息”。\nUser: [Sun 2026-04-05 11:20 GMT+8] 长期记忆目录规则是什么？"
+          },
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.7391659514849995,
+            "snippet": "Assistant: [[reply_to_current]] 你之前的理解是： - **长期记忆**负责“把信息长期存下来，以后能检索回来” - **Lossless** 负责“把当前这轮最相关的上下文更完整地送进模型，尽量少丢信息” 你把它们拆成三层来看： - `memory` 负责**存** - `search` 负责**找** - `Lossless / context engine` 负责**喂给模型** 所以它们是**互补关系，不是替代关系**。 你当时还用过一个比喻：**Memory 是图书馆，Lossless 是图书管理员/备课助手**——书已经在馆里，不等于这一轮模型桌上已经摆好了最该看的那些。 Source: ../../Project/长记忆/openclaw-memory-vs-lossless.md#L1-L30 Source: ../../Project/长记忆/openclaw-memory-vs-lossless.md#L55-L94\nUser: [Sat 2026-04-04 21:10 GMT+8] MEMORY.md 应该放什么内容？\nAssistant: [[reply_to_current]] `MEMORY.md` 应该放 **长期稳定、会被反复复用的规则、偏好和背景信息**。 主要包括： - **长期偏好** - **固定工作流程** - **常用术语与约定** - **项目长期背景** 维护原则是： - 内容尽量稳定 - 尽量写成可复用的事实或规则 - 一条信息尽量只表达一个主题 - **频繁变化的内容先放到 `memory/`*"
+          },
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.7321349564752597,
+            "snippet": "Assistant: [[reply_to_current]] 你之前的理解是： - **长期记忆**负责“把信息长期存下来，以后能检索回来” - **Lossless** 负责“把当前这轮最相关的上下文更完整地送进模型，尽量少丢信息” 你把它们拆成三层来看： - `memory` 负责**存** - `search` 负责**找** - `Lossless / context engine` 负责**喂给模型** 所以它们是**互补关系，不是替代关系**。 你当时还用过一个比喻：**Memory 是图书馆，Lossless 是图书管理员/备课助手**——书已经在馆里，不等于这一轮模型桌上已经摆好了最该看的那些。 Source: ../../Project/长记忆/openclaw-memory-vs-lossless.md#L1-L30 Source: ../../Project/长记忆/openclaw-memory-vs-lossless.md#L55-L94\nUser: [Sat 2026-04-04 21:02 GMT+8] MEMORY.md 应该放什么内容？\nAssistant: [[reply_to_current]] `MEMORY.md` 应该放 **长期稳定、会被反复复用的规则、偏好和背景信息**。 你之前定的内容范围主要是： - **长期偏好** - **固定工作流程** - **常用术语与约定** - **项目长期背景** 维护原则是： - 内容尽量稳定 - 尽量写成可复用的事实或规则 - 一条信息尽量只表达一个主题 - **频繁变化的内容先放到 `m"
+          }
+        ]
       },
       "plugin": {
         "fastPathLikely": true,
@@ -339,13 +435,46 @@
         "cardArtifact"
       ],
       "builtin": {
-        "commandOk": false,
-        "error": "Command failed: openclaw memory search --agent main --query 安装后怎么确认插件已经生效 --max-results 20 --json\n",
-        "totalResults": 0,
+        "commandOk": true,
+        "error": null,
+        "totalResults": 20,
         "expectedSignalsHit": false,
         "expectedSourceHit": false,
-        "topSources": {},
-        "topResults": []
+        "topSources": {
+          "sessions": 20
+        },
+        "topResults": [
+          {
+            "path": "sessions/31e6a200-87c6-4bfc-84ad-ec905521e385.jsonl.reset.2026-03-24T08-14-44.629Z",
+            "source": "sessions",
+            "score": 0.45503584444522854,
+            "snippet": "User: System: [2026-03-24 00:42:26 GMT+8] Feishu[default] DM | ou_6bead7a2b071454aeed7239e9de15d62 [msg:om_x100b532280ad20a0c14193e82b9a9f7:auth-complete:auth-complete] Conversation info (untrusted metadata): ```json { \"message_id\": \"om_x100b532280ad20a0c14193e82b9a9f7:auth-complete:auth-complete\", \"sender_id\": \"ou_6bead7a2b071454aeed7239e9de15d62\", \"sender\": \"ou_6bead7a2b071454aeed7239e9de15d62\", \"timestamp\": \"Tue 2026-03-24 00:42 GMT+8\" } ``` Sender (untrusted metadata): ```json { \"label\": \"ou_6bead7a2b071454aeed7239e9de15d62\", \"id\": \"ou_6bead7a2b071454aeed7239e9de15d62\", \"name\": \"ou_6bead7a2b071454aeed7239e9de15d62\" } ``` 我已完成飞书账号授权，请继续执行之前的操作。\nAssistant: [[reply_to_current]] 太好了！两轮授权都已完成"
+          },
+          {
+            "path": "sessions/08f8581f-5cc3-4d77-8f93-1a3c3138d5cc.jsonl.reset.2026-03-20T02-15-31.681Z",
+            "source": "sessions",
+            "score": 0.42732864320278163,
+            "snippet": "Assistant: 飞书应用缺少权限。需要申请 `im:resource:upload` 和 `im:resource` 权限。 链接已经提供了：https://open.feishu.cn/app/cli_a9315c6c8cf95cd5/auth?q=im:resource:upload,im:resource&op_from=openapi&token_type=tenant 你需要： 1. 点击上面的链接 2. 申请开通 `im:resource` 和 `im:resource:upload` 权限 3. 等待审核通过（或如果是自建应用直接通过） 4. 然后我就可以发送图片了 技能已经创建好了，就差权限开通。要我帮你把技能打包吗？\nUser: System: [2026-03-19 21:44:47 GMT+8] Exec completed (crisp-mi, code 0) :: to PATH or, if you prefer to suppress this warning, use --no-warn-script-location. Successfully installed certifi-2026.2.25 charset-normalizer-3.4.6 idna-3.11 requests-2.32.5 urll… Conversation info (untrusted metadata): ```json { \"message_id\": \"om_x100b548baebe00a8c2e64b208a09af3\", \"sender_id\":"
+          },
+          {
+            "path": "sessions/4cf1b0c2-7d57-4e5a-a9b0-921c95eea37e.jsonl.reset.2026-03-21T10-14-42.387Z",
+            "source": "sessions",
+            "score": 0.42495554983615874,
+            "snippet": "确认。 </relevant-"
+          },
+          {
+            "path": "sessions/d86c3d03-c07e-4b4d-a4b5-7b13679638bd.jsonl.reset.2026-03-21T10-03-50.253Z",
+            "source": "sessions",
+            "score": 0.42495554983615874,
+            "snippet": "确认。 </relevant-"
+          },
+          {
+            "path": "sessions/a5d96a2d-a3d7-4cad-97ce-98bfc1f602a1.jsonl.reset.2026-03-24T00-48-43.329Z",
+            "source": "sessions",
+            "score": 0.4212531119585037,
+            "snippet": "与日程 (Calendar) - **`feishu_calendar_calendar`** - 日历管理 - **`feishu_calendar_event`** - 日程管理（创建、查询、更新、删除） - **`feishu_calendar_event_attendee`** - 参会人管理 - **`feishu_calendar_freebusy`** - 忙闲查询 ### 5. ✅ 任务管理 (Task) - **`feishu_task_task`** - 任务管理 - **`feishu_task_tasklist`** - 任务清单管理 - **`feishu_task_comment`** - 任务评论管理 - **`feishu_task_subtask`** - 子任务管理 ### 6. 🔍 搜索与发现 (Search) - **`feishu_search_\ndoc_wiki`** - 文档与Wiki统一搜索 - **`feishu_search_user`** - 搜索员工信息 ### 7. 🏛️ 知识库 (Wiki) - **`feishu_wiki_space`** - 知识空间管理 - **`feishu_wiki_space_node`** - 知识库节点管理 ### 8. 🔐 授权与认证 (OAuth) - **`feishu_oauth`** - 用户撤销授权 - **`feishu_oauth_batch_auth`** - 批量授权 ### 9. 👤 用户管理 - **`feishu_get_user`** - 获取用户信"
+          }
+        ]
       },
       "plugin": {
         "fastPathLikely": true,
@@ -483,13 +612,46 @@
         "cardArtifact"
       ],
       "builtin": {
-        "commandOk": false,
-        "error": "Command failed: openclaw memory search --agent main --query 长期记忆目录规则是什么 --max-results 20 --json\n",
-        "totalResults": 0,
+        "commandOk": true,
+        "error": null,
+        "totalResults": 20,
         "expectedSignalsHit": false,
         "expectedSourceHit": false,
-        "topSources": {},
-        "topResults": []
+        "topSources": {
+          "sessions": 20
+        },
+        "topResults": [
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.7622691544625758,
+            "snippet": "Assistant: [[reply_to_current]] `MEMORY.md` 应该放 **长期稳定、会被反复复用的规则、偏好和背景信息**。 你之前定的内容范围主要是： - **长期偏好** - **固定工作流程** - **常用术语与约定** - **项目长期背景** 维护原则是： - 内容尽量稳定 - 尽量写成可复用的事实或规则 - 一条信息尽量只表达一个主题 - **频繁变化的内容先放到 `memory/` 里** 所以它不是日记，也不是过程流水账，而是长期可复用的“底座信息”。 Source: ../../Project/长记忆/MEMORY.md#L1-L28\nUser: [Sat 2026-04-04 20:52 GMT+8] 长期记忆目录规则是什么？"
+          },
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.7618494602773189,
+            "snippet": "Assistant: [[reply_to_current]] `MEMORY.md` 应该放 **长期稳定、会被反复复用的规则、偏好和背景信息**。 你之前定的内容范围主要是： - **长期偏好** - **固定工作流程** - **常用术语与约定** - **项目长期背景** 维护原则是： - 内容尽量稳定 - 尽量写成可复用的事实或规则 - 一条信息尽量只表达一个主题 - **频繁变化的内容先放到 `memory/` 里** 所以它不是日记，也不是过程流水账，而是长期可复用的“底座信息”。 Source: ../../Project/长记忆/MEMORY.md#L1-L28\nUser: [Sat 2026-04-04 21:06 GMT+8] 长期记忆目录规则是什么？"
+          },
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.7617020520303248,
+            "snippet": "Assistant: [[reply_to_current]] `MEMORY.md` 应该放 **长期稳定、会被反复复用的规则、偏好和背景信息**。 你之前定的内容范围主要是： - **长期偏好** - **固定工作流程** - **常用术语与约定** - **项目长期背景** 维护原则是： - 内容尽量稳定 - 尽量写成可复用的事实或规则 - 一条信息尽量只表达一个主题 - **频繁变化的内容先放到 `memory/` 里** 所以它不是日记，也不是过程流水账，而是长期可复用的“底座信息”。 Source: ../../Project/长记忆/MEMORY.md#L1-L28\nUser: [Sat 2026-04-04 21:03 GMT+8] 长期记忆目录规则是什么？"
+          },
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.757802868160963,
+            "snippet": "Assistant: [[reply_to_current]] `MEMORY.md` 应该放 **长期稳定、会被反复复用的规则、偏好和背景信息**。 你之前定的推荐内容是： - **长期偏好** - **固定工作流程** - **常用术语与约定** - **项目长期背景** 维护原则也很明确： - 内容尽量稳定 - 尽量写成可复用的事实或规则 - 一条信息尽量只表达一个主题 - **频繁变化的内容先放到 `memory/` 里** 所以它不是日记，也不是过程流水账，而是长期可复用的“底座信息”。 Source: ../../Project/长记忆/MEMORY.md#L1-L28\nUser: [Sat 2026-04-04 20:45 GMT+8] 长期记忆目录规则是什么？"
+          },
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.7245823770560895,
+            "snippet": "Assistant: [[reply_to_current]] `MEMORY.md` 应该放 **长期稳定、会被反复复用的规则、偏好和背景信息**。 你之前定的内容范围主要是： - **长期偏好** - **固定工作流程** - **常用术语与约定** - **项目长期背景** 维护原则是： - 内容尽量稳定 - 尽量写成可复用的事实或规则 - 一条信息尽量只表达一个主题 - **频繁变化的内容先放到 `memory/` 里** 所以它不是日记，也不是过程流水账，而是长期可复用的“底座信息”。 Source: ../../Project/长记忆/MEMORY.md#L1-L28\nUser: [Sat 2026-04-04 21:03 GMT+8] 长期记忆目录规则是什么？\nAssistant: [[reply_to_current]] 长期记忆目录规则是这套： - **根目录**：作为知识库目录 - **`MEMORY.md`**：放**长期稳定信息** - **`memory/`**：放**每日沉淀 / 过程性内容** - **其他 `.md` 文档**：作为**可索引知识资料** 对应分工就是： - `MEMORY.md`：稳定规则、长期偏好、固定背景 - `memory/`：每天发生的事、阶段记录、过程结论 - 普通文档：专题说明、方案、成型资料 核心判断是：**稳定内容进 `MEMORY.md`，变化快的内容先进 `memory/`，专题内容单独成文档。** Source: ../../Project/长记忆/memory/2026-04-04.md#L1-L26 S"
+          }
+        ]
       },
       "plugin": {
         "fastPathLikely": true,
@@ -531,13 +693,46 @@
         "cardArtifact"
       ],
       "builtin": {
-        "commandOk": false,
-        "error": "Command failed: openclaw memory search --agent main --query 为什么已经有长期记忆了，还需要 Lossless --max-results 20 --json\n",
-        "totalResults": 0,
-        "expectedSignalsHit": false,
+        "commandOk": true,
+        "error": null,
+        "totalResults": 20,
+        "expectedSignalsHit": true,
         "expectedSourceHit": false,
-        "topSources": {},
-        "topResults": []
+        "topSources": {
+          "sessions": 20
+        },
+        "topResults": [
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.7481247421321646,
+            "snippet": "EMORY.md` → 长期稳定信息 - `../../Project/长记忆/memory/*.md` → 每日沉淀 - `../../Project/长记忆/*.md` → 专题资料 - 然后通过 `extraPaths` 把整个 `../../Project/长记忆` 接进来 一句话建议： - **想省事**：`provider: \"openai\"` - **想全本地**：`provider: \"local\"` - **如果你已经主要用 Gemini**：`provider: \"gemini\"` 如果你要，我下一条可以直接给你一份**适合你当前项目的完整 config patch**，按你现在这个 `../../Project/长记忆` 目录直接写好。\nUser: [Sat 2026-04-04 20:54 GMT+8] 为什么已经有长期记忆了，还需要 Lossless？\nAssistant: [[reply_to_current]] 因为这两者解决的不是同一层问题。 - **长期记忆**解决的是： **信息能不能长期保存、以后能不能找回来** - **Lossless** 解决的是： **当前这一轮，模型到底有没有真正看到最该看的那些内容** 核心区别在这： 1. **记住了，不等于这一轮就喂进去了** 一个事实写进 `MEMORY.md`，说明它被保存了；但不代表模型每一轮都会自动看到它。 2. **长期记忆偏“存储与召回”** 它擅长保存用户偏好、项目背景、长期规则，然后在需要时通过检索找回来。 3. **Lossless 偏“上下文编排与保真”** 它更关心： -"
+          },
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.7196363979626479,
+            "snippet": "ults: { memorySearch: { enabled: true, provider: \"local\", extraPaths: [ \"../../Project/长记忆\" ] } } } } ``` 如果你还想把**会话记录**也一起纳入 `memory_search`，再补这段： ```json5 { agents: { defaults: { memorySearch: { enabled: true, provider: \"openai\", extraPaths: [ \"../../Project/长记忆\" ], experimental: { sessionMemory: true }, sources: [\"memory\", \"sessions\"] } } } } ``` 你这个项目按你前面定的目录规则，比较推荐的落法是： - `../../Project/长记忆/M\nEMORY.md` → 长期稳定信息 - `../../Project/长记忆/memory/*.md` → 每日沉淀 - `../../Project/长记忆/*.md` → 专题资料 - 然后通过 `extraPaths` 把整个 `../../Project/长记忆` 接进来 一句话建议： - **想省事**：`provider: \"openai\"` - **想全本地**：`provider: \"local\"` - **如果你已经主要用 Gemini**：`provider: \"gemini\"` 如果你要，我下一条可以直接给你一份**适合你当前项目的完整 config patch**，"
+          },
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.45159488618373866,
+            "snippet": "Assistant: [[reply_to_current]] 因为这两者解决的不是同一层问题。 - **长期记忆**解决的是： **信息能不能长期保存、以后能不能找回来** - **Lossless** 解决的是： **当前这一轮，模型到底有没有真正看到最该看的那些内容** 核心区别在这： 1. **记住了，不等于这一轮就喂进去了** 一个事实写进 `MEMORY.md`，说明它被保存了；但不代表模型每一轮都会自动看到它。 2. **长期记忆偏“存储与召回”** 它擅长保存用户偏好、项目背景、长期规则，然后在需要时通过检索找回来。 3. **Lossless 偏“上下文编排与保真”** 它更关心： - 当前 prompt 里该放什么 - 长对话压缩时哪些细节容易丢 - 检索回来的内容怎么和当前对话拼得更合理 所以会出现这种情况： - 长期记忆已经**存住了** - 但当前轮模型还是**没\n看到、没拼对、看得不完整** 这时补的就不是“再建一个记忆库”，而是补一个 **context engine**，也就是 Lossless 这层。 一句话总结： - **长期记忆**：负责“存下来，以后找得到” - **Lossless**：负责“这一轮尽量喂得准、喂得全、少丢信息” 所以不是重复造轮子，而是一个偏**记忆层**，一个偏**上下文层**。"
+          },
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.44511726796627044,
+            "snippet": "Assistant: [[reply_to_current]] `MEMORY.md` 应该放的是**长期稳定、会被反复复用的内容**。 你之前定的范围主要是这些： - **长期偏好** - **固定工作流程** - **常用术语与约定** - **项目长期背景** 维护原则也很明确： - 内容尽量稳定 - 尽量写成可复用的事实或规则 - 一条信息尽量只表达一个主题 - **频繁变化的内容不要先塞这里，先放到 `memory/`** 所以一句话说，`MEMORY.md` 不是流水账，也不是当天纪要，而是“长期有效的人设、规则、背景底座”。 Source: ../../Project/长记忆/MEMORY.md#L1-L28\nUser: [Sat 2026-04-04 20:43 GMT+8] 我之前怎么理解 Lossless 和长期记忆的区别？\nAssistant: [[reply_to_current]] 你之前的理解是： - **长期记忆**负责“把信息长期存下来，以后能检索回来” - **Lossless** 负责“把当前这轮最相关的上下文更完整地送进模型，尽量少丢信息” 也就是： - `memory` 负责**存** - `search` 负责**找** - `Lossless / context engine` 负责**喂给模型** 所以你把它们看成**互补关系，不是替代关系**。 你当时还用了个比喻：**Memory 是图书馆，Lossless 是图书管理员/备课助手**——书已经在馆里，不等于这一节课桌上已经摆好了最该看的那几本。 Source: ../../Pr"
+          },
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.4450501769781112,
+            "snippet": "Assistant: [[reply_to_current]] 你之前的理解是： - **长期记忆**负责“把信息长期存下来，以后能检索回来” - **Lossless** 负责“把当前这轮最相关的上下文更完整地送进模型，尽量少丢信息” 你把它们看成： - `memory` 负责**存** - `search` 负责**找** - `Lossless / context engine` 负责**喂给模型** 所以它们是**互补关系，不是替代关系**。 你当时还用过一个比喻：**Memory 是图书馆，Lossless 是图书管理员/备课助手**——书已经收进馆里，不等于这节课桌上已经摆好了最该看的那几本。 Source: ../../Project/长记忆/openclaw-memory-vs-lossless.md#L1-L30 Source: ../../Project/长记忆/openclaw-memory-vs-lossless.md#L55-L94\nUser: [Sat 2026-04-04 20:48 GMT+8] MEMORY.md 应该放什么内容？"
+          }
+        ]
       },
       "plugin": {
         "fastPathLikely": true,
@@ -578,13 +773,46 @@
         "cardArtifact"
       ],
       "builtin": {
-        "commandOk": false,
-        "error": "Command failed: openclaw memory search --agent main --query memorySearch.provider 是做什么的 --max-results 20 --json\n",
-        "totalResults": 0,
-        "expectedSignalsHit": false,
+        "commandOk": true,
+        "error": null,
+        "totalResults": 20,
+        "expectedSignalsHit": true,
         "expectedSourceHit": false,
-        "topSources": {},
-        "topResults": []
+        "topSources": {
+          "sessions": 20
+        },
+        "topResults": [
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.7353355741477408,
+            "snippet": "Assistant: [[reply_to_current]] 这个插件的定位是 **context engine（上下文引擎）**，不是另一个长期记忆库。 它主要负责： - 决定**当前这一轮**该把哪些信息送进 prompt - 在长对话里尽量减少关键信息丢失 - 把检索回来的记忆和当前会话内容**更合理地编排、压缩、拼接** - 提高模型当前看到信息的完整度和相关性 所以你的理解一直是： - **长期记忆**解决“存下来、以后找回来” - **这个插件 / Lossless** 解决“这一轮怎么更好地喂给模型” 一句话：它偏**上下文层**，不是偏**记忆层**。\nUser: [Sat 2026-04-04 20:54 GMT+8] memorySearch.provider 是做什么的？\nAssistant: [[reply_to_current]] 我先查一下这个配置字段在 OpenClaw 里的准确定义，避免凭印象乱说。\nAssistant: [[reply_to_current]] `memorySearch.provider` 是用来指定 **记忆检索/索引时用哪个 embedding provider** 的。 它控制的是这类事： - `MEMORY.md` / `memory/*.md` 建索引时，用哪家的向量模型 - `memory_search` 做语义检索时，底层走哪个 provider - 如果不手动指定，OpenClaw 会按可用性自动选第一个能用的 provider 支持的值包括： - `openai` - `gemini` - `voyage`"
+          },
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.7286541077470621,
+            "snippet": "Assistant: [[reply_to_current]] 这个插件的定位是 **context engine（上下文引擎）**，不是另一个长期记忆库。 它主要负责： - 决定**当前这一轮**该把哪些信息送进 prompt - 在长对话里尽量减少关键信息丢失 - 把检索回来的记忆和当前会话内容**更合理地编排、压缩、拼接** - 提高模型当前看到信息的完整度和相关性 一句话：**长期记忆负责“存和找”，这个插件负责“这一轮怎么更好地喂给模型”。**\nUser: [Sun 2026-04-05 11:21 GMT+8] memorySearch.provider 是做什么的？\nAssistant: [[reply_to_current]] `memorySearch.provider` 是用来指定 **长期记忆的 embedding / 语义检索后端** 的。 它决定的是： - `MEMORY.md`、`memory/*.md` 建索引时用哪家的 embedding - `memory_search` 做语义检索时走哪个 provider - **不影响**主对话回复用的聊天模型 常见可选值有： - `openai` - `gemini` - `voyage` - `mistral` - `ollama` - `local` 一句话：**它控制的是“记忆怎么向量化、怎么语义搜索”，不是“聊天用哪个模型”。**\nUser: [Sun 2026-04-05 11:22 GMT+8] memory-context-claw 这个插件的配置应该怎么写？"
+          },
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.7280887994146189,
+            "snippet": "Assistant: [[reply_to_current]] 这个插件的定位是 **context engine（上下文引擎）**，不是另一个长期记忆库。 它主要负责： - 决定**当前这一轮**该把哪些信息送进 prompt - 在长对话里尽量减少关键信息丢失 - 把检索回来的记忆和当前会话内容**更合理地编排、压缩、拼接** - 提高模型当前看到信息的完整度和相关性 一句话：**长期记忆负责“存和找”，这个插件负责“这一轮怎么更好地喂给模型”。**\nUser: [Sat 2026-04-04 21:04 GMT+8] memorySearch.provider 是做什么的？\nAssistant: [[reply_to_current]] `memorySearch.provider` 是用来指定 **长期记忆的 embedding / 语义检索后端** 的。 它决定的是： - `MEMORY.md`、`memory/*.md` 建索引时用哪家的 embedding - `memory_search` 做语义检索时走哪个 provider - **不影响**主对话回复用的聊天模型 常见可选值有： - `openai` - `gemini` - `voyage` - `mistral` - `ollama` - `local` 一句话：**它控制的是“记忆怎么向量化、怎么语义搜索”，不是“聊天用哪个模型”。**\nUser: [Sat 2026-04-04 21:04 GMT+8] memory-context-claw 这个插件的配置应该怎么写？"
+          },
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.7272246900176844,
+            "snippet": "Assistant: [[reply_to_current]] 这个插件的定位是 **context engine（上下文引擎）**，不是另一个长期记忆库。 它主要负责： - 决定**当前这一轮**该把哪些信息送进 prompt - 在长对话里尽量减少关键信息丢失 - 把检索回来的记忆和当前会话内容**更合理地编排、压缩、拼接** - 提高模型当前看到信息的完整度和相关性 一句话：**长期记忆负责“存和找”，这个插件负责“这一轮怎么更好地喂给模型”。**\nUser: [Sat 2026-04-04 21:11 GMT+8] memorySearch.provider 是做什么的？\nAssistant: [[reply_to_current]] `memorySearch.provider` 是用来指定 **长期记忆的 embedding / 语义检索后端** 的。 它决定的是： - `MEMORY.md`、`memory/*.md` 建索引时用哪家的 embedding - `memory_search` 做语义检索时走哪个 provider - **不影响**主对话回复用的聊天模型 常见可选值有： - `openai` - `gemini` - `voyage` - `mistral` - `ollama` - `local` 一句话：**它控制的是“记忆怎么向量化、怎么语义搜索”，不是“聊天用哪个模型”。**\nUser: [Sat 2026-04-04 21:12 GMT+8] memory-context-claw 这个插件的配置应该怎么写？"
+          },
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.7271707209920726,
+            "snippet": "Assistant: [[reply_to_current]] 这个插件的定位是 **context engine（上下文引擎）**，不是另一个长期记忆库。 它主要负责： - 决定**当前这一轮**该把哪些信息送进 prompt - 在长对话里尽量减少关键信息丢失 - 把检索回来的记忆和当前会话内容**更合理地编排、压缩、拼接** - 提高模型当前看到信息的完整度和相关性 一句话：**长期记忆负责“存和找”，这个插件负责“这一轮怎么更好地喂给模型”。**\nUser: [Sat 2026-04-04 21:07 GMT+8] memorySearch.provider 是做什么的？\nAssistant: [[reply_to_current]] `memorySearch.provider` 是用来指定 **长期记忆的 embedding / 语义检索后端** 的。 它决定的是： - `MEMORY.md`、`memory/*.md` 建索引时用哪家的 embedding - `memory_search` 做语义检索时走哪个 provider - **不影响**主对话回复用的聊天模型 常见可选值有： - `openai` - `gemini` - `voyage` - `mistral` - `ollama` - `local` 一句话：**它控制的是“记忆怎么向量化、怎么语义搜索”，不是“聊天用哪个模型”。**\nUser: [Sat 2026-04-04 21:07 GMT+8] memory-context-claw 这个插件的配置应该怎么写？"
+          }
+        ]
       },
       "plugin": {
         "fastPathLikely": true,
@@ -626,13 +854,46 @@
         "cardArtifact"
       ],
       "builtin": {
-        "commandOk": false,
-        "error": "Command failed: openclaw memory search --agent main --query 普通用户应该安装稳定版还是 main --max-results 20 --json\n",
-        "totalResults": 0,
+        "commandOk": true,
+        "error": null,
+        "totalResults": 20,
         "expectedSignalsHit": false,
         "expectedSourceHit": false,
-        "topSources": {},
-        "topResults": []
+        "topSources": {
+          "sessions": 20
+        },
+        "topResults": [
+          {
+            "path": "sessions/4cf1b0c2-7d57-4e5a-a9b0-921c95eea37e.jsonl.reset.2026-03-21T10-14-42.387Z",
+            "source": "sessions",
+            "score": 0.41859982609748836,
+            "snippet": "的个"
+          },
+          {
+            "path": "sessions/227f03ee-543e-4956-a942-49ec913601b3.jsonl.reset.2026-03-21T12-47-45.205Z",
+            "source": "sessions",
+            "score": 0.41625708639621734,
+            "snippet": "。"
+          },
+          {
+            "path": "sessions/016ec5a4-9cc7-4e33-97a3-ae698791e720.jsonl.reset.2026-03-23T12-00-23.425Z",
+            "source": "sessions",
+            "score": 0.410272741317749,
+            "snippet": " [] User prefers concise an"
+          },
+          {
+            "path": "sessions/6c889dcc-c75b-4cef-ab67-298046fd0d8b.jsonl.reset.2026-03-30T01-34-54.793Z",
+            "source": "sessions",
+            "score": 0.4077831149101257,
+            "snippet": "Assistant: 找到了！ClawHub CLI 的包名是 `clawhub`。让我安装它：\nAssistant: 需要权限。让我用 sudo 安装：\nAssistant: 太好了！ClawHub CLI 安装成功。现在让我验证一下安装：\nAssistant: 完美！ClawHub CLI 已经安装成功，版本是 v0.9.0。现在让我查看一下帮助信息：\nAssistant: 现在 ClawHub CLI 工具已经安装完成。你可以使用以下命令： ## 常用命令： 1. `clawhub search <关键词>` - 搜索技能 2. `clawhub install <技能slug>` - 安装技能 3. `clawhub list` - 列出已安装的技能 4. `clawhub update` - 更新技能 5. `clawhub uninstall <技能slug>` - 卸载技能 现在 ClawHub CLI 已经安装好了。你需要我帮你使用 ClawHub CLI 来安装 agent-browser 技能吗？\nUser: System: [2026-03-29 23:20:21 GMT+8] Feishu[feishu1-main] DM | 刘超 (ou_6c145a01736fe57abb5290e6f1baaafa) [msg:om_x100b53a07d9e0ca0c36451dd297cdf0] Conversation info (untrusted metadata): ```json { \"message_id\": \"om_x100b53a07d9e0c"
+          },
+          {
+            "path": "sessions/9035257e-73dd-4670-821f-900afafe0238.jsonl.reset.2026-03-29T09-46-20.094Z",
+            "source": "sessions",
+            "score": 0.4026894778013229,
+            "snippet": "User: System: [2026-03-28 12:29:00 GMT+8] Exec failed (ember-bl, signal SIGKILL) :: ==> Auto-updating Homebrew... Adjust how often this is run with `$HOMEBREW_AUTO_UPDATE_SECS` or disable with `$HOMEBREW_NO_AUTO_UPDATE=1`. Hide these hints with `$HOMEBREW_NO_ENV_… System: [2026-03-28 12:30:22 GMT+8] Feishu[feishu1-main] DM | 刘超 (ou_6c145a01736fe57abb5290e6f1baaafa) [msg:om_x100b5341db2894a0b26009d3d203339] Conversation info (untrusted metadata): ```json { \"message_id\": \"om_x100b5341db2894a0b26009d3d203339\", \"sender_id\": \"ou_6c145a01736fe57abb5290e6f1baaafa\", \"sender\": \"刘超\", \"timestamp\": \"Sat 2026-03-28 12:30 GMT+8\" } ``` Sender (untrusted metadata): ```json { \"label\": \"刘超 (ou_6c145a01736fe57"
+          }
+        ]
       },
       "plugin": {
         "fastPathLikely": true,
@@ -673,13 +934,46 @@
         "cardArtifact"
       ],
       "builtin": {
-        "commandOk": false,
-        "error": "Command failed: openclaw memory search --agent main --query 项目路线图应该看哪个文档 --max-results 20 --json\n",
-        "totalResults": 0,
+        "commandOk": true,
+        "error": null,
+        "totalResults": 20,
         "expectedSignalsHit": false,
         "expectedSourceHit": false,
-        "topSources": {},
-        "topResults": []
+        "topSources": {
+          "sessions": 20
+        },
+        "topResults": [
+          {
+            "path": "sessions/227f03ee-543e-4956-a942-49ec913601b3.jsonl.reset.2026-03-21T12-47-45.205Z",
+            "source": "sessions",
+            "score": 0.41892119944095607,
+            "snippet": "。"
+          },
+          {
+            "path": "sessions/4cf1b0c2-7d57-4e5a-a9b0-921c95eea37e.jsonl.reset.2026-03-21T10-14-42.387Z",
+            "source": "sessions",
+            "score": 0.40637366175651546,
+            "snippet": "的个"
+          },
+          {
+            "path": "sessions/135e2c76-89ca-48aa-8953-dd840809421a.jsonl.reset.2026-03-29T10-00-55.087Z",
+            "source": "sessions",
+            "score": 0.40499533414840694,
+            "snippet": "User: System: [2026-03-29 16:43:06 GMT+8] Feishu[feishu6-chat] DM | 刘超 (ou_6bead7a2b071454aeed7239e9de15d62) [msg:om_x100b53ba2f6e4ca8c42987c917e50d3] Conversation info (untrusted metadata): ```json { \"message_id\": \"om_x100b53ba2f6e4ca8c42987c917e50d3\", \"sender_id\": \"ou_6bead7a2b071454aeed7239e9de15d62\", \"sender\": \"刘超\", \"timestamp\": \"Sun 2026-03-29 16:43 GMT+8\" } ``` Sender (untrusted metadata): ```json { \"label\": \"刘超 (ou_6bead7a2b071454aeed7239e9de15d62)\", \"id\": \"ou_6bead7a2b071454aeed7239e9de15d62\", \"name\": \"刘超\" } ``` 你刚才抓的几秒的那个视频是啥？ 发我看下\nAssistant: [[reply_to_current]] 让我检查之前抓到的那个小视频文件：\nAssistant: 之前的脚本没有成功下载视频。让我检查一下之前找到的那个URL： 从之前的输出中，我们找到过： ``` https://lf-douyin-pc-web.douyinstatic.com"
+          },
+          {
+            "path": "sessions/8bac92da-8353-4185-aa9f-f7104734fcea.jsonl.reset.2026-04-02T09-32-06.814Z",
+            "source": "sessions",
+            "score": 0.39789808392524717,
+            "snippet": "`AGENTS.md` 这次也已经提交： - commit: `3939ad9` - message: `add shared execution checklist for all agents` 顺手说一句，这一轮里还刚好出现了一个很典型的实战案例： 我前面批量改 AGENTS 时，部分 edit 因为文本不完全一致失败了。这个时候我没有把“批量方案失败”说成“已经全部做完”，而是明确告诉你：**checklist 已建好，根规则已接上，当前卡在逐个修 agent 的 AGENTS**，然后继续补完。 也就是说，这套规范不只是写下来了，刚才已经现场用了一次。 如果你要，下一步我可以再做最后一层： **给这套规范起一个正式名字**，比如“执行透明规范”或者“任务真实状态协议”，以后你一提名字，我就知道整套要求。\nUser: System: [2026-04-02 12:12:37 GMT+8] Feishu[feishu1-main] DM | 刘超 (ou_6c145a01736fe57abb5290e6f1baaafa) [msg:om_x100b53ea858a10b4b3cbd0561be9a88] Conversation info (untrusted metadata): ```json { \"message_id\": \"om_x100b53ea858a10b4b3cbd0561be9a88\", \"sender_id\": \"ou_6c145a01736fe57abb5290e6f1baaafa\", \"sender\": \"刘超\", \"timestamp\": \"Th"
+          },
+          {
+            "path": "sessions/016ec5a4-9cc7-4e33-97a3-ae698791e720.jsonl.reset.2026-03-23T12-00-23.425Z",
+            "source": "sessions",
+            "score": 0.3938470900058746,
+            "snippet": "在沟通中"
+          }
+        ]
       },
       "plugin": {
         "fastPathLikely": true,
@@ -720,13 +1014,47 @@
         "cardArtifact"
       ],
       "builtin": {
-        "commandOk": false,
-        "error": "Command failed: openclaw memory search --agent main --query 我生日是什么时候 --max-results 20 --json\n",
-        "totalResults": 0,
+        "commandOk": true,
+        "error": null,
+        "totalResults": 20,
         "expectedSignalsHit": false,
         "expectedSourceHit": false,
-        "topSources": {},
-        "topResults": []
+        "topSources": {
+          "sessions": 19,
+          "memory": 1
+        },
+        "topResults": [
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.7044755319173581,
+            "snippet": "Assistant: [[reply_to_current]] 我查到的记录是：你爱吃**面食**，像**面条、馒头**这些。 不过你目前会为了控体重和血压，克制着吃。 （刚才我说牛排那是不准的，以这个面食的记录为准。）\nAssistant: [[reply_to_current]] 按我这边**最新记录**，你爱吃**牛排**。\nUser: [Sun 2026-04-05 11:27 GMT+8] 你怎么称呼我？\nAssistant: [[reply_to_current]] 我一般叫你**超哥**。\nUser: [Sun 2026-04-05 12:11 GMT+8] 我生日是什么时候？\nAssistant: [[reply_to_current]] 你生日是 **1983年2月6日**。 农历生日是 **腊月二十四**。\nUser: [Sun 2026-04-05 12:13 GMT+8] 我生日是什么时候？\nAssistant: [[reply_to_current]] 你生日是 **1983年2月6日**。 农历生日是 **腊月二十四**。\nUser: [Sun 2026-04-05 12:13 GMT+8] 我的农历生日是什么？\nAssistant: [[reply_to_current]] 你的农历生日是 **腊月二十四**。\nUser: [Sun 2026-04-05 12:14 GMT+8] 我女儿叫什么，生日是哪天，现在几年级？\nAssistant: [[reply_to_current]] 你女儿叫 **刘子妍**，生日是 **2014年12月29日**，"
+          },
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.6966890479728359,
+            "snippet": "Assistant: [[reply_to_current]] 这条我**不能确认**。 我这边只记到一句：**“身份证是19282年2月6日”**，明显像笔误或有歧义，所以我没有把它当成已确认信息。 你发我正确版本，我就按正确的记。\nUser: [Sun 2026-04-05 12:42 GMT+8] 我的身份证生日是什么？\nAssistant: [[reply_to_current]] 这条我**不能确认**。 我这边只记到一句：**“身份证是19282年2月6日”**，明显像笔误或有歧义，所以我没有把它当成已确认信息。 你发我正确版本，我就按正确的记。\nUser: [Sun 2026-04-05 12:46 GMT+8] 我生日是什么时候？\nAssistant: [[reply_to_current]] 你生日是 **1983年2月6日**。 农历生日是 **腊月二十四**。\nUser: [Sun 2026-04-05 12:46 GMT+8] 我的农历生日是什么？\nAssistant: [[reply_to_current]] 你的农历生日是 **腊月二十四**。\nUser: [Sun 2026-04-05 12:47 GMT+8] 我女儿叫什么，生日是哪天，现在几年级？\nAssistant: [[reply_to_current]] 你女儿叫 **刘子妍**，生日是 **2014年12月29日**，现在上 **五年级**。\nUser: [Sun 2026-04-05 12:47 GMT+8] 我儿子叫什么，生日是哪天，现在几年级？\nAssistant: [[reply"
+          },
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.6934437948113596,
+            "snippet": "User: task-system planning runtime context: - current_session_key: *** - current_task_id: unknown - planning_mode: tool-first-after-first-ack - if you need a future follow-up, use task-system tools in this order: 1. ts_attach_promise_guard 2. ts_create_followup_plan 3. ts_schedule_followup_from_plan 4. ts_finalize_planned_followup - for future-first requests, default to main_user_content_mode=none - runtime decides whether this turn sends no business content, a short summary, or a full answer - if main_user_content_mode=immediate-summary, keep the user-visible summary to one short business-facing line (about 120 chars max) - legacy structured user-content blocks may appear, but they are comp"
+          },
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.687022644050188,
+            "snippet": "Assistant: [[reply_to_current]] 你生日是 **1983年2月6日**。 农历生日是 **腊月二十四**。\nUser: [Sun 2026-04-05 12:36 GMT+8] 我的农历生日是什么？\nAssistant: [[reply_to_current]] 你的农历生日是 **腊月二十四**。\nUser: [Sun 2026-04-05 12:36 GMT+8] 我女儿叫什么，生日是哪天，现在几年级？\nAssistant: [[reply_to_current]] 你女儿叫 **刘子妍**，生日是 **2014年12月29日**，现在上 **五年级**。\nUser: [Sun 2026-04-05 12:37 GMT+8] 我儿子叫什么，生日是哪天，现在几年级？\nAssistant: [[reply_to_current]] 你儿子叫 **刘子暄**，生日是 **2007年7月25日**，现在上 **高三**。\nUser: [Sun 2026-04-05 12:37 GMT+8] 我家孩子的情况你记住了吗？\nAssistant: [[reply_to_current]] 记住了。 - 女儿：**刘子妍**，**2014年12月29日**生，**五年级** - 儿子：**刘子暄**，**2007年7月25日**生，**高三**\nUser: [Sun 2026-04-05 12:37 GMT+8] 我的身份证生日是什么？\nAssistant: [[reply_to_current]] 这条我**不能确认**。 我这边只记到一句：**“身份证是19"
+          },
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.6861097184491824,
+            "snippet": "Assistant: [[reply_to_current]] 这条我**不能确认**。 我这边只记到一句：**“身份证是19282年2月6日”**，明显像笔误或有歧义，所以我没有把它当成已确认信息。 你要是发我正确的身份证生日，我就按正确版本记。\nUser: [Sun 2026-04-05 12:38 GMT+8] 我生日是什么时候？\nAssistant: [[reply_to_current]] 你生日是 **1983年2月6日**。 农历生日是 **腊月二十四**。\nUser: [Sun 2026-04-05 12:38 GMT+8] 我的农历生日是什么？\nAssistant: [[reply_to_current]] 你的农历生日是 **腊月二十四**。\nUser: [Sun 2026-04-05 12:38 GMT+8] 我女儿叫什么，生日是哪天，现在几年级？\nAssistant: [[reply_to_current]] 你女儿叫 **刘子妍**，生日是 **2014年12月29日**，现在上 **五年级**。\nUser: [Sun 2026-04-05 12:38 GMT+8] 我儿子叫什么，生日是哪天，现在几年级？\nAssistant: [[reply_to_current]] 你儿子叫 **刘子暄**，生日是 **2007年7月25日**，现在上 **高三**。\nUser: [Sun 2026-04-05 12:39 GMT+8] 我家孩子的情况你记住了吗？\nAssistant: [[reply_to_current]] 记住了。 - 女儿：**刘子妍**，*"
+          }
+        ]
       },
       "plugin": {
         "fastPathLikely": true,
@@ -754,6 +1082,86 @@
       }
     },
     {
+      "id": "birthday-lunar-priority",
+      "category": "memory_search",
+      "query": "我的农历生日是什么",
+      "risk": "农历生日这类变体事实掉回弱相关日期片段，失去稳定事实优先级",
+      "expectedSignals": [
+        "腊月二十四"
+      ],
+      "expectedSources": [
+        "memory/%",
+        "cardArtifact"
+      ],
+      "builtin": {
+        "commandOk": true,
+        "error": null,
+        "totalResults": 20,
+        "expectedSignalsHit": true,
+        "expectedSourceHit": false,
+        "topSources": {
+          "sessions": 17,
+          "memory": 3
+        },
+        "topResults": [
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.7277799081625724,
+            "snippet": "ut scheduling status, promise state, or tool-chain state in the user-visible answer - provide followup_summary so runtime can send a meaningful wd scheduling confirmation - use followup_due_at as an absolute RFC3339 time - if scheduling is overdue, still schedule and tell the user it is being recovered - never promise a future reply without a successful task-system tool result [Sun 2026-04-12 12:55 GMT+8] 我的农历生日是什么？"
+          },
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.7087003698338901,
+            "snippet": "Assistant: [[reply_to_current]] 这条我**不能确认**。 我这边只记到一句：**“身份证是19282年2月6日”**，明显像笔误或有歧义，所以我没有把它当成已确认信息。 你发我正确版本，我就按正确的记。\nUser: [Sun 2026-04-05 12:42 GMT+8] 我的身份证生日是什么？\nAssistant: [[reply_to_current]] 这条我**不能确认**。 我这边只记到一句：**“身份证是19282年2月6日”**，明显像笔误或有歧义，所以我没有把它当成已确认信息。 你发我正确版本，我就按正确的记。\nUser: [Sun 2026-04-05 12:46 GMT+8] 我生日是什么时候？\nAssistant: [[reply_to_current]] 你生日是 **1983年2月6日**。 农历生日是 **腊月二十四**。\nUser: [Sun 2026-04-05 12:46 GMT+8] 我的农历生日是什么？\nAssistant: [[reply_to_current]] 你的农历生日是 **腊月二十四**。\nUser: [Sun 2026-04-05 12:47 GMT+8] 我女儿叫什么，生日是哪天，现在几年级？\nAssistant: [[reply_to_current]] 你女儿叫 **刘子妍**，生日是 **2014年12月29日**，现在上 **五年级**。\nUser: [Sun 2026-04-05 12:47 GMT+8] 我儿子叫什么，生日是哪天，现在几年级？\nAssistant: [[reply"
+          },
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.708584257129418,
+            "snippet": "User: task-system planning runtime context: - current_session_key: *** - current_task_id: unknown - planning_mode: tool-first-after-first-ack - if you need a future follow-up, use task-system tools in this order: 1. ts_attach_promise_guard 2. ts_create_followup_plan 3. ts_schedule_followup_from_plan 4. ts_finalize_planned_followup - for future-first requests, default to main_user_content_mode=none - runtime decides whether this turn sends no business content, a short summary, or a full answer - if main_user_content_mode=immediate-summary, keep the user-visible summary to one short business-facing line (about 120 chars max) - legacy structured user-content blocks may appear, but they are comp"
+          },
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.7046750745273194,
+            "snippet": "Assistant: [[reply_to_current]] 你生日是 **1983年2月6日**。 农历生日是 **腊月二十四**。\nUser: [Sun 2026-04-05 12:36 GMT+8] 我的农历生日是什么？\nAssistant: [[reply_to_current]] 你的农历生日是 **腊月二十四**。\nUser: [Sun 2026-04-05 12:36 GMT+8] 我女儿叫什么，生日是哪天，现在几年级？\nAssistant: [[reply_to_current]] 你女儿叫 **刘子妍**，生日是 **2014年12月29日**，现在上 **五年级**。\nUser: [Sun 2026-04-05 12:37 GMT+8] 我儿子叫什么，生日是哪天，现在几年级？\nAssistant: [[reply_to_current]] 你儿子叫 **刘子暄**，生日是 **2007年7月25日**，现在上 **高三**。\nUser: [Sun 2026-04-05 12:37 GMT+8] 我家孩子的情况你记住了吗？\nAssistant: [[reply_to_current]] 记住了。 - 女儿：**刘子妍**，**2014年12月29日**生，**五年级** - 儿子：**刘子暄**，**2007年7月25日**生，**高三**\nUser: [Sun 2026-04-05 12:37 GMT+8] 我的身份证生日是什么？\nAssistant: [[reply_to_current]] 这条我**不能确认**。 我这边只记到一句：**“身份证是19"
+          },
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.6988492569423279,
+            "snippet": "Assistant: [[reply_to_current]] 这条我**不能确认**。 我这边只记到一句：**“身份证是19282年2月6日”**，明显像笔误或有歧义，所以我没有把它当成已确认信息。 你要是发我正确的身份证生日，我就按正确版本记。\nUser: [Sun 2026-04-05 12:38 GMT+8] 我生日是什么时候？\nAssistant: [[reply_to_current]] 你生日是 **1983年2月6日**。 农历生日是 **腊月二十四**。\nUser: [Sun 2026-04-05 12:38 GMT+8] 我的农历生日是什么？\nAssistant: [[reply_to_current]] 你的农历生日是 **腊月二十四**。\nUser: [Sun 2026-04-05 12:38 GMT+8] 我女儿叫什么，生日是哪天，现在几年级？\nAssistant: [[reply_to_current]] 你女儿叫 **刘子妍**，生日是 **2014年12月29日**，现在上 **五年级**。\nUser: [Sun 2026-04-05 12:38 GMT+8] 我儿子叫什么，生日是哪天，现在几年级？\nAssistant: [[reply_to_current]] 你儿子叫 **刘子暄**，生日是 **2007年7月25日**，现在上 **高三**。\nUser: [Sun 2026-04-05 12:39 GMT+8] 我家孩子的情况你记住了吗？\nAssistant: [[reply_to_current]] 记住了。 - 女儿：**刘子妍**，*"
+          }
+        ]
+      },
+      "plugin": {
+        "fastPathLikely": true,
+        "candidateCount": 6,
+        "expectedSignalsHit": true,
+        "expectedSourceHit": true,
+        "selectionQuality": {
+          "selectedCount": 1,
+          "singleCard": true,
+          "multiCard": false,
+          "noisySupporting": false,
+          "unexpectedSupportingCount": 0
+        },
+        "topSources": {
+          "cardArtifact": 1
+        },
+        "selected": [
+          {
+            "path": "memory/2026-04-05.md",
+            "source": "cardArtifact",
+            "score": 1.145,
+            "snippet": "你的生日是1983-02-06，农历生日是腊月二十四"
+          }
+        ]
+      }
+    },
+    {
       "id": "daughter-profile-priority",
       "category": "memory_search",
       "query": "我女儿叫什么，生日是哪天，现在几年级",
@@ -768,13 +1176,47 @@
         "cardArtifact"
       ],
       "builtin": {
-        "commandOk": false,
-        "error": "Command failed: openclaw memory search --agent main --query 我女儿叫什么，生日是哪天，现在几年级 --max-results 20 --json\n",
-        "totalResults": 0,
-        "expectedSignalsHit": false,
+        "commandOk": true,
+        "error": null,
+        "totalResults": 20,
+        "expectedSignalsHit": true,
         "expectedSourceHit": false,
-        "topSources": {},
-        "topResults": []
+        "topSources": {
+          "sessions": 18,
+          "memory": 2
+        },
+        "topResults": [
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.805158517160452,
+            "snippet": "Assistant: [[reply_to_current]] 你女儿叫 **刘子妍**，生日是 **2014年12月29日**，现在上 **五年级**。\nUser: [Sun 2026-04-05 12:15 GMT+8] 我儿子叫什么，生日是哪天，现在几年级？\nAssistant: [[reply_to_current]] 你儿子叫 **刘子暄**，生日是 **2007年7月25日**，现在上 **高三**。\nUser: [Sun 2026-04-05 12:16 GMT+8] 我家孩子的情况你记住了吗？\nAssistant: [[reply_to_current]] 记住了。 - 女儿：**刘子妍**，**2014年12月29日**生，**五年级** - 儿子：**刘子暄**，**2007年7月25日**生，**高三**\nUser: [Sun 2026-04-05 12:17 GMT+8] 我的身份证生日是什么？\nAssistant: [[reply_to_current]] 这条我**不能确认**。 我这边只记到你之前说过一句：**“身份证是19282年2月6日”**，这明显像笔误或有歧义，所以我没有把它当成已确认信息。 如果你要，我可以按你下一条更正后的内容重新记住。\nUser: [Sun 2026-04-05 12:36 GMT+8] 我生日是什么时候？\nAssistant: [[reply_to_current]] 你生日是 **1983年2月6日**。 农历生日是 **腊月二十四**。\nUser: [Sun 2026-04-05 12:36 GMT+8] 我的农"
+          },
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.7981874133631747,
+            "snippet": "se state, or tool-chain state in the user-visible answer - provide followup_summary so runtime can send a meaningful wd scheduling confirmation - use followup_due_at as an absolute RFC3339 time - if scheduling is overdue, still schedule and tell the user it is being recovered - never promise a future reply without a successful task-system tool result [Sun 2026-04-12 12:55 GMT+8] 我女儿叫什么，生日是哪天，现在几年级？"
+          },
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.793936530989556,
+            "snippet": "Assistant: [[reply_to_current]] 这条我**不能确认**。 我这边只记到一句：**“身份证是19282年2月6日”**，明显像笔误或有歧义，所以我没有把它当成已确认信息。 你发我正确版本，我就按正确的记。\nUser: [Sun 2026-04-05 12:42 GMT+8] 我的身份证生日是什么？\nAssistant: [[reply_to_current]] 这条我**不能确认**。 我这边只记到一句：**“身份证是19282年2月6日”**，明显像笔误或有歧义，所以我没有把它当成已确认信息。 你发我正确版本，我就按正确的记。\nUser: [Sun 2026-04-05 12:46 GMT+8] 我生日是什么时候？\nAssistant: [[reply_to_current]] 你生日是 **1983年2月6日**。 农历生日是 **腊月二十四**。\nUser: [Sun 2026-04-05 12:46 GMT+8] 我的农历生日是什么？\nAssistant: [[reply_to_current]] 你的农历生日是 **腊月二十四**。\nUser: [Sun 2026-04-05 12:47 GMT+8] 我女儿叫什么，生日是哪天，现在几年级？\nAssistant: [[reply_to_current]] 你女儿叫 **刘子妍**，生日是 **2014年12月29日**，现在上 **五年级**。\nUser: [Sun 2026-04-05 12:47 GMT+8] 我儿子叫什么，生日是哪天，现在几年级？\nAssistant: [[reply"
+          },
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.7847798381233577,
+            "snippet": "Assistant: [[reply_to_current]] 这条我**不能确认**。 我这边只记到一句：**“身份证是19282年2月6日”**，明显像笔误或有歧义，所以我没有把它当成已确认信息。 你要是发我正确的身份证生日，我就按正确版本记。\nUser: [Sun 2026-04-05 12:38 GMT+8] 我生日是什么时候？\nAssistant: [[reply_to_current]] 你生日是 **1983年2月6日**。 农历生日是 **腊月二十四**。\nUser: [Sun 2026-04-05 12:38 GMT+8] 我的农历生日是什么？\nAssistant: [[reply_to_current]] 你的农历生日是 **腊月二十四**。\nUser: [Sun 2026-04-05 12:38 GMT+8] 我女儿叫什么，生日是哪天，现在几年级？\nAssistant: [[reply_to_current]] 你女儿叫 **刘子妍**，生日是 **2014年12月29日**，现在上 **五年级**。\nUser: [Sun 2026-04-05 12:38 GMT+8] 我儿子叫什么，生日是哪天，现在几年级？\nAssistant: [[reply_to_current]] 你儿子叫 **刘子暄**，生日是 **2007年7月25日**，现在上 **高三**。\nUser: [Sun 2026-04-05 12:39 GMT+8] 我家孩子的情况你记住了吗？\nAssistant: [[reply_to_current]] 记住了。 - 女儿：**刘子妍**，*"
+          },
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.7845690313959484,
+            "snippet": "Assistant: [[reply_to_current]] 你生日是 **1983年2月6日**。 农历生日是 **腊月二十四**。\nUser: [Sun 2026-04-05 12:36 GMT+8] 我的农历生日是什么？\nAssistant: [[reply_to_current]] 你的农历生日是 **腊月二十四**。\nUser: [Sun 2026-04-05 12:36 GMT+8] 我女儿叫什么，生日是哪天，现在几年级？\nAssistant: [[reply_to_current]] 你女儿叫 **刘子妍**，生日是 **2014年12月29日**，现在上 **五年级**。\nUser: [Sun 2026-04-05 12:37 GMT+8] 我儿子叫什么，生日是哪天，现在几年级？\nAssistant: [[reply_to_current]] 你儿子叫 **刘子暄**，生日是 **2007年7月25日**，现在上 **高三**。\nUser: [Sun 2026-04-05 12:37 GMT+8] 我家孩子的情况你记住了吗？\nAssistant: [[reply_to_current]] 记住了。 - 女儿：**刘子妍**，**2014年12月29日**生，**五年级** - 儿子：**刘子暄**，**2007年7月25日**生，**高三**\nUser: [Sun 2026-04-05 12:37 GMT+8] 我的身份证生日是什么？\nAssistant: [[reply_to_current]] 这条我**不能确认**。 我这边只记到一句：**“身份证是19"
+          }
+        ]
       },
       "plugin": {
         "fastPathLikely": true,
@@ -802,6 +1244,174 @@
       }
     },
     {
+      "id": "son-profile-priority",
+      "category": "memory_search",
+      "query": "我儿子叫什么，生日是哪天，现在几年级",
+      "risk": "家庭组合事实扩面时，如果儿子 profile 退回 session 噪音，就说明 stable fact 覆盖还不够稳",
+      "expectedSignals": [
+        "刘子暄",
+        "2007-07-25",
+        "高三"
+      ],
+      "expectedSources": [
+        "memory/%",
+        "cardArtifact"
+      ],
+      "builtin": {
+        "commandOk": true,
+        "error": null,
+        "totalResults": 20,
+        "expectedSignalsHit": true,
+        "expectedSourceHit": false,
+        "topSources": {
+          "sessions": 17,
+          "memory": 3
+        },
+        "topResults": [
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.8068218146127334,
+            "snippet": "ty-only and must not leak to users - do not put scheduling status, promise state, or tool-chain state in the user-visible answer - provide followup_summary so runtime can send a meaningful wd scheduling confirmation - use followup_due_at as an absolute RFC3339 time - if scheduling is overdue, still schedule and tell the user it is being recovered - never promise a future reply without a successful task-system tool result [Sun 2026-04-12 12:56 GMT+8] 我儿子叫什么，生日是哪天，现在几年级？"
+          },
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.8023351464653378,
+            "snippet": "Assistant: [[reply_to_current]] 你女儿叫 **刘子妍**，生日是 **2014年12月29日**，现在上 **五年级**。\nUser: [Sun 2026-04-05 12:15 GMT+8] 我儿子叫什么，生日是哪天，现在几年级？\nAssistant: [[reply_to_current]] 你儿子叫 **刘子暄**，生日是 **2007年7月25日**，现在上 **高三**。\nUser: [Sun 2026-04-05 12:16 GMT+8] 我家孩子的情况你记住了吗？\nAssistant: [[reply_to_current]] 记住了。 - 女儿：**刘子妍**，**2014年12月29日**生，**五年级** - 儿子：**刘子暄**，**2007年7月25日**生，**高三**\nUser: [Sun 2026-04-05 12:17 GMT+8] 我的身份证生日是什么？\nAssistant: [[reply_to_current]] 这条我**不能确认**。 我这边只记到你之前说过一句：**“身份证是19282年2月6日”**，这明显像笔误或有歧义，所以我没有把它当成已确认信息。 如果你要，我可以按你下一条更正后的内容重新记住。\nUser: [Sun 2026-04-05 12:36 GMT+8] 我生日是什么时候？\nAssistant: [[reply_to_current]] 你生日是 **1983年2月6日**。 农历生日是 **腊月二十四**。\nUser: [Sun 2026-04-05 12:36 GMT+8] 我的农"
+          },
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.7903760564745947,
+            "snippet": "Assistant: [[reply_to_current]] 这条我**不能确认**。 我这边只记到一句：**“身份证是19282年2月6日”**，明显像笔误或有歧义，所以我没有把它当成已确认信息。 你发我正确版本，我就按正确的记。\nUser: [Sun 2026-04-05 12:42 GMT+8] 我的身份证生日是什么？\nAssistant: [[reply_to_current]] 这条我**不能确认**。 我这边只记到一句：**“身份证是19282年2月6日”**，明显像笔误或有歧义，所以我没有把它当成已确认信息。 你发我正确版本，我就按正确的记。\nUser: [Sun 2026-04-05 12:46 GMT+8] 我生日是什么时候？\nAssistant: [[reply_to_current]] 你生日是 **1983年2月6日**。 农历生日是 **腊月二十四**。\nUser: [Sun 2026-04-05 12:46 GMT+8] 我的农历生日是什么？\nAssistant: [[reply_to_current]] 你的农历生日是 **腊月二十四**。\nUser: [Sun 2026-04-05 12:47 GMT+8] 我女儿叫什么，生日是哪天，现在几年级？\nAssistant: [[reply_to_current]] 你女儿叫 **刘子妍**，生日是 **2014年12月29日**，现在上 **五年级**。\nUser: [Sun 2026-04-05 12:47 GMT+8] 我儿子叫什么，生日是哪天，现在几年级？\nAssistant: [[reply"
+          },
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.7856984172249203,
+            "snippet": "Assistant: [[reply_to_current]] 这条我**不能确认**。 我这边只记到一句：**“身份证是19282年2月6日”**，明显像笔误或有歧义，所以我没有把它当成已确认信息。 你要是发我正确的身份证生日，我就按正确版本记。\nUser: [Sun 2026-04-05 12:38 GMT+8] 我生日是什么时候？\nAssistant: [[reply_to_current]] 你生日是 **1983年2月6日**。 农历生日是 **腊月二十四**。\nUser: [Sun 2026-04-05 12:38 GMT+8] 我的农历生日是什么？\nAssistant: [[reply_to_current]] 你的农历生日是 **腊月二十四**。\nUser: [Sun 2026-04-05 12:38 GMT+8] 我女儿叫什么，生日是哪天，现在几年级？\nAssistant: [[reply_to_current]] 你女儿叫 **刘子妍**，生日是 **2014年12月29日**，现在上 **五年级**。\nUser: [Sun 2026-04-05 12:38 GMT+8] 我儿子叫什么，生日是哪天，现在几年级？\nAssistant: [[reply_to_current]] 你儿子叫 **刘子暄**，生日是 **2007年7月25日**，现在上 **高三**。\nUser: [Sun 2026-04-05 12:39 GMT+8] 我家孩子的情况你记住了吗？\nAssistant: [[reply_to_current]] 记住了。 - 女儿：**刘子妍**，*"
+          },
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.784758872189558,
+            "snippet": "Assistant: [[reply_to_current]] 你生日是 **1983年2月6日**。 农历生日是 **腊月二十四**。\nUser: [Sun 2026-04-05 12:36 GMT+8] 我的农历生日是什么？\nAssistant: [[reply_to_current]] 你的农历生日是 **腊月二十四**。\nUser: [Sun 2026-04-05 12:36 GMT+8] 我女儿叫什么，生日是哪天，现在几年级？\nAssistant: [[reply_to_current]] 你女儿叫 **刘子妍**，生日是 **2014年12月29日**，现在上 **五年级**。\nUser: [Sun 2026-04-05 12:37 GMT+8] 我儿子叫什么，生日是哪天，现在几年级？\nAssistant: [[reply_to_current]] 你儿子叫 **刘子暄**，生日是 **2007年7月25日**，现在上 **高三**。\nUser: [Sun 2026-04-05 12:37 GMT+8] 我家孩子的情况你记住了吗？\nAssistant: [[reply_to_current]] 记住了。 - 女儿：**刘子妍**，**2014年12月29日**生，**五年级** - 儿子：**刘子暄**，**2007年7月25日**生，**高三**\nUser: [Sun 2026-04-05 12:37 GMT+8] 我的身份证生日是什么？\nAssistant: [[reply_to_current]] 这条我**不能确认**。 我这边只记到一句：**“身份证是19"
+          }
+        ]
+      },
+      "plugin": {
+        "fastPathLikely": true,
+        "candidateCount": 6,
+        "expectedSignalsHit": true,
+        "expectedSourceHit": true,
+        "selectionQuality": {
+          "selectedCount": 1,
+          "singleCard": true,
+          "multiCard": false,
+          "noisySupporting": false,
+          "unexpectedSupportingCount": 0
+        },
+        "topSources": {
+          "cardArtifact": 1
+        },
+        "selected": [
+          {
+            "path": "memory/2026-04-05.md",
+            "source": "cardArtifact",
+            "score": 1.125,
+            "snippet": "你儿子叫刘子暄，生日是2007-07-25，现在上高三"
+          }
+        ]
+      }
+    },
+    {
+      "id": "children-overview-priority",
+      "category": "memory_search",
+      "query": "我家孩子的情况你记住了吗",
+      "risk": "家庭概览型自然查询如果召回不稳，会让多子女稳定事实无法形成直接可答的单卡入口",
+      "expectedSignals": [
+        "刘子妍",
+        "刘子暄"
+      ],
+      "expectedSources": [
+        "memory/%",
+        "cardArtifact"
+      ],
+      "builtin": {
+        "commandOk": true,
+        "error": null,
+        "totalResults": 20,
+        "expectedSignalsHit": true,
+        "expectedSourceHit": false,
+        "topSources": {
+          "sessions": 20
+        },
+        "topResults": [
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.7147142090499403,
+            "snippet": "nly and must not leak to users - do not put scheduling status, promise state, or tool-chain state in the user-visible answer - provide followup_summary so runtime can send a meaningful wd scheduling confirmation - use followup_due_at as an absolute RFC3339 time - if scheduling is overdue, still schedule and tell the user it is being recovered - never promise a future reply without a successful task-system tool result [Sun 2026-04-12 12:57 GMT+8] 我家孩子的情况你记住了吗？"
+          },
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.6498138007341838,
+            "snippet": "User: [Sun 2026-04-05 12:39 GMT+8] 我家孩子的情况你记住了吗？\nAssistant: [[reply_to_current]] 记住了。 - 女儿：**刘子妍**，**2014年12月29日**生，**五年级** - 儿子：**刘子暄**，**2007年7月25日**生，**高三**\nUser: [Sun 2026-04-05 12:39 GMT+8] 我的身份证生日是什么？\nAssistant: [[reply_to_current]] 这条我**不能确认**。 我这边只记到一句：**“身份证是19282年2月6日”**，这明显像笔误或有歧义，所以我没有把它当成已确认信息。 你发我正确版本，我就按正确的记。\nUser: [Sun 2026-04-05 12:40 GMT+8] 我的身份证生日是什么？\nAssistant: [[reply_to_current]] 这条我**不能确认**。 我这边只记到一句：**“身份证是19282年2月6日”**，明显像笔误或有歧义，所以我没有把它当成已确认信息。 你发我正确版本，我就按正确的记。\nUser: [Sun 2026-04-05 12:41 GMT+8] 我的身份证生日是什么？\nAssistant: [[reply_to_current]] 这条我**不能确认**。 我这边只记到一句：**“身份证是19282年2月6日”**，明显像笔误或有歧义，所以我没有把它当成已确认信息。 你发我正确版本，我就按正确的记。\nUser: [Sun 2026-04-05 12:42 GMT+8] 我的身份证生日是什"
+          },
+          {
+            "path": "sessions/4cf1b0c2-7d57-4e5a-a9b0-921c95eea37e.jsonl.reset.2026-03-21T10-14-42.387Z",
+            "source": "sessions",
+            "score": 0.5020272403955459,
+            "snippet": "的个"
+          },
+          {
+            "path": "sessions/227f03ee-543e-4956-a942-49ec913601b3.jsonl.reset.2026-03-21T12-47-45.205Z",
+            "source": "sessions",
+            "score": 0.4946799427270889,
+            "snippet": "。"
+          },
+          {
+            "path": "sessions/fb16c269-1810-48bd-b946-04fa39fb8951.jsonl.reset.2026-04-01T12-49-20.043Z",
+            "source": "sessions",
+            "score": 0.4806356459856033,
+            "snippet": "的。"
+          }
+        ]
+      },
+      "plugin": {
+        "fastPathLikely": true,
+        "candidateCount": 6,
+        "expectedSignalsHit": true,
+        "expectedSourceHit": true,
+        "selectionQuality": {
+          "selectedCount": 2,
+          "singleCard": false,
+          "multiCard": true,
+          "noisySupporting": false,
+          "unexpectedSupportingCount": 0
+        },
+        "topSources": {
+          "cardArtifact": 2
+        },
+        "selected": [
+          {
+            "path": "memory/2026-04-05.md",
+            "source": "cardArtifact",
+            "score": 1.0064285714285715,
+            "snippet": "你女儿叫刘子妍，生日是2014-12-29，现在上五年级"
+          },
+          {
+            "path": "memory/2026-04-05.md",
+            "source": "cardArtifact",
+            "score": 1.0064285714285715,
+            "snippet": "你儿子叫刘子暄，生日是2007-07-25，现在上高三"
+          }
+        ]
+      }
+    },
+    {
       "id": "timezone-priority",
       "category": "memory_search",
       "query": "我的时区是什么",
@@ -815,13 +1425,46 @@
         "cardArtifact"
       ],
       "builtin": {
-        "commandOk": false,
-        "error": "Command failed: openclaw memory search --agent main --query 我的时区是什么 --max-results 20 --json\n",
-        "totalResults": 0,
-        "expectedSignalsHit": false,
+        "commandOk": true,
+        "error": null,
+        "totalResults": 20,
+        "expectedSignalsHit": true,
         "expectedSourceHit": false,
-        "topSources": {},
-        "topResults": []
+        "topSources": {
+          "sessions": 20
+        },
+        "topResults": [
+          {
+            "path": "sessions/016ec5a4-9cc7-4e33-97a3-ae698791e720.jsonl.reset.2026-03-23T12-00-23.425Z",
+            "source": "sessions",
+            "score": 0.49653404057025907,
+            "snippet": "versation info (untrusted metadata): ```json { \"message_id\": \"om_x100b533fc6ae1554c3cecb9f2a3b4e8\", \"sender_id\": \"ou_6c145a01736fe57abb5290e6f1baaafa\", \"sender\": \"刘超\", \"timestamp\": \"Mon 2026-03-23 11:50 GMT+8\" } ``` Sender (untrusted metadata): ```json { \"label\": \"刘超 (ou_6c145a01736fe57abb5290e6f1baaafa)\", \"id\": \"ou_6c145a01736fe57abb5290e6f1baaafa\", \"name\": \"刘超\" } ``` [message_id: om_x100b533fc6a\ne1554c3cecb9f2a3b4e8] 刘超: ？\nAssistant: 🌞 超哥好！我是三德子，刚睡醒，准备就绪。有什么需要帮忙的吗？\nUser: <relevant-memories> The following OpenViking memories may be relevant: - [] 用户在对话中明确告知名为‘超哥’的人本名是刘超，该称呼在会话启动问候中以随意方式提及，表明与用户存在熟悉或常规的联系。 - [] 用户在对话中提及一个名为“超哥”的人，其本名是刘超。他今年44岁，体重曾为93公斤，现已减至87公斤。他的一个明确饮食偏好是喜爱面食。该信息在回答关于“刘超爱吃"
+          },
+          {
+            "path": "sessions/016ec5a4-9cc7-4e33-97a3-ae698791e720.jsonl.reset.2026-03-23T12-00-23.425Z",
+            "source": "sessions",
+            "score": 0.44817725121974944,
+            "snippet": " [] 用户名为刘超，也被称呼为超哥，当前使用GMT+"
+          },
+          {
+            "path": "sessions/4cf1b0c2-7d57-4e5a-a9b0-921c95eea37e.jsonl.reset.2026-03-21T10-14-42.387Z",
+            "source": "sessions",
+            "score": 0.4303506791591644,
+            "snippet": "的个"
+          },
+          {
+            "path": "sessions/227f03ee-543e-4956-a942-49ec913601b3.jsonl.reset.2026-03-21T12-47-45.205Z",
+            "source": "sessions",
+            "score": 0.42672334313392635,
+            "snippet": "。"
+          },
+          {
+            "path": "sessions/016ec5a4-9cc7-4e33-97a3-ae698791e720.jsonl.reset.2026-03-23T12-00-23.425Z",
+            "source": "sessions",
+            "score": 0.41308653652668,
+            "snippet": "答"
+          }
+        ]
       },
       "plugin": {
         "fastPathLikely": true,
@@ -863,13 +1506,46 @@
         "cardArtifact"
       ],
       "builtin": {
-        "commandOk": false,
-        "error": "Command failed: openclaw memory search --agent main --query 你应该怎么跟我沟通 --max-results 20 --json\n",
-        "totalResults": 0,
-        "expectedSignalsHit": false,
+        "commandOk": true,
+        "error": null,
+        "totalResults": 20,
+        "expectedSignalsHit": true,
         "expectedSourceHit": false,
-        "topSources": {},
-        "topResults": []
+        "topSources": {
+          "sessions": 20
+        },
+        "topResults": [
+          {
+            "path": "sessions/016ec5a4-9cc7-4e33-97a3-ae698791e720.jsonl.reset.2026-03-23T12-00-23.425Z",
+            "source": "sessions",
+            "score": 0.6044779643416405,
+            "snippet": "在沟通中"
+          },
+          {
+            "path": "sessions/08f8581f-5cc3-4d77-8f93-1a3c3138d5cc.jsonl.reset.2026-03-20T02-15-31.681Z",
+            "source": "sessions",
+            "score": 0.5059368968009949,
+            "snippet": "Assistant: 只有一个 `IphoneBackup` 目录。让我进去看看：\nAssistant: **外接硬盘 (2T) 里有 9,089 张照片**。 都在 `IphoneBackup` 目录里，看起来是 iPhone 备份。 需要我看看这些照片是怎么组织的吗？比如按日期还是按相册分文件夹？\nUser: Conversation info (untrusted metadata): ```json { \"message_id\": \"om_x100b548b874e78b4c2a18742a6360ca\", \"sender_id\": \"ou_6c145a01736fe57abb5290e6f1baaafa\", \"sender\": \"刘超\", \"timestamp\": \"Thu 2026-03-19 21:39 GMT+8\" } ``` Sender (untrusted metadata): ```json { \"label\": \"刘超 (ou_6c145a01736fe57abb5290e6f1baaafa)\", \"id\": \"ou_6c145a01736fe57abb5290e6f1baaafa\", \"name\": \"刘超\" } ``` [message_id: om_x100b548b874e78b4c2a18742a6360ca] 刘超: 最后一张照片发给我\nAssistant: 命令在处理 9000 多张照片的 stat，可能超时。让我用更高效的方式：\nAssistant: 找到了最后一张照片： **`/Volumes/2T/IphoneBackup/i4-i"
+          },
+          {
+            "path": "sessions/a5d96a2d-a3d7-4cad-97ce-98bfc1f602a1.jsonl.reset.2026-03-24T00-48-43.329Z",
+            "source": "sessions",
+            "score": 0.48336144685745236,
+            "snippet": "方案？比如让每个Agent主动联系我建立会话？"
+          },
+          {
+            "path": "sessions/016ec5a4-9cc7-4e33-97a3-ae698791e720.jsonl.reset.2026-03-23T12-00-23.425Z",
+            "source": "sessions",
+            "score": 0.4827957838773727,
+            "snippet": "答"
+          },
+          {
+            "path": "sessions/4cf1b0c2-7d57-4e5a-a9b0-921c95eea37e.jsonl.reset.2026-03-21T10-14-42.387Z",
+            "source": "sessions",
+            "score": 0.4810546517372131,
+            "snippet": "的个"
+          }
+        ]
       },
       "plugin": {
         "fastPathLikely": true,
@@ -910,13 +1586,46 @@
         "cardArtifact"
       ],
       "builtin": {
-        "commandOk": false,
-        "error": "Command failed: openclaw memory search --agent main --query 我说提醒时默认用什么 --max-results 20 --json\n",
-        "totalResults": 0,
-        "expectedSignalsHit": false,
+        "commandOk": true,
+        "error": null,
+        "totalResults": 20,
+        "expectedSignalsHit": true,
         "expectedSourceHit": false,
-        "topSources": {},
-        "topResults": []
+        "topSources": {
+          "sessions": 20
+        },
+        "topResults": [
+          {
+            "path": "sessions/08f8581f-5cc3-4d77-8f93-1a3c3138d5cc.jsonl.reset.2026-03-20T02-15-31.681Z",
+            "source": "sessions",
+            "score": 0.4654757112264633,
+            "snippet": "User: System: [2026-03-19 23:04:25 GMT+8] Exec failed (quiet-sh, code 1) :: :in 'Cask::Installer#enqueue_downloads' /opt/homebrew/Library/Homebrew/install.rb:409:in 'Array#each' /opt/homebrew/Library/Homebrew/install.rb:409:in 'Homebrew::Install.enqueue_c… System: [2026-03-19 23:07:28 GMT+8] Exec failed (tidal-sa, signal SIGTERM) Conversation info (untrusted metadata): ```json { \"message_id\": \"om_x100b54f5ee7e48a0c444c611b3f7d3e\", \"sender_id\": \"ou_6c145a01736fe57abb5290e6f1baaafa\", \"sender\": \"刘超\", \"timestamp\": \"Thu 2026-03-19 23:45 GMT+8\" } ``` Sender (untrusted metadata): ```json { \"label\": \"刘超 (ou_6c145a01736fe57abb5290e6f1baaafa)\", \"id\": \"ou_6c145a01736fe57abb5290e6f1baaafa\", \"name\": \"刘超\""
+          },
+          {
+            "path": "sessions/4cbff037-9d30-4550-b9fe-87279fa35630.jsonl.reset.2026-04-01T13-01-33.018Z",
+            "source": "sessions",
+            "score": 0.43368810117244716,
+            "snippet": "先给你： - **罪魁祸首：OpenClaw 的 exec approval / ask gate** - **不是 Feishu 插件单独拦** - **不是 allowFrom 名单拦** - **是宿主机命令默认经过审批流程** 下一步我该做的是两件事： 1. 找到 **exec approval 的真实配置入口** 2. 直接按你要的方式改掉： - 要么仅放开本地只读命令 - 要么整体关闭本地 exec 审批 如果你还是要我**直接干掉这层拦截**，我建议我按更稳的方式来： **先定到配置入口，再优先做“本地只读免审”**，不然全关太莽。 你回我一句： - **稳一点** - 或 **全关** 我就继续。\nUser: System: [2026-04-01 19:47:37 GMT+8] Feishu[feishu1-main] DM | 刘超 (ou_6c145a01736fe57abb5290e6f1baaafa) [msg:om_x100b53e4134b6cb0b3df89f18111b60] Conversation info (untrusted metadata): ```json { \"message_id\": \"om_x100b53e4134b6cb0b3df89f18111b60\", \"sender_id\": \"ou_6c145a01736fe57abb5290e6f1baaafa\", \"sender\": \"刘超\", \"timestamp\": \"Wed 2026-04-01 19:47 GMT+8\" } ``` Sender (untrusted m"
+          },
+          {
+            "path": "sessions/08f8581f-5cc3-4d77-8f93-1a3c3138d5cc.jsonl.reset.2026-03-20T02-15-31.681Z",
+            "source": "sessions",
+            "score": 0.4292210638523102,
+            "snippet": "User: Conversation info (untrusted metadata): ```json { \"message_id\": \"om_x100b54f7270774a0c2cb4b4f4a788b0\", \"sender_id\": \"ou_6c145a01736fe57abb5290e6f1baaafa\", \"sender\": \"刘超\", \"timestamp\": \"Fri 2026-03-20 01:47 GMT+8\" } ``` Sender (untrusted metadata): ```json { \"label\": \"刘超 (ou_6c145a01736fe57abb5290e6f1baaafa)\", \"id\": \"ou_6c145a01736fe57abb5290e6f1baaafa\", \"name\": \"刘超\" } ``` [message_id: om_x100b54f7270774a0c2cb4b4f4a788b0] 刘超: 我在本地的 llama 上装了 Deepseek 14B，你看一下能不能帮我测试一下？然后在 model 列表里边把这个放进去。并且默认作为 order agent 的的模型\nAssistant: 理解：测试本地 Llama 上的 Deepseek 14B，添加到 model 列表，并设为 order agent 的默认模型。 让我先检查当前模型配置和 Llama 的连接情况：\nAssistant: 我看到了当前配置。现在让我检查 Llama 的连接信息：\nAssistant: 太好了！Llama 正在运行，并且已经加载了 "
+          },
+          {
+            "path": "sessions/37515420-e068-4ad8-8606-00e507936964.jsonl.reset.2026-03-21T09-57-24.184Z",
+            "source": "sessions",
+            "score": 0.4187977403402328,
+            "snippet": "话中继续适用，除非用户明确更改。 </relevant-m"
+          },
+          {
+            "path": "sessions/d86c3d03-c07e-4b4d-a4b5-7b13679638bd.jsonl.reset.2026-03-21T10-03-50.253Z",
+            "source": "sessions",
+            "score": 0.4187977403402328,
+            "snippet": "话中继续适用，除非用户明确更改。 </relevant-m"
+          }
+        ]
       },
       "plugin": {
         "fastPathLikely": true,
@@ -958,13 +1667,47 @@
         "cardArtifact"
       ],
       "builtin": {
-        "commandOk": false,
-        "error": "Command failed: openclaw memory search --agent main --query 收到明确任务后，低风险可逆操作应该怎么做 --max-results 20 --json\n",
-        "totalResults": 0,
-        "expectedSignalsHit": false,
-        "expectedSourceHit": false,
-        "topSources": {},
-        "topResults": []
+        "commandOk": true,
+        "error": null,
+        "totalResults": 20,
+        "expectedSignalsHit": true,
+        "expectedSourceHit": true,
+        "topSources": {
+          "sessions": 17,
+          "memory": 3
+        },
+        "topResults": [
+          {
+            "path": "sessions/016ec5a4-9cc7-4e33-97a3-ae698791e720.jsonl.reset.2026-03-23T12-00-23.425Z",
+            "source": "sessions",
+            "score": 0.436386302113533,
+            "snippet": "户明确说出\"执行\"指令后才能开始实际操作，以"
+          },
+          {
+            "path": "memory/2026-04-10-task-system.md",
+            "source": "memory",
+            "score": 0.42841380238533017,
+            "snippet": "  \"message_id\": \"om_x100b52a59c9038a0c345cb44139d66f\",\n  \"sender_id\": \"ou_6c145a01736fe57abb5290e6f1baaafa\",\n  \"sender\": \"刘超\",\n  \"timestamp\": \"Fri 2026-04-10 23:54 GMT+8\"\n}\n```\n\nSender (untrusted metadata):\n```json\n{\n  \"label\": \"刘超 (ou_6c145a01736fe57abb5290e6f1baaafa)\",\n  \"id\": \"ou_6c145a01736fe57abb5290e6f1baaafa\",\n  \"name\": \"刘超\"\n}\n```\n\n在？\nassistant: 在。\nuser: task-system planning runtime context:\n- current_session_key: agent:main:feishu:direct:ou_6c145a01736fe57abb5290e6f1baaafa\n- current_task_id: task_6e3bbb97c1c6464ab6234b607b0d5c59\n- planning_mode: tool-first-after-first-ack\n- if you need a future follow-up, use task-system tools in this order:\n  1. ts_attach_promise_guard\n  2. ts_creat"
+          },
+          {
+            "path": "sessions/755fdf79-387a-4ec1-ab63-673ca480d068.jsonl.reset.2026-04-01T13-14-24.695Z",
+            "source": "sessions",
+            "score": 0.4228789836168289,
+            "snippet": "User: System: [2026-04-01 21:05:41 GMT+8] Feishu[feishu1-main] DM | 刘超 (ou_6c145a01736fe57abb5290e6f1baaafa) [msg:om_x100b53e5cc9fd8a4c3642cb9e41af72] Conversation info (untrusted metadata): ```json { \"message_id\": \"om_x100b53e5cc9fd8a4c3642cb9e41af72\", \"sender_id\": \"ou_6c145a01736fe57abb5290e6f1baaafa\", \"sender\": \"刘超\", \"timestamp\": \"Wed 2026-04-01 21:05 GMT+8\" } ``` Sender (untrusted metadata): ```json { \"label\": \"刘超 (ou_6c145a01736fe57abb5290e6f1baaafa)\", \"id\": \"ou_6c145a01736fe57abb5290e6f1baaafa\", \"name\": \"刘超\" } ``` 执行\nAssistant: 我先把协作规则改掉，并记到长期记忆里，避免后面继续“像在做但没落地”。\nAssistant: [[reply_to_current]] 已执行。 我刚把规则改了，并且落盘了：以后默认是**低风险内部任务直接推进**，只有对外发送、删除覆盖、付款提交这类高风险动作才先确认；另外连续任务我会按“已开始 / 当前进展 / 下"
+          },
+          {
+            "path": "sessions/016ec5a4-9cc7-4e33-97a3-ae698791e720.jsonl.reset.2026-03-23T12-00-23.425Z",
+            "source": "sessions",
+            "score": 0.41654564440250397,
+            "snippet": "在沟通中"
+          },
+          {
+            "path": "MEMORY.md",
+            "source": "memory",
+            "score": 0.41631917059421536,
+            "snippet": "# MEMORY.md - 长期记忆\n\n## 用户\n- **姓名**: 刘超（超哥）\n- **时区**: GMT+8（北京时间）\n- **饮食偏好**: 牛排\n- **出生年份说明**: 实际出生年份为 1983；身份证登记生日年份为 1982（历史登记错误，但证件信息客观如此）\n- **沟通风格**: 直接、实用、不废话\n\n## main 工作原则\n1. **先响应，再推进**：第一时间回应用户，不让用户长时间无反馈。\n2. **默认推进，风险动作再确认**：纯内部、低风险、可逆操作，收到明确任务后可直接执行；只有对外发送、删除/覆盖、付款、提交、不可逆操作等高风险动作，才必须先确认。\n3. **确认不是执行替代品**：除非存在明显风险或需求不清，否则不要停留在“我理解的是...”这种准备态；先做至少 1 个可落地动作，再汇报。\n4. **拆小步执行**：大任务拆成小步骤，单步尽量不超过 30 秒；超时立即汇报进展和卡点。\n5. **进度透明**：进入连续执行任务后，要明确汇报“已开始 / 当前进展 / 下一步 / 卡点”，不能用“我在继续”代替真实进度。"
+          }
+        ]
       },
       "plugin": {
         "fastPathLikely": true,
@@ -1006,13 +1749,47 @@
         "cardArtifact"
       ],
       "builtin": {
-        "commandOk": false,
-        "error": "Command failed: openclaw memory search --agent main --query OpenViking 是做什么的 --max-results 20 --json\n",
-        "totalResults": 0,
-        "expectedSignalsHit": false,
-        "expectedSourceHit": false,
-        "topSources": {},
-        "topResults": []
+        "commandOk": true,
+        "error": null,
+        "totalResults": 20,
+        "expectedSignalsHit": true,
+        "expectedSourceHit": true,
+        "topSources": {
+          "sessions": 19,
+          "memory": 1
+        },
+        "topResults": [
+          {
+            "path": "sessions/686a38c3-2033-4dc2-9f5b-2e48d6b43ec7.jsonl.reset.2026-03-21T16-25-38.571Z",
+            "source": "sessions",
+            "score": 0.4813729792833328,
+            "snippet": "信息存储或查询分工规则；而OpenViking会在每次新对话（Session Startu"
+          },
+          {
+            "path": "MEMORY.md",
+            "source": "memory",
+            "score": 0.47479384839534755,
+            "snippet": "- **OpenViking**: 主要长期记忆检索补充工具，用于查询个人信息、偏好、历史片段等。\n- 详细的 OpenViking CLI 使用说明不放在本文件中，避免把长期记忆变成工具手册。\n\n## 其他\n- main 的目标是：快速响应、准确判断、合理分派，而不是把所有任务长期压在自己身上。\n- 用户已明确提出并确认：要解决“口头说在做、实际未持续执行”和“承诺定时同步却未真正建立机制”的问题；后续必须按上述状态词与长程任务同步规则执行。\n"
+          },
+          {
+            "path": "sessions/96bff6dc-816b-4b38-bfa4-c00c6f48653c.jsonl.reset.2026-03-21T10-36-03.215Z",
+            "source": "sessions",
+            "score": 0.46142692863941187,
+            "snippet": "ol-ui\", \"id\": \"open"
+          },
+          {
+            "path": "sessions/142f69f5-abb0-45fc-830d-7430dc55aded.jsonl.reset.2026-03-20T16-21-19.899Z",
+            "source": "sessions",
+            "score": 0.45715346634387966,
+            "snippet": "食、体重管理情况等等。OpenViking 把这些存下来了，现在根据你的问题调了出来。"
+          },
+          {
+            "path": "sessions/08f8581f-5cc3-4d77-8f93-1a3c3138d5cc.jsonl.reset.2026-03-20T02-15-31.681Z",
+            "source": "sessions",
+            "score": 0.4565238624811172,
+            "snippet": "Assistant: ✅ **OpenViking Memory Skill 创建完成！** **文件结构：** ``` skills/openviking-memory/ ├── SKILL.md # 技能说明文档 └── scripts/ └── openviking_memory.py # 主程序 ``` **功能：** 1. `save` - 保存对话到 OpenViking 2. `search` - 语义搜索记忆 3. `add_file` - 添加文件到知识库 4. `list` - 列出所有会话 **使用方法示例：** ```bash # 保存对话 python3 scripts/openviking_memory.py save \"session_001\" '[{\"role\": \"user\", \"content\": \"Hello\"}]' # 搜索记忆 python3 scripts/openviking_memory.py search \"dog factory\" # 添加文件 python3 scripts/openviking_memory.py add_file \"/path/to/file.pdf\" \"描述\" ``` 需要我测试一下这个 Skill 吗？\nUser: Conversation info (untrusted metadata): ```json { \"message_id\": \"om_x100b54f762da10a4c3258523077db50\", \"sender_id\": \"ou_6c145a01736fe57abb5290e6f"
+          }
+        ]
       },
       "plugin": {
         "fastPathLikely": true,
@@ -1053,13 +1830,46 @@
         "cardArtifact"
       ],
       "builtin": {
-        "commandOk": false,
-        "error": "Command failed: openclaw memory search --agent main --query 编程工作应该交给哪个 Agent --max-results 20 --json\n",
-        "totalResults": 0,
+        "commandOk": true,
+        "error": null,
+        "totalResults": 20,
         "expectedSignalsHit": false,
         "expectedSourceHit": false,
-        "topSources": {},
-        "topResults": []
+        "topSources": {
+          "sessions": 20
+        },
+        "topResults": [
+          {
+            "path": "sessions/016ec5a4-9cc7-4e33-97a3-ae698791e720.jsonl.reset.2026-03-23T12-00-23.425Z",
+            "source": "sessions",
+            "score": 0.4670333862304687,
+            "snippet": "8b4cad80c34f020c\", \"sender_id\": \"ou_6c145a01736fe57abb5290e6f1baaafa\", \"sender\": \"刘超\", \"timestamp\": \"Mon 2026-03-23 17:37 GMT+8\" } ``` Sender (untrusted metadata): ```json { \"label\": \"刘超 (ou_6c145a01736fe57abb5290e6f1baaafa)\", \"id\": \"ou_6c145a01736fe57abb5290e6f1baaafa\", \"name\": \"刘超\" } ``` [message_id: om_x100b5324dc9df118b4cad80c34f020c] 刘超: 在吗？如果涉及到编程的工作，是不是可以交给 code 这个 agent\nAssistant: 🌞 超哥，我在！ **关于编程工作分配：** ✅ 是的！编程相关工作应该交给 `code` 这个 Agent。 **Agent 分工：** 1. **code** - 编程助理：负责所有编程、代码、技术开发工作 2. **main** - 总助（我）：协调、管理、提醒、日常事务 3. **document** - 文档助理：文档处理、写作 4. **order** - 订单助理：订单管理 5. **health** - 健康助理：健康管理 6. **simple** - 简单助理：简单任务 **工作流程：** 1. 你提出编程需求 2. 我作为总助接收任务 3. 分配给 `code` Agent 执行 4."
+          },
+          {
+            "path": "sessions/a5d96a2d-a3d7-4cad-97ce-98bfc1f602a1.jsonl.reset.2026-03-24T00-48-43.329Z",
+            "source": "sessions",
+            "score": 0.45985358655452724,
+            "snippet": "方案？比如让每个Agent主动联系我建立会话？"
+          },
+          {
+            "path": "sessions/35e7b889-fb9b-4e92-b55f-f2f962ac34be.jsonl.reset.2026-03-25T16-09-56.107Z",
+            "source": "sessions",
+            "score": 0.45145052373409267,
+            "snippet": "User: System: [2026-03-24 23:59:30 GMT+8] Feishu[feishu1-main] DM | 刘超 (ou_6c145a01736fe57abb5290e6f1baaafa) [msg:om_x100b531f00d0dca0c31fb505c564e60] Conversation info (untrusted metadata): ```json { \"message_id\": \"om_x100b531f00d0dca0c31fb505c564e60\", \"sender_id\": \"ou_6c145a01736fe57abb5290e6f1baaafa\", \"sender\": \"刘超\", \"timestamp\": \"Tue 2026-03-24 23:59 GMT+8\" } ``` Sender (untrusted metadata): ```json { \"label\": \"刘超 (ou_6c145a01736fe57abb5290e6f1baaafa)\", \"id\": \"ou_6c145a01736fe57abb5290e6f1baaafa\", \"name\": \"刘超\" } ``` 你能帮我把这个和其他所有的 Agent 讲一遍吗？用 OpenClaw Agent 发消息的模式，你可以去看一下它的 CLv的用法\nAssistant: 好的，我理解你的需求：用 OpenClaw Agent 发消息的模式，把\"提醒事项规则\"告诉所有其他 Agent。 我先查一下 OpenClaw Agent 发消息的模式和 CLv 用法：\nAs"
+          },
+          {
+            "path": "sessions/a5d96a2d-a3d7-4cad-97ce-98bfc1f602a1.jsonl.reset.2026-03-24T00-48-43.329Z",
+            "source": "sessions",
+            "score": 0.4488008469343185,
+            "snippet": " **文档创建** → 遇到权限问题，使用 `feishu_oauth_batch_auth` 6. **批量授权** → 62个权限一次性授权 7. **文档完成** → 创建完整的解决方案文档 ## 特别价值： **`feishu_oauth_batch_auth` 的记录非常重要**，因为它： 1. **展示了完整的权限获取流程** 2. **记录了批量授权的实际应用** 3. **为后续类似问题提供了参考** 4. **体现了\"解决问题本身也需要权限\"的现实情况** **超哥，现在文档完整记录了从问题发现到文档创建的全过程，包括 `feishu_oauth_batch_auth` 的关键步骤！** 这成为一个完整的案例研究，既有技术深度，又有完整的操作流程。 文档现在是一个真正的\"完整解决方案\"，包含了问题解决和知识沉淀的全过程！\nUser: System: [2026-03-24 00:24:48 GMT+8] Feishu[feishu1-main] DM | 刘超 (ou_6c145a01736fe57abb5290e6f1baaafa) [msg:om_x100b5322da32f4a0c2c51504239dd9e] Conversation info (untrusted metadata): ```json { \"message_id\": \"om_x100b5322da32f4a0c2c51504239dd9e\", \"sender_id\": \"ou_6c145a01736fe57abb5290e6f1baaafa\", \"sender\": \"刘超\", \"ti"
+          },
+          {
+            "path": "sessions/686a38c3-2033-4dc2-9f5b-2e48d6b43ec7.jsonl.reset.2026-03-21T16-25-38.571Z",
+            "source": "sessions",
+            "score": 0.44755371809005734,
+            "snippet": "助手发起"
+          }
+        ]
       },
       "plugin": {
         "fastPathLikely": true,
@@ -1102,13 +1912,47 @@
         "cardArtifact"
       ],
       "builtin": {
-        "commandOk": false,
-        "error": "Command failed: openclaw memory search --agent main --query main 负责什么 --max-results 20 --json\n",
-        "totalResults": 0,
+        "commandOk": true,
+        "error": null,
+        "totalResults": 20,
         "expectedSignalsHit": false,
-        "expectedSourceHit": false,
-        "topSources": {},
-        "topResults": []
+        "expectedSourceHit": true,
+        "topSources": {
+          "sessions": 19,
+          "memory": 1
+        },
+        "topResults": [
+          {
+            "path": "sessions/227f03ee-543e-4956-a942-49ec913601b3.jsonl.reset.2026-03-21T12-47-45.205Z",
+            "source": "sessions",
+            "score": 0.47271548807621,
+            "snippet": "。"
+          },
+          {
+            "path": "sessions/4cf1b0c2-7d57-4e5a-a9b0-921c95eea37e.jsonl.reset.2026-03-21T10-14-42.387Z",
+            "source": "sessions",
+            "score": 0.4638427466154098,
+            "snippet": "的个"
+          },
+          {
+            "path": "sessions/016ec5a4-9cc7-4e33-97a3-ae698791e720.jsonl.reset.2026-03-23T12-00-23.425Z",
+            "source": "sessions",
+            "score": 0.4568910896778106,
+            "snippet": "答"
+          },
+          {
+            "path": "sessions/016ec5a4-9cc7-4e33-97a3-ae698791e720.jsonl.reset.2026-03-23T12-00-23.425Z",
+            "source": "sessions",
+            "score": 0.4439322024583816,
+            "snippet": "的核心逻辑，助手仅"
+          },
+          {
+            "path": "sessions/fb16c269-1810-48bd-b946-04fa39fb8951.jsonl.reset.2026-04-01T12-49-20.043Z",
+            "source": "sessions",
+            "score": 0.4425679355859756,
+            "snippet": "的。"
+          }
+        ]
       },
       "plugin": {
         "fastPathLikely": true,
@@ -1150,13 +1994,46 @@
         "cardArtifact"
       ],
       "builtin": {
-        "commandOk": false,
-        "error": "Command failed: openclaw memory search --agent main --query main 不负责什么 --max-results 20 --json\n",
-        "totalResults": 0,
+        "commandOk": true,
+        "error": null,
+        "totalResults": 20,
         "expectedSignalsHit": false,
         "expectedSourceHit": false,
-        "topSources": {},
-        "topResults": []
+        "topSources": {
+          "sessions": 20
+        },
+        "topResults": [
+          {
+            "path": "sessions/227f03ee-543e-4956-a942-49ec913601b3.jsonl.reset.2026-03-21T12-47-45.205Z",
+            "source": "sessions",
+            "score": 0.4937457799911499,
+            "snippet": "。"
+          },
+          {
+            "path": "sessions/4cf1b0c2-7d57-4e5a-a9b0-921c95eea37e.jsonl.reset.2026-03-21T10-14-42.387Z",
+            "source": "sessions",
+            "score": 0.47397444546222683,
+            "snippet": "的个"
+          },
+          {
+            "path": "sessions/016ec5a4-9cc7-4e33-97a3-ae698791e720.jsonl.reset.2026-03-23T12-00-23.425Z",
+            "source": "sessions",
+            "score": 0.46671234667301176,
+            "snippet": "答"
+          },
+          {
+            "path": "sessions/016ec5a4-9cc7-4e33-97a3-ae698791e720.jsonl.reset.2026-03-23T12-00-23.425Z",
+            "source": "sessions",
+            "score": 0.45701767802238463,
+            "snippet": "的核心逻辑，助手仅"
+          },
+          {
+            "path": "sessions/fb16c269-1810-48bd-b946-04fa39fb8951.jsonl.reset.2026-04-01T12-49-20.043Z",
+            "source": "sessions",
+            "score": 0.45466569662094114,
+            "snippet": "的。"
+          }
+        ]
       },
       "plugin": {
         "fastPathLikely": true,
@@ -1199,13 +2076,46 @@
         "cardArtifact"
       ],
       "builtin": {
-        "commandOk": false,
-        "error": "Command failed: openclaw memory search --agent main --query 已开始是什么意思 --max-results 20 --json\n",
-        "totalResults": 0,
+        "commandOk": true,
+        "error": null,
+        "totalResults": 20,
         "expectedSignalsHit": false,
         "expectedSourceHit": false,
-        "topSources": {},
-        "topResults": []
+        "topSources": {
+          "sessions": 20
+        },
+        "topResults": [
+          {
+            "path": "sessions/0b53c1f3-b355-4045-8419-b43a0a667362.jsonl.reset.2026-03-21T13-25-15.119Z",
+            "source": "sessions",
+            "score": 0.5313508316874503,
+            "snippet": "话开始时，"
+          },
+          {
+            "path": "sessions/227f03ee-543e-4956-a942-49ec913601b3.jsonl.reset.2026-03-21T12-47-45.205Z",
+            "source": "sessions",
+            "score": 0.5083357751369476,
+            "snippet": "。"
+          },
+          {
+            "path": "sessions/fb16c269-1810-48bd-b946-04fa39fb8951.jsonl.reset.2026-04-01T12-49-20.043Z",
+            "source": "sessions",
+            "score": 0.49755707383155817,
+            "snippet": "的。"
+          },
+          {
+            "path": "sessions/4cf1b0c2-7d57-4e5a-a9b0-921c95eea37e.jsonl.reset.2026-03-21T10-14-42.387Z",
+            "source": "sessions",
+            "score": 0.4921859562397003,
+            "snippet": "的个"
+          },
+          {
+            "path": "sessions/016ec5a4-9cc7-4e33-97a3-ae698791e720.jsonl.reset.2026-03-23T12-00-23.425Z",
+            "source": "sessions",
+            "score": 0.4727608829736709,
+            "snippet": "在沟通中"
+          }
+        ]
       },
       "plugin": {
         "fastPathLikely": true,
@@ -1247,13 +2157,46 @@
         "cardArtifact"
       ],
       "builtin": {
-        "commandOk": false,
-        "error": "Command failed: openclaw memory search --agent main --query unified-memory-core 这个插件的配置应该怎么写 --max-results 20 --json\n",
-        "totalResults": 0,
+        "commandOk": true,
+        "error": null,
+        "totalResults": 20,
         "expectedSignalsHit": false,
         "expectedSourceHit": false,
-        "topSources": {},
-        "topResults": []
+        "topSources": {
+          "sessions": 20
+        },
+        "topResults": [
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.4343012452125549,
+            "snippet": "Assistant: [[reply_to_current]] 因为**长记忆解决的是“存下来、以后找得到”**，而这个上下文插件解决的是**“这一轮到底有没有把最该看的内容真正喂进模型”**。 也就是： - **长记忆**：偏存储和检索 - **上下文插件**：偏当前轮的上下文选择、拼接、压缩和保真 所以会有这种情况： - 信息已经写进长期记忆了 - 但当前这一轮模型还是没看到，或者看到得不完整、拼得不合理 这时候补的就不是“再建一个记忆库”，而是补一个**context engine**。 一句话：**一个负责记得住，一个负责这一轮喂得准。**\nUser: [Sat 2026-04-04 21:13 GMT+8] 只说 memory-context-claw 这个插件本身，最小配置怎么写？\nAssistant: [[reply_to_current]] 只看 `memory-context-claw` 插件本身，**最小配置**就是这段： ```json5 { plugins: { allow: [\"memory-context-claw\"], load: { paths: [\"/ABSOLUTE/PATH/TO/memory-context-claw\"] }, slots: { contextEngine: \"memory-context-claw\" }, entries: { \"memory-context-claw\": { enabled: true } } } } ``` 如果连安装步骤一起算，就是： ```bash openclaw plugins install"
+          },
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.42776181399822233,
+            "snippet": "Assistant: [[reply_to_current]] 因为**长记忆解决的是“存下来、以后找得到”**，而这个上下文插件解决的是**“这一轮到底有没有把最该看的内容真正喂进模型”**。 也就是： - **长记忆**：偏存储和检索 - **上下文插件**：偏当前轮的上下文选择、拼接、压缩和保真 所以会有这种情况： - 信息已经写进长期记忆了 - 但当前这一轮模型还是没看到，或者看到得不完整、拼得不合理 这时候补的就不是“再建一个记忆库”，而是补一个 **context engine**。 一句话：**一个负责记得住，一个负责这一轮喂得准。**\nUser: [Sun 2026-04-05 11:24 GMT+8] 只说 memory-context-claw 这个插件本身，最小配置怎么写？\nAssistant: [[reply_to_current]] 只看 `memory-context-claw` 插件本身，**最小配置**就是这段： ```json5 { plugins: { allow: [\"memory-context-claw\"], load: { paths: [\"/ABSOLUTE/PATH/TO/memory-context-claw\"] }, slots: { contextEngine: \"memory-context-claw\" }, entries: { \"memory-context-claw\": { enabled: true } } } } ``` 如果连安装步骤一起算，就是： ```bash openclaw plugins instal"
+          },
+          {
+            "path": "sessions/51e254df-058b-43c0-ba96-0520e241972f.jsonl.reset.2026-03-24T10-56-41.897Z",
+            "source": "sessions",
+            "score": 0.4264492839574814,
+            "snippet": "Assistant: **总结当前情况**： 1. **图片文件**：`/Users/redcreen/1.png` (764x455 PNG, 39KB) 2. **模型视觉bug**：DeepSeek-Chat视觉识别失败 3. **OCR尝试**：tesseract可用但识别效果差（缺少中文语言包） 4. **Python环境**：系统限制无法安装OCR库 **建议解决方案**： 1. **你描述销售单内容**：直接告诉我需要处理什么 2. **我尝试修复OCR**：安装中文语言包 3. **换其他图片处理方式**：如截图文字提取 **下一步**：你需要我： 1. 尝试安装tesseract中文语言包？ 2. 还是你直接描述销售单内容？ 3. 或者换其他图片处理方式？\nUser: System: [2026-03-24 17:51:25 GMT+8] Feishu[feishu1-main] DM | 刘超 (ou_6c145a01736fe57abb5290e6f1baaafa) [msg:om_x100b5311a718b8a0c22c2c37ba41869] Conversation info (untrusted metadata): ```json { \"message_id\": \"om_x100b5311a718b8a0c22c2c37ba41869\", \"sender_id\": \"ou_6c145a01736fe57abb5290e6f1baaafa\", \"sender\": \"刘超\", \"timestamp\": \"Tue 2026-03-24 17:51 G"
+          },
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.42570542097091674,
+            "snippet": "Assistant: [[reply_to_current]] 这个插件的定位是 **context engine（上下文引擎）**，不是另一个长期记忆库。 它主要负责： - 决定**当前这一轮**该把哪些信息送进 prompt - 在长对话里尽量减少关键信息丢失 - 把检索回来的记忆和当前会话内容**更合理地编排、压缩、拼接** - 提高模型当前看到信息的完整度和相关性 一句话：**长期记忆负责“存和找”，这个插件负责“这一轮怎么更好地喂给模型”。**\nUser: [Sun 2026-04-05 11:21 GMT+8] memorySearch.provider 是做什么的？\nAssistant: [[reply_to_current]] `memorySearch.provider` 是用来指定 **长期记忆的 embedding / 语义检索后端** 的。 它决定的是： - `MEMORY.md`、`memory/*.md` 建索引时用哪家的 embedding - `memory_search` 做语义检索时走哪个 provider - **不影响**主对话回复用的聊天模型 常见可选值有： - `openai` - `gemini` - `voyage` - `mistral` - `ollama` - `local` 一句话：**它控制的是“记忆怎么向量化、怎么语义搜索”，不是“聊天用哪个模型”。**\nUser: [Sun 2026-04-05 11:22 GMT+8] memory-context-claw 这个插件的配置应该怎么写？"
+          },
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.42508580982685085,
+            "snippet": "Assistant: [[reply_to_current]] 这个插件的定位是 **context engine（上下文引擎）**，不是另一个长期记忆库。 它主要负责： - 决定**当前这一轮**该把哪些信息送进 prompt - 在长对话里尽量减少关键信息丢失 - 把检索回来的记忆和当前会话内容**更合理地编排、压缩、拼接** - 提高模型当前看到信息的完整度和相关性 一句话：**长期记忆负责“存和找”，这个插件负责“这一轮怎么更好地喂给模型”。**\nUser: [Sat 2026-04-04 21:11 GMT+8] memorySearch.provider 是做什么的？\nAssistant: [[reply_to_current]] `memorySearch.provider` 是用来指定 **长期记忆的 embedding / 语义检索后端** 的。 它决定的是： - `MEMORY.md`、`memory/*.md` 建索引时用哪家的 embedding - `memory_search` 做语义检索时走哪个 provider - **不影响**主对话回复用的聊天模型 常见可选值有： - `openai` - `gemini` - `voyage` - `mistral` - `ollama` - `local` 一句话：**它控制的是“记忆怎么向量化、怎么语义搜索”，不是“聊天用哪个模型”。**\nUser: [Sat 2026-04-04 21:12 GMT+8] memory-context-claw 这个插件的配置应该怎么写？"
+          }
+        ]
       },
       "plugin": {
         "fastPathLikely": true,
@@ -1295,13 +2238,46 @@
         "cardArtifact"
       ],
       "builtin": {
-        "commandOk": false,
-        "error": "Command failed: openclaw memory search --agent main --query 这个项目的内置 workspace 目录应该怎么组织 --max-results 20 --json\n",
-        "totalResults": 0,
+        "commandOk": true,
+        "error": null,
+        "totalResults": 20,
         "expectedSignalsHit": false,
         "expectedSourceHit": false,
-        "topSources": {},
-        "topResults": []
+        "topSources": {
+          "sessions": 20
+        },
+        "topResults": [
+          {
+            "path": "sessions/492c1b4a-1d40-4aa4-b0ab-c7a2fc03bb58.jsonl.reset.2026-03-21T11-30-18.571Z",
+            "source": "sessions",
+            "score": 0.42261458337306973,
+            "snippet": "的目录，通常会存放按日期命名的每日笔记文件以及MEMORY.md主记忆文件，默认存储在memory文"
+          },
+          {
+            "path": "sessions/fb16c269-1810-48bd-b946-04fa39fb8951.jsonl.reset.2026-04-01T12-49-20.043Z",
+            "source": "sessions",
+            "score": 0.411607551574707,
+            "snippet": "space-code/MEMORY.md` - `workspace-document/MEMORY.md` 不过这两个**还没有提交**。 前面我先优先把你点名的 `main / order / health` 收完了。 --- ## 这次改动的实际结果 ### main - 从混合型长期记忆/工具手册，收敛成： - 用户 - main 工作原则 - main 边界 - Agent 分工 - 用户偏好规则 ### order - 从超长业务手册型 MEMORY，收敛成： - 订单 agent 定位 - 核心工作原则 - 业务边界 - 核心业务记忆 - 关键结构与关系 - 不在 MEMORY 展开的内容 ### health - 从健康档案 + 流程 + 技术细节混合体，收敛成： - agent 定位 - 核心工作原则 - 健康档案 - 当前目标 - 数据记录规则 - 飞书表格 - 工作边\n界 - 输出风格 --- ## 还剩一点尾巴 如果你要彻底收干净，下一步只剩两个很小的动作： 1. 把 `code/document` 的基础 `MEMORY.md` 也提交掉 2. 根据这次整理后的结构，再决定要不要继续做： - runtime-cache 的自动刷新接入 - 或者对 `document/code` 再补一版更成熟的 MEMORY 但你这次交代给我的主任务，已经完成了。"
+          },
+          {
+            "path": "sessions/4cf1b0c2-7d57-4e5a-a9b0-921c95eea37e.jsonl.reset.2026-03-21T10-14-42.387Z",
+            "source": "sessions",
+            "score": 0.4104857176542282,
+            "snippet": "的个"
+          },
+          {
+            "path": "sessions/016ec5a4-9cc7-4e33-97a3-ae698791e720.jsonl.reset.2026-03-23T12-00-23.425Z",
+            "source": "sessions",
+            "score": 0.4070516437292099,
+            "snippet": "Assistant: 🌞 明白了！Agent 的工作目录在配置文件里指定，每个 Agent 有自己的工作目录，目录名与 Agent 名字一致。 **我需要先查看配置文件来了解：** 1. Agent 的配置在哪里？ 2. 工作目录的路径结构是什么？ 3. 有哪些现有的 Agent？ 让我检查一下 OpenClaw 的配置文件：\nAssistant: 查看主配置文件：\nAssistant: 太好了！从配置文件中我看到了： **现有的 Agent：** 1. `order` - 订单助理 2. `simple` - 简单助理 3. `document` - 文档助理 4. `code` - 编程助理 5. `health` - 健康助理 **每个 Agent 的目录结构：** - `agentDir`: `/Users/redcreen/.openclaw/agents/{agent_name}/agent` - `workspace`: `/Users/redcreen/.openclaw/workspace-{agent_name}` **现在我来调整同步方案：** 1. **监控所有 Agent 的 agentDir 目录** 2. **每个 Agent 文件夹独立同步** 3. **保持文件夹名与 Agent 名字一致** 让我更新同步脚本：\nAssistant: 现在检查 Agent 目录是否存在：\nAssistant: 检查其中一个 Agent 目录结构：\nAssistant: 检查 agent 目录内容：\nAssistant: 现在需要将这些 Agent 目录添加到"
+          },
+          {
+            "path": "sessions/103587ff-4d67-4598-8de7-ba361cf96fca.jsonl",
+            "source": "sessions",
+            "score": 0.40267474949359894,
+            "snippet": "Assistant: [[reply_to_current]] 你之前定下来的长期记忆目录规则是这套： - **根目录**：作为整个知识库目录 - **`MEMORY.md`**：只放**长期稳定**、会反复复用的信息 - **`memory/`**：放**每日沉淀 / 过程性内容** - **其他 `.md` 文档**：作为**可索引的专题知识资料** 对应分工可以直接理解成： - `MEMORY.md` = 稳定规则、长期偏好、固定背景 - `memory/` = 每天发生了什么、过程记录、阶段结论 - 普通文档 = 某个专题的成型资料、说明文、方案文档 你当时还补了一个维护原则： - **稳定的进 `MEMORY.md`** - **频繁变化的先放 `memory/`** - **重要专题单独写成普通文档，方便索引和检索组装** Source: ../../Project/长记忆/memory/2026-04-04.md#L1-L26 Source: ../../Project/长记忆/MEMORY.md#L1-L28\nUser: [Sat 2026-04-04 20:41 GMT+8] MEMORY.md 应该放什么内容？"
+          }
+        ]
       },
       "plugin": {
         "fastPathLikely": true,

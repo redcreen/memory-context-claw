@@ -29,12 +29,32 @@
     "category": "user-facts"
   },
   {
+    "name": "birthday-lunar-smoke",
+    "query": "我的农历生日是什么",
+    "expectedSelectedAny": [
+      "腊月二十四"
+    ],
+    "expectedTopSource": "cardArtifact",
+    "category": "user-facts"
+  },
+  {
     "name": "daughter-profile-smoke",
     "query": "我女儿叫什么，生日是哪天，现在几年级",
     "expectedSelectedAny": [
       "刘子妍",
       "2014-12-29",
       "五年级"
+    ],
+    "expectedTopSource": "cardArtifact",
+    "category": "user-facts"
+  },
+  {
+    "name": "son-profile-smoke",
+    "query": "我儿子叫什么，生日是哪天，现在几年级",
+    "expectedSelectedAny": [
+      "刘子暄",
+      "2007-07-25",
+      "高三"
     ],
     "expectedTopSource": "cardArtifact",
     "category": "user-facts"

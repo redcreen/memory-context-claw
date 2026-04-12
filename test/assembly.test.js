@@ -424,6 +424,54 @@ test("buildAssemblyResult keeps family cards ahead of identity-correction cards 
   assert.ok(result.selectedCandidates.every((item) => !/身份证登记生日年份/.test(item.snippet)));
 });
 
+test("buildAssemblyResult allows two stable fact cards from the same path for children overview queries", () => {
+  const result = buildAssemblyResult({
+    messages: [{ role: "user", content: "我家孩子的情况你记住了吗", timestamp: 1 }],
+    tokenBudget: 2048,
+    memoryBudgetRatio: 0.35,
+    recentMessageCount: 8,
+    maxSelectedChunks: 4,
+    maxChunksPerPath: 1,
+    candidates: [
+      {
+        path: "memory/2026-04-05.md",
+        pathKind: "cardArtifact",
+        startLine: 1,
+        endLine: 1,
+        weightedScore: 1.06,
+        finalScore: 1.06,
+        snippet: "你女儿叫刘子妍，生日是2014-12-29，现在上五年级"
+      },
+      {
+        path: "memory/2026-04-05.md",
+        pathKind: "cardArtifact",
+        startLine: 2,
+        endLine: 2,
+        weightedScore: 1.05,
+        finalScore: 1.05,
+        snippet: "你儿子叫刘子暄，生日是2007-07-25，现在上高三"
+      },
+      {
+        path: "MEMORY.md",
+        pathKind: "cardArtifact",
+        startLine: 1,
+        endLine: 1,
+        weightedScore: 0.98,
+        finalScore: 0.98,
+        snippet: "你的实际出生年份是1983；身份证登记生日年份是1982，这是历史登记错误，但证件信息客观如此。"
+      }
+    ]
+  });
+
+  assert.deepEqual(
+    result.selectedCandidates.map((item) => item.snippet),
+    [
+      "你女儿叫刘子妍，生日是2014-12-29，现在上五年级",
+      "你儿子叫刘子暄，生日是2007-07-25，现在上高三"
+    ]
+  );
+});
+
 test("buildAssemblyResult keeps only project-positioning supporting docs for project queries", () => {
   const result = buildAssemblyResult({
     messages: [{ role: "user", content: "这个项目主要解决什么问题", timestamp: 1 }],
