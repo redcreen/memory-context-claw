@@ -25,6 +25,15 @@
 
 如果你只是第一次看这个项目，先从 [../../../README.zh-CN.md](../../../README.zh-CN.md) 开始会更合适。
 
+## 按角色阅读
+
+如果你不想整篇顺着读，可以直接跳到和自己职责对应的部分：
+
+- 普通用户：[普通用户路径](#ordinary-user-path)
+- operator：[Operator 路径](#operator-path)
+- maintainer：[Maintainer 路径](#maintainer-path)
+- release owner：[Release Owner 路径](#release-owner-path)
+
 ## 最短心智模型
 
 `Unified Memory Core` 不是“把所有召回结果都倒出来”。
@@ -202,6 +211,147 @@ nightly self-learning 默认开启。
 5. 只有真的应该被系统学习时，才用 `Remember this: ...`
 
 你不需要每天去跑整套 CLI。
+
+<a id="ordinary-user-path"></a>
+
+## 普通用户路径
+
+如果你的目标主要是让 OpenClaw 日常使用里的 recall 质量更好，这条路径最适合你。
+
+### 你应该做什么
+
+1. 除非你明确要追 `main`，否则优先装稳定 tag。
+2. 把稳定事实和规则放进 `workspace/MEMORY.md`。
+3. 把近期观察放进 `workspace/memory/*.md`。
+4. 把可复用背景 notes 放进 `workspace/notes/*.md`。
+5. 正常继续和 OpenClaw 对话。
+
+### 你通常不需要做什么
+
+- 每天跑 CLI 验证
+- 手动检查 artifacts
+- replay / repair 工作流
+- release-boundary review
+
+### 最小有用命令
+
+```bash
+openclaw plugins list
+openclaw plugins inspect unified-memory-core
+```
+
+### 普通用户检查清单
+
+- 插件已加载
+- `unified-memory-core` 是当前 `contextEngine`
+- 长期规则写在 `MEMORY.md`
+- 近期事实留在 `workspace/memory/*.md`
+- notes 是可复用背景，而不是 scratch 噪声
+
+<a id="operator-path"></a>
+
+## Operator 路径
+
+如果你负责安全安装、配置和环境级信心，这条路径最适合你。
+
+### 你应该做什么
+
+1. 先选对安装方式。
+2. 验证 OpenClaw 宿主配置。
+3. 确认插件可见且已启用。
+4. 在需要宿主运行时信心时跑 host-level smoke。
+5. 在需要安装路径信心时跑 bundle-install verification。
+
+### 推荐命令
+
+```bash
+openclaw config validate
+openclaw plugins list
+openclaw plugins inspect unified-memory-core
+npm run umc:openclaw-itest -- --format markdown
+npm run umc:openclaw-install-verify -- --format markdown
+```
+
+### Operator 检查清单
+
+- config 验证通过
+- 插件出现在 loaded list
+- `contextEngine` 指向 `unified-memory-core`
+- 需要运行时信心时，host smoke 为绿
+- 需要安装路径信心时，bundle-install verification 为绿
+
+<a id="maintainer-path"></a>
+
+## Maintainer 路径
+
+如果你在修改仓库，并且要保证文档里的证据面持续为绿，这条路径最适合你。
+
+### 你应该做什么
+
+1. 保持 repo regression suite 为绿。
+2. 改 lifecycle 或 policy 行为时，保持 Stage 3-4 acceptance 为绿。
+3. 改 product-hardening 路径时，保持 Stage 5 acceptance 为绿。
+4. 改部署或运行时行为时，保持 host smoke 和 release-preflight 为绿。
+5. 排障时，用 export / maintenance / review CLI 做精确定位。
+
+### 推荐命令
+
+```bash
+npm test
+npm run smoke:eval
+npm run eval:memory-search:cases
+npm run umc:acceptance -- --format markdown
+npm run umc:stage5 -- --format markdown
+npm run umc:openclaw-itest -- --format markdown
+npm run umc:release-preflight -- --format markdown
+```
+
+### Maintainer 调试命令
+
+```bash
+npm run umc:cli -- export inspect --consumer generic --format markdown
+npm run umc:cli -- maintenance run --format markdown
+npm run umc:cli -- export reproducibility --format markdown
+npm run umc:cli -- review independent-execution --repo-root . --format markdown
+```
+
+### Maintainer 检查清单
+
+- 你改动的层，对应的 acceptance 面仍然为绿
+- 报告仍然可读，足以支撑 operator review
+- 没有 shortcut 绕开 governed lifecycle 或 release gates
+- 文档仍然描述真实当前状态
+
+<a id="release-owner-path"></a>
+
+## Release Owner 路径
+
+如果你在决定这个仓库是否适合打稳定 tag 或对外推荐稳定安装，这条路径最适合你。
+
+### 你应该做什么
+
+1. 跑一条总 release gate。
+2. 确认 `README*` 里的安装目标仍然指向预期稳定 tag。
+3. 确认 worktree 干净。
+4. 在真实 OpenClaw 会话里做一次最终人类 sanity check。
+5. 然后再创建并推送 tag。
+
+### 推荐命令
+
+```bash
+npm run umc:release-preflight -- --format markdown
+git status --short
+git tag v0.2.0
+git push origin v0.2.0
+```
+
+### Release Owner 检查清单
+
+- `release-preflight` 为绿
+- 稳定安装示例仍然指向预期 tag
+- worktree 没有意外变更
+- 人类 sanity check 已完成
+- tag 和 release note 与验证证据一致
 
 ## 当你说 “Remember this” 时发生了什么
 

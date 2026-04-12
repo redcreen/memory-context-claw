@@ -26,6 +26,15 @@ This guide is for:
 This guide is not the best first read if you only want a high-level overview.
 In that case, start with [../../../README.md](../../../README.md).
 
+## Read By Role
+
+If you do not want to read the whole manual in order, jump to the section that matches your job:
+
+- ordinary user: [Ordinary User Path](#ordinary-user-path)
+- operator: [Operator Path](#operator-path)
+- maintainer: [Maintainer Path](#maintainer-path)
+- release owner: [Release Owner Path](#release-owner-path)
+
 ## Mental Model
 
 `Unified Memory Core` is not a flat retrieval dump.
@@ -203,6 +212,147 @@ For a normal user, the workflow should stay simple.
 5. Use explicit signals such as `Remember this: ...` only when something should clearly be learned.
 
 You do not need to run the whole CLI stack every day.
+
+<a id="ordinary-user-path"></a>
+
+## Ordinary User Path
+
+This is the right path if you mainly care about better recall quality in normal OpenClaw use.
+
+### What You Should Do
+
+1. Install a stable tag unless you intentionally want development head.
+2. Put stable facts and rules in `workspace/MEMORY.md`.
+3. Put recent observations in `workspace/memory/*.md`.
+4. Put reusable background notes in `workspace/notes/*.md`.
+5. Keep chatting with OpenClaw normally.
+
+### What You Usually Do Not Need
+
+- daily CLI validation
+- manual artifact inspection
+- replay / repair workflows
+- release-boundary review
+
+### Useful Minimal Commands
+
+```bash
+openclaw plugins list
+openclaw plugins inspect unified-memory-core
+```
+
+### Ordinary User Checklist
+
+- the plugin loads
+- `unified-memory-core` is the active `contextEngine`
+- durable rules are stored in `MEMORY.md`
+- recent facts stay in `workspace/memory/*.md`
+- notes are reusable background, not scratch noise
+
+<a id="operator-path"></a>
+
+## Operator Path
+
+This is the right path if you are responsible for safe installation, configuration, and environment-level confidence.
+
+### What You Should Do
+
+1. Choose the correct install mode.
+2. Validate OpenClaw host configuration.
+3. Confirm the plugin is visible and enabled.
+4. Run host-level smoke when confidence matters.
+5. Run bundle-install verification before treating packaged install as proven.
+
+### Recommended Operator Commands
+
+```bash
+openclaw config validate
+openclaw plugins list
+openclaw plugins inspect unified-memory-core
+npm run umc:openclaw-itest -- --format markdown
+npm run umc:openclaw-install-verify -- --format markdown
+```
+
+### Operator Checklist
+
+- config validates cleanly
+- plugin appears in the loaded list
+- `contextEngine` points to `unified-memory-core`
+- host smoke is green when runtime confidence is needed
+- bundle-install verification is green when package-install confidence is needed
+
+<a id="maintainer-path"></a>
+
+## Maintainer Path
+
+This is the right path if you are changing the repo and need to keep the documented evidence surfaces green.
+
+### What You Should Do
+
+1. Keep the repo regression suite green.
+2. Keep Stage 3-4 acceptance green when changing lifecycle or policy behavior.
+3. Keep Stage 5 acceptance green when changing product-hardening paths.
+4. Keep host smoke and release-preflight green when changing deployment or runtime behavior.
+5. Inspect exports or maintenance surfaces when debugging behavior.
+
+### Recommended Maintainer Commands
+
+```bash
+npm test
+npm run smoke:eval
+npm run eval:memory-search:cases
+npm run umc:acceptance -- --format markdown
+npm run umc:stage5 -- --format markdown
+npm run umc:openclaw-itest -- --format markdown
+npm run umc:release-preflight -- --format markdown
+```
+
+### Maintainer Debug Commands
+
+```bash
+npm run umc:cli -- export inspect --consumer generic --format markdown
+npm run umc:cli -- maintenance run --format markdown
+npm run umc:cli -- export reproducibility --format markdown
+npm run umc:cli -- review independent-execution --repo-root . --format markdown
+```
+
+### Maintainer Checklist
+
+- the relevant acceptance surface matches the layer you changed
+- reports remain readable enough for operator review
+- no shortcut bypasses governed lifecycle or release gates
+- docs still describe the true current state
+
+<a id="release-owner-path"></a>
+
+## Release Owner Path
+
+This is the right path if you are deciding whether the repo is ready for a stable tag or public release recommendation.
+
+### What You Should Do
+
+1. Run the one-command release gate.
+2. Confirm the install target in `README*` still matches the intended stable tag.
+3. Confirm the worktree is clean.
+4. Do one final human sanity check in a real OpenClaw session.
+5. Only then create and push the tag.
+
+### Recommended Release Commands
+
+```bash
+npm run umc:release-preflight -- --format markdown
+git status --short
+git tag v0.2.0
+git push origin v0.2.0
+```
+
+### Release Owner Checklist
+
+- `release-preflight` is green
+- stable install snippets still point at the intended tag
+- no unexpected worktree changes remain
+- human sanity check is done
+- tag and release notes match the evidence
 
 ## What Happens When You Say “Remember This”
 
