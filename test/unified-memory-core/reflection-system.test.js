@@ -131,3 +131,32 @@ test("reflection system raises confidence for repeated sources in the same names
   assert.equal(result.repeated_source_count, 1);
   assert.ok(result.candidate_artifact.confidence > 0.78);
 });
+
+test("reflection system treats Chinese should-style rules as stable rule candidates", async () => {
+  const sourceSystem = createSourceSystem({
+    idGenerator: createIdGenerator(),
+    clock: createFixedClock()
+  });
+  const reflectionSystem = createReflectionSystem({
+    idGenerator: createIdGenerator(),
+    clock: createFixedClock()
+  });
+
+  const { sourceArtifact } = await sourceSystem.ingestDeclaredSource({
+    sourceType: "manual",
+    declaredBy: "test",
+    namespace: {
+      tenant: "local",
+      scope: "workspace",
+      resource: "unified-memory-core",
+      key: "reflection-zh-rule"
+    },
+    visibility: "workspace",
+    content: "订单与供应链执行应该拆成固定模块，并优先定义清晰的输入、动作和输出。"
+  });
+
+  const result = await reflectionSystem.reflectSourceArtifact(sourceArtifact);
+
+  assert.equal(result.primary_label, "stable_rule_candidate");
+  assert.equal(result.recommendation.should_promote, true);
+});

@@ -6,6 +6,7 @@ import {
   SHARED_CONTRACT_VERSION,
   createContractId,
   createContractTimestamp,
+  createNamespaceKey,
   parseCandidateArtifact,
   parseDecisionTrail,
   parseRegistryRecord,
@@ -21,6 +22,49 @@ const ALLOWED_RECORD_STATE_BY_TYPE = {
 
 function createFingerprint(payload) {
   return createHash("sha256").update(JSON.stringify(payload)).digest("hex");
+}
+
+function normalizeStableDedupText(text = "") {
+  return String(text || "")
+    .toLowerCase()
+    .replace(/[`"'“”‘’]/gu, "")
+    .replace(/[\s.,!?;:，。！？；：（）()\-_/\\]+/gu, "");
+}
+
+function createCharacterBigrams(text = "") {
+  const normalized = normalizeStableDedupText(text);
+  if (normalized.length < 2) {
+    return new Set(normalized ? [normalized] : []);
+  }
+  const grams = new Set();
+  for (let index = 0; index < normalized.length - 1; index += 1) {
+    grams.add(normalized.slice(index, index + 2));
+  }
+  return grams;
+}
+
+function calculateStableSummarySimilarity(left, right) {
+  const leftGrams = createCharacterBigrams(left);
+  const rightGrams = createCharacterBigrams(right);
+  if (leftGrams.size === 0 || rightGrams.size === 0) {
+    return 0;
+  }
+  let overlap = 0;
+  for (const gram of leftGrams) {
+    if (rightGrams.has(gram)) {
+      overlap += 1;
+    }
+  }
+  return (2 * overlap) / (leftGrams.size + rightGrams.size);
+}
+
+function createMonotonicTimestamp(clock, previousTimestamps = []) {
+  const current = Date.parse(createContractTimestamp(clock));
+  const previous = previousTimestamps
+    .map((value) => Date.parse(value))
+    .filter((value) => Number.isFinite(value));
+  const floor = previous.length > 0 ? Math.max(...previous) + 1 : current;
+  return new Date(Math.max(current, floor)).toISOString();
 }
 
 async function ensureParentDirectory(filePath) {
@@ -200,7 +244,58 @@ export function createMemoryRegistry(options = {}) {
     }
 
     const candidateArtifact = parseCandidateArtifact(candidateRecord.payload);
-    const now = createContractTimestamp(clock);
+    const now = createMonotonicTimestamp(clock, [
+      candidateArtifact.created_at,
+      candidateArtifact.updated_at
+    ]);
+    const stableTitle = title || candidateArtifact.title;
+    const stableSummary = summary || candidateArtifact.summary;
+    const namespaceKey = createNamespaceKey(candidateArtifact.namespace);
+    const existingStableRecord = (await listRecords({
+      recordType: "stable_artifact",
+      state: "stable",
+      namespaceKey
+    })).find((record) =>
+      record.visibility === candidateArtifact.visibility &&
+      (
+        record.payload?.summary === stableSummary
+        || calculateStableSummarySimilarity(record.payload?.summary, stableSummary) >= 0.66
+      )
+    );
+
+    if (existingStableRecord) {
+      const droppedCandidateArtifact = parseCandidateArtifact({
+        ...candidateArtifact,
+        state: "dropped",
+        updated_at: now
+      });
+      const droppedCandidateRecord = await persistCandidateArtifact(droppedCandidateArtifact);
+      const decisionTrail = await recordDecisionTrail({
+        decision_id: createContractId("decision", idGenerator),
+        artifact_id: candidateArtifact.artifact_id,
+        artifact_type: "candidate_artifact",
+        namespace: candidateArtifact.namespace,
+        visibility: candidateArtifact.visibility,
+        from_state: candidateRecord.state,
+        to_state: "dropped",
+        decided_by: decidedBy,
+        decided_at: now,
+        reason_codes: [...reasonCodes, "duplicate_stable_artifact"],
+        evidence_refs: [candidateArtifact.artifact_id, ...candidateArtifact.evidence_refs],
+        metadata: {
+          reused_stable_artifact_id: existingStableRecord.record_id
+        }
+      });
+
+      return {
+        stableArtifact: parseStableArtifact(existingStableRecord.payload),
+        stableRecord: existingStableRecord,
+        candidateRecord: droppedCandidateRecord,
+        decisionTrail,
+        reusedExisting: true
+      };
+    }
+
     const stableArtifact = parseStableArtifact({
       artifact_id: createContractId("artifact", idGenerator),
       artifact_type: "stable_artifact",
@@ -208,14 +303,14 @@ export function createMemoryRegistry(options = {}) {
       state: "stable",
       namespace: candidateArtifact.namespace,
       visibility: candidateArtifact.visibility,
-      title: title || candidateArtifact.title,
-      summary: summary || candidateArtifact.summary,
+      title: stableTitle,
+      summary: stableSummary,
       source_candidate_id: candidateArtifact.artifact_id,
       evidence_refs: candidateArtifact.evidence_refs,
       fingerprint: createFingerprint({
         source_candidate_id: candidateArtifact.artifact_id,
-        title: title || candidateArtifact.title,
-        summary: summary || candidateArtifact.summary
+        title: stableTitle,
+        summary: stableSummary
       }),
       attributes: candidateArtifact.attributes,
       export_hints: Array.isArray(exportHints) ? exportHints : candidateArtifact.export_hints,
@@ -244,6 +339,56 @@ export function createMemoryRegistry(options = {}) {
     return {
       stableArtifact,
       stableRecord,
+      decisionTrail,
+      reusedExisting: false
+    };
+  }
+
+  async function supersedeStableArtifact({
+    stableArtifactId,
+    decidedBy,
+    reasonCodes = ["manual_supersede"]
+  }) {
+    const stableRecord = await getRecord(stableArtifactId);
+    if (!stableRecord) {
+      throw new Error(`stable artifact not found: ${stableArtifactId}`);
+    }
+    if (stableRecord.record_type !== "stable_artifact") {
+      throw new TypeError("supersedeStableArtifact requires a stable artifact");
+    }
+
+    const stableArtifact = parseStableArtifact(stableRecord.payload);
+    const now = createMonotonicTimestamp(clock, [
+      stableArtifact.created_at,
+      stableArtifact.updated_at
+    ]);
+    const supersededArtifact = parseStableArtifact({
+      ...stableArtifact,
+      state: "superseded",
+      updated_at: now
+    });
+
+    const nextRecord = await persistStableArtifact(supersededArtifact);
+    const decisionTrail = await recordDecisionTrail({
+      decision_id: createContractId("decision", idGenerator),
+      artifact_id: supersededArtifact.artifact_id,
+      artifact_type: "stable_artifact",
+      namespace: supersededArtifact.namespace,
+      visibility: supersededArtifact.visibility,
+      from_state: stableRecord.state,
+      to_state: "superseded",
+      decided_by: decidedBy,
+      decided_at: now,
+      reason_codes: reasonCodes,
+      evidence_refs: [stableArtifact.source_candidate_id, ...stableArtifact.evidence_refs],
+      metadata: {
+        source_candidate_id: stableArtifact.source_candidate_id
+      }
+    });
+
+    return {
+      stableArtifact: supersededArtifact,
+      stableRecord: nextRecord,
       decisionTrail
     };
   }
@@ -268,6 +413,7 @@ export function createMemoryRegistry(options = {}) {
     getRecord,
     listDecisionTrails,
     promoteCandidateToStable,
+    supersedeStableArtifact,
     getStats
   };
 }

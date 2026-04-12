@@ -1,6 +1,10 @@
 const DEFAULT_CONFIG = {
   enabled: true,
   openclawCommand: "openclaw",
+  selfLearning: {
+    enabled: true,
+    localTime: "00:00"
+  },
   cardArtifacts: {
     enabled: true,
     path: "",
@@ -52,6 +56,9 @@ const DEFAULT_CONFIG = {
       enabled: true,
       registryDir: "",
       workspaceId: "",
+      agentNamespace: {
+        enabled: false
+      },
       tenant: "local",
       scope: "workspace",
       resource: "openclaw-shared-memory",
@@ -97,8 +104,27 @@ function mergeStringArrays(base, incoming) {
   return [...new Set(values)];
 }
 
+function normalizeTimeOfDay(value, fallback) {
+  if (typeof value !== "string") {
+    return fallback;
+  }
+  const normalized = value.trim();
+  if (!/^\d{2}:\d{2}$/.test(normalized)) {
+    return fallback;
+  }
+  const [hours, minutes] = normalized.split(":").map((item) => Number(item));
+  if (!Number.isInteger(hours) || !Number.isInteger(minutes)) {
+    return fallback;
+  }
+  if (hours < 0 || hours > 23 || minutes < 0 || minutes > 59) {
+    return fallback;
+  }
+  return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
+}
+
 export function resolvePluginConfig(raw) {
   const cfg = raw && typeof raw === "object" && !Array.isArray(raw) ? raw : {};
+  const selfLearning = mergeObject(DEFAULT_CONFIG.selfLearning, cfg.selfLearning);
   const cardArtifacts = mergeObject(DEFAULT_CONFIG.cardArtifacts, cfg.cardArtifacts);
   const llmRerank = mergeObject(DEFAULT_CONFIG.llmRerank, cfg.llmRerank);
   const queryRewrite = mergeObject(DEFAULT_CONFIG.queryRewrite, cfg.queryRewrite);
@@ -109,6 +135,10 @@ export function resolvePluginConfig(raw) {
     DEFAULT_CONFIG.openclawAdapter.governedExports,
     openclawAdapter.governedExports
   );
+  const agentNamespace = mergeObject(
+    DEFAULT_CONFIG.openclawAdapter.governedExports.agentNamespace,
+    governedExports.agentNamespace
+  );
 
   return {
     enabled: cfg.enabled !== false,
@@ -116,6 +146,13 @@ export function resolvePluginConfig(raw) {
       typeof cfg.openclawCommand === "string" && cfg.openclawCommand.trim()
         ? cfg.openclawCommand.trim()
         : DEFAULT_CONFIG.openclawCommand,
+    selfLearning: {
+      enabled: selfLearning.enabled !== false,
+      localTime: normalizeTimeOfDay(
+        selfLearning.localTime,
+        DEFAULT_CONFIG.selfLearning.localTime
+      )
+    },
     cardArtifacts: {
       enabled: cardArtifacts.enabled !== false,
       path: typeof cardArtifacts.path === "string" ? cardArtifacts.path.trim() : "",
@@ -238,6 +275,9 @@ export function resolvePluginConfig(raw) {
           typeof governedExports.workspaceId === "string"
             ? governedExports.workspaceId.trim()
             : "",
+        agentNamespace: {
+          enabled: agentNamespace.enabled === true
+        },
         tenant:
           typeof governedExports.tenant === "string" && governedExports.tenant.trim()
             ? governedExports.tenant.trim()

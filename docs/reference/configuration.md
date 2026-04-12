@@ -14,6 +14,8 @@ Most users only need to do three things:
 
 Everything else should stay on defaults until there is a clear reason to tune.
 
+That includes nightly self-learning: the plugin now runs one local-time self-learning pass at `00:00` by default, so most users do not need to add any extra config.
+
 ### Quick Minimal Config
 
 Use this in `~/.openclaw/openclaw.json`:
@@ -49,6 +51,24 @@ If you are developing locally and want OpenClaw to load this repo directly:
     entries: {
       "unified-memory-core": {
         enabled: true
+      }
+    }
+  }
+}
+```
+
+If you want to override the nightly self-learning behavior, keep it minimal:
+
+```json5
+{
+  plugins: {
+    entries: {
+      "unified-memory-core": {
+        enabled: true,
+        selfLearning: {
+          enabled: true,
+          localTime: "00:00"
+        }
       }
     }
   }
@@ -252,6 +272,9 @@ Default:
     enabled: true,
     registryDir: "",
     workspaceId: "",
+    agentNamespace: {
+      enabled: false
+    },
     tenant: "local",
     scope: "workspace",
     resource: "openclaw-shared-memory",
@@ -264,6 +287,36 @@ Default:
 ```
 
 Use this when you want the OpenClaw adapter to load governed stable exports from the local registry before merging with builtin recall results.
+
+If you enable `openclawAdapter.governedExports.agentNamespace.enabled`, OpenClaw uses a two-layer layout:
+
+- shared workspace namespace: every agent can read it
+- optional agent sub namespace: only the current agent reads it, and nightly self-learning writes agent-specific artifacts into it
+
+#### `selfLearning`
+
+Controls the plugin-level nightly self-learning pass.
+
+Default:
+
+```json5
+{
+  enabled: true,
+  localTime: "00:00"
+}
+```
+
+Behavior:
+
+- scans recent OpenClaw session memory at local midnight
+- derives governed long-term candidates from recent conversations
+- runs the existing daily reflection pipeline
+- auto-promotes stable candidates that pass the baseline threshold
+- persists scheduler state and latest reflection reports under the local registry
+
+Recommended rule:
+
+- leave this on unless you explicitly do not want automatic governed learning
 
 #### `weights`
 
@@ -351,6 +404,8 @@ But do that only after non-LLM behavior is already understandable.
 
 除此之外，大部分配置都应该先保持默认值。
 
+这也包括 nightly self-learning：插件现在默认会在本地时间 `00:00` 自动跑一轮 self-learning，所以大多数用户不需要额外再配。
+
 ### 最小可用配置
 
 把下面这段放到 `~/.openclaw/openclaw.json`：
@@ -386,6 +441,24 @@ But do that only after non-LLM behavior is already understandable.
     entries: {
       "unified-memory-core": {
         enabled: true
+      }
+    }
+  }
+}
+```
+
+如果你想覆盖 nightly self-learning 行为，建议也尽量保持最小配置：
+
+```json5
+{
+  plugins: {
+    entries: {
+      "unified-memory-core": {
+        enabled: true,
+        selfLearning: {
+          enabled: true,
+          localTime: "00:00"
+        }
       }
     }
   }
@@ -591,6 +664,9 @@ openclaw memory search "我爱吃什么"
     enabled: true,
     registryDir: "",
     workspaceId: "",
+    agentNamespace: {
+      enabled: false
+    },
     tenant: "local",
     scope: "workspace",
     resource: "openclaw-shared-memory",
@@ -603,6 +679,36 @@ openclaw memory search "我爱吃什么"
 ```
 
 当你希望 OpenClaw adapter 在合并内置 recall 结果之前，先从本地 registry 加载 governed stable exports 时，就用这一组配置。
+
+如果开启 `openclawAdapter.governedExports.agentNamespace.enabled`，OpenClaw 会变成双层结构：
+
+- 共享 workspace namespace：所有 agent 都能读
+- 可选 agent 子 namespace：只有当前 agent 会读，nightly self-learning 也会把 agent 专属学习结果写进去
+
+#### `selfLearning`
+
+控制插件层 nightly self-learning。
+
+默认值：
+
+```json5
+{
+  enabled: true,
+  localTime: "00:00"
+}
+```
+
+行为：
+
+- 在本地午夜扫描最近的 OpenClaw 会话记忆
+- 从最近对话里提取受治理的长期学习候选
+- 复用现有 daily reflection 管线
+- 对达到基线阈值的 stable candidates 自动晋升
+- 在本地 registry 下持久化 scheduler state 和 latest reflection reports
+
+推荐原则：
+
+- 除非你明确不想要自动受治理学习，否则就保持开启
 
 #### `weights`
 

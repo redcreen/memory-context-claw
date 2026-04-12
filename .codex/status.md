@@ -11,7 +11,7 @@
 
 ## Active Slice
 
-`openclaw-adapter stable-fact expansion under module view`
+`bootstrap host-neutral-memory subproject and define canonical storage decoupling slices`
 
 ## Done
 
@@ -52,6 +52,8 @@
 
 ## In Progress
 
+- 启动 `host-neutral-memory` 子项目，把 canonical storage 从 OpenClaw 宿主语义里解耦
+- 为 OpenClaw / Codex 共享同一 registry root 定义实现边界和迁移路径
 - 按模块视角继续推进 `openclaw-adapter`
 - 保持 `governance-system` 作为常规治理面运行
 - 把 self-learning 文档口径与当前实现状态重新对齐
@@ -61,9 +63,10 @@
 
 - `todo.md` 当前仍是用户自留短记，不应与 `.codex/status.md` 重叠承担当前状态职责
 - 是否要把 `reports/` 下部分高频专题文档再进一步按 `durable` / `generated` 分层，目前尚未执行
+- host-neutral registry 的默认根目录、compat fallback 和迁移策略尚未锁定
 
 ## Next 3 Actions
 
-1. 在 `openclaw-adapter` 模块里扩下一批稳定事实 / 稳定规则
-2. 新的 memory-search 专项 case 先过 `eval:smoke-promotion`
-3. 为 self-learning 下一生命周期 phase 明确定义 promotion / decay / policy adaptation 的验证方式
+1. 定义 host-neutral registry root resolution contract 与 fallback 顺序
+2. 让 OpenClaw / Codex 收敛到同一 canonical registry root
+3. 再继续推进 `openclaw-adapter` 的稳定事实 / 稳定规则扩面

@@ -57,6 +57,26 @@ openclaw plugins install git+https://github.com/redcreen/Unified-Memory-Core.git
 }
 ```
 
+插件层现在默认开启 nightly self-learning。它会在本地时间每天 `00:00` 扫描最近的 OpenClaw 会话记忆，抽取受治理的长期学习候选，跑 daily reflection，并把达到基线阈值的 stable candidates 自动晋升。
+
+大多数用户不需要额外配置。只有在你想关闭它或改执行时间时，才需要显式写 `selfLearning`：
+
+```json5
+{
+  plugins: {
+    entries: {
+      "unified-memory-core": {
+        enabled: true,
+        selfLearning: {
+          enabled: true,
+          localTime: "00:00"
+        }
+      }
+    }
+  }
+}
+```
+
 ### 验证是否加载成功
 
 ```bash
@@ -115,6 +135,7 @@ workspace/
 - candidate -> stable 的升级基线，以及对应 decision trails
 - standalone runtime / CLI，可直接跑 reflect、daily-run、export、audit、repair、replay
 - generic、OpenClaw、Codex 三条 export surface，可围绕 promoted stable artifacts 工作
+- 插件层 nightly self-learning：默认本地 `00:00`、启动补跑、运行状态持久化、latest reflection reports
 
 还没有做完的部分是：
 

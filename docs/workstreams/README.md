@@ -10,4 +10,4 @@ This directory contains durable workstream documentation that used to be mixed i
 
 - [memory-search/README.md](memory-search/README.md)
 - [self-learning/README.md](self-learning/README.md)
-
+- [host-neutral-memory/README.md](host-neutral-memory/README.md)

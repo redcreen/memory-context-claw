@@ -15,9 +15,10 @@ Own Codex-facing adapter integration, compatibility behavior, and future Codex-s
 - first-class adapter position in product docs and architecture
 
 ## Remaining Steps
-1. Define when Codex-specific policy adaptation should begin.
-2. Validate future consumer-specific exports once policy-input artifacts exist.
-3. Revisit task-side consumption only when the next product phase requires it.
+1. Converge Codex on the same canonical registry root used by OpenClaw.
+2. Define when Codex-specific policy adaptation should begin.
+3. Validate future consumer-specific exports once policy-input artifacts exist.
+4. Revisit task-side consumption only when the next product phase requires it.
 
 ## Completion Signal
 
@@ -25,4 +26,4 @@ Baseline complete; currently in maintain mode until policy adaptation becomes ac
 
 ## Next Checkpoint
 
-Reopen this module when the policy-input artifact contract is defined.
+Prove that Codex can read the same workspace memory from the shared canonical root.

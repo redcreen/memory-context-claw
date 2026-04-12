@@ -9,6 +9,14 @@
       "label": "OpenClaw Command",
       "help": "CLI command used to fetch memory candidates. Defaults to 'openclaw'."
     },
+    "selfLearning.enabled": {
+      "label": "Nightly Self-Learning",
+      "help": "Run the built-in nightly self-learning pass inside the plugin."
+    },
+    "selfLearning.localTime": {
+      "label": "Nightly Learn Time",
+      "help": "Local wall-clock time for the nightly self-learning run. Defaults to 00:00."
+    },
     "maxCandidates": {
       "label": "Max Candidates",
       "help": "Maximum number of recall candidates fetched before reranking."
@@ -41,6 +49,10 @@
       "label": "Rewrite Query Count",
       "help": "Maximum number of rewritten retrieval queries used for one recall."
     },
+    "openclawAdapter.governedExports.agentNamespace.enabled": {
+      "label": "Agent Sub Namespace",
+      "help": "When enabled, governed memory reads merge workspace-shared memory with the current agent's sub-namespace, and nightly self-learning writes per-agent artifacts into that sub-namespace."
+    },
     "llmRerank.enabled": {
       "label": "LLM Rerank",
       "help": "Use a subagent run to rerank top candidates with a model."
@@ -71,6 +83,19 @@
       },
       "openclawCommand": {
         "type": "string"
+      },
+      "selfLearning": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "enabled": {
+            "type": "boolean"
+          },
+          "localTime": {
+            "type": "string",
+            "pattern": "^\\d{2}:\\d{2}$"
+          }
+        }
       },
       "maxCandidates": {
         "type": "integer",
@@ -119,6 +144,39 @@
       },
       "forceAgentId": {
         "type": "string"
+      },
+      "openclawAdapter": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "enabled": {
+            "type": "boolean"
+          },
+          "governedExports": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "enabled": {
+                "type": "boolean"
+              },
+              "registryDir": {
+                "type": "string"
+              },
+              "workspaceId": {
+                "type": "string"
+              },
+              "agentNamespace": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "enabled": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        }
       },
       "llmRerank": {
         "type": "object",

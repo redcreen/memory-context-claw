@@ -3,8 +3,9 @@ import path from "node:path";
 
 import {
   createMemoryRegistry,
-  createOpenClawAdapterBridge,
-  createProjectionSystem
+  createProjectionSystem,
+  resolveOpenClawAgentNamespace,
+  resolveOpenClawNamespace
 } from "./unified-memory-core/index.js";
 
 const DEFAULT_REGISTRY_DIR = path.join(
@@ -32,9 +33,29 @@ function normalizeStringList(values, fallback) {
   return normalized.length > 0 ? normalized : [...fallback];
 }
 
+function dedupeGovernedCandidates(candidates, maxCandidates) {
+  const seen = new Set();
+  const merged = [];
+
+  for (const candidate of candidates) {
+    const key = String(candidate?.id || candidate?.path || "");
+    if (!key || seen.has(key)) {
+      continue;
+    }
+    seen.add(key);
+    merged.push(candidate);
+    if (merged.length >= maxCandidates) {
+      break;
+    }
+  }
+
+  return merged;
+}
+
 export function resolveOpenClawAdapterConfig(pluginConfig = {}) {
   const raw = pluginConfig?.openclawAdapter || {};
   const governedExports = raw?.governedExports || {};
+  const agentNamespace = governedExports?.agentNamespace || {};
 
   return {
     enabled: raw.enabled !== false,
@@ -42,6 +63,9 @@ export function resolveOpenClawAdapterConfig(pluginConfig = {}) {
       enabled: governedExports.enabled !== false,
       registryDir: normalizeString(governedExports.registryDir, DEFAULT_REGISTRY_DIR),
       workspaceId: normalizeString(governedExports.workspaceId, "default-workspace"),
+      agentNamespace: {
+        enabled: agentNamespace.enabled === true
+      },
       tenant: normalizeString(governedExports.tenant, "local"),
       scope: normalizeString(governedExports.scope, "workspace"),
       resource: normalizeString(governedExports.resource, "openclaw-shared-memory"),
@@ -103,33 +127,50 @@ export function createOpenClawAdapterRuntime(options = {}) {
     rootDir: config.governedExports.registryDir
   });
   const projectionSystem = createProjectionSystem({ registry });
-  const bridge = createOpenClawAdapterBridge({ projectionSystem });
 
   return {
     enabled: true,
-    async loadGovernedCandidates({ query, maxCandidates } = {}) {
+    async loadGovernedCandidates({ query, maxCandidates, agentId } = {}) {
       try {
-        const exportResult = await bridge.loadExports(
-          {
-            workspaceId: config.governedExports.workspaceId,
-            tenant: config.governedExports.tenant,
-            scope: config.governedExports.scope,
-            resource: config.governedExports.resource,
-            host: config.governedExports.host
-          },
-          {
+        const requestedMaxCandidates = Math.min(
+          maxCandidates || config.governedExports.maxCandidates,
+          config.governedExports.maxCandidates
+        );
+        const baseContext = {
+          workspaceId: config.governedExports.workspaceId,
+          tenant: config.governedExports.tenant,
+          scope: config.governedExports.scope,
+          resource: config.governedExports.resource,
+          host: config.governedExports.host
+        };
+        const namespaces = [
+          resolveOpenClawNamespace(baseContext)
+        ];
+
+        if (config.governedExports.agentNamespace.enabled && agentId) {
+          namespaces.unshift(resolveOpenClawAgentNamespace({
+            ...baseContext,
+            agentId
+          }));
+        }
+
+        const exportResults = await Promise.all(
+          namespaces.map((namespace) => projectionSystem.buildOpenClawExport({
+            namespace,
             allowedVisibilities: config.governedExports.allowedVisibilities,
             allowedStates: config.governedExports.allowedStates
-          }
+          }))
         );
 
-        return mapOpenClawExportToCandidates(exportResult, {
-          query,
-          maxCandidates: Math.min(
-            maxCandidates || config.governedExports.maxCandidates,
-            config.governedExports.maxCandidates
-          )
-        });
+        const candidates = dedupeGovernedCandidates(
+          exportResults.flatMap((exportResult, namespaceIndex) => mapOpenClawExportToCandidates(exportResult, {
+            query,
+            maxCandidates: requestedMaxCandidates + namespaceIndex
+          })),
+          requestedMaxCandidates
+        );
+
+        return candidates;
       } catch (error) {
         logger?.warn?.(
           `[unified-memory-core] openclaw adapter export loading failed: ${String(error)}`

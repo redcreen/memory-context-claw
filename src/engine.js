@@ -86,7 +86,8 @@ export class ContextAssemblyEngine {
     const [governedCandidates, retrievalCandidates] = await Promise.all([
       this.openclawAdapterRuntime.loadGovernedCandidates({
         query,
-        maxCandidates: this.config.openclawAdapter?.governedExports?.maxCandidates
+        maxCandidates: this.config.openclawAdapter?.governedExports?.maxCandidates,
+        agentId
       }),
       this.retrievalFn({
         openclawCommand: this.config.openclawCommand,

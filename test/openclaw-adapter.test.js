@@ -21,6 +21,9 @@ test("resolvePluginConfig keeps openclaw adapter governed export settings", () =
       governedExports: {
         workspaceId: "demo-workspace",
         registryDir: "/tmp/registry",
+        agentNamespace: {
+          enabled: true
+        },
         maxCandidates: 3,
         allowedVisibilities: ["workspace", "shared"]
       }
@@ -29,6 +32,7 @@ test("resolvePluginConfig keeps openclaw adapter governed export settings", () =
 
   assert.equal(config.openclawAdapter.governedExports.workspaceId, "demo-workspace");
   assert.equal(config.openclawAdapter.governedExports.registryDir, "/tmp/registry");
+  assert.equal(config.openclawAdapter.governedExports.agentNamespace.enabled, true);
   assert.equal(config.openclawAdapter.governedExports.maxCandidates, 3);
   assert.deepEqual(config.openclawAdapter.governedExports.allowedVisibilities, ["workspace", "shared"]);
 });
@@ -145,6 +149,94 @@ test("engine merges governed export candidates into the openclaw retrieval path"
   assert.equal(result.selectedCandidates.length, 1);
   assert.equal(result.selectedCandidates[0].source, "governedArtifact");
   assert.match(result.systemPromptAddition, /OpenClaw adapter/);
+});
+
+test("openclaw adapter runtime merges workspace and agent sub-namespace exports", async () => {
+  const registryRoot = await fs.mkdtemp(path.join(os.tmpdir(), "umc-openclaw-agent-"));
+  const clock = () => new Date("2026-04-11T00:00:00.000Z");
+  const sourceSystem = createSourceSystem({ clock });
+  const registry = createMemoryRegistry({ rootDir: registryRoot, clock });
+  const sharedNamespace = {
+    tenant: "local",
+    scope: "workspace",
+    resource: "openclaw-shared-memory",
+    key: "demo-workspace"
+  };
+  const agentNamespace = {
+    tenant: "local",
+    scope: "workspace",
+    resource: "openclaw-shared-memory",
+    key: "demo-workspace.agent.code"
+  };
+
+  const shared = await ingestDeclaredSourceToCandidate({
+    declaredSource: {
+      sourceType: "manual",
+      declaredBy: "test",
+      namespace: sharedNamespace,
+      visibility: "workspace",
+      content: "共享规则：所有 agent 都能读到"
+    },
+    sourceSystem,
+    registry,
+    decidedBy: "test-suite"
+  });
+  const agent = await ingestDeclaredSourceToCandidate({
+    declaredSource: {
+      sourceType: "manual",
+      declaredBy: "test",
+      namespace: agentNamespace,
+      visibility: "workspace",
+      content: "code agent 专属规则"
+    },
+    sourceSystem,
+    registry,
+    decidedBy: "test-suite"
+  });
+
+  await registry.promoteCandidateToStable({
+    candidateArtifactId: shared.candidateArtifact.artifact_id,
+    decidedBy: "test-suite",
+    reasonCodes: ["shared_namespace_ready"]
+  });
+  await registry.promoteCandidateToStable({
+    candidateArtifactId: agent.candidateArtifact.artifact_id,
+    decidedBy: "test-suite",
+    reasonCodes: ["agent_namespace_ready"]
+  });
+
+  const adapterRuntime = createOpenClawAdapterRuntime({
+    pluginConfig: {
+      openclawAdapter: {
+        governedExports: {
+          registryDir: registryRoot,
+          workspaceId: "demo-workspace",
+          agentNamespace: {
+            enabled: true
+          },
+          allowedVisibilities: ["workspace"],
+          maxCandidates: 4
+        }
+      }
+    }
+  });
+
+  const codeCandidates = await adapterRuntime.loadGovernedCandidates({
+    query: "读 code agent 的治理记忆",
+    agentId: "code",
+    maxCandidates: 4
+  });
+  const mainCandidates = await adapterRuntime.loadGovernedCandidates({
+    query: "读 main agent 的治理记忆",
+    agentId: "main",
+    maxCandidates: 4
+  });
+
+  assert.equal(codeCandidates.length, 2);
+  assert.match(codeCandidates[0].snippet, /code agent 专属规则/);
+  assert.match(codeCandidates.map((item) => item.snippet).join("\n"), /共享规则/);
+  assert.equal(mainCandidates.length, 1);
+  assert.match(mainCandidates[0].snippet, /共享规则/);
 });
 
 test("mapOpenClawExportToCandidates converts exported memory items into retrieval candidates", () => {

@@ -16,9 +16,9 @@
 
 - Overall: governed execution / module-view active
 - Average Completion: 85%
-- Active Module: Openclaw Adapter
-- Main Risk: `todo.md` 当前仍是用户自留短记，不应与 `.codex/status.md` 重叠承担当前状态职责
-- Active Slice: openclaw-adapter stable-fact expansion under module view
+- Active Module: Memory Registry / Adapter Boundary
+- Main Risk: host-neutral registry 迁移如果处理不好，会让 live OpenClaw 路径与未来 Codex 共享路径继续分叉
+- Active Slice: bootstrap host-neutral-memory subproject and define canonical storage decoupling slices
 
 ## Modules
 
@@ -32,6 +32,15 @@
 | Openclaw Adapter | active | 80% (active) | OpenClaw adapter runtime integration; memory-search phases A-E baseline; ... | Expand the next batch of stable facts and stable rules.; Keep supporting context clean while expanding recall coverage.; ... | Promote the next stable-fact batch without making the smoke surface brittle. | [modules/openclaw-adapter.md](modules/openclaw-adapter.md) |
 | Codex Adapter | baseline-complete / maintain | 95% (maintain) | Codex adapter runtime integration baseline; compatibility coverage across OpenClaw / Codex / governance surfaces; ... | Define when Codex-specific policy adaptation should begin.; Validate future consumer-specific exports once policy-input artifacts exist.; ... | Reopen this module when the policy-input artifact contract is defined. | [modules/codex-adapter.md](modules/codex-adapter.md) |
 
+## Cross-Cutting Subprojects
+
+| Subproject | Status | Goal | Primary Entry |
+| --- | --- | --- | --- |
+| Host-Neutral Memory | planning-active / development-ready | decouple canonical storage from OpenClaw host semantics and converge OpenClaw / Codex on one shared registry | [subprojects/host-neutral-memory.md](subprojects/host-neutral-memory.md) |
+| Core Product | baseline-complete / next-phase candidate | keep the shared memory product core independent from any one adapter | [subprojects/core-product.md](subprojects/core-product.md) |
+| Plugin Runtime | active | keep OpenClaw retrieval / assembly clean while runtime behavior evolves | [subprojects/plugin-runtime.md](subprojects/plugin-runtime.md) |
+| Memory Governance | stable | keep governance readable, low-noise, and comparable | [subprojects/memory-governance.md](subprojects/memory-governance.md) |
+
 ## Module Entry Rules
 
 - 当前状态，以 [status.md](status.md) 为准
@@ -43,7 +52,7 @@
 
 ## Current Execution Order
 
-1. 先从 [modules/openclaw-adapter.md](modules/openclaw-adapter.md) 继续扩下一批稳定事实 / 稳定规则
-2. 新的 memory-search 专项 case 一律先过 `npm run eval:smoke-promotion`
-3. 继续让 [modules/governance-system.md](modules/governance-system.md) 维护 recalled context 质量，不只看 pass/fail
-4. 为 [modules/reflection-system.md](modules/reflection-system.md) 与 [modules/projection-system.md](modules/projection-system.md) 打开下一增强 phase 入口
+1. 先按 [subprojects/host-neutral-memory.md](subprojects/host-neutral-memory.md) 定义 canonical registry root、fallback 和迁移边界
+2. 再对齐 [modules/memory-registry.md](modules/memory-registry.md)、[modules/openclaw-adapter.md](modules/openclaw-adapter.md)、[modules/codex-adapter.md](modules/codex-adapter.md) 的 shared-root 行为
+3. 新的 memory-search 专项 case 一律先过 `npm run eval:smoke-promotion`
+4. 继续让 [modules/governance-system.md](modules/governance-system.md) 维护 recalled context 质量，不只看 pass/fail

@@ -6,6 +6,27 @@
 
 ## Slices
 
+- Slice: `define-host-neutral-registry-contract`
+  - Objective: 明确 canonical registry root、config / env override、compat fallback 与 shared / agent / session durability policy
+  - Dependencies: `.codex/subprojects/host-neutral-memory.md`、`docs/workstreams/host-neutral-memory/architecture.md`
+  - Risks: storage 归属继续和 OpenClaw 宿主混在一起，导致 Codex 共享路径继续漂移
+  - Validation: durable 文档和 `.codex` 控制面达成同一边界；首批实现切片与验证方式明确
+  - Exit Condition: registry-root contract 和 fallback 顺序固定，不再停留在口头讨论
+
+- Slice: `implement-host-neutral-registry-root`
+  - Objective: 让 OpenClaw / Codex 都通过同一 canonical root 解析 registry，并保留兼容旧 OpenClaw-scoped root 的能力
+  - Dependencies: `src/config.js`、registry root 解析入口、OpenClaw / Codex adapter
+  - Risks: live OpenClaw 本地安装被打断，或出现 adapter-local duplicate store
+  - Validation: targeted tests、shared-root resolution tests、live plugin load 检查
+  - Exit Condition: 一个 workspace 能被 OpenClaw / Codex 从同一 registry root 读取
+
+- Slice: `add-migration-and-governance-for-shared-root`
+  - Objective: 给 host-neutral root 增加 migration/reporting/governance，避免切换期静默丢数据
+  - Dependencies: registry、governance-system、standalone CLI / reports
+  - Risks: records 虽未丢失，但 operator 无法判断当前 live root 和 fallback 命中情况
+  - Validation: migration/reporting 输出可读；治理检查能发现 root / namespace 不一致
+  - Exit Condition: storage decoupling 进入可维护状态
+
 - Slice: `advance-openclaw-adapter-recall-quality`
   - Objective: 继续扩稳定事实 / 稳定规则，同时保持 recalled context 干净
   - Dependencies: `.codex/modules/openclaw-adapter.md`、smoke surfaces、promotion helper
@@ -29,6 +50,8 @@
 
 ## Execution Order
 
-1. 先继续 `openclaw-adapter` 的稳定事实 / 规则扩面
-2. 同步维持 `governance-system` 与 smoke promotion
-3. 再为 `reflection-system` 打开下一增强 phase
+1. 先定义 `host-neutral-memory` 的 registry-root contract
+2. 再实现 shared-root resolution 和 OpenClaw / Codex 对齐
+3. 再补 migration / governance / operator-visible reporting
+4. 同步维持 `openclaw-adapter` recall quality 与 smoke promotion
+5. 为 `reflection-system` 打开下一增强 phase

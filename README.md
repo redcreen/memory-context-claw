@@ -57,6 +57,26 @@ Set `unified-memory-core` as the active `contextEngine` in `~/.openclaw/openclaw
 }
 ```
 
+Nightly self-learning is now enabled by default inside the plugin. Every day at local `00:00`, the plugin scans recent OpenClaw session memory, derives governed long-term learning candidates, runs daily reflection, and auto-promotes stable candidates that pass the baseline threshold.
+
+Most users do not need to configure this. Only add `selfLearning` if you want to disable it or move the run time:
+
+```json5
+{
+  plugins: {
+    entries: {
+      "unified-memory-core": {
+        enabled: true,
+        selfLearning: {
+          enabled: true,
+          localTime: "00:00"
+        }
+      }
+    }
+  }
+}
+```
+
 ### Verify It Loaded
 
 ```bash
@@ -115,6 +135,7 @@ Today the repo already includes:
 - candidate-to-stable promotion baseline with decision trails
 - standalone runtime / CLI flows for reflect, daily-run, export, audit, repair, and replay
 - generic, OpenClaw, and Codex export surfaces around promoted stable artifacts
+- plugin-level nightly self-learning: default local `00:00`, startup catch-up, persisted run state, and latest reflection reports
 
 What is not finished yet:
 

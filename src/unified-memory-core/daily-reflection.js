@@ -138,6 +138,7 @@ export function renderDailyReflectionReport(report, { format = "markdown" } = {}
   lines.push(`- repeatedSignals: \`${report.summary.reflection.repeated_signal_count}\``);
   lines.push(`- explicitRememberSignals: \`${report.explicit_remember_signals.length}\``);
   lines.push(`- promotedStableArtifacts: \`${report.promoted_stable_artifacts.length}\``);
+  lines.push(`- reusedStableArtifacts: \`${(report.reused_stable_artifacts || []).length}\``);
   lines.push("");
   lines.push("## Labels");
   if (Object.keys(report.summary.reflection.by_label).length === 0) {
@@ -221,17 +222,23 @@ export function createDailyReflectionRunner(options = {}) {
     );
     const promotionReview = buildPromotionReview(reflectionResult.outputs);
     const promotedStableArtifacts = [];
+    const reusedStableArtifacts = [];
 
     if (!dryRun && autoPromote) {
       for (const reviewItem of promotionReview) {
         if (!reviewItem.should_promote) {
           continue;
         }
-        promotedStableArtifacts.push(await registry.promoteCandidateToStable({
+        const promotion = await registry.promoteCandidateToStable({
           candidateArtifactId: reviewItem.candidate_artifact_id,
           decidedBy,
           reasonCodes: ["daily_reflection_promotion", `label:${reviewItem.label}`]
-        }));
+        });
+        if (promotion.reusedExisting) {
+          reusedStableArtifacts.push(promotion);
+        } else {
+          promotedStableArtifacts.push(promotion);
+        }
       }
     }
 
@@ -252,6 +259,11 @@ export function createDailyReflectionRunner(options = {}) {
       explicit_remember_signals: explicitRememberSignals,
       promotion_review: promotionReview,
       promoted_stable_artifacts: promotedStableArtifacts.map((item) => ({
+        stable_artifact_id: item.stableArtifact.artifact_id,
+        source_candidate_id: item.stableArtifact.source_candidate_id,
+        decision_id: item.decisionTrail.decision_id
+      })),
+      reused_stable_artifacts: reusedStableArtifacts.map((item) => ({
         stable_artifact_id: item.stableArtifact.artifact_id,
         source_candidate_id: item.stableArtifact.source_candidate_id,
         decision_id: item.decisionTrail.decision_id

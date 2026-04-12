@@ -21,6 +21,7 @@
 | See official module boundaries | [module-map.md](module-map.md) |
 | Understand what is next at milestone level | [roadmap.md](roadmap.md) |
 | Understand the self-learning direction and current baseline | [workstreams/self-learning/README.md](workstreams/self-learning/README.md) |
+| Understand how canonical memory will decouple from OpenClaw host storage | [workstreams/host-neutral-memory/README.md](workstreams/host-neutral-memory/README.md) |
 | Understand verification and release gates | [test-plan.md](test-plan.md) |
 | Dive into detailed implementation sequencing | [unified-memory-core/development-plan.md](unified-memory-core/development-plan.md) |
 

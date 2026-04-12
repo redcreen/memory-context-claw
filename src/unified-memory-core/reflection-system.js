@@ -77,7 +77,7 @@ function detectLabels(sourceArtifact, text) {
     return [...labels];
   }
 
-  if (/\b(must|always|never|rule|rules|required?|should)\b|必须|不要|禁止|应当/iu.test(normalizedText)) {
+  if (/\b(must|always|never|rule|rules|required?|should)\b|必须|不要|禁止|应当|应该|优先/iu.test(normalizedText)) {
     labels.add("stable_rule_candidate");
   }
   if (/\b(prefer|prefers|preferred|preference|likes?|dislikes?|favorite)\b|偏好|喜欢|不喜欢|更倾向/iu.test(normalizedText)) {

@@ -17,12 +17,32 @@ function normalizeProjectId(projectPath, projectId) {
   return "default-project";
 }
 
+function resolveOpenClawWorkspaceKey(context = {}) {
+  return sanitizePart(
+    context.workspaceId || context.namespaceHint || "default-workspace",
+    "default-workspace"
+  );
+}
+
 export function resolveOpenClawNamespace(context = {}) {
   return parseNamespace({
     tenant: sanitizePart(context.tenant || "local", "local"),
     scope: sanitizePart(context.scope || "workspace", "workspace"),
     resource: sanitizePart(context.resource || "openclaw-shared-memory", "openclaw-shared-memory"),
-    key: sanitizePart(context.workspaceId || context.namespaceHint || "default-workspace", "default-workspace"),
+    key: resolveOpenClawWorkspaceKey(context),
+    host: sanitizePart(context.host || "", "")
+  });
+}
+
+export function resolveOpenClawAgentNamespace(context = {}) {
+  const workspaceKey = resolveOpenClawWorkspaceKey(context);
+  const agentKey = sanitizePart(context.agentId || "main", "main");
+
+  return parseNamespace({
+    tenant: sanitizePart(context.tenant || "local", "local"),
+    scope: sanitizePart(context.scope || "workspace", "workspace"),
+    resource: sanitizePart(context.resource || "openclaw-shared-memory", "openclaw-shared-memory"),
+    key: `${workspaceKey}.agent.${agentKey}`,
     host: sanitizePart(context.host || "", "")
   });
 }

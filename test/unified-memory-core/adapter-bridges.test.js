@@ -7,6 +7,7 @@ import path from "node:path";
 import {
   createCodexAdapterBridge,
   createOpenClawAdapterBridge,
+  resolveOpenClawAgentNamespace,
   resolveCodexNamespace,
   resolveOpenClawNamespace
 } from "../../src/unified-memory-core/adapter-bridges.js";
@@ -27,6 +28,22 @@ test("namespace resolvers build stable openclaw and codex namespace bindings", (
       scope: "workspace",
       resource: "openclaw-shared-memory",
       key: "main-workspace",
+      host: "macbook-pro"
+    }
+  );
+
+  assert.deepEqual(
+    resolveOpenClawAgentNamespace({
+      workspaceId: "Main Workspace",
+      agentId: "Code Agent",
+      host: "macbook-pro",
+      tenant: "Local"
+    }),
+    {
+      tenant: "local",
+      scope: "workspace",
+      resource: "openclaw-shared-memory",
+      key: "main-workspace.agent.code-agent",
       host: "macbook-pro"
     }
   );

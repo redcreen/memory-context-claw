@@ -132,7 +132,7 @@ test("standalone runtime daily reflection loop can export promoted artifacts", a
     clock: createFixedClock()
   });
 
-  await runtime.runDailyReflection({
+  const report = await runtime.runDailyReflection({
     declaredSources: [
       {
         sourceType: "manual",
@@ -153,7 +153,9 @@ test("standalone runtime daily reflection loop can export promoted artifacts", a
     consumer: "generic"
   });
 
-  assert.equal(exportResult.artifacts.length, 2);
+  assert.equal(report.promoted_stable_artifacts.length, 1);
+  assert.equal((report.reused_stable_artifacts || []).length, 1);
+  assert.equal(exportResult.artifacts.length, 1);
 });
 
 test("daily reflection CLI command returns reviewable report", async () => {

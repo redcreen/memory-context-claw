@@ -21,6 +21,7 @@
 | 看官方模块边界 | [module-map.zh-CN.md](module-map.zh-CN.md) |
 | 看里程碑层面的下一步 | [roadmap.zh-CN.md](roadmap.zh-CN.md) |
 | 理解 self-learning 主线与当前基线 | [workstreams/self-learning/README.md](workstreams/self-learning/README.md) |
+| 理解 canonical memory 如何从 OpenClaw 宿主存储解耦 | [workstreams/host-neutral-memory/README.md](workstreams/host-neutral-memory/README.md) |
 | 了解验证和发布门禁 | [test-plan.zh-CN.md](test-plan.zh-CN.md) |
 | 深入查看详细执行队列 | [unified-memory-core/development-plan.md](unified-memory-core/development-plan.md) |
 

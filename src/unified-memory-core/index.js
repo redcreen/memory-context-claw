@@ -36,6 +36,7 @@ export {
 } from "./governance-system.js";
 export {
   resolveOpenClawNamespace,
+  resolveOpenClawAgentNamespace,
   resolveCodexNamespace,
   createOpenClawAdapterBridge,
   createCodexAdapterBridge
