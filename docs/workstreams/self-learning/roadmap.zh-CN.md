@@ -35,27 +35,29 @@
 
 ## 当前状态
 
-- 状态：`baseline-implemented / next-phase active`
+- 状态：`Stage 3 complete / Stage 4 next`
 - 架构基线：`已定义，并且已经在当前共享模块里部分落地`
 - 实现基线：`已经可运行`
 - 依赖状态：
   - memory-context 主骨架：`ready`
   - memory-search 治理循环：`ready but not a hard coupling target`
   - daily reflection 基线：`implemented`
-  - candidate -> stable promotion 基线：`implemented`
+  - lifecycle 基线：`implemented`
   - standalone CLI / export / governance 面：`implemented`
 
 ## 当前已经落地的基线
 
-当前仓库已经有一条真实可用的 self-learning 基线，只是完整 lifecycle 还没有收口。
+当前仓库已经不只是“有一条 baseline”。Stage 3 lifecycle 已经收口完成。
 
 - declared sources 已支持 `manual`、`file`、`directory`、`conversation`
 - reflection 已能产出结构化的 candidate artifacts 和 decision trails
 - daily reflection 已能识别 repeated signals 和显式 remember 指令
-- candidate -> stable promotion 已经能走通 registry
-- standalone runtime / CLI、exports、governance audit / repair / replay 已经可用
+- promotion / decay / conflict / stable-update 规则已经落进共享模块
+- learning-specific audit / repair / replay / compare 面已经可用
+- standalone runtime / CLI / script 已支持一条本地 governed `observation -> stable` loop
+- OpenClaw 对 promoted learning artifacts 的消费行为已经有验证
 
-下一阶段不是“从零开始做 self-learning”，而是把生命周期规则显式化，并补齐 policy-facing 部分。
+下一阶段不再是“把生命周期规则显式化”。这一段已经完成。下一阶段是定义 `policy-input artifact` contract，并开始可回退的 consumer adaptation。
 
 下面的 phase 描述是规划外壳。Phase 0-2 的一部分，已经通过当前共享模块实现。
 
@@ -222,6 +224,10 @@ flowchart LR
 - 弱信号和过期信号可以衰减
 - 冲突会被显式标出
 - 没有候选能绕过评审逻辑
+
+状态：
+
+`已经通过当前共享模块实现`
 
 ## Phase 4：集成适配层
 

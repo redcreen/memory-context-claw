@@ -255,3 +255,90 @@ test("standalone CLI can plan and apply registry migration", async () => {
   assert.equal(applyResult.added_records, 1);
   assert.match(await fs.readFile(path.join(canonicalDir, "records.jsonl"), "utf8"), /legacy-cli/);
 });
+
+test("standalone runtime closes a local observation to stable governed learning loop", async () => {
+  const registryRoot = await fs.mkdtemp(path.join(os.tmpdir(), "umc-standalone-lifecycle-"));
+  const runtime = createStandaloneRuntime({
+    config: {
+      registryDir: registryRoot,
+      tenant: "local",
+      scope: "workspace",
+      resource: "unified-memory-core",
+      key: "lifecycle-loop",
+      visibility: "workspace"
+    },
+    clock: () => new Date("2026-04-20T00:00:00.000Z")
+  });
+
+  const report = await runtime.runLearningLifecycle({
+    declaredSources: [
+      {
+        sourceType: "manual",
+        declaredBy: "test",
+        content: "Remember this: the user prefers concise progress reports."
+      }
+    ],
+    autoPromote: true,
+    decidedBy: "standalone-test"
+  });
+
+  assert.equal(report.daily_reflection.summary.sources.source_count, 1);
+  assert.equal(report.lifecycle.promotedStableArtifacts.length, 1);
+  assert.equal(report.learning_audit.summary.stable_learning_artifacts, 1);
+  assert.equal(report.learning_audit.summary.openclaw_consumed_candidates, 1);
+  assert.equal(report.replay_run.result, "queued");
+});
+
+test("standalone CLI can run lifecycle loop and render learning audit markdown", async () => {
+  const registryRoot = await fs.mkdtemp(path.join(os.tmpdir(), "umc-standalone-lifecycle-cli-"));
+  const cliPath = path.join(process.cwd(), "scripts", "unified-memory-core-cli.js");
+
+  const lifecycleResult = await execFileAsync(
+    "node",
+    [
+      cliPath,
+      "learn",
+      "lifecycle-run",
+      "--registry-dir",
+      registryRoot,
+      "--tenant",
+      "local",
+      "--scope",
+      "workspace",
+      "--resource",
+      "unified-memory-core",
+      "--key",
+      "lifecycle-cli",
+      "--source-type",
+      "manual",
+      "--content",
+      "Remember this: the user prefers concise summaries."
+    ],
+    { cwd: process.cwd() }
+  );
+  const auditResult = await execFileAsync(
+    "node",
+    [
+      cliPath,
+      "govern",
+      "audit-learning",
+      "--registry-dir",
+      registryRoot,
+      "--tenant",
+      "local",
+      "--scope",
+      "workspace",
+      "--resource",
+      "unified-memory-core",
+      "--key",
+      "lifecycle-cli",
+      "--format",
+      "markdown"
+    ],
+    { cwd: process.cwd() }
+  );
+
+  const lifecycle = parseJson(lifecycleResult.stdout);
+  assert.equal(lifecycle.learning_audit.summary.stable_learning_artifacts, 1);
+  assert.match(String(auditResult.stdout || ""), /Learning Lifecycle Audit/);
+});

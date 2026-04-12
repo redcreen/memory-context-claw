@@ -2,11 +2,11 @@
 
 ## Ownership
 
-Own audit, repair, replay, conflict/duplicate handling, governance cycle, and promotion decision support.
+Own audit, repair, replay, conflict/duplicate handling, governance cycle, promotion decision support, and lifecycle comparison/reporting.
 
 ## Current Status
 
-`governing`
+`governing / lifecycle-baseline complete`
 
 ## Already Implemented
 
@@ -14,19 +14,19 @@ Own audit, repair, replay, conflict/duplicate handling, governance cycle, and pr
 - governance cycle and repair/replay primitives
 - memory-search governance metrics
 - namespace audit around exported stable artifacts
-- smoke-promotion helper as a conservative suggestion path
-- smoke-promotion output now separates `naturalPending`, `syntheticReviewRequired`, and `syntheticPending`
-- registry-root consistency surfaced through governance cycle output
+- learning-specific audit report, repair/replay plan, and time-window comparison
+- OpenClaw promoted-artifact consumption validation
 
 ## Remaining Steps
-1. Keep governance signals readable and stable during ongoing work.
-2. Add learning-specific governance reports, decay/conflict review paths, and time-window comparisons.
-3. Optionally split high-frequency reports into clearer durable/generated groups.
+
+1. Keep lifecycle reports readable and durable while Stage 4 starts.
+2. Add Stage 4 rollback / compatibility checks on top of current learning audit surfaces.
+3. Decide whether high-frequency lifecycle outputs need a clearer durable/generated split.
 
 ## Completion Signal
 
-This module is in ongoing governance mode rather than a finite "done" state.
+Stage 3 governance productization is complete. This module stays in ongoing governance mode while later phases reuse these reports.
 
 ## Next Checkpoint
 
-Maintain stable governance outputs while the next plugin-runtime and learning changes are introduced.
+Carry current lifecycle reports forward as the required evidence surface for Stage 4.

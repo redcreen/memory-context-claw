@@ -32,7 +32,9 @@ export {
   createGovernanceSystem,
   renderGovernanceAuditReport,
   renderGovernanceRepairRecord,
-  renderGovernanceReplayRun
+  renderGovernanceReplayRun,
+  renderLearningLifecycleReport,
+  renderLearningWindowComparisonReport
 } from "./governance-system.js";
 export {
   resolveOpenClawNamespace,
@@ -49,6 +51,10 @@ export {
   createStandaloneRuntime,
   resolveStandaloneConfig
 } from "./standalone-runtime.js";
+export {
+  mapOpenClawExportToCandidates,
+  validateOpenClawExportConsumption
+} from "./openclaw-consumption.js";
 export {
   createIndependentExecutionReview,
   renderIndependentExecutionReview

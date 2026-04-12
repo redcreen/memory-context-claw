@@ -115,6 +115,10 @@ function buildPromotionReview(outputs) {
     state: output.candidate_artifact.state,
     confidence: output.candidate_artifact.confidence,
     should_promote: output.recommendation.should_promote,
+    promotion_score: output.recommendation.promotion_score,
+    recommended_action: output.recommendation.recommended_action,
+    reason_codes: output.recommendation.reason_codes || [],
+    blocker_codes: output.recommendation.blocker_codes || [],
     reason:
       output.recommendation.should_promote
         ? "confidence_threshold_met"
@@ -154,7 +158,7 @@ export function renderDailyReflectionReport(report, { format = "markdown" } = {}
     lines.push("- none");
   } else {
     for (const item of report.promotion_review) {
-      lines.push(`- ${item.label}: promote=${item.should_promote} confidence=${item.confidence}`);
+      lines.push(`- ${item.label}: promote=${item.should_promote} score=${item.promotion_score ?? item.confidence} action=${item.recommended_action || "review"}`);
     }
   }
   lines.push("");

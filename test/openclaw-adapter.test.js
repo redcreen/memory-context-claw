@@ -13,6 +13,7 @@ import {
 } from "../src/openclaw-adapter.js";
 import { createMemoryRegistry } from "../src/unified-memory-core/memory-registry.js";
 import { ingestDeclaredSourceToCandidate } from "../src/unified-memory-core/pipeline.js";
+import { createReflectionSystem } from "../src/unified-memory-core/reflection-system.js";
 import { createSourceSystem } from "../src/unified-memory-core/source-system.js";
 
 test("resolvePluginConfig keeps openclaw adapter governed export settings", () => {
@@ -374,4 +375,60 @@ test("mapOpenClawExportToCandidates converts exported memory items into retrieva
   assert.equal(candidates.length, 1);
   assert.equal(candidates[0].pathKind, "governedArtifact");
   assert.equal(resolveOpenClawAdapterConfig({}).governedExports.enabled, true);
+});
+
+test("openclaw adapter runtime exposes learning metadata for promoted lifecycle artifacts", async () => {
+  const registryRoot = await fs.mkdtemp(path.join(os.tmpdir(), "umc-openclaw-learning-"));
+  const clock = () => new Date("2026-04-20T00:00:00.000Z");
+  const sourceSystem = createSourceSystem({ clock });
+  const registry = createMemoryRegistry({ rootDir: registryRoot, clock });
+  const reflectionSystem = createReflectionSystem({ registry, clock });
+  const namespace = {
+    tenant: "local",
+    scope: "workspace",
+    resource: "openclaw-shared-memory",
+    key: "learning-workspace"
+  };
+
+  const { sourceArtifact } = await sourceSystem.ingestDeclaredSource({
+    sourceType: "manual",
+    declaredBy: "test",
+    namespace,
+    visibility: "workspace",
+    content: "Remember this: the user prefers concise summaries."
+  });
+  await registry.persistSourceArtifact(sourceArtifact);
+  const reflection = await reflectionSystem.runReflection({
+    sourceArtifacts: [sourceArtifact],
+    persistCandidates: true,
+    decidedBy: "test-suite"
+  });
+  await registry.promoteCandidateToStable({
+    candidateArtifactId: reflection.outputs[0].candidate_artifact.artifact_id,
+    decidedBy: "test-suite",
+    reasonCodes: ["learning_metadata_ready"]
+  });
+
+  const adapterRuntime = createOpenClawAdapterRuntime({
+    pluginConfig: {
+      openclawAdapter: {
+        governedExports: {
+          registryDir: registryRoot,
+          workspaceId: "learning-workspace",
+          allowedVisibilities: ["workspace"],
+          maxCandidates: 2
+        }
+      }
+    }
+  });
+
+  const candidates = await adapterRuntime.loadGovernedCandidates({
+    query: "读取学习后的长期记忆",
+    maxCandidates: 2
+  });
+
+  assert.equal(candidates.length, 1);
+  assert.equal(candidates[0].learning.signal_type, "preference");
+  assert.equal(candidates[0].learning.lifecycle_state, "stable");
+  assert.ok((candidates[0].learning.promotion_score || 0) > 0);
 });

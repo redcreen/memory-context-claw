@@ -35,27 +35,29 @@ Build a governed daily-learning system for `unified-memory-core` that can:
 
 ## Current Status
 
-- status: `baseline-implemented / next-phase active`
+- status: `Stage 3 complete / Stage 4 next`
 - architecture baseline: `defined and partially realized in the current shared modules`
 - implementation baseline: `already running`
 - dependency status:
   - core memory-context backbone: `ready`
   - memory-search governance loop: `ready but not a hard coupling target`
   - daily reflection baseline: `implemented`
-  - candidate -> stable promotion baseline: `implemented`
+  - lifecycle baseline: `implemented`
   - standalone CLI / export / governance surfaces: `implemented`
 
 ## Implemented Baseline Today
 
-The current repo already has a real self-learning baseline, even though the full lifecycle is not complete yet.
+The current repo no longer has only a baseline. Stage 3 lifecycle work is now complete.
 
 - declared sources already support `manual`, `file`, `directory`, and `conversation`
 - reflection already emits structured candidate artifacts and decision trails
 - daily reflection already detects repeated signals and explicit remember instructions
-- candidate-to-stable promotion already runs through the registry
-- standalone runtime / CLI, exports, and governance audit / repair / replay surfaces are already available
+- explicit promotion / decay / conflict / stable-update rules now run through the shared modules
+- learning-specific audit / repair / replay / compare surfaces are now available
+- standalone runtime / CLI / script now support one local governed `observation -> stable` loop
+- OpenClaw consumption of promoted learning artifacts is now validated
 
-The next phase is not “start self-learning from zero”. The next phase is to make the lifecycle rules explicit and finish the policy-facing parts.
+The next phase is not to make lifecycle rules explicit. That part is done. The next phase is to define the `policy-input artifact` contract and begin reversible consumer adaptation.
 
 The phase descriptions below are planning envelopes. Parts of Phase 0-2 are already implemented across the current shared modules.
 
@@ -222,6 +224,10 @@ Acceptance:
 - weak or stale signals can decay
 - conflicts are explicit
 - no candidate bypasses review logic
+
+Status:
+
+`implemented in the current shared modules`
 
 ## Phase 4: Integration Adapters
 

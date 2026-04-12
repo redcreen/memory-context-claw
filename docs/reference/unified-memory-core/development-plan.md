@@ -47,8 +47,9 @@ Current status:
 
 - `Stage 1`: completed
 - `Stage 2`: completed
-- current pointer: `Step 21`
-- current recommendation: resume from `Stage 3`
+- `Stage 3`: completed
+- current pointer: `Step 31`
+- current recommendation: resume from `Stage 4`
 
 Already implemented in the current baseline:
 
@@ -77,8 +78,8 @@ Execution constraints that still apply:
 | --- | --- | --- | --- |
 | Stage 1 | `1-10` | freeze product shape and documentation baseline | `completed` |
 | Stage 2 | `11-20` | complete the first local-first implementation baseline | `completed` |
-| Stage 3 | `21-30` | complete the self-learning lifecycle baseline | `next` |
-| Stage 4 | `31-38` | connect governed learning outputs into adapter policy use | `later` |
+| Stage 3 | `21-30` | complete the self-learning lifecycle baseline | `completed` |
+| Stage 4 | `31-38` | connect governed learning outputs into adapter policy use | `next` |
 | Stage 5 | `39-46` | harden product operations and split-ready execution | `later` |
 
 ## Sequential Build Plan
@@ -129,16 +130,16 @@ Stage complete when:
 - promotion and decay are explicit
 - learning-specific governance is testable
 
-21. `next` Implement promotion rules for learning candidates.
-22. `later` Implement decay and expiry rules for weak or stale signals.
-23. `later` Implement conflict detection and conflict reporting for learned artifacts.
-24. `later` Implement stable registry update rules for promoted learning artifacts.
-25. `later` Add learning-specific audit reports.
-26. `later` Add learning-specific replay and repair paths.
-27. `later` Add time-window comparison reports for learning outcomes.
-28. `later` Add regression coverage for the learning lifecycle.
-29. `later` Validate OpenClaw consumption of promoted learning artifacts.
-30. `later` Close the stage with one governed `observation -> stable` loop running locally end to end.
+21. `completed` Implement promotion rules for learning candidates.
+22. `completed` Implement decay and expiry rules for weak or stale signals.
+23. `completed` Implement conflict detection and conflict reporting for learned artifacts.
+24. `completed` Implement stable registry update rules for promoted learning artifacts.
+25. `completed` Add learning-specific audit reports.
+26. `completed` Add learning-specific replay and repair paths.
+27. `completed` Add time-window comparison reports for learning outcomes.
+28. `completed` Add regression coverage for the learning lifecycle.
+29. `completed` Validate OpenClaw consumption of promoted learning artifacts.
+30. `completed` Close the stage with one governed `observation -> stable` loop running locally end to end.
 
 ### Stage 4. Policy Adaptation And Multi-Consumer Use
 
@@ -177,9 +178,9 @@ Stage complete when:
 
 Resume exactly from here:
 
-1. start at `Step 21`
-2. finish `Stage 3` completely before touching `Stage 4`
-3. treat `Stage 4-5` as locked until `Stage 3` closes
+1. start at `Step 31`
+2. finish `Stage 4` completely before touching `Stage 5`
+3. treat `Stage 5` as locked until `Stage 4` closes
 
 Do not start with:
 

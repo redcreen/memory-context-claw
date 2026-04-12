@@ -5,7 +5,13 @@ import { createGovernanceSystem } from "./governance-system.js";
 import { createReflectionSystem } from "./reflection-system.js";
 import { createDailyReflectionRunner } from "./daily-reflection.js";
 import { createIndependentExecutionReview } from "./independent-execution.js";
-import { parseNamespace, parseVisibility } from "./contracts.js";
+import {
+  SHARED_CONTRACT_VERSION,
+  createContractId,
+  createContractTimestamp,
+  parseNamespace,
+  parseVisibility
+} from "./contracts.js";
 import {
   buildRegistryRootReport,
   inspectRegistryTopology,
@@ -149,6 +155,52 @@ export function createStandaloneRuntime(options = {}) {
     });
   }
 
+  async function auditLearningLifecycle({
+    namespace = config.namespace,
+    allowedVisibilities,
+    allowedStates,
+    referenceTime,
+    maxOpenClawCandidates
+  } = {}) {
+    return governanceSystem.auditLearningLifecycle({
+      namespace,
+      allowedVisibilities,
+      allowedStates,
+      referenceTime,
+      maxOpenClawCandidates
+    });
+  }
+
+  async function compareLearningTimeWindows({
+    namespace = config.namespace,
+    currentWindowDays,
+    previousWindowDays,
+    referenceTime
+  } = {}) {
+    return governanceSystem.compareLearningTimeWindows({
+      namespace,
+      currentWindowDays,
+      previousWindowDays,
+      referenceTime
+    });
+  }
+
+  async function validateOpenClawConsumption({
+    namespace = config.namespace,
+    allowedVisibilities,
+    allowedStates,
+    maxCandidates,
+    expectedArtifactIds
+  } = {}) {
+    return governanceSystem.validateOpenClawConsumption({
+      namespace,
+      allowedVisibilities,
+      allowedStates,
+      maxCandidates,
+      expectedArtifactIds
+    });
+  }
+
   async function planRepair({
     namespace = config.namespace,
     findingCode,
@@ -183,6 +235,32 @@ export function createStandaloneRuntime(options = {}) {
     });
   }
 
+  async function planLearningRepair({
+    namespace = config.namespace,
+    findingCode,
+    action,
+    decidedBy = "standalone-runtime",
+    targetRecordIds = [],
+    dryRun = true,
+    notes = [],
+    report
+  } = {}) {
+    const lifecycleReport = report || await governanceSystem.auditLearningLifecycle({
+      namespace
+    });
+
+    return governanceSystem.createLearningRepairRecord({
+      namespace,
+      findingCode,
+      action,
+      decidedBy,
+      targetRecordIds,
+      dryRun,
+      notes,
+      report: lifecycleReport
+    });
+  }
+
   async function planReplay({
     namespace = config.namespace,
     replayedBy = "standalone-runtime",
@@ -212,6 +290,103 @@ export function createStandaloneRuntime(options = {}) {
     });
   }
 
+  async function planLearningReplay({
+    namespace = config.namespace,
+    replayedBy = "standalone-runtime",
+    exportId,
+    inputRefs,
+    result = "queued",
+    notes = [],
+    report
+  } = {}) {
+    const lifecycleReport = report || await governanceSystem.auditLearningLifecycle({
+      namespace
+    });
+
+    return governanceSystem.createLearningReplayRun({
+      namespace,
+      exportId,
+      replayedBy,
+      inputRefs: Array.isArray(inputRefs) ? inputRefs : [],
+      result,
+      notes,
+      report: lifecycleReport
+    });
+  }
+
+  async function runLearningLifecycle({
+    declaredSources = [],
+    sourceArtifacts = [],
+    dryRun = false,
+    autoPromote = true,
+    decidedBy = "standalone-runtime",
+    allowedVisibilities,
+    allowedStates,
+    comparisonWindowDays = 7,
+    maxOpenClawCandidates = 10
+  } = {}) {
+    const referenceTime = createContractTimestamp(clock);
+    const dailyReflection = await dailyReflectionRunner.runDailyReflection({
+      declaredSources,
+      sourceArtifacts,
+      dryRun,
+      autoPromote: false,
+      decidedBy
+    });
+    const namespace = sourceArtifacts[0]?.namespace
+      || dailyReflection.reflection?.outputs?.[0]?.candidate_artifact?.namespace
+      || config.namespace;
+    const lifecycle = await registry.processLearningLifecycle({
+      namespace,
+      decidedBy,
+      autoPromote,
+      applyDecay: true,
+      dryRun,
+      referenceTime
+    });
+    const learningAudit = await governanceSystem.auditLearningLifecycle({
+      namespace,
+      allowedVisibilities,
+      allowedStates,
+      referenceTime,
+      maxOpenClawCandidates
+    });
+    const comparison = await governanceSystem.compareLearningTimeWindows({
+      namespace,
+      currentWindowDays: comparisonWindowDays,
+      previousWindowDays: comparisonWindowDays,
+      referenceTime
+    });
+    const repairPlan = learningAudit.findings.length > 0
+      ? governanceSystem.createLearningRepairRecord({
+          namespace,
+          findingCode: learningAudit.findings[0].code,
+          decidedBy,
+          report: learningAudit
+        })
+      : null;
+    const replayRun = governanceSystem.createLearningReplayRun({
+      namespace,
+      replayedBy: decidedBy,
+      result: "queued",
+      report: learningAudit
+    });
+
+    return {
+      run_id: createContractId("learning_loop", options.idGenerator),
+      contract_version: SHARED_CONTRACT_VERSION,
+      generated_at: referenceTime,
+      namespace,
+      dry_run: dryRun,
+      daily_reflection: dailyReflection,
+      lifecycle,
+      learning_audit: learningAudit,
+      time_window_comparison: comparison,
+      repair_plan: repairPlan,
+      replay_run: replayRun
+    };
+  }
+
   return {
     config,
     registry,
@@ -228,8 +403,14 @@ export function createStandaloneRuntime(options = {}) {
     buildExport,
     inspectExport,
     auditNamespace,
+    auditLearningLifecycle,
+    compareLearningTimeWindows,
+    validateOpenClawConsumption,
     planRepair,
+    planLearningRepair,
     planReplay,
+    planLearningReplay,
+    runLearningLifecycle,
     inspectRegistryRoot() {
       return buildRegistryRootReport({
         explicitDir: options?.config?.registryDir,

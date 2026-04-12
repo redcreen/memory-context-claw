@@ -20,8 +20,8 @@ For detailed queues, read:
 
 | Horizon | Focus | Exit Signal |
 | --- | --- | --- |
-| Now | keep the current OpenClaw adapter and governance baseline clean while module-view execution continues | stable-fact expansion lands without degrading smoke quality |
-| Next | finish the next lifecycle phase for Reflection, Projection, and Registry on top of the already-implemented reflection baseline | promotion / decay / learning-governance surfaces are explicitly named and have validation |
+| Now | keep the newly closed Stage 3 lifecycle baseline stable while Stage 4 planning opens | Stage 3 reports, replay paths, and regressions stay green while the next contract is defined |
+| Next | define the `policy-input artifact` contract and the first reversible consumer path | one Stage 4 contract and validation slice are named and agreed |
 | Later | connect governed learning outputs into consumer policy use and product hardening | policy-input artifacts and independent-product gates are both proven |
 
 ## Milestones
@@ -30,8 +30,8 @@ For detailed queues, read:
 | --- | --- | --- | --- | --- |
 | [Stage 1: design baseline](reference/unified-memory-core/development-plan.md#stage-1-design-and-documentation-baseline) | completed | freeze product naming, boundaries, and document stack | none | architecture, module boundaries, and testing surfaces are aligned |
 | [Stage 2: local-first baseline](reference/unified-memory-core/development-plan.md#stage-2-local-first-implementation-baseline) | completed | ship one governed local-first end-to-end baseline | Stage 1 | core modules, adapters, standalone CLI, and governance all run |
-| [Stage 3: self-learning lifecycle baseline](reference/unified-memory-core/development-plan.md#stage-3-self-learning-lifecycle-baseline) | active | turn the already-implemented reflection baseline into an explicit lifecycle with promotion, decay, and learning-specific governance | Stage 2 | promotion / decay expectations and learning-governance rules are explicit and regression-protected |
-| [Stage 4: policy adaptation](reference/unified-memory-core/development-plan.md#stage-4-policy-adaptation-and-multi-consumer-use) | later | let governed learning outputs influence consumer behavior | Stage 3 | one reversible policy-adaptation loop is proven |
+| [Stage 3: self-learning lifecycle baseline](reference/unified-memory-core/development-plan.md#stage-3-self-learning-lifecycle-baseline) | completed | turn the already-implemented reflection baseline into an explicit lifecycle with promotion, decay, and learning-specific governance | Stage 2 | promotion / decay expectations, learning governance, OpenClaw validation, and local governed loop are all implemented and regression-protected |
+| [Stage 4: policy adaptation](reference/unified-memory-core/development-plan.md#stage-4-policy-adaptation-and-multi-consumer-use) | next | let governed learning outputs influence consumer behavior | Stage 3 | one reversible policy-adaptation loop is proven |
 | [Stage 5: product hardening](reference/unified-memory-core/development-plan.md#stage-5-product-hardening-and-independent-operation) | later | validate split-ready and independent-product operation | Stage 4 | release boundary, reproducibility, and maintenance workflows are stable |
 
 ## Milestone Flow
@@ -48,5 +48,5 @@ flowchart LR
 
 - the current roadmap should not drift away from `.codex/status.md` and `.codex/plan.md`
 - `todo.md` should remain personal scratch space, not a competing status source
-- learning-phase naming is still an open dependency for Reflection, Projection, and Registry work
+- the next dependency is no longer Stage 3 naming; it is the Stage 4 `policy-input artifact` contract
 - smoke and governance surfaces must stay readable while OpenClaw adapter recall quality expands

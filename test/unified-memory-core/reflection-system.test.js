@@ -44,7 +44,10 @@ test("reflection system labels preference and rule candidates deterministically"
 
   assert.equal(result.primary_label, "stable_rule_candidate");
   assert.match(result.candidate_artifact.summary, /User prefers concise summaries/);
-  assert.deepEqual(result.candidate_artifact.export_hints, ["stable_rule_candidate"]);
+  assert.deepEqual(result.candidate_artifact.export_hints, [
+    "stable_rule_candidate",
+    "learning:rule"
+  ]);
   assert.equal(result.recommendation.should_promote, true);
 });
 

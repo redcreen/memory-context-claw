@@ -20,8 +20,8 @@
 
 | 时间层级 | 重点 | 退出信号 |
 | --- | --- | --- |
-| 当前 | 在模块视角下继续推进 OpenClaw 适配器和治理基线，保持质量稳定 | 稳定事实扩面落地，同时 smoke 质量不退化 |
-| 下一步 | 在已经实现的 reflection baseline 之上，完成 Reflection、Projection、Registry 的下一段生命周期 phase | promotion / decay / learning-governance 的边界被明确命名，并且有验证面 |
+| 当前 | 保持刚收口的 Stage 3 lifecycle baseline 稳定，同时为 Stage 4 打开规划入口 | Stage 3 的 report / replay / regression 在下一阶段打开前继续稳定 |
+| 下一步 | 定义 `policy-input artifact` contract，并选择第一条可回退的 consumer path | 一条 Stage 4 contract + validation slice 被明确命名 |
 | 更后面 | 把治理后的学习产物接入 consumer policy use，并推进产品硬化 | policy-input artifacts 与独立产品门禁都被证明可行 |
 
 ## 里程碑
@@ -30,8 +30,8 @@
 | --- | --- | --- | --- | --- |
 | [Stage 1：设计基线](reference/unified-memory-core/development-plan.zh-CN.md#stage-1-设计与文档基线) | completed | 冻结产品命名、边界和文档栈 | 无 | 架构、模块边界、测试面已经对齐 |
 | [Stage 2：local-first 基线](reference/unified-memory-core/development-plan.zh-CN.md#stage-2-local-first-实现基线) | completed | 跑通一条可治理的 local-first 端到端主链 | Stage 1 | 核心模块、适配器、standalone CLI、governance 都可运行 |
-| [Stage 3：self-learning lifecycle 基线](reference/unified-memory-core/development-plan.zh-CN.md#stage-3-self-learning-生命周期基线) | active | 把已经实现的 reflection baseline 收成一条显式的生命周期，补齐 promotion、decay 和学习专项治理 | Stage 2 | promotion / decay 预期与 learning-governance 规则清楚，并且有回归保护 |
-| [Stage 4：policy adaptation](reference/unified-memory-core/development-plan.zh-CN.md#stage-4-policy-adaptation-与多消费者使用) | later | 让治理后的学习产物影响消费者行为 | Stage 3 | 一条可回退的 policy-adaptation 闭环被证明 |
+| [Stage 3：self-learning lifecycle 基线](reference/unified-memory-core/development-plan.zh-CN.md#stage-3-self-learning-生命周期基线) | completed | 把已经实现的 reflection baseline 收成一条显式生命周期，并补齐 promotion / decay / 学习专项治理 | Stage 2 | promotion / decay、learning governance、OpenClaw validation 和本地 governed loop 都已落地并有回归保护 |
+| [Stage 4：policy adaptation](reference/unified-memory-core/development-plan.zh-CN.md#stage-4-policy-adaptation-与多消费者使用) | next | 让治理后的学习产物影响消费者行为 | Stage 3 | 一条可回退的 policy-adaptation 闭环被证明 |
 | [Stage 5：product hardening](reference/unified-memory-core/development-plan.zh-CN.md#stage-5-产品加固与独立运行) | later | 验证独立产品运行和 split-ready 边界 | Stage 4 | release boundary、可复现性、维护工作流趋于稳定 |
 
 ## 里程碑流转
@@ -48,5 +48,5 @@ flowchart LR
 
 - 路线图不能和 `.codex/status.md`、`.codex/plan.md` 漂移
 - `todo.md` 应继续只是个人速记，不应成为并行状态源
-- Reflection、Projection、Registry 的下一学习 phase 仍然依赖命名和范围收口
+- 当前的下一依赖不再是 Stage 3 命名，而是 Stage 4 的 `policy-input artifact` contract
 - 在继续扩 OpenClaw 适配器 recall 能力时，smoke 与 governance 的输出必须保持可读

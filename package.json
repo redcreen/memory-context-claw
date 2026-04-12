@@ -38,6 +38,7 @@
     "memory:governance-cycle": "node scripts/run-governance-cycle.js",
     "umc:cli": "node scripts/unified-memory-core-cli.js",
     "umc:daily-reflection": "node scripts/run-daily-reflection.js",
+    "umc:lifecycle": "node scripts/run-learning-lifecycle.js",
     "umc:independent-review": "node scripts/run-independent-execution-review.js",
     "verify": "node scripts/verify-suite.js",
     "deploy:local": "node scripts/deploy-openclaw-local.js",

@@ -13,5 +13,5 @@ Use:
 
 Current status:
 
-- reflection baseline, daily reflection, and standalone learning surfaces are already implemented
-- the next phase is to make promotion / decay / policy adaptation explicit
+- Stage 3 lifecycle baseline is complete on top of the reflection / daily reflection / standalone learning baseline
+- the next phase is to define the `policy-input artifact` contract and open reversible policy adaptation

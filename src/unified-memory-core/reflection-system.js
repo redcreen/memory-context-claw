@@ -8,6 +8,11 @@ import {
   parseCandidateArtifact,
   parseSourceArtifact
 } from "./contracts.js";
+import {
+  buildLearningLifecycleAttributes,
+  evaluateLearningCandidatePromotion,
+  inferLearningSignalType
+} from "./learning-lifecycle.js";
 
 const LABEL_PRIORITY = [
   "stable_rule_candidate",
@@ -21,8 +26,11 @@ const LABEL_PRIORITY = [
 const PROMOTABLE_LABELS = new Set([
   "stable_rule_candidate",
   "stable_preference_candidate",
-  "stable_fact_candidate"
+  "stable_fact_candidate",
+  "habit_signal_candidate"
 ]);
+
+const EXPLICIT_REMEMBER_PATTERN = /\b(remember this|remember that|please remember|save this|keep this in mind)\b|记住这个|记住这点|请记住|记下来/iu;
 
 function createFingerprint(payload) {
   return createHash("sha256").update(JSON.stringify(payload)).digest("hex");
@@ -190,6 +198,14 @@ export function createReflectionSystem(options = {}) {
     const summary = summarizeText(sourceArtifact, text);
     const confidence = buildConfidence(primaryLabel, repeatedSourceCount);
     const now = createContractTimestamp(clock);
+    const explicitRememberSignal = EXPLICIT_REMEMBER_PATTERN.test(text);
+    const lifecycleAttributes = buildLearningLifecycleAttributes({
+      summary,
+      title: buildCandidateTitle(sourceArtifact, primaryLabel),
+      primaryLabel,
+      repeatedSourceCount,
+      explicitRememberSignal
+    });
     const candidateState = primaryLabel === "open_question_candidate" || primaryLabel === "observation_candidate"
       ? "observation"
       : "candidate";
@@ -219,11 +235,23 @@ export function createReflectionSystem(options = {}) {
         source_type: sourceArtifact.source_type,
         source_fingerprint: sourceArtifact.fingerprint,
         repeated_source_count: repeatedSourceCount,
-        prior_namespace_record_count: priorRecords.length
+        prior_namespace_record_count: priorRecords.length,
+        explicit_remember_signal: explicitRememberSignal,
+        ...lifecycleAttributes
       },
-      export_hints: [primaryLabel],
+      export_hints: [
+        primaryLabel,
+        `learning:${lifecycleAttributes.learning_signal_type}`,
+        ...(explicitRememberSignal ? ["explicit_remember"] : [])
+      ],
       created_at: now,
       updated_at: now
+    });
+    const existingStableArtifacts = priorRecords
+      .filter((record) => record.record_type === "stable_artifact" && record.state === "stable")
+      .map((record) => record.payload);
+    const promotionRecommendation = evaluateLearningCandidatePromotion(candidateArtifact, {
+      existingStableArtifacts
     });
 
     return {
@@ -235,8 +263,18 @@ export function createReflectionSystem(options = {}) {
         should_promote:
           PROMOTABLE_LABELS.has(primaryLabel) &&
           candidateArtifact.state === "candidate" &&
-          candidateArtifact.confidence >= promoteConfidenceThreshold,
-        promote_confidence_threshold: promoteConfidenceThreshold
+          promotionRecommendation.should_promote,
+        promote_confidence_threshold: Math.max(
+          promoteConfidenceThreshold,
+          promotionRecommendation.promote_confidence_threshold
+        ),
+        promotion_score: promotionRecommendation.promotion_score,
+        recommended_action: promotionRecommendation.recommended_action,
+        reason_codes: promotionRecommendation.reason_codes,
+        blocker_codes: promotionRecommendation.blocker_codes,
+        signal_type: inferLearningSignalType(candidateArtifact),
+        duplicate_stable_artifact_ids: promotionRecommendation.duplicate_stable_artifact_ids,
+        conflicting_stable_artifact_ids: promotionRecommendation.conflicting_stable_artifact_ids
       },
       candidate_artifact: candidateArtifact
     };

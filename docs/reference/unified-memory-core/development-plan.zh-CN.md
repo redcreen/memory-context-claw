@@ -47,8 +47,9 @@
 
 - `Stage 1`：已完成
 - `Stage 2`：已完成
-- 当前指针：`Step 21`
-- 当前建议：从 `Stage 3` 恢复继续
+- `Stage 3`：已完成
+- 当前指针：`Step 31`
+- 当前建议：从 `Stage 4` 恢复继续
 
 当前 baseline 已经落地：
 
@@ -77,8 +78,8 @@
 | --- | --- | --- | --- |
 | Stage 1 | `1-10` | 冻结产品形态与文档基线 | `completed` |
 | Stage 2 | `11-20` | 完成第一条 local-first 实现基线 | `completed` |
-| Stage 3 | `21-30` | 完成 self-learning 生命周期基线 | `next` |
-| Stage 4 | `31-38` | 把受治理学习结果接到 adapter 策略使用 | `later` |
+| Stage 3 | `21-30` | 完成 self-learning 生命周期基线 | `completed` |
+| Stage 4 | `31-38` | 把受治理学习结果接到 adapter 策略使用 | `next` |
 | Stage 5 | `39-46` | 补齐产品运维与 split-ready 执行 | `later` |
 
 ## 顺序开发计划
@@ -129,16 +130,16 @@
 - promotion 和 decay 明确可见
 - learning-specific governance 可测试
 
-21. `next` 实现 learning candidates 的 promotion rules。
-22. `later` 实现弱信号和陈旧信号的 decay / expiry rules。
-23. `later` 实现 learned artifacts 的 conflict detection 和 conflict report。
-24. `later` 实现 promoted learning artifacts 的 stable registry update rules。
-25. `later` 增加 learning-specific audit reports。
-26. `later` 增加 learning-specific replay / repair 路径。
-27. `later` 增加 learning outcomes 的 time-window comparison reports。
-28. `later` 为 learning lifecycle 增加 regression coverage。
-29. `later` 验证 OpenClaw 对 promoted learning artifacts 的消费行为。
-30. `later` 以一条本地端到端的 `observation -> stable` governed loop 收口本阶段。
+21. `completed` 实现 learning candidates 的 promotion rules。
+22. `completed` 实现弱信号和陈旧信号的 decay / expiry rules。
+23. `completed` 实现 learned artifacts 的 conflict detection 和 conflict report。
+24. `completed` 实现 promoted learning artifacts 的 stable registry update rules。
+25. `completed` 增加 learning-specific audit reports。
+26. `completed` 增加 learning-specific replay / repair 路径。
+27. `completed` 增加 learning outcomes 的 time-window comparison reports。
+28. `completed` 为 learning lifecycle 增加 regression coverage。
+29. `completed` 验证 OpenClaw 对 promoted learning artifacts 的消费行为。
+30. `completed` 以一条本地端到端的 `observation -> stable` governed loop 收口本阶段。
 
 ### Stage 4. Policy Adaptation 与多消费者使用
 
@@ -177,9 +178,9 @@
 
 从这里恢复：
 
-1. 从 `Step 21` 开始
-2. 先完整做完 `Stage 3`
-3. `Stage 3` 没收口前，不进入 `Stage 4`
+1. 从 `Step 31` 开始
+2. 先完整做完 `Stage 4`
+3. `Stage 4` 没收口前，不进入 `Stage 5`
 
 当前不要开始：
 

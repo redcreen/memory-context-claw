@@ -7,6 +7,13 @@ import {
   createNamespaceKey,
   parseNamespace
 } from "./contracts.js";
+import {
+  diffLearningWindowSummaries,
+  evaluateLearningCandidateDecay,
+  isLearningArtifact,
+  summarizeLearningTimeWindow
+} from "./learning-lifecycle.js";
+import { validateOpenClawExportConsumption } from "./openclaw-consumption.js";
 
 function assertRegistry(registry) {
   if (!registry || typeof registry.listRecords !== "function" || typeof registry.listDecisionTrails !== "function") {
@@ -77,6 +84,98 @@ function buildFindings({ records, decisionTrails, exportResult }) {
       code: "export_contains_non_stable_artifact",
       message: "Export includes artifacts that are not in stable state.",
       record_refs: exportedWithoutStableState.map((record) => record.record_id)
+    });
+  }
+
+  return findings;
+}
+
+function buildLearningLifecycleSummary({
+  activeCandidates,
+  stableLearningArtifacts,
+  supersededLearningArtifacts,
+  promotionReviews,
+  decayReviews,
+  conflicts,
+  openclawValidation
+}) {
+  return {
+    active_candidates: activeCandidates.length,
+    promotable_candidates: promotionReviews.filter((item) => item.should_promote).length,
+    decay_recommended: decayReviews.filter((item) => item.should_decay).length,
+    stable_learning_artifacts: stableLearningArtifacts.length,
+    superseded_learning_artifacts: supersededLearningArtifacts.length,
+    conflicts_detected: conflicts.length,
+    openclaw_consumed_candidates: openclawValidation?.consumed_candidates || 0,
+    openclaw_missing_promoted_artifacts: openclawValidation?.missing_expected_artifact_ids?.length || 0
+  };
+}
+
+function buildLearningLifecycleFindings({
+  stableLearningArtifacts,
+  promotionReviews,
+  decayReviews,
+  conflicts,
+  openclawValidation
+}) {
+  const findings = [];
+
+  for (const review of promotionReviews) {
+    if (!review.should_promote) {
+      continue;
+    }
+    findings.push({
+      finding_id: `learning_promotable_${review.candidate_artifact_id}`,
+      severity: "info",
+      code: "learning_candidate_ready_for_promotion",
+      message: "A learning candidate is ready for promotion.",
+      record_refs: [review.candidate_artifact_id]
+    });
+  }
+
+  for (const review of decayReviews) {
+    if (!review.should_decay) {
+      continue;
+    }
+    findings.push({
+      finding_id: `learning_decay_${review.candidate_artifact_id}`,
+      severity: "warning",
+      code: "learning_candidate_ready_for_decay",
+      message: "A weak or stale learning candidate should decay or expire.",
+      record_refs: [review.candidate_artifact_id]
+    });
+  }
+
+  for (const artifact of stableLearningArtifacts) {
+    if (artifact.attributes?.learning_signal_type) {
+      continue;
+    }
+    findings.push({
+      finding_id: `learning_metadata_${artifact.artifact_id}`,
+      severity: "warning",
+      code: "stable_learning_artifact_missing_metadata",
+      message: "A stable learning artifact is missing lifecycle metadata.",
+      record_refs: [artifact.artifact_id]
+    });
+  }
+
+  for (const conflict of conflicts) {
+    findings.push({
+      finding_id: conflict.conflict_id,
+      severity: conflict.severity,
+      code: conflict.code,
+      message: conflict.message,
+      record_refs: conflict.artifact_refs
+    });
+  }
+
+  if (openclawValidation?.missing_expected_artifact_ids?.length > 0) {
+    findings.push({
+      finding_id: "learning_openclaw_missing_promoted",
+      severity: "error",
+      code: "openclaw_missing_promoted_learning_artifact",
+      message: "OpenClaw export validation is missing promoted learning artifacts.",
+      record_refs: openclawValidation.missing_expected_artifact_ids
     });
   }
 
@@ -166,6 +265,89 @@ export function renderGovernanceReplayRun(replay, { format = "markdown" } = {}) 
   return `${lines.join("\n").trimEnd()}\n`;
 }
 
+export function renderLearningLifecycleReport(report, { format = "markdown" } = {}) {
+  if (format === "json") {
+    return JSON.stringify(report, null, 2);
+  }
+
+  const lines = [];
+  lines.push("# Unified Memory Core Learning Lifecycle Audit");
+  lines.push(`- reportId: \`${report.report_id}\``);
+  lines.push(`- namespace: \`${createNamespaceKey(report.namespace)}\``);
+  lines.push(`- generatedAt: \`${report.generated_at}\``);
+  lines.push("");
+  lines.push("## Summary");
+  lines.push(`- activeCandidates: \`${report.summary.active_candidates}\``);
+  lines.push(`- promotableCandidates: \`${report.summary.promotable_candidates}\``);
+  lines.push(`- decayRecommended: \`${report.summary.decay_recommended}\``);
+  lines.push(`- stableLearningArtifacts: \`${report.summary.stable_learning_artifacts}\``);
+  lines.push(`- conflictsDetected: \`${report.summary.conflicts_detected}\``);
+  lines.push(`- openclawConsumedCandidates: \`${report.summary.openclaw_consumed_candidates}\``);
+  lines.push(`- openclawMissingPromotedArtifacts: \`${report.summary.openclaw_missing_promoted_artifacts}\``);
+  lines.push("");
+  lines.push("## Findings");
+  if (report.findings.length === 0) {
+    lines.push("- none");
+  } else {
+    for (const finding of report.findings) {
+      lines.push(`- [${finding.severity}] ${finding.code}: ${finding.message}`);
+    }
+  }
+  lines.push("");
+  lines.push("## Promotion Review");
+  if (report.promotion_reviews.length === 0) {
+    lines.push("- none");
+  } else {
+    for (const review of report.promotion_reviews) {
+      lines.push(`- ${review.candidate_artifact_id}: promote=${review.should_promote} action=${review.recommended_action} score=${review.promotion_score}`);
+    }
+  }
+  lines.push("");
+  lines.push("## Decay Review");
+  if (report.decay_reviews.length === 0) {
+    lines.push("- none");
+  } else {
+    for (const review of report.decay_reviews) {
+      lines.push(`- ${review.candidate_artifact_id}: decay=${review.should_decay} action=${review.action} reasons=${review.reason_codes.join(",") || "none"}`);
+    }
+  }
+  lines.push("");
+
+  return `${lines.join("\n").trimEnd()}\n`;
+}
+
+export function renderLearningWindowComparisonReport(report, { format = "markdown" } = {}) {
+  if (format === "json") {
+    return JSON.stringify(report, null, 2);
+  }
+
+  const lines = [];
+  lines.push("# Unified Memory Core Learning Window Comparison");
+  lines.push(`- comparisonId: \`${report.comparison_id}\``);
+  lines.push(`- namespace: \`${createNamespaceKey(report.namespace)}\``);
+  lines.push(`- generatedAt: \`${report.generated_at}\``);
+  lines.push("");
+  lines.push("## Current Window");
+  lines.push(`- days: \`${report.current_window.days}\``);
+  for (const [key, value] of Object.entries(report.current_window.summary)) {
+    lines.push(`- ${key}: \`${value}\``);
+  }
+  lines.push("");
+  lines.push("## Previous Window");
+  lines.push(`- days: \`${report.previous_window.days}\``);
+  for (const [key, value] of Object.entries(report.previous_window.summary)) {
+    lines.push(`- ${key}: \`${value}\``);
+  }
+  lines.push("");
+  lines.push("## Delta");
+  for (const [key, value] of Object.entries(report.delta)) {
+    lines.push(`- ${key}: \`${value}\``);
+  }
+  lines.push("");
+
+  return `${lines.join("\n").trimEnd()}\n`;
+}
+
 export function createGovernanceSystem(options = {}) {
   const registry = options.registry;
   const projectionSystem = options.projectionSystem;
@@ -214,6 +396,196 @@ export function createGovernanceSystem(options = {}) {
     };
   }
 
+  async function validateOpenClawConsumption({
+    namespace,
+    allowedVisibilities = ["private", "workspace", "shared", "public"],
+    allowedStates = ["stable"],
+    maxCandidates = 10,
+    expectedArtifactIds = []
+  }) {
+    if (typeof projectionSystem.buildOpenClawExport !== "function") {
+      throw new TypeError("projection system does not support buildOpenClawExport()");
+    }
+
+    const parsedNamespace = parseNamespace(namespace);
+    const exportResult = await projectionSystem.buildOpenClawExport({
+      namespace: parsedNamespace,
+      allowedVisibilities,
+      allowedStates
+    });
+    const validation = validateOpenClawExportConsumption({
+      exportResult,
+      expectedArtifactIds,
+      maxCandidates
+    });
+
+    return {
+      namespace: parsedNamespace,
+      export_id: exportResult.exportContract.export_id,
+      generated_at: createContractTimestamp(clock),
+      ...validation
+    };
+  }
+
+  async function auditLearningLifecycle({
+    namespace,
+    allowedVisibilities = ["private", "workspace", "shared", "public"],
+    allowedStates = ["stable"],
+    referenceTime,
+    maxOpenClawCandidates = 10
+  }) {
+    const parsedNamespace = parseNamespace(namespace);
+    const namespaceKey = createNamespaceKey(parsedNamespace);
+    const [records, decisionTrails] = await Promise.all([
+      registry.listRecords({ namespaceKey }),
+      registry.listDecisionTrails()
+    ]);
+
+    const relevantTrails = decisionTrails.filter(
+      (trail) => createNamespaceKey(trail.namespace) === namespaceKey
+    );
+    const activeCandidates = records.filter(
+      (record) =>
+        record.record_type === "candidate_artifact"
+        && (record.state === "candidate" || record.state === "observation")
+        && isLearningArtifact(record.payload)
+    );
+    const stableLearningArtifacts = records
+      .filter(
+        (record) =>
+          record.record_type === "stable_artifact"
+          && record.state === "stable"
+          && isLearningArtifact(record.payload)
+      )
+      .map((record) => record.payload);
+    const supersededLearningArtifacts = records
+      .filter(
+        (record) =>
+          record.record_type === "stable_artifact"
+          && record.state === "superseded"
+          && isLearningArtifact(record.payload)
+      )
+      .map((record) => record.payload);
+
+    const promotionReviews = [];
+    for (const candidateRecord of activeCandidates) {
+      const review = typeof registry.reviewLearningCandidate === "function"
+        ? await registry.reviewLearningCandidate({
+            candidateArtifactId: candidateRecord.record_id,
+            referenceTime
+          })
+        : null;
+      promotionReviews.push({
+        candidate_artifact_id: candidateRecord.record_id,
+        ...(review || {})
+      });
+    }
+
+    const decayReviews = activeCandidates.map((candidateRecord) => ({
+      candidate_artifact_id: candidateRecord.record_id,
+      ...evaluateLearningCandidateDecay(candidateRecord.payload, {
+        referenceTime
+      })
+    }));
+    const conflicts = typeof registry.detectLifecycleConflicts === "function"
+      ? await registry.detectLifecycleConflicts({ namespace: parsedNamespace })
+      : [];
+    const openclawValidation = await validateOpenClawConsumption({
+      namespace: parsedNamespace,
+      allowedVisibilities,
+      allowedStates,
+      maxCandidates: maxOpenClawCandidates,
+      expectedArtifactIds: stableLearningArtifacts
+        .map((artifact) => artifact.artifact_id)
+        .slice(0, maxOpenClawCandidates)
+    });
+    const summary = buildLearningLifecycleSummary({
+      activeCandidates,
+      stableLearningArtifacts,
+      supersededLearningArtifacts,
+      promotionReviews,
+      decayReviews,
+      conflicts,
+      openclawValidation
+    });
+    const findings = buildLearningLifecycleFindings({
+      stableLearningArtifacts,
+      promotionReviews,
+      decayReviews,
+      conflicts,
+      openclawValidation
+    });
+
+    return {
+      report_id: createContractId("learning_audit", idGenerator),
+      contract_version: SHARED_CONTRACT_VERSION,
+      namespace: parsedNamespace,
+      generated_at: createContractTimestamp(clock),
+      summary,
+      findings,
+      promotion_reviews: promotionReviews,
+      decay_reviews: decayReviews,
+      conflicts,
+      openclaw_validation: openclawValidation,
+      stable_learning_artifacts: stableLearningArtifacts.map((artifact) => artifact.artifact_id),
+      relevant_decision_trails: relevantTrails.length
+    };
+  }
+
+  async function compareLearningTimeWindows({
+    namespace,
+    currentWindowDays = 7,
+    previousWindowDays = currentWindowDays,
+    referenceTime
+  }) {
+    const parsedNamespace = parseNamespace(namespace);
+    const namespaceKey = createNamespaceKey(parsedNamespace);
+    const [records, decisionTrails] = await Promise.all([
+      registry.listRecords({ namespaceKey }),
+      registry.listDecisionTrails()
+    ]);
+    const relevantTrails = decisionTrails.filter(
+      (trail) => createNamespaceKey(trail.namespace) === namespaceKey
+    );
+    const referenceTimestamp = Date.parse(referenceTime || createContractTimestamp(clock));
+    const currentEnd = referenceTimestamp + 1;
+    const currentStart = currentEnd - currentWindowDays * 24 * 60 * 60 * 1000;
+    const previousEnd = currentStart;
+    const previousStart = previousEnd - previousWindowDays * 24 * 60 * 60 * 1000;
+    const currentSummary = summarizeLearningTimeWindow({
+      records,
+      decisionTrails: relevantTrails,
+      windowStart: currentStart,
+      windowEnd: currentEnd
+    });
+    const previousSummary = summarizeLearningTimeWindow({
+      records,
+      decisionTrails: relevantTrails,
+      windowStart: previousStart,
+      windowEnd: previousEnd
+    });
+
+    return {
+      comparison_id: createContractId("learning_compare", idGenerator),
+      contract_version: SHARED_CONTRACT_VERSION,
+      namespace: parsedNamespace,
+      generated_at: createContractTimestamp(clock),
+      current_window: {
+        days: currentWindowDays,
+        start_at: new Date(currentStart).toISOString(),
+        end_at: new Date(currentEnd).toISOString(),
+        summary: currentSummary
+      },
+      previous_window: {
+        days: previousWindowDays,
+        start_at: new Date(previousStart).toISOString(),
+        end_at: new Date(previousEnd).toISOString(),
+        summary: previousSummary
+      },
+      delta: diffLearningWindowSummaries(currentSummary, previousSummary)
+    };
+  }
+
   function createRepairRecord({
     namespace,
     findingCode,
@@ -238,6 +610,30 @@ export function createGovernanceSystem(options = {}) {
     };
   }
 
+  function createLearningRepairRecord({
+    namespace,
+    findingCode,
+    action = "mark_learning_review",
+    decidedBy,
+    targetRecordIds = [],
+    dryRun = true,
+    notes = [],
+    report
+  }) {
+    const reportTargets = Array.isArray(report?.findings)
+      ? (report.findings.find((item) => item.code === String(findingCode || "").trim())?.record_refs || [])
+      : [];
+    return createRepairRecord({
+      namespace,
+      findingCode,
+      action,
+      decidedBy,
+      targetRecordIds: targetRecordIds.length > 0 ? targetRecordIds : reportTargets,
+      dryRun,
+      notes: [...notes, "learning-lifecycle-repair"]
+    });
+  }
+
   function createReplayRun({
     namespace,
     exportId,
@@ -260,6 +656,28 @@ export function createGovernanceSystem(options = {}) {
     };
   }
 
+  function createLearningReplayRun({
+    namespace,
+    exportId,
+    replayedBy,
+    inputRefs = [],
+    result = "queued",
+    notes = [],
+    report
+  }) {
+    const reportRefs = Array.isArray(report?.openclaw_validation?.consumed_artifact_ids)
+      ? report.openclaw_validation.consumed_artifact_ids
+      : [];
+    return createReplayRun({
+      namespace,
+      exportId: exportId || report?.openclaw_validation?.export_id || report?.export_contract?.export_id,
+      replayedBy,
+      inputRefs: inputRefs.length > 0 ? inputRefs : reportRefs,
+      result,
+      notes: [...notes, "learning-lifecycle-replay"]
+    });
+  }
+
   function buildRegressionOwnershipMap() {
     return {
       shared_contracts: ["test/unified-memory-core/contracts.test.js"],
@@ -274,14 +692,25 @@ export function createGovernanceSystem(options = {}) {
       codex_adapter_runtime: ["test/codex-adapter.test.js"],
       adapter_compatibility: ["test/adapter-compatibility.test.js"],
       governance_system: ["test/unified-memory-core/governance-system.test.js"],
-      standalone_runtime: ["test/unified-memory-core/standalone-runtime.test.js"]
+      standalone_runtime: ["test/unified-memory-core/standalone-runtime.test.js"],
+      learning_lifecycle: [
+        "test/unified-memory-core/memory-registry.test.js",
+        "test/unified-memory-core/governance-system.test.js",
+        "test/unified-memory-core/standalone-runtime.test.js",
+        "test/openclaw-adapter.test.js"
+      ]
     };
   }
 
   return {
     auditNamespace,
+    auditLearningLifecycle,
+    compareLearningTimeWindows,
+    validateOpenClawConsumption,
     createRepairRecord,
+    createLearningRepairRecord,
     createReplayRun,
+    createLearningReplayRun,
     buildRegressionOwnershipMap
   };
 }

@@ -24,10 +24,10 @@ Use this together with:
 | Module | Responsibility | Main Paths | Status |
 | --- | --- | --- | --- |
 | Source System | controlled source ingestion, normalization, and replayable source artifacts | `src/unified-memory-core/source-system.js`, `test/unified-memory-core/source-system.test.js` | baseline-complete |
-| Reflection System | candidate generation, daily reflection, and reflection outputs | `src/unified-memory-core/reflection-system.js`, `src/unified-memory-core/daily-reflection.js`, related `test/unified-memory-core/` files | baseline-complete / next-phase candidate |
-| Memory Registry | source / candidate / stable artifacts and decision trail | `src/unified-memory-core/memory-registry.js`, `test/unified-memory-core/memory-registry.test.js` | baseline-complete |
-| Projection System | export shaping, visibility filtering, and consumer projections | `src/unified-memory-core/projection-system.js`, `test/unified-memory-core/projection-system.test.js` | baseline-complete |
-| Governance System | audit / repair / replay / governance cycle / promotion support | `src/unified-memory-core/governance-system.js`, `src/*audit*.js`, `scripts/run-governance-cycle.js`, related tests | governing |
+| Reflection System | candidate generation, daily reflection, lifecycle review inputs, and reflection outputs | `src/unified-memory-core/reflection-system.js`, `src/unified-memory-core/daily-reflection.js`, related `test/unified-memory-core/` files | lifecycle-baseline complete / stage4 candidate |
+| Memory Registry | source / candidate / stable artifacts, lifecycle transitions, and decision trail | `src/unified-memory-core/memory-registry.js`, `test/unified-memory-core/memory-registry.test.js` | lifecycle-baseline complete |
+| Projection System | export shaping, visibility filtering, learning metadata, and future consumer projections | `src/unified-memory-core/projection-system.js`, `test/unified-memory-core/projection-system.test.js` | baseline-complete / stage4 next |
+| Governance System | audit / repair / replay / governance cycle / lifecycle reporting | `src/unified-memory-core/governance-system.js`, `src/*audit*.js`, `scripts/run-governance-cycle.js`, related tests | governing / lifecycle-baseline complete |
 | OpenClaw Adapter | OpenClaw-facing retrieval / assembly / scoring / runtime integration | `src/openclaw-adapter.js`, `src/assembly.js`, `src/retrieval*.js`, `src/scoring.js`, related tests | active |
 | Codex Adapter | Codex-facing adapter integration and compatibility path | `src/codex-adapter.js`, `test/codex-adapter.test.js`, `test/adapter-compatibility.test.js` | baseline-complete / maintain |
 
@@ -43,12 +43,12 @@ When resuming, read in this order:
 
 ## Current Active Modules
 
-1. **OpenClaw Adapter**
-   Current focus: expand stable facts / stable rules while keeping recalled context clean.
+1. **Projection System**
+   Current focus: define the Stage 4 `policy-input artifact` contract.
 2. **Governance System**
-   Current focus: keep governance signals readable and use `eval:smoke-promotion` conservatively.
+   Current focus: keep Stage 3 lifecycle reports and validation stable while Stage 4 opens.
 3. **Reflection System**
-   Current focus: define the next enhancement phase beyond the current baseline.
+   Current focus: map current candidate/review outputs into the future policy-input contract.
 
 ## Terminology Boundary
 

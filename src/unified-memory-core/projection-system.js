@@ -32,7 +32,13 @@ function createOpenClawPayload(artifacts) {
       visibility: artifact.visibility,
       evidence_refs: artifact.evidence_refs,
       attributes: artifact.attributes,
-      export_hints: artifact.export_hints
+      export_hints: artifact.export_hints,
+      learning: {
+        signal_type: artifact.attributes?.learning_signal_type || "",
+        polarity: artifact.attributes?.learning_polarity || "",
+        lifecycle_state: artifact.attributes?.lifecycle_state || artifact.state,
+        promotion_score: artifact.attributes?.promotion_score
+      }
     }))
   };
 }
@@ -47,7 +53,13 @@ function createCodexPayload(artifacts) {
       namespace: createNamespaceKey(artifact.namespace),
       evidence_refs: artifact.evidence_refs,
       attributes: artifact.attributes,
-      export_hints: artifact.export_hints
+      export_hints: artifact.export_hints,
+      learning: {
+        signal_type: artifact.attributes?.learning_signal_type || "",
+        polarity: artifact.attributes?.learning_polarity || "",
+        lifecycle_state: artifact.attributes?.lifecycle_state || artifact.state,
+        promotion_score: artifact.attributes?.promotion_score
+      }
     }))
   };
 }

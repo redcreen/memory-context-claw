@@ -5,6 +5,8 @@ import {
   renderDailyReflectionReport,
   renderExportReport,
   renderGovernanceAuditReport,
+  renderLearningLifecycleReport,
+  renderLearningWindowComparisonReport,
   renderRegistryMigrationReport,
   renderRegistryTopologyReport,
   renderGovernanceRepairRecord,
@@ -66,6 +68,11 @@ function parseListFlag(value, fallback) {
     .split(",")
     .map((item) => item.trim())
     .filter(Boolean);
+}
+
+function parseNumberFlag(value, fallback) {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : fallback;
 }
 
 function buildDeclaredSource(flags) {
@@ -132,6 +139,17 @@ async function run() {
     result = flags.format === "markdown"
       ? renderDailyReflectionReport(report)
       : report;
+  } else if (family === "learn" && action === "lifecycle-run") {
+    const report = await runtime.runLearningLifecycle({
+      declaredSources: [buildDeclaredSource(flags)],
+      dryRun: Boolean(flags["dry-run"]),
+      autoPromote: flags.promote !== false,
+      comparisonWindowDays: parseNumberFlag(flags["comparison-window-days"], 7),
+      maxOpenClawCandidates: parseNumberFlag(flags["max-openclaw-candidates"], 10)
+    });
+    result = flags.format === "markdown"
+      ? renderLearningLifecycleReport(report.learning_audit)
+      : report;
   } else if (family === "reflect" && action === "run") {
     result = await runtime.reflectDeclaredSource({
       declaredSource: buildDeclaredSource(flags),
@@ -164,6 +182,25 @@ async function run() {
     result = flags.format === "markdown"
       ? renderGovernanceAuditReport(report)
       : report;
+  } else if (family === "govern" && action === "audit-learning") {
+    const report = await runtime.auditLearningLifecycle({
+      namespace: parseNamespaceFromFlags(flags),
+      allowedVisibilities: parseListFlag(flags["allowed-visibilities"], undefined),
+      allowedStates: parseListFlag(flags["allowed-states"], undefined),
+      maxOpenClawCandidates: parseNumberFlag(flags["max-openclaw-candidates"], 10)
+    });
+    result = flags.format === "markdown"
+      ? renderLearningLifecycleReport(report)
+      : report;
+  } else if (family === "govern" && action === "compare-learning") {
+    const report = await runtime.compareLearningTimeWindows({
+      namespace: parseNamespaceFromFlags(flags),
+      currentWindowDays: parseNumberFlag(flags["current-window-days"], 7),
+      previousWindowDays: parseNumberFlag(flags["previous-window-days"], 7)
+    });
+    result = flags.format === "markdown"
+      ? renderLearningWindowComparisonReport(report)
+      : report;
   } else if (family === "govern" && action === "repair") {
     const record = await runtime.planRepair({
       namespace: parseNamespaceFromFlags(flags),
@@ -175,6 +212,25 @@ async function run() {
       notes: parseListFlag(flags.notes, []),
       allowedVisibilities: parseListFlag(flags["allowed-visibilities"], undefined),
       allowedStates: parseListFlag(flags["allowed-states"], undefined)
+    });
+    result = flags.format === "markdown"
+      ? renderGovernanceRepairRecord(record)
+      : record;
+  } else if (family === "govern" && action === "repair-learning") {
+    const report = await runtime.auditLearningLifecycle({
+      namespace: parseNamespaceFromFlags(flags),
+      allowedVisibilities: parseListFlag(flags["allowed-visibilities"], undefined),
+      allowedStates: parseListFlag(flags["allowed-states"], undefined)
+    });
+    const record = await runtime.planLearningRepair({
+      namespace: parseNamespaceFromFlags(flags),
+      findingCode: normalizeString(flags["finding-code"]),
+      action: normalizeString(flags.action, "mark_learning_review"),
+      decidedBy: normalizeString(flags["decided-by"], "standalone-cli"),
+      targetRecordIds: parseListFlag(flags["target-record-ids"], []),
+      dryRun: flags["dry-run"] !== false,
+      notes: parseListFlag(flags.notes, []),
+      report
     });
     result = flags.format === "markdown"
       ? renderGovernanceRepairRecord(record)
@@ -193,6 +249,24 @@ async function run() {
     result = flags.format === "markdown"
       ? renderGovernanceReplayRun(replay)
       : replay;
+  } else if (family === "govern" && action === "replay-learning") {
+    const report = await runtime.auditLearningLifecycle({
+      namespace: parseNamespaceFromFlags(flags),
+      allowedVisibilities: parseListFlag(flags["allowed-visibilities"], undefined),
+      allowedStates: parseListFlag(flags["allowed-states"], undefined)
+    });
+    const replay = await runtime.planLearningReplay({
+      namespace: parseNamespaceFromFlags(flags),
+      replayedBy: normalizeString(flags["replayed-by"], "standalone-cli"),
+      exportId: normalizeString(flags["export-id"]),
+      inputRefs: parseListFlag(flags["input-refs"], []),
+      result: normalizeString(flags.result, "queued"),
+      notes: parseListFlag(flags.notes, []),
+      report
+    });
+    result = flags.format === "markdown"
+      ? renderGovernanceReplayRun(replay)
+      : replay;
   } else if (family === "review" && action === "independent-execution") {
     const review = await runtime.reviewIndependentExecution({
       repoRoot: normalizeString(flags["repo-root"], process.cwd())
@@ -207,12 +281,17 @@ async function run() {
         "registry inspect [--format markdown]",
         "registry migrate [--source-dir <dir>] [--target-dir <dir>] [--apply] [--format markdown]",
         "learn daily-run --source-type manual --content 'text' [--dry-run] [--promote]",
+        "learn lifecycle-run --source-type manual --content 'text' [--dry-run] [--format markdown]",
         "reflect run --source-type manual --content 'text' [--dry-run] [--promote]",
         "export build --consumer generic",
         "export inspect --consumer generic [--format markdown]",
         "govern audit [--format markdown]",
+        "govern audit-learning [--format markdown]",
+        "govern compare-learning [--current-window-days 7] [--previous-window-days 7] [--format markdown]",
         "govern repair --finding-code candidate_missing_decision_trail --action mark_for_review [--format markdown]",
+        "govern repair-learning --finding-code learning_candidate_ready_for_decay [--format markdown]",
         "govern replay [--result queued] [--format markdown]",
+        "govern replay-learning [--result queued] [--format markdown]",
         "review independent-execution [--format markdown]"
       ]
     };

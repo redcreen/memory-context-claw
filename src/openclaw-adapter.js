@@ -5,6 +5,8 @@ import {
   resolveOpenClawNamespace,
   resolveRegistryRoot
 } from "./unified-memory-core/index.js";
+import { mapOpenClawExportToCandidates } from "./unified-memory-core/openclaw-consumption.js";
+export { mapOpenClawExportToCandidates } from "./unified-memory-core/openclaw-consumption.js";
 
 function normalizeString(value, fallback = "") {
   if (typeof value !== "string") {
@@ -103,34 +105,6 @@ export function resolveOpenClawAdapterConfig(pluginConfig = {}) {
         : 4
     }
   };
-}
-
-export function mapOpenClawExportToCandidates(exportResult, { query, maxCandidates }) {
-  const items = Array.isArray(exportResult?.payload?.memory_items)
-    ? exportResult.payload.memory_items
-    : [];
-
-  return items.slice(0, maxCandidates).map((item, index) => {
-    const baseScore = Math.max(0.01, 0.92 - index * 0.03);
-    return {
-      id: item.memory_id,
-      path: `umc://openclaw-export/${item.memory_id}`,
-      canonicalPath: `umc://openclaw-export/${item.memory_id}`,
-      startLine: 1,
-      endLine: 1,
-      snippet: String(item.summary || item.title || ""),
-      source: "governedArtifact",
-      pathKind: "governedArtifact",
-      title: item.title,
-      visibility: item.visibility,
-      exportHints: item.export_hints,
-      attributes: item.attributes,
-      score: baseScore,
-      retrievalScore: baseScore,
-      sourceQuery: query,
-      fusionScore: baseScore + 1 / (index + 1)
-    };
-  });
 }
 
 export function createOpenClawAdapterRuntime(options = {}) {
