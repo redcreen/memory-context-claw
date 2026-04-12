@@ -11,10 +11,10 @@
 
 当前审计基于这些来源：
 
-- [/Users/redcreen/Project/长记忆/MEMORY.md](/Users/redcreen/Project/长记忆/MEMORY.md)
-- [/Users/redcreen/Project/长记忆/memory/2026-04-04.md](/Users/redcreen/Project/长记忆/memory/2026-04-04.md)
+- `/Users/redcreen/Project/长记忆/MEMORY.md`
+- `/Users/redcreen/Project/长记忆/memory/2026-04-04.md`
 - [reports/conversation-memory-candidates.md](conversation-memory-candidates.md)
-- [reports/conversation-memory-cards.json](conversation-memory-cards.json)
+- [reports/conversation-memory-cards.json](../conversation-memory-cards.json)
 
 ## 总体判断
 
@@ -34,7 +34,7 @@
 
 ### MEMORY.md 的总体规则
 
-当前 [MEMORY.md](/Users/redcreen/Project/长记忆/MEMORY.md) 的主结论是稳定的：
+当前 `MEMORY.md` 的主结论是稳定的：
 
 - `这个文件只放长期稳定、会被反复复用的规则、偏好和背景信息。`
 
@@ -48,7 +48,7 @@
 
 ### 2026-04-04 的目录分层结论
 
-当前 [2026-04-04.md](/Users/redcreen/Project/长记忆/memory/2026-04-04.md) 记录的是：
+当前 `2026-04-04.md` 记录的是：
 
 - `MEMORY.md` 存长期稳定信息
 - `memory/` 存每日沉淀

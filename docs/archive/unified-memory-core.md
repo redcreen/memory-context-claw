@@ -87,32 +87,32 @@ flowchart LR
 
 - [unified-memory-core-architecture.md](unified-memory-core-architecture.md)
 - [unified-memory-core-roadmap.md](unified-memory-core-roadmap.md)
-- [docs/unified-memory-core/development-plan.md](docs/unified-memory-core/development-plan.md)
-- [docs/unified-memory-core/deployment-topology.md](docs/unified-memory-core/deployment-topology.md)
-- [docs/unified-memory-core/repo-layout.md](docs/unified-memory-core/repo-layout.md)
-- [code-memory-binding-architecture.md](code-memory-binding-architecture.md)
+- [docs/unified-memory-core/development-plan.md](../reference/unified-memory-core/development-plan.md)
+- [docs/unified-memory-core/deployment-topology.md](../reference/unified-memory-core/deployment-topology.md)
+- [docs/unified-memory-core/repo-layout.md](../reference/unified-memory-core/repo-layout.md)
+- [code-memory-binding-architecture.md](../reference/code-memory-binding-architecture.md)
 
 ### Module architecture
 
-- [docs/unified-memory-core/architecture/README.md](docs/unified-memory-core/architecture/README.md)
-- [self-learning-architecture.md](self-learning-architecture.md)
+- [docs/unified-memory-core/architecture/README.md](../reference/unified-memory-core/architecture/README.md)
+- [self-learning-architecture.md](../workstreams/self-learning/architecture.md)
 
 ### Module roadmaps
 
-- [docs/unified-memory-core/roadmaps/README.md](docs/unified-memory-core/roadmaps/README.md)
-- [reports/self-learning-roadmap.md](reports/self-learning-roadmap.md)
+- [docs/unified-memory-core/roadmaps/README.md](../reference/unified-memory-core/roadmaps/README.md)
+- [reports/self-learning-roadmap.md](../workstreams/self-learning/roadmap.md)
 
 ### Module blueprints
 
-- [docs/unified-memory-core/blueprints/README.md](docs/unified-memory-core/blueprints/README.md)
+- [docs/unified-memory-core/blueprints/README.md](../reference/unified-memory-core/blueprints/README.md)
 
 ### Module todo
 
-- [docs/unified-memory-core/todo/README.md](docs/unified-memory-core/todo/README.md)
+- [docs/unified-memory-core/todo/README.md](unified-memory-core/todo/README.md)
 
 ### Testing plan
 
-- [docs/unified-memory-core/testing/README.md](docs/unified-memory-core/testing/README.md)
+- [docs/unified-memory-core/testing/README.md](../reference/unified-memory-core/testing/README.md)
 
 ## 中文
 
@@ -199,28 +199,28 @@ flowchart LR
 
 - [unified-memory-core-architecture.md](unified-memory-core-architecture.md)
 - [unified-memory-core-roadmap.md](unified-memory-core-roadmap.md)
-- [docs/unified-memory-core/deployment-topology.md](docs/unified-memory-core/deployment-topology.md)
-- [docs/unified-memory-core/repo-layout.md](docs/unified-memory-core/repo-layout.md)
-- [code-memory-binding-architecture.md](code-memory-binding-architecture.md)
+- [docs/unified-memory-core/deployment-topology.md](../reference/unified-memory-core/deployment-topology.md)
+- [docs/unified-memory-core/repo-layout.md](../reference/unified-memory-core/repo-layout.md)
+- [code-memory-binding-architecture.md](../reference/code-memory-binding-architecture.md)
 
 ### 模块架构
 
-- [docs/unified-memory-core/architecture/README.md](docs/unified-memory-core/architecture/README.md)
-- [self-learning-architecture.md](self-learning-architecture.md)
+- [docs/unified-memory-core/architecture/README.md](../reference/unified-memory-core/architecture/README.md)
+- [self-learning-architecture.md](../workstreams/self-learning/architecture.md)
 
 ### 模块 roadmap
 
-- [docs/unified-memory-core/roadmaps/README.md](docs/unified-memory-core/roadmaps/README.md)
-- [reports/self-learning-roadmap.md](reports/self-learning-roadmap.md)
+- [docs/unified-memory-core/roadmaps/README.md](../reference/unified-memory-core/roadmaps/README.md)
+- [reports/self-learning-roadmap.md](../workstreams/self-learning/roadmap.md)
 
 ### 模块 blueprint
 
-- [docs/unified-memory-core/blueprints/README.md](docs/unified-memory-core/blueprints/README.md)
+- [docs/unified-memory-core/blueprints/README.md](../reference/unified-memory-core/blueprints/README.md)
 
 ### 模块 todo
 
-- [docs/unified-memory-core/todo/README.md](docs/unified-memory-core/todo/README.md)
+- [docs/unified-memory-core/todo/README.md](unified-memory-core/todo/README.md)
 
 ### 测试规划
 
-- [docs/unified-memory-core/testing/README.md](docs/unified-memory-core/testing/README.md)
+- [docs/unified-memory-core/testing/README.md](../reference/unified-memory-core/testing/README.md)

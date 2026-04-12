@@ -102,7 +102,7 @@ flowchart TB
 
 更完整的对比文档在：
 
-- [memory-search-orchestration-vs-tool-agent.md](memory-search-orchestration-vs-tool-agent.md)
+- [memory-search-orchestration-vs-tool-agent.md](../../archive/memory-search-orchestration-vs-tool-agent.md)
 - 当前 retrieval mode / source priority / `0-LLM default` 的正式说明在：
   - [retrieval-policy.md](retrieval-policy.md)
 
@@ -616,11 +616,11 @@ flowchart TB
 后续所有 `memory search` 开发，都应该对着这 3 份一起看：
 
 - 架构与问题说明：
-  [memory-search-architecture.md](memory-search-architecture.md)
+  [memory-search-architecture.md](architecture.md)
 - 工作流说明：
-  [memory-search-workstream.md](memory-search-workstream.md)
+  [memory-search-workstream.md](README.md)
 - 专项 case 集：
-  [memory-search-cases.json](../evals/memory-search-cases.json)
+  [memory-search-cases.json](../../../evals/memory-search-cases.json)
 
 一句话：
 

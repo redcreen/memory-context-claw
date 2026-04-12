@@ -17,21 +17,21 @@
 相关配套文档：
 
 - 架构与问题说明：
-  [memory-search-architecture.md](memory-search-architecture.md)
+  [memory-search-architecture.md](architecture.md)
 - 工作流说明：
-  [memory-search-workstream.md](memory-search-workstream.md)
+  [memory-search-workstream.md](README.md)
 - 专项 case：
-  [memory-search-cases.json](../evals/memory-search-cases.json)
+  [memory-search-cases.json](../../../evals/memory-search-cases.json)
 - baseline 报告：
-  [memory-search-baseline-report.md](memory-search-baseline-report.md)
+  [memory-search-baseline-report.md](../../../reports/generated/memory-search-baseline-report.md)
 - session-memory 形态策略：
   [session-memory-shape-strategy.md](session-memory-shape-strategy.md)
 - retrieval policy：
   [retrieval-policy.md](retrieval-policy.md)
 - governance：
-  [memory-search-governance.md](memory-search-governance.md)
+  [memory-search-governance.md](governance.md)
 - 后续蓝图：
-  [memory-search-next-blueprint.md](memory-search-next-blueprint.md)
+  [memory-search-next-blueprint.md](next-blueprint.md)
 
 ## roadmap 总览图
 
@@ -153,7 +153,7 @@ flowchart TB
   - `scripts/eval-memory-search-cases.js`
   - `npm run eval:memory-search:cases`
 - 已有正式 baseline：
-  - [memory-search-baseline-report.md](memory-search-baseline-report.md)
+  - [memory-search-baseline-report.md](../../../reports/generated/memory-search-baseline-report.md)
 
 阶段结论：
 
@@ -341,7 +341,7 @@ flowchart TB
 已完成：
 
 - 已有独立治理文档：
-  - [memory-search-governance.md](memory-search-governance.md)
+  - [memory-search-governance.md](governance.md)
 - 已有单独入口：
   - `npm run eval:memory-search:governance`
 - 已接入主治理周期：
@@ -375,7 +375,7 @@ flowchart TB
 
 主 case 集：
 
-- [memory-search-cases.json](../evals/memory-search-cases.json)
+- [memory-search-cases.json](../../../evals/memory-search-cases.json)
 
 当前包括：
 

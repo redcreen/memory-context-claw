@@ -45,31 +45,31 @@ Meaning:
 
 Core scripts:
 
-- [scripts/smoke-assemble.js](scripts/smoke-assemble.js)
-- [scripts/eval-smoke-cases.js](scripts/eval-smoke-cases.js)
-- [scripts/eval-cases.js](scripts/eval-cases.js)
-- [scripts/agent-regression.js](scripts/agent-regression.js)
-- [scripts/audit-formal-memory.js](scripts/audit-formal-memory.js)
-- [scripts/audit-session-memory-exit.js](scripts/audit-session-memory-exit.js)
-- [scripts/audit-fact-conflicts.js](scripts/audit-fact-conflicts.js)
-- [scripts/audit-fact-duplicates.js](scripts/audit-fact-duplicates.js)
-- [scripts/run-governance-cycle.js](scripts/run-governance-cycle.js)
-- [scripts/verify-suite.js](scripts/verify-suite.js)
+- [scripts/smoke-assemble.js](../../scripts/smoke-assemble.js)
+- [scripts/eval-smoke-cases.js](../../scripts/eval-smoke-cases.js)
+- [scripts/eval-cases.js](../../scripts/eval-cases.js)
+- [scripts/agent-regression.js](../../scripts/agent-regression.js)
+- [scripts/audit-formal-memory.js](../../scripts/audit-formal-memory.js)
+- [scripts/audit-session-memory-exit.js](../../scripts/audit-session-memory-exit.js)
+- [scripts/audit-fact-conflicts.js](../../scripts/audit-fact-conflicts.js)
+- [scripts/audit-fact-duplicates.js](../../scripts/audit-fact-duplicates.js)
+- [scripts/run-governance-cycle.js](../../scripts/run-governance-cycle.js)
+- [scripts/verify-suite.js](../../scripts/verify-suite.js)
 
 Key policy / architecture docs:
 
-- [system-architecture.md](system-architecture.md)
-- [reports/memory-search-architecture.md](reports/memory-search-architecture.md)
-- [reports/session-memory-shape-strategy.md](reports/session-memory-shape-strategy.md)
-- [reports/retrieval-policy.md](reports/retrieval-policy.md)
+- [system-architecture.md](../workstreams/system/architecture.md)
+- [reports/memory-search-architecture.md](../workstreams/memory-search/architecture.md)
+- [reports/session-memory-shape-strategy.md](../workstreams/memory-search/session-memory-shape-strategy.md)
+- [reports/retrieval-policy.md](../workstreams/memory-search/retrieval-policy.md)
 
 Case files:
 
-- [evals/smoke-cases.json](evals/smoke-cases.json)
-- [evals/golden-cases.json](evals/golden-cases.json)
-- [evals/agent-regression-cases.json](evals/agent-regression-cases.json)
-- [evals/fact-growth-cases.json](evals/fact-growth-cases.json)
-- [evals/perf-cases.json](evals/perf-cases.json)
+- [evals/smoke-cases.json](../../evals/smoke-cases.json)
+- [evals/golden-cases.json](../../evals/golden-cases.json)
+- [evals/agent-regression-cases.json](../../evals/agent-regression-cases.json)
+- [evals/fact-growth-cases.json](../../evals/fact-growth-cases.json)
+- [evals/perf-cases.json](../../evals/perf-cases.json)
 
 ### Commands
 
@@ -350,11 +350,11 @@ Newly extracted from recent `main` dialogue and staged for gradual adoption:
 
 These currently live in:
 
-- [evals/fact-growth-cases.json](evals/fact-growth-cases.json)
+- [evals/fact-growth-cases.json](../../evals/fact-growth-cases.json)
 
 Breakdown notes:
 
-- [reports/new-dialogue-test-cases.md](reports/new-dialogue-test-cases.md)
+- [reports/new-dialogue-test-cases.md](../../reports/generated/new-dialogue-test-cases.md)
 
 ### Performance Cases
 
@@ -368,7 +368,7 @@ Current perf cases track latency budgets for representative flows:
 
 These live in:
 
-- [evals/perf-cases.json](evals/perf-cases.json)
+- [evals/perf-cases.json](../../evals/perf-cases.json)
 
 Rules:
 
@@ -451,24 +451,24 @@ npm run memory:governance-cycle -- --write
 
 核心脚本：
 
-- [scripts/smoke-assemble.js](scripts/smoke-assemble.js)
-- [scripts/eval-smoke-cases.js](scripts/eval-smoke-cases.js)
-- [scripts/eval-cases.js](scripts/eval-cases.js)
-- [scripts/agent-regression.js](scripts/agent-regression.js)
-- [scripts/audit-formal-memory.js](scripts/audit-formal-memory.js)
-- [scripts/audit-session-memory-exit.js](scripts/audit-session-memory-exit.js)
-- [scripts/audit-fact-conflicts.js](scripts/audit-fact-conflicts.js)
-- [scripts/audit-fact-duplicates.js](scripts/audit-fact-duplicates.js)
-- [scripts/run-governance-cycle.js](scripts/run-governance-cycle.js)
-- [scripts/verify-suite.js](scripts/verify-suite.js)
+- [scripts/smoke-assemble.js](../../scripts/smoke-assemble.js)
+- [scripts/eval-smoke-cases.js](../../scripts/eval-smoke-cases.js)
+- [scripts/eval-cases.js](../../scripts/eval-cases.js)
+- [scripts/agent-regression.js](../../scripts/agent-regression.js)
+- [scripts/audit-formal-memory.js](../../scripts/audit-formal-memory.js)
+- [scripts/audit-session-memory-exit.js](../../scripts/audit-session-memory-exit.js)
+- [scripts/audit-fact-conflicts.js](../../scripts/audit-fact-conflicts.js)
+- [scripts/audit-fact-duplicates.js](../../scripts/audit-fact-duplicates.js)
+- [scripts/run-governance-cycle.js](../../scripts/run-governance-cycle.js)
+- [scripts/verify-suite.js](../../scripts/verify-suite.js)
 
 case 文件：
 
-- [evals/smoke-cases.json](evals/smoke-cases.json)
-- [evals/golden-cases.json](evals/golden-cases.json)
-- [evals/agent-regression-cases.json](evals/agent-regression-cases.json)
-- [evals/fact-growth-cases.json](evals/fact-growth-cases.json)
-- [evals/perf-cases.json](evals/perf-cases.json)
+- [evals/smoke-cases.json](../../evals/smoke-cases.json)
+- [evals/golden-cases.json](../../evals/golden-cases.json)
+- [evals/agent-regression-cases.json](../../evals/agent-regression-cases.json)
+- [evals/fact-growth-cases.json](../../evals/fact-growth-cases.json)
+- [evals/perf-cases.json](../../evals/perf-cases.json)
 
 ### 命令怎么跑
 
@@ -582,7 +582,7 @@ npm run verify
 
 正式记忆层巡检报告默认写到：
 
-- [reports/formal-memory-audit-2026-04-05.md](reports/formal-memory-audit-2026-04-05.md)
+- [reports/formal-memory-audit-2026-04-05.md](../../reports/generated/formal-memory-audit-2026-04-05.md)
 
 ### Smoke 测试案例
 
@@ -698,7 +698,7 @@ npm run verify
 
 这些用例目前放在：
 
-- [evals/fact-growth-cases.json](evals/fact-growth-cases.json)
+- [evals/fact-growth-cases.json](../../evals/fact-growth-cases.json)
 
 其中已经稳定、并升格进主 `agent regression` 的有：
 
@@ -755,7 +755,7 @@ That means:
 
 详细拆解说明在：
 
-- [reports/new-dialogue-test-cases.md](reports/new-dialogue-test-cases.md)
+- [reports/new-dialogue-test-cases.md](../../reports/generated/new-dialogue-test-cases.md)
 
 ### 性能测试用例
 
@@ -769,7 +769,7 @@ That means:
 
 这些用例放在：
 
-- [evals/perf-cases.json](evals/perf-cases.json)
+- [evals/perf-cases.json](../../evals/perf-cases.json)
 
 规则是：
 
@@ -810,9 +810,9 @@ That means:
 这组不是“宿主 `memory_search` 已修好”的证明，而是后续收口 builtin `memory_search` 缺口的专项 case 集。
 
 - case 文件：
-  [memory-search-cases.json](evals/memory-search-cases.json)
+  [memory-search-cases.json](../../evals/memory-search-cases.json)
 - 工作流说明：
-  [memory-search-workstream.md](reports/memory-search-workstream.md)
+  [memory-search-workstream.md](../workstreams/memory-search/README.md)
 
 当前用途：
 
@@ -836,6 +836,6 @@ That means:
 结构说明文档：
 
 - [memory-search-scope.md](memory-search-scope.md)
-- [memory-search-architecture.md](reports/memory-search-architecture.md)
-- [memory-search-roadmap.md](reports/memory-search-roadmap.md)
-- [memory-search-orchestration-vs-tool-agent.md](reports/memory-search-orchestration-vs-tool-agent.md)
+- [memory-search-architecture.md](../workstreams/memory-search/architecture.md)
+- [memory-search-roadmap.md](../workstreams/memory-search/roadmap.md)
+- [memory-search-orchestration-vs-tool-agent.md](memory-search-orchestration-vs-tool-agent.md)

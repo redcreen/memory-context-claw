@@ -7,9 +7,9 @@
 请直接配合下面两份主文档使用：
 
 - workstream roadmap：
-  [../../workstreams/self-learning/roadmap.md](../../workstreams/self-learning/roadmap.md)
+  [../../workstreams/self-learning/roadmap.md](../../../workstreams/self-learning/roadmap.zh-CN.md)
 - workstream architecture：
-  [../../workstreams/self-learning/architecture.md](../../workstreams/self-learning/architecture.md)
+  [../../workstreams/self-learning/architecture.md](../../../workstreams/self-learning/architecture.zh-CN.md)
 
 当前状态：
 

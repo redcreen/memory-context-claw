@@ -1,6 +1,6 @@
 # Unified Memory Core Module Todo
 
-- [../development-plan.md](../development-plan.md)
+- [../development-plan.md](../../../reference/unified-memory-core/development-plan.md)
 - [self-learning-workstream.md](self-learning-workstream.md)
 - [source-system.md](source-system.md)
 - [reflection-system.md](reflection-system.md)

@@ -498,7 +498,7 @@ Phase 5 / live regression 工具链治理：给 `eval:hot*` 增加显式 hot-ses
 
 1. 新增 hot-session 元数据提取模块
 
-- [hot-session-regression.js](../src/hot-session-regression.js)
+- [hot-session-regression.js](../../src/hot-session-regression.js)
 
 它会从 `openclaw agent --json` 返回里提取：
 
@@ -531,8 +531,8 @@ Phase 5 / live regression 工具链治理：给 `eval:hot*` 增加显式 hot-ses
 
 4. 同步更新文档
 
-- [testsuite.md](../testsuite.md)
-- [project-roadmap.md](../project-roadmap.md)
+- [testsuite.md](testsuite.md)
+- [project-roadmap.md](../workstreams/project/roadmap.md)
 - [investigation-todo.md](investigation-todo.md)
 
 ### 为什么这样做
@@ -791,7 +791,7 @@ Phase 5 / Governance Layer / Now-2：第四波治理，开始处理“更短、�
 
 最关键的是：
 
-- `2026-04-01-1314.md` 里的“默认推进 / 高风险再确认 / 连续任务自动续航”已经正式写进了 [MEMORY.md](/Users/redcreen/.openclaw/workspace/MEMORY.md)
+- `2026-04-01-1314.md` 里的“默认推进 / 高风险再确认 / 连续任务自动续航”已经正式写进了 `MEMORY.md`
 
 其余几份则更明显地属于：
 
@@ -2094,7 +2094,7 @@ critical live regression 仍然通过：
 
 4. 更新报告输出
 
-现在 [conversation-memory-candidates.md](conversation-memory-candidates.md) 已经不只是列候选文本，还会显示：
+现在 [conversation-memory-candidates.md](../../reports/generated/conversation-memory-candidates.md) 已经不只是列候选文本，还会显示：
 
 - 建议动作
 - 置信度
@@ -2922,7 +2922,7 @@ critical live regression 仍然通过：
 
 2. 候选记忆报告里没有“牛排”
 
-当前 [conversation-memory-candidates.md](conversation-memory-candidates.md) 里没有这条偏好。
+当前 [conversation-memory-candidates.md](../../reports/generated/conversation-memory-candidates.md) 里没有这条偏好。
 
 继续下钻后确认了一个关键原因：
 
@@ -2931,7 +2931,7 @@ critical live regression 仍然通过：
 
 代码位置：
 
-- [conversation-memory.js](../src/conversation-memory.js)
+- [conversation-memory.js](../../src/conversation-memory.js)
 
 其中 `readIndexedSessionMessages()` 的 SQL 明确只看：
 
@@ -2958,7 +2958,7 @@ critical live regression 仍然通过：
 
 已经做了真实参数实验，报告在：
 
-- [memory-search-param-eval.md](memory-search-param-eval.md)
+- [memory-search-param-eval.md](../../reports/generated/memory-search-param-eval.md)
 
 实验内容包括：
 
@@ -2989,7 +2989,7 @@ OpenClaw 的 temporal decay 只会自动识别：
 
 代码位置：
 
-- [manager-DaI_sbkE.js](/Users/redcreen/.local/lib/node_modules/openclaw/dist/manager-DaI_sbkE.js)
+- `manager-DaI_sbkE.js`
 
 相关函数：
 
@@ -3010,7 +3010,7 @@ OpenClaw 的 FTS 查询构造是：
 
 代码位置：
 
-- [manager-DaI_sbkE.js](/Users/redcreen/.local/lib/node_modules/openclaw/dist/manager-DaI_sbkE.js)
+- `manager-DaI_sbkE.js`
 - `buildFtsQuery(raw)`
 
 这意味着像：
@@ -3097,7 +3097,7 @@ OpenClaw 的 FTS 查询构造是：
 
 - `MEMORY.md 应该放的是长期稳定、会被反复复用的内容...`
 
-这类内容实际上已经被整理进正式的 [MEMORY.md](/Users/redcreen/Project/长记忆/MEMORY.md) 了，但在候选报告里仍然被当成一条新的长期候选挂出来。
+这类内容实际上已经被整理进正式的 `MEMORY.md` 了，但在候选报告里仍然被当成一条新的长期候选挂出来。
 
 原因不是主题判断错了，而是“已有覆盖检测”还太像字符串比对：
 
@@ -5287,7 +5287,7 @@ OpenClaw 的 FTS 查询构造是：
 
 新增了一份阶段性审计文档：
 
-- [current-memory-audit.md](current-memory-audit.md)
+- [current-memory-audit.md](../../reports/generated/current-memory-audit.md)
 
 这份文档按 4 类梳理了当前记忆：
 
@@ -5432,7 +5432,7 @@ OpenClaw 的 FTS 查询构造是：
 
 1. 新增 smoke case 文件
 
-- [smoke-cases.json](../evals/smoke-cases.json)
+- [smoke-cases.json](../../evals/smoke-cases.json)
 
 当前按 4 类组织：
 
@@ -5463,7 +5463,7 @@ OpenClaw 的 FTS 查询构造是：
 4. 补 smoke 计划和 baseline 报告
 
 - [smoke-test-plan.md](smoke-test-plan.md)
-- [smoke-baseline-report.md](smoke-baseline-report.md)
+- [smoke-baseline-report.md](../../reports/generated/smoke-baseline-report.md)
 
 ### 这轮验证结果
 
@@ -5522,8 +5522,8 @@ OpenClaw 的 FTS 查询构造是：
 
 进一步往下查后发现：
 
-- 当前 [conversation-memory-cards.json](conversation-memory-cards.json) 里没有身份 card
-- 但宿主 [MEMORY.md](/Users/redcreen/.openclaw/workspace/MEMORY.md) 已经明确写着 `刘超（超哥）`
+- 当前 [conversation-memory-cards.json](../../reports/conversation-memory-cards.json) 里没有身份 card
+- 但宿主 `MEMORY.md` 已经明确写着 `刘超（超哥）`
 
 所以问题根因不是“身份没记住”，而是：
 
@@ -5532,7 +5532,7 @@ OpenClaw 的 FTS 查询构造是：
 
 ### 这轮做了什么
 
-1. 在 [retrieval.js](../src/retrieval.js) 新增：
+1. 在 [retrieval.js](../../src/retrieval.js) 新增：
 
 - `buildStableMemoryCardsFromMarkdown()`
 
@@ -5549,7 +5549,7 @@ OpenClaw 的 FTS 查询构造是：
 
 现在它会同时读取：
 
-- 现有 [conversation-memory-cards.json](conversation-memory-cards.json)
+- 现有 [conversation-memory-cards.json](../../reports/conversation-memory-cards.json)
 - 宿主 `~/.openclaw/workspace/MEMORY.md`
 
 也就是说，`cardArtifact` 不再只是“对话提炼副产物”，而是开始消费“正式长期记忆本身”。
@@ -5590,7 +5590,7 @@ OpenClaw 的 FTS 查询构造是：
 
 1. 新增检索层测试
 
-在 [retrieval.test.js](../test/retrieval.test.js) 里补了：
+在 [retrieval.test.js](../../test/retrieval.test.js) 里补了：
 
 - `buildStableMemoryCardsFromMarkdown derives identity and style cards from MEMORY.md`
 - `buildCardArtifactCandidates promotes MEMORY.md identity cards for identity queries`
@@ -5667,7 +5667,7 @@ OpenClaw 的 FTS 查询构造是：
 
 1. 新增对话衍生 case 文件
 
-- [fact-growth-cases.json](../evals/fact-growth-cases.json)
+- [fact-growth-cases.json](../../evals/fact-growth-cases.json)
 
 当前拆出的 case 有：
 
@@ -5680,7 +5680,7 @@ OpenClaw 的 FTS 查询构造是：
 
 2. 补说明文档
 
-- [new-dialogue-test-cases.md](new-dialogue-test-cases.md)
+- [new-dialogue-test-cases.md](../../reports/generated/new-dialogue-test-cases.md)
 
 这份文档明确区分了：
 
@@ -5689,7 +5689,7 @@ OpenClaw 的 FTS 查询构造是：
 
 3. 补维护入口
 
-在 [package.json](../package.json) 里新增：
+在 [package.json](../../package.json) 里新增：
 
 - `npm run eval:agent:facts`
 
@@ -5701,7 +5701,7 @@ OpenClaw 的 FTS 查询构造是：
 
 4. 同步测试总说明
 
-- [testsuite.md](../testsuite.md)
+- [testsuite.md](testsuite.md)
 
 已经补了：
 
@@ -5774,7 +5774,7 @@ OpenClaw 的 FTS 查询构造是：
 
 ### 这轮做了什么
 
-1. 扩展 [retrieval.js](../src/retrieval.js)
+1. 扩展 [retrieval.js](../../src/retrieval.js)
 
 新增了从 daily memory 派生 stable card 的能力：
 
@@ -5811,7 +5811,7 @@ OpenClaw 的 FTS 查询构造是：
 
 3. 补测试
 
-在 [retrieval.test.js](../test/retrieval.test.js) 里新增和扩展了：
+在 [retrieval.test.js](../../test/retrieval.test.js) 里新增和扩展了：
 
 - `buildStableMemoryCardsFromMarkdown derives birthday and family cards from daily memory`
 - `buildCardArtifactCandidates promotes birthday and family cards for personal fact queries`
@@ -5906,7 +5906,7 @@ OpenClaw 的 FTS 查询构造是：
 
 2. 在 roadmap 里提升性能优先级
 
-- [project-roadmap.md](../project-roadmap.md)
+- [project-roadmap.md](../workstreams/project/roadmap.md)
 
 更新了：
 
@@ -5917,7 +5917,7 @@ OpenClaw 的 FTS 查询构造是：
 
 3. 新增 perf case 文件
 
-- [perf-cases.json](../evals/perf-cases.json)
+- [perf-cases.json](../../evals/perf-cases.json)
 
 当前覆盖了几类代表性查询：
 
@@ -5929,7 +5929,7 @@ OpenClaw 的 FTS 查询构造是：
 
 4. 新增 perf suite 脚本
 
-- [eval-performance.js](../scripts/eval-performance.js)
+- [eval-performance.js](../../scripts/eval-performance.js)
 
 它会对每条 perf case 记录：
 
@@ -5950,13 +5950,13 @@ OpenClaw 的 FTS 查询构造是：
 
 5. 新增维护命令
 
-在 [package.json](../package.json) 里新增：
+在 [package.json](../../package.json) 里新增：
 
 - `npm run eval:perf`
 
 6. 同步测试总说明
 
-- [testsuite.md](../testsuite.md)
+- [testsuite.md](testsuite.md)
 
 现在已经把 perf case、perf 命令、soft/hard budget 都写进去了。
 
@@ -6325,7 +6325,7 @@ guardrail 那条仍然留在独立治理池里，单独跟踪。
 
 这轮已经实际导出了一份：
 
-- [pending-memory-candidates-2026-04-05.md](pending-memory-candidates-2026-04-05.md)
+- [pending-memory-candidates-2026-04-05.md](../../reports/generated/pending-memory-candidates-2026-04-05.md)
 
 ### 当前判断
 
@@ -6501,7 +6501,7 @@ guardrail 那条仍然留在独立治理池里，单独跟踪。
 
 这一轮没有继续盲调分数，而是先补足正式来源本身：
 
-- 给 [formal-memory-policy.md](../formal-memory-policy.md) 新增 stable policy card 提取
+- 给 [formal-memory-policy.md](../reference/formal-memory-policy.md) 新增 stable policy card 提取
 - 新增 card：
   - `正式记忆准入规则`
   - `正式 daily 准入规则`
@@ -6510,8 +6510,8 @@ guardrail 那条仍然留在独立治理池里，单独跟踪。
 
 涉及文件：
 
-- [retrieval.js](../src/retrieval.js)
-- [retrieval.test.js](../test/retrieval.test.js)
+- [retrieval.js](../../src/retrieval.js)
+- [retrieval.test.js](../../test/retrieval.test.js)
 
 ## Validation
 
@@ -6577,7 +6577,7 @@ smoke 现在的排序已经从：
 - `memory_archive/2026-04-05-governance-wave8-safe-governance`
 
 2. 修正 audit 误伤规则  
-之前 [formal-memory-audit.js](../src/formal-memory-audit.js) 用：
+之前 [formal-memory-audit.js](../../src/formal-memory-audit.js) 用：
 
 - `/\/status/`
 
@@ -6641,9 +6641,9 @@ smoke 现在的排序已经从：
 
 这一轮先做了一个专门的退出巡检工具：
 
-- [session-memory-exit-audit.js](../src/session-memory-exit-audit.js)
-- [audit-session-memory-exit.js](../scripts/audit-session-memory-exit.js)
-- [session-memory-exit-audit.test.js](../test/session-memory-exit-audit.test.js)
+- [session-memory-exit-audit.js](../../src/session-memory-exit-audit.js)
+- [audit-session-memory-exit.js](../../scripts/audit-session-memory-exit.js)
+- [session-memory-exit-audit.test.js](../../test/session-memory-exit-audit.test.js)
 
 结论非常明确：
 
@@ -6653,7 +6653,7 @@ smoke 现在的排序已经从：
 
 然后我做了 wave9 治理：
 
-- 把 [2026-04-05-food-preference.md](/Users/redcreen/.openclaw/workspace/memory_archive/2026-04-05-governance-wave9-session-exit/2026-04-05-food-preference.md)
+- 把 `2026-04-05-food-preference.md`
   从宿主正式层移到：
   - `memory_archive/2026-04-05-governance-wave9-session-exit`
 
@@ -6782,14 +6782,14 @@ critical smoke：
 
 这一轮补了完整的 duplicate audit 工具链：
 
-- [fact-duplicate-audit.js](../src/fact-duplicate-audit.js)
-- [audit-fact-duplicates.js](../scripts/audit-fact-duplicates.js)
-- [fact-duplicate-audit.test.js](../test/fact-duplicate-audit.test.js)
+- [fact-duplicate-audit.js](../../src/fact-duplicate-audit.js)
+- [audit-fact-duplicates.js](../../scripts/audit-fact-duplicates.js)
+- [fact-duplicate-audit.test.js](../../test/fact-duplicate-audit.test.js)
 
 同时把它接进了治理周期：
 
-- [run-governance-cycle.js](../scripts/run-governance-cycle.js)
-- [governance-cycle.js](../src/governance-cycle.js)
+- [run-governance-cycle.js](../../scripts/run-governance-cycle.js)
+- [governance-cycle.js](../../src/governance-cycle.js)
 
 现在治理周期里会同时看到：
 
@@ -6989,7 +6989,7 @@ full smoke：
 
 更新了：
 
-- [MEMORY.md](/Users/redcreen/.openclaw/workspace/MEMORY.md)
+- `MEMORY.md`
 
 新增：
 
@@ -7526,7 +7526,7 @@ openclaw agent --agent main --session-id <random> --message '我爱吃什么？'
 这轮做了 4 件事：
 
 1. 重写 roadmap 的状态快照  
-   在 [project-roadmap.md](../project-roadmap.md) 里明确区分：
+   在 [project-roadmap.md](../workstreams/project/roadmap.md) 里明确区分：
    - Governance 已进入常规运行
    - 当前工程主焦点已经切到 `Memory Search Workstream`
    - 宿主 builtin `memory_search` 本身没有被修好
@@ -7540,7 +7540,7 @@ openclaw agent --agent main --session-id <random> --message '我爱吃什么？'
 
 3. 把 memory-search 立成独立工作流  
    新增：
-   - [memory-search-workstream.md](memory-search-workstream.md)
+   - [memory-search-workstream.md](../workstreams/memory-search/README.md)
 
    这份文档的目标不是再重复说“宿主还没修好”，而是把问题拆成三条工程 track：
    - Track A: 宿主 builtin `memory_search` 缺口拆解
@@ -7549,7 +7549,7 @@ openclaw agent --agent main --session-id <random> --message '我爱吃什么？'
 
 4. 把专项 case 集立起来  
    新增：
-   - [memory-search-cases.json](../evals/memory-search-cases.json)
+   - [memory-search-cases.json](../../evals/memory-search-cases.json)
 
    当前先收了 6 条最关键的 memory-search 专项 case：
    - `food-preference-recall`
@@ -7580,19 +7580,19 @@ openclaw agent --agent main --session-id <random> --message '我爱吃什么？'
 
 原因不是“懒得整理”，而是现在真实边界还是跨层的：
 
-- [retrieval.js](../src/retrieval.js)
-- [scoring.js](../src/scoring.js)
-- [query-rewrite.js](../src/query-rewrite.js)
-- [conversation-memory.js](../src/conversation-memory.js)
-- [engine.js](../src/engine.js)
+- [retrieval.js](../../src/retrieval.js)
+- [scoring.js](../../src/scoring.js)
+- [query-rewrite.js](../../src/query-rewrite.js)
+- [conversation-memory.js](../../src/conversation-memory.js)
+- [engine.js](../../src/engine.js)
 
 对应测试也是分散守在这些层上：
 
-- [retrieval.test.js](../test/retrieval.test.js)
-- [scoring.test.js](../test/scoring.test.js)
-- [query-rewrite.test.js](../test/query-rewrite.test.js)
-- [conversation-memory.test.js](../test/conversation-memory.test.js)
-- [engine.test.js](../test/engine.test.js)
+- [retrieval.test.js](../../test/retrieval.test.js)
+- [scoring.test.js](../../test/scoring.test.js)
+- [query-rewrite.test.js](../../test/query-rewrite.test.js)
+- [conversation-memory.test.js](../../test/conversation-memory.test.js)
+- [engine.test.js](../../test/engine.test.js)
 
 现在如果为了“看起来更整齐”立刻把源码搬到 `src/memory-search/`：
 
@@ -7604,11 +7604,11 @@ openclaw agent --agent main --session-id <random> --message '我爱吃什么？'
 所以我最后采取的是折中方案：
 
 1. 先把 memory-search 工作流资产独立出来  
-   - [memory-search-workstream.md](memory-search-workstream.md)
-   - [memory-search-cases.json](../evals/memory-search-cases.json)
+   - [memory-search-workstream.md](../workstreams/memory-search/README.md)
+   - [memory-search-cases.json](../../evals/memory-search-cases.json)
 
 2. 再补一份结构判断文档  
-   - [memory-search-scope.md](../memory-search-scope.md)
+   - [memory-search-scope.md](memory-search-scope.md)
 
 3. 源码层保持暂不大搬  
    - 等 memory-search 的根源实验和边界进一步稳定后，再决定是否拆出：
@@ -7632,7 +7632,7 @@ openclaw agent --agent main --session-id <random> --message '我爱吃什么？'
 这轮新增了两份正式文档：
 
 1. 架构文档  
-   - [memory-search-architecture.md](memory-search-architecture.md)
+   - [memory-search-architecture.md](../workstreams/memory-search/architecture.md)
 
    这份文档重点讲：
    - 问题是什么
@@ -7643,27 +7643,27 @@ openclaw agent --agent main --session-id <random> --message '我爱吃什么？'
    - 推荐的最终架构是什么
 
 2. roadmap 文档  
-   - [memory-search-roadmap.md](memory-search-roadmap.md)
+   - [memory-search-roadmap.md](../workstreams/memory-search/roadmap.md)
 
    这份文档重点讲：
    - 后面按什么阶段推进
    - 每个阶段的目标、任务、完成标准
    - 后续怎么按专项 case 集逐步开发和验证
 
-另外我也把 [testsuite.md](../testsuite.md) 同步了，把这两份文档挂到了 memory-search workstream 说明下面，避免后面再散落。
+另外我也把 [testsuite.md](testsuite.md) 同步了，把这两份文档挂到了 memory-search workstream 说明下面，避免后面再散落。
 
 这轮之后，memory-search 这条线终于有了 5 份成套资产：
 
 - 范围判断：
-  - [memory-search-scope.md](../memory-search-scope.md)
+  - [memory-search-scope.md](memory-search-scope.md)
 - 工作流说明：
-  - [memory-search-workstream.md](memory-search-workstream.md)
+  - [memory-search-workstream.md](../workstreams/memory-search/README.md)
 - 问题 / 解决思路 / 架构：
-  - [memory-search-architecture.md](memory-search-architecture.md)
+  - [memory-search-architecture.md](../workstreams/memory-search/architecture.md)
 - roadmap：
-  - [memory-search-roadmap.md](memory-search-roadmap.md)
+  - [memory-search-roadmap.md](../workstreams/memory-search/roadmap.md)
 - 专项 case 集：
-  - [memory-search-cases.json](../evals/memory-search-cases.json)
+  - [memory-search-cases.json](../../evals/memory-search-cases.json)
 
 这样后面就可以真的做到：
 
@@ -7695,7 +7695,7 @@ openclaw agent --agent main --session-id <random> --message '我爱吃什么？'
    - 为什么当前阶段更适合继续用固定编排做主架构
 
 2. 把这个结论补进总架构文档  
-   - [memory-search-architecture.md](memory-search-architecture.md)
+   - [memory-search-architecture.md](../workstreams/memory-search/architecture.md)
 
    现在架构文档里已经明确说了：
    - 当前主架构继续采用固定编排
@@ -7703,7 +7703,7 @@ openclaw agent --agent main --session-id <random> --message '我爱吃什么？'
 
 我还把这个文档挂到了：
 
-- [testsuite.md](../testsuite.md)
+- [testsuite.md](testsuite.md)
 
 这样后面这条线的“概念资产”就更完整了，不会只剩一堆实现细节。
 
@@ -7714,7 +7714,7 @@ openclaw agent --agent main --session-id <random> --message '我爱吃什么？'
 新增内容：
 
 - 脚本：
-  - [eval-memory-search-cases.js](../scripts/eval-memory-search-cases.js)
+  - [eval-memory-search-cases.js](../../scripts/eval-memory-search-cases.js)
 - 命令：
   - `npm run eval:memory-search:cases`
 

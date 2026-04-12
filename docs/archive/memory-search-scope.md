@@ -23,31 +23,31 @@
 ### 已经独立出来的
 
 - 工作流说明：
-  [memory-search-workstream.md](reports/memory-search-workstream.md)
+  [memory-search-workstream.md](../workstreams/memory-search/README.md)
 - 专项案例：
-  [memory-search-cases.json](evals/memory-search-cases.json)
+  [memory-search-cases.json](../../evals/memory-search-cases.json)
 - Roadmap 主焦点：
-  [project-roadmap.md](project-roadmap.md)
+  [project-roadmap.md](../workstreams/project/roadmap.md)
 - Todo 主线：
-  [investigation-todo.md](reports/investigation-todo.md)
+  [investigation-todo.md](investigation-todo.md)
 
 ### 还没有物理独立的
 
 核心逻辑目前仍散落在这些源文件里：
 
-- [retrieval.js](src/retrieval.js)
-- [scoring.js](src/scoring.js)
-- [query-rewrite.js](src/query-rewrite.js)
-- [conversation-memory.js](src/conversation-memory.js)
-- [engine.js](src/engine.js)
+- [retrieval.js](../../src/retrieval.js)
+- [scoring.js](../../src/scoring.js)
+- [query-rewrite.js](../../src/query-rewrite.js)
+- [conversation-memory.js](../../src/conversation-memory.js)
+- [engine.js](../../src/engine.js)
 
 对应测试也还是分散的：
 
-- [retrieval.test.js](test/retrieval.test.js)
-- [scoring.test.js](test/scoring.test.js)
-- [query-rewrite.test.js](test/query-rewrite.test.js)
-- [conversation-memory.test.js](test/conversation-memory.test.js)
-- [engine.test.js](test/engine.test.js)
+- [retrieval.test.js](../../test/retrieval.test.js)
+- [scoring.test.js](../../test/scoring.test.js)
+- [query-rewrite.test.js](../../test/query-rewrite.test.js)
+- [conversation-memory.test.js](../../test/conversation-memory.test.js)
+- [engine.test.js](../../test/engine.test.js)
 
 ## 为什么现在不建议立刻大搬家
 

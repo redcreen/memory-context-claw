@@ -16,7 +16,7 @@
 相关文档：
 
 - [../deployment-topology.md](../deployment-topology.md)
-- [../../self-learning-architecture.md](../../self-learning-architecture.md)
+- [../../self-learning-architecture.md](../../../workstreams/self-learning/architecture.zh-CN.md)
 - [../development-plan.md](../development-plan.md)
 
 ## 它负责什么

@@ -23,7 +23,7 @@ npm run eval:memory-search:cases -- --format json
 
 专项 case 集：
 
-- [memory-search-cases.json](../evals/memory-search-cases.json)
+- [memory-search-cases.json](../../evals/memory-search-cases.json)
 
 ---
 

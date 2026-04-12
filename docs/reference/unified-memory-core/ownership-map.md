@@ -19,10 +19,10 @@ Owns:
 
 Primary paths:
 
-- [../../src/unified-memory-core/](../../src/unified-memory-core/)
-- [../../scripts/unified-memory-core-cli.js](../../scripts/unified-memory-core-cli.js)
-- [../../scripts/run-daily-reflection.js](../../scripts/run-daily-reflection.js)
-- [../../scripts/run-independent-execution-review.js](../../scripts/run-independent-execution-review.js)
+- [../../src/unified-memory-core/](../../../src/unified-memory-core/)
+- [../../scripts/unified-memory-core-cli.js](../../../scripts/unified-memory-core-cli.js)
+- [../../scripts/run-daily-reflection.js](../../../scripts/run-daily-reflection.js)
+- [../../scripts/run-independent-execution-review.js](../../../scripts/run-independent-execution-review.js)
 
 ### OpenClaw Adapter
 
@@ -34,10 +34,10 @@ Owns:
 
 Primary paths:
 
-- [../../src/openclaw-adapter.js](../../src/openclaw-adapter.js)
-- [../../src/plugin/index.js](../../src/plugin/index.js)
-- [../../src/engine.js](../../src/engine.js)
-- [../../src/scoring.js](../../src/scoring.js)
+- [../../src/openclaw-adapter.js](../../../src/openclaw-adapter.js)
+- [../../src/plugin/index.js](../../../src/plugin/index.js)
+- [../../src/engine.js](../../../src/engine.js)
+- [../../src/scoring.js](../../../src/scoring.js)
 
 ### Codex Adapter
 
@@ -48,7 +48,7 @@ Owns:
 
 Primary paths:
 
-- [../../src/codex-adapter.js](../../src/codex-adapter.js)
+- [../../src/codex-adapter.js](../../../src/codex-adapter.js)
 
 ### Shared Regression Surface
 
@@ -59,10 +59,10 @@ Owns:
 
 Primary paths:
 
-- [../../test/unified-memory-core/](../../test/unified-memory-core/)
-- [../../test/openclaw-adapter.test.js](../../test/openclaw-adapter.test.js)
-- [../../test/codex-adapter.test.js](../../test/codex-adapter.test.js)
-- [../../test/adapter-compatibility.test.js](../../test/adapter-compatibility.test.js)
+- [../../test/unified-memory-core/](../../../test/unified-memory-core/)
+- [../../test/openclaw-adapter.test.js](../../../test/openclaw-adapter.test.js)
+- [../../test/codex-adapter.test.js](../../../test/codex-adapter.test.js)
+- [../../test/adapter-compatibility.test.js](../../../test/adapter-compatibility.test.js)
 
 ## Boundary Rules
 

@@ -825,7 +825,7 @@ npm run memory:distill
 
 输出文件：
 
-- [conversation-memory-candidates.md](conversation-memory-candidates.md)
+- [conversation-memory-candidates.md](../../reports/generated/conversation-memory-candidates.md)
 
 ### 现在更准确的完整链路
 

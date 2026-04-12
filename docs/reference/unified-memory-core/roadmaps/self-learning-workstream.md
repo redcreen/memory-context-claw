@@ -7,9 +7,9 @@ This document makes the self-learning workstream part of the unified module road
 Use:
 
 - product/workstream roadmap:
-  [../../workstreams/self-learning/roadmap.md](../../workstreams/self-learning/roadmap.md)
+  [../../workstreams/self-learning/roadmap.md](../../../workstreams/self-learning/roadmap.md)
 - product/workstream architecture:
-  [../../workstreams/self-learning/architecture.md](../../workstreams/self-learning/architecture.md)
+  [../../workstreams/self-learning/architecture.md](../../../workstreams/self-learning/architecture.md)
 
 Current status:
 

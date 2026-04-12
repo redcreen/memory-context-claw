@@ -16,7 +16,7 @@ It is the top-level architecture reference for the new product direction.
 
 Related deployment reference:
 
-- [docs/unified-memory-core/deployment-topology.md](docs/unified-memory-core/deployment-topology.md)
+- [docs/unified-memory-core/deployment-topology.md](../reference/unified-memory-core/deployment-topology.md)
 
 ## Executive View
 
@@ -236,7 +236,7 @@ Current recommended implementation target:
 
 See:
 
-- [docs/unified-memory-core/deployment-topology.md](docs/unified-memory-core/deployment-topology.md)
+- [docs/unified-memory-core/deployment-topology.md](../reference/unified-memory-core/deployment-topology.md)
 
 ## Governance Loop
 

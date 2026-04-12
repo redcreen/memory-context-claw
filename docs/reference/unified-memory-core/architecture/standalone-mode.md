@@ -16,7 +16,7 @@ It covers:
 Related documents:
 
 - [../deployment-topology.md](../deployment-topology.md)
-- [../../self-learning-architecture.md](../../self-learning-architecture.md)
+- [../../self-learning-architecture.md](../../../workstreams/self-learning/architecture.md)
 - [../development-plan.md](../development-plan.md)
 
 ## What It Owns
