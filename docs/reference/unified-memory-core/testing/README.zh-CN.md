@@ -5,6 +5,12 @@
 测试规划入口：
 
 - [case-matrix.md](case-matrix.md)
+- [stage3-stage4-acceptance.zh-CN.md](stage3-stage4-acceptance.zh-CN.md)
+
+推荐操作路径：
+
+- 先跑 `npm run umc:acceptance -- --format markdown`
+- 只有这份报告失败时，再退回更窄的 lifecycle / policy / export CLI 命令定位问题
 
 Step 4 的 testing surfaces 分成 4 层：
 
@@ -41,6 +47,7 @@ Step 4 的 testing surfaces 分成 4 层：
 - OpenClaw / Codex adapter bridge compatibility: [../../../test/unified-memory-core/adapter-bridges.test.js](../../../../test/unified-memory-core/adapter-bridges.test.js)
 - governance audit / repair / replay primitives: [../../../test/unified-memory-core/governance-system.test.js](../../../../test/unified-memory-core/governance-system.test.js)
 - standalone runtime / CLI contract path: [../../../test/unified-memory-core/standalone-runtime.test.js](../../../../test/unified-memory-core/standalone-runtime.test.js)
+- Stage 3-4 acceptance automation: [../../../test/unified-memory-core/stage3-stage4-acceptance.test.js](../../../../test/unified-memory-core/stage3-stage4-acceptance.test.js)
 - standalone governance repair / replay command path: [../../../test/unified-memory-core/standalone-governance.test.js](../../../../test/unified-memory-core/standalone-governance.test.js)
 - OpenClaw runtime adapter integration: [../../../test/openclaw-adapter.test.js](../../../../test/openclaw-adapter.test.js)
 - Codex runtime adapter integration: [../../../test/codex-adapter.test.js](../../../../test/codex-adapter.test.js)

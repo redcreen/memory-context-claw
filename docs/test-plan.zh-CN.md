@@ -24,12 +24,15 @@
 | promotion 建议保持保守 | 仓库加新的 memory-search cases | 执行 `npm run eval:smoke-promotion` | promotion 建议不会把 smoke 面搞脆 |
 | governance 仍然可 repair | 仓库含 governance fixtures | 跑 targeted governance tests 和 CLI 路径 | audit、repair、replay、export inspect 仍然可用 |
 
-更细的 case 清单在 [unified-memory-core/testing/case-matrix.md](reference/unified-memory-core/testing/case-matrix.md)。
+更细的 case 清单在 [unified-memory-core/testing/case-matrix.zh-CN.md](reference/unified-memory-core/testing/case-matrix.zh-CN.md)。
+
+Stage 3-4 的首选操作清单在 [unified-memory-core/testing/stage3-stage4-acceptance.zh-CN.md](reference/unified-memory-core/testing/stage3-stage4-acceptance.zh-CN.md)。
 
 ## 自动化覆盖
 
 主要自动化测试面：
 
+- `npm run umc:acceptance`
 - `npm test`
 - `npm run smoke:eval`
 - `npm run eval:smoke-promotion`
@@ -38,11 +41,13 @@
 
 详细测试栈：
 
-- [unified-memory-core/testing/README.md](reference/unified-memory-core/testing/README.md)
-- [unified-memory-core/testing/case-matrix.md](reference/unified-memory-core/testing/case-matrix.md)
+- [unified-memory-core/testing/README.zh-CN.md](reference/unified-memory-core/testing/README.zh-CN.md)
+- [unified-memory-core/testing/case-matrix.zh-CN.md](reference/unified-memory-core/testing/case-matrix.zh-CN.md)
+- [unified-memory-core/testing/stage3-stage4-acceptance.zh-CN.md](reference/unified-memory-core/testing/stage3-stage4-acceptance.zh-CN.md)
 
 ## 手工检查
 
+- Stage 3-4 相关验证优先先跑 `npm run umc:acceptance`
 - 从 release tag 安装插件，并确认它能在 OpenClaw 里成功加载
 - 检查 recalled context 质量，不只看测试通过与否
 - 确认稳定事实 / 规则扩面后没有引入脏 supporting context
@@ -64,6 +69,7 @@
 打稳定 tag 之前先跑：
 
 ```bash
+npm run umc:acceptance -- --format markdown
 npm test
 npm run smoke:eval
 npm run eval:smoke-promotion

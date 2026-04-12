@@ -10,6 +10,7 @@ import { createGovernanceSystem } from "../src/unified-memory-core/governance-sy
 import { createMemoryRegistry } from "../src/unified-memory-core/memory-registry.js";
 import { ingestDeclaredSourceToCandidate } from "../src/unified-memory-core/pipeline.js";
 import { createProjectionSystem } from "../src/unified-memory-core/projection-system.js";
+import { createReflectionSystem } from "../src/unified-memory-core/reflection-system.js";
 import { createSourceSystem } from "../src/unified-memory-core/source-system.js";
 
 async function seedStableArtifact({
@@ -205,4 +206,77 @@ test("governance can audit a namespace after Codex write-back and track the repl
   assert.deepEqual(ownership.adapter_compatibility, [
     "test/adapter-compatibility.test.js"
   ]);
+});
+
+test("OpenClaw and Codex keep learned policy inputs aligned across one shared namespace", async () => {
+  const registryRoot = await fs.mkdtemp(path.join(os.tmpdir(), "umc-policy-compat-"));
+  const clock = () => new Date("2026-04-20T00:00:00.000Z");
+  const sourceSystem = createSourceSystem({ clock });
+  const registry = createMemoryRegistry({ rootDir: registryRoot, clock });
+  const reflectionSystem = createReflectionSystem({ registry, clock });
+  const namespace = {
+    tenant: "local",
+    scope: "workspace",
+    resource: "openclaw-shared-memory",
+    key: "policy-shared"
+  };
+
+  const { sourceArtifact } = await sourceSystem.ingestDeclaredSource({
+    sourceType: "manual",
+    declaredBy: "test",
+    namespace,
+    visibility: "shared",
+    content: "Remember this: the user prefers concise progress reports."
+  });
+  await registry.persistSourceArtifact(sourceArtifact);
+  const reflection = await reflectionSystem.runReflection({
+    sourceArtifacts: [sourceArtifact],
+    persistCandidates: true,
+    decidedBy: "test-suite"
+  });
+  await registry.promoteCandidateToStable({
+    candidateArtifactId: reflection.outputs[0].candidate_artifact.artifact_id,
+    decidedBy: "test-suite",
+    reasonCodes: ["adapter_policy_alignment_ready"]
+  });
+
+  const openclawRuntime = createOpenClawAdapterRuntime({
+    pluginConfig: {
+      openclawAdapter: {
+        governedExports: {
+          registryDir: registryRoot,
+          workspaceId: "policy-shared",
+          scope: "workspace",
+          resource: "openclaw-shared-memory",
+          allowedVisibilities: ["shared"]
+        }
+      }
+    }
+  });
+  const codexRuntime = createCodexAdapterRuntime({
+    clock,
+    config: {
+      registryDir: registryRoot,
+      projectId: "policy-shared",
+      userId: "default-user",
+      namespaceHint: "policy-shared",
+      scope: "workspace",
+      resource: "openclaw-shared-memory",
+      allowedVisibilities: ["shared"]
+    }
+  });
+
+  const openclawContext = await openclawRuntime.loadGovernedContext({
+    query: "给我简洁的进展汇报"
+  });
+  const codexMemory = await codexRuntime.readBeforeTask({
+    taskPrompt: "给我简洁的进展汇报"
+  });
+
+  assert.equal(openclawContext.policyContext.policy_inputs.length, 1);
+  assert.equal(codexMemory.policy_inputs.length, 1);
+  assert.equal(
+    openclawContext.policyContext.policy_inputs[0].source_artifact_id,
+    codexMemory.policy_inputs[0].source_artifact_id
+  );
 });

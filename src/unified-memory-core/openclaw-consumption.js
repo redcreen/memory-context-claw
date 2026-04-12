@@ -54,6 +54,9 @@ export function validateOpenClawExportConsumption({
     requested_candidates: normalizeMaxCandidates(maxCandidates, expectedArtifactIds.length || 4),
     consumed_candidates: candidates.length,
     consumed_artifact_ids: consumedArtifactIds,
+    policy_input_count: Array.isArray(exportResult?.payload?.policy_inputs)
+      ? exportResult.payload.policy_inputs.length
+      : 0,
     missing_expected_artifact_ids: missingExpectedArtifactIds,
     status: missingExpectedArtifactIds.length === 0 ? "ok" : "missing_promoted_artifacts",
     preview_candidates: candidates.map((candidate) => ({

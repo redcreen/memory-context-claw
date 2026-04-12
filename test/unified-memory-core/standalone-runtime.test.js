@@ -342,3 +342,88 @@ test("standalone CLI can run lifecycle loop and render learning audit markdown",
   assert.equal(lifecycle.learning_audit.summary.stable_learning_artifacts, 1);
   assert.match(String(auditResult.stdout || ""), /Learning Lifecycle Audit/);
 });
+
+test("standalone runtime can close a local policy-adaptation loop", async () => {
+  const registryRoot = await fs.mkdtemp(path.join(os.tmpdir(), "umc-standalone-policy-"));
+  const runtime = createStandaloneRuntime({
+    config: {
+      registryDir: registryRoot,
+      tenant: "local",
+      scope: "workspace",
+      resource: "unified-memory-core",
+      key: "policy-loop",
+      visibility: "workspace"
+    },
+    clock: () => new Date("2026-04-20T00:00:00.000Z")
+  });
+
+  const report = await runtime.runPolicyAdaptationLoop({
+    declaredSources: [
+      {
+        sourceType: "manual",
+        declaredBy: "test",
+        content: "Remember this: the user prefers concise progress reports."
+      }
+    ],
+    query: "给我一个简洁的进展汇报",
+    taskPrompt: "给我一个简洁的进展汇报并继续编码"
+  });
+
+  assert.equal(report.learning_lifecycle.learning_audit.summary.stable_learning_artifacts, 1);
+  assert.equal(report.policy_audit.summary.openclaw_policy_inputs, 1);
+  assert.equal(report.openclaw_context.policy_context.supporting_context_mode, "compact");
+  assert.equal(report.codex_context.task_defaults.response_style, "concise");
+});
+
+test("standalone CLI can audit policy adaptation and run policy loop", async () => {
+  const registryRoot = await fs.mkdtemp(path.join(os.tmpdir(), "umc-standalone-policy-cli-"));
+  const cliPath = path.join(process.cwd(), "scripts", "unified-memory-core-cli.js");
+
+  await execFileAsync(
+    "node",
+    [
+      cliPath,
+      "learn",
+      "policy-loop",
+      "--registry-dir",
+      registryRoot,
+      "--tenant",
+      "local",
+      "--scope",
+      "workspace",
+      "--resource",
+      "unified-memory-core",
+      "--key",
+      "policy-cli",
+      "--source-type",
+      "manual",
+      "--content",
+      "Remember this: the user prefers concise progress reports."
+    ],
+    { cwd: process.cwd() }
+  );
+
+  const auditResult = await execFileAsync(
+    "node",
+    [
+      cliPath,
+      "govern",
+      "audit-policy",
+      "--registry-dir",
+      registryRoot,
+      "--tenant",
+      "local",
+      "--scope",
+      "workspace",
+      "--resource",
+      "unified-memory-core",
+      "--key",
+      "policy-cli",
+      "--format",
+      "markdown"
+    ],
+    { cwd: process.cwd() }
+  );
+
+  assert.match(String(auditResult.stdout || ""), /Policy Adaptation Report/);
+});

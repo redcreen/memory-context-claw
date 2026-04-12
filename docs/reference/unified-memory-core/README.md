@@ -10,3 +10,4 @@
 - [ownership-map.md](ownership-map.md)
 - [release-boundary.md](release-boundary.md)
 - [repo-layout.md](repo-layout.md)
+- [testing/README.md](testing/README.md)

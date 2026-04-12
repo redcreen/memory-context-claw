@@ -48,8 +48,8 @@
 - `Stage 1`：已完成
 - `Stage 2`：已完成
 - `Stage 3`：已完成
-- 当前指针：`Step 31`
-- 当前建议：从 `Stage 4` 恢复继续
+- 当前指针：`Step 39`
+- 当前建议：从 `Stage 5` 恢复继续
 
 当前 baseline 已经落地：
 
@@ -79,8 +79,8 @@
 | Stage 1 | `1-10` | 冻结产品形态与文档基线 | `completed` |
 | Stage 2 | `11-20` | 完成第一条 local-first 实现基线 | `completed` |
 | Stage 3 | `21-30` | 完成 self-learning 生命周期基线 | `completed` |
-| Stage 4 | `31-38` | 把受治理学习结果接到 adapter 策略使用 | `next` |
-| Stage 5 | `39-46` | 补齐产品运维与 split-ready 执行 | `later` |
+| Stage 4 | `31-38` | 把受治理学习结果接到 adapter 策略使用 | `completed` |
+| Stage 5 | `39-46` | 补齐产品运维与 split-ready 执行 | `next` |
 
 ## 顺序开发计划
 
@@ -148,14 +148,14 @@
 - 受治理学习结果可以显式影响 consumer 行为
 - adapter 侧策略使用可回滚、可测试
 
-31. `later` 定义 `policy-input artifact` contract。
-32. `later` 从 promoted learning artifacts 生成 policy-input projections。
-33. `later` 让 OpenClaw retrieval / assembly 消费 governed learning signals。
-34. `later` 让 Codex task-side consumption 消费 governed learning signals。
-35. `later` 增加 policy adaptation tests 和 rollback protections。
-36. `later` 增加 consumer-specific export compatibility reports。
-37. `later` 验证 learned artifacts 在跨 adapter 情况下的 namespace / visibility 行为。
-38. `later` 以一条可复现的 policy-adaptation loop 收口本阶段。
+31. `completed` 定义 `policy-input artifact` contract。
+32. `completed` 从 promoted learning artifacts 生成 policy-input projections。
+33. `completed` 让 OpenClaw retrieval / assembly 消费 governed learning signals。
+34. `completed` 让 Codex task-side consumption 消费 governed learning signals。
+35. `completed` 增加 policy adaptation tests 和 rollback protections。
+36. `completed` 增加 consumer-specific export compatibility reports。
+37. `completed` 验证 learned artifacts 在跨 adapter 情况下的 namespace / visibility 行为。
+38. `completed` 以一条可复现的 policy-adaptation loop 收口本阶段。
 
 ### Stage 5. 产品加固与独立运行
 
@@ -165,7 +165,7 @@
 - split-ready execution 经过验证
 - 后续 service mode 讨论基于稳定底座进行
 
-39. `later` 加固 file / directory / URL / image 输入的 standalone source adapters。
+39. `next` 加固 file / directory / URL / image 输入的 standalone source adapters。
 40. `later` 增加 reflection 与 governance runs 的 scheduled-job 友好工作流。
 41. `later` 增加 self-learning maintenance workflow 文档与 CLI 支持。
 42. `later` 增加 release-boundary validation checks。
@@ -178,9 +178,9 @@
 
 从这里恢复：
 
-1. 从 `Step 31` 开始
-2. 先完整做完 `Stage 4`
-3. `Stage 4` 没收口前，不进入 `Stage 5`
+1. 从 `Step 39` 开始
+2. 先完整做完 `Stage 5`
+3. 在 Stage 5 打开时，保持 Stage 4 policy adaptation 证据面稳定
 
 当前不要开始：
 

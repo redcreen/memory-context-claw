@@ -35,7 +35,7 @@ Build a governed daily-learning system for `unified-memory-core` that can:
 
 ## Current Status
 
-- status: `Stage 3 complete / Stage 4 next`
+- status: `Stage 4 complete / Stage 5 next`
 - architecture baseline: `defined and partially realized in the current shared modules`
 - implementation baseline: `already running`
 - dependency status:
@@ -57,7 +57,7 @@ The current repo no longer has only a baseline. Stage 3 lifecycle work is now co
 - standalone runtime / CLI / script now support one local governed `observation -> stable` loop
 - OpenClaw consumption of promoted learning artifacts is now validated
 
-The next phase is not to make lifecycle rules explicit. That part is done. The next phase is to define the `policy-input artifact` contract and begin reversible consumer adaptation.
+The next phase is not to define the Stage 4 contract. That part is done. The next phase is product hardening: source-adapter hardening, maintenance workflow, release-boundary checks, and reproducibility.
 
 The phase descriptions below are planning envelopes. Parts of Phase 0-2 are already implemented across the current shared modules.
 

@@ -117,6 +117,66 @@ export function parseExportContract(value) {
   };
 }
 
+export function parsePolicyInputArtifact(value) {
+  assertPlainObject(value, "policy_input_artifact");
+  return {
+    policy_input_id: assertNonEmptyString(
+      value.policy_input_id,
+      "policy_input_artifact.policy_input_id"
+    ),
+    contract_version: assertNonEmptyString(
+      value.contract_version,
+      "policy_input_artifact.contract_version"
+    ),
+    policy_contract_version: assertNonEmptyString(
+      value.policy_contract_version,
+      "policy_input_artifact.policy_contract_version"
+    ),
+    consumer: assertNonEmptyString(value.consumer, "policy_input_artifact.consumer"),
+    namespace: parseNamespace(value.namespace),
+    source_artifact_id: assertNonEmptyString(
+      value.source_artifact_id,
+      "policy_input_artifact.source_artifact_id"
+    ),
+    source_fingerprint: assertNonEmptyString(
+      value.source_fingerprint,
+      "policy_input_artifact.source_fingerprint"
+    ),
+    signal_type: assertNonEmptyString(
+      value.signal_type,
+      "policy_input_artifact.signal_type"
+    ),
+    policy_kind: assertNonEmptyString(
+      value.policy_kind,
+      "policy_input_artifact.policy_kind"
+    ),
+    polarity: assertNonEmptyString(value.polarity, "policy_input_artifact.polarity"),
+    title: assertNonEmptyString(value.title, "policy_input_artifact.title"),
+    statement: assertNonEmptyString(value.statement, "policy_input_artifact.statement"),
+    confidence: assertOptionalNumber(
+      value.confidence,
+      "policy_input_artifact.confidence"
+    ) ?? 0,
+    query_match_terms: Array.isArray(value.query_match_terms)
+      ? value.query_match_terms
+          .map((item, index) =>
+            assertNonEmptyString(
+              item,
+              `policy_input_artifact.query_match_terms[${index}]`
+            )
+          )
+      : [],
+    effects: assertOptionalObject(value.effects, "policy_input_artifact.effects"),
+    evidence_refs: assertStringArray(
+      value.evidence_refs,
+      "policy_input_artifact.evidence_refs"
+    ),
+    rollback: assertOptionalObject(value.rollback, "policy_input_artifact.rollback"),
+    metadata: assertOptionalObject(value.metadata, "policy_input_artifact.metadata"),
+    created_at: assertTimestamp(value.created_at, "policy_input_artifact.created_at")
+  };
+}
+
 export function parseSourceArtifact(value) {
   assertPlainObject(value, "source_artifact");
   const sourceType = assertNonEmptyString(value.source_type, "source_artifact.source_type");

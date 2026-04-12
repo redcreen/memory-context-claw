@@ -29,6 +29,7 @@
 - OpenClaw export artifact cases
 - Codex export artifact cases
 - generic export version cases
+- Stage 3-4 acceptance report cases
 - audit report cases
 - repair record cases
 - replay result cases
@@ -50,3 +51,4 @@
 - runtime API tests 放到后续 roadmap 阶段
 - self-learning 执行测试应复用 Source / Reflection / Registry 的测试面，不再额外开一条隐藏路径
 - standalone mode 应和 embedded mode 复用同一套 artifact contracts 做校验
+- Stage 3-4 operator validation 应优先跑 `npm run umc:acceptance`，再决定是否需要人工 spot check

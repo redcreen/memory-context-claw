@@ -48,8 +48,8 @@ Current status:
 - `Stage 1`: completed
 - `Stage 2`: completed
 - `Stage 3`: completed
-- current pointer: `Step 31`
-- current recommendation: resume from `Stage 4`
+- current pointer: `Step 39`
+- current recommendation: resume from `Stage 5`
 
 Already implemented in the current baseline:
 
@@ -79,8 +79,8 @@ Execution constraints that still apply:
 | Stage 1 | `1-10` | freeze product shape and documentation baseline | `completed` |
 | Stage 2 | `11-20` | complete the first local-first implementation baseline | `completed` |
 | Stage 3 | `21-30` | complete the self-learning lifecycle baseline | `completed` |
-| Stage 4 | `31-38` | connect governed learning outputs into adapter policy use | `next` |
-| Stage 5 | `39-46` | harden product operations and split-ready execution | `later` |
+| Stage 4 | `31-38` | connect governed learning outputs into adapter policy use | `completed` |
+| Stage 5 | `39-46` | harden product operations and split-ready execution | `next` |
 
 ## Sequential Build Plan
 
@@ -148,14 +148,14 @@ Stage complete when:
 - governed learning outputs can influence consumer behavior explicitly
 - adapter-side policy use stays reversible and testable
 
-31. `later` Define the `policy-input artifact` contract.
-32. `later` Implement policy-input projections from promoted learning artifacts.
-33. `later` Adapt OpenClaw retrieval / assembly behavior from governed learning signals.
-34. `later` Adapt Codex task-side consumption from governed learning signals.
-35. `later` Add policy adaptation tests and rollback protections.
-36. `later` Add consumer-specific export compatibility reports.
-37. `later` Validate namespace and visibility behavior across adapters for learned artifacts.
-38. `later` Close the stage with one reproducible policy-adaptation loop.
+31. `completed` Define the `policy-input artifact` contract.
+32. `completed` Implement policy-input projections from promoted learning artifacts.
+33. `completed` Adapt OpenClaw retrieval / assembly behavior from governed learning signals.
+34. `completed` Adapt Codex task-side consumption from governed learning signals.
+35. `completed` Add policy adaptation tests and rollback protections.
+36. `completed` Add consumer-specific export compatibility reports.
+37. `completed` Validate namespace and visibility behavior across adapters for learned artifacts.
+38. `completed` Close the stage with one reproducible policy-adaptation loop.
 
 ### Stage 5. Product Hardening And Independent Operation
 
@@ -165,7 +165,7 @@ Stage complete when:
 - split-ready execution is validated
 - future service mode can be discussed from a stable base
 
-39. `later` Harden standalone source adapters for file / directory / URL / image inputs.
+39. `next` Harden standalone source adapters for file / directory / URL / image inputs.
 40. `later` Add scheduled-job-friendly workflows for reflection and governance runs.
 41. `later` Add self-learning maintenance workflow docs and CLI support.
 42. `later` Add release-boundary validation checks.
@@ -178,9 +178,9 @@ Stage complete when:
 
 Resume exactly from here:
 
-1. start at `Step 31`
-2. finish `Stage 4` completely before touching `Stage 5`
-3. treat `Stage 5` as locked until `Stage 4` closes
+1. start at `Step 39`
+2. finish `Stage 5` completely before discussing anything beyond it
+3. keep Stage 4 policy adaptation evidence stable while Stage 5 opens
 
 Do not start with:
 

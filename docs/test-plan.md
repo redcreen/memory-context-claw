@@ -26,10 +26,13 @@ The highest practical risk is not simple pass/fail breakage. It is quality drift
 
 Detailed case inventory lives in [unified-memory-core/testing/case-matrix.md](reference/unified-memory-core/testing/case-matrix.md).
 
+Preferred Stage 3-4 operator checklist lives in [unified-memory-core/testing/stage3-stage4-acceptance.md](reference/unified-memory-core/testing/stage3-stage4-acceptance.md).
+
 ## Automation Coverage
 
 Primary automated surfaces:
 
+- `npm run umc:acceptance`
 - `npm test`
 - `npm run smoke:eval`
 - `npm run eval:smoke-promotion`
@@ -40,9 +43,11 @@ Detailed testing stack:
 
 - [unified-memory-core/testing/README.md](reference/unified-memory-core/testing/README.md)
 - [unified-memory-core/testing/case-matrix.md](reference/unified-memory-core/testing/case-matrix.md)
+- [unified-memory-core/testing/stage3-stage4-acceptance.md](reference/unified-memory-core/testing/stage3-stage4-acceptance.md)
 
 ## Manual Checks
 
+- prefer `npm run umc:acceptance` before any Stage 3-4 manual validation
 - install the plugin from a release tag and verify it loads in OpenClaw
 - inspect recalled context quality, not only raw test pass/fail
 - confirm stable facts and rules improve recall without adding noisy supporting context
@@ -64,6 +69,7 @@ Important fixtures and references:
 Before tagging a stable release, run:
 
 ```bash
+npm run umc:acceptance -- --format markdown
 npm test
 npm run smoke:eval
 npm run eval:smoke-promotion

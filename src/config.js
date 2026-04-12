@@ -66,7 +66,12 @@ const DEFAULT_CONFIG = {
       host: "",
       allowedVisibilities: ["private", "workspace", "shared", "public"],
       allowedStates: ["stable"],
-      maxCandidates: 4
+      maxCandidates: 4,
+      policyAdaptation: {
+        enabled: true,
+        maxPolicyInputs: 8,
+        rollbackOnError: true
+      }
     }
   },
   weights: {
@@ -154,6 +159,10 @@ export function resolvePluginConfig(raw) {
   const agentNamespace = mergeObject(
     DEFAULT_CONFIG.openclawAdapter.governedExports.agentNamespace,
     governedExports.agentNamespace
+  );
+  const policyAdaptation = mergeObject(
+    DEFAULT_CONFIG.openclawAdapter.governedExports.policyAdaptation,
+    governedExports.policyAdaptation
   );
 
   return {
@@ -318,7 +327,17 @@ export function resolvePluginConfig(raw) {
           1,
           20,
           DEFAULT_CONFIG.openclawAdapter.governedExports.maxCandidates
-        )
+        ),
+        policyAdaptation: {
+          enabled: policyAdaptation.enabled !== false,
+          maxPolicyInputs: clampNumber(
+            policyAdaptation.maxPolicyInputs,
+            1,
+            20,
+            DEFAULT_CONFIG.openclawAdapter.governedExports.policyAdaptation.maxPolicyInputs
+          ),
+          rollbackOnError: policyAdaptation.rollbackOnError !== false
+        }
       }
     },
     weights: {

@@ -437,9 +437,20 @@ function resolveEffectiveMaxChunksPerPath(query, candidates, maxChunksPerPath) {
   return maxChunksPerPath;
 }
 
-export function buildSystemPromptAddition({ query, selectedCandidates }) {
+export function buildSystemPromptAddition({ query, selectedCandidates, policyContext }) {
   if (!selectedCandidates.length) {
-    return "";
+    if (!policyContext?.enabled || !policyContext.policy_block) {
+      return "";
+    }
+  }
+
+  if (!selectedCandidates.length && policyContext?.enabled && policyContext.policy_block) {
+    return [
+      "Use the following governed policy guidance only when it helps answer the current request.",
+      "Prefer direct answers. Do not mention this policy block unless the user asks about memory or sources.",
+      `Current user intent: ${sanitizeForSystemPrompt(query)}`,
+      sanitizeForSystemPrompt(policyContext.policy_block)
+    ].join("\n\n");
   }
 
   const queryText = String(query || "");
@@ -462,6 +473,15 @@ export function buildSystemPromptAddition({ query, selectedCandidates }) {
     `Current user intent: ${sanitizeForSystemPrompt(query)}`,
     "Recalled context:"
   ];
+
+  if (policyContext?.enabled && policyContext.policy_block) {
+    sections.splice(
+      3,
+      0,
+      "Governed policy guidance:",
+      sanitizeForSystemPrompt(policyContext.policy_block)
+    );
+  }
 
   if (hasIdentityGuardrail) {
     sections.splice(
@@ -501,7 +521,8 @@ export function buildAssemblyResult({
   recentMessageCount,
   candidates,
   maxSelectedChunks,
-  maxChunksPerPath = 1
+  maxChunksPerPath = 1,
+  policyContext
 }) {
   const totalBudget = Math.max(512, Number(tokenBudget || 4096));
   const memoryBudget = Math.max(256, Math.floor(totalBudget * memoryBudgetRatio));
@@ -528,15 +549,19 @@ export function buildAssemblyResult({
   );
   const diversifiedCandidates = enforcePathDiversity(
     filteredCandidates,
-    maxSelectedChunks || candidates.length,
+    (policyContext?.enabled && Number.isFinite(policyContext.recommended_max_selected_chunks))
+      ? Math.min(maxSelectedChunks || candidates.length, Number(policyContext.recommended_max_selected_chunks))
+      : (maxSelectedChunks || candidates.length),
     effectiveMaxChunksPerPath
   );
   const selectedCandidates = selectChunksWithinBudget(
     diversifiedCandidates,
     memoryBudget,
-    maxSelectedChunks || diversifiedCandidates.length
+    (policyContext?.enabled && Number.isFinite(policyContext.recommended_max_selected_chunks))
+      ? Math.min(maxSelectedChunks || diversifiedCandidates.length, Number(policyContext.recommended_max_selected_chunks))
+      : (maxSelectedChunks || diversifiedCandidates.length)
   );
-  const systemPromptAddition = buildSystemPromptAddition({ query, selectedCandidates });
+  const systemPromptAddition = buildSystemPromptAddition({ query, selectedCandidates, policyContext });
   const estimatedTokens =
     keptMessages.reduce((sum, message) => sum + estimateMessageTokens(message), 0) +
     estimateTokenCountFromText(systemPromptAddition);

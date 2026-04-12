@@ -14,23 +14,23 @@
 
 ## Summary
 
-- Overall: `stage transition / Stage 4 unlocked`
-- Average Completion: `90%`
-- Active Module: `Projection System`
-- Main Risk: `policy-input artifact` contract 还未冻结
-- Active Slice: `unlock-stage4-policy-adaptation-contract`
+- Overall: `stage transition / Stage 5 unlocked`
+- Average Completion: `94%`
+- Active Module: `Source System`
+- Main Risk: `Stage 5 execution order` 与 `registry-root cutover policy` 还未冻结
+- Active Slice: `unlock-stage5-product-hardening-baseline`
 
 ## Modules
 
 | Module | Status | Completion % | Already Implemented | Remaining Steps | Next Checkpoint | Primary Entry |
 | --- | --- | --- | --- | --- | --- | --- |
-| Source System | baseline-complete | 88% (stable) | source contracts and manifest baseline; local-first source registration and normalization; replayable source artifacts | 只在 Stage 5 需要新 source type 时再回看；保持 current replay shape 稳定 | 确认 Stage 4 不需要额外 source contract | [modules/source-system.md](modules/source-system.md) |
-| Reflection System | lifecycle-baseline complete / stage4 candidate | 92% (active) | reflection candidate generation; explicit promotion review; daily reflection; lifecycle metadata; learning-specific candidate evaluation | 进入 Stage 4 时，把 current candidate/review outputs 映射到 policy-input artifacts；保持 promotion/decay readable | 冻结 `policy-input artifact` contract | [modules/reflection-system.md](modules/reflection-system.md) |
-| Memory Registry | lifecycle-baseline complete | 92% (stable) | source/candidate/stable separation; promotion/decay/conflict/update rules; local governed lifecycle loop | 继续 host-neutral root cutover；保持 lifecycle state transitions 和 lineage metadata 稳定 | 决定 canonical root hard-gate 与 Stage 4 export compatibility | [modules/memory-registry.md](modules/memory-registry.md) |
-| Projection System | baseline-complete / stage4 next | 88% (next) | generic / OpenClaw / Codex export paths; learning metadata in exports; OpenClaw consumption validation shape | 定义 `policy-input artifact` contract；开始 consumer-specific adaptation projections | 命名并冻结 Step `31` contract | [modules/projection-system.md](modules/projection-system.md) |
-| Governance System | governing / lifecycle-baseline complete | 93% (stable) | formal audit; repair/replay primitives; learning-specific audit / compare / repair / replay; OpenClaw validation | 保持 report readability；支持 Stage 4 rollback / compatibility checks | 把 Stage 3 lifecycle reports 固定成后续阶段的回归证据面 | [modules/governance-system.md](modules/governance-system.md) |
-| Openclaw Adapter | active | 85% (stable) | governed export consumption; agent sub namespace; Stage 3 promoted-artifact validation | Stage 4 决定是否开始 retrieval / assembly policy adaptation | 如果它是 Stage 4 first consumer path，就定义第一条 reversible policy loop | [modules/openclaw-adapter.md](modules/openclaw-adapter.md) |
-| Codex Adapter | baseline-complete / maintain | 95% (maintain) | shared namespace / registry compatibility; write-back signals into self-learning; compatibility coverage | Stage 4 决定是否开始 task-side policy adaptation | 如果它不是 first path，则保持 compatibility，不先做 consumer-local heuristics | [modules/codex-adapter.md](modules/codex-adapter.md) |
+| Source System | baseline-complete / stage5 next | 90% (next) | source contracts and manifest baseline; local-first source registration and normalization; replayable source artifacts | 打开 Stage 5 时补 file / directory / URL / image hardening，保持 source replay shape 稳定 | 命名 `Step 39` 的 source hardening slice | [modules/source-system.md](modules/source-system.md) |
+| Reflection System | stage4 contract-mapped / stable | 96% (stable) | reflection candidate generation; explicit promotion review; daily reflection; lifecycle metadata; policy-input mapping through governed exports | 保持 signal extraction readable；只通过 governed artifacts 接入后续 feedback | 证明 Stage 5 不需要额外 reflection-local heuristics | [modules/reflection-system.md](modules/reflection-system.md) |
+| Memory Registry | lifecycle + policy export compatible | 94% (stable) | source/candidate/stable separation; promotion/decay/conflict/update rules; lineage metadata; Stage 4 policy-export compatibility | 继续 host-neutral root cutover；保持 lineage metadata 和 stable update rules 稳定 | 决定 canonical root hard-gate | [modules/memory-registry.md](modules/memory-registry.md) |
+| Projection System | stage4-complete / stable | 94% (stable) | generic / OpenClaw / Codex export paths; learning metadata; `policy-input artifact` contract; consumer policy projections | 在 Stage 5 增加 reproducibility / rollback checks，保持 policy projection 可比较 | 固定 export-level reproducibility evidence | [modules/projection-system.md](modules/projection-system.md) |
+| Governance System | governing / stage4-complete | 96% (stable) | formal audit; repair/replay primitives; lifecycle audit / compare; policy compatibility / rollback report | 保持 report readability；把 Stage 4 policy audit 固定成 Stage 5 证据面 | 连接 release-boundary / reproducibility checks | [modules/governance-system.md](modules/governance-system.md) |
+| Openclaw Adapter | stage4-complete / stable | 90% (stable) | governed export consumption; agent sub namespace; policy context + assembly adaptation | 保持 recall quality 干净；继续 root alignment；不要回退成 adapter-local policy state | 用 Stage 4 policy loop 作为后续回归面 | [modules/openclaw-adapter.md](modules/openclaw-adapter.md) |
+| Codex Adapter | stage4-complete / stable | 97% (stable) | shared namespace / registry compatibility; write-back signals; governed `policy_block / task_defaults` | 保持 task-side consumption 走 governed policy inputs；继续 root alignment | 证明 Stage 5 不需要 consumer-local fallback heuristics | [modules/codex-adapter.md](modules/codex-adapter.md) |
 
 ## Module Entry Rules
 
@@ -43,7 +43,7 @@
 
 ## Current Execution Order
 
-1. 保持 Stage 3 lifecycle baseline 稳定
-2. 定义 `policy-input artifact` contract
-3. 选择 Stage 4 的 first consumer path
-4. 再决定 registry-root consistency 是否升成独立强门禁
+1. 保持 Stage 4 policy loop 稳定
+2. 定义 Stage 5 的 first hardening slice
+3. 决定 registry-root consistency 是否升成独立强门禁
+4. 再展开 source adapters / maintenance / release-boundary 的正式执行顺序

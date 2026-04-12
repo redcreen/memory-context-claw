@@ -6,7 +6,7 @@ Own export/projection behavior, visibility filtering, consumer-facing artifact s
 
 ## Current Status
 
-`baseline-complete / stage4 next`
+`stage4-complete / stable`
 
 ## Already Implemented
 
@@ -15,17 +15,20 @@ Own export/projection behavior, visibility filtering, consumer-facing artifact s
 - OpenClaw / Codex / generic projection path
 - learning metadata in exported promoted artifacts
 - OpenClaw consumption validation shape through governed exports
+- `policy-input artifact` contract
+- consumer-specific policy projections for `generic / openclaw / codex`
+- policy fingerprint / rollback metadata on exports
 
 ## Remaining Steps
 
-1. Define the `policy-input artifact` contract.
-2. Project promoted learning outputs into policy-facing artifacts without bypassing stable governed exports.
-3. Validate consumer-specific export compatibility during Stage 4.
+1. Add Stage 5 reproducibility / rollback checks for policy exports.
+2. Keep consumer-specific projection differences explicit and comparable.
+3. Avoid pushing policy behavior back into adapters outside export boundaries.
 
 ## Completion Signal
 
-Projection baseline is complete; the next meaningful work is Stage 4 contract design and consumer-specific projection.
+Projection now owns a frozen Stage 4 policy contract and multi-consumer policy projections. The next work is hardening, not contract discovery.
 
 ## Next Checkpoint
 
-Name and freeze the `policy-input artifact` shape before consumer adaptation starts.
+Carry policy-export reproducibility into Stage 5 without changing the contract boundary.

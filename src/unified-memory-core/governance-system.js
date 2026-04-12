@@ -13,6 +13,7 @@ import {
   isLearningArtifact,
   summarizeLearningTimeWindow
 } from "./learning-lifecycle.js";
+import { createPolicyContext } from "./policy-adaptation.js";
 import { validateOpenClawExportConsumption } from "./openclaw-consumption.js";
 
 function assertRegistry(registry) {
@@ -182,6 +183,123 @@ function buildLearningLifecycleFindings({
   return findings;
 }
 
+function buildPolicyConsumerSummary(context, exportResult) {
+  const sourceArtifactIds = Array.isArray(context?.policy_inputs)
+    ? context.policy_inputs.map((item) => item.source_artifact_id)
+    : [];
+  return {
+    export_id: exportResult?.exportContract?.export_id || "",
+    artifact_count: Array.isArray(exportResult?.exportContract?.artifact_refs)
+      ? exportResult.exportContract.artifact_refs.length
+      : 0,
+    policy_input_count: sourceArtifactIds.length,
+    source_artifact_ids: sourceArtifactIds,
+    response_style: context?.response_style || "default",
+    supporting_context_mode: context?.supporting_context_mode || "default",
+    rollback_status: context?.rollback?.status || "disabled"
+  };
+}
+
+function buildPolicyAdaptationSummary({
+  openclawContext,
+  codexContext,
+  genericContext
+}) {
+  const openclawIds = new Set(openclawContext.policy_inputs.map((item) => item.source_artifact_id));
+  const codexIds = new Set(codexContext.policy_inputs.map((item) => item.source_artifact_id));
+  const genericIds = new Set(genericContext.policy_inputs.map((item) => item.source_artifact_id));
+  const sharedIds = [...openclawIds].filter((artifactId) => codexIds.has(artifactId));
+
+  return {
+    openclaw_policy_inputs: openclawIds.size,
+    codex_policy_inputs: codexIds.size,
+    generic_policy_inputs: genericIds.size,
+    shared_policy_sources: sharedIds.length,
+    rollback_disabled_consumers: [openclawContext, codexContext, genericContext]
+      .filter((context) => context.rollback?.status === "disabled")
+      .length,
+    compact_mode_consumers: [openclawContext, codexContext, genericContext]
+      .filter((context) => context.supporting_context_mode === "compact")
+      .length
+  };
+}
+
+function buildPolicyAdaptationFindings({
+  namespaceKey,
+  allowedVisibilities,
+  openclawContext,
+  codexContext,
+  genericContext
+}) {
+  const findings = [];
+  const contexts = [
+    { consumer: "openclaw", context: openclawContext },
+    { consumer: "codex", context: codexContext },
+    { consumer: "generic", context: genericContext }
+  ];
+
+  for (const { consumer, context } of contexts) {
+    if (context.rollback?.status === "disabled") {
+      findings.push({
+        finding_id: `policy_disabled_${consumer}`,
+        severity: "error",
+        code: "policy_adaptation_disabled_for_consumer",
+        message: `${consumer} policy adaptation is disabled after rollback protection.`,
+        record_refs: []
+      });
+    }
+
+    for (const policyInput of context.policy_inputs || []) {
+      if (createNamespaceKey(policyInput.namespace) !== namespaceKey) {
+        findings.push({
+          finding_id: `policy_namespace_${consumer}_${policyInput.policy_input_id}`,
+          severity: "error",
+          code: "policy_input_namespace_mismatch",
+          message: `${consumer} export contains a policy input from a different namespace.`,
+          record_refs: [policyInput.source_artifact_id]
+        });
+      }
+      const visibility = String(policyInput.metadata?.visibility || "").trim();
+      if (visibility && Array.isArray(allowedVisibilities) && allowedVisibilities.length > 0 && !allowedVisibilities.includes(visibility)) {
+        findings.push({
+          finding_id: `policy_visibility_${consumer}_${policyInput.policy_input_id}`,
+          severity: "error",
+          code: "policy_input_visibility_leak",
+          message: `${consumer} export surfaced a policy input outside the allowed visibilities.`,
+          record_refs: [policyInput.source_artifact_id]
+        });
+      }
+    }
+  }
+
+  const openclawIds = new Set(openclawContext.policy_inputs.map((item) => item.source_artifact_id));
+  const codexIds = new Set(codexContext.policy_inputs.map((item) => item.source_artifact_id));
+  const genericIds = new Set(genericContext.policy_inputs.map((item) => item.source_artifact_id));
+
+  const missingInOpenClaw = [...genericIds].filter((artifactId) => !openclawIds.has(artifactId));
+  const missingInCodex = [...genericIds].filter((artifactId) => !codexIds.has(artifactId));
+  if (missingInOpenClaw.length > 0) {
+    findings.push({
+      finding_id: "policy_missing_openclaw",
+      severity: "warning",
+      code: "consumer_missing_policy_inputs",
+      message: "OpenClaw export is missing policy inputs present in the generic export.",
+      record_refs: missingInOpenClaw
+    });
+  }
+  if (missingInCodex.length > 0) {
+    findings.push({
+      finding_id: "policy_missing_codex",
+      severity: "warning",
+      code: "consumer_missing_policy_inputs",
+      message: "Codex export is missing policy inputs present in the generic export.",
+      record_refs: missingInCodex
+    });
+  }
+
+  return findings;
+}
+
 export function renderGovernanceAuditReport(report, { format = "markdown" } = {}) {
   if (format === "json") {
     return JSON.stringify(report, null, 2);
@@ -342,6 +460,44 @@ export function renderLearningWindowComparisonReport(report, { format = "markdow
   lines.push("## Delta");
   for (const [key, value] of Object.entries(report.delta)) {
     lines.push(`- ${key}: \`${value}\``);
+  }
+  lines.push("");
+
+  return `${lines.join("\n").trimEnd()}\n`;
+}
+
+export function renderPolicyAdaptationReport(report, { format = "markdown" } = {}) {
+  if (format === "json") {
+    return JSON.stringify(report, null, 2);
+  }
+
+  const lines = [];
+  lines.push("# Unified Memory Core Policy Adaptation Report");
+  lines.push(`- reportId: \`${report.report_id}\``);
+  lines.push(`- namespace: \`${createNamespaceKey(report.namespace)}\``);
+  lines.push(`- generatedAt: \`${report.generated_at}\``);
+  lines.push("");
+  lines.push("## Summary");
+  lines.push(`- openclawPolicyInputs: \`${report.summary.openclaw_policy_inputs}\``);
+  lines.push(`- codexPolicyInputs: \`${report.summary.codex_policy_inputs}\``);
+  lines.push(`- genericPolicyInputs: \`${report.summary.generic_policy_inputs}\``);
+  lines.push(`- sharedPolicySources: \`${report.summary.shared_policy_sources}\``);
+  lines.push(`- rollbackDisabledConsumers: \`${report.summary.rollback_disabled_consumers}\``);
+  lines.push("");
+  lines.push("## Consumers");
+  for (const [consumer, consumerSummary] of Object.entries(report.consumers)) {
+    lines.push(
+      `- ${consumer}: inputs=${consumerSummary.policy_input_count} artifacts=${consumerSummary.artifact_count} rollback=${consumerSummary.rollback_status} mode=${consumerSummary.supporting_context_mode}`
+    );
+  }
+  lines.push("");
+  lines.push("## Findings");
+  if (report.findings.length === 0) {
+    lines.push("- none");
+  } else {
+    for (const finding of report.findings) {
+      lines.push(`- [${finding.severity}] ${finding.code}: ${finding.message}`);
+    }
   }
   lines.push("");
 
@@ -586,6 +742,85 @@ export function createGovernanceSystem(options = {}) {
     };
   }
 
+  async function auditPolicyAdaptation({
+    namespace,
+    allowedVisibilities = ["private", "workspace", "shared", "public"],
+    allowedStates = ["stable"],
+    maxPolicyInputs = 8
+  }) {
+    if (
+      typeof projectionSystem.buildOpenClawExport !== "function"
+      || typeof projectionSystem.buildCodexExport !== "function"
+    ) {
+      throw new TypeError("projection system does not support multi-consumer policy exports");
+    }
+
+    const parsedNamespace = parseNamespace(namespace);
+    const namespaceKey = createNamespaceKey(parsedNamespace);
+    const [openclawExport, codexExport, genericExport] = await Promise.all([
+      projectionSystem.buildOpenClawExport({
+        namespace: parsedNamespace,
+        allowedVisibilities,
+        allowedStates
+      }),
+      projectionSystem.buildCodexExport({
+        namespace: parsedNamespace,
+        allowedVisibilities,
+        allowedStates
+      }),
+      projectionSystem.buildGenericExport({
+        namespace: parsedNamespace,
+        allowedVisibilities,
+        allowedStates
+      })
+    ]);
+
+    const openclawContext = createPolicyContext({
+      exportResults: [openclawExport],
+      consumer: "openclaw",
+      maxPolicyInputs
+    });
+    const codexContext = createPolicyContext({
+      exportResults: [codexExport],
+      consumer: "codex",
+      maxPolicyInputs
+    });
+    const genericContext = createPolicyContext({
+      exportResults: [genericExport],
+      consumer: "generic",
+      maxPolicyInputs
+    });
+
+    return {
+      report_id: createContractId("policy_audit", idGenerator),
+      contract_version: SHARED_CONTRACT_VERSION,
+      namespace: parsedNamespace,
+      generated_at: createContractTimestamp(clock),
+      summary: buildPolicyAdaptationSummary({
+        openclawContext,
+        codexContext,
+        genericContext
+      }),
+      consumers: {
+        openclaw: buildPolicyConsumerSummary(openclawContext, openclawExport),
+        codex: buildPolicyConsumerSummary(codexContext, codexExport),
+        generic: buildPolicyConsumerSummary(genericContext, genericExport)
+      },
+      findings: buildPolicyAdaptationFindings({
+        namespaceKey,
+        allowedVisibilities,
+        openclawContext,
+        codexContext,
+        genericContext
+      }),
+      exports: {
+        openclaw: openclawExport.exportContract.export_id,
+        codex: codexExport.exportContract.export_id,
+        generic: genericExport.exportContract.export_id
+      }
+    };
+  }
+
   function createRepairRecord({
     namespace,
     findingCode,
@@ -693,6 +928,13 @@ export function createGovernanceSystem(options = {}) {
       adapter_compatibility: ["test/adapter-compatibility.test.js"],
       governance_system: ["test/unified-memory-core/governance-system.test.js"],
       standalone_runtime: ["test/unified-memory-core/standalone-runtime.test.js"],
+      policy_adaptation: [
+        "test/unified-memory-core/policy-adaptation.test.js",
+        "test/unified-memory-core/governance-system.test.js",
+        "test/openclaw-adapter.test.js",
+        "test/codex-adapter.test.js",
+        "test/adapter-compatibility.test.js"
+      ],
       learning_lifecycle: [
         "test/unified-memory-core/memory-registry.test.js",
         "test/unified-memory-core/governance-system.test.js",
@@ -706,6 +948,7 @@ export function createGovernanceSystem(options = {}) {
     auditNamespace,
     auditLearningLifecycle,
     compareLearningTimeWindows,
+    auditPolicyAdaptation,
     validateOpenClawConsumption,
     createRepairRecord,
     createLearningRepairRecord,

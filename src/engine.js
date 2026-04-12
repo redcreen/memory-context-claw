@@ -3,6 +3,7 @@ import { buildAssemblyResult } from "./assembly.js";
 import { resolvePluginConfig } from "./config.js";
 import { DistillationManager, estimateUsageRatio } from "./distillation-manager.js";
 import { createOpenClawAdapterRuntime } from "./openclaw-adapter.js";
+import { applyPolicyToScoredCandidates } from "./unified-memory-core/policy-adaptation.js";
 import { retrieveMemoryCandidates } from "./retrieval.js";
 import {
   applyRerankOrder,
@@ -83,8 +84,8 @@ export class ContextAssemblyEngine {
     }
 
     const agentId = parseAgentId(params.sessionKey, this.config.forceAgentId);
-    const [governedCandidates, retrievalCandidates] = await Promise.all([
-      this.openclawAdapterRuntime.loadGovernedCandidates({
+    const [governedContext, retrievalCandidates] = await Promise.all([
+      this.openclawAdapterRuntime.loadGovernedContext({
         query,
         maxCandidates: this.config.openclawAdapter?.governedExports?.maxCandidates,
         agentId
@@ -100,6 +101,9 @@ export class ContextAssemblyEngine {
         logger: this.logger
       })
     ]);
+    const governedCandidates = Array.isArray(governedContext?.candidates)
+      ? governedContext.candidates
+      : [];
     const rawCandidates = [...governedCandidates, ...retrievalCandidates];
 
     if (rawCandidates.length === 0) {
@@ -143,6 +147,12 @@ export class ContextAssemblyEngine {
       }
     }
 
+    const policyAdjusted = applyPolicyToScoredCandidates(rankedCandidates, {
+      policyContext: governedContext?.policyContext,
+      query
+    });
+    rankedCandidates = policyAdjusted.candidates;
+
     return buildAssemblyResult({
       messages: params.messages,
       tokenBudget: params.tokenBudget,
@@ -150,7 +160,8 @@ export class ContextAssemblyEngine {
       recentMessageCount: this.config.recentMessageCount,
       maxSelectedChunks: this.config.maxSelectedChunks,
       maxChunksPerPath: this.config.maxChunksPerPath,
-      candidates: rankedCandidates
+      candidates: rankedCandidates,
+      policyContext: governedContext?.policyContext
     });
   }
 }

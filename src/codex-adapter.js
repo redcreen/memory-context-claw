@@ -2,10 +2,12 @@ import os from "node:os";
 import path from "node:path";
 
 import {
+  applyPolicyToMemoryItems,
   createCodexAdapterBridge,
   createContractId,
   createContractTimestamp,
   createMemoryRegistry,
+  createPolicyContext,
   createProjectionSystem,
   createSourceSystem,
   createNamespaceKey,
@@ -138,7 +140,14 @@ export function resolveCodexAdapterConfig(raw = {}) {
     ),
     allowedStates: normalizeStringList(raw.allowedStates, ["stable"]),
     maxItems: Number.isFinite(raw.maxItems) ? Math.max(1, Math.min(20, Number(raw.maxItems))) : 6,
-    writeBackVisibility: normalizeString(raw.writeBackVisibility, "workspace")
+    writeBackVisibility: normalizeString(raw.writeBackVisibility, "workspace"),
+    policyAdaptation: {
+      enabled: raw.policyAdaptation?.enabled !== false,
+      maxPolicyInputs: Number.isFinite(raw.policyAdaptation?.maxPolicyInputs)
+        ? Math.max(1, Math.min(20, Number(raw.policyAdaptation.maxPolicyInputs)))
+        : 8,
+      rollbackOnError: raw.policyAdaptation?.rollbackOnError !== false
+    }
   };
 }
 
@@ -219,11 +228,17 @@ export function createCodexWriteBackEvent(input = {}, context = {}, options = {}
   };
 }
 
-export function mapCodexExportToTaskMemory(exportResult, { taskPrompt, maxItems }) {
+export function mapCodexExportToTaskMemory(exportResult, { taskPrompt, maxItems, policyContext } = {}) {
   const items = Array.isArray(exportResult?.payload?.code_memory)
     ? exportResult.payload.code_memory
     : [];
-  const memoryItems = items.slice(0, maxItems).map((item) => ({
+  const effectivePolicyContext = policyContext || createPolicyContext({
+    exportResults: [exportResult],
+    consumer: "codex",
+    maxPolicyInputs: 8,
+    rollbackOnError: true
+  });
+  const mappedItems = items.map((item) => ({
     memory_id: item.memory_id,
     title: item.title,
     summary: item.summary,
@@ -232,6 +247,12 @@ export function mapCodexExportToTaskMemory(exportResult, { taskPrompt, maxItems 
     attributes: item.attributes,
     export_hints: item.export_hints
   }));
+  const adapted = applyPolicyToMemoryItems(mappedItems, {
+    policyContext: effectivePolicyContext,
+    prompt: taskPrompt,
+    maxItems
+  });
+  const memoryItems = adapted.memory_items;
 
   const promptBlock = memoryItems.length === 0
     ? ""
@@ -245,6 +266,15 @@ export function mapCodexExportToTaskMemory(exportResult, { taskPrompt, maxItems 
     export_version: exportResult.exportVersion,
     export_contract: exportResult.exportContract,
     namespace: exportResult.exportContract.namespace,
+    policy_inputs: effectivePolicyContext.enabled ? effectivePolicyContext.policy_inputs : [],
+    policy_block: effectivePolicyContext.policy_block || "",
+    task_defaults: {
+      response_style: effectivePolicyContext.response_style || "default",
+      supporting_context_mode: effectivePolicyContext.supporting_context_mode || "default",
+      avoid_patterns: effectivePolicyContext.avoid_patterns || [],
+      prefer_patterns: effectivePolicyContext.prefer_patterns || []
+    },
+    policy_adaptation: adapted.adaptation,
     memory_items: memoryItems,
     prompt_block: promptBlock
   };
@@ -333,13 +363,33 @@ export function createCodexAdapterRuntime(options = {}) {
         code_memory: dedupeMemoryItems(
           exportResults.flatMap((item) => Array.isArray(item?.payload?.code_memory) ? item.payload.code_memory : []),
           maxItems
-        )
+        ),
+        policy_inputs: exportResults.flatMap((item) => Array.isArray(item?.payload?.policy_inputs) ? item.payload.policy_inputs : [])
       }
     };
+    const policyContext = createPolicyContext({
+      exportResults,
+      consumer: "codex",
+      maxPolicyInputs: config.policyAdaptation.maxPolicyInputs,
+      rollbackOnError: config.policyAdaptation.rollbackOnError
+    });
 
     return mapCodexExportToTaskMemory(exportResult, {
       taskPrompt: input.taskPrompt || input.prompt || "",
-      maxItems
+      maxItems,
+      policyContext: config.policyAdaptation.enabled
+        ? policyContext
+        : {
+            ...policyContext,
+            enabled: false,
+            policy_inputs: [],
+            policy_block: "",
+            rollback: {
+              status: "disabled",
+              reason_codes: ["policy_adaptation_disabled"],
+              invalid_inputs: []
+            }
+          }
     });
   }
 

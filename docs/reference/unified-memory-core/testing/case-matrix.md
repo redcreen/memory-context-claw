@@ -29,6 +29,7 @@
 - OpenClaw export artifact cases
 - Codex export artifact cases
 - generic export version cases
+- Stage 3-4 acceptance report cases
 - audit report cases
 - repair record cases
 - replay result cases
@@ -50,3 +51,4 @@
 - runtime API tests are deferred to a later roadmap phase
 - self-learning execution tests should reuse Source / Reflection / Registry surfaces instead of inventing a separate hidden path
 - standalone mode should be validated against the same artifact contracts as embedded mode
+- Stage 3-4 operator validation should default to `npm run umc:acceptance` before manual spot checks

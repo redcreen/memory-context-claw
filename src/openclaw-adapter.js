@@ -1,4 +1,5 @@
 import {
+  createPolicyContext,
   createMemoryRegistry,
   createProjectionSystem,
   resolveOpenClawAgentNamespace,
@@ -103,6 +104,13 @@ export function resolveOpenClawAdapterConfig(pluginConfig = {}) {
       maxCandidates: Number.isFinite(governedExports.maxCandidates)
         ? Math.max(1, Math.min(20, Number(governedExports.maxCandidates)))
         : 4
+    },
+    policyAdaptation: {
+      enabled: governedExports?.policyAdaptation?.enabled !== false,
+      maxPolicyInputs: Number.isFinite(governedExports?.policyAdaptation?.maxPolicyInputs)
+        ? Math.max(1, Math.min(20, Number(governedExports.policyAdaptation.maxPolicyInputs)))
+        : 8,
+      rollbackOnError: governedExports?.policyAdaptation?.rollbackOnError !== false
     }
   };
 }
@@ -114,6 +122,21 @@ export function createOpenClawAdapterRuntime(options = {}) {
   if (!config.enabled || !config.governedExports.enabled) {
     return {
       enabled: false,
+      async loadGovernedContext() {
+        return {
+          candidates: [],
+          policyContext: {
+            enabled: false,
+            policy_inputs: [],
+            policy_block: "",
+            rollback: {
+              status: "disabled",
+              reason_codes: ["governed_exports_disabled"]
+            }
+          },
+          exportResults: []
+        };
+      },
       async loadGovernedCandidates() {
         return [];
       }
@@ -127,7 +150,7 @@ export function createOpenClawAdapterRuntime(options = {}) {
 
   return {
     enabled: true,
-    async loadGovernedCandidates({ query, maxCandidates, agentId } = {}) {
+    async loadGovernedContext({ query, maxCandidates, agentId } = {}) {
       try {
         const requestedMaxCandidates = Math.min(
           maxCandidates || config.governedExports.maxCandidates,
@@ -170,14 +193,52 @@ export function createOpenClawAdapterRuntime(options = {}) {
           })),
           requestedMaxCandidates
         );
+        const policyContext = createPolicyContext({
+          exportResults,
+          consumer: "openclaw",
+          maxPolicyInputs: config.policyAdaptation.maxPolicyInputs,
+          rollbackOnError: config.policyAdaptation.rollbackOnError
+        });
 
-        return candidates;
+        return {
+          candidates,
+          policyContext: config.policyAdaptation.enabled
+            ? policyContext
+            : {
+                ...policyContext,
+                enabled: false,
+                policy_inputs: [],
+                policy_block: "",
+                rollback: {
+                  status: "disabled",
+                  reason_codes: ["policy_adaptation_disabled"],
+                  invalid_inputs: []
+                }
+              },
+          exportResults
+        };
       } catch (error) {
         logger?.warn?.(
           `[unified-memory-core] openclaw adapter export loading failed: ${String(error)}`
         );
-        return [];
+        return {
+          candidates: [],
+          policyContext: {
+            enabled: false,
+            policy_inputs: [],
+            policy_block: "",
+            rollback: {
+              status: "disabled",
+              reason_codes: ["export_loading_failed", String(error)]
+            }
+          },
+          exportResults: []
+        };
       }
+    },
+    async loadGovernedCandidates(params = {}) {
+      const context = await this.loadGovernedContext(params);
+      return context.candidates;
     }
   };
 }

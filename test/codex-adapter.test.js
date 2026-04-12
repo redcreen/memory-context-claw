@@ -12,6 +12,7 @@ import {
 } from "../src/codex-adapter.js";
 import { createMemoryRegistry } from "../src/unified-memory-core/memory-registry.js";
 import { ingestDeclaredSourceToCandidate } from "../src/unified-memory-core/pipeline.js";
+import { createReflectionSystem } from "../src/unified-memory-core/reflection-system.js";
 import { createSourceSystem } from "../src/unified-memory-core/source-system.js";
 
 test("codex adapter resolves local-first project binding defaults", () => {
@@ -276,6 +277,56 @@ test("codex adapter can write back into the same agent sub-namespace", async () 
   });
 
   assert.equal(persisted.write_back_event.namespace.key, "code-workspace.agent.code");
+});
+
+test("codex adapter exposes governed task defaults from policy inputs", async () => {
+  const registryRoot = await fs.mkdtemp(path.join(os.tmpdir(), "umc-codex-policy-"));
+  const clock = () => new Date("2026-04-20T00:00:00.000Z");
+  const sourceSystem = createSourceSystem({ clock });
+  const registry = createMemoryRegistry({ rootDir: registryRoot, clock });
+  const reflectionSystem = createReflectionSystem({ registry, clock });
+  const namespace = {
+    tenant: "local",
+    scope: "project",
+    resource: "shared-code-memory",
+    key: "unified-memory-core-codex-user"
+  };
+
+  const { sourceArtifact } = await sourceSystem.ingestDeclaredSource({
+    sourceType: "manual",
+    declaredBy: "test",
+    namespace,
+    visibility: "workspace",
+    content: "Remember this: the user prefers concise progress reports and does not want hardcoded fixes."
+  });
+  await registry.persistSourceArtifact(sourceArtifact);
+  const reflection = await reflectionSystem.runReflection({
+    sourceArtifacts: [sourceArtifact],
+    persistCandidates: true,
+    decidedBy: "test-suite"
+  });
+  await registry.promoteCandidateToStable({
+    candidateArtifactId: reflection.outputs[0].candidate_artifact.artifact_id,
+    decidedBy: "test-suite",
+    reasonCodes: ["codex_policy_ready"]
+  });
+
+  const adapter = createCodexAdapterRuntime({
+    clock,
+    config: {
+      registryDir: registryRoot,
+      projectPath: "/tmp/unified-memory-core",
+      userId: "codex-user"
+    }
+  });
+
+  const memoryPackage = await adapter.readBeforeTask({
+    taskPrompt: "给我一个简洁的进展汇报，并继续实现代码"
+  });
+
+  assert.equal(memoryPackage.policy_inputs.length, 1);
+  assert.equal(memoryPackage.task_defaults.response_style, "concise");
+  assert.match(memoryPackage.policy_block, /concise progress reports/i);
 });
 
 test("createCodexWriteBackEvent validates summary and maps task metadata", () => {

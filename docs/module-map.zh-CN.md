@@ -25,12 +25,12 @@
 | 模块 | 负责内容 | 主要路径 | 当前状态 |
 | --- | --- | --- | --- |
 | Source System | 受控 source ingestion、normalization、replayable source artifacts | `src/unified-memory-core/source-system.js`、对应 `test/unified-memory-core/` | baseline-complete |
-| Reflection System | candidate generation、daily reflection、lifecycle review inputs、reflection outputs | `src/unified-memory-core/reflection-system.js`、`src/unified-memory-core/daily-reflection.js`、对应测试 | lifecycle-baseline complete / stage4 candidate |
-| Memory Registry | source / candidate / stable artifacts、lifecycle transitions 与 decision trail | `src/unified-memory-core/memory-registry.js`、对应测试 | lifecycle-baseline complete |
-| Projection System | export shaping、visibility filtering、learning metadata、future consumer projection | `src/unified-memory-core/projection-system.js`、对应测试 | baseline-complete / stage4 next |
-| Governance System | audit / repair / replay / governance cycle / lifecycle reporting | `src/unified-memory-core/governance-system.js`、`src/*audit*.js`、相关脚本与测试 | governing / lifecycle-baseline complete |
-| OpenClaw Adapter | OpenClaw 侧 retrieval / assembly / scoring / runtime integration | `src/openclaw-adapter.js`、`src/assembly.js`、`src/retrieval*.js`、相关测试 | active |
-| Codex Adapter | Codex 侧 adapter integration 与 compatibility | `src/codex-adapter.js`、对应测试 | baseline-complete / maintain |
+| Reflection System | candidate generation、daily reflection、lifecycle review inputs、reflection outputs | `src/unified-memory-core/reflection-system.js`、`src/unified-memory-core/daily-reflection.js`、对应测试 | stage4 contract-mapped / stable |
+| Memory Registry | source / candidate / stable artifacts、lifecycle transitions 与 decision trail | `src/unified-memory-core/memory-registry.js`、对应测试 | lifecycle + policy export compatible |
+| Projection System | export shaping、visibility filtering、learning metadata、consumer policy projection | `src/unified-memory-core/projection-system.js`、`src/unified-memory-core/policy-adaptation.js`、对应测试 | stage4-complete / stable |
+| Governance System | audit / repair / replay / governance cycle / lifecycle + policy reporting | `src/unified-memory-core/governance-system.js`、`src/*audit*.js`、相关脚本与测试 | governing / stage4-complete |
+| OpenClaw Adapter | OpenClaw 侧 retrieval / assembly / scoring / runtime integration | `src/openclaw-adapter.js`、`src/assembly.js`、`src/retrieval*.js`、相关测试 | stage4-complete / stable |
+| Codex Adapter | Codex 侧 adapter integration 与 compatibility | `src/codex-adapter.js`、对应测试 | stage4-complete / stable |
 
 ## 恢复顺序
 
@@ -44,12 +44,12 @@
 
 ## 当前活跃模块
 
-1. **Projection System**
-   当前重点：定义 Stage 4 的 `policy-input artifact` contract。
+1. **Source System**
+   当前重点：打开 `Step 39` 的 source-adapter hardening。
 2. **Governance System**
-   当前重点：在 Stage 4 打开前，保持 Stage 3 lifecycle report 与 validation 稳定。
-3. **Reflection System**
-   当前重点：把 current candidate/review outputs 映射到未来的 policy-input contract。
+   当前重点：在 Stage 5 打开时，保持 Stage 4 policy evidence 稳定。
+3. **Projection System**
+   当前重点：把 policy-export reproducibility 带进 Stage 5，但不改变 contract 边界。
 
 ## 术语边界
 

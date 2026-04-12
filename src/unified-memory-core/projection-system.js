@@ -10,6 +10,7 @@ import {
   parseNamespace,
   parseStableArtifact
 } from "./contracts.js";
+import { buildPolicyProjection } from "./policy-adaptation.js";
 
 function createHashValue(payload) {
   return createHash("sha256").update(JSON.stringify(payload)).digest("hex");
@@ -112,6 +113,12 @@ function countPayloadItems(exportResult) {
   return 0;
 }
 
+function countPolicyInputs(exportResult) {
+  return Array.isArray(exportResult?.payload?.policy_inputs)
+    ? exportResult.payload.policy_inputs.length
+    : 0;
+}
+
 export function renderExportReport(exportResult, { format = "markdown" } = {}) {
   if (format === "json") {
     return JSON.stringify(exportResult, null, 2);
@@ -125,6 +132,7 @@ export function renderExportReport(exportResult, { format = "markdown" } = {}) {
   lines.push(`- exportVersion: \`${exportResult.exportVersion}\``);
   lines.push(`- generatedAt: \`${exportResult.exportContract.generated_at}\``);
   lines.push(`- artifactCount: \`${countPayloadItems(exportResult)}\``);
+  lines.push(`- policyInputCount: \`${countPolicyInputs(exportResult)}\``);
   lines.push("");
   lines.push("## Filters");
   lines.push(`- allowedVisibilities: \`${(exportResult.exportContract.metadata?.allowed_visibilities || []).join(", ")}\``);
@@ -171,6 +179,10 @@ export function createProjectionSystem(options = {}) {
       allowedStates: states
     });
     const projectedAt = createContractTimestamp(clock);
+    const policyProjection = buildPolicyProjection({
+      artifacts,
+      consumer
+    });
 
     let consumerPayload;
     if (consumer === "openclaw") {
@@ -202,7 +214,10 @@ export function createProjectionSystem(options = {}) {
         export_version: exportVersion,
         payload_fingerprint: payloadFingerprint,
         allowed_visibilities: visibilities,
-        allowed_states: states
+        allowed_states: states,
+        policy_contract_version: policyProjection.policy_contract_version,
+        policy_input_count: policyProjection.policy_inputs.length,
+        policy_fingerprint: policyProjection.policy_fingerprint
       }
     });
 
@@ -211,8 +226,14 @@ export function createProjectionSystem(options = {}) {
       exportVersion,
       payloadFingerprint,
       artifacts,
+      policyProjection,
       payload: {
         ...consumerPayload,
+        policy_inputs: policyProjection.policy_inputs,
+        policy_summary: policyProjection.policy_summary,
+        policy_fingerprint: policyProjection.policy_fingerprint,
+        policy_contract_version: policyProjection.policy_contract_version,
+        policy_rollback: policyProjection.rollback,
         export_version: exportVersion,
         payload_fingerprint: payloadFingerprint,
         projected_at: projectedAt

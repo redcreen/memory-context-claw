@@ -28,6 +28,9 @@ test("resolvePluginConfig keeps openclaw adapter governed export settings", () =
         agentNamespace: {
           enabled: true
         },
+        policyAdaptation: {
+          maxPolicyInputs: 5
+        },
         maxCandidates: 3,
         allowedVisibilities: ["workspace", "shared"]
       }
@@ -40,6 +43,7 @@ test("resolvePluginConfig keeps openclaw adapter governed export settings", () =
     code: "code-workspace"
   });
   assert.equal(config.openclawAdapter.governedExports.agentNamespace.enabled, true);
+  assert.equal(config.openclawAdapter.governedExports.policyAdaptation.maxPolicyInputs, 5);
   assert.equal(config.openclawAdapter.governedExports.maxCandidates, 3);
   assert.deepEqual(config.openclawAdapter.governedExports.allowedVisibilities, ["workspace", "shared"]);
 });
@@ -431,4 +435,59 @@ test("openclaw adapter runtime exposes learning metadata for promoted lifecycle 
   assert.equal(candidates[0].learning.signal_type, "preference");
   assert.equal(candidates[0].learning.lifecycle_state, "stable");
   assert.ok((candidates[0].learning.promotion_score || 0) > 0);
+});
+
+test("openclaw adapter runtime surfaces governed policy context for stage 4 adaptation", async () => {
+  const registryRoot = await fs.mkdtemp(path.join(os.tmpdir(), "umc-openclaw-policy-"));
+  const clock = () => new Date("2026-04-20T00:00:00.000Z");
+  const sourceSystem = createSourceSystem({ clock });
+  const registry = createMemoryRegistry({ rootDir: registryRoot, clock });
+  const reflectionSystem = createReflectionSystem({ registry, clock });
+  const namespace = {
+    tenant: "local",
+    scope: "workspace",
+    resource: "openclaw-shared-memory",
+    key: "policy-workspace"
+  };
+
+  const { sourceArtifact } = await sourceSystem.ingestDeclaredSource({
+    sourceType: "manual",
+    declaredBy: "test",
+    namespace,
+    visibility: "workspace",
+    content: "Remember this: the user prefers concise progress reports."
+  });
+  await registry.persistSourceArtifact(sourceArtifact);
+  const reflection = await reflectionSystem.runReflection({
+    sourceArtifacts: [sourceArtifact],
+    persistCandidates: true,
+    decidedBy: "test-suite"
+  });
+  await registry.promoteCandidateToStable({
+    candidateArtifactId: reflection.outputs[0].candidate_artifact.artifact_id,
+    decidedBy: "test-suite",
+    reasonCodes: ["openclaw_policy_ready"]
+  });
+
+  const adapterRuntime = createOpenClawAdapterRuntime({
+    pluginConfig: {
+      openclawAdapter: {
+        governedExports: {
+          registryDir: registryRoot,
+          workspaceId: "policy-workspace",
+          allowedVisibilities: ["workspace"],
+          maxCandidates: 3
+        }
+      }
+    }
+  });
+
+  const context = await adapterRuntime.loadGovernedContext({
+    query: "给我一个简洁的进展汇报",
+    maxCandidates: 3
+  });
+
+  assert.equal(context.policyContext.enabled, true);
+  assert.equal(context.policyContext.supporting_context_mode, "compact");
+  assert.match(context.policyContext.policy_block, /concise progress reports/i);
 });

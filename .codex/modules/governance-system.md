@@ -6,7 +6,7 @@ Own audit, repair, replay, conflict/duplicate handling, governance cycle, promot
 
 ## Current Status
 
-`governing / lifecycle-baseline complete`
+`governing / stage4-complete`
 
 ## Already Implemented
 
@@ -16,17 +16,19 @@ Own audit, repair, replay, conflict/duplicate handling, governance cycle, promot
 - namespace audit around exported stable artifacts
 - learning-specific audit report, repair/replay plan, and time-window comparison
 - OpenClaw promoted-artifact consumption validation
+- Stage 4 policy adaptation compatibility / rollback report
+- namespace and visibility validation across policy consumers
 
 ## Remaining Steps
 
-1. Keep lifecycle reports readable and durable while Stage 4 starts.
-2. Add Stage 4 rollback / compatibility checks on top of current learning audit surfaces.
-3. Decide whether high-frequency lifecycle outputs need a clearer durable/generated split.
+1. Keep lifecycle and policy reports readable and durable while Stage 5 starts.
+2. Connect release-boundary / reproducibility checks on top of current policy audit surfaces.
+3. Decide whether high-frequency lifecycle / policy outputs need a clearer durable/generated split.
 
 ## Completion Signal
 
-Stage 3 governance productization is complete. This module stays in ongoing governance mode while later phases reuse these reports.
+Governance now covers lifecycle plus Stage 4 policy adaptation evidence. This module stays in ongoing governance mode while Stage 5 reuses these reports.
 
 ## Next Checkpoint
 
-Carry current lifecycle reports forward as the required evidence surface for Stage 4.
+Carry current lifecycle + policy reports forward as the required evidence surface for Stage 5.

@@ -6,7 +6,7 @@ Own the OpenClaw-facing runtime path: retrieval, rerank, assembly, scoring, runt
 
 ## Current Status
 
-`active`
+`stage4-complete / stable`
 
 ## Already Implemented
 
@@ -15,18 +15,20 @@ Own the OpenClaw-facing runtime path: retrieval, rerank, assembly, scoring, runt
 - retrieval / rerank / assembly / scoring baseline
 - smoke coverage and current quality metrics
 - dedicated family-overview stable card path for `children-overview`, with same-path dual-card fallback kept only as a compatibility backstop
+- governed `policyContext` consumption from Stage 4 exports
+- policy-aware assembly guidance and compact-mode selection limits
 
 ## Remaining Steps
 1. Align OpenClaw runtime reads and writes with the future host-neutral canonical registry root.
-2. Expand the next batch of stable facts and stable rules.
-3. Keep supporting context clean while expanding recall coverage.
+2. Keep supporting context clean while Stage 4 compact-mode policy stays live.
+3. Expand stable fact / stable rule coverage without bypassing governed policy exports.
 4. Keep smoke natural-query coverage and governance coverage aligned as new cases appear.
 5. Use `eval:smoke-promotion` and governance checks before promoting anything new into smoke.
 
 ## Completion Signal
 
-Operational baseline is complete; current work is iterative hardening and quality expansion.
+OpenClaw now consumes governed Stage 4 policy inputs. Current work is iterative hardening, recall quality, and root alignment.
 
 ## Next Checkpoint
 
-Keep live OpenClaw behavior stable while the now-single-card family-overview path rolls into the next stable fact / stable rule batch.
+Keep live OpenClaw behavior stable while Stage 4 policy guidance becomes a fixed regression surface.

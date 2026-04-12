@@ -35,7 +35,7 @@
 
 ## 当前状态
 
-- 状态：`Stage 3 complete / Stage 4 next`
+- 状态：`Stage 4 complete / Stage 5 next`
 - 架构基线：`已定义，并且已经在当前共享模块里部分落地`
 - 实现基线：`已经可运行`
 - 依赖状态：
@@ -57,7 +57,7 @@
 - standalone runtime / CLI / script 已支持一条本地 governed `observation -> stable` loop
 - OpenClaw 对 promoted learning artifacts 的消费行为已经有验证
 
-下一阶段不再是“把生命周期规则显式化”。这一段已经完成。下一阶段是定义 `policy-input artifact` contract，并开始可回退的 consumer adaptation。
+下一阶段不再是定义 Stage 4 contract。这一段已经完成。下一阶段是产品加固：source-adapter hardening、maintenance workflow、release-boundary checks 和 reproducibility。
 
 下面的 phase 描述是规划外壳。Phase 0-2 的一部分，已经通过当前共享模块实现。
 

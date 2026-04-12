@@ -14,4 +14,5 @@
 当前状态：
 
 - reflection baseline、daily reflection 和 standalone learning surfaces 之上的 Stage 3 lifecycle baseline 已完成
-- 下一阶段是定义 `policy-input artifact` contract，并打开可回退的 policy adaptation
+- Stage 4 policy adaptation 与多消费者使用已完成
+- 下一阶段是产品加固，而不是继续做 Stage 4 contract discovery

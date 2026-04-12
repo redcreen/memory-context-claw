@@ -8,6 +8,7 @@
 
 ## 条目
 
+- [Close Stage 4 policy adaptation and multi-consumer use](2026-04-12-close-stage4-policy-adaptation-and-multi-consumer-use.md)
 - [Close Stage 3 self-learning lifecycle baseline](2026-04-12-close-stage3-self-learning-lifecycle-baseline.md)
 - [Converge repo-relative Markdown links after docs tree moves](2026-04-12-converge-repo-relative-markdown-links.md)
 - [Separate synthetic review buckets in smoke promotion](2026-04-12-separate-synthetic-review-buckets-in-smoke-promotion.md)

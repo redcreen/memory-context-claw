@@ -6,6 +6,7 @@ import {
   parseDecisionTrail,
   parseExportContract,
   parseNamespace,
+  parsePolicyInputArtifact,
   parseSourceArtifact,
   parseStableArtifact
 } from "../../src/unified-memory-core/contracts.js";
@@ -97,12 +98,37 @@ test("artifact contracts validate source, candidate, stable, and export shapes",
     artifact_refs: [stable.artifact_id],
     generated_at: "2026-04-11T00:00:00.000Z"
   });
+  const policyInput = parsePolicyInputArtifact({
+    policy_input_id: "policy_input:openclaw:artifact_stable_1",
+    contract_version: "1.0.0",
+    policy_contract_version: "policy-input/v1",
+    consumer: "openclaw",
+    namespace,
+    source_artifact_id: stable.artifact_id,
+    source_fingerprint: stable.fingerprint,
+    signal_type: "rule",
+    policy_kind: "presentation",
+    polarity: "positive",
+    title: stable.title,
+    statement: "Keep outputs concise.",
+    confidence: 0.8,
+    query_match_terms: ["concise", "output"],
+    effects: {
+      ranking_weight: 0.16
+    },
+    evidence_refs: [stable.artifact_id],
+    rollback: {
+      mode: "ignore_policy_input"
+    },
+    created_at: "2026-04-11T00:00:00.000Z"
+  });
 
   assert.equal(source.artifact_type, "source_artifact");
   assert.equal(candidate.artifact_type, "candidate_artifact");
   assert.equal(stable.artifact_type, "stable_artifact");
   assert.equal(decision.to_state, "stable");
   assert.equal(exportContract.consumer, "openclaw");
+  assert.equal(policyInput.consumer, "openclaw");
 });
 
 test("contracts reject invalid visibility", () => {

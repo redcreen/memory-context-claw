@@ -7,8 +7,10 @@ import {
   renderGovernanceAuditReport,
   renderLearningLifecycleReport,
   renderLearningWindowComparisonReport,
+  renderPolicyAdaptationReport,
   renderRegistryMigrationReport,
   renderRegistryTopologyReport,
+  renderStage34AcceptanceReport,
   renderGovernanceRepairRecord,
   renderGovernanceReplayRun,
   renderIndependentExecutionReview
@@ -150,6 +152,36 @@ async function run() {
     result = flags.format === "markdown"
       ? renderLearningLifecycleReport(report.learning_audit)
       : report;
+  } else if (family === "learn" && action === "policy-loop") {
+    const report = await runtime.runPolicyAdaptationLoop({
+      declaredSources: [buildDeclaredSource(flags)],
+      dryRun: Boolean(flags["dry-run"]),
+      autoPromote: flags.promote !== false,
+      query: normalizeString(flags.query, "summarize the current governed policy"),
+      taskPrompt: normalizeString(flags["task-prompt"], "apply current governed coding policy"),
+      comparisonWindowDays: parseNumberFlag(flags["comparison-window-days"], 7),
+      maxCandidates: parseNumberFlag(flags["max-candidates"], 6),
+      maxItems: parseNumberFlag(flags["max-items"], 6),
+      maxPolicyInputs: parseNumberFlag(flags["max-policy-inputs"], 8)
+    });
+    result = flags.format === "markdown"
+      ? renderPolicyAdaptationReport(report.policy_audit)
+      : report;
+  } else if (family === "verify" && action === "stage3-stage4") {
+    const report = await runtime.runStage34Acceptance({
+      declaredSources: [buildDeclaredSource(flags)],
+      dryRun: Boolean(flags["dry-run"]),
+      autoPromote: flags.promote !== false,
+      query: normalizeString(flags.query, "summarize the current governed policy"),
+      taskPrompt: normalizeString(flags["task-prompt"], "apply current governed coding policy"),
+      comparisonWindowDays: parseNumberFlag(flags["comparison-window-days"], 7),
+      maxCandidates: parseNumberFlag(flags["max-candidates"], 6),
+      maxItems: parseNumberFlag(flags["max-items"], 6),
+      maxPolicyInputs: parseNumberFlag(flags["max-policy-inputs"], 8)
+    });
+    result = flags.format === "markdown"
+      ? renderStage34AcceptanceReport(report)
+      : report;
   } else if (family === "reflect" && action === "run") {
     result = await runtime.reflectDeclaredSource({
       declaredSource: buildDeclaredSource(flags),
@@ -200,6 +232,16 @@ async function run() {
     });
     result = flags.format === "markdown"
       ? renderLearningWindowComparisonReport(report)
+      : report;
+  } else if (family === "govern" && action === "audit-policy") {
+    const report = await runtime.auditPolicyAdaptation({
+      namespace: parseNamespaceFromFlags(flags),
+      allowedVisibilities: parseListFlag(flags["allowed-visibilities"], undefined),
+      allowedStates: parseListFlag(flags["allowed-states"], undefined),
+      maxPolicyInputs: parseNumberFlag(flags["max-policy-inputs"], 8)
+    });
+    result = flags.format === "markdown"
+      ? renderPolicyAdaptationReport(report)
       : report;
   } else if (family === "govern" && action === "repair") {
     const record = await runtime.planRepair({
@@ -282,11 +324,14 @@ async function run() {
         "registry migrate [--source-dir <dir>] [--target-dir <dir>] [--apply] [--format markdown]",
         "learn daily-run --source-type manual --content 'text' [--dry-run] [--promote]",
         "learn lifecycle-run --source-type manual --content 'text' [--dry-run] [--format markdown]",
+        "learn policy-loop --source-type manual --content 'text' [--query <text>] [--task-prompt <text>] [--format markdown]",
+        "verify stage3-stage4 --source-type manual --content 'text' [--query <text>] [--task-prompt <text>] [--format markdown]",
         "reflect run --source-type manual --content 'text' [--dry-run] [--promote]",
         "export build --consumer generic",
         "export inspect --consumer generic [--format markdown]",
         "govern audit [--format markdown]",
         "govern audit-learning [--format markdown]",
+        "govern audit-policy [--format markdown]",
         "govern compare-learning [--current-window-days 7] [--previous-window-days 7] [--format markdown]",
         "govern repair --finding-code candidate_missing_decision_trail --action mark_for_review [--format markdown]",
         "govern repair-learning --finding-code learning_candidate_ready_for_decay [--format markdown]",

@@ -14,4 +14,5 @@ Use:
 Current status:
 
 - Stage 3 lifecycle baseline is complete on top of the reflection / daily reflection / standalone learning baseline
-- the next phase is to define the `policy-input artifact` contract and open reversible policy adaptation
+- Stage 4 policy adaptation and multi-consumer use is now complete
+- the next phase is product hardening, not more Stage 4 contract discovery

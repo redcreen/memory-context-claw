@@ -8,7 +8,8 @@ import {
   createGovernanceSystem,
   renderGovernanceAuditReport,
   renderLearningLifecycleReport,
-  renderLearningWindowComparisonReport
+  renderLearningWindowComparisonReport,
+  renderPolicyAdaptationReport
 } from "../../src/unified-memory-core/governance-system.js";
 import { createMemoryRegistry } from "../../src/unified-memory-core/memory-registry.js";
 import { createReflectionSystem } from "../../src/unified-memory-core/reflection-system.js";
@@ -282,4 +283,37 @@ test("governance system compares learning time windows", async () => {
   assert.equal(report.previous_window.summary.promotions, 1);
   assert.equal(report.delta.promotions, 1);
   assert.match(markdown, /Learning Window Comparison/);
+});
+
+test("governance system audits multi-consumer policy adaptation compatibility", async () => {
+  const registryRoot = await fs.mkdtemp(path.join(os.tmpdir(), "umc-policy-governance-"));
+  const clock = () => new Date("2026-04-20T00:00:00.000Z");
+  const sourceSystem = createSourceSystem({ clock });
+  const registry = createMemoryRegistry({ rootDir: registryRoot, clock });
+  const reflectionSystem = createReflectionSystem({ registry, clock });
+  const projectionSystem = createProjectionSystem({ registry, clock });
+  const governanceSystem = createGovernanceSystem({ registry, projectionSystem, clock });
+  const namespace = {
+    tenant: "local",
+    scope: "workspace",
+    resource: "openclaw-shared-memory",
+    key: "policy-governance"
+  };
+
+  await seedLearningStableArtifact({
+    sourceSystem,
+    reflectionSystem,
+    registry,
+    namespace,
+    content: "Remember this: the user prefers concise progress reports."
+  });
+
+  const report = await governanceSystem.auditPolicyAdaptation({ namespace });
+  const markdown = renderPolicyAdaptationReport(report);
+
+  assert.equal(report.summary.openclaw_policy_inputs, 1);
+  assert.equal(report.summary.codex_policy_inputs, 1);
+  assert.equal(report.summary.shared_policy_sources, 1);
+  assert.equal(report.findings.length, 0);
+  assert.match(markdown, /Policy Adaptation Report/);
 });

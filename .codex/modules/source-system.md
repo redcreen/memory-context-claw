@@ -6,7 +6,7 @@ Own controlled source ingestion, normalization, fingerprinting, and replayable s
 
 ## Current Status
 
-`baseline-complete`
+`baseline-complete / stage5 next`
 
 ## Already Implemented
 
@@ -16,14 +16,14 @@ Own controlled source ingestion, normalization, fingerprinting, and replayable s
 - source-system tests and replay-oriented structure
 
 ## Remaining Steps
-1. Revisit only if the next enhancement phase needs new source types or stronger replay/change inspection.
-2. Harden additional adapters when independent-product operation requires them.
-3. Keep source contracts aligned with future learning-policy inputs.
+1. 打开 Stage 5 的 file / directory / URL / image source hardening。
+2. 保持 source replay / manifest shape 稳定，不为单个 consumer 做特例。
+3. 把 source-side reproducibility 和 rollback expectation 写清楚。
 
 ## Completion Signal
 
-Baseline complete; currently in maintain mode until a new source requirement appears.
+Source baseline is complete. The next meaningful work is Stage 5 source-adapter hardening, not contract rediscovery.
 
 ## Next Checkpoint
 
-Confirm whether the next enhancement phase introduces any new source requirements beyond the current local-first baseline.
+Name the first Stage 5 source-hardening slice under `Step 39`.

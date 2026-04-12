@@ -6,7 +6,7 @@ Own candidate generation from normalized artifacts: event labeling, pattern extr
 
 ## Current Status
 
-`lifecycle-baseline complete / stage4 candidate`
+`stage4 contract-mapped / stable`
 
 ## Already Implemented
 
@@ -19,14 +19,14 @@ Own candidate generation from normalized artifacts: event labeling, pattern extr
 
 ## Remaining Steps
 
-1. Freeze how current candidate/review outputs map into `policy-input artifacts`.
-2. Keep promotion / decay review semantics readable while Stage 4 opens.
-3. Add feedback hooks only through governed artifacts, not hidden consumer-local state.
+1. Keep promotion / decay review semantics readable while Stage 5 opens.
+2. Add future feedback hooks only through governed artifacts, not hidden consumer-local state.
+3. Avoid consumer-local heuristics that would bypass current policy-input mapping.
 
 ## Completion Signal
 
-Stage 3 lifecycle work is complete. The next meaningful work is Stage 4 contract mapping, not more baseline cleanup.
+Reflection now feeds the shared Stage 4 policy contract. The next meaningful work is later-stage hardening, not more contract naming.
 
 ## Next Checkpoint
 
-Define `Step 31` so Reflection outputs have a named Stage 4 consumer contract.
+Prove that Stage 5 does not require reflection-local shortcuts outside governed artifacts.
