@@ -1,5 +1,6 @@
 import { ContextAssemblyEngine } from "../engine.js";
 import { resolvePluginConfig } from "../config.js";
+import { createOpenClawAcceptedActionHookRuntime } from "./accepted-action-hook.js";
 import { createOpenClawSelfLearningService } from "./self-learning-service.js";
 
 export default {
@@ -20,8 +21,16 @@ export default {
       logger: api.logger,
       pluginConfig
     });
+    const acceptedActionHookRuntime = createOpenClawAcceptedActionHookRuntime({
+      logger: api.logger,
+      pluginConfig
+    });
 
     api.registerContextEngine("unified-memory-core", () => engine);
+
+    if (typeof api.on === "function" && acceptedActionHookRuntime.enabled) {
+      api.on("after_tool_call", async (event, ctx) => acceptedActionHookRuntime.captureAfterToolCall(event, ctx));
+    }
 
     if (typeof api.registerService === "function") {
       api.registerService(createOpenClawSelfLearningService({

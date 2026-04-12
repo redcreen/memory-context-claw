@@ -1,7 +1,6 @@
 # Program Board
 
 ## Current Program Direction
-
 - Direction: `hold-post-stage5-roadmap-state-aligned`
 - Status: `active`
 - Why Now: 保持 post-Stage-5 的 operator baseline、project/workstream roadmap 摘要和 canonical-root policy 同时稳定
@@ -58,7 +57,6 @@
 | future governance / architecture side-track | supporting backlog | 只有 durable 证据显示当前主线不够时，才升级 | 先记录，不抢主线 |
 
 ## Next Orchestration Checks
-
 1. 确认当前 active slice、执行线和 supporting backlog 仍保持同一套排序真相。
 2. 判断哪些 sidecar 工作可以并入下个 checkpoint，哪些必须继续留在队列里。
 3. 如果单 Codex PTL 模式在真实仓库里成为瓶颈，再整理成后续多执行器候选。

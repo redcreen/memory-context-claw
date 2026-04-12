@@ -347,6 +347,7 @@ flowchart LR
 - `accepted_action` 已经可以进入受治理的 source -> candidate -> stable 闭环
 - CLI 已经可以提交结构化 accepted-action 证据
 - 成功的 accepted-action event 现在已经会在 source 提供结构化证据时拆成 field-aware 的 `target_fact`、`operating_rule`、`outcome_artifact` candidates
+- runtime/task 接入面现在已经包括 Codex `writeAfterTask(...)`，以及 OpenClaw 在显式结构化 accepted-action payload 出现时的异步 `after_tool_call`
 
 这已经足够证明集成链路和 Step 47 的 field-aware extraction 打通了，但还不是完整的抽取策略。
 

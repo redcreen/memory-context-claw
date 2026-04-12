@@ -100,7 +100,7 @@ Validation:
 - one workspace can be read by both adapters from the same registry
 - agent-specific records remain scoped correctly
 - no adapter-local duplicate stable-memory store is introduced
-- Codex task/write-back signals have a planned path into the same governed learning ingestion surface
+- Codex `writeAfterTask(...)` and OpenClaw async `after_tool_call` now converge on the same governed learning ingestion surface
 - accepted-action events emitted by either adapter converge on the same host-neutral intake surface
 
 ## Phase 3: Migration + Compatibility

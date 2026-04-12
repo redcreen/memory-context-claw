@@ -346,6 +346,7 @@ The current implementation intentionally stops at a conservative first step:
 - `accepted_action` can enter the governed source -> candidate -> stable loop
 - the CLI can submit structured accepted-action evidence
 - successful accepted-action events now split into field-aware `target_fact`, `operating_rule`, and `outcome_artifact` candidates when structured source evidence is present
+- runtime/task surfaces now include Codex `writeAfterTask(...)` and OpenClaw async `after_tool_call` when explicit structured accepted-action payloads are present
 
 That is enough to prove the integration path and Step 47 field-aware extraction, but it is not yet the full extraction policy.
 

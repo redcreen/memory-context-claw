@@ -21,6 +21,7 @@
 - OpenClaw namespace mapping
 - OpenClaw export consumption
 - OpenClaw-specific retrieval / assembly hooks
+- OpenClaw accepted-action runtime hook
 - adapter-side compatibility rules
 - OpenClaw 多 agent 运行时协调规则
 
@@ -35,8 +36,9 @@
 1. 把 OpenClaw session 映射到产品 namespace
 2. 消费相关产品 exports
 3. 在需要时把 adapter 逻辑和宿主 retrieval 路径结合起来
-4. 保持行为有 regression 保护
-5. 同时兼容 local-first 与后续 shared-service 演进
+4. 当结构化 tool result 出现时，通过异步 OpenClaw runtime hook 发出 governed accepted-action 证据
+5. 保持行为有 regression 保护
+6. 同时兼容 local-first 与后续 shared-service 演进
 
 ## 主流程
 
@@ -104,6 +106,19 @@ flowchart LR
 - 允许并发读取
 - adapter 侧写入按 namespace 串行化
 - agent 本地 scratch state 不进入 governed exports
+
+## Accepted-Action Hook 边界
+
+OpenClaw adapter 现在拥有一条写侧接缝：
+
+- 异步 `after_tool_call`
+- 只有当 tool result 里带有显式结构化 accepted-action payload 时才触发
+- registry 写入、reflection 和 promotion 仍然留在 `Unified Memory Core` 内部，不回退到宿主本地 scratch 逻辑
+
+它有意不做这些事：
+
+- 不把同步 `tool_result_persist` 当作 registry 写入口
+- 不对任意“成功工具结果”做隐式推断
 
 ## 必须守住的边界
 

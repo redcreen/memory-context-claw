@@ -202,6 +202,7 @@ They exist so the next enhancement phase can start from a clear queue instead of
    - `accepted_action` source normalization now emits field descriptors for targets, artifact paths, and output references.
    - reflection now expands successful accepted-action events into field-aware `target_fact`, `operating_rule`, and `outcome_artifact` candidates instead of flattening everything into one summary.
    - CLI and lifecycle validation now prove reusable targets can promote independently while one-off outcomes stay in observation state.
+   - runtime/task hook coverage now includes Codex `writeAfterTask(...)` and OpenClaw async `after_tool_call` when structured accepted-action payloads are present.
 48. `todo` Add accepted-action admission routing across `session`, `daily`, `observation`, and stable-candidate layers.
 49. `todo` Add richer accepted-action evidence weighting using acceptance, execution success, later reuse, contradiction, and citation signals together.
 50. `todo` Add negative / partial accepted-action handling so rejected or failed actions become audit or observation inputs instead of stable facts.

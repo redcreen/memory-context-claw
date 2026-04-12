@@ -41,6 +41,7 @@
   - accepted-action 证据已能进入 governed source -> candidate -> stable loop
   - export / audit / lifecycle 已能消费 accepted-action stable artifacts
   - Step 47 的 field-aware extraction 已落地：successful accepted_action 现在会拆成 `target_fact`、显式 `operating_rule`、`outcome_artifact` candidates
+  - runtime/task hook 已补齐到两条显式入口：Codex `writeAfterTask(...)` 与 OpenClaw 异步 `after_tool_call`
   - 一次性 outcome 目前仍保持 observation，Step 48-52 的 admission routing / negative-path / conflict policy 继续维持在 deferred TODO 队列
 - control-surface 与 host-neutral workstream docs 已再次对齐：
   - 不再把 canonical-root cutover 描述成“仍待决定的窗口”
@@ -51,7 +52,7 @@
 - 当前验证已完成：
   - Stage 5 targeted tests：`3/3`
   - release / deployment targeted tests：`71/71`
-  - full repo `npm test`：`354/354`
+  - full repo `npm test`：`363/363`
   - `npm run umc:stage5 -- --format markdown`：`pass`
   - `npm run umc:acceptance -- --format markdown`：`pass`
   - `npm run umc:openclaw-itest -- --format markdown`：`pass`
@@ -76,6 +77,7 @@
 - 保持 project/workstream roadmap 摘要与当前 Stage 5 closeout 基线持续一致
 - 继续观察 legacy root 是否只停留在兼容回退窗口，而不是重新变成 active root
 - 把 accepted-action 的 Step 48-52 继续明确维持在 deferred enhancement queue，而不是在 Step 47 完成后继续悄悄并进当前 closeout baseline
+- 保持 OpenClaw `after_tool_call` accepted-action runtime hook 与配置/文档/宿主部署验证持续一致
 
 ## Blockers / Open Decisions
 
@@ -128,3 +130,4 @@
 - Trigger Level: high
 - Pending Capture: no
 - Last Entry: `docs/devlog/2026-04-12-implement-step47-field-aware-accepted-action-extraction.md`
+- Last Entry: `docs/devlog/2026-04-12-hook-openclaw-after-tool-call-into-accepted-action-learning.md`

@@ -1,7 +1,6 @@
 # Worker Handoff
 
 ## Current Handoff Direction
-
 - Direction: `stage closeout / Stage 5 complete`
 - Status: `active`
 - Why Now: 保持 post-Stage-5 的 operator baseline、project/workstream roadmap 摘要和 canonical-root policy 同时稳定
@@ -63,7 +62,6 @@
 | 显著成本 / 时间变化 | 必须升级给人类 |
 
 ## Next Handoff Checks
-
 1. 确认 worker 停下后的接续、回流和升级都能靠 durable 真相完成。
 2. 继续观察哪些 handoff 场景会反复出现，再决定是否需要更强的调度层。
 3. 只在 disjoint write scope 和结果回收口都明确时，才考虑扩成多执行器调度。

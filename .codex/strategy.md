@@ -1,7 +1,6 @@
 # Strategy
 
 ## Current Strategic Direction
-
 - Direction: `hold-post-stage5-roadmap-state-aligned`
 - Status: `active`
 - Why Now: 保持 post-Stage-5 的 operator baseline、project/workstream roadmap 摘要和 canonical-root policy 同时稳定
@@ -52,7 +51,6 @@
 - 不要让战略层静默膨胀成全能调度器；编排仍应保留在 program-board。
 
 ## Next Strategic Checks
-
 1. 确认 roadmap、development plan、当前切片和 Next 3 仍在同一条主线里。
 2. 判断当前 blocker 或重复修补是否已经需要插入治理 / 架构专项。
 3. 如果里程碑顺序、项目定位或长期目标需要调整，整理成待人类审批的建议。

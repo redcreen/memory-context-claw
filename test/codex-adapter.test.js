@@ -5,6 +5,7 @@ import os from "node:os";
 import path from "node:path";
 
 import {
+  createCodexAcceptedActionSource,
   createCodexAdapterRuntime,
   createCodexWriteBackEvent,
   mapCodexExportToTaskMemory,
@@ -123,6 +124,7 @@ test("codex adapter persists a governed write-back event into source and candida
   assert.equal(trails.length, 1);
   assert.equal(persisted.candidateRecord.state, "candidate");
   assert.equal(persisted.write_back_event.visibility, "workspace");
+  assert.equal(persisted.accepted_action, null);
 });
 
 test("codex adapter can share a namespace hint with openclaw-compatible workspace scope", async () => {
@@ -370,4 +372,92 @@ test("createCodexWriteBackEvent validates summary and maps task metadata", () =>
   assert.equal(event.project_id, "unified-memory-core");
   assert.equal(memoryPackage.memory_items.length, 1);
   assert.match(memoryPackage.prompt_block, /shared memory/);
+});
+
+test("createCodexAcceptedActionSource maps task result metadata into an accepted_action source", () => {
+  const declaredSource = createCodexAcceptedActionSource(
+    {
+      taskId: "task_publish_1",
+      summary: "Published the site successfully.",
+      actionType: "publish_site",
+      accepted: true,
+      succeeded: true,
+      targets: ["redcreen/redcreen.github.io", "https://redcreen.github.io/demo/"],
+      artifacts: ["dist/index.html"],
+      outputs: {
+        finalUrl: "https://redcreen.github.io/demo/"
+      }
+    },
+    {
+      projectPath: "/tmp/unified-memory-core",
+      userId: "codex-user",
+      agentId: "code"
+    },
+    {
+      clock: () => new Date("2026-04-11T00:00:00.000Z")
+    }
+  );
+
+  assert.equal(declaredSource.sourceType, "accepted_action");
+  assert.equal(declaredSource.actionType, "publish_site");
+  assert.equal(declaredSource.agentId, "code");
+  assert.deepEqual(declaredSource.targets, [
+    "redcreen/redcreen.github.io",
+    "https://redcreen.github.io/demo/"
+  ]);
+  assert.deepEqual(declaredSource.artifacts, ["dist/index.html"]);
+  assert.deepEqual(declaredSource.outputs, {
+    finalUrl: "https://redcreen.github.io/demo/"
+  });
+});
+
+test("codex adapter auto-emits accepted_action signals from write-after-task input", async () => {
+  const registryRoot = await fs.mkdtemp(path.join(os.tmpdir(), "umc-codex-accepted-action-"));
+  const clock = () => new Date("2026-04-11T00:00:00.000Z");
+  const adapter = createCodexAdapterRuntime({
+    clock,
+    logger: { info() {} },
+    config: {
+      registryDir: registryRoot,
+      scope: "workspace",
+      resource: "openclaw-shared-memory",
+      workspaceId: "code-workspace",
+      agentId: "code",
+      agentNamespaceEnabled: true
+    }
+  });
+
+  const persisted = await adapter.writeAfterTask({
+    taskId: "task_publish_2",
+    taskTitle: "发布站点",
+    summary: "用户接受发布目标，站点已成功发布。",
+    details: "同步到了 Pages 仓库。",
+    actionType: "publish_site",
+    accepted: true,
+    succeeded: true,
+    targets: ["redcreen/redcreen.github.io", "https://redcreen.github.io/brain-reinstall-jingangjing/"],
+    artifacts: ["dist/index.html"]
+  });
+
+  const registry = createMemoryRegistry({ rootDir: registryRoot, clock });
+  const records = await registry.listRecords();
+  const trails = await registry.listDecisionTrails();
+  const stableRecords = records.filter((record) => record.record_type === "stable_artifact");
+  const acceptedActionSources = records.filter(
+    (record) => record.record_type === "source_artifact" && record.payload?.source_type === "accepted_action"
+  );
+
+  assert.ok(persisted.accepted_action);
+  assert.equal(persisted.accepted_action.declared_source.sourceType, "accepted_action");
+  assert.equal(persisted.accepted_action.reflection.run.summary.by_extraction_class.target_fact, 1);
+  assert.equal(persisted.accepted_action.reflection.run.summary.by_extraction_class.outcome_artifact, 2);
+  assert.equal(persisted.accepted_action.promoted.length, 1);
+  assert.equal(acceptedActionSources.length, 1);
+  assert.equal(stableRecords.length, 1);
+  assert.equal(
+    stableRecords[0].payload.attributes.accepted_action_extraction_class,
+    "target_fact"
+  );
+  assert.equal(records.length, 7);
+  assert.equal(trails.length, 6);
 });

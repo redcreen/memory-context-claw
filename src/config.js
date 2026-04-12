@@ -52,6 +52,10 @@ const DEFAULT_CONFIG = {
   },
   openclawAdapter: {
     enabled: true,
+    acceptedActions: {
+      enabled: true,
+      visibility: "workspace"
+    },
     governedExports: {
       enabled: true,
       registryDir: "",
@@ -152,6 +156,10 @@ export function resolvePluginConfig(raw) {
   const memoryDistillation = mergeObject(DEFAULT_CONFIG.memoryDistillation, cfg.memoryDistillation);
   const weights = mergeObject(DEFAULT_CONFIG.weights, cfg.weights);
   const openclawAdapter = mergeObject(DEFAULT_CONFIG.openclawAdapter, cfg.openclawAdapter);
+  const acceptedActions = mergeObject(
+    DEFAULT_CONFIG.openclawAdapter.acceptedActions,
+    openclawAdapter.acceptedActions
+  );
   const governedExports = mergeObject(
     DEFAULT_CONFIG.openclawAdapter.governedExports,
     openclawAdapter.governedExports
@@ -290,6 +298,13 @@ export function resolvePluginConfig(raw) {
     },
     openclawAdapter: {
       enabled: openclawAdapter.enabled !== false,
+      acceptedActions: {
+        enabled: acceptedActions.enabled !== false,
+        visibility:
+          typeof acceptedActions.visibility === "string" && acceptedActions.visibility.trim()
+            ? acceptedActions.visibility.trim()
+            : DEFAULT_CONFIG.openclawAdapter.acceptedActions.visibility
+      },
       governedExports: {
         enabled: governedExports.enabled !== false,
         registryDir:

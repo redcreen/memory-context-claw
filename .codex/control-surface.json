@@ -18,12 +18,13 @@
     ".codex/module-dashboard.md"
   ],
   "managedBy": "project-assistant",
-  "controlSurfaceVersion": 2,
+  "controlSurfaceVersion": 3,
   "surfaceVersions": {
     "strategy": 1,
     "programBoard": 1,
     "deliverySupervision": 1,
     "ptlSupervision": 1,
-    "workerHandoff": 1
+    "workerHandoff": 1,
+    "entryRouting": 1
   }
 }

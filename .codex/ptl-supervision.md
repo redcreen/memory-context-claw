@@ -1,7 +1,6 @@
 # PTL Supervision
 
 ## Current PTL Direction
-
 - Direction: `stage closeout / Stage 5 complete`
 - Status: `active`
 - Why Now: 保持 post-Stage-5 的 operator baseline、project/workstream roadmap 摘要和 canonical-root policy 同时稳定
@@ -51,7 +50,6 @@
 | 业务裁决越权防护 | green | 一旦跨到产品方向或兼容性承诺，PTL 只升级不代替决策 |
 
 ## Next PTL Checks
-
 1. 确认 worker 停下后，PTL 能从 durable 真相恢复当前工作，而不是退回聊天记忆。
 2. 继续观察 handoff / re-entry 是否还暴露新的 durable 缺口，需要回写到监督契约。
 3. 如果真实仓库反复出现单 Codex 编排瓶颈，再整理成后续多执行器候选。

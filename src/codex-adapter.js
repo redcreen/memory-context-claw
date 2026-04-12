@@ -9,6 +9,7 @@ import {
   createMemoryRegistry,
   createPolicyContext,
   createProjectionSystem,
+  createReflectionSystem,
   createSourceSystem,
   createNamespaceKey,
   parseNamespace,
@@ -38,6 +39,53 @@ function normalizeStringList(values, fallback) {
   return normalized.length > 0 ? normalized : [...fallback];
 }
 
+function normalizeStringArrayLike(values, fallback = []) {
+  if (Array.isArray(values)) {
+    const normalized = values
+      .map((value) => normalizeString(value))
+      .filter(Boolean);
+    return normalized.length > 0 ? normalized : [...fallback];
+  }
+  if (typeof values === "string") {
+    const normalized = values
+      .split(",")
+      .map((value) => normalizeString(value))
+      .filter(Boolean);
+    return normalized.length > 0 ? normalized : [...fallback];
+  }
+  return [...fallback];
+}
+
+function normalizeBoolean(value, fallback = false) {
+  if (typeof value === "boolean") {
+    return value;
+  }
+  if (typeof value === "number") {
+    return value !== 0;
+  }
+  if (typeof value !== "string") {
+    return fallback;
+  }
+  const normalized = value.trim().toLowerCase();
+  if (!normalized) {
+    return fallback;
+  }
+  if (["true", "1", "yes", "y", "accepted", "success", "succeeded"].includes(normalized)) {
+    return true;
+  }
+  if (["false", "0", "no", "n", "rejected", "failed"].includes(normalized)) {
+    return false;
+  }
+  return fallback;
+}
+
+function normalizeOptionalObject(value) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    return undefined;
+  }
+  return { ...value };
+}
+
 function dedupeMemoryItems(items, maxItems) {
   const seen = new Set();
   const merged = [];
@@ -59,6 +107,19 @@ function dedupeMemoryItems(items, maxItems) {
 
 function normalizeTaskPrompt(value) {
   return normalizeString(value).replace(/\s+/g, " ").trim();
+}
+
+function resolveAcceptedActionPayload(input = {}) {
+  const nested = input.acceptedAction && typeof input.acceptedAction === "object" && !Array.isArray(input.acceptedAction)
+    ? input.acceptedAction
+    : input.accepted_action && typeof input.accepted_action === "object" && !Array.isArray(input.accepted_action)
+      ? input.accepted_action
+      : null;
+
+  return {
+    ...(nested || {}),
+    ...input
+  };
 }
 
 function formatWriteBackContent(event) {
@@ -228,6 +289,69 @@ export function createCodexWriteBackEvent(input = {}, context = {}, options = {}
   };
 }
 
+export function createCodexAcceptedActionSource(input = {}, context = {}, options = {}) {
+  const clock = options.clock || (() => new Date());
+  const config = resolveCodexAdapterConfig(context);
+  const namespacePlan = resolveCodexNamespacePlan(context);
+  const namespace = parseNamespace(options.namespace || namespacePlan.primaryNamespace);
+  const payload = resolveAcceptedActionPayload(input);
+  const actionType = normalizeString(payload.actionType || payload.action_type || payload.kind);
+
+  if (!actionType) {
+    return null;
+  }
+
+  const status = normalizeString(payload.status, "succeeded");
+  const accepted = normalizeBoolean(
+    payload.accepted ?? payload.userAccepted ?? payload.user_accepted,
+    true
+  );
+  const succeeded = normalizeBoolean(
+    payload.succeeded ?? payload.executionSucceeded ?? payload.execution_succeeded ?? status,
+    /success|succeed|applied|completed|done/iu.test(status)
+  );
+  const content = normalizeTaskPrompt(
+    payload.content
+    || payload.summary
+    || input.summary
+    || input.details
+    || ""
+  );
+  const targets = normalizeStringArrayLike(
+    payload.targets ?? payload.externalTargets ?? payload.external_targets,
+    []
+  );
+  const artifacts = normalizeStringArrayLike(
+    payload.artifacts ?? payload.artifactPaths ?? payload.artifact_paths,
+    []
+  );
+  const outputs = normalizeOptionalObject(payload.outputs);
+  const declaredSource = {
+    sourceType: "accepted_action",
+    declaredBy: `codex-adapter:${normalizeString(payload.actorId || payload.actor_id, config.userId)}`,
+    namespace,
+    visibility: parseVisibility(payload.visibility || config.writeBackVisibility),
+    actionType,
+    status,
+    accepted,
+    succeeded,
+    agentId: normalizeString(payload.agentId || payload.agent_id || payload.runtime || context.agentId || ""),
+    targets,
+    artifacts,
+    content
+  };
+  const inputs = normalizeOptionalObject(payload.inputs);
+
+  if (inputs) {
+    declaredSource.inputs = inputs;
+  }
+  if (outputs) {
+    declaredSource.outputs = outputs;
+  }
+
+  return declaredSource;
+}
+
 export function mapCodexExportToTaskMemory(exportResult, { taskPrompt, maxItems, policyContext } = {}) {
   const items = Array.isArray(exportResult?.payload?.code_memory)
     ? exportResult.payload.code_memory
@@ -303,6 +427,10 @@ export function createCodexAdapterRuntime(options = {}) {
       ...(config.host ? { host: config.host } : {})
     },
     defaultVisibility: config.writeBackVisibility
+  });
+  const reflectionSystem = createReflectionSystem({
+    registry,
+    clock
   });
   const writeChains = new Map();
 
@@ -448,6 +576,64 @@ export function createCodexAdapterRuntime(options = {}) {
         },
         candidateBuilder: createWriteBackCandidateBuilder(event, clock)
       });
+      const acceptedActionSource = createCodexAcceptedActionSource(input, {
+        registryDir: config.registryDir,
+        projectPath: normalizeString(input.projectPath, config.projectPath),
+        projectId: normalizeString(input.projectId, config.projectId),
+        userId: normalizeString(input.userId, config.userId),
+        tenant: normalizeString(input.tenant, config.tenant),
+        scope: normalizeString(input.scope, config.scope),
+        resource: normalizeString(input.resource, config.resource),
+        namespaceHint: normalizeString(input.namespaceHint, config.namespaceHint),
+        workspaceId: normalizeString(input.workspaceId, config.workspaceId),
+        agentId: normalizeString(input.agentId, config.agentId),
+        agentNamespaceEnabled:
+          input.agentNamespaceEnabled === undefined
+            ? config.agentNamespaceEnabled
+            : input.agentNamespaceEnabled === true,
+        host: normalizeString(input.host, config.host),
+        writeBackVisibility: normalizeString(
+          input.visibility,
+          config.writeBackVisibility
+        )
+      }, { clock });
+      let acceptedActionPersistence = null;
+
+      if (acceptedActionSource) {
+        const acceptedActionSourceResult = await sourceSystem.ingestDeclaredSource(acceptedActionSource);
+        const acceptedActionSourceRecord = await registry.persistSourceArtifact(
+          acceptedActionSourceResult.sourceArtifact
+        );
+        const reflection = await reflectionSystem.runReflection({
+          sourceArtifacts: [acceptedActionSourceResult.sourceArtifact],
+          persistCandidates: true,
+          decidedBy: `codex-adapter:${event.actor_id}`
+        });
+        const promoted = [];
+
+        for (const output of reflection.outputs) {
+          if (!output.recommendation.should_promote) {
+            continue;
+          }
+          promoted.push(await registry.promoteCandidateToStable({
+            candidateArtifactId: output.candidate_artifact.artifact_id,
+            decidedBy: `codex-adapter:${event.actor_id}`,
+            reasonCodes: [
+              "codex_accepted_action_promotion",
+              `label:${output.primary_label}`
+            ]
+          }));
+        }
+
+        acceptedActionPersistence = {
+          declared_source: acceptedActionSource,
+          sourceManifest: acceptedActionSourceResult.sourceManifest,
+          sourceArtifact: acceptedActionSourceResult.sourceArtifact,
+          sourceRecord: acceptedActionSourceRecord,
+          reflection,
+          promoted
+        };
+      }
 
       logger?.info?.(
         `[unified-memory-core] codex write-back persisted (event=${event.event_id}, namespace=${createNamespaceKey(event.namespace)})`
@@ -455,6 +641,7 @@ export function createCodexAdapterRuntime(options = {}) {
 
       return {
         write_back_event: event,
+        accepted_action: acceptedActionPersistence,
         ...persistence
       };
     });

@@ -91,6 +91,7 @@ Current status:
 - generic accepted-action intake is now implemented
 - CLI and lifecycle coverage already prove that accepted-action evidence can enter the governed loop
 - Step 47 field-aware extraction is now implemented
+- Codex `writeAfterTask(...)` and OpenClaw async `after_tool_call` now emit accepted-action evidence into the same governed intake when structured payloads are present
 - later admission / weighting / negative-path policy is still intentionally deferred
 
 That deferred package should reopen only as a later enhancement slice.

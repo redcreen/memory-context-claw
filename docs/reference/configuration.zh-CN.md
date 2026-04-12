@@ -268,6 +268,10 @@ openclaw memory search "我爱吃什么"
 ```json5
 {
   enabled: true,
+  acceptedActions: {
+    enabled: true,
+    visibility: "workspace"
+  },
   governedExports: {
     enabled: true,
     registryDir: "",
@@ -288,6 +292,17 @@ openclaw memory search "我爱吃什么"
 ```
 
 当你希望 OpenClaw adapter 在合并内置 recall 结果之前，先从本地 registry 加载 governed stable exports 时，就用这一组配置。
+
+`acceptedActions` 用来控制 OpenClaw 侧异步 accepted-action 捕获钩子。
+
+默认行为：
+
+- 只捕获 OpenClaw `after_tool_call` 钩子里显式提供的结构化 payload
+- 支持 `result.accepted_action` 或 `result.acceptedAction`
+- 捕获到的证据会进入和 CLI、Codex write-back 同一条 governed accepted-action 闭环
+- 不会把同步的 `tool_result_persist` hook 用作 registry 写入入口
+
+当你希望 OpenClaw runtime 在任务执行时直接发出受治理的 accepted-action 证据，而不是等 nightly distillation 再间接提炼时，就开启这条路径。
 
 关键规则：
 
@@ -343,6 +358,11 @@ openclaw memory search "我爱吃什么"
   - `adopt_canonical_root` / `canonical_root_active`：继续运行
   - `migrate_to_canonical_root`：需要处理
 - 不要把 `registry_roots_diverged` 在 canonical active 场景下误判成“必须停机”的 hard gate
+
+当前 accepted-action 的 runtime 接入面：
+
+- Codex：`writeAfterTask(...)`
+- OpenClaw：异步 `after_tool_call` hook，前提是 tool result 带有结构化 accepted-action payload
 
 运维命令：
 

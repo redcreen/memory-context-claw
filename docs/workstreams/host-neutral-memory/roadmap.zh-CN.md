@@ -100,6 +100,7 @@ flowchart LR
 - 同一 workspace 可被两个 adapter 从同一 registry 读取
 - agent-specific records 仍能正确隔离
 - 不引入 adapter-local duplicate stable-memory store
+- Codex `writeAfterTask(...)` 与 OpenClaw 异步 `after_tool_call` 现在已经汇合到同一条 governed learning ingestion surface
 - 任一 adapter 发出的 accepted-action events，都应汇合到同一条 host-neutral intake surface
 
 ## Phase 3：Migration + Compatibility

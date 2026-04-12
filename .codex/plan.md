@@ -78,19 +78,28 @@
   - Exit Condition: successful accepted_action 至少能拆出 field-aware target / outcome candidates，CLI 与 lifecycle 能证明可复用 target promote、一次性 outcome 保持 observation，且 Step 48-52 继续维持 deferred
   - Status: `completed`
 
+- Slice: `hook-openclaw-after-tool-call-into-accepted-action-learning`
+  - Objective: 把 OpenClaw 侧真正可用的异步 runtime seam 接上 governed accepted-action intake，让显式结构化 tool result 能直接进入 source -> reflection -> promotion 闭环
+  - Dependencies: `src/plugin/index.js`、OpenClaw typed hooks、host-neutral namespace mapping、accepted_action source/reflection baseline、deployment verification
+  - Risks: 如果把 registry 写入接到同步 `tool_result_persist`，会违反宿主 hook 约束；如果对任意成功 tool result 做隐式推断，会把 Step 48-52 的 deeper policy 偷渡进当前实现
+  - Validation: OpenClaw hook regression tests、full `npm test`、`npm run verify`、本机部署后宿主侧 after_tool_call 模拟
+  - Exit Condition: OpenClaw async `after_tool_call` 在显式 structured payload 存在时，能把 accepted_action 发入与 Codex/CLI 相同的 governed intake surface，且文档/配置/宿主验证同步完成
+  - Status: `completed`
+
 ## Execution Order
 
 1. 保持 release-preflight / bundle install / host smoke / Stage 5 evidence 稳定
 2. 保持 host-neutral root operator policy 可见且不回退
 3. 保持 project/workstream roadmap 摘要与当前 Stage 5 closeout 基线持续一致
 4. 保持 accepted-action deeper queue 的 Step 48-52 仍然显式 deferred，不把 admission / negative-path / conflict work 偷渡进当前实现
-5. 只有在 runtime API prerequisites 持续为绿后，才开启新的 enhancement planning 或讨论 legacy root cleanup 窗口
+5. 保持 Codex `writeAfterTask(...)` 与 OpenClaw async `after_tool_call` 这两条 runtime intake surface 继续对齐同一条 governed loop
+6. 只有在 runtime API prerequisites 持续为绿后，才开启新的 enhancement planning 或讨论 legacy root cleanup 窗口
 
 ## Architecture Supervision
 - Signal: `yellow`
 - Signal Basis: open blockers or architectural risks are still recorded
 - Problem Class: post-stage maintenance, human acceptance, and operator policy
-- Root Cause Hypothesis: 后续真正的风险不再是“cutover 未决”，而是 evidence / roadmap drift 让维护者误判当前阶段，或者在 Step 47 已经实现后继续把 Step 48-52 偷渡进当前 closeout baseline
+- Root Cause Hypothesis: 后续真正的风险不再是“cutover 未决”，而是 evidence / roadmap drift 让维护者误判当前阶段，或在 Step 47 已完成后继续把 Step 48-52 过早并进当前 closeout baseline
 - Correct Layer: release preflight evidence, governance evidence, registry-root operator policy, project/workstream roadmap, control surface
 - Rejected Shortcut: 跳过 Stage 5 证据面和当前 operator baseline，直接讨论 runtime API / service mode
 - Automatic Review Trigger: no automatic trigger is currently active

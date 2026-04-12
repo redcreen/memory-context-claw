@@ -91,6 +91,7 @@
 - generic accepted-action intake 已经落地
 - CLI 和 lifecycle 覆盖已经证明 accepted-action 证据可以进入 governed loop
 - Step 47 的 field-aware extraction 已经落地
+- Codex `writeAfterTask(...)` 和 OpenClaw 异步 `after_tool_call` 现在都能在结构化 payload 存在时，把 accepted-action 证据发进同一条 governed intake
 - 后续 admission / weighting / negative-path policy 仍然是有意延后的
 
 这一包延后项，只应在后续 enhancement slice 单独打开，不应继续往当前 closeout baseline 里追加。

@@ -19,6 +19,10 @@ import { createSourceSystem } from "../src/unified-memory-core/source-system.js"
 test("resolvePluginConfig keeps openclaw adapter governed export settings", () => {
   const config = resolvePluginConfig({
     openclawAdapter: {
+      acceptedActions: {
+        enabled: true,
+        visibility: "shared"
+      },
       governedExports: {
         workspaceId: "demo-workspace",
         registryDir: "/tmp/registry",
@@ -39,6 +43,8 @@ test("resolvePluginConfig keeps openclaw adapter governed export settings", () =
 
   assert.equal(config.openclawAdapter.governedExports.workspaceId, "demo-workspace");
   assert.equal(config.openclawAdapter.governedExports.registryDir, "/tmp/registry");
+  assert.equal(config.openclawAdapter.acceptedActions.enabled, true);
+  assert.equal(config.openclawAdapter.acceptedActions.visibility, "shared");
   assert.deepEqual(config.openclawAdapter.governedExports.agentWorkspaceIds, {
     code: "code-workspace"
   });

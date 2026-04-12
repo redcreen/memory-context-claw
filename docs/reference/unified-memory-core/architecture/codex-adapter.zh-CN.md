@@ -34,8 +34,9 @@
 1. 绑定 user + project + namespace
 2. 在 coding task 前加载 shared code memory
 3. 在 coding task 后回写治理过的事件
-4. 同时兼容 standalone 和 embedded 两条执行路径
-5. 保持在单机与未来多主机场景下都可用
+4. 当 task-result metadata 提供结构化字段时，通过 `writeAfterTask(...)` 发出 governed accepted-action 证据
+5. 同时兼容 standalone 和 embedded 两条执行路径
+6. 保持在单机与未来多主机场景下都可用
 
 ## 主流程
 
@@ -51,7 +52,15 @@ sequenceDiagram
     Core-->>Adapter: 返回 code memory exports
     Adapter-->>Codex: 返回 task-facing memory package
     Codex->>Adapter: 回传 task result / write-back event
-    Adapter->>Core: 执行 governed write-back
+    Adapter->>Core: 执行 governed write-back + 可选 accepted-action intake
+
+## Accepted-Action Hook 边界
+
+Codex adapter 现在有一条显式的写侧学习接缝：
+
+- `writeAfterTask(...)` 仍会发出原来的 governed manual write-back event
+- 同一个调用在 task-result metadata 带有显式 accepted-action 字段时，也会发出结构化 `accepted_action` 证据
+- promotion 仍然受 reflection 和 lifecycle 规则治理，而不是 adapter-local 硬编码
 ```
 
 ## 运行模式

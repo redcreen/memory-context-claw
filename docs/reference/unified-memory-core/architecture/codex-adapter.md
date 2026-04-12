@@ -34,8 +34,9 @@ Related documents:
 1. map user + project + namespace
 2. load shared code memory before coding tasks
 3. write back governed events after coding tasks
-4. stay compatible with standalone and embedded execution paths
-5. keep the adapter usable across one-host and future multi-host deployments
+4. emit governed accepted-action evidence from `writeAfterTask(...)` when structured task-result metadata is present
+5. stay compatible with standalone and embedded execution paths
+6. keep the adapter usable across one-host and future multi-host deployments
 
 ## Core Flow
 
@@ -51,7 +52,15 @@ sequenceDiagram
     Core-->>Adapter: code memory exports
     Adapter-->>Codex: task-facing memory package
     Codex->>Adapter: task result / write-back event
-    Adapter->>Core: governed write-back
+    Adapter->>Core: governed write-back + optional accepted-action intake
+
+## Accepted-Action Hook Boundary
+
+The Codex adapter now has one explicit write-side learning seam:
+
+- `writeAfterTask(...)` can still emit the legacy governed manual write-back event
+- the same call can also emit structured `accepted_action` evidence when task-result metadata includes explicit accepted-action fields
+- promotion remains governed by reflection and lifecycle rules, not by adapter-local hardcoding
 ```
 
 ## Runtime Modes

@@ -266,6 +266,10 @@ Default:
 ```json5
 {
   enabled: true,
+  acceptedActions: {
+    enabled: true,
+    visibility: "workspace"
+  },
   governedExports: {
     enabled: true,
     registryDir: "",
@@ -286,6 +290,17 @@ Default:
 ```
 
 Use this when you want the OpenClaw adapter to load governed stable exports from the local registry before merging with builtin recall results.
+
+`acceptedActions` controls the async OpenClaw-side accepted-action capture hook.
+
+Default behavior:
+
+- captures only explicit structured payloads from the OpenClaw `after_tool_call` hook
+- supports `result.accepted_action` or `result.acceptedAction`
+- routes captured evidence into the same governed accepted-action loop used by CLI and Codex write-back
+- does not use the synchronous `tool_result_persist` hook for registry writes
+
+Use this when you want OpenClaw runtime execution to emit governed accepted-action evidence directly instead of waiting for nightly distillation.
 
 Important rule:
 
@@ -341,6 +356,11 @@ Recommended operator interpretation:
   - `adopt_canonical_root` / `canonical_root_active`: continue
   - `migrate_to_canonical_root`: act
 - do not treat `registry_roots_diverged` as a stop-the-world hard gate when canonical is already active
+
+Current accepted-action runtime surfaces:
+
+- Codex: `writeAfterTask(...)`
+- OpenClaw: async `after_tool_call` hook when tool results include structured accepted-action payloads
 
 Operator commands:
 

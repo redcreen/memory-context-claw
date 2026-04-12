@@ -21,6 +21,7 @@ Related documents:
 - OpenClaw namespace mapping
 - OpenClaw export consumption
 - OpenClaw-specific retrieval / assembly hooks
+- OpenClaw accepted-action runtime hook
 - adapter-side compatibility rules
 - OpenClaw multi-agent runtime coordination rules
 
@@ -35,8 +36,9 @@ Related documents:
 1. map OpenClaw sessions to product namespaces
 2. consume relevant product exports
 3. merge adapter logic with host retrieval paths when needed
-4. keep behavior regression-protected
-5. stay compatible with local-first and future shared-service deployments
+4. emit governed accepted-action evidence from async OpenClaw runtime hooks when structured tool results are present
+5. keep behavior regression-protected
+6. stay compatible with local-first and future shared-service deployments
 
 ## Core Flow
 
@@ -102,6 +104,19 @@ For `one OpenClaw with multiple agents`, the recommended rule is:
 - allow concurrent reads
 - serialize adapter-side writes by namespace
 - keep agent-local scratch state outside governed exports
+
+## Accepted-Action Hook Boundary
+
+The OpenClaw adapter now owns one write-side integration seam:
+
+- async `after_tool_call`
+- only when a tool result includes an explicit structured accepted-action payload
+- registry writes, reflection, and promotion stay inside `Unified Memory Core`, not inside host-local scratch logic
+
+It intentionally does not use:
+
+- sync `tool_result_persist` for registry writes
+- implicit inference from arbitrary successful tool results
 
 ## Required Boundaries
 

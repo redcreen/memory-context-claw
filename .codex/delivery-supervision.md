@@ -1,7 +1,6 @@
 # Delivery Supervision
 
 ## Current Delivery Direction
-
 - Direction: `stage closeout / Stage 5 complete`
 - Status: `active`
 - Why Now: 保持 post-Stage-5 的 operator baseline、project/workstream roadmap 摘要和 canonical-root policy 同时稳定
@@ -60,7 +59,6 @@
 | future rollout friction | 只有同类摩擦跨多个 repo 反复出现时，才升级成新的正式里程碑 | 先记录为 rollout evidence |
 
 ## Next Delivery Checks
-
 1. 确认每轮 checkpoint 都会刷新 status / progress / continue / handoff，而不是只更新其中一部分。
 2. 继续判断当前 gate 是自动继续、提醒后继续，还是已经需要升级给人类。
 3. 如果同类 rollout 摩擦反复出现，再整理成新的专项或后续里程碑候选。
