@@ -278,6 +278,68 @@ flowchart LR
     class E branch;
 ```
 
+## 已采纳行为捕获
+
+当前还缺一条很明确的链路：
+
+`已经执行成功、而且已经被采纳的行为，可能仍然只停留在任务日志里，没进入受治理的学习候选层`
+
+这正是“agent 这次明明用对了发布目标，下次却记不稳”的那类问题来源。
+
+架构上不应该走产品特判，比如“只要 GitHub Pages 发布成功就记住 URL”。
+
+更合理的是给学习子系统补一层通用的已采纳行为入口：
+
+- `accepted_action`
+- `applied_decision`
+- `successful_execution`
+
+这些事件本身不是 stable memory。
+
+它们只是结构化证据事件，用来让学习子系统看清：
+
+- agent 提议了什么
+- 用户采纳了什么
+- runtime 实际执行了什么
+- 产出了哪些 artifact 或外部目标
+- 观察到了哪些成功信号
+
+关键边界：
+
+`所有已采纳行为都可以进入事实候选抽取，但不是所有已采纳行为都应该变成长期记忆`
+
+## 从已采纳行为到记忆候选
+
+目标管线应该是：
+
+1. 先捕获一条受治理的 accepted-action event
+2. 再抽取候选事实、规则、偏好或一次性观察
+3. 再判断置信度和生命周期类型
+4. 再写入合适的记忆层
+5. 最后由后续治理决定 promote、decay、merge 或 drop
+
+这样做能保持系统通用性。
+
+也能同时避免两个错误极端：
+
+- 除了当前任务什么都记不住
+- 只要执行成功就直接写进 durable memory
+
+建议的抽取类别：
+
+- 可复用环境事实
+- 稳定操作规则
+- 用户偏好或工作流约定
+- 近期结果工件
+- 一次性执行结果
+
+建议的准入类别：
+
+- 仅 session 召回
+- daily-memory candidate
+- governed stable-memory candidate
+- dropped / 仅审计记录
+
 ## 什么算证据
 
 反思系统对候选学习信号打分时，建议至少看这些证据：
@@ -286,6 +348,7 @@ flowchart LR
 - 是否跨多次、跨多天重复出现
 - 是否有重复表达模式
 - 用户是否接受或否定了系统之前的行为
+- 某个已采纳行为是否已经执行成功
 - 用户“怎么说”和“怎么做”是否一致
 - 是否最近仍然有效
 - 是否与已有稳定记忆冲突
@@ -294,6 +357,7 @@ flowchart LR
 
 - 重复句式 -> 候选说话习惯或偏好
 - 明确 `记住` -> 高优先级 stable memory 候选
+- 已采纳且执行成功的行为 -> 候选事实或操作规则，但仍需经过生命周期判断
 - 重复出现的反思 / 修正 -> 候选操作规则
 - 只反复表达目标、但行为不一致 -> `aspiration`，不是 stable fact
 - 表述变化但底层原则一致 -> 抽象成更高层规则候选
@@ -367,6 +431,7 @@ flowchart TB
 
 - `self-learning component` 负责 ingestion、candidate generation、promotion lifecycle、audit trail 和 exports
 - `unified-memory-core` 负责 OpenClaw 专属的 retrieval、assembly 和 adapter-side consumption
+- adapter 和任务 runtime 可以发出 accepted-action events，但不应该在适配层里硬编码长期记忆策略
 
 换句话说：
 

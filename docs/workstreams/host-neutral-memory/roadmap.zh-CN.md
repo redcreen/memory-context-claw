@@ -99,6 +99,7 @@ flowchart LR
 - 同一 workspace 可被两个 adapter 从同一 registry 读取
 - agent-specific records 仍能正确隔离
 - 不引入 adapter-local duplicate stable-memory store
+- 任一 adapter 发出的 accepted-action events，都应汇合到同一条 host-neutral intake surface
 
 ## Phase 3：Migration + Compatibility
 
@@ -143,7 +144,8 @@ flowchart LR
 2. 再决定 canonical root 的正式切换窗口
 3. 需要时把 legacy records 非破坏性迁移 / adopt 到 canonical root
 4. 持续把 registry-root findings 暴露给治理和运维面
-5. 继续推进 adapter 质量，而不是重新分叉 per-host storage
+5. 保证未来 accepted-action capture 仍然对齐 shared registry intake，而不是退回 adapter-local persistence
+6. 继续推进 adapter 质量，而不是重新分叉 per-host storage
 
 相关文档：
 

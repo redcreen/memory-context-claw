@@ -277,6 +277,68 @@ flowchart LR
     class E branch;
 ```
 
+## Accepted-Action Capture
+
+One gap is still explicit:
+
+`successful or adopted behavior can remain trapped inside task logs even when it should become a governed learning candidate`
+
+This is the class of problem behind "the agent used the right publishing target once, but did not reliably remember it later."
+
+The architecture direction should not be a product-specific hardcoded rule such as "if GitHub Pages succeeds, remember the URL."
+
+Instead, the learning subsystem should add one generic capture surface for adopted behavior:
+
+- `accepted_action`
+- `applied_decision`
+- `successful_execution`
+
+These are not stable memories by themselves.
+
+They are structured evidence events that let the learning subsystem inspect:
+
+- what the agent proposed
+- what the user accepted
+- what the runtime actually executed
+- which artifacts or external targets were produced
+- which success signals were observed
+
+Important boundary:
+
+`all adopted behavior may enter fact-candidate extraction, but not all adopted behavior should become long-term memory`
+
+## From Accepted Actions To Memory Candidates
+
+The intended pipeline is:
+
+1. capture a governed accepted-action event
+2. extract candidate facts, rules, preferences, or one-off observations
+3. score confidence and lifecycle class
+4. write the result into the appropriate layer
+5. let later governance promote, decay, merge, or drop it
+
+This keeps the system generic.
+
+It also avoids the two wrong extremes:
+
+- remembering nothing beyond the current task
+- promoting every successful action directly into durable memory
+
+Recommended extraction classes:
+
+- reusable environment fact
+- stable operating rule
+- user preference or workflow convention
+- recent outcome artifact
+- one-off execution result
+
+Recommended admission classes:
+
+- session-only recall
+- daily-memory candidate
+- governed stable-memory candidate
+- dropped / audit-only record
+
 ## What Counts As Evidence
 
 The reflection system should score candidate learning signals using evidence like:
@@ -285,6 +347,7 @@ The reflection system should score candidate learning signals using evidence lik
 - repeated statements across multiple days
 - repeated wording patterns
 - user acceptance / rejection of previous behavior
+- accepted actions with successful execution
 - consistency between what the user says and what the user actually does
 - recency and freshness
 - conflict with existing stable memory
@@ -293,6 +356,7 @@ Recommended interpretation:
 
 - repeated sentence pattern -> candidate speaking habit or preference
 - explicit remember instruction -> strong candidate stable memory
+- accepted action with successful execution -> candidate fact or operating rule, subject to lifecycle checks
 - repeated reflection / correction -> candidate operating rule
 - repeated goal without matching action -> aspiration, not stable fact
 - changing wording but consistent underlying principle -> candidate higher-level rule
@@ -366,6 +430,7 @@ The clean boundary should be:
 
 - `self-learning component` owns ingestion, candidate generation, promotion lifecycle, audit trail, and exports
 - `unified-memory-core` owns OpenClaw-specific retrieval, assembly, and adapter-side consumption
+- adapters and task runtimes may emit accepted-action events, but they should not hardcode long-term-memory policy
 
 In other words:
 

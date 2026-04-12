@@ -94,6 +94,12 @@ Recommended placement policy:
   - current execution chatter
   - volatile runtime state
 
+Accepted-action evidence should follow the same host-neutral rule:
+
+- accepted-action events are shared learning inputs, not host-owned permanent memory
+- adapters may emit them, but canonical storage belongs to the shared registry / decision-trail layer
+- adapter-local buffering is acceptable only as a transient transport step
+
 ## Runtime Resolution Model
 
 For a current OpenClaw or Codex consumer, reads should resolve in this order:
@@ -107,6 +113,7 @@ Writes should follow artifact policy:
 - stable shared knowledge -> shared workspace namespace
 - agent-specific stable learning -> agent sub namespace
 - volatile session material -> non-durable or short-lived layer
+- accepted-action events and their extracted candidates -> shared governed learning intake, then layered by policy
 
 ## Migration Strategy
 

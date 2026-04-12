@@ -61,6 +61,29 @@ The next phase is not to reopen Stage 5 contract work. That part is done. The ne
 
 The phase descriptions below are planning envelopes. Parts of Phase 0-2 are already implemented across the current shared modules.
 
+## Next Planning Slice
+
+The next self-learning enhancement should not start from "more reflection" in the abstract.
+
+The clearest product gap is:
+
+`accepted and successfully executed behavior still lacks a generic path into governed fact-candidate extraction`
+
+That gap shows up when:
+
+- a task discovers a reusable repo, endpoint, or workflow target
+- the user accepts the choice
+- runtime execution succeeds
+- but the result remains visible only in session logs instead of entering layered memory governance
+
+The recommended direction is a generic pipeline, not business-specific hardcoding:
+
+- emit accepted-action events from task/runtime surfaces
+- extract candidate facts / rules / preferences / outcome artifacts
+- classify lifecycle and confidence
+- land results in session, daily, or governed stable-candidate layers
+- keep later promotion under normal governance
+
 ## Phase Map
 
 ```mermaid
@@ -165,6 +188,7 @@ Scope:
 
 - daily input aggregation
 - event labeling
+- accepted-action event intake
 - repeated-signal detection
 - explicit remember detection
 - observation queue generation
@@ -189,6 +213,7 @@ Acceptance:
 - daily reflection can run on recent inputs
 - repeated preference candidates can be extracted
 - explicit remember instructions are detected
+- accepted successful actions can enter governed candidate extraction without direct long-term promotion
 - output is structured and reviewable
 
 ## Phase 3: Promotion + Decay
@@ -278,6 +303,7 @@ Scope:
 - rollback posture
 - repair workflow
 - export reproducibility
+- accepted-action replay / audit coverage
 
 Suggested outputs:
 
@@ -298,6 +324,7 @@ Acceptance:
 - self-learning behavior is regression-protected
 - promoted items are reviewable
 - quality can be compared over time
+- accepted-action sourced candidates are traceable from event to final layer
 
 ## Phase Dependencies
 
@@ -331,7 +358,7 @@ flowchart TB
 
 1. finish Phase 0 contracts and tests
 2. implement Phase 1 source adapters and CLI MVP
-3. implement Phase 2 reflection runner and candidate outputs
+3. implement Phase 2 reflection runner, including accepted-action event intake and candidate outputs
 4. implement Phase 3 lifecycle rules
 5. implement Phase 4 integration adapters
 6. implement Phase 5 reports and smoke coverage

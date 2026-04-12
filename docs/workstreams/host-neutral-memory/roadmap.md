@@ -100,6 +100,7 @@ Validation:
 - agent-specific records remain scoped correctly
 - no adapter-local duplicate stable-memory store is introduced
 - Codex task/write-back signals have a planned path into the same governed learning ingestion surface
+- accepted-action events emitted by either adapter converge on the same host-neutral intake surface
 
 ## Phase 3: Migration + Compatibility
 
@@ -144,7 +145,8 @@ Validation:
 2. decide the canonical-root cutover window
 3. migrate or adopt legacy records into the canonical root when needed
 4. keep registry-root findings visible in governance and operator workflows
-5. continue adapter quality work without reopening per-host storage drift
+5. keep future accepted-action capture work aligned to the shared registry intake instead of adapter-local persistence
+6. continue adapter quality work without reopening per-host storage drift
 
 Related:
 

@@ -61,6 +61,29 @@
 
 下面的 phase 描述是规划外壳。Phase 0-2 的一部分，已经通过当前共享模块实现。
 
+## 下一段规划切片
+
+下一条 self-learning 增强主线，不该再抽象地写成“继续做更多 reflection”。
+
+现在最清晰的产品缺口是：
+
+`已采纳并执行成功的行为，还没有一条通用入口进入受治理的事实候选抽取链路`
+
+这个缺口会表现为：
+
+- 某次任务发现了一个可复用的 repo、endpoint 或 workflow target
+- 用户接受了这个选择
+- runtime 执行也成功了
+- 但结果只存在于 session logs，没有进入分层记忆治理
+
+推荐方向是通用管线，而不是业务硬编码：
+
+- 从 task/runtime 面发出 accepted-action events
+- 抽取候选 facts / rules / preferences / outcome artifacts
+- 判断生命周期和置信度
+- 分别落到 session、daily 或 governed stable-candidate 层
+- 后续 promote 仍然走常规治理
+
 ## 阶段图
 
 ```mermaid
@@ -165,6 +188,7 @@ flowchart LR
 
 - 每日输入聚合
 - 事件标注
+- accepted-action event intake
 - 重复信号检测
 - 明确 `记住` 检测
 - observation queue 生成
@@ -189,6 +213,7 @@ flowchart LR
 - 能对最近输入跑 daily reflection
 - 能提炼重复偏好候选
 - 能识别明确 `记住`
+- 已采纳且成功执行的行为，能进入受治理的候选抽取，而不是直接晋升长期记忆
 - 输出结构化且可评审
 
 ## Phase 3：升级 + 衰减
@@ -278,6 +303,7 @@ flowchart LR
 - rollback posture
 - repair workflow
 - export reproducibility
+- accepted-action replay / audit coverage
 
 建议产出：
 
@@ -298,6 +324,7 @@ flowchart LR
 - self-learning 行为有回归保护
 - 已升级条目可评审
 - 质量可跨时间对比
+- 能从 accepted-action event 一路追踪到最终落层结果
 
 ## 阶段依赖图
 
@@ -331,7 +358,7 @@ flowchart TB
 
 1. 先完成 Phase 0 的 contract 和测试
 2. 再实现 Phase 1 的 source adapters 和 CLI MVP
-3. 再实现 Phase 2 的 reflection runner 和 candidate 输出
+3. 再实现 Phase 2 的 reflection runner，其中包括 accepted-action event intake 和 candidate 输出
 4. 再补 Phase 3 的生命周期规则
 5. 再接入 Phase 4 的 integration adapters
 6. 最后补 Phase 5 的报告和 smoke 覆盖

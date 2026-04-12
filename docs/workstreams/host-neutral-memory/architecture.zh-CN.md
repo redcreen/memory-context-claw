@@ -94,6 +94,12 @@ namespace 是逻辑隔离层，不是物理存储要求。
   - 当前执行 chatter
   - 易失 runtime state
 
+accepted-action 证据也应遵守同一条 host-neutral 规则：
+
+- accepted-action events 属于共享学习输入，不属于某个宿主私有的永久记忆
+- adapter 可以发出事件，但 canonical storage 应落在共享 registry / decision-trail 层
+- adapter-local buffering 只能作为短暂的传输步骤存在
+
 ## Runtime 解析模型
 
 对于当前 OpenClaw 或 Codex consumer，读取顺序应是：
@@ -107,6 +113,7 @@ namespace 是逻辑隔离层，不是物理存储要求。
 - stable shared knowledge -> shared workspace namespace
 - agent-specific stable learning -> agent sub namespace
 - volatile session material -> 非长期或短期层
+- accepted-action events 及其抽取出的 candidates -> 先进入共享的 governed learning intake，再按策略分层
 
 ## 迁移策略
 
