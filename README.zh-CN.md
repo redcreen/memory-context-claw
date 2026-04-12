@@ -85,6 +85,36 @@ openclaw plugins list
 
 你应该能在已加载插件列表里看到 `unified-memory-core`。
 
+### 安装后的 `umc` 命令行
+
+对正常安装用户，`umc` 的默认可执行文件就在宿主插件目录里：
+
+```bash
+$HOME/.openclaw/extensions/unified-memory-core/umc
+```
+
+最方便的用法，是把宿主插件目录加到 `PATH`：
+
+```bash
+export PATH="$HOME/.openclaw/extensions/unified-memory-core:$PATH"
+```
+
+加完后你就可以直接用：
+
+```bash
+umc where
+umc --help
+umc source add --source-type manual --content "Remember this: prefer concise summaries."
+umc help source add
+```
+
+如果你不想改 `PATH`，也可以直接跑完整路径：
+
+```bash
+"$HOME/.openclaw/extensions/unified-memory-core/umc" where
+"$HOME/.openclaw/extensions/unified-memory-core/umc" --help
+```
+
 ### 理解这套系统的最短路径
 
 - `workspace/MEMORY.md` 保存稳定长期规则和事实
@@ -172,7 +202,18 @@ workspace/
 5. 只有横切工作流需要时再看 `.codex/subprojects/*.md`
 6. 先把控制面读清，再去看更深的 roadmap 和 reports
 
-### 常用命令
+### 普通安装用户常用命令
+
+```bash
+umc where
+umc --help
+umc source --help
+umc source add --source-type manual --content "Remember this: prefer concise summaries."
+umc learn lifecycle-run --source-type manual --content "Remember this: prefer concise progress reports." --format markdown
+umc export inspect --consumer openclaw --format markdown
+```
+
+### 仓库维护命令
 
 ```bash
 npm test

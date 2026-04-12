@@ -3,6 +3,13 @@ import path from "node:path";
 
 import { createStandaloneRuntime } from "./standalone-runtime.js";
 import {
+  classifyCliInvocation,
+  renderCommandHelp,
+  renderGroupHelp,
+  renderRootHelp,
+  renderUtilityHelp
+} from "./cli-help.js";
+import {
   renderDailyReflectionReport,
   renderExportReport,
   renderGovernanceAuditReport,
@@ -27,6 +34,10 @@ function parseArgs(argv) {
 
   for (let index = 0; index < argv.length; index += 1) {
     const token = argv[index];
+    if (token === "--help" || token === "-h") {
+      flags.help = true;
+      continue;
+    }
     if (!token.startsWith("--")) {
       positionals.push(token);
       continue;
@@ -47,6 +58,22 @@ function parseArgs(argv) {
     positionals,
     flags
   };
+}
+
+function buildWherePayload() {
+  const backendPath = normalizeString(process.env.UMC_BACKEND_PATH, path.resolve(process.argv[1]));
+  return {
+    umc: normalizeString(process.env.UMC_WRAPPER_PATH, path.resolve(process.argv[1])),
+    backend: backendPath,
+    mode: normalizeString(process.env.UMC_BACKEND_MODE, "portable")
+  };
+}
+
+function buildUsageError(message, helpText) {
+  const error = new TypeError(message);
+  error.code = "UMC_CLI_USAGE";
+  error.helpText = helpText;
+  return error;
 }
 
 function normalizeString(value, fallback = "") {
@@ -147,47 +174,79 @@ async function buildDeclaredSources(flags) {
   return [buildDeclaredSource(flags)];
 }
 
-function buildUsage() {
-  return {
-    usage: [
-      "source add --source-type manual --content 'text'",
-      "registry inspect [--format markdown]",
-      "registry migrate [--source-dir <dir>] [--target-dir <dir>] [--apply] [--format markdown]",
-      "learn daily-run --source-type manual --content 'text' [--sources-file <json>] [--dry-run] [--promote]",
-      "learn lifecycle-run --source-type manual --content 'text' [--sources-file <json>] [--dry-run] [--format markdown]",
-      "learn policy-loop --source-type manual --content 'text' [--sources-file <json>] [--query <text>] [--task-prompt <text>] [--format markdown]",
-      "maintenance run --sources-file <json> [--format markdown]",
-      "export reproducibility [--consumers generic,openclaw,codex] [--runs 2] [--format markdown]",
-      "verify stage3-stage4 --source-type manual --content 'text' [--sources-file <json>] [--query <text>] [--task-prompt <text>] [--format markdown]",
-      "verify stage5 --sources-file <json> [--format markdown]",
-      "reflect run --source-type manual --content 'text' [--dry-run] [--promote]",
-      "export build --consumer generic",
-      "export inspect --consumer generic [--format markdown]",
-      "govern audit [--format markdown]",
-      "govern audit-learning [--format markdown]",
-      "govern audit-policy [--format markdown]",
-      "govern compare-learning [--current-window-days 7] [--previous-window-days 7] [--format markdown]",
-      "govern repair --finding-code candidate_missing_decision_trail --action mark_for_review [--format markdown]",
-      "govern repair-learning --finding-code learning_candidate_ready_for_decay [--format markdown]",
-      "govern replay [--result queued] [--format markdown]",
-      "govern replay-learning [--result queued] [--format markdown]",
-      "review independent-execution [--format markdown]",
-      "review split-rehearsal [--source-dir <dir>] [--target-dir <dir>] [--format markdown]",
-      "where"
-    ]
-  };
-}
-
 export async function runPortableCli(argv = process.argv.slice(2)) {
   const { positionals, flags } = parseArgs(argv);
-  const [family = "help", action = ""] = positionals;
+  const programName = normalizeString(process.env.UMC_PROGRAM_NAME, "umc");
+  const invocation = classifyCliInvocation(positionals, { mode: "portable" });
+  const explicitHelpCommand = positionals[0] === "help";
 
-  if (family === "where") {
-    return {
-      cli: "portable",
-      mode: "portable"
-    };
+  if (flags.help || explicitHelpCommand) {
+    if (invocation.type === "command") {
+      return renderCommandHelp(invocation.group.name, invocation.command.name, {
+        programName,
+        mode: "portable"
+      });
+    }
+    if (invocation.type === "group") {
+      return renderGroupHelp(invocation.group.name, {
+        programName,
+        mode: "portable"
+      });
+    }
+    if (invocation.type === "utility") {
+      return renderUtilityHelp(invocation.utility.name, { programName });
+    }
+    if (invocation.type === "unknown-subcommand") {
+      throw buildUsageError(
+        `Unknown subcommand: ${positionals[0]} ${invocation.name}`,
+        renderGroupHelp(invocation.group.name, {
+          programName,
+          mode: "portable"
+        })
+      );
+    }
+    if (invocation.type === "unknown-group") {
+      throw buildUsageError(
+        `Unknown command: ${invocation.name}`,
+        renderRootHelp({ programName, mode: "portable" })
+      );
+    }
+    return renderRootHelp({ programName, mode: "portable" });
   }
+
+  if (invocation.type === "root") {
+    return renderRootHelp({ programName, mode: "portable" });
+  }
+  if (invocation.type === "group") {
+    return renderGroupHelp(invocation.group.name, {
+      programName,
+      mode: "portable"
+    });
+  }
+  if (invocation.type === "utility") {
+    if (invocation.utility.name === "where") {
+      return buildWherePayload();
+    }
+    return renderUtilityHelp(invocation.utility.name, { programName });
+  }
+  if (invocation.type === "unknown-subcommand") {
+    throw buildUsageError(
+      `Unknown subcommand: ${positionals[0]} ${invocation.name}`,
+      renderGroupHelp(invocation.group.name, {
+        programName,
+        mode: "portable"
+      })
+    );
+  }
+  if (invocation.type === "unknown-group") {
+    throw buildUsageError(
+      `Unknown command: ${invocation.name}`,
+      renderRootHelp({ programName, mode: "portable" })
+    );
+  }
+
+  const family = invocation.group.name;
+  const action = invocation.command.name;
 
   const runtime = createStandaloneRuntime({
     config: {
@@ -461,17 +520,29 @@ export async function runPortableCli(argv = process.argv.slice(2)) {
       ? renderStage5AcceptanceReport(report)
       : report;
   } else {
-    result = buildUsage();
+    return renderRootHelp({ programName, mode: "portable" });
   }
 
   return result;
 }
 
 export async function runPortableCliAsMain(argv = process.argv.slice(2)) {
-  const result = await runPortableCli(argv);
-  if (typeof result === "string") {
-    console.log(result);
-    return;
+  try {
+    const result = await runPortableCli(argv);
+    if (typeof result === "string") {
+      console.log(result);
+      return;
+    }
+    console.log(JSON.stringify(result, null, 2));
+  } catch (error) {
+    if (error && error.code === "UMC_CLI_USAGE") {
+      console.error(error.message);
+      if (error.helpText) {
+        console.log(error.helpText);
+      }
+      process.exitCode = 1;
+      return;
+    }
+    throw error;
   }
-  console.log(JSON.stringify(result, null, 2));
 }

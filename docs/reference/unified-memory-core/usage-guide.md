@@ -137,7 +137,44 @@ npm run deploy:local
 
 ## Command-Line Entrypoint
 
-The simplest stable command shape is now:
+For a normal installed user, the default entrypoint should be the host-installed `umc`, not the repo checkout copy.
+
+The default host path is:
+
+```bash
+$HOME/.openclaw/extensions/unified-memory-core/umc
+```
+
+The recommended setup is to add the host plugin directory to `PATH`:
+
+```bash
+export PATH="$HOME/.openclaw/extensions/unified-memory-core:$PATH"
+```
+
+If you use `zsh`, make it persistent through `~/.zshrc`:
+
+```bash
+echo 'export PATH="$HOME/.openclaw/extensions/unified-memory-core:$PATH"' >> ~/.zshrc
+source ~/.zshrc
+```
+
+After that, you can run:
+
+```bash
+umc where
+umc --help
+umc source add --source-type manual --content "Remember this: prefer concise summaries."
+umc help source add
+```
+
+If you do not want to change `PATH`, call the full host path directly:
+
+```bash
+"$HOME/.openclaw/extensions/unified-memory-core/umc" where
+"$HOME/.openclaw/extensions/unified-memory-core/umc" --help
+```
+
+The simplest stable command shape for a repo checkout or development workflow is:
 
 ```bash
 ./umc source add --source-type manual --content "Remember this: prefer concise summaries."
@@ -150,6 +187,42 @@ If you want to print the command location first:
 ```
 
 The wrapper prints the resolved backend path before running unless you pass `--no-cli-path`.
+
+`umc --help` is now organized in grouped, subcommand-oriented help similar to OpenClaw. The most useful discovery path is:
+
+```bash
+./umc --help
+./umc help source
+./umc help source add
+./umc help verify
+```
+
+You can also ask for help directly on a group or subcommand:
+
+```bash
+./umc source --help
+./umc source add --help
+./umc learn --help
+./umc verify --help
+```
+
+If your host install directory is already on `PATH`, the same commands can be written directly as:
+
+```bash
+umc --help
+umc help source add
+```
+
+For a normal installed user, these are the best commands to start with:
+
+```bash
+umc where
+umc --help
+umc source --help
+umc source add --source-type manual --content "Remember this: prefer concise summaries."
+umc learn lifecycle-run --source-type manual --content "Remember this: prefer concise progress reports." --format markdown
+umc export inspect --consumer openclaw --format markdown
+```
 
 ## Minimal Host Configuration
 

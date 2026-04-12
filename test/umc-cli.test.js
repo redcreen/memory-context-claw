@@ -28,6 +28,44 @@ test("umc where prints wrapper and backend paths", () => {
   assert.match(payload.mode, /full|portable/);
 });
 
+test("umc -h renders grouped top-level help", () => {
+  const result = runUmc(["--no-cli-path", "-h"]);
+  assert.equal(result.status, 0, result.stderr);
+  assert.match(result.stdout, /Usage: umc \[options\] \[command\]/);
+  assert.match(result.stdout, /Commands:/);
+  assert.match(result.stdout, /source \*/);
+  assert.match(result.stdout, /Examples:/);
+});
+
+test("umc source without a subcommand renders grouped help", () => {
+  const result = runUmc(["--no-cli-path", "source"]);
+  assert.equal(result.status, 0, result.stderr);
+  assert.match(result.stdout, /Usage: umc source \[options\] \[command\]/);
+  assert.match(result.stdout, /Persist one declared source artifact/);
+});
+
+test("umc help source add renders command-specific help", () => {
+  const result = runUmc(["--no-cli-path", "help", "source", "add"]);
+  assert.equal(result.status, 0, result.stderr);
+  assert.match(result.stdout, /Usage: umc source add \[options\]/);
+  assert.match(result.stdout, /Persist one declared source artifact/);
+  assert.match(result.stdout, /Examples:/);
+});
+
+test("portable top-level help hides full-only commands", () => {
+  const result = runUmc(["--no-cli-path", "--help"], {
+    env: {
+      ...process.env,
+      UMC_CLI_FORCE_PORTABLE: "1"
+    }
+  });
+
+  assert.equal(result.status, 0, result.stderr);
+  assert.doesNotMatch(result.stdout, /release \*/);
+  assert.doesNotMatch(result.stdout, /verify release-preflight/);
+  assert.match(result.stdout, /verify \*/);
+});
+
 test("umc source add delegates to the full cli backend", async () => {
   const registryDir = await fs.mkdtemp(path.join(os.tmpdir(), "umc-full-cli-"));
   const result = runUmc([

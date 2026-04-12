@@ -48,15 +48,10 @@ async function main() {
   const fullCliExists = fs.existsSync(fullCliPath);
   const backendPath = !forcePortable && fullCliExists ? fullCliPath : portableCliPath;
   const backendMode = !forcePortable && fullCliExists ? "full" : "portable";
-
-  if (forwardedArgs.length > 0 && forwardedArgs[0] === "where") {
-    console.log(JSON.stringify({
-      umc: wrapperPath,
-      backend: backendPath,
-      mode: backendMode
-    }, null, 2));
-    return;
-  }
+  process.env.UMC_PROGRAM_NAME = path.basename(wrapperPath);
+  process.env.UMC_WRAPPER_PATH = wrapperPath;
+  process.env.UMC_BACKEND_PATH = backendPath;
+  process.env.UMC_BACKEND_MODE = backendMode;
 
   if (printCliPath) {
     console.error(`[umc] command: ${wrapperPath}`);

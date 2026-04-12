@@ -136,7 +136,44 @@ npm run deploy:local
 
 ## 命令行入口
 
-现在最简单、最稳定的命令形态是：
+对正常安装用户，默认应该先用宿主安装副本里的 `umc`，而不是 repo checkout 里的 `./umc`。
+
+默认宿主路径是：
+
+```bash
+$HOME/.openclaw/extensions/unified-memory-core/umc
+```
+
+最推荐的配置，是把宿主插件目录加进 `PATH`：
+
+```bash
+export PATH="$HOME/.openclaw/extensions/unified-memory-core:$PATH"
+```
+
+如果你用 `zsh`，长期生效可以写进 `~/.zshrc`：
+
+```bash
+echo 'export PATH="$HOME/.openclaw/extensions/unified-memory-core:$PATH"' >> ~/.zshrc
+source ~/.zshrc
+```
+
+这样以后你就可以直接运行：
+
+```bash
+umc where
+umc --help
+umc source add --source-type manual --content "Remember this: prefer concise summaries."
+umc help source add
+```
+
+如果你不想改 `PATH`，那就直接跑宿主里的完整路径：
+
+```bash
+"$HOME/.openclaw/extensions/unified-memory-core/umc" where
+"$HOME/.openclaw/extensions/unified-memory-core/umc" --help
+```
+
+仓库 checkout / 开发场景下，最简单、最稳定的命令形态才是：
 
 ```bash
 ./umc source add --source-type manual --content "Remember this: prefer concise summaries."
@@ -149,6 +186,42 @@ npm run deploy:local
 ```
 
 这个 wrapper 默认会在运行前打印解析出来的后端 CLI 路径；如果你不想看，可以加 `--no-cli-path`。
+
+现在 `umc --help` 已经按 OpenClaw 类似的方式做了分组和子命令入口。最实用的发现路径是：
+
+```bash
+./umc --help
+./umc help source
+./umc help source add
+./umc help verify
+```
+
+也可以直接在分组命令上看帮助：
+
+```bash
+./umc source --help
+./umc source add --help
+./umc learn --help
+./umc verify --help
+```
+
+如果你已经把宿主安装目录加进了 `PATH`，同样的帮助命令可以直接写成：
+
+```bash
+umc --help
+umc help source add
+```
+
+对正常安装用户，建议优先从下面这几条开始：
+
+```bash
+umc where
+umc --help
+umc source --help
+umc source add --source-type manual --content "Remember this: prefer concise summaries."
+umc learn lifecycle-run --source-type manual --content "Remember this: prefer concise progress reports." --format markdown
+umc export inspect --consumer openclaw --format markdown
+```
 
 ## 最简宿主配置
 

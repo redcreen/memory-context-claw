@@ -85,6 +85,36 @@ openclaw plugins list
 
 You should see `unified-memory-core` in the loaded plugin list.
 
+### `umc` After Install
+
+For a normal installed user, the default `umc` executable lives inside the host plugin directory:
+
+```bash
+$HOME/.openclaw/extensions/unified-memory-core/umc
+```
+
+The simplest setup is to add that directory to `PATH`:
+
+```bash
+export PATH="$HOME/.openclaw/extensions/unified-memory-core:$PATH"
+```
+
+After that, you can use:
+
+```bash
+umc where
+umc --help
+umc source add --source-type manual --content "Remember this: prefer concise summaries."
+umc help source add
+```
+
+If you do not want to change `PATH`, call the full path directly:
+
+```bash
+"$HOME/.openclaw/extensions/unified-memory-core/umc" where
+"$HOME/.openclaw/extensions/unified-memory-core/umc" --help
+```
+
 ### Mental Model
 
 - `workspace/MEMORY.md` stores stable long-term rules and facts.
@@ -172,7 +202,18 @@ If you want the strongest signal about where this project is going, read the sel
 5. `.codex/subprojects/*.md` only when a cross-cutting workstream matters
 6. deeper roadmap and reports only after the control surface is clear
 
-### Useful Commands
+### Useful Commands For Installed Users
+
+```bash
+umc where
+umc --help
+umc source --help
+umc source add --source-type manual --content "Remember this: prefer concise summaries."
+umc learn lifecycle-run --source-type manual --content "Remember this: prefer concise progress reports." --format markdown
+umc export inspect --consumer openclaw --format markdown
+```
+
+### Repo Maintainer Commands
 
 ```bash
 npm test

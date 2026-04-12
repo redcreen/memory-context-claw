@@ -17,6 +17,13 @@ import {
   renderReleasePreflightReport
 } from "./run-release-preflight.js";
 import {
+  classifyCliInvocation,
+  renderCommandHelp,
+  renderGroupHelp,
+  renderRootHelp,
+  renderUtilityHelp
+} from "../src/unified-memory-core/cli-help.js";
+import {
   renderDailyReflectionReport,
   renderExportReport,
   renderGovernanceAuditReport,
@@ -41,6 +48,10 @@ function parseArgs(argv) {
 
   for (let index = 0; index < argv.length; index += 1) {
     const token = argv[index];
+    if (token === "--help" || token === "-h") {
+      flags.help = true;
+      continue;
+    }
     if (!token.startsWith("--")) {
       positionals.push(token);
       continue;
@@ -60,6 +71,15 @@ function parseArgs(argv) {
   return {
     positionals,
     flags
+  };
+}
+
+function buildWherePayload() {
+  const backendPath = normalizeString(process.env.UMC_BACKEND_PATH, path.resolve(process.argv[1]));
+  return {
+    umc: normalizeString(process.env.UMC_WRAPPER_PATH, path.resolve(process.argv[1])),
+    backend: backendPath,
+    mode: normalizeString(process.env.UMC_BACKEND_MODE, "full")
   };
 }
 
@@ -163,7 +183,85 @@ async function buildDeclaredSources(flags) {
 
 async function run() {
   const { positionals, flags } = parseArgs(process.argv.slice(2));
-  const [family = "help", action = ""] = positionals;
+  const programName = normalizeString(process.env.UMC_PROGRAM_NAME, "umc");
+  const invocation = classifyCliInvocation(positionals, { mode: "full" });
+  const explicitHelpCommand = positionals[0] === "help";
+
+  if (flags.help || explicitHelpCommand) {
+    if (invocation.type === "command") {
+      console.log(renderCommandHelp(invocation.group.name, invocation.command.name, {
+        programName,
+        mode: "full"
+      }));
+      return;
+    }
+    if (invocation.type === "group") {
+      console.log(renderGroupHelp(invocation.group.name, {
+        programName,
+        mode: "full"
+      }));
+      return;
+    }
+    if (invocation.type === "utility") {
+      console.log(renderUtilityHelp(invocation.utility.name, { programName }));
+      return;
+    }
+    if (invocation.type === "unknown-subcommand") {
+      console.error(`Unknown subcommand: ${positionals[0]} ${invocation.name}`);
+      console.log(renderGroupHelp(invocation.group.name, {
+        programName,
+        mode: "full"
+      }));
+      process.exitCode = 1;
+      return;
+    }
+    if (invocation.type === "unknown-group") {
+      console.error(`Unknown command: ${invocation.name}`);
+      console.log(renderRootHelp({ programName, mode: "full" }));
+      process.exitCode = 1;
+      return;
+    }
+    console.log(renderRootHelp({ programName, mode: "full" }));
+    return;
+  }
+
+  if (invocation.type === "root") {
+    console.log(renderRootHelp({ programName, mode: "full" }));
+    return;
+  }
+  if (invocation.type === "group") {
+    console.log(renderGroupHelp(invocation.group.name, {
+      programName,
+      mode: "full"
+    }));
+    return;
+  }
+  if (invocation.type === "utility") {
+    if (invocation.utility.name === "where") {
+      console.log(JSON.stringify(buildWherePayload(), null, 2));
+      return;
+    }
+    console.log(renderUtilityHelp(invocation.utility.name, { programName }));
+    return;
+  }
+  if (invocation.type === "unknown-group") {
+    console.error(`Unknown command: ${invocation.name}`);
+    console.log(renderRootHelp({ programName, mode: "full" }));
+    process.exitCode = 1;
+    return;
+  }
+  if (invocation.type === "unknown-subcommand") {
+    console.error(`Unknown subcommand: ${positionals[0]} ${invocation.name}`);
+    console.log(renderGroupHelp(invocation.group.name, {
+      programName,
+      mode: "full"
+    }));
+    process.exitCode = 1;
+    return;
+  }
+
+  const family = invocation.group.name;
+  const action = invocation.command.name;
   const runtime = createStandaloneRuntime({
     config: {
       registryDir: normalizeString(flags["registry-dir"], ""),
@@ -472,36 +570,8 @@ async function run() {
       ? renderReleasePreflightReport(report)
       : report;
   } else {
-    result = {
-      usage: [
-        "source add --source-type manual --content 'text'",
-        "registry inspect [--format markdown]",
-        "registry migrate [--source-dir <dir>] [--target-dir <dir>] [--apply] [--format markdown]",
-        "learn daily-run --source-type manual --content 'text' [--sources-file <json>] [--dry-run] [--promote]",
-        "learn lifecycle-run --source-type manual --content 'text' [--sources-file <json>] [--dry-run] [--format markdown]",
-        "learn policy-loop --source-type manual --content 'text' [--sources-file <json>] [--query <text>] [--task-prompt <text>] [--format markdown]",
-        "maintenance run --sources-file <json> [--format markdown]",
-        "export reproducibility [--consumers generic,openclaw,codex] [--runs 2] [--format markdown]",
-        "verify stage3-stage4 --source-type manual --content 'text' [--sources-file <json>] [--query <text>] [--task-prompt <text>] [--format markdown]",
-        "verify stage5 --sources-file <json> [--format markdown]",
-        "verify openclaw-install [--archive <bundle.tgz>] [--format markdown]",
-        "verify release-preflight [--format markdown]",
-        "reflect run --source-type manual --content 'text' [--dry-run] [--promote]",
-        "export build --consumer generic",
-        "export inspect --consumer generic [--format markdown]",
-        "govern audit [--format markdown]",
-        "govern audit-learning [--format markdown]",
-        "govern audit-policy [--format markdown]",
-        "govern compare-learning [--current-window-days 7] [--previous-window-days 7] [--format markdown]",
-        "govern repair --finding-code candidate_missing_decision_trail --action mark_for_review [--format markdown]",
-        "govern repair-learning --finding-code learning_candidate_ready_for_decay [--format markdown]",
-        "govern replay [--result queued] [--format markdown]",
-        "govern replay-learning [--result queued] [--format markdown]",
-        "release build-bundle [--output-dir <dir>] [--format markdown]",
-        "review independent-execution [--format markdown]",
-        "review split-rehearsal [--source-dir <dir>] [--target-dir <dir>] [--format markdown]"
-      ]
-    };
+    console.log(renderRootHelp({ programName, mode: "full" }));
+    return;
   }
 
   if (typeof result === "string") {
