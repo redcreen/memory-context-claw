@@ -401,8 +401,23 @@ export function enforcePathDiversity(candidates, maxSelectedChunks, maxChunksPer
   return selected;
 }
 
+function isDedicatedFamilyOverviewCandidate(candidate) {
+  if (candidate?.pathKind !== "cardArtifact") {
+    return false;
+  }
+  const snippet = String(candidate?.snippet || "");
+  return (
+    (/一儿一女|孩子情况/.test(snippet) && /女儿叫/.test(snippet) && /儿子叫/.test(snippet))
+    || (/你有一儿一女/.test(snippet) && /女儿叫/.test(snippet) && /儿子叫/.test(snippet))
+  );
+}
+
 function resolveEffectiveMaxChunksPerPath(query, candidates, maxChunksPerPath) {
   if (classifyMixedFactIntent(query) !== "children") {
+    return maxChunksPerPath;
+  }
+
+  if ((Array.isArray(candidates) ? candidates : []).some(isDedicatedFamilyOverviewCandidate)) {
     return maxChunksPerPath;
   }
 
@@ -436,7 +451,7 @@ export function buildSystemPromptAddition({ query, selectedCandidates }) {
   const hasStableFactOverride =
     selectedCandidates.some((candidate) => candidate?.pathKind === "cardArtifact")
     && selectedCandidates.some((candidate) =>
-      /你爱吃|你叫|你的生日是|你女儿叫|你儿子叫|你的实际出生年份是|memorySearch\.provider 决定/.test(
+      /你爱吃|你叫|你的生日是|你女儿叫|你儿子叫|你有一儿一女|孩子情况是|你的实际出生年份是|memorySearch\.provider 决定/.test(
         String(candidate?.snippet || "")
       )
     );

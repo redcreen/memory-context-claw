@@ -57,6 +57,37 @@ export function compareGovernanceCoverage(governanceResults = [], governanceCase
   };
 }
 
+function classifyPromotionBucket({ alreadyInSmoke, eligible, naturalQueryLikely, recommendedForSmoke }) {
+  if (alreadyInSmoke) {
+    return {
+      promotionBucket: "already-in-smoke",
+      reason: "already-in-smoke"
+    };
+  }
+  if (recommendedForSmoke) {
+    return {
+      promotionBucket: "recommended-natural",
+      reason: "stable-single-card"
+    };
+  }
+  if (eligible) {
+    return {
+      promotionBucket: "synthetic-review",
+      reason: "synthetic-query-review"
+    };
+  }
+  if (naturalQueryLikely) {
+    return {
+      promotionBucket: "natural-pending",
+      reason: "natural-query-not-stable-enough"
+    };
+  }
+  return {
+    promotionBucket: "synthetic-pending",
+    reason: "synthetic-query-not-promotable"
+  };
+}
+
 export function buildSmokePromotionSuggestions(memorySearchResults = [], smokeCases = []) {
   const existingSmokeQueries = new Set(
     (Array.isArray(smokeCases) ? smokeCases : []).map((item) => normalizeQuery(item?.query))
@@ -72,6 +103,12 @@ export function buildSmokePromotionSuggestions(memorySearchResults = [], smokeCa
     const eligible = isSmokePromotionEligible(item);
     const naturalQueryLikely = looksLikeNaturalSmokeQuery(query);
     const recommendedForSmoke = eligible && !alreadyInSmoke && naturalQueryLikely;
+    const { promotionBucket, reason } = classifyPromotionBucket({
+      alreadyInSmoke,
+      eligible,
+      naturalQueryLikely,
+      recommendedForSmoke
+    });
 
     suggestions.push({
       id: item?.id || "",
@@ -80,23 +117,25 @@ export function buildSmokePromotionSuggestions(memorySearchResults = [], smokeCa
       eligible,
       naturalQueryLikely,
       recommendedForSmoke,
-      reason: alreadyInSmoke
-        ? "already-in-smoke"
-        : recommendedForSmoke
-          ? "stable-single-card"
-          : eligible
-            ? "synthetic-query-review"
-          : "not-stable-enough"
+      promotionBucket,
+      reason
     });
   }
+
+  const syntheticReviewRequired = suggestions.filter((item) => item.promotionBucket === "synthetic-review").length;
+  const naturalPending = suggestions.filter((item) => item.promotionBucket === "natural-pending").length;
+  const syntheticPending = suggestions.filter((item) => item.promotionBucket === "synthetic-pending").length;
 
   return {
     total: suggestions.length,
     alreadyInSmoke: suggestions.filter((item) => item.alreadyInSmoke).length,
     eligibleNewSuggestions: suggestions.filter((item) => item.eligible && !item.alreadyInSmoke).length,
     recommendedForSmoke: suggestions.filter((item) => item.recommendedForSmoke).length,
-    pending: suggestions.filter((item) => !item.eligible && !item.alreadyInSmoke).length,
-    reviewRequired: suggestions.filter((item) => item.eligible && !item.alreadyInSmoke && !item.recommendedForSmoke).length,
+    pending: naturalPending + syntheticPending,
+    reviewRequired: syntheticReviewRequired,
+    syntheticReviewRequired,
+    naturalPending,
+    syntheticPending,
     suggestions
   };
 }

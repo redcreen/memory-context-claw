@@ -76,8 +76,21 @@ test("buildSmokePromotionSuggestions separates existing smoke cases and new elig
         }
       },
       {
-        id: "future-case",
-        query: "未来某个候选问题",
+        id: "future-natural-case",
+        query: "这个项目应该看哪个文档",
+        plugin: {
+          expectedSignalsHit: true,
+          expectedSourceHit: false,
+          fastPathLikely: true,
+          selectionQuality: {
+            singleCard: true,
+            noisySupporting: false
+          }
+        }
+      },
+      {
+        id: "future-synthetic-case",
+        query: "候选 smoke query",
         plugin: {
           expectedSignalsHit: true,
           expectedSourceHit: false,
@@ -97,19 +110,33 @@ test("buildSmokePromotionSuggestions separates existing smoke cases and new elig
     ]
   );
 
-  assert.equal(result.total, 3);
+  assert.equal(result.total, 4);
   assert.equal(result.alreadyInSmoke, 1);
   assert.equal(result.eligibleNewSuggestions, 1);
   assert.equal(result.recommendedForSmoke, 0);
   assert.equal(result.reviewRequired, 1);
-  assert.equal(result.pending, 1);
+  assert.equal(result.syntheticReviewRequired, 1);
+  assert.equal(result.naturalPending, 1);
+  assert.equal(result.syntheticPending, 1);
+  assert.equal(result.pending, 2);
 
   const shortChinese = result.suggestions.find((item) => item.id === "short-chinese-token");
   assert.equal(shortChinese?.eligible, true);
   assert.equal(shortChinese?.alreadyInSmoke, false);
   assert.equal(shortChinese?.naturalQueryLikely, false);
   assert.equal(shortChinese?.recommendedForSmoke, false);
+  assert.equal(shortChinese?.promotionBucket, "synthetic-review");
   assert.equal(shortChinese?.reason, "synthetic-query-review");
+
+  const futureNatural = result.suggestions.find((item) => item.id === "future-natural-case");
+  assert.equal(futureNatural?.naturalQueryLikely, true);
+  assert.equal(futureNatural?.promotionBucket, "natural-pending");
+  assert.equal(futureNatural?.reason, "natural-query-not-stable-enough");
+
+  const futureSynthetic = result.suggestions.find((item) => item.id === "future-synthetic-case");
+  assert.equal(futureSynthetic?.naturalQueryLikely, false);
+  assert.equal(futureSynthetic?.promotionBucket, "synthetic-pending");
+  assert.equal(futureSynthetic?.reason, "synthetic-query-not-promotable");
 });
 
 test("compareGovernanceCoverage reports stale governance results when case catalog changed", () => {

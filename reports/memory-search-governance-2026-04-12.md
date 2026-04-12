@@ -1,39 +1,21 @@
 # Memory Search Governance Report
-- 生成时间：2026-04-12T05:08:51.543Z
+- 生成时间：2026-04-12T06:19:27.784Z
+- note: plugin refresh run used `--timeout-ms 1000`; builtin metrics are not the primary checkpoint signal for this slice
 
 ## Summary
 - cases: `30`
-- builtinUnavailable: `6`
-- builtinSignalHits: `13`
-- builtinSourceHits: `3`
+- builtinUnavailable: `30`
+- builtinSignalHits: `0`
+- builtinSourceHits: `0`
 - pluginSignalHits: `30`
 - pluginSourceHits: `30`
 - pluginFastPathLikely: `30`
-- pluginSingleCard: `29`
-- pluginMultiCard: `1`
+- pluginSingleCard: `30`
+- pluginMultiCard: `0`
 - pluginNoisySupporting: `0`
 - pluginUnexpectedSupportingTotal: `0`
-- builtinFailures: `22`
+- builtinFailures: `0`
 - pluginFailures: `0`
-
-## Delta vs Previous
-- builtinUnavailableDelta: `-21`
-- builtinSignalHitsDelta: `13`
-- builtinSourceHitsDelta: `3`
-- pluginSignalHitsDelta: `3`
-- pluginSourceHitsDelta: `3`
-- pluginFastPathLikelyDelta: `3`
-- pluginSingleCardDelta: `2`
-- pluginMultiCardDelta: `1`
-- pluginNoisySupportingDelta: `0`
-- pluginUnexpectedSupportingTotalDelta: `0`
-- builtinFailuresDelta: `22`
-- pluginFailuresDelta: `0`
-
-## Watchlist Changes
-- added: none
-- resolved: none
-- persisting: none
 
 ## Cases
 - `food-preference-recall`
@@ -46,10 +28,10 @@
   - builtin: signal=`miss`, source=`miss`
   - plugin: signal=`ok`, source=`ok`, fastPath=`yes`, selectedCount=`1`, noisySupporting=`no`
 - `session-memory-source-competition`
-  - builtin: signal=`ok`, source=`miss`
+  - builtin: signal=`miss`, source=`miss`
   - plugin: signal=`ok`, source=`ok`, fastPath=`yes`, selectedCount=`1`, noisySupporting=`no`
 - `rule-formal-memory-priority`
-  - builtin: signal=`ok`, source=`miss`
+  - builtin: signal=`miss`, source=`miss`
   - plugin: signal=`ok`, source=`ok`, fastPath=`yes`, selectedCount=`1`, noisySupporting=`no`
 - `project-positioning-priority`
   - builtin: signal=`miss`, source=`miss`
@@ -67,10 +49,10 @@
   - builtin: signal=`miss`, source=`miss`
   - plugin: signal=`ok`, source=`ok`, fastPath=`yes`, selectedCount=`1`, noisySupporting=`no`
 - `lossless-understanding-priority`
-  - builtin: signal=`ok`, source=`miss`
+  - builtin: signal=`miss`, source=`miss`
   - plugin: signal=`ok`, source=`ok`, fastPath=`yes`, selectedCount=`1`, noisySupporting=`no`
 - `provider-role-priority`
-  - builtin: signal=`ok`, source=`miss`
+  - builtin: signal=`miss`, source=`miss`
   - plugin: signal=`ok`, source=`ok`, fastPath=`yes`, selectedCount=`1`, noisySupporting=`no`
 - `release-install-priority`
   - builtin: signal=`miss`, source=`miss`
@@ -82,37 +64,37 @@
   - builtin: signal=`miss`, source=`miss`
   - plugin: signal=`ok`, source=`ok`, fastPath=`yes`, selectedCount=`1`, noisySupporting=`no`
 - `birthday-lunar-priority`
-  - builtin: signal=`ok`, source=`miss`
+  - builtin: signal=`miss`, source=`miss`
   - plugin: signal=`ok`, source=`ok`, fastPath=`yes`, selectedCount=`1`, noisySupporting=`no`
 - `daughter-profile-priority`
-  - builtin: signal=`ok`, source=`miss`
+  - builtin: signal=`miss`, source=`miss`
   - plugin: signal=`ok`, source=`ok`, fastPath=`yes`, selectedCount=`1`, noisySupporting=`no`
 - `son-profile-priority`
-  - builtin: signal=`ok`, source=`miss`
+  - builtin: signal=`miss`, source=`miss`
   - plugin: signal=`ok`, source=`ok`, fastPath=`yes`, selectedCount=`1`, noisySupporting=`no`
 - `children-overview-priority`
-  - builtin: signal=`ok`, source=`miss`
-  - plugin: signal=`ok`, source=`ok`, fastPath=`yes`, selectedCount=`2`, noisySupporting=`no`
+  - builtin: signal=`miss`, source=`miss`
+  - plugin: signal=`ok`, source=`ok`, fastPath=`yes`, selectedCount=`1`, noisySupporting=`no`
 - `timezone-priority`
-  - builtin: signal=`ok`, source=`miss`
+  - builtin: signal=`miss`, source=`miss`
   - plugin: signal=`ok`, source=`ok`, fastPath=`yes`, selectedCount=`1`, noisySupporting=`no`
 - `communication-style-priority`
-  - builtin: signal=`ok`, source=`miss`
+  - builtin: signal=`miss`, source=`miss`
   - plugin: signal=`ok`, source=`ok`, fastPath=`yes`, selectedCount=`1`, noisySupporting=`no`
 - `reminder-channel-priority`
-  - builtin: signal=`ok`, source=`miss`
+  - builtin: signal=`miss`, source=`miss`
   - plugin: signal=`ok`, source=`ok`, fastPath=`yes`, selectedCount=`1`, noisySupporting=`no`
 - `execution-rule-priority`
-  - builtin: signal=`ok`, source=`ok`
+  - builtin: signal=`miss`, source=`miss`
   - plugin: signal=`ok`, source=`ok`, fastPath=`yes`, selectedCount=`1`, noisySupporting=`no`
 - `openviking-role-priority`
-  - builtin: signal=`ok`, source=`ok`
+  - builtin: signal=`miss`, source=`miss`
   - plugin: signal=`ok`, source=`ok`, fastPath=`yes`, selectedCount=`1`, noisySupporting=`no`
 - `agent-routing-rule-priority`
   - builtin: signal=`miss`, source=`miss`
   - plugin: signal=`ok`, source=`ok`, fastPath=`yes`, selectedCount=`1`, noisySupporting=`no`
 - `main-boundary-rule-priority`
-  - builtin: signal=`miss`, source=`ok`
+  - builtin: signal=`miss`, source=`miss`
   - plugin: signal=`ok`, source=`ok`, fastPath=`yes`, selectedCount=`1`, noisySupporting=`no`
 - `main-negative-boundary-rule-priority`
   - builtin: signal=`miss`, source=`miss`

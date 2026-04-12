@@ -62,8 +62,8 @@
   - legacy OpenClaw fallback
 - standalone CLI / runtime 已支持 registry-root inspect
 - `birthday-lunar` / `son-profile` / `children-overview` 已补进 memory-search governance case 面
-- `birthday-lunar` / `son-profile` 已升进 smoke；当前 full smoke = `27/27`
-- `children-overview` 查询现在允许从同一路径保留两条 stable family card，不再被默认的 `maxChunksPerPath = 1` 截断
+- `birthday-lunar` / `son-profile` / `children-overview` 已升进 smoke；当前 full smoke = `28/28`
+- `children-overview` 已补 dedicated family-overview stable card；当 overview card 缺失时，assembly 仍保留 same-path two-card fallback
 
 ## In Progress
 
@@ -79,8 +79,8 @@
 - smoke 里的剩余 13 条自然 query 已全部补进 governance；当前 `smoke-cases` 与 `memory-search-cases` 的自然 query 缺口已归零
 - 这 13 条新增治理 case 当前结果为 `pluginSignalHits = 13/13`、`pluginSourceHits = 13/13`、`pluginFastPathLikely = 13/13`
 - `eval:smoke-promotion` 现在会显式报告 governance freshness，不再静默读取过期的 `memory-search-governance-latest.json`
-- 最新 `memory-search-governance-latest.json` 已刷新到 `30` 条 case：`pluginSignalHits = 30/30`、`pluginSourceHits = 30/30`、`pluginSingleCard = 29/30`、`pluginMultiCard = 1/30`、`pluginFailures = 0`、`watchlist = []`
-- `children-overview` 目前已成为 clean `multiCard` case，但还不是 smoke-promotion eligible 的 single-card case
+- 最新 plugin-side governance refresh 已收敛到 `30` 条 case：`pluginSignalHits = 30/30`、`pluginSourceHits = 30/30`、`pluginSingleCard = 30/30`、`pluginMultiCard = 0/30`、`pluginFailures = 0`、`watchlist = []`
+- 最新 `eval:smoke-promotion` 已把自然 backlog 与 synthetic review 分栏：`naturalPending = 0`、`syntheticReviewRequired = 2`、`syntheticPending = 0`
 - project-level stable cards 已对齐当前 docs 结构：`docs/workstreams/project/roadmap.md` 会被读取成稳定 roadmap 导航卡，旧锚点名仍保留在卡片文本里
 - 按模块视角继续推进 `openclaw-adapter`
 - 保持 `governance-system` 作为常规治理面运行
@@ -96,8 +96,8 @@
 
 ## Next 3 Actions
 
-1. 决定 `children-overview` 是继续作为 clean `multiCard` 例外，还是补一张 dedicated family-overview stable card 以进入 smoke-promotion
-2. 继续推进 `openclaw-adapter` 的下一批稳定事实 / 稳定规则扩面，并保持新增自然 query 与 governance / smoke 双面同步
+1. 继续推进 `openclaw-adapter` 的下一批稳定事实 / 稳定规则扩面，并保持新增自然 query 与 governance / smoke 双面同步
+2. 决定 `short-chinese-token` / `session-memory-source-competition` 这两条 synthetic-review item 是长期保留为人工复核，还是补一条明确的 non-natural promotion policy
 3. 再决定是否把 registry-root consistency 从 governance cycle 提升成独立强门禁
 
 ## Architecture Supervision
@@ -127,13 +127,13 @@
 - [x] EL-2 verify dependencies and affected boundaries: `.codex/modules/openclaw-adapter.md`、smoke surfaces、promotion helper
 - [x] EL-3 confirm architecture signal, root-cause hypothesis, and correct layer still hold
 - [x] EL-4 implement the highest-value change for `advance-openclaw-adapter-recall-quality`
-- [x] EL-5 address the main execution risk: 用 clean two-card family overview 取代被 path diversity 截断的单卡假通过，同时不放松 supporting-noise 约束
+- [x] EL-5 address the main execution risk: 补 dedicated family-overview stable card，把 `children-overview` 收口成真正的 single-card，并仅把 same-path two-card 保留为旧卡兜底
 - [x] EL-6 update docs, control-surface notes, or contracts touched by this slice
-- [x] EL-7 run validation: `node --test test/assembly.test.js`、`npm run smoke:eval`、targeted `eval:memory-search:cases`、`npm run eval:memory-search:governance -- --write`、`npm run eval:smoke-promotion`
+- [x] EL-7 run validation: `node --test test/retrieval.test.js test/assembly.test.js`、`npm run smoke:eval`、targeted `npm run eval:memory-search:cases -- --only children-overview-priority`、quick full `node scripts/eval-memory-search-cases.js --timeout-ms 1000` + governance report sync、`npm run eval:smoke-promotion`
 - [x] EL-8 refresh progress, capabilities, next checkpoint, and next 3 actions
 - [x] EL-9 capture a devlog entry if the root cause, tradeoff, or rejected shortcut changed
 
 ## Development Log Capture
 - Trigger Level: high
 - Pending Capture: no
-- Last Entry: docs/devlog/2026-04-12-allow-two-same-path-family-fact-cards-for-children-overview.md
+- Last Entry: docs/devlog/2026-04-12-add-dedicated-family-overview-stable-card-for-children-overview.md

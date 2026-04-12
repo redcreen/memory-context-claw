@@ -60,6 +60,17 @@
     "category": "user-facts"
   },
   {
+    "name": "children-overview-smoke",
+    "query": "我家孩子的情况你记住了吗",
+    "expectedSelectedAny": [
+      "一儿一女",
+      "刘子妍",
+      "刘子暄"
+    ],
+    "expectedTopSource": "cardArtifact",
+    "category": "user-facts"
+  },
+  {
     "name": "timezone-smoke",
     "query": "我的时区是什么",
     "expectedSelectedAny": [

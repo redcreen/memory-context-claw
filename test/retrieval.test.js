@@ -159,6 +159,7 @@ test("buildStableMemoryCardsFromMarkdown derives birthday and family cards from 
   assert.ok(cards.some((card) => /实际出生年份是1983.*身份证登记生日年份是1982/.test(card.fact)));
   assert.ok(cards.some((card) => /你女儿叫刘子妍/.test(card.fact)));
   assert.ok(cards.some((card) => /你儿子叫刘子暄/.test(card.fact)));
+  assert.ok(cards.some((card) => /你有一儿一女，孩子情况是：女儿叫刘子妍.*儿子叫刘子暄/.test(card.fact)));
   assert.ok(cards.some((card) => /身份证生日信息待确认.*暂不作为已确认身份信息使用/.test(card.fact)));
   assert.ok(cards.every((card) => !/19282年2月6日/.test(card.fact)));
 });
@@ -1324,6 +1325,22 @@ test("buildCardArtifactCandidates keeps slot-specific family facts ahead of sibl
 
   const sonCandidates = buildCardArtifactCandidates(cards, "我儿子叫什么，生日是哪天，现在几年级", 6);
   assert.match(sonCandidates[0].snippet, /刘子暄|2007-07-25|高三/);
+});
+
+test("buildCardArtifactCandidates prefers family overview cards for children overview queries", () => {
+  const cards = buildStableMemoryCardsFromMarkdown(
+    [
+      "- 用户女儿名叫刘子妍，生日为 2014-12-29，当前上五年级。",
+      "- 用户儿子名叫刘子暄，生日为 2007-07-25，当前上高三。"
+    ].join("\n"),
+    "memory/2026-04-05.md"
+  );
+
+  const overviewCandidates = buildCardArtifactCandidates(cards, "我家孩子的情况你记住了吗", 6);
+  assert.ok(overviewCandidates.length >= 1);
+  assert.match(overviewCandidates[0].snippet, /一儿一女/);
+  assert.match(overviewCandidates[0].snippet, /刘子妍/);
+  assert.match(overviewCandidates[0].snippet, /刘子暄/);
 });
 
 test("retrieveMemoryCandidates uses card fast path for strong fact intents", async () => {

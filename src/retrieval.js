@@ -450,6 +450,18 @@ export function buildCardArtifactCandidates(cards, query, maxCandidates = 6) {
         (sonIntent && /你儿子/.test(fact) ? 0.16 : 0) +
         (childrenIntent && (/你女儿|你儿子|一儿一女|家庭/.test(fact) ? 0.12 : 0)) +
         (guardrailIntent && (/待确认|暂不作为已确认|身份证/.test(fact) ? 0.18 : 0));
+      const familyOverviewBoost =
+        childrenIntent &&
+        (
+          tagsList.includes("family-overview")
+          || (
+            /你女儿/.test(fact)
+            && /你儿子/.test(fact)
+            && /一儿一女|孩子情况/.test(fact)
+          )
+        )
+          ? 0.18
+          : 0;
       const slotPenalty =
         (selfBirthdayIntent && /你女儿|你儿子/.test(fact) ? 0.08 : 0) +
         (daughterIntent && /你儿子|你的生日/.test(fact) ? 0.08 : 0) +
@@ -840,6 +852,7 @@ export function buildCardArtifactCandidates(cards, query, maxCandidates = 6) {
         birthdayBoost +
         slotBoost -
         slotPenalty +
+        familyOverviewBoost +
         projectBoost +
         workspaceStructureBoost +
         projectNavigationBoost +
@@ -926,6 +939,10 @@ export function buildStableMemoryCardsFromMarkdown(markdown = "", filePath = "ME
   const cards = [];
   const lines = String(markdown || "").split(/\r?\n/);
   const isDailyMemory = /memory\/\d{4}-\d{2}-\d{2}\.md$/.test(filePath.replace(/\\/g, "/"));
+  const familyProfiles = {
+    daughter: null,
+    son: null
+  };
 
   for (const line of lines) {
     const trimmed = line.trim();
@@ -1180,10 +1197,15 @@ export function buildStableMemoryCardsFromMarkdown(markdown = "", filePath = "ME
     const daughterMatch = trimmed.match(/女儿名叫([^，。；;]+)[，,]\s*生日为?\s*(\d{4}-\d{2}-\d{2}|\d{4}年\d{1,2}月\d{1,2}日)[，,]\s*当前上([^。；;]+)/);
     if (daughterMatch) {
       const [, name, birthday, grade] = daughterMatch;
+      familyProfiles.daughter = {
+        name: name.trim(),
+        birthday: birthday.trim(),
+        grade: grade.trim()
+      };
       cards.push({
         title: "家庭背景",
         type: isDailyMemory ? "daily" : "longTerm",
-        fact: `你女儿叫${name.trim()}，生日是${birthday.trim()}，现在上${grade.trim()}`,
+        fact: `你女儿叫${familyProfiles.daughter.name}，生日是${familyProfiles.daughter.birthday}，现在上${familyProfiles.daughter.grade}`,
         tags: ["family", "background", isDailyMemory ? "daily" : "long-term"],
         sourceFile: path.basename(filePath),
         sourcePath: filePath,
@@ -1199,10 +1221,15 @@ export function buildStableMemoryCardsFromMarkdown(markdown = "", filePath = "ME
     const sonMatch = trimmed.match(/儿子名叫([^，。；;]+)[，,]\s*生日为?\s*(\d{4}-\d{2}-\d{2}|\d{4}年\d{1,2}月\d{1,2}日)[，,]\s*当前上([^。；;]+)/);
     if (sonMatch) {
       const [, name, birthday, grade] = sonMatch;
+      familyProfiles.son = {
+        name: name.trim(),
+        birthday: birthday.trim(),
+        grade: grade.trim()
+      };
       cards.push({
         title: "家庭背景",
         type: isDailyMemory ? "daily" : "longTerm",
-        fact: `你儿子叫${name.trim()}，生日是${birthday.trim()}，现在上${grade.trim()}`,
+        fact: `你儿子叫${familyProfiles.son.name}，生日是${familyProfiles.son.birthday}，现在上${familyProfiles.son.grade}`,
         tags: ["family", "background", isDailyMemory ? "daily" : "long-term"],
         sourceFile: path.basename(filePath),
         sourcePath: filePath,
@@ -1253,6 +1280,22 @@ export function buildStableMemoryCardsFromMarkdown(markdown = "", filePath = "ME
         }
       });
     }
+  }
+
+  if (familyProfiles.daughter && familyProfiles.son) {
+    cards.push({
+      title: "家庭概览",
+      type: isDailyMemory ? "daily" : "longTerm",
+      fact: `你有一儿一女，孩子情况是：女儿叫${familyProfiles.daughter.name}，生日是${familyProfiles.daughter.birthday}，现在上${familyProfiles.daughter.grade}；儿子叫${familyProfiles.son.name}，生日是${familyProfiles.son.birthday}，现在上${familyProfiles.son.grade}`,
+      tags: ["family", "background", "family-overview", isDailyMemory ? "daily" : "long-term"],
+      sourceFile: path.basename(filePath),
+      sourcePath: filePath,
+      sourceChannel: isDailyMemory ? "memory-daily" : "memory-md",
+      recommendation: {
+        action: isDailyMemory ? "review-daily-memory" : "review-memory-md",
+        confidence: "medium"
+      }
+    });
   }
 
   return cards;

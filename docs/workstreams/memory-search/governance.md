@@ -173,7 +173,13 @@ npm run eval:smoke-promotion
 - `recommendedForSmoke`
   - 既稳定、又像自然用户问题，适合优先考虑升进 smoke
 - `reviewRequired`
+  - 兼容字段；当前等价于 `syntheticReviewRequired`
+- `syntheticReviewRequired`
   - 技术上已稳定，但 query 更像专项治理 query / 关键词拼接，需要人工判断是否值得进入长期保护面
+- `naturalPending`
+  - 看起来像自然用户问题，但还没稳定到可升 smoke
+- `syntheticPending`
+  - 既不是自然 query，也还没稳定，通常不应视为 smoke backlog
 
 注意：
 

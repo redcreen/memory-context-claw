@@ -14,6 +14,7 @@ Own the OpenClaw-facing runtime path: retrieval, rerank, assembly, scoring, runt
 - memory-search phases A-E baseline
 - retrieval / rerank / assembly / scoring baseline
 - smoke coverage and current quality metrics
+- dedicated family-overview stable card path for `children-overview`, with same-path dual-card fallback kept only as a compatibility backstop
 
 ## Remaining Steps
 1. Align OpenClaw runtime reads and writes with the future host-neutral canonical registry root.
@@ -28,4 +29,4 @@ Operational baseline is complete; current work is iterative hardening and qualit
 
 ## Next Checkpoint
 
-Keep live OpenClaw behavior stable while the now-fully-aligned natural-query governance surface expands the next stable fact / stable rule batch.
+Keep live OpenClaw behavior stable while the now-single-card family-overview path rolls into the next stable fact / stable rule batch.
