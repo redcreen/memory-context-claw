@@ -6,7 +6,7 @@ Own export/projection behavior, visibility filtering, consumer-facing artifact s
 
 ## Current Status
 
-`stage4-complete / stable`
+`stage5-complete / stable`
 
 ## Already Implemented
 
@@ -18,17 +18,18 @@ Own export/projection behavior, visibility filtering, consumer-facing artifact s
 - `policy-input artifact` contract
 - consumer-specific policy projections for `generic / openclaw / codex`
 - policy fingerprint / rollback metadata on exports
+- export reproducibility checks for `generic / openclaw / codex`
 
 ## Remaining Steps
 
-1. Add Stage 5 reproducibility / rollback checks for policy exports.
-2. Keep consumer-specific projection differences explicit and comparable.
-3. Avoid pushing policy behavior back into adapters outside export boundaries.
+1. Keep consumer-specific projection differences explicit and comparable.
+2. Avoid pushing policy behavior back into adapters outside export boundaries.
+3. Keep reproducibility evidence green in post-stage maintenance.
 
 ## Completion Signal
 
-Projection now owns a frozen Stage 4 policy contract and multi-consumer policy projections. The next work is hardening, not contract discovery.
+Projection now owns a frozen Stage 4 policy contract plus Stage 5 reproducibility evidence. The next work is stability maintenance, not contract discovery.
 
 ## Next Checkpoint
 
-Carry policy-export reproducibility into Stage 5 without changing the contract boundary.
+Keep `export reproducibility` as a stable regression surface without changing the contract boundary.

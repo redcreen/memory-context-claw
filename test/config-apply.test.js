@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { mergeInstallConfig } from "../src/install-config.js";
+import { mergeInstallConfig, mergePluginHostConfig } from "../src/install-config.js";
 
 test("mergeConfig injects plugin slot and main local memory", () => {
   const merged = mergeInstallConfig(
@@ -40,4 +40,22 @@ test("mergeConfig can apply llm-rerank preset", () => {
 
   assert.equal(merged.plugins.entries["unified-memory-core"].config.llmRerank.enabled, true);
   assert.equal(merged.plugins.entries["unified-memory-core"].config.llmRerank.model, "gpt-5.4");
+});
+
+test("mergePluginHostConfig can bind an already installed plugin without load paths", () => {
+  const merged = mergePluginHostConfig(
+    {},
+    {
+      agentId: "main",
+      modelPath: "/tmp/model.gguf",
+      workspacePath: "/tmp/workspace",
+      preset: "safe-local"
+    }
+  );
+
+  assert.equal(merged.plugins.slots.contextEngine, "unified-memory-core");
+  assert.equal(merged.plugins.allow.includes("unified-memory-core"), true);
+  assert.equal(merged.plugins.entries["unified-memory-core"].enabled, true);
+  assert.equal(merged.plugins.load, undefined);
+  assert.equal(merged.agents.list[0].memorySearch.provider, "local");
 });

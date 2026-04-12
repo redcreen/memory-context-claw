@@ -35,7 +35,7 @@ Build a governed daily-learning system for `unified-memory-core` that can:
 
 ## Current Status
 
-- status: `Stage 4 complete / Stage 5 next`
+- status: `Stage 5 complete / hold stable`
 - architecture baseline: `defined and partially realized in the current shared modules`
 - implementation baseline: `already running`
 - dependency status:
@@ -49,7 +49,7 @@ Build a governed daily-learning system for `unified-memory-core` that can:
 
 The current repo no longer has only a baseline. Stage 3 lifecycle work is now complete.
 
-- declared sources already support `manual`, `file`, `directory`, and `conversation`
+- declared sources already support `manual`, `file`, `directory`, `conversation`, `url`, and `image`
 - reflection already emits structured candidate artifacts and decision trails
 - daily reflection already detects repeated signals and explicit remember instructions
 - explicit promotion / decay / conflict / stable-update rules now run through the shared modules
@@ -57,7 +57,7 @@ The current repo no longer has only a baseline. Stage 3 lifecycle work is now co
 - standalone runtime / CLI / script now support one local governed `observation -> stable` loop
 - OpenClaw consumption of promoted learning artifacts is now validated
 
-The next phase is not to define the Stage 4 contract. That part is done. The next phase is product hardening: source-adapter hardening, maintenance workflow, release-boundary checks, and reproducibility.
+The next phase is not to reopen Stage 5 contract work. That part is done. The next focus is keeping product hardening evidence stable while any later service-mode discussion remains deferred.
 
 The phase descriptions below are planning envelopes. Parts of Phase 0-2 are already implemented across the current shared modules.
 

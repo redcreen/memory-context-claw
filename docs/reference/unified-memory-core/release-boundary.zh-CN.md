@@ -46,3 +46,11 @@ adapter 边界包含：
 - portable contract 路径保持稳定
 - standalone commands 继续能在不依赖 adapter coupling 的情况下运行
 - adapters 继续通过 exports 消费能力，而不是重定义 product core 行为
+
+## Stage 5 验证
+
+在把这条 boundary 视为稳定之前，先跑：
+
+- `npm run umc:stage5 -- --format markdown`
+- `npm run umc:openclaw-itest -- --format markdown`
+- `npm run umc:cli -- review independent-execution --format markdown`

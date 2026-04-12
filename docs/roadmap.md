@@ -20,9 +20,9 @@ For detailed queues, read:
 
 | Horizon | Focus | Exit Signal |
 | --- | --- | --- |
-| Now | keep the newly closed Stage 4 policy loop stable while Stage 5 planning opens | Stage 4 policy reports, loops, and regressions stay green while the next hardening slice is defined |
-| Next | harden standalone operation, release boundary, and reproducibility | one Stage 5 hardening slice is named and agreed |
-| Later | discuss runtime API / split-ready evolution only after product hardening is proven | independent-product evidence remains stable after Stage 5 |
+| Now | keep release-preflight, bundle install, host smoke, and Stage 5 evidence green | `umc:release-preflight`, `umc:openclaw-install-verify`, `umc:openclaw-itest`, and `umc:stage5` stay reliable in routine runs |
+| Next | decide whether later runtime API / service-mode discussion should open at all | runtime API prerequisites remain satisfied over time |
+| Later | discuss runtime API / split-ready evolution only from a stable operator baseline | independent-product evidence stays green after Stage 5 closeout |
 
 ## Milestones
 
@@ -32,7 +32,7 @@ For detailed queues, read:
 | [Stage 2: local-first baseline](reference/unified-memory-core/development-plan.md#stage-2-local-first-implementation-baseline) | completed | ship one governed local-first end-to-end baseline | Stage 1 | core modules, adapters, standalone CLI, and governance all run |
 | [Stage 3: self-learning lifecycle baseline](reference/unified-memory-core/development-plan.md#stage-3-self-learning-lifecycle-baseline) | completed | turn the already-implemented reflection baseline into an explicit lifecycle with promotion, decay, and learning-specific governance | Stage 2 | promotion / decay expectations, learning governance, OpenClaw validation, and local governed loop are all implemented and regression-protected |
 | [Stage 4: policy adaptation](reference/unified-memory-core/development-plan.md#stage-4-policy-adaptation-and-multi-consumer-use) | completed | let governed learning outputs influence consumer behavior | Stage 3 | one reversible policy-adaptation loop is proven |
-| [Stage 5: product hardening](reference/unified-memory-core/development-plan.md#stage-5-product-hardening-and-independent-operation) | next | validate split-ready and independent-product operation | Stage 4 | release boundary, reproducibility, and maintenance workflows are stable |
+| [Stage 5: product hardening](reference/unified-memory-core/development-plan.md#stage-5-product-hardening-and-independent-operation) | completed | validate split-ready and independent-product operation | Stage 4 | release boundary, reproducibility, maintenance workflows, and split rehearsal are all CLI-verifiable |
 
 ## Milestone Flow
 
@@ -48,5 +48,6 @@ flowchart LR
 
 - the current roadmap should not drift away from `.codex/status.md` and `.codex/plan.md`
 - `todo.md` should remain personal scratch space, not a competing status source
-- the next dependency is no longer the Stage 4 contract; it is the Stage 5 hardening order
-- Stage 4 policy reports and loops must stay readable while later hardening opens
+- the next dependency is no longer Stage 5 implementation; it is keeping release-preflight and deployment evidence stable over time
+- registry-root cutover policy remains an operator follow-up, not hidden Stage 5 contract work
+- Stage 4 and Stage 5 reports must stay readable while any later service-mode discussion remains deferred

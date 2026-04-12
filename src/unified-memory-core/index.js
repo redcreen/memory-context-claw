@@ -61,7 +61,11 @@ export {
 export {
   createStandaloneRuntime,
   resolveStandaloneConfig,
-  renderStage34AcceptanceReport
+  renderStage34AcceptanceReport,
+  renderMaintenanceWorkflowReport,
+  renderExportReproducibilityReport,
+  renderSplitRehearsalReport,
+  renderStage5AcceptanceReport
 } from "./standalone-runtime.js";
 export {
   mapOpenClawExportToCandidates,

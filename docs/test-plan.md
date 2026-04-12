@@ -28,14 +28,24 @@ Detailed case inventory lives in [unified-memory-core/testing/case-matrix.md](re
 
 Preferred Stage 3-4 operator checklist lives in [unified-memory-core/testing/stage3-stage4-acceptance.md](reference/unified-memory-core/testing/stage3-stage4-acceptance.md).
 
+Preferred Stage 5 operator checklist lives in [unified-memory-core/testing/stage5-acceptance.md](reference/unified-memory-core/testing/stage5-acceptance.md).
+
 OpenClaw host-level integration smoke lives in [unified-memory-core/testing/openclaw-cli-integration.md](reference/unified-memory-core/testing/openclaw-cli-integration.md).
+
+OpenClaw release bundle installation is documented in [unified-memory-core/testing/openclaw-bundle-install.md](reference/unified-memory-core/testing/openclaw-bundle-install.md).
+
+The one-command CLI gate that should leave only human acceptance is documented in [unified-memory-core/testing/release-preflight.md](reference/unified-memory-core/testing/release-preflight.md).
 
 ## Automation Coverage
 
 Primary automated surfaces:
 
 - `npm run umc:acceptance`
+- `npm run umc:stage5`
 - `npm run umc:openclaw-itest`
+- `npm run umc:build-bundle`
+- `npm run umc:openclaw-install-verify`
+- `npm run umc:release-preflight`
 - `npm test`
 - `npm run smoke:eval`
 - `npm run eval:smoke-promotion`
@@ -47,13 +57,18 @@ Detailed testing stack:
 - [unified-memory-core/testing/README.md](reference/unified-memory-core/testing/README.md)
 - [unified-memory-core/testing/case-matrix.md](reference/unified-memory-core/testing/case-matrix.md)
 - [unified-memory-core/testing/stage3-stage4-acceptance.md](reference/unified-memory-core/testing/stage3-stage4-acceptance.md)
+- [unified-memory-core/testing/stage5-acceptance.md](reference/unified-memory-core/testing/stage5-acceptance.md)
 - [unified-memory-core/testing/openclaw-cli-integration.md](reference/unified-memory-core/testing/openclaw-cli-integration.md)
+- [unified-memory-core/testing/openclaw-bundle-install.md](reference/unified-memory-core/testing/openclaw-bundle-install.md)
+- [unified-memory-core/testing/release-preflight.md](reference/unified-memory-core/testing/release-preflight.md)
 
 ## Manual Checks
 
 - prefer `npm run umc:acceptance` before any Stage 3-4 manual validation
+- prefer `npm run umc:stage5` before any Stage 5 manual validation
 - prefer `npm run umc:openclaw-itest` before any host-level OpenClaw manual validation
-- install the plugin from a release tag and verify it loads in OpenClaw
+- prefer `npm run umc:release-preflight -- --format markdown` when you want deployment validation and CLI evidence in one run
+- install the plugin from a release tag and verify it loads in OpenClaw; after preflight passes, this becomes a human sanity check instead of another operator checklist
 - inspect recalled context quality, not only raw test pass/fail
 - confirm stable facts and rules improve recall without adding noisy supporting context
 - confirm governance reports are still readable enough to drive promotion decisions
@@ -75,7 +90,10 @@ Before tagging a stable release, run:
 
 ```bash
 npm run umc:acceptance -- --format markdown
+npm run umc:stage5 -- --format markdown
 npm run umc:openclaw-itest -- --format markdown
+npm run umc:openclaw-install-verify -- --format markdown
+npm run umc:release-preflight -- --format markdown
 npm test
 npm run smoke:eval
 npm run eval:smoke-promotion

@@ -35,7 +35,7 @@
 
 ## 当前状态
 
-- 状态：`Stage 4 complete / Stage 5 next`
+- 状态：`Stage 5 complete / hold stable`
 - 架构基线：`已定义，并且已经在当前共享模块里部分落地`
 - 实现基线：`已经可运行`
 - 依赖状态：
@@ -49,7 +49,7 @@
 
 当前仓库已经不只是“有一条 baseline”。Stage 3 lifecycle 已经收口完成。
 
-- declared sources 已支持 `manual`、`file`、`directory`、`conversation`
+- declared sources 已支持 `manual`、`file`、`directory`、`conversation`、`url`、`image`
 - reflection 已能产出结构化的 candidate artifacts 和 decision trails
 - daily reflection 已能识别 repeated signals 和显式 remember 指令
 - promotion / decay / conflict / stable-update 规则已经落进共享模块
@@ -57,7 +57,7 @@
 - standalone runtime / CLI / script 已支持一条本地 governed `observation -> stable` loop
 - OpenClaw 对 promoted learning artifacts 的消费行为已经有验证
 
-下一阶段不再是定义 Stage 4 contract。这一段已经完成。下一阶段是产品加固：source-adapter hardening、maintenance workflow、release-boundary checks 和 reproducibility。
+下一阶段不再是重开 Stage 5 contract 工作。这一段已经完成。接下来的重点是保持产品加固证据面长期稳定，同时继续延后任何 service-mode 讨论。
 
 下面的 phase 描述是规划外壳。Phase 0-2 的一部分，已经通过当前共享模块实现。
 

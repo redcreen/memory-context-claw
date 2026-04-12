@@ -48,8 +48,10 @@
 - `Stage 1`：已完成
 - `Stage 2`：已完成
 - `Stage 3`：已完成
-- 当前指针：`Step 39`
-- 当前建议：从 `Stage 5` 恢复继续
+- `Stage 4`：已完成
+- `Stage 5`：已完成
+- 当前指针：`Stage 5 closeout`
+- 当前建议：先把 release-preflight、deployment verification 和 Stage 5 证据面持续保持稳定，再讨论任何更后面的阶段
 
 当前 baseline 已经落地：
 
@@ -80,7 +82,7 @@
 | Stage 2 | `11-20` | 完成第一条 local-first 实现基线 | `completed` |
 | Stage 3 | `21-30` | 完成 self-learning 生命周期基线 | `completed` |
 | Stage 4 | `31-38` | 把受治理学习结果接到 adapter 策略使用 | `completed` |
-| Stage 5 | `39-46` | 补齐产品运维与 split-ready 执行 | `next` |
+| Stage 5 | `39-46` | 补齐产品运维与 split-ready 执行 | `completed` |
 
 ## 顺序开发计划
 
@@ -165,22 +167,22 @@
 - split-ready execution 经过验证
 - 后续 service mode 讨论基于稳定底座进行
 
-39. `next` 加固 file / directory / URL / image 输入的 standalone source adapters。
-40. `later` 增加 reflection 与 governance runs 的 scheduled-job 友好工作流。
-41. `later` 增加 self-learning maintenance workflow 文档与 CLI 支持。
-42. `later` 增加 release-boundary validation checks。
-43. `later` 增加 migration 和 repo-split rehearsal。
-44. `later` 增加 learning exports 的 reproducibility 和 rollback checks。
-45. `later` 复核 runtime API 或 network service mode 的前置条件。
-46. `later` 以 independent-product readiness review 收口本阶段。
+39. `completed` 加固 file / directory / URL / image 输入的 standalone source adapters。
+40. `completed` 增加 reflection 与 governance runs 的 scheduled-job 友好工作流。
+41. `completed` 增加 self-learning maintenance workflow 文档与 CLI 支持。
+42. `completed` 增加 release-boundary validation checks。
+43. `completed` 增加 migration 和 repo-split rehearsal。
+44. `completed` 增加 learning exports 的 reproducibility 和 rollback checks。
+45. `completed` 复核 runtime API 或 network service mode 的前置条件。
+46. `completed` 以 independent-product readiness review 收口本阶段。
 
 ## 当前下一步
 
 从这里恢复：
 
-1. 从 `Step 39` 开始
-2. 先完整做完 `Stage 5`
-3. 在 Stage 5 打开时，保持 Stage 4 policy adaptation 证据面稳定
+1. 继续保持 release-preflight、deployment verification 和 `Stage 5` 证据面稳定
+2. 在文档前置条件长期为绿之前，不要打开 runtime API 或 service-mode 工作
+3. 把 registry-root cutover 继续当作显式 operator policy 工作，不要让它变成隐藏的阶段漂移
 
 当前不要开始：
 

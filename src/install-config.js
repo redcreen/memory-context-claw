@@ -49,7 +49,7 @@ function mergePluginEntryConfig(existingConfig, presetConfig) {
   };
 }
 
-export function mergeInstallConfig(config, options) {
+export function mergePluginHostConfig(config, options) {
   const next = { ...ensureObject(config) };
   const presetConfig = resolvePluginPreset(options.preset);
 
@@ -72,7 +72,9 @@ export function mergeInstallConfig(config, options) {
   const plugins = ensureObject(next.plugins);
   const allow = Array.from(new Set([...ensureArray(plugins.allow), "unified-memory-core"]));
   const load = ensureObject(plugins.load);
-  const loadPaths = Array.from(new Set([...ensureArray(load.paths), options.pluginPath]));
+  const loadPaths = normalizeString(options.pluginPath)
+    ? Array.from(new Set([...ensureArray(load.paths), normalizeString(options.pluginPath)]))
+    : ensureArray(load.paths);
   const entries = ensureObject(plugins.entries);
   const existingEntry = ensureObject(entries["unified-memory-core"]);
   const existingConfig = ensureObject(existingEntry.config);
@@ -80,10 +82,6 @@ export function mergeInstallConfig(config, options) {
   next.plugins = {
     ...plugins,
     allow,
-    load: {
-      ...load,
-      paths: loadPaths
-    },
     slots: {
       ...ensureObject(plugins.slots),
       contextEngine: "unified-memory-core"
@@ -98,5 +96,23 @@ export function mergeInstallConfig(config, options) {
     }
   };
 
+  if (loadPaths.length > 0) {
+    next.plugins.load = {
+      ...load,
+      paths: loadPaths
+    };
+  }
+
   return next;
+}
+
+function normalizeString(value) {
+  if (typeof value !== "string") {
+    return "";
+  }
+  return value.trim();
+}
+
+export function mergeInstallConfig(config, options) {
+  return mergePluginHostConfig(config, options);
 }

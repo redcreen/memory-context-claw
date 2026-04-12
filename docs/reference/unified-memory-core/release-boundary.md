@@ -46,3 +46,11 @@ A repo split is allowed only when:
 - portable contract paths remain stable
 - standalone commands continue to work without adapter coupling
 - adapters can consume exports without redefining product-core behavior
+
+## Stage 5 Validation
+
+Before calling this boundary stable, run:
+
+- `npm run umc:stage5 -- --format markdown`
+- `npm run umc:openclaw-itest -- --format markdown`
+- `npm run umc:cli -- review independent-execution --format markdown`

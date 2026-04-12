@@ -54,9 +54,7 @@ Simple meaning:
 Before creating a tag:
 
 1. run:
-   - `npm test`
-   - `npm run smoke:eval`
-   - `npm run eval:memory-search:cases`
+   - `npm run umc:release-preflight -- --format markdown`
 2. confirm important docs are updated:
    - `README.md`
    - `docs/reference/configuration.md`
@@ -73,6 +71,7 @@ Before creating a tag:
 Example release flow:
 
 ```bash
+npm run umc:release-preflight -- --format markdown
 git tag v0.2.0
 git push origin v0.2.0
 ```

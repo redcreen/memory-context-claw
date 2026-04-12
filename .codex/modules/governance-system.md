@@ -6,7 +6,7 @@ Own audit, repair, replay, conflict/duplicate handling, governance cycle, promot
 
 ## Current Status
 
-`governing / stage4-complete`
+`governing / stage5-complete`
 
 ## Already Implemented
 
@@ -18,17 +18,18 @@ Own audit, repair, replay, conflict/duplicate handling, governance cycle, promot
 - OpenClaw promoted-artifact consumption validation
 - Stage 4 policy adaptation compatibility / rollback report
 - namespace and visibility validation across policy consumers
+- maintenance workflow, split rehearsal, and release-boundary evidence
 
 ## Remaining Steps
 
-1. Keep lifecycle and policy reports readable and durable while Stage 5 starts.
-2. Connect release-boundary / reproducibility checks on top of current policy audit surfaces.
-3. Decide whether high-frequency lifecycle / policy outputs need a clearer durable/generated split.
+1. Keep lifecycle, policy, maintenance, and split-readiness reports readable and durable.
+2. Decide whether high-frequency lifecycle / policy outputs need a clearer durable/generated split.
+3. Keep later operator policy from bypassing the current acceptance surfaces.
 
 ## Completion Signal
 
-Governance now covers lifecycle plus Stage 4 policy adaptation evidence. This module stays in ongoing governance mode while Stage 5 reuses these reports.
+Governance now covers lifecycle, Stage 4 policy evidence, and Stage 5 operator evidence. This module stays in ongoing governance mode after Stage 5 closeout.
 
 ## Next Checkpoint
 
-Carry current lifecycle + policy reports forward as the required evidence surface for Stage 5.
+Carry current lifecycle + policy + maintenance reports forward as the required post-Stage-5 evidence surface.

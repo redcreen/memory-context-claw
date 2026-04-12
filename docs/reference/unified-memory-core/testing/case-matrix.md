@@ -14,6 +14,7 @@
 
 - source registration cases
 - normalization cases
+- standalone source adapter hardening cases for `file`, `directory`, `url`, and `image`
 - fingerprinting / replay cases
 - event labeling cases
 - candidate builder cases
@@ -30,6 +31,7 @@
 - Codex export artifact cases
 - generic export version cases
 - Stage 3-4 acceptance report cases
+- Stage 5 acceptance report cases
 - audit report cases
 - repair record cases
 - replay result cases

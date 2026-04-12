@@ -1,6 +1,21 @@
 #!/usr/bin/env node
 
+import fs from "node:fs/promises";
+import path from "node:path";
+
 import { createStandaloneRuntime } from "../src/unified-memory-core/standalone-runtime.js";
+import {
+  buildOpenClawReleaseBundle,
+  renderOpenClawReleaseBundleReport
+} from "./build-openclaw-release-bundle.js";
+import {
+  runOpenClawBundleInstallVerification,
+  renderOpenClawBundleInstallReport
+} from "./run-openclaw-bundle-install.js";
+import {
+  runReleasePreflight,
+  renderReleasePreflightReport
+} from "./run-release-preflight.js";
 import {
   renderDailyReflectionReport,
   renderExportReport,
@@ -13,7 +28,11 @@ import {
   renderStage34AcceptanceReport,
   renderGovernanceRepairRecord,
   renderGovernanceReplayRun,
-  renderIndependentExecutionReview
+  renderIndependentExecutionReview,
+  renderMaintenanceWorkflowReport,
+  renderExportReproducibilityReport,
+  renderSplitRehearsalReport,
+  renderStage5AcceptanceReport
 } from "../src/unified-memory-core/index.js";
 
 function parseArgs(argv) {
@@ -77,6 +96,27 @@ function parseNumberFlag(value, fallback) {
   return Number.isFinite(parsed) ? parsed : fallback;
 }
 
+async function readDeclaredSourcesFile(filePath, flags) {
+  const raw = await fs.readFile(filePath, "utf8");
+  const parsed = JSON.parse(raw);
+  const declaredSources = Array.isArray(parsed)
+    ? parsed
+    : Array.isArray(parsed?.declaredSources)
+      ? parsed.declaredSources
+      : [];
+
+  if (declaredSources.length === 0) {
+    throw new TypeError("sources-file must contain an array or { declaredSources: [] }");
+  }
+
+  return declaredSources.map((item) => ({
+    ...item,
+    namespace: item.namespace || parseNamespaceFromFlags(flags),
+    visibility: normalizeString(item.visibility, normalizeString(flags.visibility, "workspace")),
+    declaredBy: normalizeString(item.declaredBy || item.declared_by, normalizeString(flags["declared-by"], "standalone-cli"))
+  }));
+}
+
 function buildDeclaredSource(flags) {
   const sourceType = normalizeString(flags["source-type"], "manual");
   const declaredSource = {
@@ -95,11 +135,30 @@ function buildDeclaredSource(flags) {
         content: normalizeString(flags.content)
       }
     ];
+  } else if (sourceType === "url") {
+    declaredSource.url = normalizeString(flags.url || flags.path);
+    declaredSource.content = normalizeString(flags.content);
+    declaredSource.path = normalizeString(flags.path);
+    declaredSource.title = normalizeString(flags.title);
+    declaredSource.contentType = normalizeString(flags["content-type"]);
+  } else if (sourceType === "image") {
+    declaredSource.path = normalizeString(flags.path);
+    declaredSource.altText = normalizeString(flags["alt-text"]);
+    declaredSource.caption = normalizeString(flags.caption);
+    declaredSource.ocrText = normalizeString(flags["ocr-text"]);
   } else {
     declaredSource.path = normalizeString(flags.path);
   }
 
   return declaredSource;
+}
+
+async function buildDeclaredSources(flags) {
+  const sourcesFile = normalizeString(flags["sources-file"]);
+  if (sourcesFile) {
+    return readDeclaredSourcesFile(sourcesFile, flags);
+  }
+  return [buildDeclaredSource(flags)];
 }
 
 async function run() {
@@ -133,8 +192,9 @@ async function run() {
       ? renderRegistryMigrationReport(report)
       : report;
   } else if (family === "learn" && action === "daily-run") {
+    const declaredSources = await buildDeclaredSources(flags);
     const report = await runtime.runDailyReflection({
-      declaredSources: [buildDeclaredSource(flags)],
+      declaredSources,
       dryRun: Boolean(flags["dry-run"]),
       autoPromote: Boolean(flags.promote)
     });
@@ -142,8 +202,9 @@ async function run() {
       ? renderDailyReflectionReport(report)
       : report;
   } else if (family === "learn" && action === "lifecycle-run") {
+    const declaredSources = await buildDeclaredSources(flags);
     const report = await runtime.runLearningLifecycle({
-      declaredSources: [buildDeclaredSource(flags)],
+      declaredSources,
       dryRun: Boolean(flags["dry-run"]),
       autoPromote: flags.promote !== false,
       comparisonWindowDays: parseNumberFlag(flags["comparison-window-days"], 7),
@@ -153,8 +214,9 @@ async function run() {
       ? renderLearningLifecycleReport(report.learning_audit)
       : report;
   } else if (family === "learn" && action === "policy-loop") {
+    const declaredSources = await buildDeclaredSources(flags);
     const report = await runtime.runPolicyAdaptationLoop({
-      declaredSources: [buildDeclaredSource(flags)],
+      declaredSources,
       dryRun: Boolean(flags["dry-run"]),
       autoPromote: flags.promote !== false,
       query: normalizeString(flags.query, "summarize the current governed policy"),
@@ -168,8 +230,9 @@ async function run() {
       ? renderPolicyAdaptationReport(report.policy_audit)
       : report;
   } else if (family === "verify" && action === "stage3-stage4") {
+    const declaredSources = await buildDeclaredSources(flags);
     const report = await runtime.runStage34Acceptance({
-      declaredSources: [buildDeclaredSource(flags)],
+      declaredSources,
       dryRun: Boolean(flags["dry-run"]),
       autoPromote: flags.promote !== false,
       query: normalizeString(flags.query, "summarize the current governed policy"),
@@ -181,6 +244,34 @@ async function run() {
     });
     result = flags.format === "markdown"
       ? renderStage34AcceptanceReport(report)
+      : report;
+  } else if (family === "maintenance" && action === "run") {
+    const declaredSources = await buildDeclaredSources(flags);
+    const report = await runtime.runMaintenanceWorkflow({
+      declaredSources,
+      dryRun: Boolean(flags["dry-run"]),
+      autoPromote: flags.promote !== false,
+      query: normalizeString(flags.query, "summarize the current governed policy"),
+      taskPrompt: normalizeString(flags["task-prompt"], "apply current governed coding policy"),
+      comparisonWindowDays: parseNumberFlag(flags["comparison-window-days"], 7),
+      maxCandidates: parseNumberFlag(flags["max-candidates"], 6),
+      maxItems: parseNumberFlag(flags["max-items"], 6),
+      maxPolicyInputs: parseNumberFlag(flags["max-policy-inputs"], 8)
+    });
+    result = flags.format === "markdown"
+      ? renderMaintenanceWorkflowReport(report)
+      : report;
+  } else if (family === "export" && action === "reproducibility") {
+    const report = await runtime.auditExportReproducibility({
+      namespace: parseNamespaceFromFlags(flags),
+      allowedVisibilities: parseListFlag(flags["allowed-visibilities"], undefined),
+      allowedStates: parseListFlag(flags["allowed-states"], undefined),
+      consumers: parseListFlag(flags.consumers, ["generic", "openclaw", "codex"]),
+      runs: parseNumberFlag(flags.runs, 2),
+      maxPolicyInputs: parseNumberFlag(flags["max-policy-inputs"], 8)
+    });
+    result = flags.format === "markdown"
+      ? renderExportReproducibilityReport(report)
       : report;
   } else if (family === "reflect" && action === "run") {
     result = await runtime.reflectDeclaredSource({
@@ -316,16 +407,85 @@ async function run() {
     result = flags.format === "markdown"
       ? renderIndependentExecutionReview(review)
       : review;
+  } else if (family === "review" && action === "split-rehearsal") {
+    const rehearsal = await runtime.runSplitRehearsal({
+      repoRoot: normalizeString(flags["repo-root"], process.cwd()),
+      sourceDir: normalizeString(flags["source-dir"], runtime.config.registryDir),
+      targetDir: normalizeString(flags["target-dir"], `${runtime.config.registryDir}-split-rehearsal`),
+      apply: Boolean(flags.apply)
+    });
+    result = flags.format === "markdown"
+      ? renderSplitRehearsalReport(rehearsal)
+      : rehearsal;
+  } else if (family === "release" && action === "build-bundle") {
+    const report = await buildOpenClawReleaseBundle({
+      repoRoot: normalizeString(flags["repo-root"], process.cwd()),
+      outputDir: normalizeString(flags["output-dir"], path.join(process.cwd(), "dist", "openclaw-release"))
+    });
+    result = flags.format === "markdown"
+      ? renderOpenClawReleaseBundleReport(report)
+      : report;
+  } else if (family === "verify" && action === "stage5") {
+    const declaredSources = await buildDeclaredSources(flags);
+    const report = await runtime.runStage5Acceptance({
+      declaredSources,
+      dryRun: Boolean(flags["dry-run"]),
+      autoPromote: flags.promote !== false,
+      query: normalizeString(flags.query, "summarize the current governed policy"),
+      taskPrompt: normalizeString(flags["task-prompt"], "apply current governed coding policy"),
+      comparisonWindowDays: parseNumberFlag(flags["comparison-window-days"], 7),
+      maxCandidates: parseNumberFlag(flags["max-candidates"], 6),
+      maxItems: parseNumberFlag(flags["max-items"], 6),
+      maxPolicyInputs: parseNumberFlag(flags["max-policy-inputs"], 8),
+      repoRoot: normalizeString(flags["repo-root"], process.cwd()),
+      splitTargetDir: normalizeString(flags["target-dir"], `${runtime.config.registryDir}-split-rehearsal`)
+    });
+    result = flags.format === "markdown"
+      ? renderStage5AcceptanceReport(report)
+      : report;
+  } else if (family === "verify" && action === "openclaw-install") {
+    const report = await runOpenClawBundleInstallVerification({
+      openclawBin: normalizeString(flags["openclaw-bin"], "openclaw"),
+      profile: normalizeString(flags.profile),
+      profileExplicit: Boolean(flags.profile),
+      keepProfile: Boolean(flags["keep-profile"]),
+      keepBundle: Boolean(flags["keep-bundle"]),
+      format: normalizeString(flags.format, "json"),
+      agentId: normalizeString(flags.agent, "main"),
+      preset: normalizeString(flags.preset, "safe-local"),
+      workspacePath: normalizeString(flags.workspace),
+      workspaceExplicit: Boolean(flags.workspace),
+      query: normalizeString(flags.query, "concise progress"),
+      expectedText: normalizeString(flags["expected-text"], "concise progress reports"),
+      repoRoot: normalizeString(flags["repo-root"], process.cwd()),
+      outputDir: normalizeString(flags["output-dir"]),
+      archivePath: normalizeString(flags.archive)
+    });
+    result = flags.format === "markdown"
+      ? renderOpenClawBundleInstallReport(report)
+      : report;
+  } else if (family === "verify" && action === "release-preflight") {
+    const report = await runReleasePreflight({
+      repoRoot: normalizeString(flags["repo-root"], process.cwd())
+    });
+    result = flags.format === "markdown"
+      ? renderReleasePreflightReport(report)
+      : report;
   } else {
     result = {
       usage: [
         "source add --source-type manual --content 'text'",
         "registry inspect [--format markdown]",
         "registry migrate [--source-dir <dir>] [--target-dir <dir>] [--apply] [--format markdown]",
-        "learn daily-run --source-type manual --content 'text' [--dry-run] [--promote]",
-        "learn lifecycle-run --source-type manual --content 'text' [--dry-run] [--format markdown]",
-        "learn policy-loop --source-type manual --content 'text' [--query <text>] [--task-prompt <text>] [--format markdown]",
-        "verify stage3-stage4 --source-type manual --content 'text' [--query <text>] [--task-prompt <text>] [--format markdown]",
+        "learn daily-run --source-type manual --content 'text' [--sources-file <json>] [--dry-run] [--promote]",
+        "learn lifecycle-run --source-type manual --content 'text' [--sources-file <json>] [--dry-run] [--format markdown]",
+        "learn policy-loop --source-type manual --content 'text' [--sources-file <json>] [--query <text>] [--task-prompt <text>] [--format markdown]",
+        "maintenance run --sources-file <json> [--format markdown]",
+        "export reproducibility [--consumers generic,openclaw,codex] [--runs 2] [--format markdown]",
+        "verify stage3-stage4 --source-type manual --content 'text' [--sources-file <json>] [--query <text>] [--task-prompt <text>] [--format markdown]",
+        "verify stage5 --sources-file <json> [--format markdown]",
+        "verify openclaw-install [--archive <bundle.tgz>] [--format markdown]",
+        "verify release-preflight [--format markdown]",
         "reflect run --source-type manual --content 'text' [--dry-run] [--promote]",
         "export build --consumer generic",
         "export inspect --consumer generic [--format markdown]",
@@ -337,7 +497,9 @@ async function run() {
         "govern repair-learning --finding-code learning_candidate_ready_for_decay [--format markdown]",
         "govern replay [--result queued] [--format markdown]",
         "govern replay-learning [--result queued] [--format markdown]",
-        "review independent-execution [--format markdown]"
+        "release build-bundle [--output-dir <dir>] [--format markdown]",
+        "review independent-execution [--format markdown]",
+        "review split-rehearsal [--source-dir <dir>] [--target-dir <dir>] [--format markdown]"
       ]
     };
   }

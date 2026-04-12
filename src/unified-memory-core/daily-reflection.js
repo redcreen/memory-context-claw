@@ -13,7 +13,9 @@ const EXPLICIT_REMEMBER_PATTERN = /\b(remember this|remember that|please remembe
 function getSourceText(sourceArtifact) {
   const payload = sourceArtifact.normalized_payload || {};
 
-  if (sourceArtifact.source_type === "manual" || sourceArtifact.source_type === "file") {
+  if (sourceArtifact.source_type === "manual"
+    || sourceArtifact.source_type === "file"
+    || sourceArtifact.source_type === "url") {
     return typeof payload.text === "string" ? payload.text.trim() : "";
   }
 
@@ -23,6 +25,10 @@ function getSourceText(sourceArtifact) {
       .map((turn) => (typeof turn?.content === "string" ? turn.content.trim() : ""))
       .filter(Boolean)
       .join("\n");
+  }
+
+  if (sourceArtifact.source_type === "image") {
+    return typeof payload.text === "string" ? payload.text.trim() : "";
   }
 
   return "";

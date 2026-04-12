@@ -39,7 +39,9 @@ function createFingerprint(payload) {
 function getSourceText(sourceArtifact) {
   const payload = sourceArtifact.normalized_payload || {};
 
-  if (sourceArtifact.source_type === "manual" || sourceArtifact.source_type === "file") {
+  if (sourceArtifact.source_type === "manual"
+    || sourceArtifact.source_type === "file"
+    || sourceArtifact.source_type === "url") {
     return typeof payload.text === "string" ? payload.text.trim() : "";
   }
 
@@ -49,6 +51,14 @@ function getSourceText(sourceArtifact) {
       .map((turn) => (typeof turn?.content === "string" ? turn.content.trim() : ""))
       .filter(Boolean)
       .join("\n");
+  }
+
+  if (sourceArtifact.source_type === "image") {
+    return typeof payload.text === "string" && payload.text.trim()
+      ? payload.text.trim()
+      : typeof payload.path === "string"
+        ? payload.path.trim()
+        : "";
   }
 
   if (sourceArtifact.source_type === "directory") {
@@ -71,6 +81,11 @@ function summarizeText(sourceArtifact, text, maxChars = 180) {
   if (sourceArtifact.source_type === "directory") {
     const entryCount = Number(sourceArtifact.normalized_payload?.entry_count) || 0;
     return `directory snapshot with ${entryCount} entries`;
+  }
+
+  if (sourceArtifact.source_type === "image") {
+    const imagePath = String(sourceArtifact.normalized_payload?.path || "").trim();
+    return imagePath ? `image snapshot ${imagePath}` : "image source reflection";
   }
 
   return `${sourceArtifact.source_type} source reflection`;

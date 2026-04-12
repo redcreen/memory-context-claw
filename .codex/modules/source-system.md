@@ -6,24 +6,26 @@ Own controlled source ingestion, normalization, fingerprinting, and replayable s
 
 ## Current Status
 
-`baseline-complete / stage5 next`
+`stage5-complete / stable`
 
 ## Already Implemented
 
 - source contracts and manifest baseline
 - local-first source registration and normalization
 - fingerprinting and source-to-candidate pipeline
+- hardened standalone source adapters for `file / directory / url / image`
+- multi-source manifest support through CLI `--sources-file`
 - source-system tests and replay-oriented structure
 
 ## Remaining Steps
-1. 打开 Stage 5 的 file / directory / URL / image source hardening。
-2. 保持 source replay / manifest shape 稳定，不为单个 consumer 做特例。
-3. 把 source-side reproducibility 和 rollback expectation 写清楚。
+1. 保持 source replay / manifest shape 稳定，不为单个 consumer 做特例。
+2. 继续让 mixed-source Stage 5 acceptance 保持绿色。
+3. 只在 later phase 真有需要时，再补新的 source type。
 
 ## Completion Signal
 
-Source baseline is complete. The next meaningful work is Stage 5 source-adapter hardening, not contract rediscovery.
+Source baseline and Stage 5 source hardening are complete. The next work is stability maintenance, not contract rediscovery.
 
 ## Next Checkpoint
 
-Name the first Stage 5 source-hardening slice under `Step 39`.
+Keep `umc:stage5` proving mixed-source acceptance without regressions.

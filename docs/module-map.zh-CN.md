@@ -45,11 +45,11 @@
 ## 当前活跃模块
 
 1. **Source System**
-   当前重点：打开 `Step 39` 的 source-adapter hardening。
+   当前重点：保持 mixed-source 的 Stage 5 acceptance 稳定。
 2. **Governance System**
-   当前重点：在 Stage 5 打开时，保持 Stage 4 policy evidence 稳定。
+   当前重点：保持 Stage 5 maintenance、release-boundary、split-readiness 证据可读、可持续。
 3. **Projection System**
-   当前重点：把 policy-export reproducibility 带进 Stage 5，但不改变 contract 边界。
+   当前重点：保持 policy-export reproducibility 稳定，同时不改变 contract 边界。
 
 ## 术语边界
 

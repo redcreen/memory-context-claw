@@ -18,6 +18,10 @@ function createFingerprint(payload) {
   return createHash("sha256").update(JSON.stringify(payload)).digest("hex");
 }
 
+function createBufferHash(buffer) {
+  return createHash("sha256").update(buffer).digest("hex");
+}
+
 function toLocator(value, fallbackKind) {
   if (value && typeof value === "object" && !Array.isArray(value)) {
     return { ...value };
@@ -25,6 +29,42 @@ function toLocator(value, fallbackKind) {
   return {
     kind: fallbackKind,
     value: typeof value === "string" ? value : ""
+  };
+}
+
+function normalizeText(value) {
+  return normalizeWhitespace(typeof value === "string" ? value : "");
+}
+
+function detectMediaType(filePath, fallback = "application/octet-stream") {
+  const extension = path.extname(String(filePath || "")).toLowerCase();
+  const byExtension = {
+    ".md": "text/markdown",
+    ".txt": "text/plain",
+    ".json": "application/json",
+    ".html": "text/html",
+    ".htm": "text/html",
+    ".png": "image/png",
+    ".jpg": "image/jpeg",
+    ".jpeg": "image/jpeg",
+    ".gif": "image/gif",
+    ".webp": "image/webp",
+    ".svg": "image/svg+xml"
+  };
+  return byExtension[extension] || fallback;
+}
+
+async function readTextFileSnapshot(filePath) {
+  const buffer = await fs.readFile(filePath);
+  const stats = await fs.stat(filePath);
+  const text = buffer.toString("utf8");
+
+  return {
+    text,
+    stats,
+    sha256: createBufferHash(buffer),
+    mediaType: detectMediaType(filePath, "text/plain"),
+    extension: path.extname(filePath)
   };
 }
 
@@ -61,6 +101,7 @@ async function readDirectorySnapshot(rootDir) {
   return {
     root_path: rootDir,
     entry_count: entries.length,
+    snapshot_fingerprint: createFingerprint(entries),
     entries
   };
 }
@@ -90,6 +131,104 @@ function normalizeConversationMessages(messages) {
     format: "conversation_turns",
     turn_count: turns.length,
     turns
+  };
+}
+
+async function normalizeUrlSource(declaredSource) {
+  const url = String(declaredSource.url || declaredSource.href || "").trim();
+  if (!url) {
+    throw new TypeError("url source requires url");
+  }
+
+  let snapshotPath = String(
+    declaredSource.path || declaredSource.snapshotPath || declaredSource.cachePath || ""
+  ).trim();
+  let text = normalizeText(
+    declaredSource.content
+    ?? declaredSource.text
+    ?? declaredSource.snapshot
+    ?? declaredSource.body
+  );
+  const title = normalizeText(declaredSource.title || declaredSource.pageTitle);
+  let contentType = normalizeText(declaredSource.contentType || declaredSource.mediaType);
+  let sizeBytes;
+  let sha256 = "";
+
+  if (!text && snapshotPath) {
+    const snapshot = await readTextFileSnapshot(snapshotPath);
+    text = normalizeText(snapshot.text);
+    contentType = contentType || snapshot.mediaType;
+    sizeBytes = snapshot.stats.size;
+    sha256 = snapshot.sha256;
+  }
+
+  if (!text) {
+    throw new TypeError("url source requires content or snapshotPath");
+  }
+
+  return {
+    locator: {
+      kind: "url",
+      value: url
+    },
+    normalizedPayload: {
+      format: "web_snapshot",
+      url,
+      title,
+      text,
+      char_count: text.length,
+      content_type: contentType || "text/plain",
+      ...(snapshotPath ? { snapshot_path: snapshotPath } : {})
+    },
+    rawMetadata: {
+      source_type: "url",
+      content_type: contentType || "text/plain",
+      title,
+      ...(snapshotPath ? { snapshot_path: snapshotPath } : {}),
+      ...(Number.isFinite(sizeBytes) ? { size_bytes: sizeBytes } : {}),
+      ...(sha256 ? { sha256 } : {})
+    }
+  };
+}
+
+async function normalizeImageSource(declaredSource) {
+  const imagePath = String(declaredSource.path || declaredSource.imagePath || "").trim();
+  if (!imagePath) {
+    throw new TypeError("image source requires path");
+  }
+
+  const buffer = await fs.readFile(imagePath);
+  const stats = await fs.stat(imagePath);
+  const altText = normalizeText(declaredSource.altText || declaredSource.alt_text);
+  const caption = normalizeText(declaredSource.caption);
+  const extractedText = normalizeText(declaredSource.ocrText || declaredSource.ocr_text || declaredSource.text);
+  const text = normalizeText([altText, caption, extractedText].filter(Boolean).join("\n"));
+  const mediaType = detectMediaType(imagePath);
+
+  return {
+    locator: {
+      kind: "image",
+      value: imagePath
+    },
+    normalizedPayload: {
+      format: "image_snapshot",
+      path: imagePath,
+      media_type: mediaType,
+      alt_text: altText,
+      caption,
+      extracted_text: extractedText,
+      text,
+      size_bytes: stats.size,
+      sha256: createBufferHash(buffer)
+    },
+    rawMetadata: {
+      source_type: "image",
+      media_type: mediaType,
+      size_bytes: stats.size,
+      extension: path.extname(imagePath),
+      sha256: createBufferHash(buffer),
+      has_text_context: Boolean(text)
+    }
   };
 }
 
@@ -131,7 +270,7 @@ export function createSourceSystem(options = {}) {
     };
 
     if (sourceType === "manual") {
-      const text = normalizeWhitespace(
+      const text = normalizeText(
         declaredSource.content ?? declaredSource.text ?? declaredSource.input ?? ""
       );
       if (!text) {
@@ -149,19 +288,22 @@ export function createSourceSystem(options = {}) {
       if (!filePath) {
         throw new TypeError("file source requires path");
       }
-      const content = await fs.readFile(filePath, "utf8");
-      const stats = await fs.stat(filePath);
+      const snapshot = await readTextFileSnapshot(filePath);
       locator = toLocator(declaredSource.locator || filePath, "file");
       normalizedPayload = {
         format: "text",
         path: filePath,
-        text: content,
-        char_count: content.length
+        text: normalizeText(snapshot.text),
+        char_count: normalizeText(snapshot.text).length,
+        sha256: snapshot.sha256,
+        media_type: snapshot.mediaType
       };
       rawMetadata = {
         ...rawMetadata,
-        size_bytes: stats.size,
-        extension: path.extname(filePath)
+        size_bytes: snapshot.stats.size,
+        extension: snapshot.extension,
+        sha256: snapshot.sha256,
+        media_type: snapshot.mediaType
       };
     } else if (sourceType === "directory") {
       const directoryPath = String(declaredSource.path || declaredSource.directoryPath || "").trim();
@@ -170,6 +312,20 @@ export function createSourceSystem(options = {}) {
       }
       locator = toLocator(declaredSource.locator || directoryPath, "directory");
       normalizedPayload = await readDirectorySnapshot(directoryPath);
+      rawMetadata = {
+        ...rawMetadata,
+        snapshot_fingerprint: normalizedPayload.snapshot_fingerprint
+      };
+    } else if (sourceType === "url") {
+      const normalized = await normalizeUrlSource(declaredSource);
+      locator = toLocator(declaredSource.locator || normalized.locator, "url");
+      normalizedPayload = normalized.normalizedPayload;
+      rawMetadata = normalized.rawMetadata;
+    } else if (sourceType === "image") {
+      const normalized = await normalizeImageSource(declaredSource);
+      locator = toLocator(declaredSource.locator || normalized.locator, "image");
+      normalizedPayload = normalized.normalizedPayload;
+      rawMetadata = normalized.rawMetadata;
     } else {
       locator = toLocator(declaredSource.locator, "conversation");
       normalizedPayload = normalizeConversationMessages(declaredSource.messages);

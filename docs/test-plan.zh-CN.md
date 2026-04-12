@@ -28,14 +28,24 @@
 
 Stage 3-4 的首选操作清单在 [unified-memory-core/testing/stage3-stage4-acceptance.zh-CN.md](reference/unified-memory-core/testing/stage3-stage4-acceptance.zh-CN.md)。
 
+Stage 5 的首选操作清单在 [unified-memory-core/testing/stage5-acceptance.zh-CN.md](reference/unified-memory-core/testing/stage5-acceptance.zh-CN.md)。
+
 OpenClaw 宿主级集成 smoke 在 [unified-memory-core/testing/openclaw-cli-integration.zh-CN.md](reference/unified-memory-core/testing/openclaw-cli-integration.zh-CN.md)。
+
+OpenClaw release bundle 的真实安装验证在 [unified-memory-core/testing/openclaw-bundle-install.zh-CN.md](reference/unified-memory-core/testing/openclaw-bundle-install.zh-CN.md)。
+
+“只等人类验收”的一键 CLI 门禁在 [unified-memory-core/testing/release-preflight.zh-CN.md](reference/unified-memory-core/testing/release-preflight.zh-CN.md)。
 
 ## 自动化覆盖
 
 主要自动化测试面：
 
 - `npm run umc:acceptance`
+- `npm run umc:stage5`
 - `npm run umc:openclaw-itest`
+- `npm run umc:build-bundle`
+- `npm run umc:openclaw-install-verify`
+- `npm run umc:release-preflight`
 - `npm test`
 - `npm run smoke:eval`
 - `npm run eval:smoke-promotion`
@@ -47,13 +57,18 @@ OpenClaw 宿主级集成 smoke 在 [unified-memory-core/testing/openclaw-cli-int
 - [unified-memory-core/testing/README.zh-CN.md](reference/unified-memory-core/testing/README.zh-CN.md)
 - [unified-memory-core/testing/case-matrix.zh-CN.md](reference/unified-memory-core/testing/case-matrix.zh-CN.md)
 - [unified-memory-core/testing/stage3-stage4-acceptance.zh-CN.md](reference/unified-memory-core/testing/stage3-stage4-acceptance.zh-CN.md)
+- [unified-memory-core/testing/stage5-acceptance.zh-CN.md](reference/unified-memory-core/testing/stage5-acceptance.zh-CN.md)
 - [unified-memory-core/testing/openclaw-cli-integration.zh-CN.md](reference/unified-memory-core/testing/openclaw-cli-integration.zh-CN.md)
+- [unified-memory-core/testing/openclaw-bundle-install.zh-CN.md](reference/unified-memory-core/testing/openclaw-bundle-install.zh-CN.md)
+- [unified-memory-core/testing/release-preflight.zh-CN.md](reference/unified-memory-core/testing/release-preflight.zh-CN.md)
 
 ## 手工检查
 
 - Stage 3-4 相关验证优先先跑 `npm run umc:acceptance`
+- Stage 5 相关验证优先先跑 `npm run umc:stage5`
 - OpenClaw 宿主相关验证优先先跑 `npm run umc:openclaw-itest`
-- 从 release tag 安装插件，并确认它能在 OpenClaw 里成功加载
+- 如果要把部署验证和 CLI 验收一次收口，优先跑 `npm run umc:release-preflight -- --format markdown`
+- 从 release tag 安装插件，并确认它能在 OpenClaw 里成功加载；当 preflight 已通过时，这一步只保留成人类 sanity check
 - 检查 recalled context 质量，不只看测试通过与否
 - 确认稳定事实 / 规则扩面后没有引入脏 supporting context
 - 确认 governance 报告仍然足够可读，能支持 promotion 决策
@@ -75,7 +90,10 @@ OpenClaw 宿主级集成 smoke 在 [unified-memory-core/testing/openclaw-cli-int
 
 ```bash
 npm run umc:acceptance -- --format markdown
+npm run umc:stage5 -- --format markdown
 npm run umc:openclaw-itest -- --format markdown
+npm run umc:openclaw-install-verify -- --format markdown
+npm run umc:release-preflight -- --format markdown
 npm test
 npm run smoke:eval
 npm run eval:smoke-promotion

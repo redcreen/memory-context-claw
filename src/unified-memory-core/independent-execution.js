@@ -30,6 +30,21 @@ function normalizeList(values) {
   return values.filter(Boolean);
 }
 
+async function resolveDocPath(repoRoot, relativePath) {
+  const candidates = [
+    path.join(repoRoot, "docs", "reference", "unified-memory-core", relativePath),
+    path.join(repoRoot, "docs", "unified-memory-core", relativePath)
+  ];
+
+  for (const candidate of candidates) {
+    if (await exists(candidate)) {
+      return candidate;
+    }
+  }
+
+  return candidates[0];
+}
+
 function buildOwnershipMap() {
   return {
     product_core: {
@@ -38,7 +53,7 @@ function buildOwnershipMap() {
         "src/unified-memory-core/",
         "scripts/unified-memory-core-cli.js",
         "scripts/run-daily-reflection.js",
-        "docs/unified-memory-core/"
+        "docs/reference/unified-memory-core/"
       ]
     },
     openclaw_adapter: {
@@ -112,6 +127,10 @@ function buildMigrationChecklist(readinessChecks) {
     {
       item: "document ownership map before migration",
       status: readinessChecks.ownership_map_documented.status
+    },
+    {
+      item: "review runtime API prerequisites before service mode discussion",
+      status: readinessChecks.runtime_api_prerequisites_reviewed.status
     }
   ];
 }
@@ -191,6 +210,10 @@ export async function createIndependentExecutionReview(options = {}) {
       status: "needs_followup",
       evidence: []
     },
+    runtime_api_prerequisites_reviewed: {
+      status: "needs_followup",
+      evidence: []
+    },
     adapter_boundaries_explicit: {
       status: "needs_followup",
       evidence: []
@@ -224,29 +247,36 @@ export async function createIndependentExecutionReview(options = {}) {
   const standaloneScripts = normalizeList([
     packageJson.scripts?.["umc:cli"] ? "package.json:scripts.umc:cli" : "",
     packageJson.scripts?.["umc:daily-reflection"] ? "package.json:scripts.umc:daily-reflection" : "",
+    packageJson.scripts?.["umc:stage5"] ? "package.json:scripts.umc:stage5" : "",
     await exists(path.join(repoRoot, "scripts", "unified-memory-core-cli.js")) ? "scripts/unified-memory-core-cli.js" : ""
   ]);
-  checks.standalone_operations_available.status = toStatus(standaloneScripts.length === 3);
+  checks.standalone_operations_available.status = toStatus(standaloneScripts.length >= 3);
   checks.standalone_operations_available.evidence = [
     `standalone command surface present: ${standaloneScripts.join(", ") || "none"}`
   ];
 
-  const ownershipMapPath = path.join(repoRoot, "docs", "unified-memory-core", "ownership-map.md");
+  const ownershipMapPath = await resolveDocPath(repoRoot, "ownership-map.md");
   checks.ownership_map_documented.status = toStatus(await exists(ownershipMapPath));
   checks.ownership_map_documented.evidence = [
-    `ownership map documented: ${await exists(ownershipMapPath)}`
+    `ownership map documented: ${await exists(ownershipMapPath)} (${path.relative(repoRoot, ownershipMapPath)})`
   ];
 
-  const releaseBoundaryPath = path.join(repoRoot, "docs", "unified-memory-core", "release-boundary.md");
+  const releaseBoundaryPath = await resolveDocPath(repoRoot, "release-boundary.md");
   checks.release_boundary_documented.status = toStatus(await exists(releaseBoundaryPath));
   checks.release_boundary_documented.evidence = [
-    `release boundary documented: ${await exists(releaseBoundaryPath)}`
+    `release boundary documented: ${await exists(releaseBoundaryPath)} (${path.relative(repoRoot, releaseBoundaryPath)})`
   ];
 
-  const migrationChecklistPath = path.join(repoRoot, "docs", "unified-memory-core", "migration-checklist.md");
+  const migrationChecklistPath = await resolveDocPath(repoRoot, "migration-checklist.md");
   checks.migration_checklist_documented.status = toStatus(await exists(migrationChecklistPath));
   checks.migration_checklist_documented.evidence = [
-    `migration checklist documented: ${await exists(migrationChecklistPath)}`
+    `migration checklist documented: ${await exists(migrationChecklistPath)} (${path.relative(repoRoot, migrationChecklistPath)})`
+  ];
+
+  const runtimeApiPrerequisitesPath = await resolveDocPath(repoRoot, "runtime-api-prerequisites.md");
+  checks.runtime_api_prerequisites_reviewed.status = toStatus(await exists(runtimeApiPrerequisitesPath));
+  checks.runtime_api_prerequisites_reviewed.evidence = [
+    `runtime API prerequisites reviewed: ${await exists(runtimeApiPrerequisitesPath)} (${path.relative(repoRoot, runtimeApiPrerequisitesPath)})`
   ];
 
   const adapterBoundaryFiles = normalizeList([
@@ -260,7 +290,8 @@ export async function createIndependentExecutionReview(options = {}) {
   ];
 
   const layoutMatches = [
-    await exists(path.join(repoRoot, "docs", "unified-memory-core")),
+    await exists(path.join(repoRoot, "docs", "reference", "unified-memory-core"))
+      || await exists(path.join(repoRoot, "docs", "unified-memory-core")),
     await exists(path.join(repoRoot, "src", "unified-memory-core")),
     await exists(path.join(repoRoot, "src", "adapters")),
     await exists(path.join(repoRoot, "scripts", "adapters")),
@@ -272,6 +303,7 @@ export async function createIndependentExecutionReview(options = {}) {
   ].every(Boolean);
   checks.repo_layout_matches_target.status = toStatus(layoutMatches);
   checks.repo_layout_matches_target.evidence = [
+    `docs/reference/unified-memory-core present: ${await exists(path.join(repoRoot, "docs", "reference", "unified-memory-core"))}`,
     `docs/unified-memory-core present: ${await exists(path.join(repoRoot, "docs", "unified-memory-core"))}`,
     `src/unified-memory-core present: ${await exists(path.join(repoRoot, "src", "unified-memory-core"))}`,
     `src/adapters present: ${await exists(path.join(repoRoot, "src", "adapters"))}`,

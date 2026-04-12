@@ -20,9 +20,9 @@
 
 | 时间层级 | 重点 | 退出信号 |
 | --- | --- | --- |
-| 当前 | 保持刚收口的 Stage 4 policy loop 稳定，同时为 Stage 5 打开规划入口 | Stage 4 的 policy report / policy loop / regression 在下一阶段打开前继续稳定 |
-| 下一步 | 推进 standalone operation、release boundary 和 reproducibility hardening | 一条 Stage 5 hardening slice 被明确命名 |
-| 更后面 | 只在产品硬化被证明后，再讨论 runtime API / split-ready 演进 | Stage 5 之后独立产品证据仍保持稳定 |
+| 当前 | 保持 release-preflight、bundle install、host smoke 和 Stage 5 证据持续稳定 | `umc:release-preflight`、`umc:openclaw-install-verify`、`umc:openclaw-itest`、`umc:stage5` 在日常运行里持续稳定 |
+| 下一步 | 决定后续 runtime API / service-mode 讨论是否真的要打开 | runtime API prerequisites 在一段时间内持续满足 |
+| 更后面 | 只在 operator baseline 稳定后，再讨论 runtime API / split-ready 演进 | Stage 5 收口后的独立产品证据继续保持绿色 |
 
 ## 里程碑
 
@@ -32,7 +32,7 @@
 | [Stage 2：local-first 基线](reference/unified-memory-core/development-plan.zh-CN.md#stage-2-local-first-实现基线) | completed | 跑通一条可治理的 local-first 端到端主链 | Stage 1 | 核心模块、适配器、standalone CLI、governance 都可运行 |
 | [Stage 3：self-learning lifecycle 基线](reference/unified-memory-core/development-plan.zh-CN.md#stage-3-self-learning-生命周期基线) | completed | 把已经实现的 reflection baseline 收成一条显式生命周期，并补齐 promotion / decay / 学习专项治理 | Stage 2 | promotion / decay、learning governance、OpenClaw validation 和本地 governed loop 都已落地并有回归保护 |
 | [Stage 4：policy adaptation](reference/unified-memory-core/development-plan.zh-CN.md#stage-4-policy-adaptation-与多消费者使用) | completed | 让治理后的学习产物影响消费者行为 | Stage 3 | 一条可回退的 policy-adaptation 闭环被证明 |
-| [Stage 5：product hardening](reference/unified-memory-core/development-plan.zh-CN.md#stage-5-产品加固与独立运行) | next | 验证独立产品运行和 split-ready 边界 | Stage 4 | release boundary、可复现性、维护工作流趋于稳定 |
+| [Stage 5：product hardening](reference/unified-memory-core/development-plan.zh-CN.md#stage-5-产品加固与独立运行) | completed | 验证独立产品运行和 split-ready 边界 | Stage 4 | release boundary、可复现性、维护工作流和 split rehearsal 都已经 CLI 可验证 |
 
 ## 里程碑流转
 
@@ -48,5 +48,6 @@ flowchart LR
 
 - 路线图不能和 `.codex/status.md`、`.codex/plan.md` 漂移
 - `todo.md` 应继续只是个人速记，不应成为并行状态源
-- 当前的下一依赖不再是 Stage 4 contract，而是 Stage 5 的 hardening 顺序
-- 在继续打开后续 hardening 时，Stage 4 的 policy report / policy loop 必须保持可读
+- 当前的下一依赖不再是 Stage 5 实现，而是让 release-preflight 与 deployment 证据面长期保持稳定
+- registry-root cutover policy 仍是 operator follow-up，但不再算隐藏的 Stage 5 contract 工作
+- 只要后续 service-mode 讨论继续延后，Stage 4 和 Stage 5 的报告都必须保持可读

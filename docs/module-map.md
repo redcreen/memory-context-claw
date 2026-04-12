@@ -44,11 +44,11 @@ When resuming, read in this order:
 ## Current Active Modules
 
 1. **Source System**
-   Current focus: open `Step 39` source-adapter hardening.
+   Current focus: keep mixed-source Stage 5 acceptance stable.
 2. **Governance System**
-   Current focus: keep Stage 4 policy evidence stable while Stage 5 opens.
+   Current focus: keep Stage 5 maintenance, release-boundary, and split-readiness evidence readable.
 3. **Projection System**
-   Current focus: carry policy-export reproducibility into Stage 5 without changing the contract boundary.
+   Current focus: keep policy-export reproducibility stable without changing the contract boundary.
 
 ## Terminology Boundary
 

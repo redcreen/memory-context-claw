@@ -1,14 +1,12 @@
-import { execFile } from "node:child_process";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
+import { DatabaseSync } from "node:sqlite";
 import { fileURLToPath } from "node:url";
-import { promisify } from "node:util";
 import { rewriteRetrievalQueries } from "./query-rewrite.js";
 import { classifyQueryIntent, resolveRetrievalPolicy } from "./retrieval-policy.js";
 import { buildKeywordSet, buildOrderedKeywordSet, shouldExcludeMemoryPath } from "./utils.js";
 
-const execFileAsync = promisify(execFile);
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const DEFAULT_CARDS_PATH = path.resolve(__dirname, "..", "reports", "conversation-memory-cards.json");
@@ -20,6 +18,221 @@ const REPO_RELEASE_INSTALL_URL_RE = /git\+https:\/\/github\.com\/redcreen\/unifi
 
 function normalizeFact(text) {
   return String(text || "").replace(/\s+/g, " ").trim();
+}
+
+function normalizeSearchText(text) {
+  return String(text || "").toLowerCase().replace(/\s+/g, " ").trim();
+}
+
+function quoteFtsTerm(term) {
+  return `"${String(term || "").replace(/"/g, "\"\"")}"`;
+}
+
+function resolveOpenClawStateDir(env = process.env) {
+  const explicitStateDir = String(env.OPENCLAW_STATE_DIR || "").trim();
+  if (explicitStateDir) {
+    return explicitStateDir;
+  }
+
+  const profile = String(env.OPENCLAW_PROFILE || "").trim();
+  if (profile && profile.toLowerCase() !== "default") {
+    return path.join(os.homedir(), `.openclaw-${profile}`);
+  }
+
+  return path.join(os.homedir(), ".openclaw");
+}
+
+function resolveAgentMemoryDbPath(agentId = "main", env = process.env) {
+  return path.join(resolveOpenClawStateDir(env), "memory", `${agentId}.sqlite`);
+}
+
+function extractSearchTerms(query) {
+  const orderedKeywords = buildOrderedKeywordSet(query);
+  if (orderedKeywords.length > 0) {
+    return orderedKeywords;
+  }
+
+  const normalized = normalizeSearchText(query);
+  return normalized ? [normalized] : [];
+}
+
+function calculateLocalKeywordScore(text, query, keywords) {
+  const normalizedText = normalizeSearchText(text);
+  const normalizedQuery = normalizeSearchText(query);
+  let score = 0;
+  let matchedKeywords = 0;
+
+  if (normalizedQuery && normalizedText.includes(normalizedQuery)) {
+    score += 2.4;
+  }
+
+  for (const keyword of keywords) {
+    const normalizedKeyword = normalizeSearchText(keyword);
+    if (!normalizedKeyword) {
+      continue;
+    }
+    if (normalizedText.includes(normalizedKeyword)) {
+      matchedKeywords += 1;
+      score += normalizedKeyword.length <= 2 ? 0.75 : 1.15;
+    }
+  }
+
+  if (matchedKeywords > 1) {
+    score += 0.35 * (matchedKeywords - 1);
+  }
+
+  return {
+    score,
+    matchedKeywords
+  };
+}
+
+function createLocalSearchCandidate(row, {
+  query,
+  score,
+  sourceQuery,
+  searchMode
+}) {
+  return {
+    path: String(row.path || ""),
+    source: String(row.source || "memory"),
+    snippet: String(row.text || "").trim(),
+    startLine: Number(row.startLine || row.start_line || 0),
+    endLine: Number(row.endLine || row.end_line || 0),
+    score: Number(score || 0),
+    sourceQuery: sourceQuery || query,
+    fusionScore: Number(score || 0),
+    localSearchMode: searchMode || "heuristic",
+    updatedAt: Number(row.updatedAt || row.updated_at || 0)
+  };
+}
+
+function mergeLocalSearchCandidate(target, candidate) {
+  if (!target) {
+    return candidate;
+  }
+  if (Number(candidate.fusionScore || 0) > Number(target.fusionScore || 0)) {
+    return candidate;
+  }
+  return target;
+}
+
+function searchLocalMemoryIndex({
+  agentId,
+  query,
+  maxCandidates,
+  logger,
+  env = process.env
+}) {
+  const dbPath = resolveAgentMemoryDbPath(agentId, env);
+  const trimmedQuery = String(query || "").trim();
+  if (!trimmedQuery) {
+    return [];
+  }
+
+  const keywords = extractSearchTerms(trimmedQuery);
+  const merged = new Map();
+  let db;
+
+  try {
+    db = new DatabaseSync(dbPath, { readonly: true });
+  } catch (error) {
+    logger?.debug?.(
+      `[unified-memory-core] local memory db unavailable (${dbPath}): ${String(error)}`
+    );
+    return [];
+  }
+
+  try {
+    const ftsTerms = keywords.filter((term) => normalizeSearchText(term).length >= 2);
+    const ftsQuery = ftsTerms.map(quoteFtsTerm).join(" OR ");
+    if (ftsQuery) {
+      try {
+        const rows = db.prepare(`
+          SELECT
+            c.path,
+            c.source,
+            c.start_line AS startLine,
+            c.end_line AS endLine,
+            c.text,
+            c.updated_at AS updatedAt,
+            bm25(chunks_fts) AS rank
+          FROM chunks_fts
+          JOIN chunks c ON c.id = chunks_fts.id
+          WHERE chunks_fts MATCH ?
+            AND (c.source = 'memory' OR c.source = 'sessions')
+          ORDER BY bm25(chunks_fts)
+          LIMIT ?
+        `).all(ftsQuery, Math.max(Number(maxCandidates || 0) * 4, 24));
+
+        for (const row of rows) {
+          const keywordScore = calculateLocalKeywordScore(row.text, trimmedQuery, keywords);
+          const score = 2.2 + keywordScore.score + (1 / (1 + Math.abs(Number(row.rank || 0))));
+          const candidate = createLocalSearchCandidate(row, {
+            query: trimmedQuery,
+            sourceQuery: trimmedQuery,
+            score,
+            searchMode: "fts"
+          });
+          const key = `${candidate.path}::${candidate.startLine}::${candidate.endLine}`;
+          merged.set(key, mergeLocalSearchCandidate(merged.get(key), candidate));
+        }
+      } catch (error) {
+        logger?.debug?.(
+          `[unified-memory-core] local fts retrieval skipped for agent=${agentId}: ${String(error)}`
+        );
+      }
+    }
+
+    const scanLimit = Math.max(Number(maxCandidates || 0) * 40, 240);
+    const recentRows = db.prepare(`
+      SELECT
+        path,
+        source,
+        start_line AS startLine,
+        end_line AS endLine,
+        text,
+        updated_at AS updatedAt
+      FROM chunks
+      WHERE source = 'memory' OR source = 'sessions'
+      ORDER BY updated_at DESC
+      LIMIT ?
+    `).all(scanLimit);
+
+    const newestTimestamp = Number(recentRows[0]?.updatedAt || 0);
+    for (const row of recentRows) {
+      const keywordScore = calculateLocalKeywordScore(row.text, trimmedQuery, keywords);
+      if (keywordScore.score <= 0) {
+        continue;
+      }
+
+      const ageWindowMs = 1000 * 60 * 60 * 24 * 30;
+      const ageDelta = Math.max(0, newestTimestamp - Number(row.updatedAt || 0));
+      const recencyBoost = newestTimestamp > 0
+        ? Math.max(0, 1 - (ageDelta / ageWindowMs)) * 0.2
+        : 0;
+      const sourceBoost = row.source === "memory" ? 0.25 : 0.05;
+      const memoryRootBoost = path.basename(String(row.path || "")).toLowerCase() === "memory.md"
+        ? 0.15
+        : 0;
+      const score = keywordScore.score + recencyBoost + sourceBoost + memoryRootBoost;
+      const candidate = createLocalSearchCandidate(row, {
+        query: trimmedQuery,
+        sourceQuery: trimmedQuery,
+        score,
+        searchMode: "heuristic"
+      });
+      const key = `${candidate.path}::${candidate.startLine}::${candidate.endLine}`;
+      merged.set(key, mergeLocalSearchCandidate(merged.get(key), candidate));
+    }
+
+    return [...merged.values()]
+      .sort((left, right) => Number(right.fusionScore || 0) - Number(left.fusionScore || 0))
+      .slice(0, maxCandidates)
+      .map(({ localSearchMode, updatedAt, ...item }) => item);
+  } finally {
+    db?.close();
+  }
 }
 
 function getCardSourcePriority(card) {
@@ -173,27 +386,12 @@ export async function retrieveMemoryCandidates({
     const allResults = [];
 
     for (const searchQuery of queries) {
-      const { stdout } = await execFileAsync(
-        openclawCommand,
-        [
-          "memory",
-          "search",
-          "--agent",
-          agentId,
-          "--query",
-          searchQuery,
-          "--max-results",
-          String(maxCandidates),
-          "--json"
-        ],
-        {
-          maxBuffer: 4 * 1024 * 1024,
-          timeout: Number(commandTimeoutMs) > 0 ? Number(commandTimeoutMs) : undefined
-        }
-      );
-
-      const parsed = extractJsonPayload(stdout);
-      const results = Array.isArray(parsed?.results) ? parsed.results : [];
+      const results = searchLocalMemoryIndex({
+        agentId,
+        query: searchQuery,
+        maxCandidates,
+        logger
+      });
       for (const [index, item] of results.entries()) {
         if (shouldExcludeMemoryPath(item?.path, excludePaths)) {
           continue;
@@ -233,11 +431,11 @@ export async function retrieveMemoryCandidates({
       }));
   } catch (error) {
     logger?.warn?.(
-      `[unified-memory-core] memory retrieval failed for agent=${agentId}: ${String(error)}`
+      `[unified-memory-core] local memory retrieval failed for agent=${agentId}: ${String(error)}`
     );
     if (Array.isArray(cardCandidates) && cardCandidates.length > 0) {
       logger?.warn?.(
-        `[unified-memory-core] falling back to card artifacts for query="${query}" after builtin retrieval failure`
+        `[unified-memory-core] falling back to card artifacts for query="${query}" after local retrieval failure`
       );
       return cardCandidates
         .slice(0, maxCandidates)

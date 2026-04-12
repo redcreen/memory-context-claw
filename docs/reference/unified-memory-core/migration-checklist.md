@@ -16,8 +16,10 @@ This checklist records the minimum migration conditions before any repo split or
 
 ## Required Verification
 
+- run `npm run umc:stage5 -- --format markdown`
 - run `npm test`
 - run `npm run umc:cli -- review independent-execution --format markdown`
+- run `npm run umc:cli -- review split-rehearsal --format markdown`
 - run `npm run umc:cli -- export inspect --consumer generic --format markdown`
 - run `npm run umc:cli -- govern audit --format markdown`
 

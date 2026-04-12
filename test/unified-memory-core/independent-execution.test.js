@@ -39,6 +39,7 @@ async function createFixtureRepo() {
   await fs.writeFile(path.join(repoRoot, "docs", "unified-memory-core", "ownership-map.md"), "", "utf8");
   await fs.writeFile(path.join(repoRoot, "docs", "unified-memory-core", "release-boundary.md"), "", "utf8");
   await fs.writeFile(path.join(repoRoot, "docs", "unified-memory-core", "migration-checklist.md"), "", "utf8");
+  await fs.writeFile(path.join(repoRoot, "docs", "unified-memory-core", "runtime-api-prerequisites.md"), "", "utf8");
   await fs.writeFile(path.join(repoRoot, "src", "openclaw-adapter.js"), "", "utf8");
   await fs.writeFile(path.join(repoRoot, "src", "codex-adapter.js"), "", "utf8");
   await fs.writeFile(path.join(repoRoot, "src", "unified-memory-core", "contracts.js"), "", "utf8");
@@ -65,9 +66,10 @@ test("independent execution review summarizes split readiness from repo facts", 
   assert.equal(review.readiness_checks.ownership_map_documented.status, "ready");
   assert.equal(review.readiness_checks.release_boundary_documented.status, "ready");
   assert.equal(review.readiness_checks.migration_checklist_documented.status, "ready");
+  assert.equal(review.readiness_checks.runtime_api_prerequisites_reviewed.status, "ready");
   assert.equal(review.readiness_checks.adapter_boundaries_explicit.status, "ready");
   assert.equal(review.readiness_checks.repo_layout_matches_target.status, "ready");
-  assert.equal(review.migration_checklist.length, 7);
+  assert.equal(review.migration_checklist.length, 8);
 });
 
 test("independent execution review renders markdown", async () => {

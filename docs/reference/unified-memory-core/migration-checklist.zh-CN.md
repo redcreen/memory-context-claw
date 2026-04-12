@@ -16,8 +16,10 @@
 
 ## 必须验证
 
+- 运行 `npm run umc:stage5 -- --format markdown`
 - 运行 `npm test`
 - 运行 `npm run umc:cli -- review independent-execution --format markdown`
+- 运行 `npm run umc:cli -- review split-rehearsal --format markdown`
 - 运行 `npm run umc:cli -- export inspect --consumer generic --format markdown`
 - 运行 `npm run umc:cli -- govern audit --format markdown`
 

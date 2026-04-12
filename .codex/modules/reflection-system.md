@@ -6,7 +6,7 @@ Own candidate generation from normalized artifacts: event labeling, pattern extr
 
 ## Current Status
 
-`stage4 contract-mapped / stable`
+`stage5-compatible / stable`
 
 ## Already Implemented
 
@@ -19,14 +19,14 @@ Own candidate generation from normalized artifacts: event labeling, pattern extr
 
 ## Remaining Steps
 
-1. Keep promotion / decay review semantics readable while Stage 5 opens.
+1. Keep promotion / decay review semantics readable in post-Stage-5 maintenance.
 2. Add future feedback hooks only through governed artifacts, not hidden consumer-local state.
 3. Avoid consumer-local heuristics that would bypass current policy-input mapping.
 
 ## Completion Signal
 
-Reflection now feeds the shared Stage 4 policy contract. The next meaningful work is later-stage hardening, not more contract naming.
+Reflection now feeds the shared Stage 4-5 governed contract. The next meaningful work is later stability maintenance, not more contract naming.
 
 ## Next Checkpoint
 
-Prove that Stage 5 does not require reflection-local shortcuts outside governed artifacts.
+Keep proving that no reflection-local shortcut is needed outside governed artifacts.

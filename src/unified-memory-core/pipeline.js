@@ -22,6 +22,14 @@ function summarizeSourceArtifact(sourceArtifact) {
     return payload.text || payload.path || "file source";
   }
 
+  if (sourceArtifact.source_type === "url") {
+    return payload.text || payload.url || "url source";
+  }
+
+  if (sourceArtifact.source_type === "image") {
+    return payload.text || payload.path || "image source";
+  }
+
   if (sourceArtifact.source_type === "conversation") {
     const firstTurn = Array.isArray(payload.turns) ? payload.turns[0] : null;
     return firstTurn?.content || "conversation source";

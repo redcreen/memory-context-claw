@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
+import { DatabaseSync } from "node:sqlite";
 import {
   buildStableMemoryCardsFromMarkdown,
   buildCardArtifactCandidates,
@@ -1385,6 +1386,103 @@ test("retrieveMemoryCandidates uses card fast path for strong fact intents", asy
   assert.ok(results.length >= 1);
   assert.equal(results[0].source, "cardArtifact");
   assert.match(results[0].snippet, /牛排/);
+});
+
+test("retrieveMemoryCandidates can read local OpenClaw memory sqlite without shelling out", async () => {
+  const stateDir = await fs.mkdtemp(path.join(os.tmpdir(), "unified-memory-core-state-"));
+  const memoryDir = path.join(stateDir, "memory");
+  const dbPath = path.join(memoryDir, "main.sqlite");
+  await fs.mkdir(memoryDir, { recursive: true });
+
+  const db = new DatabaseSync(dbPath);
+  try {
+    db.exec(`
+      CREATE TABLE chunks (
+        id TEXT PRIMARY KEY,
+        path TEXT NOT NULL,
+        source TEXT NOT NULL DEFAULT 'memory',
+        start_line INTEGER NOT NULL,
+        end_line INTEGER NOT NULL,
+        hash TEXT NOT NULL,
+        model TEXT NOT NULL,
+        text TEXT NOT NULL,
+        embedding TEXT NOT NULL,
+        updated_at INTEGER NOT NULL
+      );
+      CREATE VIRTUAL TABLE chunks_fts USING fts5(
+        text,
+        id UNINDEXED,
+        path UNINDEXED,
+        source UNINDEXED,
+        model UNINDEXED,
+        start_line UNINDEXED,
+        end_line UNINDEXED
+      );
+    `);
+
+    db.prepare(`
+      INSERT INTO chunks (id, path, source, start_line, end_line, hash, model, text, embedding, updated_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `).run(
+      "chunk-1",
+      "memory/MEMORY.md",
+      "memory",
+      1,
+      3,
+      "hash-1",
+      "local",
+      "The user prefers concise progress reports and compact context.",
+      "[]",
+      Date.now()
+    );
+
+    db.prepare(`
+      INSERT INTO chunks_fts (text, id, path, source, model, start_line, end_line)
+      VALUES (?, ?, ?, ?, ?, ?, ?)
+    `).run(
+      "The user prefers concise progress reports and compact context.",
+      "chunk-1",
+      "memory/MEMORY.md",
+      "memory",
+      "local",
+      1,
+      3
+    );
+  } finally {
+    db.close();
+  }
+
+  const previousStateDir = process.env.OPENCLAW_STATE_DIR;
+  process.env.OPENCLAW_STATE_DIR = stateDir;
+  try {
+    const results = await retrieveMemoryCandidates({
+      openclawCommand: "/path/that/does/not/exist",
+      agentId: "main",
+      query: "concise progress",
+      maxCandidates: 6,
+      cardArtifacts: {
+        enabled: false,
+        path: "",
+        maxCandidates: 0,
+        fastPathEnabled: false,
+        fastPathMinScore: 0.3
+      },
+      queryRewrite: { enabled: false, maxQueries: 1 },
+      excludePaths: [],
+      logger: {}
+    });
+
+    assert.ok(results.length >= 1);
+    assert.equal(results[0].path, "memory/MEMORY.md");
+    assert.match(results[0].snippet, /concise progress reports/i);
+  } finally {
+    if (typeof previousStateDir === "string") {
+      process.env.OPENCLAW_STATE_DIR = previousStateDir;
+    } else {
+      delete process.env.OPENCLAW_STATE_DIR;
+    }
+    await fs.rm(stateDir, { recursive: true, force: true });
+  }
 });
 
 test("readCardArtifactCandidates prefers formal policy over session-derived duplicate facts", async () => {

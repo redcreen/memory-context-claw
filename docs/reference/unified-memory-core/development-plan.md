@@ -48,8 +48,10 @@ Current status:
 - `Stage 1`: completed
 - `Stage 2`: completed
 - `Stage 3`: completed
-- current pointer: `Step 39`
-- current recommendation: resume from `Stage 5`
+- `Stage 4`: completed
+- `Stage 5`: completed
+- current pointer: `Stage 5 closeout`
+- current recommendation: keep release-preflight, deployment verification, and Stage 5 evidence stable before opening any later phase
 
 Already implemented in the current baseline:
 
@@ -80,7 +82,7 @@ Execution constraints that still apply:
 | Stage 2 | `11-20` | complete the first local-first implementation baseline | `completed` |
 | Stage 3 | `21-30` | complete the self-learning lifecycle baseline | `completed` |
 | Stage 4 | `31-38` | connect governed learning outputs into adapter policy use | `completed` |
-| Stage 5 | `39-46` | harden product operations and split-ready execution | `next` |
+| Stage 5 | `39-46` | harden product operations and split-ready execution | `completed` |
 
 ## Sequential Build Plan
 
@@ -165,22 +167,22 @@ Stage complete when:
 - split-ready execution is validated
 - future service mode can be discussed from a stable base
 
-39. `next` Harden standalone source adapters for file / directory / URL / image inputs.
-40. `later` Add scheduled-job-friendly workflows for reflection and governance runs.
-41. `later` Add self-learning maintenance workflow docs and CLI support.
-42. `later` Add release-boundary validation checks.
-43. `later` Add migration and repo-split rehearsal.
-44. `later` Add reproducibility and rollback checks for learning exports.
-45. `later` Review prerequisites for runtime API or network service mode.
-46. `later` Close the stage with an independent-product readiness review.
+39. `completed` Harden standalone source adapters for file / directory / URL / image inputs.
+40. `completed` Add scheduled-job-friendly workflows for reflection and governance runs.
+41. `completed` Add self-learning maintenance workflow docs and CLI support.
+42. `completed` Add release-boundary validation checks.
+43. `completed` Add migration and repo-split rehearsal.
+44. `completed` Add reproducibility and rollback checks for learning exports.
+45. `completed` Review prerequisites for runtime API or network service mode.
+46. `completed` Close the stage with an independent-product readiness review.
 
 ## Current Next Build
 
 Resume exactly from here:
 
-1. start at `Step 39`
-2. finish `Stage 5` completely before discussing anything beyond it
-3. keep Stage 4 policy adaptation evidence stable while Stage 5 opens
+1. hold release-preflight, deployment verification, and `Stage 5` evidence stable
+2. do not open runtime API or service-mode work until the documented prerequisites stay green
+3. treat registry-root cutover as explicit operator policy work, not hidden phase drift
 
 Do not start with:
 

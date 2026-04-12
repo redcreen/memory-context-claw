@@ -60,3 +60,58 @@ test("source system snapshots directory sources for replay", async () => {
     /nested\/b\.md/
   );
 });
+
+test("source system normalizes url sources from local-first snapshots", async () => {
+  const sourceSystem = createSourceSystem();
+  const result = await sourceSystem.ingestDeclaredSource({
+    sourceType: "url",
+    declaredBy: "test",
+    url: "https://example.com/stage5",
+    title: "Stage 5 maintenance",
+    content: "Maintenance workflows should stay scriptable and reproducible.",
+    namespace: {
+      tenant: "local",
+      scope: "workspace",
+      resource: "unified-memory-core",
+      key: "url"
+    },
+    visibility: "workspace"
+  });
+
+  assert.equal(result.sourceArtifact.source_type, "url");
+  assert.equal(result.sourceArtifact.normalized_payload.url, "https://example.com/stage5");
+  assert.match(result.sourceArtifact.normalized_payload.text, /scriptable and reproducible/);
+});
+
+test("source system snapshots image sources with text context", async () => {
+  const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "umc-image-"));
+  const imagePath = path.join(tempDir, "signal.png");
+  await fs.writeFile(
+    imagePath,
+    Buffer.from(
+      "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO1+L1EAAAAASUVORK5CYII=",
+      "base64"
+    )
+  );
+
+  const sourceSystem = createSourceSystem();
+  const result = await sourceSystem.ingestDeclaredSource({
+    sourceType: "image",
+    declaredBy: "test",
+    path: imagePath,
+    altText: "Compact terminal-first workflow diagram.",
+    caption: "Stage 5 image source.",
+    namespace: {
+      tenant: "local",
+      scope: "workspace",
+      resource: "unified-memory-core",
+      key: "image"
+    },
+    visibility: "workspace"
+  });
+
+  assert.equal(result.sourceArtifact.source_type, "image");
+  assert.equal(result.sourceArtifact.normalized_payload.media_type, "image/png");
+  assert.match(result.sourceArtifact.normalized_payload.text, /terminal-first workflow/);
+  assert.equal(typeof result.sourceArtifact.normalized_payload.sha256, "string");
+});

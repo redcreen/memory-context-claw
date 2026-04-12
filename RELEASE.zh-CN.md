@@ -54,9 +54,7 @@ openclaw plugins install git+https://github.com/redcreen/Unified-Memory-Core.git
 打 tag 之前，建议至少做这些：
 
 1. 跑：
-   - `npm test`
-   - `npm run smoke:eval`
-   - `npm run eval:memory-search:cases`
+   - `npm run umc:release-preflight -- --format markdown`
 2. 确认关键文档已更新：
    - `README.md`
    - `docs/reference/configuration.zh-CN.md`
@@ -73,6 +71,7 @@ openclaw plugins install git+https://github.com/redcreen/Unified-Memory-Core.git
 示例流程：
 
 ```bash
+npm run umc:release-preflight -- --format markdown
 git tag v0.2.0
 git push origin v0.2.0
 ```

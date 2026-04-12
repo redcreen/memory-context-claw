@@ -2,91 +2,98 @@
 
 ## Current Phase
 
-`stage transition / Stage 5 unlocked`
+`stage closeout / Stage 5 complete`
 
 ## Slices
 
-- Slice: `close-stage4-policy-adaptation-and-multi-consumer-use`
-  - Objective: 一口气收掉 `Step 31-38`，把 governed learning outputs 真正接到 OpenClaw / Codex consumer 行为，并保持可回退、可治理、可验证
-  - Dependencies: `policy-adaptation.js`、`projection-system.js`、OpenClaw / Codex adapters、`governance-system.js`、`standalone-runtime.js`、CLI / scripts
-  - Risks: 如果 contract 不先冻结，Stage 4 会退化成 adapter-local heuristics；如果没有 rollback / compatibility audit，consumer policy 会失去治理边界
-  - Validation: focused Stage 4 suite、`govern audit-policy`、`learn policy-loop`、`scripts/run-policy-adaptation-loop.js`、full `npm test`
-  - Exit Condition: `Step 31-38` 全部有真实实现、回归、CLI/runtime entry 和本地可复现 loop
+- Slice: `close-stage5-product-hardening-and-independent-operation`
+  - Objective: 一口气收掉 `Step 39-46`，把 source hardening、maintenance、reproducibility、release-boundary、split rehearsal、independent review 全部接到 CLI-first 证据面
+  - Dependencies: `source-system.js`、`standalone-runtime.js`、CLI / scripts、independent-execution review、testing docs
+  - Risks: 如果 Stage 5 只补单点命令而没有统一 acceptance，仓库会回到“功能有了但 operator 无法稳定验证”的状态
+  - Validation: Stage 5 targeted tests、`npm run umc:stage5`、`npm run umc:cli -- maintenance run`、`npm run umc:cli -- export reproducibility`、`npm run umc:cli -- review split-rehearsal`
+  - Exit Condition: `Step 39-46` 全部有真实实现、文档、CLI 入口和自动化 acceptance
   - Status: `completed`
 
-- Slice: `hold-stage4-policy-loop-stable`
-  - Objective: 保持 policy inputs、OpenClaw/Codex consumption、policy audit 和 policy loop 在后续改动中稳定
-  - Dependencies: `test/unified-memory-core/policy-adaptation.test.js`、adapter tests、governance tests、standalone runtime tests
-  - Risks: 后续 hardening 如果绕过 governed policy exports，会让 Stage 4 退回成隐式行为
-  - Validation: targeted Stage 4 suite、full `npm test`
-  - Exit Condition: Stage 5 首个 slice 不破坏 Stage 4 baseline
+- Slice: `hold-stage5-product-hardening-stable`
+  - Objective: 保持 Stage 5 acceptance、maintenance、reproducibility、split rehearsal 证据面持续稳定
+  - Dependencies: Stage 5 tests、`umc:stage5`、host smoke、control-surface docs
+  - Risks: 后续改动如果绕开这些证据面，会让 Stage 5 退回成“曾经完成”
+  - Validation: `npm run umc:stage5`、`npm run umc:acceptance`、`npm run umc:openclaw-itest`、full `npm test`
+  - Exit Condition: later phase discussion does not require reopening Stage 5 contract work
   - Status: `ongoing`
 
-- Slice: `unlock-stage5-product-hardening-baseline`
-  - Objective: 定义 Stage 5 的 source-adapter / maintenance / release-boundary / reproducibility 执行顺序
-  - Dependencies: `docs/reference/unified-memory-core/development-plan.md`、`docs/roadmap.md`、`.codex/module-dashboard.md`
-  - Risks: 如果没有先定顺序，Stage 5 会变成零散 hardening 而不是一条产品收口线
-  - Validation: updated development plan、clear step pointer、明确 regression / rollback evidence surface
-  - Exit Condition: `Step 39` 被命名并有明确 first slice
-  - Status: `next`
+- Slice: `close-release-preflight-cli-and-deployment-verification`
+  - Objective: 把真实 bundle install、deployment verification、release-preflight 一键门禁全部 CLI 化，并把仓库状态推进到“只等人类验收”
+  - Dependencies: local SQLite retrieval path、release bundle builder、OpenClaw install verify、testing docs、release docs
+  - Risks: 如果继续沿用 dev-repo 直接安装，safe-install 风险会让稳定安装路径名义存在、实际不稳
+  - Validation: `npm run umc:build-bundle`、`npm run umc:openclaw-install-verify`、`npm run umc:release-preflight`、`npm run umc:cli -- verify openclaw-install`
+  - Exit Condition: release bundle、真实安装验证、完整 CLI preflight 都已通过，只剩人类验收
+  - Status: `completed`
+
+- Slice: `hold-release-preflight-evidence-stable`
+  - Objective: 保持 release-preflight、bundle install、host smoke、Stage 5 acceptance 证据持续为绿
+  - Dependencies: release bundle builder、install verify、host smoke、Stage 5 acceptance、control-surface docs
+  - Risks: 如果后续改动绕过 release-preflight，仓库会退回到“功能可用但发版验证靠人工拼接”
+  - Validation: `npm run umc:release-preflight`、`npm run umc:openclaw-install-verify`、`npm run umc:openclaw-itest`、`npm run umc:stage5`
+  - Exit Condition: human acceptance 完成且 later maintenance 不需要重开 deployment contract work
+  - Status: `ongoing`
 
 - Slice: `decide-host-neutral-root-cutover-gate`
-  - Objective: 明确 canonical registry root 的正式 adoption 窗口，并决定 `registry-root consistency` 是否升成独立强门禁
-  - Dependencies: `.codex/subprojects/host-neutral-memory.md`、registry topology / migration outputs、governance cycle
-  - Risks: shared-root 合同长期停在“兼容存在，但 operator policy 未固定”
-  - Validation: topology inspect、migration report、governance findings
+  - Objective: 明确 canonical registry root 的 adoption 窗口，并决定 `registry-root consistency` 是否升成独立强门禁
+  - Dependencies: `.codex/subprojects/host-neutral-memory.md`、registry topology / migration outputs、Stage 5 split rehearsal evidence
+  - Risks: shared-root 合同长期停在“证据存在但 operator policy 未固定”
+  - Validation: topology inspect、migration rehearsal、governance findings
   - Exit Condition: cutover window 和 gate level 被明确
   - Status: `pending`
 
 ## Execution Order
 
-1. 保持刚完成的 Stage 4 policy loop 稳定
-2. 打开 `unlock-stage5-product-hardening-baseline`
-3. 再决定 host-neutral root 的正式 cutover / hard-gate 方案
+1. 保持 release-preflight / bundle install / host smoke / Stage 5 evidence 稳定
+2. 做人类验收与后续 commit / push / tag 决策
+3. 决定 host-neutral root 的正式 cutover / hard-gate 方案
 
 ## Architecture Supervision
 
-- Signal: `yellow`
-- Signal Basis: Stage 4 已完成，但 Stage 5 入口还没有冻结
-- Problem Class: operational hardening order and operator policy
-- Root Cause Hypothesis: 如果不先定义 maintenance / reproducibility / release-boundary 顺序，Stage 5 会重新散开成独立 checklist
-- Correct Layer: source adapters, release boundary, reproducibility, control surface
-- Rejected Shortcut: 直接零散补 release checks，不先冻结 Stage 5 slice
-- Escalation Gate: raise but continue
+- Signal: `green`
+- Signal Basis: 现在不仅有 Stage 5 evidence，还有 release-preflight / bundle install / host smoke 的真实部署证据
+- Problem Class: post-stage maintenance, human acceptance, and operator policy
+- Root Cause Hypothesis: 真正的后续风险不在实现本身，而在 preflight 失活、human acceptance 未做、或 root policy 被隐藏处理
+- Correct Layer: release preflight evidence, release boundary, registry-root governance, control surface
+- Rejected Shortcut: 跳过 Stage 5 证据面直接讨论 runtime API / service mode
+- Escalation Gate: continue automatically
 
 ## Current Execution Line
 
-- Objective: 定义 Stage 5 的第一个 hardening slice，并把 Stage 4 policy loop 固定成后续阶段的回归证据面
-- Plan Link: `unlock-stage5-product-hardening-baseline`
-- Runway: one slice covering Step `39` naming、execution order、validation surface、release-boundary framing
-- Progress: `0 / 5` tasks complete
+- Objective: 保持 release-preflight 刚收口的部署验证证据面持续为绿
+- Plan Link: `hold-release-preflight-evidence-stable`
+- Runway: one stable-maintenance slice covering preflight、bundle install、host smoke、stage5 acceptance、state refresh
+- Progress: `4 / 4` tasks complete
 - Stop Conditions:
-  - Stage 5 order changes user-visible product direction
-  - root cutover policy changes operational assumptions
-  - validation reveals a missing hardening prerequisite
-- Validation: updated development plan、updated roadmap、module dashboard refresh、targeted regression evidence mapping
+  - Stage 5 evidence regresses
+  - root cutover policy changes operator assumptions materially
+  - later service-mode discussion pressures the repo to bypass current evidence
+- Validation: `npm run umc:release-preflight`、`npm run umc:openclaw-install-verify`、`npm run umc:openclaw-itest`、`npm run umc:stage5`
 
 ## Execution Tasks
 
-- [ ] EL-1 define the Stage 5 first slice and exact `Step 39` ownership
-- [ ] EL-2 decide how source-adapter hardening, maintenance workflow, and release-boundary checks should be ordered
-- [ ] EL-3 carry Stage 4 policy loop forward as a required regression surface
-- [ ] EL-4 refresh roadmap / development-plan / module control surface for Stage 5 entry
-- [ ] EL-5 lock the next validation set before implementation starts
+- [x] EL-1 keep release-preflight green
+- [x] EL-2 keep bundle install / host smoke / Stage 5 surfaces green
+- [x] EL-3 keep public docs and `.codex/*` state aligned with actual completion
+- [x] EL-4 keep root-cutover follow-up visible instead of hiding it inside later product work
 
 ## Development Log Capture
 
 - Trigger Level: high
 - Auto-Capture When:
-  - `Step 39` is named
-  - release-boundary checks become executable
-  - maintenance / reproducibility workflow is frozen
+  - Stage 5 closes
+  - release-preflight closes deployment verification
+  - a later regression reopens Stage 5 evidence
+  - root cutover policy changes operator workflow materially
 - Skip When:
-  - the change stays inside Stage 4 maintenance
-  - only wording or dashboard sync changes
+  - only routine regression runs are repeated without behavior changes
 
 ## Escalation Model
 
-- Continue Automatically: Stage 5 planning stays inside the current product direction
-- Raise But Continue: pressure appears to bypass shared hardening evidence or weaken rollback / reproducibility
-- Require User Decision: the chosen Stage 5 first slice materially changes operator workflow expectations
+- Continue Automatically: normal post-stage regression and operator evidence maintenance
+- Raise But Continue: Stage 5 evidence stays green but root cutover policy remains unresolved
+- Require User Decision: a later phase would bypass or weaken the current Stage 5 contract

@@ -99,10 +99,58 @@ function summarizeDeclaredSource(declaredSource) {
       preview: normalizeString(firstMessage?.content, "").slice(0, 120)
     };
   }
+  if (sourceType === "url") {
+    return {
+      source_type: sourceType,
+      preview: normalizeString(declaredSource.url || declaredSource.href || declaredSource.path, "").slice(0, 120)
+    };
+  }
+  if (sourceType === "image") {
+    return {
+      source_type: sourceType,
+      preview: normalizeString(
+        declaredSource.altText
+        || declaredSource.alt_text
+        || declaredSource.caption
+        || declaredSource.path,
+        ""
+      ).slice(0, 120)
+    };
+  }
+  if (normalizeString(declaredSource.source_type, "")) {
+    return {
+      source_type: normalizeString(declaredSource.source_type, "unknown"),
+      preview: normalizeString(
+        declaredSource.normalized_payload?.text
+        || declaredSource.normalized_payload?.path
+        || declaredSource.normalized_payload?.url,
+        ""
+      ).slice(0, 120)
+    };
+  }
 
   return {
     source_type: sourceType,
     preview: normalizeString(declaredSource.path, "").slice(0, 120)
+  };
+}
+
+function summarizeDeclaredSources(declaredSources = []) {
+  const byType = {};
+  const previews = [];
+
+  for (const declaredSource of declaredSources) {
+    const summary = summarizeDeclaredSource(declaredSource);
+    byType[summary.source_type] = (byType[summary.source_type] || 0) + 1;
+    if (summary.preview) {
+      previews.push(summary.preview);
+    }
+  }
+
+  return {
+    source_count: declaredSources.length,
+    by_source_type: byType,
+    previews: previews.slice(0, 5)
   };
 }
 
@@ -115,6 +163,194 @@ function buildExportSnapshot(consumer, exportResult, consumerSummary = {}) {
     rollback_status: normalizeString(consumerSummary.rollback_status, "unknown"),
     supporting_context_mode: normalizeString(consumerSummary.supporting_context_mode, "unknown")
   };
+}
+
+function summarizeCheckStatus(checks = []) {
+  const passedChecks = checks.filter((check) => check.status === "pass").length;
+  const failedChecks = checks.length - passedChecks;
+  return {
+    status: failedChecks === 0 ? "pass" : "fail",
+    total_checks: checks.length,
+    passed_checks: passedChecks,
+    failed_checks: failedChecks
+  };
+}
+
+function buildConsumerReproducibility(consumer, runs = []) {
+  const payloadFingerprints = runs.map((run) => normalizeString(run.payloadFingerprint));
+  const policyFingerprints = runs.map((run) => normalizeString(run.policyFingerprint));
+  const rollbackStatuses = runs.map((run) => normalizeString(run.rollbackStatus, "unknown"));
+  const artifactRefs = runs.map((run) => JSON.stringify(run.artifactRefs || []));
+  const payloadStable = new Set(payloadFingerprints).size <= 1;
+  const policyStable = new Set(policyFingerprints).size <= 1;
+  const artifactRefsStable = new Set(artifactRefs).size <= 1;
+  const rollbackStable = new Set(rollbackStatuses).size <= 1;
+
+  return {
+    consumer,
+    runs: runs.length,
+    payload_fingerprints: payloadFingerprints,
+    policy_fingerprints: policyFingerprints,
+    rollback_statuses: rollbackStatuses,
+    payload_stable: payloadStable,
+    policy_stable: policyStable,
+    artifact_refs_stable: artifactRefsStable,
+    rollback_stable: rollbackStable,
+    artifact_count: Number(runs[0]?.artifactCount || 0),
+    policy_input_count: Number(runs[0]?.policyInputCount || 0)
+  };
+}
+
+function countReviewIssues(review = {}) {
+  return Object.values(review.readiness_checks || {})
+    .filter((item) => item.status !== "ready")
+    .length;
+}
+
+export function renderMaintenanceWorkflowReport(report, { format = "markdown" } = {}) {
+  if (format === "json") {
+    return JSON.stringify(report, null, 2);
+  }
+
+  const lines = [];
+  lines.push("# Unified Memory Core Maintenance Workflow");
+  lines.push(`- runId: \`${report.run_id}\``);
+  lines.push(`- namespace: \`${createNamespaceKey(report.namespace)}\``);
+  lines.push(`- generatedAt: \`${report.generated_at}\``);
+  lines.push(`- registryDir: \`${report.registry_dir}\``);
+  lines.push(`- status: \`${report.summary.status}\``);
+  lines.push("");
+  lines.push("## Summary");
+  lines.push(`- sources: \`${report.sources.source_count}\``);
+  lines.push(`- stableLearningArtifacts: \`${report.summary.stable_learning_artifacts}\``);
+  lines.push(`- lifecycleFindings: \`${report.summary.learning_findings}\``);
+  lines.push(`- policyFindings: \`${report.summary.policy_findings}\``);
+  lines.push(`- namespaceFindings: \`${report.summary.namespace_findings}\``);
+  lines.push(`- replayPlan: \`${report.summary.replay_plan_status}\``);
+  lines.push(`- repairPlan: \`${report.summary.repair_plan_status}\``);
+  lines.push("");
+  lines.push("## Source Coverage");
+  for (const [sourceType, count] of Object.entries(report.sources.by_source_type || {})) {
+    lines.push(`- ${sourceType}: ${count}`);
+  }
+  lines.push("");
+  lines.push("## Checks");
+  lines.push(`- policyLoopStatus: \`${report.policy_loop.policy_audit.findings.length === 0 ? "clean" : "followup"}\``);
+  lines.push(`- learningAuditStatus: \`${report.policy_loop.learning_lifecycle.learning_audit.findings.length === 0 ? "clean" : "followup"}\``);
+  lines.push(`- namespaceAuditStatus: \`${report.namespace_audit.findings.length === 0 ? "clean" : "followup"}\``);
+  lines.push(`- topologyMigrationNeeded: \`${report.registry_topology.summary.migration_needed}\``);
+  lines.push("");
+
+  return `${lines.join("\n").trimEnd()}\n`;
+}
+
+export function renderExportReproducibilityReport(report, { format = "markdown" } = {}) {
+  if (format === "json") {
+    return JSON.stringify(report, null, 2);
+  }
+
+  const lines = [];
+  lines.push("# Unified Memory Core Export Reproducibility");
+  lines.push(`- reportId: \`${report.report_id}\``);
+  lines.push(`- namespace: \`${createNamespaceKey(report.namespace)}\``);
+  lines.push(`- generatedAt: \`${report.generated_at}\``);
+  lines.push(`- status: \`${report.summary.status}\``);
+  lines.push("");
+  lines.push("## Summary");
+  lines.push(`- consumersChecked: \`${report.summary.consumers_checked}\``);
+  lines.push(`- stableConsumers: \`${report.summary.stable_consumers}\``);
+  lines.push(`- failedConsumers: \`${report.summary.failed_consumers}\``);
+  lines.push("");
+  lines.push("## Consumers");
+  for (const consumer of Object.values(report.consumers || {})) {
+    lines.push(
+      `- ${consumer.consumer}: payload=${consumer.payload_stable} policy=${consumer.policy_stable} refs=${consumer.artifact_refs_stable} rollback=${consumer.rollback_stable}`
+    );
+  }
+  lines.push("");
+  lines.push("## Findings");
+  if (!Array.isArray(report.findings) || report.findings.length === 0) {
+    lines.push("- none");
+  } else {
+    for (const finding of report.findings) {
+      lines.push(`- [${finding.severity}] ${finding.code}: ${finding.message}`);
+    }
+  }
+  lines.push("");
+
+  return `${lines.join("\n").trimEnd()}\n`;
+}
+
+export function renderSplitRehearsalReport(report, { format = "markdown" } = {}) {
+  if (format === "json") {
+    return JSON.stringify(report, null, 2);
+  }
+
+  const lines = [];
+  lines.push("# Unified Memory Core Split Rehearsal");
+  lines.push(`- rehearsalId: \`${report.rehearsal_id}\``);
+  lines.push(`- generatedAt: \`${report.generated_at}\``);
+  lines.push(`- repoRoot: \`${report.repo_root}\``);
+  lines.push(`- registrySource: \`${report.registry_migration.source_dir}\``);
+  lines.push(`- registryTarget: \`${report.registry_migration.target_dir}\``);
+  lines.push(`- status: \`${report.summary.status}\``);
+  lines.push("");
+  lines.push("## Summary");
+  lines.push(`- independentReviewIssues: \`${report.summary.independent_review_issues}\``);
+  lines.push(`- migrationNeeded: \`${report.summary.migration_needed}\``);
+  lines.push(`- migrationAddsRecords: \`${report.summary.added_records}\``);
+  lines.push("");
+  lines.push("## Path Mapping");
+  for (const item of report.path_mapping) {
+    lines.push(`- ${item.from} -> ${item.to}`);
+  }
+  lines.push("");
+
+  return `${lines.join("\n").trimEnd()}\n`;
+}
+
+export function renderStage5AcceptanceReport(report, { format = "markdown" } = {}) {
+  if (format === "json") {
+    return JSON.stringify(report, null, 2);
+  }
+
+  const lines = [];
+  lines.push("# Unified Memory Core Stage 5 Acceptance");
+  lines.push(`- reportId: \`${report.report_id}\``);
+  lines.push(`- namespace: \`${createNamespaceKey(report.namespace)}\``);
+  lines.push(`- generatedAt: \`${report.generated_at}\``);
+  lines.push(`- registryDir: \`${report.registry_dir}\``);
+  lines.push(`- status: \`${report.summary.status}\``);
+  lines.push("");
+  lines.push("## Summary");
+  lines.push(`- passedChecks: \`${report.summary.passed_checks}\``);
+  lines.push(`- failedChecks: \`${report.summary.failed_checks}\``);
+  lines.push(`- totalChecks: \`${report.summary.total_checks}\``);
+  lines.push(`- sourceCount: \`${report.sources.source_count}\``);
+  lines.push(`- stage34Status: \`${report.stage34_acceptance.summary.status}\``);
+  lines.push(`- maintenanceStatus: \`${report.maintenance.summary.status}\``);
+  lines.push(`- reproducibilityStatus: \`${report.reproducibility.summary.status}\``);
+  lines.push(`- splitRehearsalStatus: \`${report.split_rehearsal.summary.status}\``);
+  lines.push("");
+  lines.push("## Checks");
+  for (const check of report.checks) {
+    lines.push(
+      `- [${check.status.toUpperCase()}] ${check.phase}.${check.code}: ${check.message} (expected=${check.expected}; actual=${check.actual})`
+    );
+  }
+  lines.push("");
+  lines.push("## Source Coverage");
+  for (const [sourceType, count] of Object.entries(report.sources.by_source_type || {})) {
+    lines.push(`- ${sourceType}: ${count}`);
+  }
+  lines.push("");
+  lines.push("## Minimal Human Follow-Up");
+  for (const item of report.manual_follow_up) {
+    lines.push(`- ${item}`);
+  }
+  lines.push("");
+
+  return `${lines.join("\n").trimEnd()}\n`;
 }
 
 export function renderStage34AcceptanceReport(report, { format = "markdown" } = {}) {
@@ -863,6 +1099,7 @@ export function createStandaloneRuntime(options = {}) {
         summary: policyAudit.summary,
         findings: policyAudit.findings
       },
+      policy_loop: policyLoop,
       openclaw_context: {
         candidate_count: Number(policyLoop.openclaw_context.candidates?.length || 0),
         policy_input_count: Number(policyLoop.openclaw_context.policy_context?.policy_inputs?.length || 0),
@@ -889,6 +1126,440 @@ export function createStandaloneRuntime(options = {}) {
           : [
               "Fix failing automated checks before relying on manual spot checks.",
               "Use the lifecycle, policy audit, and export inspect commands to isolate the failing phase."
+            ]
+    };
+  }
+
+  async function runMaintenanceWorkflow({
+    policyLoop,
+    declaredSources = [],
+    sourceArtifacts = [],
+    dryRun = false,
+    autoPromote = true,
+    decidedBy = "standalone-runtime",
+    allowedVisibilities,
+    allowedStates,
+    query = "summarize the current governed policy",
+    taskPrompt = "apply current governed coding policy",
+    comparisonWindowDays = 7,
+    maxCandidates = 6,
+    maxItems = 6,
+    maxPolicyInputs = 8
+  } = {}) {
+    const activePolicyLoop = policyLoop || await runPolicyAdaptationLoop({
+      declaredSources,
+      sourceArtifacts,
+      dryRun,
+      autoPromote,
+      decidedBy,
+      allowedVisibilities,
+      allowedStates,
+      query,
+      taskPrompt,
+      comparisonWindowDays,
+      maxCandidates,
+      maxItems,
+      maxPolicyInputs
+    });
+    const namespace = activePolicyLoop.namespace || config.namespace;
+    const [namespaceAudit, registryTopology, genericExport] = await Promise.all([
+      governanceSystem.auditNamespace({
+        namespace,
+        allowedVisibilities,
+        allowedStates
+      }),
+      inspectRegistryTopology({
+        explicitDir: options?.config?.registryDir,
+        env: options?.config?.env
+      }),
+      projectionSystem.buildGenericExport({
+        namespace,
+        allowedVisibilities,
+        allowedStates
+      })
+    ]);
+
+    const learningAudit = activePolicyLoop.learning_lifecycle.learning_audit;
+    const policyAudit = activePolicyLoop.policy_audit;
+    const namespaceFinding = namespaceAudit.findings[0];
+    const learningFinding = learningAudit.findings[0];
+    const repairPlan = namespaceFinding
+      ? governanceSystem.createRepairRecord({
+          namespace,
+          findingCode: namespaceFinding.code,
+          action: "mark_for_review",
+          decidedBy,
+          targetRecordIds: namespaceFinding.record_refs || [],
+          notes: ["maintenance-workflow"],
+          dryRun: true
+        })
+      : null;
+    const learningRepairPlan = learningFinding
+      ? governanceSystem.createLearningRepairRecord({
+          namespace,
+          findingCode: learningFinding.code,
+          decidedBy,
+          report: learningAudit,
+          notes: ["maintenance-workflow"],
+          dryRun: true
+        })
+      : null;
+    const replayRun = governanceSystem.createReplayRun({
+      namespace,
+      exportId: genericExport.exportContract.export_id,
+      replayedBy: decidedBy,
+      inputRefs: genericExport.exportContract.artifact_refs,
+      result: namespaceAudit.findings.length === 0 ? "clean" : "queued",
+      notes: ["maintenance-workflow"]
+    });
+    const learningReplayRun = governanceSystem.createLearningReplayRun({
+      namespace,
+      replayedBy: decidedBy,
+      result: learningAudit.findings.length === 0 ? "clean" : "queued",
+      notes: ["maintenance-workflow"],
+      report: learningAudit
+    });
+
+    const sources = summarizeDeclaredSources(
+      declaredSources.length > 0 ? declaredSources : sourceArtifacts
+    );
+    const totalFindings = learningAudit.findings.length + policyAudit.findings.length + namespaceAudit.findings.length;
+
+    return {
+      run_id: createContractId("maintenance", options.idGenerator),
+      contract_version: SHARED_CONTRACT_VERSION,
+      generated_at: createContractTimestamp(clock),
+      namespace,
+      registry_dir: config.registryDir,
+      dry_run: dryRun,
+      sources,
+      policy_loop: activePolicyLoop,
+      namespace_audit: namespaceAudit,
+      registry_topology: registryTopology,
+      repair_plan: repairPlan,
+      learning_repair_plan: learningRepairPlan,
+      replay_run: replayRun,
+      learning_replay_run: learningReplayRun,
+      summary: {
+        status: totalFindings === 0 ? "pass" : "followup",
+        stable_learning_artifacts: Number(learningAudit.summary.stable_learning_artifacts || 0),
+        learning_findings: learningAudit.findings.length,
+        policy_findings: policyAudit.findings.length,
+        namespace_findings: namespaceAudit.findings.length,
+        replay_plan_status: replayRun.result,
+        repair_plan_status: repairPlan ? "queued" : "clean",
+        learning_repair_plan_status: learningRepairPlan ? "queued" : "clean"
+      }
+    };
+  }
+
+  async function auditExportReproducibility({
+    namespace = config.namespace,
+    allowedVisibilities,
+    allowedStates,
+    consumers = ["generic", "openclaw", "codex"],
+    runs = 2,
+    maxPolicyInputs = 8
+  } = {}) {
+    const consumerReports = {};
+    const findings = [];
+
+    for (const consumer of consumers) {
+      const snapshots = [];
+      for (let index = 0; index < runs; index += 1) {
+        const exportResult = await projectionSystem.buildExport({
+          consumer,
+          namespace,
+          allowedVisibilities,
+          allowedStates
+        });
+        const policyContext = createPolicyContext({
+          exportResults: [exportResult],
+          consumer,
+          maxPolicyInputs
+        });
+        snapshots.push({
+          payloadFingerprint: exportResult.payloadFingerprint,
+          policyFingerprint: exportResult.payload?.policy_fingerprint,
+          artifactRefs: exportResult.exportContract?.artifact_refs || [],
+          rollbackStatus: normalizeString(
+            policyContext.rollback?.status,
+            normalizeString(exportResult.payload?.policy_rollback?.status, "unknown")
+          ),
+          artifactCount: countExportArtifacts(exportResult),
+          policyInputCount: countPolicyInputs(exportResult)
+        });
+      }
+
+      const consumerSummary = buildConsumerReproducibility(consumer, snapshots);
+      consumerReports[consumer] = consumerSummary;
+      if (!consumerSummary.payload_stable) {
+        findings.push({
+          severity: "error",
+          code: "payload_fingerprint_changed_between_runs",
+          message: `${consumer} payload fingerprint changed between reproducibility runs.`,
+          consumer
+        });
+      }
+      if (!consumerSummary.policy_stable) {
+        findings.push({
+          severity: "error",
+          code: "policy_fingerprint_changed_between_runs",
+          message: `${consumer} policy fingerprint changed between reproducibility runs.`,
+          consumer
+        });
+      }
+      if (!consumerSummary.artifact_refs_stable) {
+        findings.push({
+          severity: "error",
+          code: "artifact_refs_changed_between_runs",
+          message: `${consumer} artifact refs changed between reproducibility runs.`,
+          consumer
+        });
+      }
+      if (!consumerSummary.rollback_stable) {
+        findings.push({
+          severity: "error",
+          code: "rollback_status_changed_between_runs",
+          message: `${consumer} rollback status changed between reproducibility runs.`,
+          consumer
+        });
+      }
+    }
+
+    const failedConsumers = Object.values(consumerReports).filter(
+      (consumer) =>
+        !consumer.payload_stable
+        || !consumer.policy_stable
+        || !consumer.artifact_refs_stable
+        || !consumer.rollback_stable
+    ).length;
+
+    return {
+      report_id: createContractId("reproducibility", options.idGenerator),
+      contract_version: SHARED_CONTRACT_VERSION,
+      generated_at: createContractTimestamp(clock),
+      namespace,
+      consumers: consumerReports,
+      findings,
+      summary: {
+        status: failedConsumers === 0 ? "pass" : "fail",
+        consumers_checked: Object.keys(consumerReports).length,
+        stable_consumers: Object.keys(consumerReports).length - failedConsumers,
+        failed_consumers: failedConsumers
+      }
+    };
+  }
+
+  async function runSplitRehearsal({
+    repoRoot: overrideRepoRoot = repoRoot,
+    sourceDir = config.registryDir,
+    targetDir = `${config.registryDir}-split-rehearsal`,
+    apply = false
+  } = {}) {
+    const [independentReview, migrationReport] = await Promise.all([
+      createIndependentExecutionReview({
+        repoRoot: overrideRepoRoot,
+        clock
+      }),
+      migrateRegistryRoot({
+        explicitDir: options?.config?.registryDir,
+        env: options?.config?.env,
+        sourceDir,
+        targetDir,
+        apply
+      })
+    ]);
+    const independentIssues = countReviewIssues(independentReview);
+
+    return {
+      rehearsal_id: createContractId("split_rehearsal", options.idGenerator),
+      contract_version: SHARED_CONTRACT_VERSION,
+      generated_at: createContractTimestamp(clock),
+      repo_root: overrideRepoRoot,
+      independent_review: independentReview,
+      registry_migration: migrationReport,
+      path_mapping: [
+        {
+          from: "src/unified-memory-core/",
+          to: "packages/unified-memory-core/src/"
+        },
+        {
+          from: "scripts/unified-memory-core-cli.js",
+          to: "packages/unified-memory-core/scripts/unified-memory-core-cli.js"
+        },
+        {
+          from: "docs/reference/unified-memory-core/",
+          to: "packages/unified-memory-core/docs/"
+        },
+        {
+          from: "src/openclaw-adapter.js",
+          to: "packages/openclaw-adapter/src/openclaw-adapter.js"
+        },
+        {
+          from: "src/codex-adapter.js",
+          to: "packages/codex-adapter/src/codex-adapter.js"
+        }
+      ],
+      summary: {
+        status: independentIssues === 0 ? "pass" : "followup",
+        independent_review_issues: independentIssues,
+        migration_needed: Boolean(migrationReport.topology?.summary?.migration_needed),
+        added_records: Number(migrationReport.added_records || 0)
+      }
+    };
+  }
+
+  async function runStage5Acceptance({
+    declaredSources = [],
+    sourceArtifacts = [],
+    dryRun = false,
+    autoPromote = true,
+    decidedBy = "standalone-runtime",
+    allowedVisibilities,
+    allowedStates,
+    query = "summarize the current governed policy",
+    taskPrompt = "apply current governed coding policy",
+    comparisonWindowDays = 7,
+    maxCandidates = 6,
+    maxItems = 6,
+    maxPolicyInputs = 8,
+    repoRoot: overrideRepoRoot = repoRoot,
+    splitTargetDir = `${config.registryDir}-split-rehearsal`
+  } = {}) {
+    const stage34Acceptance = await runStage34Acceptance({
+      declaredSources,
+      sourceArtifacts,
+      dryRun,
+      autoPromote,
+      decidedBy,
+      allowedVisibilities,
+      allowedStates,
+      query,
+      taskPrompt,
+      comparisonWindowDays,
+      maxCandidates,
+      maxItems,
+      maxPolicyInputs
+    });
+    const maintenance = await runMaintenanceWorkflow({
+      policyLoop: stage34Acceptance.policy_loop,
+      declaredSources,
+      sourceArtifacts,
+      dryRun,
+      autoPromote,
+      decidedBy,
+      allowedVisibilities,
+      allowedStates,
+      query,
+      taskPrompt,
+      comparisonWindowDays,
+      maxCandidates,
+      maxItems,
+      maxPolicyInputs
+    });
+    const namespace = maintenance.namespace || stage34Acceptance.namespace || config.namespace;
+    const [reproducibility, independentReview, splitRehearsal] = await Promise.all([
+      auditExportReproducibility({
+        namespace,
+        allowedVisibilities,
+        allowedStates,
+        maxPolicyInputs
+      }),
+      createIndependentExecutionReview({
+        repoRoot: overrideRepoRoot,
+        clock
+      }),
+      runSplitRehearsal({
+        repoRoot: overrideRepoRoot,
+        sourceDir: config.registryDir,
+        targetDir: splitTargetDir,
+        apply: false
+      })
+    ]);
+
+    const sources = maintenance.sources.source_count > 0
+      ? maintenance.sources
+      : summarizeDeclaredSources(declaredSources.length > 0 ? declaredSources : sourceArtifacts);
+    const sourceTypes = Object.keys(sources.by_source_type || {});
+    const requiredSourceTypes = ["file", "directory", "url", "image"];
+    const reviewIssueCount = countReviewIssues(independentReview);
+    const checks = [
+      createAcceptanceCheck({
+        phase: "stage5",
+        code: "stage34_regression_passes",
+        passed: stage34Acceptance.summary.status === "pass",
+        expected: "stage3-4 acceptance pass",
+        actual: stage34Acceptance.summary.status,
+        message: "Stage 3-4 baseline remains green while Stage 5 runs"
+      }),
+      createAcceptanceCheck({
+        phase: "stage5",
+        code: "source_adapter_coverage",
+        passed: requiredSourceTypes.every((sourceType) => sourceTypes.includes(sourceType)),
+        expected: `contains ${requiredSourceTypes.join(", ")}`,
+        actual: sourceTypes.join(", "),
+        message: "Stage 5 exercises hardened standalone source adapters"
+      }),
+      createAcceptanceCheck({
+        phase: "stage5",
+        code: "maintenance_workflow_clean",
+        passed: maintenance.summary.status === "pass",
+        expected: "pass",
+        actual: maintenance.summary.status,
+        message: "scheduled-job-friendly maintenance workflow is clean"
+      }),
+      createAcceptanceCheck({
+        phase: "stage5",
+        code: "reproducibility_clean",
+        passed: reproducibility.summary.failed_consumers === 0,
+        expected: "0 failed consumers",
+        actual: reproducibility.summary.failed_consumers,
+        message: "learning exports remain reproducible across repeated builds"
+      }),
+      createAcceptanceCheck({
+        phase: "stage5",
+        code: "release_boundary_ready",
+        passed: reviewIssueCount === 0,
+        expected: "0 readiness issues",
+        actual: reviewIssueCount,
+        message: "release boundary and independent execution checks are ready"
+      }),
+      createAcceptanceCheck({
+        phase: "stage5",
+        code: "split_rehearsal_ready",
+        passed: splitRehearsal.summary.status === "pass",
+        expected: "pass",
+        actual: splitRehearsal.summary.status,
+        message: "repo split rehearsal and migration dry-run are reviewable"
+      })
+    ];
+    const summary = summarizeCheckStatus(checks);
+
+    return {
+      report_id: createContractId("stage5_acceptance", options.idGenerator),
+      contract_version: SHARED_CONTRACT_VERSION,
+      generated_at: createContractTimestamp(clock),
+      namespace,
+      registry_dir: config.registryDir,
+      dry_run: dryRun,
+      sources,
+      checks,
+      summary,
+      stage34_acceptance: stage34Acceptance,
+      maintenance,
+      reproducibility,
+      independent_execution: independentReview,
+      split_rehearsal: splitRehearsal,
+      manual_follow_up:
+        summary.status === "pass"
+          ? [
+              "CLI validation is complete for Stage 5.",
+              "Before a public release, optionally rerun the OpenClaw host smoke in a real profile."
+            ]
+          : [
+              "Fix failing Stage 5 checks before relying on manual validation.",
+              "Use the maintenance, reproducibility, and independent-review commands to isolate the failing slice."
             ]
     };
   }
@@ -920,6 +1591,10 @@ export function createStandaloneRuntime(options = {}) {
     runLearningLifecycle,
     runPolicyAdaptationLoop,
     runStage34Acceptance,
+    runMaintenanceWorkflow,
+    auditExportReproducibility,
+    runSplitRehearsal,
+    runStage5Acceptance,
     inspectRegistryRoot() {
       return buildRegistryRootReport({
         explicitDir: options?.config?.registryDir,
