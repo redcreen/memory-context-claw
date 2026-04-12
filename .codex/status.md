@@ -11,7 +11,7 @@
 
 ## Active Slice
 
-`host-neutral registry-root hardening implemented; decide cutover window and keep live topology visible`
+`openclaw-adapter recall quality / natural-query governance expansion`
 
 ## Done
 
@@ -70,6 +70,9 @@
 - registry-root consistency 已进入 governance cycle 输出
 - `install-verify` / `workspace-notes-rule` / `pending-rule` 三条自然 query 已补进 memory-search governance case 面
 - 文档整改后的 stable card 读取路径已对齐到 `docs/reference/*`
+- `workspace-layering` / `lossless-understanding` / `provider-role` / `release-install` / `project-roadmap-nav` 五条自然 query 已补进 memory-search governance case 面
+- release/install stable card 提取已兼容当前 README 的 `Stable release` / `Development head` 表述
+- generated smoke baseline 报告里的 case 总数已从陈旧的 `24/24` 校正到 `25/25`
 - 按模块视角继续推进 `openclaw-adapter`
 - 保持 `governance-system` 作为常规治理面运行
 - 把 self-learning 文档口径与当前实现状态重新对齐
@@ -84,6 +87,6 @@
 
 ## Next 3 Actions
 
-1. 决定是否把 registry-root consistency 从 governance cycle 提升成独立强门禁
-2. 继续推进 `openclaw-adapter` 的稳定事实 / 稳定规则扩面
-3. 再补下一批自然 query 的 recall-quality / governance cases
+1. 继续补下一批自然 query 的 recall-quality / governance cases
+2. 评估哪些新增治理 case 值得进入 `eval:smoke-promotion`
+3. 再决定是否把 registry-root consistency 从 governance cycle 提升成独立强门禁

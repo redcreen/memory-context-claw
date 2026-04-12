@@ -71,5 +71,45 @@
     "expectedSignals": ["pending", "不得默认写入", "memory/YYYY-MM-DD.md"],
     "expectedSources": ["formal-memory-policy.md", "cardArtifact"],
     "risk": "pending 规则掉回 session-derived 建议，失去正式 policy 优先级"
+  },
+  {
+    "id": "workspace-layering-priority",
+    "category": "memory_search",
+    "query": "长期记忆目录规则是什么",
+    "expectedSignals": ["workspace/MEMORY.md", "workspace/memory/", "workspace/notes/"],
+    "expectedSources": ["README.md", "cardArtifact"],
+    "risk": "目录结构规则退回 formal policy 或背景长文，导致 selected context 不够直接"
+  },
+  {
+    "id": "lossless-understanding-priority",
+    "category": "memory_search",
+    "query": "为什么已经有长期记忆了，还需要 Lossless",
+    "expectedSignals": ["Lossless", "长期记忆", "context"],
+    "expectedSources": ["workspace/notes/openclaw-memory-vs-lossless.md", "cardArtifact"],
+    "risk": "概念分工说明退回项目定位卡或 session 解释，丢失稳定概念卡优先级"
+  },
+  {
+    "id": "provider-role-priority",
+    "category": "memory_search",
+    "query": "memorySearch.provider 是做什么的",
+    "expectedSignals": ["embedding", "memory_search"],
+    "expectedSources": ["configuration.md", "cardArtifact"],
+    "risk": "provider 解释退回 session 或 generic config 卡，失去专门配置说明"
+  },
+  {
+    "id": "release-install-priority",
+    "category": "memory_search",
+    "query": "普通用户应该安装稳定版还是 main",
+    "expectedSignals": ["release tag", "main"],
+    "expectedSources": ["README.md", "configuration.md", "cardArtifact"],
+    "risk": "安装发布规则被安装验证步骤或 generic config 卡抢走"
+  },
+  {
+    "id": "project-roadmap-nav-priority",
+    "category": "memory_search",
+    "query": "项目路线图应该看哪个文档",
+    "expectedSignals": ["project-roadmap.md", "memory-search-roadmap.md"],
+    "expectedSources": ["project-roadmap.md", "cardArtifact"],
+    "risk": "项目导航掉回 generic project card 或无关 policy，失去明确文档导航"
   }
 ]

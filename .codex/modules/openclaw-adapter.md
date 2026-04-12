@@ -28,4 +28,4 @@ Operational baseline is complete; current work is iterative hardening and qualit
 
 ## Next Checkpoint
 
-Keep live OpenClaw behavior stable while the next natural-query recall-quality batch enters governance.
+Keep live OpenClaw behavior stable while the next natural-query recall-quality batch enters governance and candidate smoke-promotion review.

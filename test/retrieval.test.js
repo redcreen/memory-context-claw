@@ -617,8 +617,8 @@ test("buildProjectCardsFromMarkdown derives workspace-structure project card", (
 test("buildProjectCardsFromMarkdown derives release-install project card", () => {
   const cards = buildProjectCardsFromMarkdown(
     [
-      "stable users: install the published release tag",
-      "early adopters: install the current `main`",
+      "Stable release:",
+      "Development head:",
       "openclaw plugins install git+https://github.com/redcreen/Unified-Memory-Core.git#v0.1.0",
       "openclaw plugins install git+https://github.com/redcreen/Unified-Memory-Core.git"
     ].join("\n"),

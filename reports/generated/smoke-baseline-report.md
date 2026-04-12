@@ -7,7 +7,7 @@
 当前状态：
 
 - `critical smoke`：`10/10` 通过
-- `full smoke`：`24/24` 全通过
+- `full smoke`：`25/25` 全通过
 - 新增的 `timezone-smoke`、`communication-style-smoke`、`reminder-channel-smoke`、`execution-rule-smoke`、`openviking-role`、`agent-routing-rule`、`main-boundary-rule`、`main-negative-boundary-rule`、`status-word-rule` 已经转正
 
 ## 当前 smoke 分层
@@ -86,8 +86,8 @@ npm run smoke:eval
 
 结果：
 
-- `cases = 24`
-- `passed = 24`
+- `cases = 25`
+- `passed = 25`
 - `failed = 0`
 
 ### Critical smoke

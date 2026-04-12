@@ -1375,7 +1375,7 @@ export function buildProjectCardsFromMarkdown(markdown = "", filePath = "README.
   if (
     REPO_RELEASE_INSTALL_URL_RE.test(text)
     && REPO_INSTALL_URL_RE.test(text)
-    && (/release tag|稳定版|当前 `main`|current `main`|开发版安装/i.test(text))
+    && (/release tag|stable release|stable users|稳定版|当前 `main`|current `main`|development head|开发版安装|开发头版本/i.test(text))
   ) {
     cards.push({
       title: "安装发布规则",
