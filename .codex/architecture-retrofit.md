@@ -56,8 +56,9 @@
 ## Current Risks / Open Decisions
 
 - archive 内部仍会保留历史命名；这是可接受的历史痕迹，不再作为 active owner 处理
-- canonical root 何时从 legacy fallback 正式切到 `~/.unified-memory-core/registry`，仍需明确迁移窗口；这属于产品切换决策，不是本次文档 owner 收敛的 blocker
-- 是否把 registry-root consistency 升成独立强门禁仍待决定；这属于治理策略，不是本次架构文档整改的 blocker
+- canonical-root operator policy 已显式收口：`~/.unified-memory-core/registry` 是默认目标，只有 `legacy_fallback` 或 canonical root 缺失才算真正 block；这不再是未决设计问题
+- 剩余的产品侧决定只有 operator 是否以及何时 archive / cleanup 过时的 legacy root 副本；这不是本次文档 owner 收敛的 blocker
+- 后续维护仍需防止文档重新把 legacy divergence 表述成独立 hard gate；这属于持续一致性风险，而不是架构未定
 
 ## Target Architecture
 

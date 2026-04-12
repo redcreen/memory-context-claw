@@ -13,6 +13,17 @@
     ".codex/brief.md",
     ".codex/plan.md",
     ".codex/status.md",
+    ".codex/COMMANDS.md",
+    ".codex/control-surface.json",
     ".codex/module-dashboard.md"
-  ]
+  ],
+  "managedBy": "project-assistant",
+  "controlSurfaceVersion": 2,
+  "surfaceVersions": {
+    "strategy": 1,
+    "programBoard": 1,
+    "deliverySupervision": 1,
+    "ptlSupervision": 1,
+    "workerHandoff": 1
+  }
 }

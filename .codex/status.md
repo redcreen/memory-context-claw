@@ -11,7 +11,7 @@
 
 ## Active Slice
 
-`hold-host-neutral-root-policy-stable`
+`hold-post-stage5-roadmap-state-aligned`
 
 ## Done
 
@@ -36,10 +36,21 @@
   - live topology 当前已解析到 canonical root，`cutoverReady = true`
   - `registry-root consistency` 不升成“legacy 必须镜像 canonical”的独立强门禁
   - 独立 block 条件收口为：runtime 回退到 `legacy_fallback`，或 canonical root 缺失
+- accepted-action governed intake baseline 已落地：
+  - CLI 已支持结构化 `accepted_action` source intake
+  - accepted-action 证据已能进入 governed source -> candidate -> stable loop
+  - export / audit / lifecycle 已能消费 accepted-action stable artifacts
+  - 更深一层的 field-aware extraction / admission routing / negative-path handling 仍然故意保持在 deferred TODO 队列
+- control-surface 与 host-neutral workstream docs 已再次对齐：
+  - 不再把 canonical-root cutover 描述成“仍待决定的窗口”
+  - 当前维护重点是防止 policy drift，而不是重新定义 hard gate
+- project workstream roadmap 已重新对齐到 post-Stage-5 维护态：
+  - 不再把“roadmap 收口 + 新 enhancement plan”写成当前主线
+  - 当前项目级主线明确收口为：守住 release-preflight、deployment verification、memory-search governance、root policy
 - 当前验证已完成：
   - Stage 5 targeted tests：`3/3`
   - release / deployment targeted tests：`71/71`
-  - full repo `npm test`：`346/346`
+  - full repo `npm test`：`354/354`
   - `npm run umc:stage5 -- --format markdown`：`pass`
   - `npm run umc:acceptance -- --format markdown`：`pass`
   - `npm run umc:openclaw-itest -- --format markdown`：`pass`
@@ -51,8 +62,9 @@
   - `npm run umc:cli -- registry inspect --format markdown`：`pass`
   - `npm run umc:cli -- registry migrate --source-dir ~/.openclaw/unified-memory-core/registry --target-dir ~/.unified-memory-core/registry --format markdown`：`noop / adopt_canonical_root`
   - `npm run umc:cli -- review split-rehearsal --source-dir ~/.unified-memory-core/registry --target-dir /tmp/umc-split-rehearsal --format markdown`：`pass`
-  - `npm run smoke:eval`：`28/28`
-  - `npm run eval:memory-search:cases`：plugin `30/30`
+  - `npm run smoke:eval -- --format markdown`：`28/28`
+  - `npm run smoke:eval:critical -- --format markdown`：`18/18`
+  - `npm run eval:memory-search:cases -- --format json`：plugin signal/source `30/30`
   - Markdown 链接扫描：`246` files scanned；source docs `issueCount = 0`（忽略 `dist/openclaw-release/` 生成产物）
   - `git diff --check`：`pass`
 
@@ -60,49 +72,54 @@
 
 - 保持 release-preflight、bundle install、host smoke、Stage 5 acceptance 证据持续为绿
 - 保持 host-neutral root policy 在 CLI、公开文档和控制面里持续一致
+- 保持 project/workstream roadmap 摘要与当前 Stage 5 closeout 基线持续一致
 - 继续观察 legacy root 是否只停留在兼容回退窗口，而不是重新变成 active root
+- 把 deeper accepted-action extraction 继续明确维持在 deferred enhancement queue，而不是悄悄并进当前 closeout baseline
 
 ## Blockers / Open Decisions
 
 - none at the implementation layer
-- operator follow-up 只剩：什么时候清理过时的 legacy root 副本，是否需要额外发布说明
+- operator / planning follow-up 只剩：
+  - 什么时候清理过时的 legacy root 副本
+  - deeper accepted-action extraction 何时具备重开实现的前置条件
 
 ## Next 3 Actions
 
 1. 保持 `umc:release-preflight`、`umc:openclaw-install-verify`、`umc:openclaw-itest`、`umc:stage5` 持续为绿。
-2. 保持 `umc registry inspect` 的 `operatorPolicy` 不回退到 `migrate_to_canonical_root`。
-3. 仅在 operator 明确需要时，再决定 legacy root archive / cleanup 窗口。
+2. 保持 `umc registry inspect` 的 `operatorPolicy` 不回退到 `migrate_to_canonical_root`，并保持 project/workstream roadmap 不回退到旧阶段叙事。
+3. 只有在 runtime API prerequisites 持续为绿且 operator 明确需要时，才讨论新的 enhancement plan、deeper accepted-action extraction 实现，或 legacy root cleanup 窗口。
 
 ## Architecture Supervision
-
-- Signal: `green`
-- Signal Basis: 现在不仅有 Stage 5 evidence 和 release-preflight，一条明确的 registry-root operator policy 也已经进入 CLI 和控制面
-- Root Cause Hypothesis: 后续真正的风险不再是“cutover 未决”，而是 operator 误把 legacy divergence 当成 hard gate，或 runtime 回退到 legacy root
-- Correct Layer: release preflight evidence, governance evidence, registry-root operator policy, control surface
-- Escalation Gate: continue automatically
+- Signal: `yellow`
+- Signal Basis: open blockers or architectural risks are still recorded
+- Root Cause Hypothesis: 后续真正的风险不再是“cutover 未决”，而是 evidence / roadmap drift 让维护者误判当前阶段，或把后续 accepted-action 深层抽取工作过早并进当前 closeout baseline
+- Correct Layer: release preflight evidence, governance evidence, registry-root operator policy, project/workstream roadmap, control surface
+- Automatic Review Trigger: no automatic trigger is currently active
+- Escalation Gate: raise but continue
 
 ## Current Escalation State
-
-- Current Gate: continue automatically
-- Reason: 代码、部署、CLI 验证和 root-cutover policy 都已收口；剩余事项属于稳定性维护
-- Next Review Trigger: `umc:release-preflight` 失败、host smoke 回退、bundle install 失败、或 `registry inspect` 回退到 `legacy_fallback`
+- Current Gate: raise but continue
+- Reason: the current direction can continue, but the supervision state should stay visible
+- Next Review Trigger: review again when blockers change, the active slice rolls forward, or release-facing work begins
 
 ## Current Execution Line
 
-- Objective: 保持 canonical-root operator policy 可见且不回退
-- Plan Link: `hold-host-neutral-root-policy-stable`
-- Runway: one stable-maintenance slice covering registry inspect、configuration docs、host smoke、release-preflight、control-surface freshness
-- Progress: `4 / 4` tasks complete
+- Objective: 保持 post-Stage-5 的 operator baseline、project/workstream roadmap 摘要和 canonical-root policy 同时稳定
+- Plan Link: `hold-post-stage5-roadmap-state-aligned`
+- Runway: one stable-maintenance slice covering roadmap summary、smoke baselines、memory-search governance snapshot、registry inspect、release-preflight、control-surface freshness
+- Progress: `3 / 4` tasks complete
 - Stop Conditions:
   - validation fails and changes product direction materially
   - live topology regresses to `legacy_fallback`
+  - later planning pressure tries to reopen a new enhancement phase without stable prerequisites
 
 ## Execution Tasks
 
-- [x] EL-1 keep `registry inspect` visible and canonical-first
-- [x] EL-2 keep public docs and `.codex/*` state aligned with the operator policy
-- [x] EL-3 keep release-preflight and host smoke green beside the root policy
-- [x] EL-4 keep later work from reintroducing legacy-mirroring as a hard gate
+- [x] EL-1 align project/workstream roadmap summaries with the current Stage 5 closeout baseline
+- [x] EL-2 refresh smoke and memory-search governance snapshots in the visible project state
+- [x] EL-3 keep `registry inspect`, release-preflight, and public docs aligned with the operator baseline
+- [x] EL-4 define deeper accepted-action extraction as an explicit deferred enhancement queue
+- [ ] EL-5 keep later enhancement planning gated behind stable runtime API prerequisites instead of reopening the next phase early
 
 ## Development Log Capture
 

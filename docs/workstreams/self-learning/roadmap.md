@@ -49,7 +49,7 @@ Build a governed daily-learning system for `unified-memory-core` that can:
 
 The current repo no longer has only a baseline. Stage 3 lifecycle work is now complete.
 
-- declared sources already support `manual`, `file`, `directory`, `conversation`, `url`, and `image`
+- declared sources already support `manual`, `file`, `directory`, `conversation`, `url`, `image`, and `accepted_action`
 - reflection already emits structured candidate artifacts and decision trails
 - daily reflection already detects repeated signals and explicit remember instructions
 - explicit promotion / decay / conflict / stable-update rules now run through the shared modules
@@ -83,6 +83,32 @@ The recommended direction is a generic pipeline, not business-specific hardcodin
 - classify lifecycle and confidence
 - land results in session, daily, or governed stable-candidate layers
 - keep later promotion under normal governance
+
+## Deferred TODO For Deeper Accepted-Action Extraction
+
+Current status:
+
+- generic accepted-action intake is now implemented
+- CLI and lifecycle coverage already prove that accepted-action evidence can enter the governed loop
+- deeper extraction policy is still intentionally deferred
+
+That deferred package should reopen only as a later enhancement slice.
+
+TODO backlog:
+
+1. split accepted-action fields into:
+   reusable target facts, operating rules, and one-off outcome artifacts
+2. add admission policy that keeps one-off URLs / paths out of stable memory until reuse justifies promotion
+3. score accepted-action candidates with richer evidence than "accepted + succeeded" alone
+4. add negative / partial-action handling so failed or rejected events do not promote like stable facts
+5. add accepted-action-specific dedupe, supersede, and conflict rules
+6. add replay / audit cases that assert final placement from raw accepted-action fields
+
+Entry criteria for reopening this TODO:
+
+- Stage 5 operator baseline remains stable
+- current release-preflight evidence stays green
+- the repo explicitly opens a later enhancement phase instead of appending more work into the closeout baseline
 
 ## Phase Map
 

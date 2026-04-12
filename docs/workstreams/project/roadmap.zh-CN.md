@@ -18,6 +18,12 @@
 
 `把 OpenClaw 的长期记忆，变成一层可治理、事实优先、可直接服务任务的上下文系统。`
 
+当前已经成立的事实是：
+
+- 当前有治理的 baseline 已覆盖 Stage 3 self-learning lifecycle、Stage 4 policy adaptation、Stage 5 product hardening
+- release-preflight、bundle install verify、host smoke，以及 registry-root operator policy 已进入当前 operator baseline
+- 下一阶段不该重开 baseline contract work，而是先把这条 operator baseline 稳定住，再讨论后续增强
+
 ## 这份主 Roadmap 负责什么
 
 `docs/roadmap.md` 是稳定的 roadmap 包装页。
@@ -63,11 +69,11 @@ flowchart TB
 ### 总体
 
 - 项目状态：`可用 + 已治理 + 有回归保护`
-- 架构状态：`主骨架已完成`
+- 架构状态：`Stage 5 closeout baseline 已完成`
 - 治理状态：`已进入常规维护循环`
 - 当前回归基线：
-  - `critical smoke = 10/10`
-  - `full smoke = 25/25`
+  - `critical smoke = 18/18`
+  - `full smoke = 28/28`
 
 ### Workstream 状态
 
@@ -75,17 +81,17 @@ flowchart TB
 | --- | --- | --- |
 | 核心 capture / fact-card / assembly | `completed` | maintain + tune |
 | Memory Search | `phase-complete` | governance + incremental expansion |
-| Self-Learning / Reflection | `baseline-implemented` | reflection、daily loop、standalone baseline 已落地 |
-| Unified Memory Core | `baseline-complete` | tranche 1-3 已完成，进入下一阶段前的 roadmap 收口 |
+| Self-Learning / Reflection | `stage-complete` | governed lifecycle、policy adaptation、exports、CLI、governance surfaces 已可用 |
+| Unified Memory Core | `stage5-complete / closeout` | 持续保持 release-preflight、deployment verification、root policy 稳定 |
 
 ## 进展图
 
 ```mermaid
 flowchart TB
-    A["Unified Memory Core 项目总览\n当前状态：第一阶段 baseline 已闭环"] --> B["基础能力层\n已完成"]
-    A --> C["Unified Memory Core 产品主线\nTranche 1-3 已完成"]
+    A["Unified Memory Core 项目总览\n当前状态：Stage 5 closeout 维护中"] --> B["基础能力层\n已完成"]
+    A --> C["Unified Memory Core 产品主线\nStage 1-5 已完成"]
     A --> D["Memory Search Workstream\nphase-complete / 治理中"]
-    A --> E["下一阶段\nroadmap 收口 + 新增强计划"]
+    A --> E["Stage 5 之后的维护面\noperator baseline + 后续阶段 gate"]
 
     B --> B1["Capture Foundation\n已完成"]
     B --> B2["Fact / Card Foundation\n已完成"]
@@ -93,32 +99,35 @@ flowchart TB
     B --> B4["Regression Foundation\n已完成"]
     B --> B5["Governance Foundation\n运行中"]
 
-    C --> C1["Tranche 1\ncontracts + source + registry\n已完成"]
-    C --> C2["Tranche 2\nprojection + governance + adapters\n已完成"]
-    C --> C3["Tranche 3\nreflection + standalone + independent execution\n已完成"]
+    C --> C1["Stage 1-2\ncontracts + source + registry + adapters\n已完成"]
+    C --> C2["Stage 3\nself-learning lifecycle\n已完成"]
+    C --> C3["Stage 4\npolicy adaptation\n已完成"]
+    C --> C4["Stage 5\nproduct hardening + release-preflight\n已完成"]
 
-    C2 --> C21["OpenClaw Adapter Runtime\n已完成"]
-    C2 --> C22["Codex Adapter Runtime\n已完成"]
-    C2 --> C23["Adapter Compatibility Tests\n已完成"]
+    C1 --> C11["OpenClaw Adapter Runtime\n已完成"]
+    C1 --> C12["Codex Adapter Runtime\n已完成"]
+    C1 --> C13["Adapter Compatibility Tests\n已完成"]
 
-    C3 --> C31["Daily Reflection Loop Baseline\n已完成"]
-    C3 --> C32["Standalone CLI\nsource / reflect / export / govern\n已完成"]
-    C3 --> C33["Independent Execution Review\nownership / release boundary / migration checklist\n已完成"]
+    C2 --> C21["Daily Reflection + Promotion / Decay\n已完成"]
+    C3 --> C31["Policy-input artifacts + consumer adaptation\n已完成"]
+    C4 --> C41["Standalone source hardening + maintenance\n已完成"]
+    C4 --> C42["Bundle install verify + host smoke\n已完成"]
+    C4 --> C43["Independent execution + root policy\n已完成"]
 
     D --> D1["Memory Search Governance\n持续进行"]
     D --> D2["Case Expansion / Policy Tuning\n按需推进"]
 
-    E --> E1["先把 roadmap 文档收口到真实进度"]
-    E --> E2["再开启下一阶段增强计划"]
-    E2 --> E21["优先候选主线：\nself-learning phase 3\npromotion / decay / policy-input artifacts"]
+    E --> E1["保持 Stage 5 evidence 持续为绿"]
+    E --> E2["保持 canonical-root operator policy 持续可见"]
+    E --> E3["只有在 prerequisites 持续为绿后，才开启后续增强规划"]
 
     classDef done fill:#e8f7e8,stroke:#2f855a,color:#1c4532,stroke-width:1.5px;
     classDef active fill:#eef6ff,stroke:#2563eb,color:#123a73,stroke-width:1.5px;
     classDef next fill:#fff4e8,stroke:#d97706,color:#7c2d12,stroke-width:1.5px;
 
-    class A,B,B1,B2,B3,B4,B5,C,C1,C2,C3,C21,C22,C23,C31,C32,C33 done;
-    class D,D1,D2 active;
-    class E,E1,E2,E21 next;
+    class B,B1,B2,B3,B4,B5,C,C1,C2,C3,C4,C11,C12,C13,C21,C31,C41,C42,C43 done;
+    class A,D,D1,D2,E,E1,E2 active;
+    class E3 next;
 ```
 
 ## 已完成的项目基础
@@ -177,8 +186,8 @@ flowchart TB
 
 当前基线：
 
-- `critical smoke = 10/10`
-- `full smoke = 25/25`
+- `critical smoke = 18/18`
+- `full smoke = 28/28`
 
 ### 5. Governance 基础层
 
@@ -205,14 +214,14 @@ flowchart TB
 
 ### 下一条主要工程主线
 
-**Roadmap 收口 + 下一阶段增强计划**
+**Stage 5 收口后的稳定维护**
 
 为什么先做这个：
 
-- `development-plan.md` 这条 local-first baseline 已经做完
-- 现在的主要缺口不是实现，而是 roadmap 文档状态还没有完全对齐真实进展
-- 下一步应该新开增强阶段计划，而不是继续往旧 baseline 计划里追加内容
-- 新阶段最可能的首条编码主线，是更深一层的 self-learning policy 能力
+- `development-plan.md` 这条 local-first baseline 已经做完，而且顶层 roadmap 包装页已经对齐
+- 现在的主要风险不再是缺实现，而是证据面或文档状态回退
+- release-preflight、deployment verification、host-neutral root policy 必须继续保持可见且为绿，后续阶段才有资格开启
+- 只有当 runtime API prerequisites 在一段时间内持续为绿时，才适合单独开新的 enhancement plan
 
 关键文档：
 
@@ -220,8 +229,10 @@ flowchart TB
   [../../roadmap.zh-CN.md](../../roadmap.zh-CN.md)
 - 实施计划：
   [../../reference/unified-memory-core/development-plan.zh-CN.md](../../reference/unified-memory-core/development-plan.zh-CN.md)
-- self-learning roadmap：
-  [../self-learning/roadmap.zh-CN.md](../self-learning/roadmap.zh-CN.md)
+- release preflight：
+  [../../reference/unified-memory-core/testing/release-preflight.zh-CN.md](../../reference/unified-memory-core/testing/release-preflight.zh-CN.md)
+- host-neutral roadmap：
+  [../host-neutral-memory/roadmap.zh-CN.md](../host-neutral-memory/roadmap.zh-CN.md)
 
 ### 并行维护主线
 
@@ -238,12 +249,9 @@ flowchart TB
 
 当前治理质量：
 
-- `pluginSignalHits = 6/6`
-- `pluginSourceHits = 6/6`
-- `pluginFailures = 0`
-- `pluginSingleCard = 6/6`
-- `pluginMultiCard = 0/6`
-- `pluginNoisySupporting = 0/6`
+- 最新 `eval:memory-search:cases` 摘要保持 `pluginSignalHits = 30/30`
+- 最新 `eval:memory-search:cases` 摘要保持 `pluginSourceHits = 30/30`
+- 最新 `eval:memory-search:cases` 摘要保持 `pluginFastPathLikely = 30/30`
 
 关键文档：
 
@@ -256,15 +264,15 @@ flowchart TB
 
 项目下一步的大方向是：
 
-`先把文档与实现之间的状态差补齐，再单独开启新的增强阶段`
+`先把 post-Stage-5 的 operator baseline 稳定住，只有在 prerequisites 持续为绿后再单独开启新的增强阶段`
 
 从这里开始的计划阶段是：
 
-1. 把 roadmap 文档收口到已完成 baseline 的真实状态
-2. 明确下一阶段 enhancement plan 的边界和范围
-3. 只选一条主编码线推进，避免重新摊大并行面
-4. 继续把 memory-search 维持在治理模式
-5. 在规划未来扩展时继续守住 local-first 和 network-ready 边界
+1. 保持 release-preflight、bundle install verify、host smoke、`Stage 5` evidence 持续为绿
+2. 保持 canonical-root operator policy 在 CLI、公开文档和控制面里持续显式
+3. 保持项目 / workstream roadmap 与 live implementation baseline 同步
+4. 继续把 memory-search 维持在治理模式，只在必要时扩 targeted case
+5. 只有在 runtime API / service-mode prerequisites 持续为绿后，才开启新的 enhancement plan
 
 ## 架构方向
 
@@ -304,11 +312,11 @@ flowchart TB
 
 ## 建议接着读
 
-- 如果想看整体系统形态：
-  [../../architecture.zh-CN.md](../../architecture.zh-CN.md)
 - 如果想看里程碑层面的 roadmap 包装页：
   [../../roadmap.zh-CN.md](../../roadmap.zh-CN.md)
-- 如果想看下一条主线的架构设计：
-  [../self-learning/architecture.zh-CN.md](../self-learning/architecture.zh-CN.md)
-- 如果想看接下来怎么分阶段开发：
-  [../self-learning/roadmap.zh-CN.md](../self-learning/roadmap.zh-CN.md)
+- 如果想看 post-Stage-5 的 operator 工作流：
+  [../../reference/unified-memory-core/maintenance-workflow.zh-CN.md](../../reference/unified-memory-core/maintenance-workflow.zh-CN.md)
+- 如果想看部署与发版 gate：
+  [../../reference/unified-memory-core/testing/release-preflight.zh-CN.md](../../reference/unified-memory-core/testing/release-preflight.zh-CN.md)
+- 如果想看 host-neutral operator policy 这条线：
+  [../host-neutral-memory/roadmap.zh-CN.md](../host-neutral-memory/roadmap.zh-CN.md)

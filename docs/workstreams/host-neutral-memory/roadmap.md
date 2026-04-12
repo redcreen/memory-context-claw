@@ -23,7 +23,7 @@ Build a host-neutral canonical memory layer for `Unified Memory Core` so that:
 
 ## Current Status
 
-- status: `implementation-active / migration-and-governance-ready`
+- status: `policy-explicit / monitoring-active`
 - dependency baseline:
   - shared contracts: `ready`
   - registry baseline: `implemented`
@@ -32,6 +32,7 @@ Build a host-neutral canonical memory layer for `Unified Memory Core` so that:
   - agent sub namespace baseline: `implemented`
   - Codex write-back ingestion into nightly learning: `implemented`
   - registry migration / topology reporting: `implemented`
+  - canonical-root operator policy: `adopt_canonical_root`
 
 ## Phase Map
 
@@ -141,9 +142,9 @@ Validation:
 
 ## Immediate Execution Order
 
-1. observe live topology and confirm the current active root/fallback path
-2. decide the canonical-root cutover window
-3. migrate or adopt legacy records into the canonical root when needed
+1. keep observing live topology and ensure the active root does not regress to `legacy_fallback`
+2. treat runtime resolution on the canonical root as the current adopted cutover signal
+3. migrate, archive, or clean up legacy records only when an operator explicitly needs that maintenance
 4. keep registry-root findings visible in governance and operator workflows
 5. keep future accepted-action capture work aligned to the shared registry intake instead of adapter-local persistence
 6. continue adapter quality work without reopening per-host storage drift

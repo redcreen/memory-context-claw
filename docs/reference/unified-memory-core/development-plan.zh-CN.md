@@ -57,6 +57,7 @@
 
 - shared contracts
 - `Source System` MVP
+- 结构化 `accepted_action` source intake
 - `Memory Registry` MVP
 - 本地 `source -> candidate` pipeline
 - `Projection System` MVP
@@ -190,6 +191,19 @@
 - 多主机 network service
 - advanced network-required architecture
 - 已有文档之外的 repo split execution 工作
+
+## 延后增强队列
+
+下面这些事项现在明确标成 `todo`，但它们不属于当前 active stage。
+
+保留这组队列的目的，是让后续 enhancement phase 可以从清晰队列恢复，而不是重新从 session history 里猜设计意图。
+
+47. `todo` 把 `accepted_action` extraction 拆成可复用 target facts、operating rules 和一次性 outcome artifacts。
+48. `todo` 为 accepted-action 增加跨 `session`、`daily`、`observation`、stable-candidate 层的 admission routing。
+49. `todo` 为 accepted-action 增加更丰富的 evidence weighting，把 acceptance、execution success、后续复用、冲突、再次引用这些信号合并打分。
+50. `todo` 为 accepted-action 增加 negative / partial handling，让 rejected / failed actions 进入 audit 或 observation，而不是按 stable fact 处理。
+51. `todo` 为 accepted-action 增加 dedupe、supersede、conflict rules，以及对应的 replay / audit coverage。
+52. `todo` 只有当 post-Stage-5 operator baseline 持续为绿，足以支撑新的 enhancement slice 时，才重新打开这组实现。
 
 ## Review Checklist
 

@@ -42,7 +42,7 @@
 
 这条专项已经不是纯设计稿了。当前仓库里已经落地了一条有实际能力的基线：
 
-- `manual`、`file`、`directory`、`conversation` 这些 declared sources 的接入
+- `manual`、`file`、`directory`、`conversation`、`accepted_action` 这些 declared sources 的接入
 - reflection labeling、candidate artifact generation、decision trails
 - 带 repeated signal 和显式 remember 检测的 daily reflection
 - 通过 registry 跑通的 candidate -> stable promotion
@@ -339,6 +339,37 @@ flowchart LR
 - daily-memory candidate
 - governed stable-memory candidate
 - dropped / 仅审计记录
+
+## 延后实现的更深抽取规则
+
+当前实现有意停在一个保守的第一步：
+
+- `accepted_action` 已经可以进入受治理的 source -> candidate -> stable 闭环
+- CLI 已经可以提交结构化 accepted-action 证据
+- 但当前 extractor 仍然主要把这类事件当成一条保守的 durable fact candidate
+
+这已经足够证明集成链路打通了，但还不是完整的抽取策略。
+
+更深一层的抽取规则现在先明确记成 TODO，避免系统从“完全没机制”直接跳到“过度拟合一切细节”。
+
+延后实现的 TODO 包：
+
+1. field-aware extraction：
+   不再把一个 accepted-action event 全部压成一条 summary，而是拆成可复用环境事实、操作规则和一次性 outcome artifacts
+2. admission routing：
+   像一次性 URL、slug、artifact path 这类结果，默认先落 observation 或 daily-memory，只有后续复用才考虑 stable promotion
+3. stronger evidence weighting：
+   把 user accepted、execution succeeded、后续复用、矛盾信号、再次引用这些证据合并打分
+4. negative and partial outcomes：
+   对 rejected、failed、ambiguous 的 accepted-action events，默认走 audit / observation，而不是 stable fact
+5. accepted-action conflict and dedupe policy：
+   新的 accepted-action 结果要能和旧的 stable target / rule 做 supersede、dedupe、staleness 判断
+6. extraction-specific replay and audit coverage：
+   让 accepted-action 从原始 event 字段到最终落层结果的整个决策链都可 replay、可 audit
+
+实现 gate：
+
+`在当前 Stage 5 operator baseline 持续为绿、仓库明确进入后续 enhancement slice 之前，不要打开这组更深抽取规则`
 
 ## 什么算证据
 

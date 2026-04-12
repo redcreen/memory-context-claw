@@ -54,40 +54,59 @@
   - Exit Condition: later phase work no longer threatens the explicit operator policy
   - Status: `ongoing`
 
+- Slice: `hold-post-stage5-roadmap-state-aligned`
+  - Objective: 保持 project/workstream roadmap 摘要、Stage 5 closeout 证据和 later-phase gate 在同一条 operator baseline 上
+  - Dependencies: `docs/workstreams/project/roadmap.md`、`docs/workstreams/project/roadmap.zh-CN.md`、`docs/roadmap.md`、development plan、release-preflight docs、host-neutral roadmap、当前 smoke / memory-search eval 基线
+  - Risks: stale roadmap text 或旧质量指标会让维护者误判当前阶段，过早重开 enhancement planning
+  - Validation: `npm run smoke:eval -- --format markdown`、`npm run smoke:eval:critical -- --format markdown`、`npm run eval:memory-search:cases -- --format json`、project/workstream roadmap、control-surface status
+  - Exit Condition: later-phase planning 只会从稳定的 operator baseline 打开，project roadmap 不再和 live control docs 冲突
+  - Status: `ongoing`
+
+- Slice: `define-deeper-accepted-action-extraction-todo`
+  - Objective: 把 accepted-action 的更深抽取规则、分层准入、负向路径和治理覆盖明确写成 deferred enhancement queue，而不是继续隐含在聊天里
+  - Dependencies: `docs/workstreams/self-learning/architecture*.md`、`docs/workstreams/self-learning/roadmap*.md`、`docs/reference/unified-memory-core/development-plan*.md`、accepted_action source intake baseline、current Stage 5 operator baseline
+  - Risks: 如果 TODO 不显式化，下一轮实现容易退回业务特判；如果现在直接开做，会把当前 closeout baseline 和 later enhancement slice 混在一起
+  - Validation: self-learning architecture / roadmap / development plan 与 `.codex/*` 对齐；TODO 只定义后续实现，不误报成当前 baseline 已完成
+  - Exit Condition: 更深 accepted-action extraction 已经有明确 TODO、前置条件、验收方向和恢复点
+  - Status: `completed`
+
 ## Execution Order
 
 1. 保持 release-preflight / bundle install / host smoke / Stage 5 evidence 稳定
 2. 保持 host-neutral root operator policy 可见且不回退
-3. 仅在 operator 明确需要时，再决定 legacy root archive / cleanup 窗口
+3. 保持 project/workstream roadmap 摘要与当前 Stage 5 closeout 基线持续一致
+4. 把 deeper accepted-action extraction 维持为显式 deferred queue，不在当前 closeout baseline 里直接开工
+5. 只有在 runtime API prerequisites 持续为绿后，才开启新的 enhancement planning 或讨论 legacy root cleanup 窗口
 
 ## Architecture Supervision
-
-- Signal: `green`
-- Signal Basis: 现在不仅有 Stage 5 evidence 和 release-preflight，还有一条 CLI-visible 的 root-cutover operator policy
+- Signal: `yellow`
+- Signal Basis: open blockers or architectural risks are still recorded
 - Problem Class: post-stage maintenance, human acceptance, and operator policy
-- Root Cause Hypothesis: 真正的后续风险不在实现本身，而在 preflight 失活，或 later changes 重新模糊 canonical-vs-legacy 规则
-- Correct Layer: release preflight evidence, release boundary, registry-root governance, control surface
-- Rejected Shortcut: 跳过 Stage 5 证据面直接讨论 runtime API / service mode
-- Escalation Gate: continue automatically
+- Root Cause Hypothesis: 后续真正的风险不再是“cutover 未决”，而是 evidence / roadmap drift 让维护者误判当前阶段，或者把 deeper accepted-action extraction 误并进当前 closeout baseline
+- Correct Layer: release preflight evidence, governance evidence, registry-root operator policy, project/workstream roadmap, control surface
+- Rejected Shortcut: 跳过 Stage 5 证据面和当前 operator baseline，直接讨论 runtime API / service mode
+- Automatic Review Trigger: no automatic trigger is currently active
+- Escalation Gate: raise but continue
 
 ## Current Execution Line
 
-- Objective: 保持 root-cutover operator policy 和 release-preflight 证据面同时稳定
-- Plan Link: `hold-host-neutral-root-policy-stable`
-- Runway: one stable-maintenance slice covering registry inspect、configuration docs、host smoke、release-preflight、state refresh
-- Progress: `4 / 4` tasks complete
+- Objective: 保持 root-cutover operator policy、project/workstream roadmap 摘要和 release-preflight 证据面同时稳定
+- Plan Link: `hold-post-stage5-roadmap-state-aligned`
+- Runway: one stable-maintenance slice covering roadmap summary、smoke baselines、memory-search governance snapshot、registry inspect、release-preflight、state refresh
+- Progress: `3 / 4` tasks complete
 - Stop Conditions:
   - Stage 5 evidence regresses
   - registry inspect regresses to `legacy_fallback` or `migrate_to_canonical_root`
-  - later service-mode discussion pressures the repo to bypass current evidence
-- Validation: `npm run umc:release-preflight`、`npm run umc:cli -- registry inspect --format markdown`、`npm run umc:openclaw-itest`、`npm run umc:stage5`
+  - later service-mode discussion pressures the repo to bypass current evidence or reopen the next phase early
+- Validation: `npm run umc:release-preflight`、`npm run umc:cli -- registry inspect --format markdown`、`npm run umc:openclaw-itest`、`npm run umc:stage5`、`npm run smoke:eval -- --format markdown`、`npm run eval:memory-search:cases -- --format json`
 
 ## Execution Tasks
 
-- [x] EL-1 keep release-preflight green
-- [x] EL-2 keep bundle install / host smoke / Stage 5 surfaces green
-- [x] EL-3 keep public docs and `.codex/*` state aligned with canonical-root policy
-- [x] EL-4 keep root-cutover rule visible instead of hiding it inside later product work
+- [x] EL-1 align project/workstream roadmap summaries with the current Stage 5 closeout baseline
+- [x] EL-2 refresh smoke and memory-search governance snapshots in the visible project state
+- [x] EL-3 keep public docs, `registry inspect`, and `.codex/*` state aligned with the operator baseline
+- [x] EL-4 define deeper accepted-action extraction as a deferred enhancement queue instead of an implicit next-step assumption
+- [ ] EL-5 keep later enhancement planning gated behind stable runtime API prerequisites instead of reopening the next phase early
 
 ## Development Log Capture
 
@@ -102,6 +121,6 @@
 
 ## Escalation Model
 
-- Continue Automatically: normal post-stage regression and operator evidence maintenance
-- Raise But Continue: Stage 5 evidence stays green but root-cutover operator policy starts drifting in docs or CLI
-- Require User Decision: a later phase would bypass or weaken the current Stage 5 contract
+- Continue Automatically: normal post-stage regression, roadmap alignment, and operator evidence maintenance
+- Raise But Continue: Stage 5 evidence stays green but root-cutover policy or project/workstream roadmap starts drifting in docs or CLI
+- Require User Decision: a later phase would bypass or weaken the current Stage 5 contract or open enhancement planning before prerequisites stay green

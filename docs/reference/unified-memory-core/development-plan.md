@@ -57,6 +57,7 @@ Already implemented in the current baseline:
 
 - shared contracts
 - `Source System` MVP
+- structured `accepted_action` source intake
 - `Memory Registry` MVP
 - local `source -> candidate` pipeline
 - `Projection System` MVP
@@ -190,6 +191,19 @@ Do not start with:
 - multi-host network service
 - advanced network-required architecture
 - repo split execution work beyond what is already documented
+
+## Deferred Enhancement Queue
+
+These items are intentionally `todo`, not the current active stage.
+
+They exist so the next enhancement phase can start from a clear queue instead of reconstructing intent from session history.
+
+47. `todo` Split `accepted_action` extraction into reusable target facts, operating rules, and one-off outcome artifacts.
+48. `todo` Add accepted-action admission routing across `session`, `daily`, `observation`, and stable-candidate layers.
+49. `todo` Add richer accepted-action evidence weighting using acceptance, execution success, later reuse, contradiction, and citation signals together.
+50. `todo` Add negative / partial accepted-action handling so rejected or failed actions become audit or observation inputs instead of stable facts.
+51. `todo` Add accepted-action-specific dedupe, supersede, and conflict rules plus replay / audit coverage.
+52. `todo` Reopen implementation of this queue only after the post-Stage-5 operator baseline stays green long enough to justify a later enhancement slice.
 
 ## Review Checklist
 

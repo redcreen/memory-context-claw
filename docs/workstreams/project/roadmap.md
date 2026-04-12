@@ -20,8 +20,9 @@ One-line summary:
 
 What is already true today:
 
-- the self-learning baseline is already implemented across reflection, daily reflection, registry promotion, exports, and governance surfaces
-- the next phase is not to start self-learning from zero, but to make lifecycle rules and policy adaptation explicit
+- the governed baseline now covers the Stage 3 self-learning lifecycle, Stage 4 policy adaptation, and Stage 5 product-hardening evidence
+- release-preflight, bundle install verification, host smoke, and the registry-root operator policy are now part of the active operator baseline
+- the next phase is not to reopen baseline contract work, but to keep that operator baseline stable before any later enhancement discussion
 
 ## What This Master Roadmap Does
 
@@ -76,11 +77,11 @@ flowchart TB
 ### Overall
 
 - Project status: `usable + governed + regression-protected`
-- Architecture status: `core backbone complete`
+- Architecture status: `Stage 5 closeout baseline complete`
 - Governance status: `running as regular maintenance`
 - Current regression baseline:
-  - `critical smoke = 10/10`
-  - `full smoke = 25/25`
+  - `critical smoke = 18/18`
+  - `full smoke = 28/28`
 
 ### Workstream Status
 
@@ -88,17 +89,17 @@ flowchart TB
 | --- | --- | --- |
 | Core capture / fact-card / assembly | `completed` | maintain + tune |
 | Memory search | `phase-complete` | governance + incremental expansion |
-| Self-learning / reflection | `baseline-implemented` | declared-source ingestion, daily reflection, candidate -> stable promotion, exports, CLI, and governance surfaces available |
-| Unified Memory Core | `baseline-complete` | tranche 1-3 complete; ready for next enhancement phase |
+| Self-learning / reflection | `stage-complete` | governed lifecycle, policy adaptation, exports, CLI, and governance surfaces are available |
+| Unified Memory Core | `stage5-complete / closeout` | keep release-preflight, deployment verification, and root policy stable |
 
 ## Progress Map
 
 ```mermaid
 flowchart TB
-    A["Unified Memory Core Project\nCurrent state: first baseline complete"] --> B["Foundation Layer\ncompleted"]
-    A --> C["Unified Memory Core Product Line\nTranche 1-3 completed"]
+    A["Unified Memory Core Project\nCurrent state: Stage 5 closeout active"] --> B["Foundation Layer\ncompleted"]
+    A --> C["Unified Memory Core Product Line\nStage 1-5 completed"]
     A --> D["Memory Search Workstream\nphase-complete / governed"]
-    A --> E["Next Phase\nroadmap alignment + new enhancement plan"]
+    A --> E["Post-Stage-5 Maintenance\noperator baseline + later-phase gate"]
 
     B --> B1["Capture Foundation\ncompleted"]
     B --> B2["Fact / Card Foundation\ncompleted"]
@@ -106,32 +107,35 @@ flowchart TB
     B --> B4["Regression Foundation\ncompleted"]
     B --> B5["Governance Foundation\nrunning"]
 
-    C --> C1["Tranche 1\ncontracts + source + registry\ncompleted"]
-    C --> C2["Tranche 2\nprojection + governance + adapters\ncompleted"]
-    C --> C3["Tranche 3\nreflection + standalone + independent execution\ncompleted"]
+    C --> C1["Stage 1-2\ncontracts + source + registry + adapters\ncompleted"]
+    C --> C2["Stage 3\nself-learning lifecycle\ncompleted"]
+    C --> C3["Stage 4\npolicy adaptation\ncompleted"]
+    C --> C4["Stage 5\nproduct hardening + release-preflight\ncompleted"]
 
-    C2 --> C21["OpenClaw Adapter Runtime\ncompleted"]
-    C2 --> C22["Codex Adapter Runtime\ncompleted"]
-    C2 --> C23["Adapter Compatibility Tests\ncompleted"]
+    C1 --> C11["OpenClaw Adapter Runtime\ncompleted"]
+    C1 --> C12["Codex Adapter Runtime\ncompleted"]
+    C1 --> C13["Adapter Compatibility Tests\ncompleted"]
 
-    C3 --> C31["Daily Reflection Loop Baseline\ncompleted"]
-    C3 --> C32["Standalone CLI\nsource / reflect / export / govern\ncompleted"]
-    C3 --> C33["Independent Execution Review\nownership / release boundary / migration checklist\ncompleted"]
+    C2 --> C21["Daily Reflection + Promotion / Decay\ncompleted"]
+    C3 --> C31["Policy-input artifacts + consumer adaptation\ncompleted"]
+    C4 --> C41["Standalone source hardening + maintenance\ncompleted"]
+    C4 --> C42["Bundle install verify + host smoke\ncompleted"]
+    C4 --> C43["Independent execution + root policy\ncompleted"]
 
     D --> D1["Memory Search Governance\nongoing"]
     D --> D2["Case Expansion / Policy Tuning\nas needed"]
 
-    E --> E1["Align roadmap docs with completed baseline"]
-    E --> E2["Open next enhancement phase"]
-    E2 --> E21["Likely first track:\nself-learning phase 3\npromotion / decay / policy-input artifacts"]
+    E --> E1["Keep Stage 5 evidence green"]
+    E --> E2["Keep canonical-root operator policy visible"]
+    E --> E3["Only open later enhancement planning after prerequisites stay green"]
 
     classDef done fill:#e8f7e8,stroke:#2f855a,color:#1c4532,stroke-width:1.5px;
     classDef active fill:#eef6ff,stroke:#2563eb,color:#123a73,stroke-width:1.5px;
     classDef next fill:#fff4e8,stroke:#d97706,color:#7c2d12,stroke-width:1.5px;
 
-    class A,B,B1,B2,B3,B4,B5,C,C1,C2,C3,C21,C22,C23,C31,C32,C33 done;
-    class D,D1,D2 active;
-    class E,E1,E2,E21 next;
+    class B,B1,B2,B3,B4,B5,C,C1,C2,C3,C4,C11,C12,C13,C21,C31,C41,C42,C43 done;
+    class A,D,D1,D2,E,E1,E2 active;
+    class E3 next;
 ```
 
 ## Completed Foundation
@@ -190,8 +194,8 @@ Completed:
 
 Current baseline:
 
-- `critical smoke = 10/10`
-- `full smoke = 25/25`
+- `critical smoke = 18/18`
+- `full smoke = 28/28`
 
 ### 5. Governance foundation
 
@@ -218,14 +222,14 @@ Still ongoing:
 
 ### Primary next engineering focus
 
-**Roadmap Alignment + Next Enhancement Planning**
+**Post-Stage-5 Stability Maintenance**
 
 Why this is next:
 
-- the current local-first baseline in `development-plan.md` is complete
-- roadmap documents still need to reflect the true implementation state
-- the next move should be a new enhancement-phase plan, not more work appended to the old baseline plan
-- the most likely first coding track in that next phase is deeper self-learning policy work
+- the current local-first baseline in `development-plan.md` is complete and already reflected in the top-level roadmap wrapper
+- the main remaining risk is stale evidence or document drift, not missing baseline implementation
+- release-preflight, deployment verification, and the host-neutral root policy must stay visible and green before any later phase opens
+- a fresh enhancement-phase plan should open only after runtime API prerequisites stay green over time
 
 Key documents:
 
@@ -233,8 +237,10 @@ Key documents:
   [../../roadmap.md](../../roadmap.md)
 - implementation plan:
   [../../reference/unified-memory-core/development-plan.md](../../reference/unified-memory-core/development-plan.md)
-- self-learning roadmap:
-  [../self-learning/roadmap.md](../self-learning/roadmap.md)
+- release preflight:
+  [../../reference/unified-memory-core/testing/release-preflight.md](../../reference/unified-memory-core/testing/release-preflight.md)
+- host-neutral roadmap:
+  [../host-neutral-memory/roadmap.md](../host-neutral-memory/roadmap.md)
 
 ### Parallel maintenance focus
 
@@ -251,12 +257,9 @@ Current state:
 
 Current governance quality:
 
-- `pluginSignalHits = 6/6`
-- `pluginSourceHits = 6/6`
-- `pluginFailures = 0`
-- `pluginSingleCard = 6/6`
-- `pluginMultiCard = 0/6`
-- `pluginNoisySupporting = 0/6`
+- latest `eval:memory-search:cases` summary keeps `pluginSignalHits = 30/30`
+- latest `eval:memory-search:cases` summary keeps `pluginSourceHits = 30/30`
+- latest `eval:memory-search:cases` summary keeps `pluginFastPathLikely = 30/30`
 
 Key documents:
 
@@ -269,15 +272,15 @@ Key documents:
 
 The next major project move is:
 
-`close the roadmap gap between documents and implementation, then open a fresh enhancement phase`
+`keep the post-Stage-5 operator baseline stable, then open a fresh enhancement phase only when its prerequisites stay green`
 
 Planned project stages from here:
 
-1. align roadmap documents with the completed baseline
-2. define the next enhancement-phase scope explicitly
-3. choose one primary coding track instead of broad parallel expansion
-4. keep memory-search in governance mode
-5. preserve local-first and network-ready boundaries while planning future growth
+1. keep release-preflight, bundle install verification, host smoke, and `Stage 5` evidence green
+2. keep canonical-root operator policy explicit in CLI, public docs, and the control surface
+3. keep project and workstream roadmaps aligned with the live implementation baseline
+4. keep memory-search in governance mode, with targeted case expansion only when needed
+5. open a fresh enhancement-phase plan only after runtime API / service-mode prerequisites stay green over time
 
 ## Architecture Direction
 
@@ -317,9 +320,11 @@ Inside the product, the first-class modules are:
 
 ## Read This Next
 
-- If you want overall system shape:
-  [../../architecture.md](../../architecture.md)
 - If you want the milestone-level roadmap wrapper:
   [../../roadmap.md](../../roadmap.md)
-- If you want the self-learning workstream inside that product:
-  [../self-learning/architecture.md](../self-learning/architecture.md)
+- If you want the post-Stage-5 operator workflow:
+  [../../reference/unified-memory-core/maintenance-workflow.md](../../reference/unified-memory-core/maintenance-workflow.md)
+- If you want deployment and release gating:
+  [../../reference/unified-memory-core/testing/release-preflight.md](../../reference/unified-memory-core/testing/release-preflight.md)
+- If you want the host-neutral operator policy workstream:
+  [../host-neutral-memory/roadmap.md](../host-neutral-memory/roadmap.md)

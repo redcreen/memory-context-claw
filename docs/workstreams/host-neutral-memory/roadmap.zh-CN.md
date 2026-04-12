@@ -23,7 +23,7 @@
 
 ## 当前状态
 
-- 状态：`implementation-active / migration-and-governance-ready`
+- 状态：`policy-explicit / monitoring-active`
 - 依赖基线：
   - shared contracts：`ready`
   - registry baseline：`implemented`
@@ -32,6 +32,7 @@
   - agent sub namespace baseline：`implemented`
   - Codex write-back 纳入 nightly learning：`implemented`
   - registry migration / topology reporting：`implemented`
+  - canonical-root operator policy：`adopt_canonical_root`
 
 ## Phase Map
 
@@ -140,9 +141,9 @@ flowchart LR
 
 ## 立即执行顺序
 
-1. 先观察 live topology，确认当前 active root / fallback 命中情况
-2. 再决定 canonical root 的正式切换窗口
-3. 需要时把 legacy records 非破坏性迁移 / adopt 到 canonical root
+1. 持续观察 live topology，确保 active root 不回退到 `legacy_fallback`
+2. 把 runtime 已解析到 canonical root 视为当前已经 adopted 的 cutover 信号
+3. 只有在 operator 明确需要维护时，才迁移、归档或清理 legacy records
 4. 持续把 registry-root findings 暴露给治理和运维面
 5. 保证未来 accepted-action capture 仍然对齐 shared registry intake，而不是退回 adapter-local persistence
 6. 继续推进 adapter 质量，而不是重新分叉 per-host storage

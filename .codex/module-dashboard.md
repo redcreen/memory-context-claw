@@ -14,23 +14,23 @@
 
 ## Summary
 
-- Overall: `stage closeout / Stage 5 complete`
-- Average Completion: `98%`
-- Active Module: `Memory Registry`
-- Main Risk: `legacy_fallback regression` 或 operator 把 legacy divergence 误判成 hard gate
-- Active Slice: `hold-host-neutral-root-policy-stable`
+- Overall: stage closeout / Stage 5 complete
+- Average Completion: 87%
+- Active Module: Source System
+- Main Risk: none at the implementation layer
+- Active Slice: hold-post-stage5-roadmap-state-aligned
 
 ## Modules
 
 | Module | Status | Completion % | Already Implemented | Remaining Steps | Next Checkpoint | Primary Entry |
 | --- | --- | --- | --- | --- | --- | --- |
-| Source System | stage5-complete / stable | 98% (stable) | source contracts；local-first source registration；replayable artifacts；`file / directory / url / image` hardening；multi-source manifest support | 保持 source replay shape 稳定 | 用 `umc:stage5` 持续证明 mixed-source acceptance 不回退 | [modules/source-system.md](modules/source-system.md) |
-| Reflection System | stable / maintenance | 97% (stable) | reflection candidate generation；explicit promotion review；daily reflection；lifecycle metadata；new source payloads continue through governed artifacts | 保持 signal extraction readable | 证明 later phase 不需要 reflection-local shortcut | [modules/reflection-system.md](modules/reflection-system.md) |
-| Memory Registry | stable / policy-fixed | 98% (stable) | lifecycle lineage；promotion/decay/conflict/update rules；policy-export compatibility；migration rehearsal compatibility；CLI-visible root operator policy | 保持 canonical root active，不让 legacy divergence 被误升为 hard gate | 继续证明 `registry inspect` 保持 `adopt_canonical_root` / `advisory` | [modules/memory-registry.md](modules/memory-registry.md) |
-| Projection System | stage5-complete / stable | 98% (stable) | generic / OpenClaw / Codex exports；policy inputs；payload fingerprints；reproducibility evidence | 保持 export-level reproducibility 为绿 | 固定 `export reproducibility` audit 为后续证据面 | [modules/projection-system.md](modules/projection-system.md) |
-| Governance System | stage5-complete / monitoring | 98% (stable) | lifecycle audit；policy audit；repair/replay；maintenance workflow；release-boundary and split-readiness evidence；release-preflight gate | 保持报告可读 | 用 `umc:release-preflight` 继续证明 operator path 稳定 | [modules/governance-system.md](modules/governance-system.md) |
-| Openclaw Adapter | stable / regression-held | 95% (stable) | governed export consumption；policy context + assembly adaptation；host smoke path；real bundle install path | 保持 recall quality、host smoke、bundle install 稳定 | 持续通过 `umc:openclaw-itest` 与 `umc:openclaw-install-verify` | [modules/openclaw-adapter.md](modules/openclaw-adapter.md) |
-| Codex Adapter | stable / regression-held | 98% (stable) | shared namespace / registry compatibility；governed `policy_block / task_defaults`；Stage 5 reproducibility compatibility | 保持 task-side consumption 走 governed inputs | 在 later phase 之前不引入 consumer-local fallback heuristics | [modules/codex-adapter.md](modules/codex-adapter.md) |
+| Source System | stage5-complete / stable | 100% (maintain) | source contracts and manifest baseline; local-first source registration and normalization; ... | 保持 source replay / manifest shape 稳定，不为单个 consumer 做特例。; 继续让 mixed-source Stage 5 acceptance 保持绿色。; ... | Keep `umc:stage5` proving mixed-source acceptance without regressions. | [modules/source-system.md](modules/source-system.md) |
+| Reflection System | stage5-compatible / stable | 60% (forming) | reflection contract baseline; candidate extraction and reflection outputs; ... | Keep promotion / decay review semantics readable in post-Stage-5 maintenance.; Add future feedback hooks only through governed artifacts, not hidden consumer-local state.; ... | Keep proving that no reflection-local shortcut is needed outside governed artifacts. | [modules/reflection-system.md](modules/reflection-system.md) |
+| Memory Registry | stable / policy-fixed | 60% (forming) | registry persistence baseline; source/candidate/stable artifact separation; ... | Keep canonical root active as the default operator target.; Preserve the explicit rule that legacy divergence is advisory when runtime already resolves to canonical.; ... | Keep `registry inspect` at `operatorPolicy = adopt_canonical_root` or `canonical_root_active`; do not let later work reintroduce legacy-mirroring as a hard requirement. | [modules/memory-registry.md](modules/memory-registry.md) |
+| Projection System | stage5-complete / stable | 100% (maintain) | projection export contract baseline; visibility filtering; ... | Keep consumer-specific projection differences explicit and comparable.; Avoid pushing policy behavior back into adapters outside export boundaries.; ... | Keep `export reproducibility` as a stable regression surface without changing the contract boundary. | [modules/projection-system.md](modules/projection-system.md) |
+| Governance System | governing / stage5-complete | 90% (stable) | formal audit, duplicate audit, and conflict audit; governance cycle and repair/replay primitives; ... | Keep lifecycle, policy, maintenance, and split-readiness reports readable and durable.; Decide whether high-frequency lifecycle / policy outputs need a clearer durable/generated split.; ... | Carry current lifecycle + policy + maintenance reports forward as the required post-Stage-5 evidence surface. | [modules/governance-system.md](modules/governance-system.md) |
+| Openclaw Adapter | stage4-complete / stable | 100% (maintain) | OpenClaw adapter runtime integration; memory-search phases A-E baseline; ... | Align OpenClaw runtime reads and writes with the future host-neutral canonical registry root.; Keep supporting context clean while Stage 4 compact-mode policy stays live.; ... | Keep live OpenClaw behavior stable while Stage 4 policy guidance becomes a fixed regression surface. | [modules/openclaw-adapter.md](modules/openclaw-adapter.md) |
+| Codex Adapter | stage4-complete / stable | 100% (maintain) | Codex adapter runtime integration baseline; compatibility coverage across OpenClaw / Codex / governance surfaces; ... | Converge Codex on the same canonical registry root used by OpenClaw.; Keep task-side policy consumption on governed exports, not Codex-local heuristics.; ... | Prove that Codex can keep reading the same governed policy memory as root policy converges. | [modules/codex-adapter.md](modules/codex-adapter.md) |
 
 ## Module Entry Rules
 

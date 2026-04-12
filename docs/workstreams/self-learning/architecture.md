@@ -42,7 +42,7 @@ At the architecture level, this system should be designed as:
 
 This workstream is no longer design-only. The repo already implements a meaningful baseline:
 
-- declared-source ingestion for `manual`, `file`, `directory`, and `conversation`
+- declared-source ingestion for `manual`, `file`, `directory`, `conversation`, and `accepted_action`
 - reflection labeling, candidate artifact generation, and decision trails
 - daily reflection runs with repeated-signal and explicit remember detection
 - candidate-to-stable promotion through the registry
@@ -338,6 +338,37 @@ Recommended admission classes:
 - daily-memory candidate
 - governed stable-memory candidate
 - dropped / audit-only record
+
+## Deferred Deeper Extraction Rules
+
+The current implementation intentionally stops at a conservative first step:
+
+- `accepted_action` can enter the governed source -> candidate -> stable loop
+- the CLI can submit structured accepted-action evidence
+- the current extractor still treats the event mainly as one durable fact candidate
+
+That is enough to prove the integration path, but it is not yet the full extraction policy.
+
+The deeper extraction rules remain a deliberate TODO so the system does not jump from "hardcoded nothing" to "overfit everything."
+
+Deferred TODO package:
+
+1. field-aware extraction:
+   split one accepted-action event into reusable environment facts, operating rules, and one-off outcome artifacts instead of flattening everything into one summary
+2. admission routing:
+   route one-off URLs, slugs, and artifact paths into observation or daily-memory layers unless later reuse justifies stable promotion
+3. stronger evidence weighting:
+   score accepted action candidates using acceptance, execution success, repeat reuse, contradiction, and later citation signals together
+4. negative and partial outcomes:
+   treat rejected, failed, or ambiguous accepted-action events as audit or observation inputs instead of stable fact inputs
+5. accepted-action conflict and dedupe policy:
+   compare newer accepted-action outcomes against prior stable targets or rules so the registry can supersede stale defaults cleanly
+6. extraction-specific replay and audit coverage:
+   prove that accepted-action extraction decisions are traceable from raw event fields to final layered placement
+
+Implementation gate:
+
+`do not open this deeper extraction package until the current Stage 5 operator baseline stays green and the repo is ready for a later enhancement slice`
 
 ## What Counts As Evidence
 
