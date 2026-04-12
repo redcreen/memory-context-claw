@@ -28,11 +28,11 @@
 
 | 里程碑 | 状态 | 目标 | 依赖 | 退出条件 |
 | --- | --- | --- | --- | --- |
-| Stage 1：设计基线 | completed | 冻结产品命名、边界和文档栈 | 无 | 架构、模块边界、测试面已经对齐 |
-| Stage 2：local-first 基线 | completed | 跑通一条可治理的 local-first 端到端主链 | Stage 1 | 核心模块、适配器、standalone CLI、governance 都可运行 |
-| Stage 3：self-learning lifecycle 基线 | active | 把已经实现的 reflection baseline 收成一条显式的生命周期，补齐 promotion、decay 和学习专项治理 | Stage 2 | promotion / decay 预期与 learning-governance 规则清楚，并且有回归保护 |
-| Stage 4：policy adaptation | later | 让治理后的学习产物影响消费者行为 | Stage 3 | 一条可回退的 policy-adaptation 闭环被证明 |
-| Stage 5：product hardening | later | 验证独立产品运行和 split-ready 边界 | Stage 4 | release boundary、可复现性、维护工作流趋于稳定 |
+| [Stage 1：设计基线](reference/unified-memory-core/development-plan.zh-CN.md#stage-1-设计与文档基线) | completed | 冻结产品命名、边界和文档栈 | 无 | 架构、模块边界、测试面已经对齐 |
+| [Stage 2：local-first 基线](reference/unified-memory-core/development-plan.zh-CN.md#stage-2-local-first-实现基线) | completed | 跑通一条可治理的 local-first 端到端主链 | Stage 1 | 核心模块、适配器、standalone CLI、governance 都可运行 |
+| [Stage 3：self-learning lifecycle 基线](reference/unified-memory-core/development-plan.zh-CN.md#stage-3-self-learning-生命周期基线) | active | 把已经实现的 reflection baseline 收成一条显式的生命周期，补齐 promotion、decay 和学习专项治理 | Stage 2 | promotion / decay 预期与 learning-governance 规则清楚，并且有回归保护 |
+| [Stage 4：policy adaptation](reference/unified-memory-core/development-plan.zh-CN.md#stage-4-policy-adaptation-与多消费者使用) | later | 让治理后的学习产物影响消费者行为 | Stage 3 | 一条可回退的 policy-adaptation 闭环被证明 |
+| [Stage 5：product hardening](reference/unified-memory-core/development-plan.zh-CN.md#stage-5-产品加固与独立运行) | later | 验证独立产品运行和 split-ready 边界 | Stage 4 | release boundary、可复现性、维护工作流趋于稳定 |
 
 ## 里程碑流转
 

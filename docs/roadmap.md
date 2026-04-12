@@ -28,11 +28,11 @@ For detailed queues, read:
 
 | Milestone | Status | Goal | Depends On | Exit Criteria |
 | --- | --- | --- | --- | --- |
-| Stage 1: design baseline | completed | freeze product naming, boundaries, and document stack | none | architecture, module boundaries, and testing surfaces are aligned |
-| Stage 2: local-first baseline | completed | ship one governed local-first end-to-end baseline | Stage 1 | core modules, adapters, standalone CLI, and governance all run |
-| Stage 3: self-learning lifecycle baseline | active | turn the already-implemented reflection baseline into an explicit lifecycle with promotion, decay, and learning-specific governance | Stage 2 | promotion / decay expectations and learning-governance rules are explicit and regression-protected |
-| Stage 4: policy adaptation | later | let governed learning outputs influence consumer behavior | Stage 3 | one reversible policy-adaptation loop is proven |
-| Stage 5: product hardening | later | validate split-ready and independent-product operation | Stage 4 | release boundary, reproducibility, and maintenance workflows are stable |
+| [Stage 1: design baseline](reference/unified-memory-core/development-plan.md#stage-1-design-and-documentation-baseline) | completed | freeze product naming, boundaries, and document stack | none | architecture, module boundaries, and testing surfaces are aligned |
+| [Stage 2: local-first baseline](reference/unified-memory-core/development-plan.md#stage-2-local-first-implementation-baseline) | completed | ship one governed local-first end-to-end baseline | Stage 1 | core modules, adapters, standalone CLI, and governance all run |
+| [Stage 3: self-learning lifecycle baseline](reference/unified-memory-core/development-plan.md#stage-3-self-learning-lifecycle-baseline) | active | turn the already-implemented reflection baseline into an explicit lifecycle with promotion, decay, and learning-specific governance | Stage 2 | promotion / decay expectations and learning-governance rules are explicit and regression-protected |
+| [Stage 4: policy adaptation](reference/unified-memory-core/development-plan.md#stage-4-policy-adaptation-and-multi-consumer-use) | later | let governed learning outputs influence consumer behavior | Stage 3 | one reversible policy-adaptation loop is proven |
+| [Stage 5: product hardening](reference/unified-memory-core/development-plan.md#stage-5-product-hardening-and-independent-operation) | later | validate split-ready and independent-product operation | Stage 4 | release boundary, reproducibility, and maintenance workflows are stable |
 
 ## Milestone Flow
 
