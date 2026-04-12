@@ -17,6 +17,7 @@
 | Goal | Read This |
 | --- | --- |
 | Try the project quickly | [README](../README.md) |
+| Learn how to use, operate, and validate the product in detail | [reference/unified-memory-core/usage-guide.md](reference/unified-memory-core/usage-guide.md) |
 | Understand the stable system shape | [architecture.md](architecture.md) |
 | See official module boundaries | [module-map.md](module-map.md) |
 | Understand what is next at milestone level | [roadmap.md](roadmap.md) |

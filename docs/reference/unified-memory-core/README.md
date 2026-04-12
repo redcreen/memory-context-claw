@@ -4,6 +4,7 @@
 
 ## Docs
 
+- [usage-guide.md](usage-guide.md)
 - [deployment-topology.md](deployment-topology.md)
 - [development-plan.md](development-plan.md)
 - [migration-checklist.md](migration-checklist.md)

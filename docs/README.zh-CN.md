@@ -17,6 +17,7 @@
 | 目标 | 阅读这里 |
 | --- | --- |
 | 快速试用项目 | [../README.zh-CN.md](../README.zh-CN.md) |
+| 查看详细使用、运维和验证手册 | [reference/unified-memory-core/usage-guide.zh-CN.md](reference/unified-memory-core/usage-guide.zh-CN.md) |
 | 理解稳定系统结构 | [architecture.zh-CN.md](architecture.zh-CN.md) |
 | 看官方模块边界 | [module-map.zh-CN.md](module-map.zh-CN.md) |
 | 看里程碑层面的下一步 | [roadmap.zh-CN.md](roadmap.zh-CN.md) |

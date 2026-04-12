@@ -4,6 +4,7 @@
 
 ## 文档
 
+- [usage-guide.zh-CN.md](usage-guide.zh-CN.md)
 - [deployment-topology.md](deployment-topology.md)
 - [development-plan.md](development-plan.md)
 - [migration-checklist.md](migration-checklist.md)

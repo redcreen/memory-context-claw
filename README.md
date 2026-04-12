@@ -191,6 +191,7 @@ npm run umc:cli -- export inspect --consumer generic --format markdown
 - [Module Map](docs/module-map.md)
 - [Roadmap](docs/roadmap.md)
 - [Test Plan](docs/test-plan.md)
+- [Detailed Usage Guide](docs/reference/unified-memory-core/usage-guide.md)
 - [Release Process](release.md)
 
 Deeper repo-specific references:

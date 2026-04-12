@@ -9,6 +9,6 @@ This directory contains stable reference material that supports the project but 
 ## Contents
 
 - configuration and policy references
+- product-specific usage guides
 - deeper architecture notes
 - durable design references that are too specific for the top-level docs stack
-

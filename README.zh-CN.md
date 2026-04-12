@@ -191,6 +191,7 @@ npm run umc:cli -- export inspect --consumer generic --format markdown
 - [模块地图](docs/module-map.zh-CN.md)
 - [路线图](docs/roadmap.zh-CN.md)
 - [测试计划](docs/test-plan.zh-CN.md)
+- [详细使用手册](docs/reference/unified-memory-core/usage-guide.zh-CN.md)
 - [发布说明](RELEASE.zh-CN.md)
 
 更深一层的仓库文档：
