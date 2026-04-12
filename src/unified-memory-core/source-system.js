@@ -79,6 +79,150 @@ function normalizeOptionalObject(value) {
   return value;
 }
 
+function sanitizeAcceptedActionFieldSegment(value) {
+  return String(value || "")
+    .trim()
+    .replace(/\s+/gu, "_");
+}
+
+function dedupeBy(items, getKey) {
+  const seen = new Set();
+  const output = [];
+
+  for (const item of items) {
+    const key = getKey(item);
+    if (!key || seen.has(key)) {
+      continue;
+    }
+    seen.add(key);
+    output.push(item);
+  }
+
+  return output;
+}
+
+function tryParseUrl(value) {
+  try {
+    return new URL(value);
+  } catch {
+    return null;
+  }
+}
+
+function classifyAcceptedActionTarget(rawValue) {
+  const value = normalizeText(rawValue);
+  if (!value) {
+    return null;
+  }
+
+  if (/^[a-z0-9_.-]+\/[a-z0-9_.-]+$/iu.test(value)) {
+    return {
+      value,
+      kind: "repository",
+      reuse_class: "reusable_target",
+      is_reusable: true
+    };
+  }
+
+  const parsedUrl = tryParseUrl(value);
+  if (parsedUrl) {
+    const pathname = normalizeText(parsedUrl.pathname || "/") || "/";
+    const hasNestedPath = pathname !== "/";
+    return {
+      value,
+      kind: hasNestedPath ? "url_path" : "url_root",
+      reuse_class: hasNestedPath ? "outcome_target" : "reusable_target",
+      is_reusable: !hasNestedPath,
+      host: parsedUrl.host,
+      pathname
+    };
+  }
+
+  return {
+    value,
+    kind: value.includes("/") ? "opaque_path" : "opaque_target",
+    reuse_class: value.includes("/") ? "outcome_target" : "reusable_target",
+    is_reusable: !value.includes("/")
+  };
+}
+
+function buildAcceptedActionTargetDescriptors(values) {
+  return dedupeBy(
+    values
+      .map((value) => classifyAcceptedActionTarget(value))
+      .filter(Boolean),
+    (item) => `${item.kind}:${item.value}`
+  );
+}
+
+function buildAcceptedActionArtifactDescriptors(values) {
+  return dedupeBy(
+    values
+      .map((rawValue) => {
+        const value = normalizeText(rawValue);
+        if (!value) {
+          return null;
+        }
+        return {
+          value,
+          kind: "artifact_path",
+          reuse_class: "outcome_artifact",
+          is_reusable: false,
+          extension: path.extname(value)
+        };
+      })
+      .filter(Boolean),
+    (item) => `${item.kind}:${item.value}`
+  );
+}
+
+function collectAcceptedActionOutputDescriptors(value, fieldPath = []) {
+  if (typeof value === "string") {
+    const normalized = normalizeText(value);
+    if (!normalized) {
+      return [];
+    }
+
+    const parsedUrl = tryParseUrl(normalized);
+    if (parsedUrl) {
+      return [{
+        field_path: fieldPath.map((item) => sanitizeAcceptedActionFieldSegment(item)).join("."),
+        value: normalized,
+        kind: "output_url",
+        reuse_class: "outcome_artifact",
+        is_reusable: false,
+        host: parsedUrl.host,
+        pathname: normalizeText(parsedUrl.pathname || "/") || "/"
+      }];
+    }
+
+    if (normalized.includes("/") || normalized.includes(".")) {
+      return [{
+        field_path: fieldPath.map((item) => sanitizeAcceptedActionFieldSegment(item)).join("."),
+        value: normalized,
+        kind: "output_path",
+        reuse_class: "outcome_artifact",
+        is_reusable: false
+      }];
+    }
+    return [];
+  }
+
+  if (Array.isArray(value)) {
+    return value.flatMap((entry, index) =>
+      collectAcceptedActionOutputDescriptors(entry, [...fieldPath, String(index)])
+    );
+  }
+
+  if (!value || typeof value !== "object") {
+    return [];
+  }
+
+  return Object.entries(value).flatMap(([key, nestedValue]) =>
+    collectAcceptedActionOutputDescriptors(nestedValue, [...fieldPath, key])
+  );
+}
+
 function buildAcceptedActionText({
   actionType,
   status,
@@ -344,6 +488,12 @@ async function normalizeAcceptedActionSource(declaredSource) {
   );
   const inputs = normalizeOptionalObject(declaredSource.inputs);
   const outputs = normalizeOptionalObject(declaredSource.outputs);
+  const targetDescriptors = buildAcceptedActionTargetDescriptors(externalTargets);
+  const artifactDescriptors = buildAcceptedActionArtifactDescriptors(artifactPaths);
+  const outputDescriptors = dedupeBy(
+    collectAcceptedActionOutputDescriptors(outputs),
+    (item) => `${item.field_path}:${item.kind}:${item.value}`
+  );
   const text = buildAcceptedActionText({
     actionType,
     status,
@@ -370,7 +520,10 @@ async function normalizeAcceptedActionSource(declaredSource) {
       text,
       summary: content || text,
       external_targets: externalTargets,
+      target_descriptors: targetDescriptors,
       artifact_paths: artifactPaths,
+      artifact_descriptors: artifactDescriptors,
+      output_descriptors: outputDescriptors,
       ...(inputs ? { inputs } : {}),
       ...(outputs ? { outputs } : {}),
       char_count: text.length
@@ -383,7 +536,9 @@ async function normalizeAcceptedActionSource(declaredSource) {
       execution_succeeded: succeeded,
       ...(agentId ? { agent_id: agentId } : {}),
       external_target_count: externalTargets.length,
-      artifact_path_count: artifactPaths.length
+      reusable_target_count: targetDescriptors.filter((item) => item.is_reusable).length,
+      artifact_path_count: artifactPaths.length,
+      output_descriptor_count: outputDescriptors.length
     }
   };
 }

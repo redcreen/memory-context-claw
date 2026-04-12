@@ -198,7 +198,10 @@ These items are intentionally `todo`, not the current active stage.
 
 They exist so the next enhancement phase can start from a clear queue instead of reconstructing intent from session history.
 
-47. `todo` Split `accepted_action` extraction into reusable target facts, operating rules, and one-off outcome artifacts.
+47. `done` Split `accepted_action` extraction into reusable target facts, operating rules, and one-off outcome artifacts.
+   - `accepted_action` source normalization now emits field descriptors for targets, artifact paths, and output references.
+   - reflection now expands successful accepted-action events into field-aware `target_fact`, `operating_rule`, and `outcome_artifact` candidates instead of flattening everything into one summary.
+   - CLI and lifecycle validation now prove reusable targets can promote independently while one-off outcomes stay in observation state.
 48. `todo` Add accepted-action admission routing across `session`, `daily`, `observation`, and stable-candidate layers.
 49. `todo` Add richer accepted-action evidence weighting using acceptance, execution success, later reuse, contradiction, and citation signals together.
 50. `todo` Add negative / partial accepted-action handling so rejected or failed actions become audit or observation inputs instead of stable facts.

@@ -128,6 +128,10 @@ test("source system normalizes accepted_action sources into structured evidence"
     agentId: "code",
     targets: ["redcreen/redcreen.github.io", "https://redcreen.github.io/demo/"],
     artifacts: ["dist/index.html"],
+    outputs: {
+      finalUrl: "https://redcreen.github.io/demo/",
+      manifestPath: "dist/manifest.json"
+    },
     content: "User accepted the publish target for the site release.",
     namespace: {
       tenant: "local",
@@ -143,4 +147,47 @@ test("source system normalizes accepted_action sources into structured evidence"
   assert.equal(result.sourceArtifact.normalized_payload.execution_succeeded, true);
   assert.match(result.sourceArtifact.normalized_payload.text, /redcreen\/redcreen\.github\.io/);
   assert.deepEqual(result.sourceArtifact.normalized_payload.artifact_paths, ["dist/index.html"]);
+  assert.deepEqual(result.sourceArtifact.normalized_payload.target_descriptors, [
+    {
+      value: "redcreen/redcreen.github.io",
+      kind: "repository",
+      reuse_class: "reusable_target",
+      is_reusable: true
+    },
+    {
+      value: "https://redcreen.github.io/demo/",
+      kind: "url_path",
+      reuse_class: "outcome_target",
+      is_reusable: false,
+      host: "redcreen.github.io",
+      pathname: "/demo/"
+    }
+  ]);
+  assert.deepEqual(result.sourceArtifact.normalized_payload.artifact_descriptors, [
+    {
+      value: "dist/index.html",
+      kind: "artifact_path",
+      reuse_class: "outcome_artifact",
+      is_reusable: false,
+      extension: ".html"
+    }
+  ]);
+  assert.deepEqual(result.sourceArtifact.normalized_payload.output_descriptors, [
+    {
+      field_path: "finalUrl",
+      value: "https://redcreen.github.io/demo/",
+      kind: "output_url",
+      reuse_class: "outcome_artifact",
+      is_reusable: false,
+      host: "redcreen.github.io",
+      pathname: "/demo/"
+    },
+    {
+      field_path: "manifestPath",
+      value: "dist/manifest.json",
+      kind: "output_path",
+      reuse_class: "outcome_artifact",
+      is_reusable: false
+    }
+  ]);
 });

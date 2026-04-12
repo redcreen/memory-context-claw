@@ -90,19 +90,18 @@ Current status:
 
 - generic accepted-action intake is now implemented
 - CLI and lifecycle coverage already prove that accepted-action evidence can enter the governed loop
-- deeper extraction policy is still intentionally deferred
+- Step 47 field-aware extraction is now implemented
+- later admission / weighting / negative-path policy is still intentionally deferred
 
 That deferred package should reopen only as a later enhancement slice.
 
 TODO backlog:
 
-1. split accepted-action fields into:
-   reusable target facts, operating rules, and one-off outcome artifacts
-2. add admission policy that keeps one-off URLs / paths out of stable memory until reuse justifies promotion
-3. score accepted-action candidates with richer evidence than "accepted + succeeded" alone
-4. add negative / partial-action handling so failed or rejected events do not promote like stable facts
-5. add accepted-action-specific dedupe, supersede, and conflict rules
-6. add replay / audit cases that assert final placement from raw accepted-action fields
+1. add admission policy that keeps one-off URLs / paths out of stable memory until reuse justifies promotion
+2. score accepted-action candidates with richer evidence than "accepted + succeeded" alone
+3. add negative / partial-action handling so failed or rejected events do not promote like stable facts
+4. add accepted-action-specific dedupe, supersede, and conflict rules
+5. add replay / audit cases that assert final placement from raw accepted-action fields
 
 Entry criteria for reopening this TODO:
 

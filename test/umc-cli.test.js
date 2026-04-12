@@ -177,6 +177,9 @@ test("umc learn lifecycle-run promotes accepted_action signals through the gover
 
   assert.equal(result.status, 0, result.stderr);
   const payload = JSON.parse(result.stdout);
+  assert.equal(payload.daily_reflection.reflection.run.summary.candidate_count, 3);
+  assert.equal(payload.daily_reflection.reflection.run.summary.by_extraction_class.target_fact, 1);
+  assert.equal(payload.daily_reflection.reflection.run.summary.by_extraction_class.outcome_artifact, 2);
   assert.equal(payload.lifecycle.promotedStableArtifacts.length, 1);
   assert.equal(payload.learning_audit.summary.stable_learning_artifacts, 1);
   assert.match(

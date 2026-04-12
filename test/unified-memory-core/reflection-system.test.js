@@ -163,3 +163,55 @@ test("reflection system treats Chinese should-style rules as stable rule candida
   assert.equal(result.primary_label, "stable_rule_candidate");
   assert.equal(result.recommendation.should_promote, true);
 });
+
+test("reflection system splits accepted_action sources into target facts and outcome artifacts", async () => {
+  const sourceSystem = createSourceSystem({
+    idGenerator: createIdGenerator(),
+    clock: createFixedClock()
+  });
+  const reflectionSystem = createReflectionSystem({
+    idGenerator: createIdGenerator(),
+    clock: createFixedClock()
+  });
+
+  const { sourceArtifact } = await sourceSystem.ingestDeclaredSource({
+    sourceType: "accepted_action",
+    declaredBy: "test",
+    actionType: "publish_site",
+    status: "succeeded",
+    accepted: true,
+    succeeded: true,
+    agentId: "code",
+    targets: ["redcreen/redcreen.github.io", "https://redcreen.github.io/brain-reinstall-jingangjing/"],
+    artifacts: ["dist/index.html"],
+    outputs: {
+      finalUrl: "https://redcreen.github.io/brain-reinstall-jingangjing/",
+      manifestPath: "dist/manifest.json"
+    },
+    content: "User accepted the publish target and the site release succeeded.",
+    namespace: {
+      tenant: "local",
+      scope: "workspace",
+      resource: "unified-memory-core",
+      key: "reflection-accepted-action"
+    },
+    visibility: "workspace"
+  });
+
+  const result = await reflectionSystem.reflectSourceArtifact(sourceArtifact);
+
+  assert.equal(result.primary_label, "stable_fact_candidate");
+  assert.equal(result.output_count, 4);
+  assert.equal(result.outputs[0].candidate_artifact.attributes.accepted_action_extraction_class, "target_fact");
+  assert.equal(result.outputs[0].recommendation.should_promote, true);
+  assert.deepEqual(
+    result.outputs.map((item) => item.candidate_artifact.attributes.accepted_action_extraction_class),
+    ["target_fact", "outcome_artifact", "outcome_artifact", "outcome_artifact"]
+  );
+  assert.deepEqual(
+    result.outputs.map((item) => item.candidate_artifact.state),
+    ["candidate", "observation", "observation", "observation"]
+  );
+  assert.match(result.outputs[0].candidate_artifact.summary, /reusable target redcreen\/redcreen\.github\.io/);
+  assert.match(result.outputs[1].candidate_artifact.summary, /brain-reinstall-jingangjing/);
+});

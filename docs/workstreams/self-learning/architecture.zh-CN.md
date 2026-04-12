@@ -346,25 +346,23 @@ flowchart LR
 
 - `accepted_action` 已经可以进入受治理的 source -> candidate -> stable 闭环
 - CLI 已经可以提交结构化 accepted-action 证据
-- 但当前 extractor 仍然主要把这类事件当成一条保守的 durable fact candidate
+- 成功的 accepted-action event 现在已经会在 source 提供结构化证据时拆成 field-aware 的 `target_fact`、`operating_rule`、`outcome_artifact` candidates
 
-这已经足够证明集成链路打通了，但还不是完整的抽取策略。
+这已经足够证明集成链路和 Step 47 的 field-aware extraction 打通了，但还不是完整的抽取策略。
 
 更深一层的抽取规则现在先明确记成 TODO，避免系统从“完全没机制”直接跳到“过度拟合一切细节”。
 
 延后实现的 TODO 包：
 
-1. field-aware extraction：
-   不再把一个 accepted-action event 全部压成一条 summary，而是拆成可复用环境事实、操作规则和一次性 outcome artifacts
-2. admission routing：
+1. admission routing：
    像一次性 URL、slug、artifact path 这类结果，默认先落 observation 或 daily-memory，只有后续复用才考虑 stable promotion
-3. stronger evidence weighting：
+2. stronger evidence weighting：
    把 user accepted、execution succeeded、后续复用、矛盾信号、再次引用这些证据合并打分
-4. negative and partial outcomes：
+3. negative and partial outcomes：
    对 rejected、failed、ambiguous 的 accepted-action events，默认走 audit / observation，而不是 stable fact
-5. accepted-action conflict and dedupe policy：
+4. accepted-action conflict and dedupe policy：
    新的 accepted-action 结果要能和旧的 stable target / rule 做 supersede、dedupe、staleness 判断
-6. extraction-specific replay and audit coverage：
+5. extraction-specific replay and audit coverage：
    让 accepted-action 从原始 event 字段到最终落层结果的整个决策链都可 replay、可 audit
 
 实现 gate：

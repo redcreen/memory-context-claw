@@ -90,22 +90,21 @@
 
 - generic accepted-action intake 已经落地
 - CLI 和 lifecycle 覆盖已经证明 accepted-action 证据可以进入 governed loop
-- 但更深一层的 extraction policy 仍然是有意延后的
+- Step 47 的 field-aware extraction 已经落地
+- 后续 admission / weighting / negative-path policy 仍然是有意延后的
 
 这一包延后项，只应在后续 enhancement slice 单独打开，不应继续往当前 closeout baseline 里追加。
 
 TODO backlog：
 
-1. 把 accepted-action 字段拆成：
-   可复用 target facts、operating rules，以及一次性 outcome artifacts
-2. 补 admission policy：
+1. 补 admission policy：
    对一次性 URL / path 默认不直接进 stable memory，只有复用后才考虑 promotion
-3. 补 richer evidence scoring：
+2. 补 richer evidence scoring：
    不只看 `accepted + succeeded`，还要合并后续复用、冲突、再次引用等证据
-4. 补 negative / partial-action handling：
+3. 补 negative / partial-action handling：
    failed、rejected、ambiguous 的事件应进入 audit / observation，而不是直接按 stable fact 处理
-5. 补 accepted-action-specific dedupe / supersede / conflict rules
-6. 补 replay / audit cases，验证从原始 accepted-action 字段到最终落层结果的完整链路
+4. 补 accepted-action-specific dedupe / supersede / conflict rules
+5. 补 replay / audit cases，验证从原始 accepted-action 字段到最终落层结果的完整链路
 
 重新打开这组 TODO 的前置条件：
 

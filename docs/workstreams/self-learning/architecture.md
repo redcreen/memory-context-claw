@@ -345,25 +345,23 @@ The current implementation intentionally stops at a conservative first step:
 
 - `accepted_action` can enter the governed source -> candidate -> stable loop
 - the CLI can submit structured accepted-action evidence
-- the current extractor still treats the event mainly as one durable fact candidate
+- successful accepted-action events now split into field-aware `target_fact`, `operating_rule`, and `outcome_artifact` candidates when structured source evidence is present
 
-That is enough to prove the integration path, but it is not yet the full extraction policy.
+That is enough to prove the integration path and Step 47 field-aware extraction, but it is not yet the full extraction policy.
 
 The deeper extraction rules remain a deliberate TODO so the system does not jump from "hardcoded nothing" to "overfit everything."
 
 Deferred TODO package:
 
-1. field-aware extraction:
-   split one accepted-action event into reusable environment facts, operating rules, and one-off outcome artifacts instead of flattening everything into one summary
-2. admission routing:
+1. admission routing:
    route one-off URLs, slugs, and artifact paths into observation or daily-memory layers unless later reuse justifies stable promotion
-3. stronger evidence weighting:
+2. stronger evidence weighting:
    score accepted action candidates using acceptance, execution success, repeat reuse, contradiction, and later citation signals together
-4. negative and partial outcomes:
+3. negative and partial outcomes:
    treat rejected, failed, or ambiguous accepted-action events as audit or observation inputs instead of stable fact inputs
-5. accepted-action conflict and dedupe policy:
+4. accepted-action conflict and dedupe policy:
    compare newer accepted-action outcomes against prior stable targets or rules so the registry can supersede stale defaults cleanly
-6. extraction-specific replay and audit coverage:
+5. extraction-specific replay and audit coverage:
    prove that accepted-action extraction decisions are traceable from raw event fields to final layered placement
 
 Implementation gate:

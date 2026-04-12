@@ -70,19 +70,27 @@
   - Exit Condition: 更深 accepted-action extraction 已经有明确 TODO、前置条件、验收方向和恢复点
   - Status: `completed`
 
+- Slice: `implement-step47-field-aware-accepted-action-extraction`
+  - Objective: 落地 deferred queue 的 Step 47，让 accepted_action 基于结构化字段拆出 `target_fact`、显式 `operating_rule`、`outcome_artifact` 候选，而不是继续只产出一条保守摘要
+  - Dependencies: `src/unified-memory-core/source-system.js`、`src/unified-memory-core/reflection-system.js`、CLI/runtime reflect & lifecycle path、self-learning docs / development plan、accepted_action baseline tests
+  - Risks: 如果继续把 accepted_action 压成单条摘要，后续 stable recall 会再次混淆“可复用 target”和“一次性 outcome”；如果一次性过做 Step 48-51，会把准入、负向路径、冲突治理一起并进当前实现
+  - Validation: accepted_action source/reflection/CLI tests、`npm test`、`npm run verify`、`npm run umc:cli -- reflect run ... --source-type accepted_action`、`npm run umc:cli -- learn lifecycle-run ... --source-type accepted_action`
+  - Exit Condition: successful accepted_action 至少能拆出 field-aware target / outcome candidates，CLI 与 lifecycle 能证明可复用 target promote、一次性 outcome 保持 observation，且 Step 48-52 继续维持 deferred
+  - Status: `completed`
+
 ## Execution Order
 
 1. 保持 release-preflight / bundle install / host smoke / Stage 5 evidence 稳定
 2. 保持 host-neutral root operator policy 可见且不回退
 3. 保持 project/workstream roadmap 摘要与当前 Stage 5 closeout 基线持续一致
-4. 把 deeper accepted-action extraction 维持为显式 deferred queue，不在当前 closeout baseline 里直接开工
+4. 保持 accepted-action deeper queue 的 Step 48-52 仍然显式 deferred，不把 admission / negative-path / conflict work 偷渡进当前实现
 5. 只有在 runtime API prerequisites 持续为绿后，才开启新的 enhancement planning 或讨论 legacy root cleanup 窗口
 
 ## Architecture Supervision
 - Signal: `yellow`
 - Signal Basis: open blockers or architectural risks are still recorded
 - Problem Class: post-stage maintenance, human acceptance, and operator policy
-- Root Cause Hypothesis: 后续真正的风险不再是“cutover 未决”，而是 evidence / roadmap drift 让维护者误判当前阶段，或者把 deeper accepted-action extraction 误并进当前 closeout baseline
+- Root Cause Hypothesis: 后续真正的风险不再是“cutover 未决”，而是 evidence / roadmap drift 让维护者误判当前阶段，或者在 Step 47 已经实现后继续把 Step 48-52 偷渡进当前 closeout baseline
 - Correct Layer: release preflight evidence, governance evidence, registry-root operator policy, project/workstream roadmap, control surface
 - Rejected Shortcut: 跳过 Stage 5 证据面和当前 operator baseline，直接讨论 runtime API / service mode
 - Automatic Review Trigger: no automatic trigger is currently active
@@ -106,7 +114,8 @@
 - [x] EL-2 refresh smoke and memory-search governance snapshots in the visible project state
 - [x] EL-3 keep public docs, `registry inspect`, and `.codex/*` state aligned with the operator baseline
 - [x] EL-4 define deeper accepted-action extraction as a deferred enhancement queue instead of an implicit next-step assumption
-- [ ] EL-5 keep later enhancement planning gated behind stable runtime API prerequisites instead of reopening the next phase early
+- [x] EL-5 implement Step 47 field-aware accepted-action extraction without reopening the rest of the deferred queue
+- [ ] EL-6 keep later enhancement planning gated behind stable runtime API prerequisites instead of reopening the next phase early
 
 ## Development Log Capture
 

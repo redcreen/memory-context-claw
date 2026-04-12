@@ -198,7 +198,10 @@
 
 保留这组队列的目的，是让后续 enhancement phase 可以从清晰队列恢复，而不是重新从 session history 里猜设计意图。
 
-47. `todo` 把 `accepted_action` extraction 拆成可复用 target facts、operating rules 和一次性 outcome artifacts。
+47. `done` 把 `accepted_action` extraction 拆成可复用 target facts、operating rules 和一次性 outcome artifacts。
+   - `accepted_action` source normalization 现在会产出 targets、artifact paths、output references 的字段级 descriptors。
+   - reflection 现在会把成功的 accepted-action event 拆成 field-aware 的 `target_fact`、`operating_rule`、`outcome_artifact` candidates，而不是继续压成一条 summary。
+   - CLI 和 lifecycle 验证已经证明：可复用 target 可以独立 promote，而一次性 outcome 仍停留在 observation。
 48. `todo` 为 accepted-action 增加跨 `session`、`daily`、`observation`、stable-candidate 层的 admission routing。
 49. `todo` 为 accepted-action 增加更丰富的 evidence weighting，把 acceptance、execution success、后续复用、冲突、再次引用这些信号合并打分。
 50. `todo` 为 accepted-action 增加 negative / partial handling，让 rejected / failed actions 进入 audit 或 observation，而不是按 stable fact 处理。

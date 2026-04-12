@@ -40,7 +40,8 @@
   - CLI 已支持结构化 `accepted_action` source intake
   - accepted-action 证据已能进入 governed source -> candidate -> stable loop
   - export / audit / lifecycle 已能消费 accepted-action stable artifacts
-  - 更深一层的 field-aware extraction / admission routing / negative-path handling 仍然故意保持在 deferred TODO 队列
+  - Step 47 的 field-aware extraction 已落地：successful accepted_action 现在会拆成 `target_fact`、显式 `operating_rule`、`outcome_artifact` candidates
+  - 一次性 outcome 目前仍保持 observation，Step 48-52 的 admission routing / negative-path / conflict policy 继续维持在 deferred TODO 队列
 - control-surface 与 host-neutral workstream docs 已再次对齐：
   - 不再把 canonical-root cutover 描述成“仍待决定的窗口”
   - 当前维护重点是防止 policy drift，而不是重新定义 hard gate
@@ -74,25 +75,25 @@
 - 保持 host-neutral root policy 在 CLI、公开文档和控制面里持续一致
 - 保持 project/workstream roadmap 摘要与当前 Stage 5 closeout 基线持续一致
 - 继续观察 legacy root 是否只停留在兼容回退窗口，而不是重新变成 active root
-- 把 deeper accepted-action extraction 继续明确维持在 deferred enhancement queue，而不是悄悄并进当前 closeout baseline
+- 把 accepted-action 的 Step 48-52 继续明确维持在 deferred enhancement queue，而不是在 Step 47 完成后继续悄悄并进当前 closeout baseline
 
 ## Blockers / Open Decisions
 
 - none at the implementation layer
 - operator / planning follow-up 只剩：
   - 什么时候清理过时的 legacy root 副本
-  - deeper accepted-action extraction 何时具备重开实现的前置条件
+  - accepted-action Step 48-52 何时具备重开实现的前置条件
 
 ## Next 3 Actions
 
 1. 保持 `umc:release-preflight`、`umc:openclaw-install-verify`、`umc:openclaw-itest`、`umc:stage5` 持续为绿。
 2. 保持 `umc registry inspect` 的 `operatorPolicy` 不回退到 `migrate_to_canonical_root`，并保持 project/workstream roadmap 不回退到旧阶段叙事。
-3. 只有在 runtime API prerequisites 持续为绿且 operator 明确需要时，才讨论新的 enhancement plan、deeper accepted-action extraction 实现，或 legacy root cleanup 窗口。
+3. 只有在 runtime API prerequisites 持续为绿且 operator 明确需要时，才讨论新的 enhancement plan、accepted-action Step 48-52，或 legacy root cleanup 窗口。
 
 ## Architecture Supervision
 - Signal: `yellow`
 - Signal Basis: open blockers or architectural risks are still recorded
-- Root Cause Hypothesis: 后续真正的风险不再是“cutover 未决”，而是 evidence / roadmap drift 让维护者误判当前阶段，或把后续 accepted-action 深层抽取工作过早并进当前 closeout baseline
+- Root Cause Hypothesis: 后续真正的风险不再是“cutover 未决”，而是 evidence / roadmap drift 让维护者误判当前阶段，或在 Step 47 已完成后继续把 Step 48-52 过早并进当前 closeout baseline
 - Correct Layer: release preflight evidence, governance evidence, registry-root operator policy, project/workstream roadmap, control surface
 - Automatic Review Trigger: no automatic trigger is currently active
 - Escalation Gate: raise but continue
@@ -119,10 +120,11 @@
 - [x] EL-2 refresh smoke and memory-search governance snapshots in the visible project state
 - [x] EL-3 keep `registry inspect`, release-preflight, and public docs aligned with the operator baseline
 - [x] EL-4 define deeper accepted-action extraction as an explicit deferred enhancement queue
-- [ ] EL-5 keep later enhancement planning gated behind stable runtime API prerequisites instead of reopening the next phase early
+- [x] EL-5 implement Step 47 field-aware accepted-action extraction with CLI / lifecycle coverage
+- [ ] EL-6 keep later enhancement planning gated behind stable runtime API prerequisites instead of reopening the next phase early
 
 ## Development Log Capture
 
 - Trigger Level: high
 - Pending Capture: no
-- Last Entry: `docs/devlog/2026-04-12-make-host-neutral-root-cutover-policy-explicit.md`
+- Last Entry: `docs/devlog/2026-04-12-implement-step47-field-aware-accepted-action-extraction.md`
