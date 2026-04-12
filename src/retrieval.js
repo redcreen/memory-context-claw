@@ -1330,9 +1330,13 @@ export function buildProjectCardsFromMarkdown(markdown = "", filePath = "README.
   }
 
   if (
-    /不是所有笔记都会进入 stable card|不是所有文件都会进入 stable card/i.test(text)
-    && /一句话结论|适用场景/.test(text)
-    && /历史 roadmap|临时配置说明|背景 notes|背景笔记/.test(text)
+    (
+      /不是所有笔记都会进入 stable card|不是所有文件都会进入 stable card/i.test(text)
+      || /not every.+stable card|only notes with a clear summary and reuse boundary should become stable cards/i.test(text)
+      || /只有带明确总结和适用场景.*才适合进入 stable card/i.test(text)
+    )
+    && /一句话结论|适用场景|clear summary|reuse boundary|reusable rule(?:\/concept)?|stable concept/i.test(text)
+    && /历史 roadmap|临时配置说明|背景 notes|背景笔记|historical roadmap(?:s)?|temporary config note(?:s)?|background note(?:s)?/i.test(text)
   ) {
     cards.push({
       title: "workspace notes 准入规则",
@@ -1702,7 +1706,10 @@ async function readPluginStableProjectCards(pluginRoot, logger) {
 
 async function readPluginStableConfigCards(pluginRoot, logger) {
   const cards = [];
-  const configFiles = ["configuration.md"];
+  const configFiles = [
+    "configuration.md",
+    path.join("docs", "reference", "configuration.md")
+  ];
 
   for (const fileName of configFiles) {
     const fullPath = path.join(pluginRoot, fileName);
@@ -1721,7 +1728,10 @@ async function readPluginStableConfigCards(pluginRoot, logger) {
 
 async function readPluginStablePolicyCards(pluginRoot, logger) {
   const cards = [];
-  const policyFiles = ["formal-memory-policy.md"];
+  const policyFiles = [
+    "formal-memory-policy.md",
+    path.join("docs", "reference", "formal-memory-policy.md")
+  ];
 
   for (const fileName of policyFiles) {
     const fullPath = path.join(pluginRoot, fileName);

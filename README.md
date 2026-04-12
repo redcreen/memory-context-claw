@@ -90,6 +90,7 @@ You should see `unified-memory-core` in the loaded plugin list.
 - `workspace/MEMORY.md` stores stable long-term rules and facts.
 - `workspace/memory/*.md` stores recent and daily memory.
 - `workspace/notes/*.md` stores project or domain notes.
+- not every `workspace/notes/*.md` file should become a stable card; only notes with a clear summary, a reusable rule/concept, and a clear reuse boundary should be promoted, while historical roadmaps and temporary config notes should stay as background notes.
 - the OpenClaw adapter decides what should matter most for the current turn.
 
 Recommended workspace shape:

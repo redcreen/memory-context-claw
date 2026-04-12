@@ -59,6 +59,20 @@ export function renderGovernanceCycleReport(result, { generatedAt, workspaceRoot
   }
   lines.push("");
 
+  lines.push("## Registry Root Governance");
+  if (result.registryRootGovernance?.summary) {
+    lines.push(`- activeRoot: \`${result.registryRootGovernance.summary.activeRoot ?? ""}\``);
+    lines.push(`- activeSource: \`${result.registryRootGovernance.summary.activeSource ?? ""}\``);
+    lines.push(`- migrationNeeded: \`${result.registryRootGovernance.summary.migrationNeeded ?? false}\``);
+    lines.push(`- cutoverReady: \`${result.registryRootGovernance.summary.cutoverReady ?? false}\``);
+    lines.push(`- findingCount: \`${result.registryRootGovernance.summary.findingCount ?? 0}\``);
+    lines.push(`- warningCount: \`${result.registryRootGovernance.summary.warningCount ?? 0}\``);
+    lines.push(`- errorCount: \`${result.registryRootGovernance.summary.errorCount ?? 0}\``);
+  } else {
+    lines.push("- skipped");
+  }
+  lines.push("");
+
   lines.push("## Safe Governance");
   lines.push(`- candidates: \`${(result.safeGovernance?.candidates || []).length}\``);
   lines.push(`- applied: \`${result.safeGovernance?.applied ? "yes" : "no"}\``);
@@ -94,6 +108,14 @@ export function renderGovernanceCycleReport(result, { generatedAt, workspaceRoot
     lines.push("## Moved");
     for (const item of result.safeGovernance.moved) {
       lines.push(`- ${item.from} -> ${item.to}`);
+    }
+    lines.push("");
+  }
+
+  if (Array.isArray(result.registryRootGovernance?.findings) && result.registryRootGovernance.findings.length) {
+    lines.push("## Registry Root Findings");
+    for (const finding of result.registryRootGovernance.findings) {
+      lines.push(`- [${finding.severity}] ${finding.code}: ${finding.message}`);
     }
     lines.push("");
   }

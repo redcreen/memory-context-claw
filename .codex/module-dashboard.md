@@ -52,7 +52,7 @@
 
 ## Current Execution Order
 
-1. 先观察 [subprojects/host-neutral-memory.md](subprojects/host-neutral-memory.md) 的 live topology，再决定 canonical-root cutover
-2. 再对齐 [modules/memory-registry.md](modules/memory-registry.md)、[modules/openclaw-adapter.md](modules/openclaw-adapter.md)、[modules/codex-adapter.md](modules/codex-adapter.md) 的 canonical-root adoption 行为
+1. 先确认 [subprojects/host-neutral-memory.md](subprojects/host-neutral-memory.md) 是否需要把 registry-root consistency 升成独立强门禁
+2. 再推进 [modules/openclaw-adapter.md](modules/openclaw-adapter.md) 的 recall quality 和稳定事实扩面
 3. 新的 memory-search 专项 case 一律先过 `npm run eval:smoke-promotion`
 4. 继续让 [modules/governance-system.md](modules/governance-system.md) 维护 recalled context 质量，不只看 pass/fail

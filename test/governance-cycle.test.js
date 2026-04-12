@@ -32,6 +32,24 @@ test("renderGovernanceCycleReport includes audit, safe governance and live regre
           pluginFailures: 1
         }
       },
+      registryRootGovernance: {
+        summary: {
+          activeRoot: "/tmp/umc-registry",
+          activeSource: "canonical",
+          migrationNeeded: false,
+          cutoverReady: true,
+          findingCount: 1,
+          warningCount: 0,
+          errorCount: 0
+        },
+        findings: [
+          {
+            severity: "info",
+            code: "registry_roots_mirrored",
+            message: "Canonical and legacy registry roots currently contain matching data."
+          }
+        ]
+      },
       safeGovernance: {
         applied: false,
         archiveDir: "/tmp/archive",
@@ -56,6 +74,10 @@ test("renderGovernanceCycleReport includes audit, safe governance and live regre
   assert.match(markdown, /Memory Search Governance/);
   assert.match(markdown, /builtinSourceHits: `0`/);
   assert.match(markdown, /pluginFailures: `1`/);
+  assert.match(markdown, /Registry Root Governance/);
+  assert.match(markdown, /activeSource: `canonical`/);
+  assert.match(markdown, /Registry Root Findings/);
+  assert.match(markdown, /registry_roots_mirrored/);
   assert.match(markdown, /cases: `2`/);
   assert.match(markdown, /\/tmp\/cron_sync\.log/);
 });

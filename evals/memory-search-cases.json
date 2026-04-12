@@ -47,5 +47,29 @@
     "expectedSignals": ["context engine", "长期记忆", "当前轮可用的上下文"],
     "expectedSources": ["README.md", "project-roadmap.md", "cardArtifact"],
     "risk": "project card 不稳定，退回慢检索"
+  },
+  {
+    "id": "install-verify-priority",
+    "category": "memory_search",
+    "query": "安装后怎么确认插件已经生效",
+    "expectedSignals": ["openclaw plugins list", "unified-memory-core", "openclaw memory status --json"],
+    "expectedSources": ["configuration.md", "cardArtifact"],
+    "risk": "安装验证规则掉回长 session 说明或无关配置噪音"
+  },
+  {
+    "id": "workspace-notes-rule-priority",
+    "category": "memory_search",
+    "query": "workspace/notes 里的笔记什么时候能进入 stable card",
+    "expectedSignals": ["stable card", "历史 roadmap", "背景 notes"],
+    "expectedSources": ["README.md", "cardArtifact"],
+    "risk": "notes 准入规则退回背景长文，导致 selected context 变脏"
+  },
+  {
+    "id": "pending-rule-priority",
+    "category": "memory_search",
+    "query": "待确认信息应该放哪里",
+    "expectedSignals": ["pending", "不得默认写入", "memory/YYYY-MM-DD.md"],
+    "expectedSources": ["formal-memory-policy.md", "cardArtifact"],
+    "risk": "pending 规则掉回 session-derived 建议，失去正式 policy 优先级"
   }
 ]

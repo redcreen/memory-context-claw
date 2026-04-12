@@ -67,6 +67,9 @@
 - 启动 `host-neutral-memory` 子项目，把 canonical storage 从 OpenClaw 宿主语义里解耦
 - 为 OpenClaw / Codex 共享同一 registry root 定义实现边界和迁移路径
 - canonical root 现在已有 topology inspect、non-destructive migration 和 operator-visible findings
+- registry-root consistency 已进入 governance cycle 输出
+- `install-verify` / `workspace-notes-rule` / `pending-rule` 三条自然 query 已补进 memory-search governance case 面
+- 文档整改后的 stable card 读取路径已对齐到 `docs/reference/*`
 - 按模块视角继续推进 `openclaw-adapter`
 - 保持 `governance-system` 作为常规治理面运行
 - 把 self-learning 文档口径与当前实现状态重新对齐
@@ -77,10 +80,10 @@
 - `todo.md` 当前仍是用户自留短记，不应与 `.codex/status.md` 重叠承担当前状态职责
 - 是否要把 `reports/` 下部分高频专题文档再进一步按 `durable` / `generated` 分层，目前尚未执行
 - canonical root 何时从 legacy fallback 正式切到 `~/.unified-memory-core/registry`，仍需明确迁移窗口
-- 目前 registry-root findings 已可见，但是否要进入单独 governance gate 仍待决定
+- 是否还要把 registry-root consistency 升成独立强门禁，目前仍待决定；但它已进入常规 governance cycle
 
 ## Next 3 Actions
 
-1. 观察 live topology，确认当前 active root 与 canonical/legacy 是否漂移
-2. 决定 canonical root 切换窗口和 adoption 策略
-3. 继续推进 `openclaw-adapter` 的稳定事实 / 稳定规则扩面
+1. 决定是否把 registry-root consistency 从 governance cycle 提升成独立强门禁
+2. 继续推进 `openclaw-adapter` 的稳定事实 / 稳定规则扩面
+3. 再补下一批自然 query 的 recall-quality / governance cases

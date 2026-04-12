@@ -643,10 +643,10 @@ test("buildProjectCardsFromMarkdown derives lossless-understanding concept card"
 test("buildProjectCardsFromMarkdown derives workspace-notes admissibility card", () => {
   const cards = buildProjectCardsFromMarkdown(
     [
-      "不是所有笔记都会进入 stable card。",
-      "只有带明确总结和适用场景结构、并且表达稳定项目概念/分工的笔记，才适合进入 stable card。",
-      "历史 roadmap、临时配置说明只保留为背景 notes。",
-      "一句话结论",
+      "workspace/notes/*.md stores project or domain notes.",
+      "Not every workspace/notes/*.md file should become a stable card.",
+      "Only notes with a clear summary, a reusable rule/concept, and a clear reuse boundary should be promoted.",
+      "Historical roadmaps and temporary config notes should stay as background notes.",
       "适用场景"
     ].join("\n"),
     "README.md"
@@ -1125,6 +1125,70 @@ test("readCardArtifactCandidates loads lossless concept cards from workspace not
   assert.ok(candidates.length >= 1);
   assert.equal(candidates[0].path, "workspace/notes/openclaw-memory-vs-lossless.md");
   assert.match(candidates[0].snippet, /长期记忆负责存和找|Lossless/);
+});
+
+test("readCardArtifactCandidates loads config and policy cards from docs/reference after docs reorganization", async () => {
+  const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "unified-memory-core-docs-reference-"));
+  const artifactPath = path.join(tempDir, "cards.json");
+  const workspaceRoot = path.join(tempDir, "workspace");
+  const pluginRoot = path.join(tempDir, "plugin");
+
+  await fs.mkdir(path.join(workspaceRoot, "memory"), { recursive: true });
+  await fs.mkdir(path.join(pluginRoot, "docs", "reference"), { recursive: true });
+  await fs.writeFile(path.join(workspaceRoot, "MEMORY.md"), "", "utf8");
+  await fs.writeFile(path.join(pluginRoot, "README.md"), "# readme\n", "utf8");
+  await fs.writeFile(path.join(pluginRoot, "project-roadmap.md"), "# roadmap\n", "utf8");
+  await fs.writeFile(artifactPath, "[]", "utf8");
+  await fs.writeFile(
+    path.join(pluginRoot, "docs", "reference", "configuration.md"),
+    [
+      "openclaw plugins list",
+      "openclaw memory status --json",
+      "memorySearch: {",
+      '  provider: "local"',
+      "}",
+      "embeddinggemma"
+    ].join("\n"),
+    "utf8"
+  );
+  await fs.writeFile(
+    path.join(pluginRoot, "docs", "reference", "formal-memory-policy.md"),
+    [
+      "MEMORY.md",
+      "长期稳定记忆",
+      "高优先级、会反复复用",
+      "待确认信息必须优先进入 pending，不得默认写入 `MEMORY.md` 或 `memory/YYYY-MM-DD.md`"
+    ].join("\n"),
+    "utf8"
+  );
+
+  const verifyCandidates = await readCardArtifactCandidates({
+    query: "安装后怎么确认插件已经生效",
+    maxCandidates: 6,
+    artifactPath,
+    workspaceRoot,
+    pluginRoot,
+    excludePaths: [],
+    logger: {}
+  });
+
+  assert.ok(verifyCandidates.length >= 1);
+  assert.equal(verifyCandidates[0].path, "docs/reference/configuration.md");
+  assert.match(verifyCandidates[0].snippet, /plugins list|memory status --json/);
+
+  const pendingCandidates = await readCardArtifactCandidates({
+    query: "待确认信息应该放哪里",
+    maxCandidates: 6,
+    artifactPath,
+    workspaceRoot,
+    pluginRoot,
+    excludePaths: [],
+    logger: {}
+  });
+
+  assert.ok(pendingCandidates.length >= 1);
+  assert.equal(pendingCandidates[0].path, "docs/reference/formal-memory-policy.md");
+  assert.match(pendingCandidates[0].snippet, /待确认信息应该先进入 pending|不得默认写入/);
 });
 
 test("readCardArtifactCandidates skips ineligible workspace notes", async () => {

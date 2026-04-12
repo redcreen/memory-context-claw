@@ -90,6 +90,7 @@ openclaw plugins list
 - `workspace/MEMORY.md` 保存稳定长期规则和事实
 - `workspace/memory/*.md` 保存近期和每日记忆
 - `workspace/notes/*.md` 保存项目或领域笔记
+- 不是所有 `workspace/notes/*.md` 都应该进入 stable card；只有带明确总结、可复用规则/概念、并且有清晰适用边界的 notes 才适合升格，历史 roadmap 和临时配置说明应继续只做背景 notes
 - OpenClaw 适配层负责决定这一轮真正该优先带什么进上下文
 
 推荐的 workspace 结构：

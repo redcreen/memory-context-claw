@@ -15,6 +15,7 @@ import {
   selectSafeArchiveCandidates
 } from "../src/formal-memory-governance.js";
 import { renderGovernanceCycleReport } from "../src/governance-cycle.js";
+import { inspectRegistryTopology } from "../src/unified-memory-core/registry-roots.js";
 
 const execFileAsync = promisify(execFile);
 
@@ -66,6 +67,19 @@ const factDuplicateAudit = await auditFactDuplicates({
 const safeCandidates = selectSafeArchiveCandidates(formalAudit);
 const moved = applySafe ? await applySafeArchiveCandidates(safeCandidates, archiveDir) : [];
 const postGovernanceFormalAudit = applySafe ? await auditFormalMemoryWorkspace(workspaceRoot) : null;
+const registryTopology = await inspectRegistryTopology();
+const registryRootGovernance = {
+  summary: {
+    activeRoot: registryTopology.summary.active_root,
+    activeSource: registryTopology.summary.active_source,
+    migrationNeeded: registryTopology.summary.migration_needed,
+    cutoverReady: registryTopology.summary.cutover_ready,
+    findingCount: registryTopology.findings.length,
+    warningCount: registryTopology.findings.filter((finding) => finding.severity === "warning").length,
+    errorCount: registryTopology.findings.filter((finding) => finding.severity === "error").length
+  },
+  findings: registryTopology.findings
+};
 
 let liveRegression = null;
 let memorySearchGovernance = null;
@@ -101,6 +115,7 @@ const result = {
   factConflictAudit,
   factDuplicateAudit,
   memorySearchGovernance,
+  registryRootGovernance,
   safeGovernance: {
     applied: applySafe,
     archiveDir,
@@ -135,6 +150,7 @@ console.log(JSON.stringify({
     factConflictAudit: factConflictAudit.summary,
     factDuplicateAudit: factDuplicateAudit.summary,
     memorySearchGovernance: memorySearchGovernance?.summary ?? null,
+    registryRootGovernance: registryRootGovernance.summary,
     safeCandidates: safeCandidates.length,
     moved: moved.length,
     liveRegression: liveRegression?.summary ?? null

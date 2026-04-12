@@ -45,11 +45,12 @@
 - standalone runtime / CLI 已能 inspect 当前 registry-root topology
 - standalone runtime / CLI 已能做 non-destructive registry migration/adoption
 - registry-root findings 现在对 operator 可见
+- registry-root consistency 已进入 governance cycle 输出
 
 ## In Progress
 
 - 观察 live topology，决定 canonical root 的正式 adoption 窗口
-- 确认是否把 registry-root findings 提升为独立 governance gate
+- 确认是否把 registry-root consistency 从 governance cycle 提升为独立 governance gate
 
 ## Blockers / Open Decisions
 
@@ -72,6 +73,6 @@
 
 ## Next 3 Actions
 
-1. 跑 live topology inspect，确认当前 active root / fallback 命中情况
-2. 决定 canonical root 的默认切换窗口
-3. 视结果执行 canonical adopt / migrate
+1. 决定是否把 registry-root consistency 升成独立强门禁
+2. 持续观察 canonical / legacy 是否保持 mirrored 或完全收敛
+3. 把下一执行重心切回 recall quality 主线

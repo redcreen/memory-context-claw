@@ -15,6 +15,7 @@ Own audit, repair, replay, conflict/duplicate handling, governance cycle, and pr
 - memory-search governance metrics
 - namespace audit around exported stable artifacts
 - smoke-promotion helper as a conservative suggestion path
+- registry-root consistency surfaced through governance cycle output
 
 ## Remaining Steps
 1. Keep governance signals readable and stable during ongoing work.
