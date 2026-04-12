@@ -4,6 +4,9 @@
   "description": "OpenClaw context-engine plugin for memory reranking and context assembly",
   "type": "module",
   "main": "index.js",
+  "bin": {
+    "umc": "./umc"
+  },
   "license": "MIT",
   "scripts": {
     "test": "node --test",
@@ -37,6 +40,7 @@
     "memory:audit-duplicates": "node scripts/audit-fact-duplicates.js",
     "memory:governance-cycle": "node scripts/run-governance-cycle.js",
     "umc:cli": "node scripts/unified-memory-core-cli.js",
+    "umc:where": "node ./umc where",
     "umc:daily-reflection": "node scripts/run-daily-reflection.js",
     "umc:lifecycle": "node scripts/run-learning-lifecycle.js",
     "umc:policy-loop": "node scripts/run-policy-adaptation-loop.js",

@@ -134,6 +134,22 @@ openclaw plugins install -l .
 npm run deploy:local
 ```
 
+## 命令行入口
+
+现在最简单、最稳定的命令形态是：
+
+```bash
+./umc source add --source-type manual --content "Remember this: prefer concise summaries."
+```
+
+如果你想先把命令位置打出来：
+
+```bash
+./umc where
+```
+
+这个 wrapper 默认会在运行前打印解析出来的后端 CLI 路径；如果你不想看，可以加 `--no-cli-path`。
+
 ## 最简宿主配置
 
 在 `~/.openclaw/openclaw.json` 里把 `unified-memory-core` 设成激活的 `contextEngine`。

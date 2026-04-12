@@ -135,6 +135,22 @@ Use this when you want a local copy under the OpenClaw extension directory inste
 npm run deploy:local
 ```
 
+## Command-Line Entrypoint
+
+The simplest stable command shape is now:
+
+```bash
+./umc source add --source-type manual --content "Remember this: prefer concise summaries."
+```
+
+If you want to print the command location first:
+
+```bash
+./umc where
+```
+
+The wrapper prints the resolved backend path before running unless you pass `--no-cli-path`.
+
 ## Minimal Host Configuration
 
 Set `unified-memory-core` as the active `contextEngine` in `~/.openclaw/openclaw.json`.

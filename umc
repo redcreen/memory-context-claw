@@ -1,0 +1,79 @@
+#!/usr/bin/env node
+
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath, pathToFileURL } from "node:url";
+
+const wrapperPath = fileURLToPath(import.meta.url);
+const repoRoot = path.dirname(wrapperPath);
+const fullCliPath = path.join(repoRoot, "scripts", "unified-memory-core-cli.js");
+const portableCliPath = path.join(repoRoot, "src", "unified-memory-core", "portable-cli.js");
+
+function normalizeBoolEnv(value, fallback) {
+  if (typeof value !== "string" || !value.trim()) {
+    return fallback;
+  }
+  const normalized = value.trim().toLowerCase();
+  if (normalized === "0" || normalized === "false" || normalized === "no") {
+    return false;
+  }
+  if (normalized === "1" || normalized === "true" || normalized === "yes") {
+    return true;
+  }
+  return fallback;
+}
+
+async function main() {
+  const rawArgs = process.argv.slice(2);
+  let printCliPath = normalizeBoolEnv(process.env.UMC_PRINT_CLI_PATH, true);
+  let forcePortable = normalizeBoolEnv(process.env.UMC_CLI_FORCE_PORTABLE, false);
+  const forwardedArgs = [];
+
+  for (const arg of rawArgs) {
+    if (arg === "--print-cli-path") {
+      printCliPath = true;
+      continue;
+    }
+    if (arg === "--no-cli-path") {
+      printCliPath = false;
+      continue;
+    }
+    if (arg === "--portable") {
+      forcePortable = true;
+      continue;
+    }
+    forwardedArgs.push(arg);
+  }
+
+  const fullCliExists = fs.existsSync(fullCliPath);
+  const backendPath = !forcePortable && fullCliExists ? fullCliPath : portableCliPath;
+  const backendMode = !forcePortable && fullCliExists ? "full" : "portable";
+
+  if (forwardedArgs.length > 0 && forwardedArgs[0] === "where") {
+    console.log(JSON.stringify({
+      umc: wrapperPath,
+      backend: backendPath,
+      mode: backendMode
+    }, null, 2));
+    return;
+  }
+
+  if (printCliPath) {
+    console.error(`[umc] command: ${wrapperPath}`);
+    console.error(`[umc] backend (${backendMode}): ${backendPath}`);
+  }
+
+  if (backendMode === "full") {
+    process.argv = [process.argv[0], backendPath, ...forwardedArgs];
+    await import(pathToFileURL(backendPath).href);
+    return;
+  }
+
+  const { runPortableCliAsMain } = await import(pathToFileURL(backendPath).href);
+  await runPortableCliAsMain(forwardedArgs);
+}
+
+main().catch((error) => {
+  console.error(error && error.stack ? error.stack : String(error));
+  process.exitCode = 1;
+});

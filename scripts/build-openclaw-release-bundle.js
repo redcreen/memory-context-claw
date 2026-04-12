@@ -10,6 +10,7 @@ const __filename = fileURLToPath(import.meta.url);
 const RELEASE_BUNDLE_ENTRIES = [
   { source: "index.js", required: true },
   { source: "openclaw.plugin.json", required: true },
+  { source: "umc", required: true },
   { source: "README.md", required: true },
   { source: "src", required: true },
   { source: path.join("docs", "reference", "configuration.md"), required: true },
@@ -64,6 +65,7 @@ function sanitizeReleasePackageJson(packageJson) {
     description: packageJson.description,
     type: packageJson.type,
     main: packageJson.main,
+    bin: packageJson.bin || {},
     license: packageJson.license,
     keywords: Array.isArray(packageJson.keywords) ? packageJson.keywords : [],
     peerDependencies: packageJson.peerDependencies || {},
