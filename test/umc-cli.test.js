@@ -110,3 +110,81 @@ test("umc source add can fall back to the portable cli backend", async () => {
   assert.equal(payload.sourceArtifact.source_type, "manual");
   assert.equal(payload.sourceRecord.state, "source_artifact");
 });
+
+test("umc source add accepts structured accepted_action sources", async () => {
+  const registryDir = await fs.mkdtemp(path.join(os.tmpdir(), "umc-action-cli-"));
+  const result = runUmc([
+    "--no-cli-path",
+    "source",
+    "add",
+    "--registry-dir",
+    registryDir,
+    "--source-type",
+    "accepted_action",
+    "--action-type",
+    "publish_site",
+    "--status",
+    "succeeded",
+    "--accepted",
+    "true",
+    "--succeeded",
+    "true",
+    "--agent-id",
+    "code",
+    "--targets",
+    "redcreen/redcreen.github.io,https://redcreen.github.io/demo/",
+    "--artifacts",
+    "dist/index.html",
+    "--content",
+    "User accepted the publish target."
+  ]);
+
+  assert.equal(result.status, 0, result.stderr);
+  const payload = JSON.parse(result.stdout);
+  assert.equal(payload.sourceArtifact.source_type, "accepted_action");
+  assert.equal(payload.sourceArtifact.normalized_payload.action_type, "publish_site");
+  assert.equal(payload.sourceArtifact.normalized_payload.execution_succeeded, true);
+  assert.match(payload.sourceArtifact.normalized_payload.text, /publish target/);
+});
+
+test("umc learn lifecycle-run promotes accepted_action signals through the governed loop", async () => {
+  const registryDir = await fs.mkdtemp(path.join(os.tmpdir(), "umc-action-lifecycle-"));
+  const result = runUmc([
+    "--no-cli-path",
+    "learn",
+    "lifecycle-run",
+    "--registry-dir",
+    registryDir,
+    "--source-type",
+    "accepted_action",
+    "--action-type",
+    "publish_site",
+    "--status",
+    "succeeded",
+    "--accepted",
+    "true",
+    "--succeeded",
+    "true",
+    "--agent-id",
+    "code",
+    "--targets",
+    "redcreen/redcreen.github.io,https://redcreen.github.io/brain-reinstall-jingangjing/",
+    "--artifacts",
+    "dist/index.html",
+    "--content",
+    "User accepted the publish target and the site release succeeded."
+  ]);
+
+  assert.equal(result.status, 0, result.stderr);
+  const payload = JSON.parse(result.stdout);
+  assert.equal(payload.lifecycle.promotedStableArtifacts.length, 1);
+  assert.equal(payload.learning_audit.summary.stable_learning_artifacts, 1);
+  assert.match(
+    payload.lifecycle.promotedStableArtifacts[0].stableArtifact.summary,
+    /redcreen\/redcreen\.github\.io/
+  );
+  assert.equal(
+    payload.lifecycle.promotedStableArtifacts[0].stableArtifact.attributes.source_type,
+    "accepted_action"
+  );
+});

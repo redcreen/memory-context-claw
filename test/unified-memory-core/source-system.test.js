@@ -115,3 +115,32 @@ test("source system snapshots image sources with text context", async () => {
   assert.match(result.sourceArtifact.normalized_payload.text, /terminal-first workflow/);
   assert.equal(typeof result.sourceArtifact.normalized_payload.sha256, "string");
 });
+
+test("source system normalizes accepted_action sources into structured evidence", async () => {
+  const sourceSystem = createSourceSystem();
+  const result = await sourceSystem.ingestDeclaredSource({
+    sourceType: "accepted_action",
+    declaredBy: "test",
+    actionType: "publish_site",
+    status: "succeeded",
+    accepted: true,
+    succeeded: true,
+    agentId: "code",
+    targets: ["redcreen/redcreen.github.io", "https://redcreen.github.io/demo/"],
+    artifacts: ["dist/index.html"],
+    content: "User accepted the publish target for the site release.",
+    namespace: {
+      tenant: "local",
+      scope: "workspace",
+      resource: "unified-memory-core",
+      key: "accepted-action"
+    },
+    visibility: "workspace"
+  });
+
+  assert.equal(result.sourceArtifact.source_type, "accepted_action");
+  assert.equal(result.sourceArtifact.normalized_payload.action_type, "publish_site");
+  assert.equal(result.sourceArtifact.normalized_payload.execution_succeeded, true);
+  assert.match(result.sourceArtifact.normalized_payload.text, /redcreen\/redcreen\.github\.io/);
+  assert.deepEqual(result.sourceArtifact.normalized_payload.artifact_paths, ["dist/index.html"]);
+});

@@ -105,6 +105,18 @@ function summarizeDeclaredSource(declaredSource) {
       preview: normalizeString(declaredSource.url || declaredSource.href || declaredSource.path, "").slice(0, 120)
     };
   }
+  if (sourceType === "accepted_action") {
+    return {
+      source_type: sourceType,
+      preview: normalizeString(
+        declaredSource.content
+        || declaredSource.summary
+        || declaredSource.actionType
+        || declaredSource.action_type,
+        ""
+      ).slice(0, 120)
+    };
+  }
   if (sourceType === "image") {
     return {
       source_type: sourceType,

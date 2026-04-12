@@ -131,6 +131,35 @@ test("artifact contracts validate source, candidate, stable, and export shapes",
   assert.equal(policyInput.consumer, "openclaw");
 });
 
+test("artifact contracts accept accepted_action source artifacts", () => {
+  const source = parseSourceArtifact({
+    artifact_id: "artifact_source_action_1",
+    artifact_type: "source_artifact",
+    contract_version: "1.0.0",
+    source_id: "source_action_1",
+    source_type: "accepted_action",
+    declared_by: "test",
+    namespace,
+    visibility: "workspace",
+    locator: { kind: "accepted_action", value: "publish_site" },
+    normalized_payload: {
+      format: "accepted_action",
+      action_type: "publish_site",
+      status: "succeeded",
+      accepted: true,
+      execution_succeeded: true,
+      text: "accepted action publish_site; status succeeded; user accepted"
+    },
+    raw_metadata: { source_type: "accepted_action", action_type: "publish_site" },
+    fingerprint: "action123",
+    ingest_run_id: "ingest_action_1",
+    created_at: "2026-04-11T00:00:00.000Z"
+  });
+
+  assert.equal(source.source_type, "accepted_action");
+  assert.equal(source.normalized_payload.action_type, "publish_site");
+});
+
 test("contracts reject invalid visibility", () => {
   assert.throws(
     () =>

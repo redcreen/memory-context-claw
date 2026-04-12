@@ -36,6 +36,81 @@ function normalizeText(value) {
   return normalizeWhitespace(typeof value === "string" ? value : "");
 }
 
+function normalizeBoolean(value, fallback = false) {
+  if (typeof value === "boolean") {
+    return value;
+  }
+  if (typeof value === "number") {
+    return value !== 0;
+  }
+  if (typeof value !== "string") {
+    return fallback;
+  }
+  const normalized = value.trim().toLowerCase();
+  if (!normalized) {
+    return fallback;
+  }
+  if (["true", "1", "yes", "y", "accepted", "success", "succeeded"].includes(normalized)) {
+    return true;
+  }
+  if (["false", "0", "no", "n", "rejected", "failed"].includes(normalized)) {
+    return false;
+  }
+  return fallback;
+}
+
+function normalizeStringArray(value) {
+  if (Array.isArray(value)) {
+    return value.map((item) => normalizeText(item)).filter(Boolean);
+  }
+  if (typeof value !== "string") {
+    return [];
+  }
+  return value
+    .split(",")
+    .map((item) => normalizeText(item))
+    .filter(Boolean);
+}
+
+function normalizeOptionalObject(value) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    return undefined;
+  }
+  return value;
+}
+
+function buildAcceptedActionText({
+  actionType,
+  status,
+  accepted,
+  succeeded,
+  agentId,
+  content,
+  targets,
+  artifacts
+}) {
+  const parts = [];
+  parts.push(`accepted action ${actionType}`);
+  if (status) {
+    parts.push(`status ${status}`);
+  }
+  parts.push(accepted ? "user accepted" : "user not accepted");
+  parts.push(succeeded ? "execution succeeded" : "execution not confirmed");
+  if (agentId) {
+    parts.push(`agent ${agentId}`);
+  }
+  if (targets.length > 0) {
+    parts.push(`targets ${targets.join(", ")}`);
+  }
+  if (artifacts.length > 0) {
+    parts.push(`artifacts ${artifacts.join(", ")}`);
+  }
+  if (content) {
+    parts.push(content);
+  }
+  return normalizeText(parts.join("; "));
+}
+
 function detectMediaType(filePath, fallback = "application/octet-stream") {
   const extension = path.extname(String(filePath || "")).toLowerCase();
   const byExtension = {
@@ -232,6 +307,87 @@ async function normalizeImageSource(declaredSource) {
   };
 }
 
+async function normalizeAcceptedActionSource(declaredSource) {
+  const actionType = normalizeText(
+    declaredSource.actionType || declaredSource.action_type || declaredSource.kind || ""
+  );
+  if (!actionType) {
+    throw new TypeError("accepted_action source requires actionType");
+  }
+
+  const status = normalizeText(declaredSource.status || "succeeded");
+  const accepted = normalizeBoolean(
+    declaredSource.accepted ?? declaredSource.userAccepted ?? declaredSource.user_accepted,
+    true
+  );
+  const succeeded = normalizeBoolean(
+    declaredSource.succeeded
+      ?? declaredSource.executionSucceeded
+      ?? declaredSource.execution_succeeded
+      ?? status,
+    /success|succeed|applied|completed|done/iu.test(status || "")
+  );
+  const agentId = normalizeText(
+    declaredSource.agentId || declaredSource.agent_id || declaredSource.runtime || ""
+  );
+  const content = normalizeText(
+    declaredSource.content ?? declaredSource.text ?? declaredSource.summary ?? ""
+  );
+  const externalTargets = normalizeStringArray(
+    declaredSource.externalTargets
+      ?? declaredSource.external_targets
+      ?? declaredSource.targets
+      ?? declaredSource.target
+  );
+  const artifactPaths = normalizeStringArray(
+    declaredSource.artifacts ?? declaredSource.artifactPaths ?? declaredSource.artifact_paths
+  );
+  const inputs = normalizeOptionalObject(declaredSource.inputs);
+  const outputs = normalizeOptionalObject(declaredSource.outputs);
+  const text = buildAcceptedActionText({
+    actionType,
+    status,
+    accepted,
+    succeeded,
+    agentId,
+    content,
+    targets: externalTargets,
+    artifacts: artifactPaths
+  });
+
+  return {
+    locator: {
+      kind: "accepted_action",
+      value: actionType
+    },
+    normalizedPayload: {
+      format: "accepted_action",
+      action_type: actionType,
+      status,
+      accepted,
+      execution_succeeded: succeeded,
+      agent_id: agentId,
+      text,
+      summary: content || text,
+      external_targets: externalTargets,
+      artifact_paths: artifactPaths,
+      ...(inputs ? { inputs } : {}),
+      ...(outputs ? { outputs } : {}),
+      char_count: text.length
+    },
+    rawMetadata: {
+      source_type: "accepted_action",
+      action_type: actionType,
+      status,
+      accepted,
+      execution_succeeded: succeeded,
+      ...(agentId ? { agent_id: agentId } : {}),
+      external_target_count: externalTargets.length,
+      artifact_path_count: artifactPaths.length
+    }
+  };
+}
+
 export function createSourceSystem(options = {}) {
   const idGenerator = options.idGenerator || randomUUID;
   const clock = options.clock || (() => new Date());
@@ -324,6 +480,11 @@ export function createSourceSystem(options = {}) {
     } else if (sourceType === "image") {
       const normalized = await normalizeImageSource(declaredSource);
       locator = toLocator(declaredSource.locator || normalized.locator, "image");
+      normalizedPayload = normalized.normalizedPayload;
+      rawMetadata = normalized.rawMetadata;
+    } else if (sourceType === "accepted_action") {
+      const normalized = await normalizeAcceptedActionSource(declaredSource);
+      locator = toLocator(declaredSource.locator || normalized.locator, "accepted_action");
       normalizedPayload = normalized.normalizedPayload;
       rawMetadata = normalized.rawMetadata;
     } else {

@@ -2,7 +2,7 @@ import { randomUUID } from "node:crypto";
 
 export const SHARED_CONTRACT_VERSION = "1.0.0";
 
-export const SOURCE_TYPES = ["manual", "file", "directory", "conversation", "url", "image"];
+export const SOURCE_TYPES = ["manual", "file", "directory", "conversation", "url", "image", "accepted_action"];
 export const VISIBILITY_LEVELS = ["private", "workspace", "shared", "public"];
 export const REGISTRY_STATES = [
   "source_artifact",

@@ -144,7 +144,7 @@ const NAMESPACE_OPTIONS = [
 const SOURCE_INPUT_OPTIONS = [
   {
     flag: "--source-type <type>",
-    description: "Declared source type (manual|conversation|file|directory|url|image)"
+    description: "Declared source type (manual|conversation|file|directory|url|image|accepted_action)"
   },
   {
     flag: "--content <text>",
@@ -185,6 +185,34 @@ const SOURCE_INPUT_OPTIONS = [
   {
     flag: "--declared-by <name>",
     description: "Writer id recorded in the artifact"
+  },
+  {
+    flag: "--action-type <type>",
+    description: "Accepted-action type when --source-type accepted_action is used"
+  },
+  {
+    flag: "--status <status>",
+    description: "Accepted-action execution status such as succeeded or failed"
+  },
+  {
+    flag: "--accepted <bool>",
+    description: "Whether the action was accepted by the user"
+  },
+  {
+    flag: "--succeeded <bool>",
+    description: "Whether execution of the accepted action succeeded"
+  },
+  {
+    flag: "--agent-id <id>",
+    description: "Agent or runtime id associated with the accepted action"
+  },
+  {
+    flag: "--targets <list>",
+    description: "Comma-separated external targets for accepted_action sources"
+  },
+  {
+    flag: "--artifacts <list>",
+    description: "Comma-separated artifact paths produced by accepted_action sources"
   }
 ];
 

@@ -41,7 +41,8 @@ function getSourceText(sourceArtifact) {
 
   if (sourceArtifact.source_type === "manual"
     || sourceArtifact.source_type === "file"
-    || sourceArtifact.source_type === "url") {
+    || sourceArtifact.source_type === "url"
+    || sourceArtifact.source_type === "accepted_action") {
     return typeof payload.text === "string" ? payload.text.trim() : "";
   }
 
@@ -97,6 +98,14 @@ function detectLabels(sourceArtifact, text) {
 
   if (sourceArtifact.source_type === "directory") {
     labels.add("observation_candidate");
+    return [...labels];
+  }
+
+  if (sourceArtifact.source_type === "accepted_action") {
+    labels.add("stable_fact_candidate");
+    if (/\b(rule|policy|default|always|never|must|should)\b|规则|策略|默认|必须|应该/iu.test(normalizedText)) {
+      labels.add("stable_rule_candidate");
+    }
     return [...labels];
   }
 

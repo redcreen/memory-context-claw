@@ -26,6 +26,10 @@ function summarizeSourceArtifact(sourceArtifact) {
     return payload.text || payload.url || "url source";
   }
 
+  if (sourceArtifact.source_type === "accepted_action") {
+    return payload.text || payload.summary || payload.action_type || "accepted action source";
+  }
+
   if (sourceArtifact.source_type === "image") {
     return payload.text || payload.path || "image source";
   }

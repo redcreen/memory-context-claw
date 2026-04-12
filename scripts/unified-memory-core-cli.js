@@ -111,6 +111,26 @@ function parseListFlag(value, fallback) {
     .filter(Boolean);
 }
 
+function parseBooleanFlag(value, fallback) {
+  if (typeof value === "boolean") {
+    return value;
+  }
+  if (typeof value !== "string") {
+    return fallback;
+  }
+  const normalized = value.trim().toLowerCase();
+  if (!normalized) {
+    return fallback;
+  }
+  if (["true", "1", "yes", "y", "accepted", "success", "succeeded"].includes(normalized)) {
+    return true;
+  }
+  if (["false", "0", "no", "n", "rejected", "failed"].includes(normalized)) {
+    return false;
+  }
+  return fallback;
+}
+
 function parseNumberFlag(value, fallback) {
   const parsed = Number(value);
   return Number.isFinite(parsed) ? parsed : fallback;
@@ -148,6 +168,15 @@ function buildDeclaredSource(flags) {
 
   if (sourceType === "manual") {
     declaredSource.content = normalizeString(flags.content);
+  } else if (sourceType === "accepted_action") {
+    declaredSource.actionType = normalizeString(flags["action-type"]);
+    declaredSource.status = normalizeString(flags.status, "succeeded");
+    declaredSource.accepted = parseBooleanFlag(flags.accepted, true);
+    declaredSource.succeeded = parseBooleanFlag(flags.succeeded, /success|succeed|applied|completed|done/iu.test(normalizeString(flags.status, "succeeded")));
+    declaredSource.agentId = normalizeString(flags["agent-id"]);
+    declaredSource.targets = parseListFlag(flags.targets, []);
+    declaredSource.artifacts = parseListFlag(flags.artifacts, []);
+    declaredSource.content = normalizeString(flags.content || flags.summary);
   } else if (sourceType === "conversation") {
     declaredSource.messages = [
       {

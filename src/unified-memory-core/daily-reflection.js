@@ -15,7 +15,8 @@ function getSourceText(sourceArtifact) {
 
   if (sourceArtifact.source_type === "manual"
     || sourceArtifact.source_type === "file"
-    || sourceArtifact.source_type === "url") {
+    || sourceArtifact.source_type === "url"
+    || sourceArtifact.source_type === "accepted_action") {
     return typeof payload.text === "string" ? payload.text.trim() : "";
   }
 
