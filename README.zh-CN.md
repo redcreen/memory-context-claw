@@ -28,7 +28,7 @@
 稳定版：
 
 ```bash
-openclaw plugins install git+https://github.com/redcreen/Unified-Memory-Core.git#v0.1.0
+openclaw plugins install git+https://github.com/redcreen/Unified-Memory-Core.git#v0.2.0
 ```
 
 开发头版本：

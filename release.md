@@ -21,7 +21,7 @@ That means:
 So the recommended public install path should be:
 
 ```bash
-openclaw plugins install git+https://github.com/redcreen/Unified-Memory-Core.git#v0.1.0
+openclaw plugins install git+https://github.com/redcreen/Unified-Memory-Core.git#v0.2.0
 ```
 
 ### Recommended Release Model
@@ -73,8 +73,8 @@ Before creating a tag:
 Example release flow:
 
 ```bash
-git tag v0.1.0
-git push origin v0.1.0
+git tag v0.2.0
+git push origin v0.2.0
 ```
 
 If you also want a GitHub Release, create it from the same tag.
@@ -84,7 +84,7 @@ If you also want a GitHub Release, create it from the same tag.
 #### Stable
 
 ```bash
-openclaw plugins install git+https://github.com/redcreen/Unified-Memory-Core.git#v0.1.0
+openclaw plugins install git+https://github.com/redcreen/Unified-Memory-Core.git#v0.2.0
 ```
 
 #### Development Head
@@ -97,7 +97,7 @@ openclaw plugins install git+https://github.com/redcreen/Unified-Memory-Core.git
 
 Current published tag:
 
-`v0.1.0`
+`v0.2.0`
 
 That means:
 
