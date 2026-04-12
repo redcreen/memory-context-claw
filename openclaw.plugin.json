@@ -53,6 +53,10 @@
       "label": "Agent Sub Namespace",
       "help": "When enabled, governed memory reads merge workspace-shared memory with the current agent's sub-namespace, and nightly self-learning writes per-agent artifacts into that sub-namespace."
     },
+    "openclawAdapter.governedExports.agentWorkspaceIds": {
+      "label": "Agent Workspace Overrides",
+      "help": "Optional map from agent id to workspace id. Use this when one agent, such as code, should read and learn in a different workspace namespace without moving every agent."
+    },
     "llmRerank.enabled": {
       "label": "LLM Rerank",
       "help": "Use a subagent run to rerank top candidates with a model."
@@ -164,6 +168,12 @@
               },
               "workspaceId": {
                 "type": "string"
+              },
+              "agentWorkspaceIds": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
               },
               "agentNamespace": {
                 "type": "object",

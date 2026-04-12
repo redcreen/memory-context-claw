@@ -25,13 +25,15 @@ Build a host-neutral canonical memory layer for `Unified Memory Core` so that:
 
 ## Current Status
 
-- status: `planning-active / development-ready`
+- status: `implementation-active / migration-and-governance-ready`
 - dependency baseline:
   - shared contracts: `ready`
-  - registry baseline: `ready`
-  - OpenClaw adapter baseline: `ready`
-  - Codex adapter baseline: `ready`
+  - registry baseline: `implemented`
+  - OpenClaw adapter baseline: `implemented`
+  - Codex adapter baseline: `implemented`
   - agent sub namespace baseline: `implemented`
+  - Codex write-back ingestion into nightly learning: `implemented`
+  - registry migration / topology reporting: `implemented`
 
 ## Phase Map
 
@@ -99,6 +101,7 @@ Validation:
 - one workspace can be read by both adapters from the same registry
 - agent-specific records remain scoped correctly
 - no adapter-local duplicate stable-memory store is introduced
+- Codex task/write-back signals have a planned path into the same governed learning ingestion surface
 
 ## Phase 3: Migration + Compatibility
 
@@ -139,10 +142,11 @@ Validation:
 
 ## Immediate Execution Order
 
-1. define root resolution contract
-2. implement host-neutral root with compatibility fallback
-3. align OpenClaw and Codex on shared root behavior
-4. add migration/reporting and governance checks
+1. observe live topology and confirm the current active root/fallback path
+2. decide the canonical-root cutover window
+3. migrate or adopt legacy records into the canonical root when needed
+4. keep registry-root findings visible in governance and operator workflows
+5. continue adapter quality work without reopening per-host storage drift
 
 Related:
 
@@ -173,13 +177,15 @@ Related:
 
 ## 当前状态
 
-- 状态：`planning-active / development-ready`
+- 状态：`implementation-active / migration-and-governance-ready`
 - 依赖基线：
   - shared contracts：`ready`
-  - registry baseline：`ready`
-  - OpenClaw adapter baseline：`ready`
-  - Codex adapter baseline：`ready`
+  - registry baseline：`implemented`
+  - OpenClaw adapter baseline：`implemented`
+  - Codex adapter baseline：`implemented`
   - agent sub namespace baseline：`implemented`
+  - Codex write-back 纳入 nightly learning：`implemented`
+  - registry migration / topology reporting：`implemented`
 
 ## Phase Map
 
@@ -287,10 +293,11 @@ flowchart LR
 
 ## 立即执行顺序
 
-1. 先定义 root resolution contract
-2. 实现 host-neutral root 与 compatibility fallback
-3. 对齐 OpenClaw / Codex shared root 行为
-4. 再补 migration/reporting 和 governance checks
+1. 先观察 live topology，确认当前 active root / fallback 命中情况
+2. 再决定 canonical root 的正式切换窗口
+3. 需要时把 legacy records 非破坏性迁移 / adopt 到 canonical root
+4. 持续把 registry-root findings 暴露给治理和运维面
+5. 继续推进 adapter 质量，而不是重新分叉 per-host storage
 
 相关文档：
 

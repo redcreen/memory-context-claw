@@ -53,3 +53,13 @@ export {
   createIndependentExecutionReview,
   renderIndependentExecutionReview
 } from "./independent-execution.js";
+export {
+  DEFAULT_CANONICAL_REGISTRY_DIR,
+  DEFAULT_LEGACY_OPENCLAW_REGISTRY_DIR,
+  resolveRegistryRoot,
+  buildRegistryRootReport,
+  inspectRegistryTopology,
+  renderRegistryTopologyReport,
+  migrateRegistryRoot,
+  renderRegistryMigrationReport
+} from "./registry-roots.js";

@@ -18,7 +18,7 @@
 - Average Completion: 85%
 - Active Module: Memory Registry / Adapter Boundary
 - Main Risk: host-neutral registry 迁移如果处理不好，会让 live OpenClaw 路径与未来 Codex 共享路径继续分叉
-- Active Slice: bootstrap host-neutral-memory subproject and define canonical storage decoupling slices
+- Active Slice: host-neutral registry-root hardening implemented; monitor live topology and decide cutover
 
 ## Modules
 
@@ -36,7 +36,7 @@
 
 | Subproject | Status | Goal | Primary Entry |
 | --- | --- | --- | --- |
-| Host-Neutral Memory | planning-active / development-ready | decouple canonical storage from OpenClaw host semantics and converge OpenClaw / Codex on one shared registry | [subprojects/host-neutral-memory.md](subprojects/host-neutral-memory.md) |
+| Host-Neutral Memory | implementation-active / migration-and-governance-ready | decouple canonical storage from OpenClaw host semantics and converge OpenClaw / Codex on one shared registry | [subprojects/host-neutral-memory.md](subprojects/host-neutral-memory.md) |
 | Core Product | baseline-complete / next-phase candidate | keep the shared memory product core independent from any one adapter | [subprojects/core-product.md](subprojects/core-product.md) |
 | Plugin Runtime | active | keep OpenClaw retrieval / assembly clean while runtime behavior evolves | [subprojects/plugin-runtime.md](subprojects/plugin-runtime.md) |
 | Memory Governance | stable | keep governance readable, low-noise, and comparable | [subprojects/memory-governance.md](subprojects/memory-governance.md) |
@@ -52,7 +52,7 @@
 
 ## Current Execution Order
 
-1. 先按 [subprojects/host-neutral-memory.md](subprojects/host-neutral-memory.md) 定义 canonical registry root、fallback 和迁移边界
-2. 再对齐 [modules/memory-registry.md](modules/memory-registry.md)、[modules/openclaw-adapter.md](modules/openclaw-adapter.md)、[modules/codex-adapter.md](modules/codex-adapter.md) 的 shared-root 行为
+1. 先观察 [subprojects/host-neutral-memory.md](subprojects/host-neutral-memory.md) 的 live topology，再决定 canonical-root cutover
+2. 再对齐 [modules/memory-registry.md](modules/memory-registry.md)、[modules/openclaw-adapter.md](modules/openclaw-adapter.md)、[modules/codex-adapter.md](modules/codex-adapter.md) 的 canonical-root adoption 行为
 3. 新的 memory-search 专项 case 一律先过 `npm run eval:smoke-promotion`
 4. 继续让 [modules/governance-system.md](modules/governance-system.md) 维护 recalled context 质量，不只看 pass/fail

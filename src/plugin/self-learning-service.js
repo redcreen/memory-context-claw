@@ -5,7 +5,12 @@ import path from "node:path";
 import {
   collectConversationMemoryCandidates
 } from "../conversation-memory.js";
-import { createStandaloneRuntime, renderDailyReflectionReport } from "../unified-memory-core/index.js";
+import {
+  createNamespaceKey,
+  createStandaloneRuntime,
+  renderDailyReflectionReport,
+  resolveRegistryRoot
+} from "../unified-memory-core/index.js";
 import {
   resolveOpenClawAgentNamespace,
   resolveOpenClawNamespace
@@ -125,6 +130,29 @@ function normalizeString(value, fallback = "") {
   }
   const normalized = value.trim();
   return normalized || fallback;
+}
+
+function normalizeStringMap(values) {
+  if (!values || typeof values !== "object" || Array.isArray(values)) {
+    return {};
+  }
+
+  return Object.fromEntries(
+    Object.entries(values)
+      .map(([key, value]) => [normalizeString(key), normalizeString(value)])
+      .filter(([key, value]) => key && value)
+  );
+}
+
+function resolveWorkspaceIdForAgent(governedExports, agentId) {
+  const normalizedAgentId = normalizeString(agentId);
+  const overrides = normalizeStringMap(governedExports?.agentWorkspaceIds);
+
+  if (normalizedAgentId && overrides[normalizedAgentId]) {
+    return overrides[normalizedAgentId];
+  }
+
+  return normalizeString(governedExports?.workspaceId, "default-workspace");
 }
 
 function normalizeTimeOfDay(value, fallback = "00:00") {
@@ -499,7 +527,6 @@ async function collectOpenClawDeclaredSources({
   const memoryDistillation = pluginConfig?.memoryDistillation || {};
   const governedExports = pluginConfig?.openclawAdapter?.governedExports || {};
   const namespaceBaseContext = {
-    workspaceId: governedExports.workspaceId,
     tenant: governedExports.tenant,
     scope: governedExports.scope,
     resource: governedExports.resource,
@@ -533,12 +560,17 @@ async function collectOpenClawDeclaredSources({
       longTermCandidates: Array.isArray(result.longTerm) ? result.longTerm.length : 0,
       declaredSources: agentDeclaredSources.length
     });
+    const workspaceId = resolveWorkspaceIdForAgent(governedExports, agentId);
     const targetNamespace = governedExports?.agentNamespace?.enabled
       ? resolveOpenClawAgentNamespace({
         ...namespaceBaseContext,
+        workspaceId,
         agentId
       })
-      : resolveOpenClawNamespace(namespaceBaseContext);
+      : resolveOpenClawNamespace({
+        ...namespaceBaseContext,
+        workspaceId
+      });
     declaredSources.push(...agentDeclaredSources.map((item) => ({
       ...item,
       declaredBy: `${item.declaredBy}:${agentId}`,
@@ -552,6 +584,109 @@ async function collectOpenClawDeclaredSources({
       workspaceRoot,
       scannedAgents,
       agentCount: scannedAgents.length,
+      declaredSourceCount: declaredSources.length
+    }
+  };
+}
+
+function buildRelevantNamespaceKeys(pluginConfig, scannedAgents = []) {
+  const governedExports = pluginConfig?.openclawAdapter?.governedExports || {};
+  const namespaceBaseContext = {
+    tenant: governedExports.tenant,
+    scope: governedExports.scope,
+    resource: governedExports.resource,
+    host: governedExports.host
+  };
+  const agentWorkspaceIds = normalizeStringMap(governedExports.agentWorkspaceIds);
+  const workspaceIds = new Set([
+    resolveWorkspaceIdForAgent(governedExports, "main"),
+    ...Object.values(agentWorkspaceIds)
+  ].filter(Boolean));
+  const agentIds = new Set([
+    ...scannedAgents.map((item) => item.agentId).filter(Boolean),
+    ...Object.keys(agentWorkspaceIds)
+  ]);
+  const namespaceKeys = new Set();
+
+  for (const workspaceId of workspaceIds) {
+    namespaceKeys.add(createNamespaceKey(resolveOpenClawNamespace({
+      ...namespaceBaseContext,
+      workspaceId
+    })));
+  }
+
+  if (governedExports?.agentNamespace?.enabled) {
+    for (const agentId of agentIds) {
+      namespaceKeys.add(createNamespaceKey(resolveOpenClawAgentNamespace({
+        ...namespaceBaseContext,
+        workspaceId: resolveWorkspaceIdForAgent(governedExports, agentId),
+        agentId
+      })));
+    }
+  }
+
+  return namespaceKeys;
+}
+
+async function collectCodexDeclaredSources({
+  registry,
+  pluginConfig,
+  lastCompletedAt = "",
+  scannedAgents = []
+} = {}) {
+  if (!registry || typeof registry.listRecords !== "function") {
+    return {
+      declaredSources: [],
+      collector: {
+        candidateRecordCount: 0,
+        declaredSourceCount: 0
+      }
+    };
+  }
+
+  const namespaceKeys = buildRelevantNamespaceKeys(pluginConfig, scannedAgents);
+  const records = await registry.listRecords({
+    recordType: "candidate_artifact",
+    state: "candidate"
+  });
+  const sinceAt = Date.parse(String(lastCompletedAt || ""));
+  const declaredSources = [];
+
+  for (const record of records) {
+    const payload = record?.payload || {};
+    if (payload?.attributes?.adapter !== "codex") {
+      continue;
+    }
+    if (namespaceKeys.size > 0 && !namespaceKeys.has(createNamespaceKey(record.namespace))) {
+      continue;
+    }
+    if (Number.isFinite(sinceAt) && Date.parse(String(record.created_at || "")) <= sinceAt) {
+      continue;
+    }
+
+    const content = compressNightlyCandidateText(payload?.summary || "");
+    if (!content) {
+      continue;
+    }
+
+    declaredSources.push({
+      sourceType: "manual",
+      declaredBy: `codex-nightly-self-learning:${payload?.attributes?.actor_id || "unknown"}`,
+      namespace: record.namespace,
+      visibility: record.visibility,
+      locator: {
+        kind: "registry-record",
+        value: record.record_id
+      },
+      exportHints: ["codex", "nightly-self-learning-source"],
+      content
+    });
+  }
+
+  return {
+    declaredSources,
+    collector: {
+      candidateRecordCount: records.length,
       declaredSourceCount: declaredSources.length
     }
   };
@@ -589,10 +724,10 @@ export function createOpenClawSelfLearningService(options = {}) {
   };
   const collector = options.collector || ((params) => collectOpenClawDeclaredSources(params));
   const governedExports = pluginConfig?.openclawAdapter?.governedExports || {};
-  const registryDir = normalizeString(
-    governedExports.registryDir,
-    path.join(os.homedir(), ".openclaw", "unified-memory-core", "registry")
-  );
+  const registryResolution = resolveRegistryRoot({
+    explicitDir: governedExports.registryDir
+  });
+  const registryDir = registryResolution.registryDir;
   const localTime = normalizeTimeOfDay(pluginConfig?.selfLearning?.localTime, "00:00");
   const runtimeFactory = options.runtimeFactory || ((params) => createStandaloneRuntime(params));
   const namespace = resolveOpenClawNamespace({
@@ -678,7 +813,16 @@ export function createOpenClawSelfLearningService(options = {}) {
           pluginConfig,
           workspaceRoot: DEFAULT_WORKSPACE_ROOT
         });
-        const declaredSources = (collected?.declaredSources || []).map((item) => ({
+        const codexCollected = await collectCodexDeclaredSources({
+          registry: runtime.registry,
+          pluginConfig,
+          lastCompletedAt: previousState.lastCompletedAt,
+          scannedAgents: collected?.collector?.scannedAgents || []
+        });
+        const declaredSources = [
+          ...(collected?.declaredSources || []),
+          ...(codexCollected?.declaredSources || [])
+        ].map((item) => ({
           ...item,
           namespace: item.namespace || namespace,
           visibility: item.visibility || "workspace"
@@ -699,11 +843,16 @@ export function createOpenClawSelfLearningService(options = {}) {
           scheduledLocalTime: localTime,
           generatedAt: clock().toISOString(),
           namespace,
+          registryResolution,
           collector: collected?.collector || {
             workspaceRoot: DEFAULT_WORKSPACE_ROOT,
             scannedAgents: [],
             agentCount: 0,
             declaredSourceCount: declaredSources.length
+          },
+          codexCollector: codexCollected?.collector || {
+            candidateRecordCount: 0,
+            declaredSourceCount: 0
           },
           report
         });

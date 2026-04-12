@@ -5,6 +5,8 @@ import {
   renderDailyReflectionReport,
   renderExportReport,
   renderGovernanceAuditReport,
+  renderRegistryMigrationReport,
+  renderRegistryTopologyReport,
   renderGovernanceRepairRecord,
   renderGovernanceReplayRun,
   renderIndependentExecutionReview
@@ -107,6 +109,20 @@ async function run() {
     result = await runtime.addSource(buildDeclaredSource(flags), {
       persist: true
     });
+  } else if (family === "registry" && action === "inspect") {
+    const report = await runtime.inspectRegistryTopology();
+    result = flags.format === "markdown"
+      ? renderRegistryTopologyReport(report)
+      : report;
+  } else if (family === "registry" && action === "migrate") {
+    const report = await runtime.migrateRegistryRoot({
+      sourceDir: normalizeString(flags["source-dir"]),
+      targetDir: normalizeString(flags["target-dir"]),
+      apply: Boolean(flags.apply)
+    });
+    result = flags.format === "markdown"
+      ? renderRegistryMigrationReport(report)
+      : report;
   } else if (family === "learn" && action === "daily-run") {
     const report = await runtime.runDailyReflection({
       declaredSources: [buildDeclaredSource(flags)],
@@ -188,6 +204,8 @@ async function run() {
     result = {
       usage: [
         "source add --source-type manual --content 'text'",
+        "registry inspect [--format markdown]",
+        "registry migrate [--source-dir <dir>] [--target-dir <dir>] [--apply] [--format markdown]",
         "learn daily-run --source-type manual --content 'text' [--dry-run] [--promote]",
         "reflect run --source-type manual --content 'text' [--dry-run] [--promote]",
         "export build --consumer generic",

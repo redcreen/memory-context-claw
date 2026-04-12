@@ -4,6 +4,7 @@ import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 
+import { createCodexAdapterRuntime } from "../src/codex-adapter.js";
 import { resolvePluginConfig } from "../src/config.js";
 import {
   buildDeclaredSourcesFromConversationCandidates,
@@ -291,4 +292,123 @@ test("self-learning service can write nightly learning into agent sub namespaces
 
   assert.equal(stableRecords.length, 1);
   assert.equal(stableRecords[0].namespace.key, "demo-workspace.agent.code");
+});
+
+test("self-learning service can route one agent into an overridden workspace without moving others", async () => {
+  const registryRoot = await fs.mkdtemp(path.join(os.tmpdir(), "umc-nightly-agent-workspace-"));
+  const service = createOpenClawSelfLearningService({
+    clock: () => new Date("2026-04-11T00:05:00+08:00"),
+    setTimeout() {
+      return {};
+    },
+    clearTimeout() {},
+    pluginConfig: resolvePluginConfig({
+      openclawAdapter: {
+        governedExports: {
+          registryDir: registryRoot,
+          workspaceId: "default-workspace",
+          agentWorkspaceIds: {
+            code: "code-workspace"
+          },
+          agentNamespace: {
+            enabled: true
+          }
+        }
+      }
+    }),
+    collector: async () => ({
+      declaredSources: [
+        {
+          sourceType: "manual",
+          declaredBy: "test-suite:code",
+          namespace: {
+            tenant: "local",
+            scope: "workspace",
+            resource: "openclaw-shared-memory",
+            key: "code-workspace.agent.code"
+          },
+          content: "Code workspace-specific stable rule."
+        }
+      ],
+      collector: {
+        workspaceRoot: "/tmp/workspace",
+        scannedAgents: [{ agentId: "code", declaredSources: 1 }],
+        agentCount: 1,
+        declaredSourceCount: 1
+      }
+    })
+  });
+
+  await service.runNow("manual-code-workspace");
+
+  const stableRecords = await service.runtime.registry.listRecords({
+    recordType: "stable_artifact",
+    state: "stable"
+  });
+
+  assert.equal(stableRecords.length, 1);
+  assert.equal(stableRecords[0].namespace.key, "code-workspace.agent.code");
+});
+
+test("self-learning service can ingest Codex write-back signals into the nightly learning pipeline", async () => {
+  const registryRoot = await fs.mkdtemp(path.join(os.tmpdir(), "umc-nightly-codex-"));
+  const clock = () => new Date("2026-04-11T00:05:00+08:00");
+  const codexRuntime = createCodexAdapterRuntime({
+    clock,
+    logger: { info() {} },
+    config: {
+      registryDir: registryRoot,
+      scope: "workspace",
+      resource: "openclaw-shared-memory",
+      workspaceId: "code-workspace",
+      agentId: "code",
+      agentNamespaceEnabled: true
+    }
+  });
+
+  await codexRuntime.writeAfterTask({
+    taskId: "task_code_nightly",
+    taskTitle: "实现 code 记忆",
+    summary: "Remember this: for code-workspace, code agent should prefer small, focused patches."
+  });
+
+  const service = createOpenClawSelfLearningService({
+    clock,
+    setTimeout() {
+      return {};
+    },
+    clearTimeout() {},
+    pluginConfig: resolvePluginConfig({
+      openclawAdapter: {
+        governedExports: {
+          registryDir: registryRoot,
+          workspaceId: "default-workspace",
+          agentWorkspaceIds: {
+            code: "code-workspace"
+          },
+          agentNamespace: {
+            enabled: true
+          }
+        }
+      }
+    }),
+    collector: async () => ({
+      declaredSources: [],
+      collector: {
+        workspaceRoot: "/tmp/workspace",
+        scannedAgents: [],
+        agentCount: 0,
+        declaredSourceCount: 0
+      }
+    })
+  });
+
+  const result = await service.runNow("manual-codex-nightly");
+  assert.equal(result.report.summary.sources.source_count, 1);
+  assert.ok(result.report.summary.reflection.candidate_count >= 1);
+  assert.ok(result.report.promotion_review.length >= 1);
+
+  const state = await service.readState();
+  const latestReport = JSON.parse(await fs.readFile(state.latestReportJsonPath, "utf8"));
+  assert.equal(latestReport.codexCollector.declaredSourceCount, 1);
 });

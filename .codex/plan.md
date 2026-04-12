@@ -6,6 +6,20 @@
 
 ## Slices
 
+- Slice: `align-code-agent-codex-memory-surface`
+  - Objective: 让 OpenClaw `code` agent 和 Codex 共用同一 registry、同一 code-workspace、同一双层 namespace 读写语义，同时不把其他 agent 一起迁进 `code-workspace`
+  - Dependencies: `src/openclaw-adapter.js`、`src/plugin/self-learning-service.js`、`src/codex-adapter.js`、OpenClaw live config
+  - Risks: 只改全局 `workspaceId` 会误伤所有 agent；Codex 如果仍是单层读取，就和 OpenClaw `code` agent 记忆面不一致
+  - Validation: targeted adapter tests、full `npm test`、live OpenClaw config 检查
+  - Exit Condition: `code` agent 和 Codex 的最小配置明确，且运行时行为对齐
+
+- Slice: `unify-codex-signals-into-self-learning-ingestion`
+  - Objective: 让 Codex task/write-back 信号进入与 OpenClaw conversation 相同的 governed self-learning ingestion，而不是停留在并行写回路径
+  - Dependencies: `src/codex-adapter.js`、`src/plugin/self-learning-service.js`、`src/unified-memory-core/daily-reflection.js`、host-neutral-memory workstream
+  - Risks: 如果继续只扫 OpenClaw session memory，Codex 的长期学习会长期落后；如果直接把宿主上下文硬灌进 learning，又会让 source 边界变脏
+  - Validation: 新 collector / source-type tests、nightly integration tests、full `npm test`
+  - Exit Condition: Codex 信号被纳入统一 learning ingestion，且 source provenance 仍清晰可审计
+
 - Slice: `define-host-neutral-registry-contract`
   - Objective: 明确 canonical registry root、config / env override、compat fallback 与 shared / agent / session durability policy
   - Dependencies: `.codex/subprojects/host-neutral-memory.md`、`docs/workstreams/host-neutral-memory/architecture.md`
@@ -50,8 +64,7 @@
 
 ## Execution Order
 
-1. 先定义 `host-neutral-memory` 的 registry-root contract
-2. 再实现 shared-root resolution 和 OpenClaw / Codex 对齐
-3. 再补 migration / governance / operator-visible reporting
-4. 同步维持 `openclaw-adapter` recall quality 与 smoke promotion
-5. 为 `reflection-system` 打开下一增强 phase
+1. `add-migration-and-governance-for-shared-root` 已落地，先观察 live topology
+2. 再决定 canonical root 的正式 adoption/cutover 方案
+3. 同步维持 `openclaw-adapter` recall quality 与 smoke promotion
+4. 为 `reflection-system` 打开下一增强 phase

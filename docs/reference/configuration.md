@@ -272,6 +272,7 @@ Default:
     enabled: true,
     registryDir: "",
     workspaceId: "",
+    agentWorkspaceIds: {},
     agentNamespace: {
       enabled: false
     },
@@ -288,10 +289,51 @@ Default:
 
 Use this when you want the OpenClaw adapter to load governed stable exports from the local registry before merging with builtin recall results.
 
+Important rule:
+
+- `workspaceId` is the shared workspace layer for this plugin instance
+- if you set only `workspaceId`, every OpenClaw agent still shares that workspace layer
+- use `agentWorkspaceIds` when one agent, such as `code`, should move to a different workspace namespace without moving the others
+
+Example:
+
+```json5
+{
+  openclawAdapter: {
+    governedExports: {
+      workspaceId: "default-workspace",
+      agentWorkspaceIds: {
+        code: "code-workspace"
+      },
+      agentNamespace: {
+        enabled: true
+      }
+    }
+  }
+}
+```
+
 If you enable `openclawAdapter.governedExports.agentNamespace.enabled`, OpenClaw uses a two-layer layout:
 
 - shared workspace namespace: every agent can read it
 - optional agent sub namespace: only the current agent reads it, and nightly self-learning writes agent-specific artifacts into it
+
+Registry-root resolution now follows this order:
+
+1. explicit `registryDir`
+2. env `UMC_REGISTRY_DIR`
+3. canonical host-neutral root: `~/.unified-memory-core/registry`
+4. compatibility fallback: `~/.openclaw/unified-memory-core/registry`
+
+This keeps existing OpenClaw local installs working while the repo moves toward a host-neutral canonical root.
+
+Operator commands:
+
+- inspect topology and findings:
+  - `node scripts/unified-memory-core-cli.js registry inspect --format markdown`
+- plan or apply non-destructive migration into the canonical root:
+  - `node scripts/unified-memory-core-cli.js registry migrate --format markdown`
+  - `node scripts/unified-memory-core-cli.js registry migrate --apply --format markdown`
 
 #### `selfLearning`
 
@@ -664,6 +706,7 @@ openclaw memory search "我爱吃什么"
     enabled: true,
     registryDir: "",
     workspaceId: "",
+    agentWorkspaceIds: {},
     agentNamespace: {
       enabled: false
     },
@@ -680,10 +723,51 @@ openclaw memory search "我爱吃什么"
 
 当你希望 OpenClaw adapter 在合并内置 recall 结果之前，先从本地 registry 加载 governed stable exports 时，就用这一组配置。
 
+关键规则：
+
+- `workspaceId` 是这个插件实例的共享 workspace 层
+- 如果你只设置 `workspaceId`，OpenClaw 的所有 agent 仍然会共用这层 shared workspace
+- 如果只想让某个 agent，比如 `code`，进入另一套 workspace namespace，而不影响其他 agent，就用 `agentWorkspaceIds`
+
+示例：
+
+```json5
+{
+  openclawAdapter: {
+    governedExports: {
+      workspaceId: "default-workspace",
+      agentWorkspaceIds: {
+        code: "code-workspace"
+      },
+      agentNamespace: {
+        enabled: true
+      }
+    }
+  }
+}
+```
+
 如果开启 `openclawAdapter.governedExports.agentNamespace.enabled`，OpenClaw 会变成双层结构：
 
 - 共享 workspace namespace：所有 agent 都能读
 - 可选 agent 子 namespace：只有当前 agent 会读，nightly self-learning 也会把 agent 专属学习结果写进去
+
+现在 registry root 的解析顺序是：
+
+1. 显式 `registryDir`
+2. 环境变量 `UMC_REGISTRY_DIR`
+3. canonical host-neutral root：`~/.unified-memory-core/registry`
+4. 兼容回退：`~/.openclaw/unified-memory-core/registry`
+
+这样做的目的是：在朝 host-neutral canonical root 迁移时，不打断当前 OpenClaw 本地安装。
+
+运维命令：
+
+- 查看当前 topology / findings：
+  - `node scripts/unified-memory-core-cli.js registry inspect --format markdown`
+- 规划或执行非破坏性迁移到 canonical root：
+  - `node scripts/unified-memory-core-cli.js registry migrate --format markdown`
+  - `node scripts/unified-memory-core-cli.js registry migrate --apply --format markdown`
 
 #### `selfLearning`
 

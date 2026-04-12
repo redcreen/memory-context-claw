@@ -27,7 +27,7 @@
 
 ## Current Slice
 
-`bootstrap host-neutral canonical storage workstream and define the first implementation slices`
+`migration/reporting hardening implemented; move to cutover decision and live adoption tracking`
 
 ## Done
 
@@ -38,12 +38,18 @@
   - optional agent sub namespace
 - nightly self-learning 已能按 agent sub namespace 写入
 - OpenClaw live 配置已经开启 `agentNamespace.enabled`
+- OpenClaw 已支持 `agentWorkspaceIds`
+- `code` agent 与 Codex 已可对齐到同一 `code-workspace` 和同一 agent sub namespace
+- Codex task/write-back 已进入 nightly self-learning ingestion
+- canonical registry root 已支持 host-neutral resolution 和 legacy fallback
+- standalone runtime / CLI 已能 inspect 当前 registry-root topology
+- standalone runtime / CLI 已能做 non-destructive registry migration/adoption
+- registry-root findings 现在对 operator 可见
 
 ## In Progress
 
-- 建立 `host-neutral-memory` 子项目控制面
-- 把 durable 架构文档、roadmap、开发序列接进主控制面
-- 收口 canonical registry root、compat fallback、迁移策略
+- 观察 live topology，决定 canonical root 的正式 adoption 窗口
+- 确认是否把 registry-root findings 提升为独立 governance gate
 
 ## Blockers / Open Decisions
 
@@ -54,6 +60,10 @@
   - 只读兼容旧 `~/.openclaw/...`
   - 或双写 / 一次性迁移
 - shared / agent / session 三层里，哪些数据允许长期沉淀，哪些只该停留在短期层
+- Codex 信号应该通过：
+  - nightly collector 扫描 registry write-back
+  - 单独的 Codex daily reflection
+  - 还是统一 host-neutral ingestion service
 
 ## Exit Condition
 
@@ -62,6 +72,6 @@
 
 ## Next 3 Actions
 
-1. 定义 host-neutral registry root resolution contract 与 fallback 顺序
-2. 先把 OpenClaw / Codex registry path 对齐到同一 canonical root
-3. 增加迁移报告与兼容验证，避免现有 live registry 被静默打断
+1. 跑 live topology inspect，确认当前 active root / fallback 命中情况
+2. 决定 canonical root 的默认切换窗口
+3. 视结果执行 canonical adopt / migrate

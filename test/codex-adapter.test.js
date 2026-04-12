@@ -26,6 +26,23 @@ test("codex adapter resolves local-first project binding defaults", () => {
   assert.equal(config.scope, "project");
 });
 
+test("codex adapter can resolve openclaw-compatible workspace plus agent settings", () => {
+  const config = resolveCodexAdapterConfig({
+    registryDir: "/tmp/registry",
+    scope: "workspace",
+    resource: "openclaw-shared-memory",
+    workspaceId: "code-workspace",
+    agentId: "code",
+    agentNamespaceEnabled: true
+  });
+
+  assert.equal(config.workspaceId, "code-workspace");
+  assert.equal(config.agentId, "code");
+  assert.equal(config.agentNamespaceEnabled, true);
+  assert.equal(config.scope, "workspace");
+  assert.equal(config.resource, "openclaw-shared-memory");
+});
+
 test("codex adapter loads governed code memory before a task", async () => {
   const registryRoot = await fs.mkdtemp(path.join(os.tmpdir(), "umc-codex-read-"));
   const clock = () => new Date("2026-04-11T00:00:00.000Z");
@@ -157,6 +174,108 @@ test("codex adapter can share a namespace hint with openclaw-compatible workspac
 
   assert.equal(memoryPackage.memory_items.length, 1);
   assert.equal(memoryPackage.namespace.key, "shared-demo");
+});
+
+test("codex adapter can merge workspace and agent sub-namespace memory like openclaw code agent", async () => {
+  const registryRoot = await fs.mkdtemp(path.join(os.tmpdir(), "umc-codex-agent-shared-"));
+  const clock = () => new Date("2026-04-11T00:00:00.000Z");
+  const sourceSystem = createSourceSystem({ clock });
+  const registry = createMemoryRegistry({ rootDir: registryRoot, clock });
+  const sharedNamespace = {
+    tenant: "local",
+    scope: "workspace",
+    resource: "openclaw-shared-memory",
+    key: "code-workspace"
+  };
+  const agentNamespace = {
+    tenant: "local",
+    scope: "workspace",
+    resource: "openclaw-shared-memory",
+    key: "code-workspace.agent.code"
+  };
+
+  const shared = await ingestDeclaredSourceToCandidate({
+    declaredSource: {
+      sourceType: "manual",
+      declaredBy: "test",
+      namespace: sharedNamespace,
+      visibility: "workspace",
+      content: "code workspace 共享规则"
+    },
+    sourceSystem,
+    registry,
+    decidedBy: "test-suite"
+  });
+  const agent = await ingestDeclaredSourceToCandidate({
+    declaredSource: {
+      sourceType: "manual",
+      declaredBy: "test",
+      namespace: agentNamespace,
+      visibility: "workspace",
+      content: "code agent 专属规则"
+    },
+    sourceSystem,
+    registry,
+    decidedBy: "test-suite"
+  });
+
+  await registry.promoteCandidateToStable({
+    candidateArtifactId: shared.candidateArtifact.artifact_id,
+    decidedBy: "test-suite",
+    reasonCodes: ["codex_dual_layer_ready"]
+  });
+  await registry.promoteCandidateToStable({
+    candidateArtifactId: agent.candidateArtifact.artifact_id,
+    decidedBy: "test-suite",
+    reasonCodes: ["codex_dual_layer_ready"]
+  });
+
+  const adapter = createCodexAdapterRuntime({
+    clock,
+    config: {
+      registryDir: registryRoot,
+      scope: "workspace",
+      resource: "openclaw-shared-memory",
+      workspaceId: "code-workspace",
+      agentId: "code",
+      agentNamespaceEnabled: true,
+      allowedVisibilities: ["workspace"]
+    }
+  });
+
+  const memoryPackage = await adapter.readBeforeTask({
+    taskPrompt: "继续实现 code agent 共享记忆"
+  });
+
+  assert.equal(memoryPackage.memory_items.length, 2);
+  assert.equal(memoryPackage.namespace.key, "code-workspace.agent.code");
+  assert.match(memoryPackage.prompt_block, /code agent 专属规则/);
+  assert.match(memoryPackage.prompt_block, /code workspace 共享规则/);
+});
+
+test("codex adapter can write back into the same agent sub-namespace", async () => {
+  const registryRoot = await fs.mkdtemp(path.join(os.tmpdir(), "umc-codex-agent-write-"));
+  const clock = () => new Date("2026-04-11T00:00:00.000Z");
+  const adapter = createCodexAdapterRuntime({
+    clock,
+    logger: { info() {} },
+    config: {
+      registryDir: registryRoot,
+      scope: "workspace",
+      resource: "openclaw-shared-memory",
+      workspaceId: "code-workspace",
+      agentId: "code",
+      agentNamespaceEnabled: true
+    }
+  });
+
+  const persisted = await adapter.writeAfterTask({
+    taskId: "task_code_1",
+    taskTitle: "实现 code 路径",
+    summary: "补齐 code agent 与 Codex 的共享记忆对齐"
+  });
+
+  assert.equal(persisted.write_back_event.namespace.key, "code-workspace.agent.code");
 });
 
 test("createCodexWriteBackEvent validates summary and maps task metadata", () => {

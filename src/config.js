@@ -56,6 +56,7 @@ const DEFAULT_CONFIG = {
       enabled: true,
       registryDir: "",
       workspaceId: "",
+      agentWorkspaceIds: {},
       agentNamespace: {
         enabled: false
       },
@@ -102,6 +103,21 @@ function mergeStringArrays(base, incoming) {
     ...(Array.isArray(incoming) ? incoming : [])
   ].filter((item) => typeof item === "string" && item.trim());
   return [...new Set(values)];
+}
+
+function normalizeStringMap(values) {
+  if (!values || typeof values !== "object" || Array.isArray(values)) {
+    return {};
+  }
+
+  return Object.fromEntries(
+    Object.entries(values)
+      .map(([key, value]) => [
+        typeof key === "string" ? key.trim() : "",
+        typeof value === "string" ? value.trim() : ""
+      ])
+      .filter(([key, value]) => key && value)
+  );
 }
 
 function normalizeTimeOfDay(value, fallback) {
@@ -275,6 +291,7 @@ export function resolvePluginConfig(raw) {
           typeof governedExports.workspaceId === "string"
             ? governedExports.workspaceId.trim()
             : "",
+        agentWorkspaceIds: normalizeStringMap(governedExports.agentWorkspaceIds),
         agentNamespace: {
           enabled: agentNamespace.enabled === true
         },

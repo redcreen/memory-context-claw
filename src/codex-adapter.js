@@ -11,16 +11,12 @@ import {
   createNamespaceKey,
   parseNamespace,
   parseVisibility,
+  resolveRegistryRoot,
+  resolveOpenClawAgentNamespace,
+  resolveOpenClawNamespace,
   SHARED_CONTRACT_VERSION
 } from "./unified-memory-core/index.js";
 import { ingestDeclaredSourceToCandidate } from "./unified-memory-core/pipeline.js";
-
-const DEFAULT_REGISTRY_DIR = path.join(
-  os.homedir(),
-  ".openclaw",
-  "unified-memory-core",
-  "registry"
-);
 
 function normalizeString(value, fallback = "") {
   if (typeof value !== "string") {
@@ -38,6 +34,25 @@ function normalizeStringList(values, fallback) {
     .map((value) => normalizeString(value))
     .filter(Boolean);
   return normalized.length > 0 ? normalized : [...fallback];
+}
+
+function dedupeMemoryItems(items, maxItems) {
+  const seen = new Set();
+  const merged = [];
+
+  for (const item of items) {
+    const key = String(item?.memory_id || item?.title || "");
+    if (!key || seen.has(key)) {
+      continue;
+    }
+    seen.add(key);
+    merged.push(item);
+    if (merged.length >= maxItems) {
+      break;
+    }
+  }
+
+  return merged;
 }
 
 function normalizeTaskPrompt(value) {
@@ -98,9 +113,14 @@ export function resolveCodexAdapterConfig(raw = {}) {
   const projectPath = normalizeString(raw.projectPath, process.cwd());
   const projectId = normalizeString(raw.projectId, path.basename(projectPath) || "default-project");
   const userId = normalizeString(raw.userId, os.userInfo().username || "default-user");
+  const registryResolution = resolveRegistryRoot({
+    explicitDir: raw.registryDir,
+    env: raw.env
+  });
 
   return {
-    registryDir: normalizeString(raw.registryDir, DEFAULT_REGISTRY_DIR),
+    registryDir: registryResolution.registryDir,
+    registryResolution,
     projectPath,
     projectId,
     userId,
@@ -108,6 +128,9 @@ export function resolveCodexAdapterConfig(raw = {}) {
     scope: normalizeString(raw.scope, "project"),
     resource: normalizeString(raw.resource, "shared-code-memory"),
     namespaceHint: normalizeString(raw.namespaceHint, `${projectId}-${userId}`),
+    workspaceId: normalizeString(raw.workspaceId, ""),
+    agentId: normalizeString(raw.agentId, ""),
+    agentNamespaceEnabled: raw.agentNamespaceEnabled === true,
     host: normalizeString(raw.host, ""),
     allowedVisibilities: normalizeStringList(
       raw.allowedVisibilities,
@@ -119,18 +142,53 @@ export function resolveCodexAdapterConfig(raw = {}) {
   };
 }
 
-export function createCodexWriteBackEvent(input = {}, context = {}, options = {}) {
-  const clock = options.clock || (() => new Date());
-  const config = resolveCodexAdapterConfig(context);
-  const namespace = parseNamespace(
-    options.namespace || {
+function resolveCodexNamespacePlan(raw = {}) {
+  const config = resolveCodexAdapterConfig(raw);
+
+  if (config.workspaceId) {
+    const baseContext = {
       tenant: config.tenant,
       scope: config.scope,
       resource: config.resource,
-      key: config.namespaceHint,
-      ...(config.host ? { host: config.host } : {})
+      workspaceId: config.workspaceId,
+      host: config.host
+    };
+    const namespaces = [];
+
+    if (config.agentNamespaceEnabled && config.agentId) {
+      namespaces.push(resolveOpenClawAgentNamespace({
+        ...baseContext,
+        agentId: config.agentId
+      }));
     }
-  );
+
+    namespaces.push(resolveOpenClawNamespace(baseContext));
+
+    return {
+      primaryNamespace: namespaces[0],
+      namespaces
+    };
+  }
+
+  const namespace = parseNamespace({
+    tenant: config.tenant,
+    scope: config.scope,
+    resource: config.resource,
+    key: config.namespaceHint,
+    ...(config.host ? { host: config.host } : {})
+  });
+
+  return {
+    primaryNamespace: namespace,
+    namespaces: [namespace]
+  };
+}
+
+export function createCodexWriteBackEvent(input = {}, context = {}, options = {}) {
+  const clock = options.clock || (() => new Date());
+  const config = resolveCodexAdapterConfig(context);
+  const namespacePlan = resolveCodexNamespacePlan(context);
+  const namespace = parseNamespace(options.namespace || namespacePlan.primaryNamespace);
 
   const eventType = normalizeString(input.eventType || input.event_type, "task_result");
   const taskId = normalizeString(input.taskId || input.task_id, createContractId("task"));
@@ -211,7 +269,7 @@ export function createCodexAdapterRuntime(options = {}) {
       tenant: config.tenant,
       scope: config.scope,
       resource: config.resource,
-      key: config.namespaceHint,
+      key: config.workspaceId || config.namespaceHint,
       ...(config.host ? { host: config.host } : {})
     },
     defaultVisibility: config.writeBackVisibility
@@ -219,31 +277,69 @@ export function createCodexAdapterRuntime(options = {}) {
   const writeChains = new Map();
 
   async function readBeforeTask(input = {}) {
-    const exportResult = await bridge.loadExports(
-      {
-        projectPath: normalizeString(input.projectPath, config.projectPath),
-        projectId: normalizeString(input.projectId, config.projectId),
-        userId: normalizeString(input.userId, config.userId),
-        tenant: normalizeString(input.tenant, config.tenant),
-        scope: normalizeString(input.scope, config.scope),
-        resource: normalizeString(input.resource, config.resource),
-        namespaceHint: normalizeString(
-          input.namespaceHint,
-          config.namespaceHint
-        ),
-        host: normalizeString(input.host, config.host)
+    const maxItems = Number.isFinite(input.maxItems)
+      ? Math.max(1, Math.min(20, Number(input.maxItems)))
+      : config.maxItems;
+    const namespacePlan = resolveCodexNamespacePlan({
+      registryDir: config.registryDir,
+      projectPath: normalizeString(input.projectPath, config.projectPath),
+      projectId: normalizeString(input.projectId, config.projectId),
+      userId: normalizeString(input.userId, config.userId),
+      tenant: normalizeString(input.tenant, config.tenant),
+      scope: normalizeString(input.scope, config.scope),
+      resource: normalizeString(input.resource, config.resource),
+      namespaceHint: normalizeString(input.namespaceHint, config.namespaceHint),
+      workspaceId: normalizeString(input.workspaceId, config.workspaceId),
+      agentId: normalizeString(input.agentId, config.agentId),
+      agentNamespaceEnabled:
+        input.agentNamespaceEnabled === undefined
+          ? config.agentNamespaceEnabled
+          : input.agentNamespaceEnabled === true,
+      host: normalizeString(input.host, config.host)
+    });
+    const allowedVisibilities = input.allowedVisibilities || config.allowedVisibilities;
+    const allowedStates = input.allowedStates || config.allowedStates;
+    const exportResults = namespacePlan.namespaces.length === 1
+      ? [await bridge.loadExports(
+        {
+          projectPath: normalizeString(input.projectPath, config.projectPath),
+          projectId: normalizeString(input.projectId, config.projectId),
+          userId: normalizeString(input.userId, config.userId),
+          tenant: normalizeString(input.tenant, config.tenant),
+          scope: normalizeString(input.scope, config.scope),
+          resource: normalizeString(input.resource, config.resource),
+          namespaceHint: normalizeString(input.namespaceHint, config.namespaceHint),
+          host: normalizeString(input.host, config.host)
+        },
+        {
+          allowedVisibilities,
+          allowedStates
+        }
+      )]
+      : await Promise.all(
+        namespacePlan.namespaces.map((namespace) => projectionSystem.buildCodexExport({
+          namespace,
+          allowedVisibilities,
+          allowedStates
+        }))
+      );
+
+    const exportResult = {
+      exportVersion: exportResults[0]?.exportVersion || "v1",
+      exportContract: exportResults[0]?.exportContract || {
+        namespace: namespacePlan.primaryNamespace
       },
-      {
-        allowedVisibilities: input.allowedVisibilities || config.allowedVisibilities,
-        allowedStates: input.allowedStates || config.allowedStates
+      payload: {
+        code_memory: dedupeMemoryItems(
+          exportResults.flatMap((item) => Array.isArray(item?.payload?.code_memory) ? item.payload.code_memory : []),
+          maxItems
+        )
       }
-    );
+    };
 
     return mapCodexExportToTaskMemory(exportResult, {
       taskPrompt: input.taskPrompt || input.prompt || "",
-      maxItems: Number.isFinite(input.maxItems)
-        ? Math.max(1, Math.min(20, Number(input.maxItems)))
-        : config.maxItems
+      maxItems
     });
   }
 
@@ -270,6 +366,12 @@ export function createCodexAdapterRuntime(options = {}) {
       scope: normalizeString(input.scope, config.scope),
       resource: normalizeString(input.resource, config.resource),
       namespaceHint: normalizeString(input.namespaceHint, config.namespaceHint),
+      workspaceId: normalizeString(input.workspaceId, config.workspaceId),
+      agentId: normalizeString(input.agentId, config.agentId),
+      agentNamespaceEnabled:
+        input.agentNamespaceEnabled === undefined
+          ? config.agentNamespaceEnabled
+          : input.agentNamespaceEnabled === true,
       host: normalizeString(input.host, config.host),
       writeBackVisibility: normalizeString(
         input.visibility,

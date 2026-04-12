@@ -1,6 +1,3 @@
-import os from "node:os";
-import path from "node:path";
-
 import { createMemoryRegistry } from "./memory-registry.js";
 import { createSourceSystem } from "./source-system.js";
 import { createProjectionSystem } from "./projection-system.js";
@@ -9,13 +6,12 @@ import { createReflectionSystem } from "./reflection-system.js";
 import { createDailyReflectionRunner } from "./daily-reflection.js";
 import { createIndependentExecutionReview } from "./independent-execution.js";
 import { parseNamespace, parseVisibility } from "./contracts.js";
-
-const DEFAULT_REGISTRY_DIR = path.join(
-  os.homedir(),
-  ".openclaw",
-  "unified-memory-core",
-  "registry"
-);
+import {
+  buildRegistryRootReport,
+  inspectRegistryTopology,
+  migrateRegistryRoot,
+  resolveRegistryRoot
+} from "./registry-roots.js";
 
 function normalizeString(value, fallback = "") {
   if (typeof value !== "string") {
@@ -34,8 +30,14 @@ export function resolveStandaloneConfig(raw = {}) {
     ...(normalizeString(raw.host, "") ? { host: normalizeString(raw.host, "") } : {})
   });
 
+  const registryResolution = resolveRegistryRoot({
+    explicitDir: raw.registryDir,
+    env: raw.env
+  });
+
   return {
-    registryDir: normalizeString(raw.registryDir, DEFAULT_REGISTRY_DIR),
+    registryDir: registryResolution.registryDir,
+    registryResolution,
     namespace,
     visibility: parseVisibility(normalizeString(raw.visibility, "workspace"))
   };
@@ -228,6 +230,27 @@ export function createStandaloneRuntime(options = {}) {
     auditNamespace,
     planRepair,
     planReplay,
+    inspectRegistryRoot() {
+      return buildRegistryRootReport({
+        explicitDir: options?.config?.registryDir,
+        env: options?.config?.env
+      });
+    },
+    inspectRegistryTopology() {
+      return inspectRegistryTopology({
+        explicitDir: options?.config?.registryDir,
+        env: options?.config?.env
+      });
+    },
+    migrateRegistryRoot(params = {}) {
+      return migrateRegistryRoot({
+        explicitDir: options?.config?.registryDir,
+        env: options?.config?.env,
+        sourceDir: params.sourceDir,
+        targetDir: params.targetDir,
+        apply: params.apply === true
+      });
+    },
     reviewIndependentExecution(params = {}) {
       return createIndependentExecutionReview({
         repoRoot: params.repoRoot || repoRoot,

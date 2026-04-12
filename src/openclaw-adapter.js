@@ -1,19 +1,10 @@
-import os from "node:os";
-import path from "node:path";
-
 import {
   createMemoryRegistry,
   createProjectionSystem,
   resolveOpenClawAgentNamespace,
-  resolveOpenClawNamespace
+  resolveOpenClawNamespace,
+  resolveRegistryRoot
 } from "./unified-memory-core/index.js";
-
-const DEFAULT_REGISTRY_DIR = path.join(
-  os.homedir(),
-  ".openclaw",
-  "unified-memory-core",
-  "registry"
-);
 
 function normalizeString(value, fallback = "") {
   if (typeof value !== "string") {
@@ -31,6 +22,29 @@ function normalizeStringList(values, fallback) {
     .map((value) => normalizeString(value))
     .filter(Boolean);
   return normalized.length > 0 ? normalized : [...fallback];
+}
+
+function normalizeStringMap(values) {
+  if (!values || typeof values !== "object" || Array.isArray(values)) {
+    return {};
+  }
+
+  return Object.fromEntries(
+    Object.entries(values)
+      .map(([key, value]) => [normalizeString(key), normalizeString(value)])
+      .filter(([key, value]) => key && value)
+  );
+}
+
+function resolveWorkspaceIdForAgent(governedExports, agentId) {
+  const normalizedAgentId = normalizeString(agentId);
+  const overrides = governedExports.agentWorkspaceIds || {};
+
+  if (normalizedAgentId && typeof overrides[normalizedAgentId] === "string" && overrides[normalizedAgentId].trim()) {
+    return overrides[normalizedAgentId].trim();
+  }
+
+  return governedExports.workspaceId;
 }
 
 function dedupeGovernedCandidates(candidates, maxCandidates) {
@@ -61,8 +75,17 @@ export function resolveOpenClawAdapterConfig(pluginConfig = {}) {
     enabled: raw.enabled !== false,
     governedExports: {
       enabled: governedExports.enabled !== false,
-      registryDir: normalizeString(governedExports.registryDir, DEFAULT_REGISTRY_DIR),
+      ...(() => {
+        const registryResolution = resolveRegistryRoot({
+          explicitDir: governedExports.registryDir
+        });
+        return {
+          registryDir: registryResolution.registryDir,
+          registryResolution
+        };
+      })(),
       workspaceId: normalizeString(governedExports.workspaceId, "default-workspace"),
+      agentWorkspaceIds: normalizeStringMap(governedExports.agentWorkspaceIds),
       agentNamespace: {
         enabled: agentNamespace.enabled === true
       },
@@ -136,8 +159,12 @@ export function createOpenClawAdapterRuntime(options = {}) {
           maxCandidates || config.governedExports.maxCandidates,
           config.governedExports.maxCandidates
         );
+        const resolvedWorkspaceId = resolveWorkspaceIdForAgent(
+          config.governedExports,
+          agentId
+        );
         const baseContext = {
-          workspaceId: config.governedExports.workspaceId,
+          workspaceId: resolvedWorkspaceId,
           tenant: config.governedExports.tenant,
           scope: config.governedExports.scope,
           resource: config.governedExports.resource,

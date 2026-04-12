@@ -136,3 +136,122 @@ test("standalone CLI govern audit renders markdown output", async () => {
 
   assert.match(String(stdout || ""), /Unified Memory Core Governance Audit/);
 });
+
+test("standalone runtime can inspect registry-root resolution", () => {
+  const runtime = createStandaloneRuntime({
+    config: {
+      registryDir: "/tmp/explicit-registry",
+      tenant: "local",
+      scope: "workspace",
+      resource: "unified-memory-core",
+      key: "registry-inspect",
+      visibility: "workspace"
+    }
+  });
+
+  const report = runtime.inspectRegistryRoot();
+  assert.equal(report.registry_dir, "/tmp/explicit-registry");
+  assert.equal(report.source, "explicit");
+});
+
+test("standalone runtime can inspect registry topology", async () => {
+  const registryRoot = await fs.mkdtemp(path.join(os.tmpdir(), "umc-standalone-topology-"));
+  await fs.writeFile(path.join(registryRoot, "records.jsonl"), '{"record_id":"standalone"}\n', "utf8");
+  const runtime = createStandaloneRuntime({
+    config: {
+      registryDir: registryRoot,
+      tenant: "local",
+      scope: "workspace",
+      resource: "unified-memory-core",
+      key: "registry-inspect",
+      visibility: "workspace"
+    }
+  });
+
+  const report = await runtime.inspectRegistryTopology();
+  assert.equal(report.summary.active_root, registryRoot);
+  assert.equal(report.summary.active_source, "explicit");
+  assert.equal(typeof report.canonical_root.registry_dir, "string");
+});
+
+test("standalone CLI can inspect registry topology", async () => {
+  const cliPath = path.join(process.cwd(), "scripts", "unified-memory-core-cli.js");
+  const { stdout } = await execFileAsync(
+    "node",
+    [
+      cliPath,
+      "registry",
+      "inspect",
+      "--registry-dir",
+      "/tmp/cli-registry",
+      "--tenant",
+      "local",
+      "--scope",
+      "workspace",
+      "--resource",
+      "unified-memory-core",
+      "--key",
+      "registry-inspect"
+    ],
+    {
+      cwd: process.cwd()
+    }
+  );
+
+  const result = parseJson(stdout);
+  assert.equal(result.summary.active_root, "/tmp/cli-registry");
+  assert.equal(result.summary.active_source, "explicit");
+});
+
+test("standalone CLI can plan and apply registry migration", async () => {
+  const tempRoot = await fs.mkdtemp(path.join(os.tmpdir(), "umc-standalone-migrate-"));
+  const legacyDir = path.join(tempRoot, "legacy");
+  const canonicalDir = path.join(tempRoot, "canonical");
+  await fs.mkdir(legacyDir, { recursive: true });
+  await fs.writeFile(path.join(legacyDir, "records.jsonl"), '{"record_id":"legacy-cli"}\n', "utf8");
+  const cliPath = path.join(process.cwd(), "scripts", "unified-memory-core-cli.js");
+
+  const dryRun = await execFileAsync(
+    "node",
+    [
+      cliPath,
+      "registry",
+      "migrate",
+      "--registry-dir",
+      legacyDir,
+      "--source-dir",
+      legacyDir,
+      "--target-dir",
+      canonicalDir
+    ],
+    {
+      cwd: process.cwd()
+    }
+  );
+  const dryRunResult = parseJson(dryRun.stdout);
+  assert.equal(dryRunResult.noop, false);
+  assert.equal(dryRunResult.added_records, 1);
+
+  const apply = await execFileAsync(
+    "node",
+    [
+      cliPath,
+      "registry",
+      "migrate",
+      "--registry-dir",
+      legacyDir,
+      "--source-dir",
+      legacyDir,
+      "--target-dir",
+      canonicalDir,
+      "--apply"
+    ],
+    {
+      cwd: process.cwd()
+    }
+  );
+  const applyResult = parseJson(apply.stdout);
+  assert.equal(applyResult.apply, true);
+  assert.equal(applyResult.added_records, 1);
+  assert.match(await fs.readFile(path.join(canonicalDir, "records.jsonl"), "utf8"), /legacy-cli/);
+});

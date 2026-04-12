@@ -21,6 +21,9 @@ test("resolvePluginConfig keeps openclaw adapter governed export settings", () =
       governedExports: {
         workspaceId: "demo-workspace",
         registryDir: "/tmp/registry",
+        agentWorkspaceIds: {
+          code: "code-workspace"
+        },
         agentNamespace: {
           enabled: true
         },
@@ -32,6 +35,9 @@ test("resolvePluginConfig keeps openclaw adapter governed export settings", () =
 
   assert.equal(config.openclawAdapter.governedExports.workspaceId, "demo-workspace");
   assert.equal(config.openclawAdapter.governedExports.registryDir, "/tmp/registry");
+  assert.deepEqual(config.openclawAdapter.governedExports.agentWorkspaceIds, {
+    code: "code-workspace"
+  });
   assert.equal(config.openclawAdapter.governedExports.agentNamespace.enabled, true);
   assert.equal(config.openclawAdapter.governedExports.maxCandidates, 3);
   assert.deepEqual(config.openclawAdapter.governedExports.allowedVisibilities, ["workspace", "shared"]);
@@ -237,6 +243,112 @@ test("openclaw adapter runtime merges workspace and agent sub-namespace exports"
   assert.match(codeCandidates.map((item) => item.snippet).join("\n"), /共享规则/);
   assert.equal(mainCandidates.length, 1);
   assert.match(mainCandidates[0].snippet, /共享规则/);
+});
+
+test("openclaw adapter runtime can override workspace per agent without moving every agent", async () => {
+  const registryRoot = await fs.mkdtemp(path.join(os.tmpdir(), "umc-openclaw-agent-workspace-"));
+  const clock = () => new Date("2026-04-11T00:00:00.000Z");
+  const sourceSystem = createSourceSystem({ clock });
+  const registry = createMemoryRegistry({ rootDir: registryRoot, clock });
+  const defaultWorkspace = {
+    tenant: "local",
+    scope: "workspace",
+    resource: "openclaw-shared-memory",
+    key: "default-workspace"
+  };
+  const codeWorkspace = {
+    tenant: "local",
+    scope: "workspace",
+    resource: "openclaw-shared-memory",
+    key: "code-workspace"
+  };
+  const codeAgentWorkspace = {
+    tenant: "local",
+    scope: "workspace",
+    resource: "openclaw-shared-memory",
+    key: "code-workspace.agent.code"
+  };
+
+  const mainShared = await ingestDeclaredSourceToCandidate({
+    declaredSource: {
+      sourceType: "manual",
+      declaredBy: "test",
+      namespace: defaultWorkspace,
+      visibility: "workspace",
+      content: "main agent 共享规则"
+    },
+    sourceSystem,
+    registry,
+    decidedBy: "test-suite"
+  });
+  const codeShared = await ingestDeclaredSourceToCandidate({
+    declaredSource: {
+      sourceType: "manual",
+      declaredBy: "test",
+      namespace: codeWorkspace,
+      visibility: "workspace",
+      content: "code workspace 共享规则"
+    },
+    sourceSystem,
+    registry,
+    decidedBy: "test-suite"
+  });
+  const codeAgent = await ingestDeclaredSourceToCandidate({
+    declaredSource: {
+      sourceType: "manual",
+      declaredBy: "test",
+      namespace: codeAgentWorkspace,
+      visibility: "workspace",
+      content: "code agent 专属记忆"
+    },
+    sourceSystem,
+    registry,
+    decidedBy: "test-suite"
+  });
+
+  for (const item of [mainShared, codeShared, codeAgent]) {
+    await registry.promoteCandidateToStable({
+      candidateArtifactId: item.candidateArtifact.artifact_id,
+      decidedBy: "test-suite",
+      reasonCodes: ["agent_workspace_override_ready"]
+    });
+  }
+
+  const adapterRuntime = createOpenClawAdapterRuntime({
+    pluginConfig: {
+      openclawAdapter: {
+        governedExports: {
+          registryDir: registryRoot,
+          workspaceId: "default-workspace",
+          agentWorkspaceIds: {
+            code: "code-workspace"
+          },
+          agentNamespace: {
+            enabled: true
+          },
+          allowedVisibilities: ["workspace"],
+          maxCandidates: 4
+        }
+      }
+    }
+  });
+
+  const codeCandidates = await adapterRuntime.loadGovernedCandidates({
+    query: "读 code agent 的治理记忆",
+    agentId: "code",
+    maxCandidates: 4
+  });
+  const mainCandidates = await adapterRuntime.loadGovernedCandidates({
+    query: "读 main agent 的治理记忆",
+    agentId: "main",
+    maxCandidates: 4
+  });
+
+  assert.equal(codeCandidates.length, 2);
+  assert.match(codeCandidates.map((item) => item.snippet).join("\n"), /code workspace 共享规则/);
+  assert.match(codeCandidates.map((item) => item.snippet).join("\n"), /code agent 专属记忆/);
+  assert.equal(mainCandidates.length, 1);
+  assert.match(mainCandidates[0].snippet, /main agent 共享规则/);
 });
 
 test("mapOpenClawExportToCandidates converts exported memory items into retrieval candidates", () => {
