@@ -32,6 +32,7 @@
   - `npm run umc:openclaw-install-verify` 可在隔离 profile 中走真实 `openclaw plugins install`
   - `npm run umc:release-preflight` 已成为“只等人类验收”的一键 CLI 门禁
   - release-preflight 里的 memory-search 门禁已收口为 plugin signal regression，不再顺带跑 builtin OpenClaw search 对照
+  - compaction fallback 单测已和宿主真实 `~/.openclaw/openclaw.json` 解耦，不再因本地失效 plugin path 让 `npm test` / `release-preflight` 偶发失败
 - host-neutral registry root policy 已显式收口：
   - canonical root 现在以 `~/.unified-memory-core/registry` 为默认 operator 目标
   - live topology 当前已解析到 canonical root，`cutoverReady = true`
@@ -111,7 +112,7 @@
 - Objective: 保持 post-Stage-5 的 operator baseline、project/workstream roadmap 摘要和 canonical-root policy 同时稳定
 - Plan Link: `hold-post-stage5-roadmap-state-aligned`
 - Runway: one stable-maintenance slice covering roadmap summary、smoke baselines、memory-search governance snapshot、registry inspect、release-preflight、control-surface freshness
-- Progress: `3 / 4` tasks complete
+- Progress: `4 / 4` tasks complete
 - Stop Conditions:
   - validation fails and changes product direction materially
   - live topology regresses to `legacy_fallback`
@@ -124,10 +125,10 @@
 - [x] EL-3 keep `registry inspect`, release-preflight, and public docs aligned with the operator baseline
 - [x] EL-4 define deeper accepted-action extraction as an explicit deferred enhancement queue
 - [x] EL-5 implement Step 47 field-aware accepted-action extraction with CLI / lifecycle coverage
-- [ ] EL-6 keep later enhancement planning gated behind stable runtime API prerequisites instead of reopening the next phase early
+- [x] EL-6 keep later enhancement planning gated behind stable runtime API prerequisites instead of reopening the next phase early
 
 ## Development Log Capture
 
 - Trigger Level: high
 - Pending Capture: no
-- Last Entry: `docs/devlog/2026-04-13-skip-builtin-memory-search-checks-in-release-preflight.md`
+- Last Entry: `docs/devlog/2026-04-13-isolate-compaction-fallback-test-from-host-config.md`

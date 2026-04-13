@@ -177,6 +177,7 @@ test("assemble schedules async distillation when nearing compaction threshold", 
 
 test("compact schedules async fallback distillation without blocking compaction", async () => {
   const scheduled = [];
+  const compactCalls = [];
   const engine = new ContextAssemblyEngine({
     runtime: {},
     logger: { warn() {}, info() {} },
@@ -187,6 +188,10 @@ test("compact schedules async fallback distillation without blocking compaction"
         compactFallback: true,
         cooldownMs: 0
       }
+    },
+    compactFn: async (params) => {
+      compactCalls.push(params);
+      return { compacted: true };
     }
   });
 
@@ -202,4 +207,6 @@ test("compact schedules async fallback distillation without blocking compaction"
 
   assert.equal(scheduled.length, 1);
   assert.equal(scheduled[0].stage, "compact-fallback");
+  assert.equal(compactCalls.length, 1);
+  assert.equal(compactCalls[0].sessionKey, "agent:main:test");
 });

@@ -60,7 +60,7 @@
   - Risks: stale roadmap text 或旧质量指标会让维护者误判当前阶段，过早重开 enhancement planning
   - Validation: `npm run smoke:eval -- --format markdown`、`npm run smoke:eval:critical -- --format markdown`、`npm run eval:memory-search:cases -- --skip-builtin --format json`、project/workstream roadmap、control-surface status
   - Exit Condition: later-phase planning 只会从稳定的 operator baseline 打开，project roadmap 不再和 live control docs 冲突
-  - Status: `ongoing`
+  - Status: `completed`
 
 - Slice: `define-deeper-accepted-action-extraction-todo`
   - Objective: 把 accepted-action 的更深抽取规则、分层准入、负向路径和治理覆盖明确写成 deferred enhancement queue，而不是继续隐含在聊天里
@@ -110,7 +110,7 @@
 - Objective: 保持 root-cutover operator policy、project/workstream roadmap 摘要和 release-preflight 证据面同时稳定
 - Plan Link: `hold-post-stage5-roadmap-state-aligned`
 - Runway: one stable-maintenance slice covering roadmap summary、smoke baselines、memory-search governance snapshot、registry inspect、release-preflight、state refresh
-- Progress: `3 / 4` tasks complete
+- Progress: `4 / 4` tasks complete
 - Stop Conditions:
   - Stage 5 evidence regresses
   - registry inspect regresses to `legacy_fallback` or `migrate_to_canonical_root`
@@ -124,7 +124,7 @@
 - [x] EL-3 keep public docs, `registry inspect`, and `.codex/*` state aligned with the operator baseline
 - [x] EL-4 define deeper accepted-action extraction as a deferred enhancement queue instead of an implicit next-step assumption
 - [x] EL-5 implement Step 47 field-aware accepted-action extraction without reopening the rest of the deferred queue
-- [ ] EL-6 keep later enhancement planning gated behind stable runtime API prerequisites instead of reopening the next phase early
+- [x] EL-6 keep later enhancement planning gated behind stable runtime API prerequisites instead of reopening the next phase early
 
 ## Development Log Capture
 

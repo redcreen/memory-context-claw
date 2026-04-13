@@ -20,7 +20,8 @@ export class ContextAssemblyEngine {
     pluginConfig,
     retrievalFn = retrieveMemoryCandidates,
     rerankFn = rerankCandidatesWithSubagent,
-    scoreFn = scoreCandidates
+    scoreFn = scoreCandidates,
+    compactFn = delegateCompactionToRuntime
   }) {
     this.runtime = runtime;
     this.logger = logger;
@@ -28,6 +29,7 @@ export class ContextAssemblyEngine {
     this.retrievalFn = retrievalFn;
     this.rerankFn = rerankFn;
     this.scoreFn = scoreFn;
+    this.compactFn = compactFn;
     this.openclawAdapterRuntime = createOpenClawAdapterRuntime({
       logger,
       pluginConfig: this.config
@@ -57,7 +59,7 @@ export class ContextAssemblyEngine {
         stage: "compact-fallback"
       });
     }
-    return delegateCompactionToRuntime(params);
+    return this.compactFn(params);
   }
 
   async assemble(params) {

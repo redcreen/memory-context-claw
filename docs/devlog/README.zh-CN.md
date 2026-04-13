@@ -8,6 +8,7 @@
 
 ## 条目
 
+- [Isolate compaction fallback test from host config](2026-04-13-isolate-compaction-fallback-test-from-host-config.md)
 - [Skip builtin memory-search checks in release preflight](2026-04-13-skip-builtin-memory-search-checks-in-release-preflight.md)
 - [Hook OpenClaw after_tool_call into accepted-action learning](2026-04-12-hook-openclaw-after-tool-call-into-accepted-action-learning.md)
 - [Implement Step 47 field-aware accepted-action extraction](2026-04-12-implement-step47-field-aware-accepted-action-extraction.md)
