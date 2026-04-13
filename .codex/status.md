@@ -3,7 +3,7 @@
 ## Delivery Tier
 
 - Tier: `large`
-- Last reviewed: `2026-04-12`
+- Last reviewed: `2026-04-13`
 
 ## Current Phase
 
@@ -31,6 +31,7 @@
   - `npm run umc:build-bundle` 可构建干净的 OpenClaw release bundle
   - `npm run umc:openclaw-install-verify` 可在隔离 profile 中走真实 `openclaw plugins install`
   - `npm run umc:release-preflight` 已成为“只等人类验收”的一键 CLI 门禁
+  - release-preflight 里的 memory-search 门禁已收口为 plugin signal regression，不再顺带跑 builtin OpenClaw search 对照
 - host-neutral registry root policy 已显式收口：
   - canonical root 现在以 `~/.unified-memory-core/registry` 为默认 operator 目标
   - live topology 当前已解析到 canonical root，`cutoverReady = true`
@@ -52,13 +53,13 @@
 - 当前验证已完成：
   - Stage 5 targeted tests：`3/3`
   - release / deployment targeted tests：`71/71`
-  - full repo `npm test`：`363/363`
+  - full repo `npm test`：`364/364`
   - `npm run umc:stage5 -- --format markdown`：`pass`
   - `npm run umc:acceptance -- --format markdown`：`pass`
   - `npm run umc:openclaw-itest -- --format markdown`：`pass`
   - `npm run umc:build-bundle -- --format markdown`：`pass`
   - `npm run umc:openclaw-install-verify -- --format markdown`：`pass`
-  - `npm run umc:release-preflight -- --format markdown`：`pass`
+  - `npm run umc:release-preflight -- --format json`：`pass`
   - `npm run umc:cli -- release build-bundle --format markdown`：`pass`
   - `npm run umc:cli -- verify openclaw-install --format markdown`：`pass`
   - `npm run umc:cli -- registry inspect --format markdown`：`pass`
@@ -66,8 +67,8 @@
   - `npm run umc:cli -- review split-rehearsal --source-dir ~/.unified-memory-core/registry --target-dir /tmp/umc-split-rehearsal --format markdown`：`pass`
   - `npm run smoke:eval -- --format markdown`：`28/28`
   - `npm run smoke:eval:critical -- --format markdown`：`18/18`
-  - `npm run eval:memory-search:cases -- --format json`：plugin signal/source `30/30`
-  - Markdown 链接扫描：`246` files scanned；source docs `issueCount = 0`（忽略 `dist/openclaw-release/` 生成产物）
+  - `npm run eval:memory-search:cases -- --skip-builtin --format json`：plugin signal/source `30/30`
+  - Markdown 链接扫描：`251` files scanned；source docs `issueCount = 0`（忽略 `dist/openclaw-release/` 生成产物）
   - `git diff --check`：`pass`
 
 ## In Progress
@@ -129,5 +130,4 @@
 
 - Trigger Level: high
 - Pending Capture: no
-- Last Entry: `docs/devlog/2026-04-12-implement-step47-field-aware-accepted-action-extraction.md`
-- Last Entry: `docs/devlog/2026-04-12-hook-openclaw-after-tool-call-into-accepted-action-learning.md`
+- Last Entry: `docs/devlog/2026-04-13-skip-builtin-memory-search-checks-in-release-preflight.md`

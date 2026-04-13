@@ -183,7 +183,7 @@ export async function runReleasePreflight({
     })
   );
 
-  const memorySearch = await runCommand("npm", ["run", "eval:memory-search:cases"], { cwd: repoRoot });
+  const memorySearch = await runCommand("npm", ["run", "eval:memory-search:cases", "--", "--skip-builtin"], { cwd: repoRoot });
   const memorySearchReport = memorySearch.ok ? extractJsonPayload(memorySearch.stdout) : null;
   artifacts.memory_search = memorySearchReport;
   checks.push(

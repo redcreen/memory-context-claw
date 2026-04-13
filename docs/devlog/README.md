@@ -8,6 +8,7 @@ This directory records durable implementation narratives: what went wrong, what 
 
 ## Entries
 
+- [Skip builtin memory-search checks in release preflight](2026-04-13-skip-builtin-memory-search-checks-in-release-preflight.md)
 - [Hook OpenClaw after_tool_call into accepted-action learning](2026-04-12-hook-openclaw-after-tool-call-into-accepted-action-learning.md)
 - [Implement Step 47 field-aware accepted-action extraction](2026-04-12-implement-step47-field-aware-accepted-action-extraction.md)
 - [Define accepted-action fact capture as a governed learning intake](2026-04-12-define-accepted-action-fact-capture-as-a-governed-learning-intake.md)

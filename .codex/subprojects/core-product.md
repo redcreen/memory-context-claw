@@ -49,6 +49,7 @@
   - `npm run umc:build-bundle` 可构建干净的 OpenClaw release bundle
   - `npm run umc:openclaw-install-verify` 可在隔离 profile 中走真实安装验证
   - `npm run umc:release-preflight` 已成为“只等人类验收”的一键门禁
+  - release-preflight 中的 memory-search 门禁已收口为 plugin 侧 signal regression；更重的 builtin 对照继续保留在独立 eval 路径
 - host-neutral root operator policy 已显式化：
   - `~/.unified-memory-core/registry` 是默认 canonical root
   - runtime 已解析到 canonical root 时，cutover 视为 adopted

@@ -58,7 +58,7 @@
   - Objective: 保持 project/workstream roadmap 摘要、Stage 5 closeout 证据和 later-phase gate 在同一条 operator baseline 上
   - Dependencies: `docs/workstreams/project/roadmap.md`、`docs/workstreams/project/roadmap.zh-CN.md`、`docs/roadmap.md`、development plan、release-preflight docs、host-neutral roadmap、当前 smoke / memory-search eval 基线
   - Risks: stale roadmap text 或旧质量指标会让维护者误判当前阶段，过早重开 enhancement planning
-  - Validation: `npm run smoke:eval -- --format markdown`、`npm run smoke:eval:critical -- --format markdown`、`npm run eval:memory-search:cases -- --format json`、project/workstream roadmap、control-surface status
+  - Validation: `npm run smoke:eval -- --format markdown`、`npm run smoke:eval:critical -- --format markdown`、`npm run eval:memory-search:cases -- --skip-builtin --format json`、project/workstream roadmap、control-surface status
   - Exit Condition: later-phase planning 只会从稳定的 operator baseline 打开，project roadmap 不再和 live control docs 冲突
   - Status: `ongoing`
 
@@ -115,7 +115,7 @@
   - Stage 5 evidence regresses
   - registry inspect regresses to `legacy_fallback` or `migrate_to_canonical_root`
   - later service-mode discussion pressures the repo to bypass current evidence or reopen the next phase early
-- Validation: `npm run umc:release-preflight`、`npm run umc:cli -- registry inspect --format markdown`、`npm run umc:openclaw-itest`、`npm run umc:stage5`、`npm run smoke:eval -- --format markdown`、`npm run eval:memory-search:cases -- --format json`
+- Validation: `npm run umc:release-preflight`、`npm run umc:cli -- registry inspect --format markdown`、`npm run umc:openclaw-itest`、`npm run umc:stage5`、`npm run smoke:eval -- --format markdown`、`npm run eval:memory-search:cases -- --skip-builtin --format json`
 
 ## Execution Tasks
 

@@ -22,7 +22,8 @@ function parseArgs(argv) {
     casesPath: defaultCasesPath,
     only: [],
     commandTimeoutMs: 15000,
-    builtinMaxResults: 20
+    builtinMaxResults: 20,
+    skipBuiltin: false
   };
 
   for (let index = 0; index < argv.length; index += 1) {
@@ -40,6 +41,8 @@ function parseArgs(argv) {
       options.commandTimeoutMs = Number(argv[++index] || 0);
     } else if (arg === "--builtin-max-results") {
       options.builtinMaxResults = Number(argv[++index] || 20);
+    } else if (arg === "--skip-builtin") {
+      options.skipBuiltin = true;
     }
   }
 
@@ -181,7 +184,15 @@ async function runBuiltinSearch(query, config, options) {
 }
 
 async function runCase(testCase, config, options) {
-  const builtin = await runBuiltinSearch(testCase.query, config, options);
+  const builtin = options.skipBuiltin
+    ? {
+        ok: true,
+        skipped: true,
+        results: [],
+        error: null,
+        rawStdout: ""
+      }
+    : await runBuiltinSearch(testCase.query, config, options);
   const builtinResults = builtin.results;
   const builtinText = builtinResults
     .map((item) => `${item?.path || ""}\n${item?.snippet || ""}`)
@@ -238,6 +249,7 @@ async function runCase(testCase, config, options) {
     expectedSignals: testCase.expectedSignals || [],
     expectedSources: testCase.expectedSources || [],
     builtin: {
+      skipped: builtin.skipped === true,
       commandOk: builtin.ok,
       error: builtin.error,
       totalResults: builtinResults.length,

@@ -26,12 +26,16 @@ One passing preflight report means all of these are green in one run:
 
 - `npm test`
 - `npm run smoke:eval`
-- `npm run eval:memory-search:cases`
+- `npm run eval:memory-search:cases -- --skip-builtin`
 - `npm run umc:stage5 -- --format json`
 - `npm run umc:openclaw-itest -- --format json`
 - `npm run umc:openclaw-install-verify -- --format json`
 - Markdown link scan
 - `git diff --check`
+
+The memory-search portion of release-preflight validates plugin-side expected signals only.
+
+Builtin OpenClaw search comparison remains available through the standalone memory-search eval flow when you want deeper comparison outside the release gate.
 
 ## When To Use It
 

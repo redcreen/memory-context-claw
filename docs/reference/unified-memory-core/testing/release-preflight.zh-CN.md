@@ -24,12 +24,16 @@ npm run umc:cli -- verify release-preflight --format markdown
 
 - `npm test`
 - `npm run smoke:eval`
-- `npm run eval:memory-search:cases`
+- `npm run eval:memory-search:cases -- --skip-builtin`
 - `npm run umc:stage5 -- --format json`
 - `npm run umc:openclaw-itest -- --format json`
 - `npm run umc:openclaw-install-verify -- --format json`
 - Markdown 链接扫描
 - `git diff --check`
+
+其中 memory-search 这一段在 release-preflight 里只校验 plugin 侧 expected signals。
+
+如果要做更深的 builtin OpenClaw search 对照，继续单独跑 memory-search eval，不把那条更重的比较路径塞进 release gate。
 
 ## 什么时候用
 
