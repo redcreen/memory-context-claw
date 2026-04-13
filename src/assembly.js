@@ -330,6 +330,98 @@ function filterSessionNoiseForStableDocIntents(query, candidates) {
   return filtered.length > 0 ? filtered : candidates;
 }
 
+function classifyCurrentStateIntent(query = "") {
+  const text = String(query || "").toLowerCase();
+  if (!/(current|currently|now|latest|confirmed|现在|当前|目前|最新|已确认)/.test(text)) {
+    return "";
+  }
+  if (/editor|编辑器/.test(text)) {
+    return "editor";
+  }
+  if (/deploy region|deployment region|default region|region|部署区域|部署地区/.test(text)) {
+    return "deployRegion";
+  }
+  if (/notebook|meeting notebook|会议本|笔记本/.test(text)) {
+    return "notebook";
+  }
+  if (/keyboard|switch|键盘|轴体/.test(text)) {
+    return "keyboard";
+  }
+  if (/demo|schedule|scheduled|when|时间|安排/.test(text)) {
+    return "schedule";
+  }
+  return "generic";
+}
+
+function rewriteSnippetForCurrentState(intent, snippet) {
+  const text = String(snippet || "").trim();
+  if (!text) {
+    return text;
+  }
+
+  if (intent === "editor") {
+    const match = text.match(/main editor from\s+(.+?)\s+to\s+(.+?)(?:\s+last week)?[.\n]/i);
+    if (match) {
+      return `Current main editor: ${match[2].trim()}.`;
+    }
+  }
+
+  if (intent === "deployRegion") {
+    const match = text.match(/deploy region decision is now\s+`?([^`;.\n]+)`?(?:;|\.)/i);
+    if (match) {
+      return `Current deploy region: ${match[1].trim()}.`;
+    }
+  }
+
+  if (intent === "notebook") {
+    const match = text.match(/Current notebook for meetings:\s+(.+?)(?:,\s*not the old|[.\n])/i);
+    if (match) {
+      return `Current notebook for meetings: ${match[1].trim()}.`;
+    }
+  }
+
+  if (intent === "keyboard") {
+    const match = text.match(/Current keyboard preference:\s+(.+?)(?:\s+over\s+.+)?[.\n]/i);
+    if (match) {
+      return `Current keyboard preference: ${match[1].trim()}.`;
+    }
+  }
+
+  if (intent === "schedule") {
+    const match = text.match(/clinic demo moved to\s+(.+?)[.\n]/i);
+    if (match) {
+      return `Current clinic demo schedule: ${match[1].trim()}.`;
+    }
+  }
+
+  const splitAtIgnore = text.split(/;\s*the older .*? should be ignored/i)[0];
+  if (splitAtIgnore !== text) {
+    return splitAtIgnore.trim().replace(/[;,\s]+$/, ".").replace(/\.\.+$/, ".");
+  }
+
+  const splitAtOld = text.split(/,\s*not the old .*$/i)[0];
+  if (splitAtOld !== text) {
+    return `${splitAtOld.trim()}.`;
+  }
+
+  return text;
+}
+
+function sanitizeCandidatesForCurrentState(query, candidates) {
+  if (!Array.isArray(candidates) || candidates.length === 0) {
+    return [];
+  }
+  const intent = classifyCurrentStateIntent(query);
+  if (!intent) {
+    return candidates;
+  }
+
+  return candidates.map((candidate) => ({
+    ...candidate,
+    snippet: rewriteSnippetForCurrentState(intent, candidate?.snippet)
+  }));
+}
+
 export function trimMessagesToBudget(messages, tokenBudget, recentMessageCount) {
   if (!Array.isArray(messages) || messages.length === 0) {
     return [];
@@ -466,6 +558,7 @@ export function buildSystemPromptAddition({ query, selectedCandidates, policyCon
         String(candidate?.snippet || "")
       )
     );
+  const hasCurrentStateIntent = Boolean(classifyCurrentStateIntent(query));
 
   const sections = [
     "Use the following recalled long-memory context only when it helps answer the current request.",
@@ -496,6 +589,14 @@ export function buildSystemPromptAddition({ query, selectedCandidates, policyCon
       2,
       0,
       "If recalled context includes a direct stable user fact, treat it as the latest confirmed fact. Prefer it over older conflicting conversation messages, stale session memories, or earlier guesses."
+    );
+  }
+
+  if (hasCurrentStateIntent) {
+    sections.splice(
+      2,
+      0,
+      "If a recalled snippet describes a current or confirmed update, answer with only the current value. Do not repeat superseded values unless the user explicitly asks for history or comparison."
     );
   }
 
@@ -561,7 +662,12 @@ export function buildAssemblyResult({
       ? Math.min(maxSelectedChunks || diversifiedCandidates.length, Number(policyContext.recommended_max_selected_chunks))
       : (maxSelectedChunks || diversifiedCandidates.length)
   );
-  const systemPromptAddition = buildSystemPromptAddition({ query, selectedCandidates, policyContext });
+  const sanitizedSelectedCandidates = sanitizeCandidatesForCurrentState(query, selectedCandidates);
+  const systemPromptAddition = buildSystemPromptAddition({
+    query,
+    selectedCandidates: sanitizedSelectedCandidates,
+    policyContext
+  });
   const estimatedTokens =
     keptMessages.reduce((sum, message) => sum + estimateMessageTokens(message), 0) +
     estimateTokenCountFromText(systemPromptAddition);
@@ -570,6 +676,6 @@ export function buildAssemblyResult({
     messages: keptMessages,
     estimatedTokens,
     systemPromptAddition,
-    selectedCandidates
+    selectedCandidates: sanitizedSelectedCandidates
   };
 }

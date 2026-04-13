@@ -706,6 +706,83 @@ test("buildAssemblyResult keeps only preference-supporting cards for preference 
   );
 });
 
+test("buildAssemblyResult rewrites current-state update snippets to current values only", () => {
+  const result = buildAssemblyResult({
+    messages: [{ role: "user", content: "What is the user's current main editor now?", timestamp: 1 }],
+    tokenBudget: 2048,
+    memoryBudgetRatio: 0.35,
+    recentMessageCount: 8,
+    maxSelectedChunks: 4,
+    maxChunksPerPath: 1,
+    candidates: [
+      {
+        path: "memory/2026-04-12.md",
+        pathKind: "dailyMemory",
+        startLine: 1,
+        endLine: 8,
+        weightedScore: 1.14,
+        finalScore: 1.14,
+        snippet: "Confirmed update: Maya switched the main editor from Vim to Zed last week."
+      }
+    ]
+  });
+
+  assert.match(result.systemPromptAddition, /current value/i);
+  assert.match(result.systemPromptAddition, /Current main editor: Zed\./);
+  assert.doesNotMatch(result.systemPromptAddition, /Vim/);
+  assert.equal(result.selectedCandidates[0].snippet, "Current main editor: Zed.");
+});
+
+test("buildAssemblyResult trims superseded deploy-region tails for current-state prompts", () => {
+  const result = buildAssemblyResult({
+    messages: [{ role: "user", content: "What is the confirmed default deploy region now?", timestamp: 1 }],
+    tokenBudget: 2048,
+    memoryBudgetRatio: 0.35,
+    recentMessageCount: 8,
+    maxSelectedChunks: 4,
+    maxChunksPerPath: 1,
+    candidates: [
+      {
+        path: "memory/2026-04-12.md",
+        pathKind: "dailyMemory",
+        startLine: 1,
+        endLine: 8,
+        weightedScore: 1.08,
+        finalScore: 1.08,
+        snippet: "Confirmed update: the deploy region decision is now `eu-west-1`; the older `us-east-1` draft should be ignored."
+      }
+    ]
+  });
+
+  assert.match(result.systemPromptAddition, /Current deploy region: eu-west-1\./);
+  assert.doesNotMatch(result.systemPromptAddition, /us-east-1/);
+});
+
+test("buildAssemblyResult trims superseded notebook tails for current-state prompts", () => {
+  const result = buildAssemblyResult({
+    messages: [{ role: "user", content: "What notebook does the user currently use for meetings?", timestamp: 1 }],
+    tokenBudget: 2048,
+    memoryBudgetRatio: 0.35,
+    recentMessageCount: 8,
+    maxSelectedChunks: 4,
+    maxChunksPerPath: 1,
+    candidates: [
+      {
+        path: "memory/2026-04-12.md",
+        pathKind: "dailyMemory",
+        startLine: 1,
+        endLine: 8,
+        weightedScore: 1.02,
+        finalScore: 1.02,
+        snippet: "Current notebook for meetings: the charcoal A5 notebook, not the old blue pocket notebook."
+      }
+    ]
+  });
+
+  assert.match(result.systemPromptAddition, /Current notebook for meetings: the charcoal A5 notebook\./);
+  assert.doesNotMatch(result.systemPromptAddition, /blue pocket notebook/);
+});
+
 test("buildAssemblyResult keeps only identity-supporting cards for identity queries", () => {
   const result = buildAssemblyResult({
     messages: [{ role: "user", content: "你怎么称呼我", timestamp: 1 }],
