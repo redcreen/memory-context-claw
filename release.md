@@ -21,7 +21,7 @@ That means:
 So the recommended public install path should be:
 
 ```bash
-openclaw plugins install git+https://github.com/redcreen/Unified-Memory-Core.git#v0.2.0
+openclaw plugins install git+https://github.com/redcreen/Unified-Memory-Core.git#v0.2.1
 ```
 
 ### Recommended Release Model
@@ -72,8 +72,8 @@ Example release flow:
 
 ```bash
 npm run umc:release-preflight -- --format markdown
-git tag v0.2.0
-git push origin v0.2.0
+git tag v0.2.1
+git push origin v0.2.1
 ```
 
 If you also want a GitHub Release, create it from the same tag.
@@ -83,7 +83,7 @@ If you also want a GitHub Release, create it from the same tag.
 #### Stable
 
 ```bash
-openclaw plugins install git+https://github.com/redcreen/Unified-Memory-Core.git#v0.2.0
+openclaw plugins install git+https://github.com/redcreen/Unified-Memory-Core.git#v0.2.1
 ```
 
 #### Development Head
@@ -92,16 +92,16 @@ openclaw plugins install git+https://github.com/redcreen/Unified-Memory-Core.git
 openclaw plugins install git+https://github.com/redcreen/Unified-Memory-Core.git
 ```
 
-### Current State
+### Current Release Target
 
-Current published tag:
+Next stable tag target in this branch:
 
-`v0.2.0`
+`v0.2.1`
 
 That means:
 
-- stable install is now available
-- README can safely recommend tag-based installation
+- stable install snippets in this branch are prepared for `v0.2.1`
+- create and push the tag before asking users to install from it
 - future releases should continue using the same model
 
 ---

@@ -7,8 +7,11 @@ import { promisify } from "node:util";
 import {
   applyGatewayGpuPolicy,
   extractJsonPayload,
+  isUnsupportedMemoryStatusFailure,
   parseRuntimeArgs,
-  summarizeMainMemory
+  summarizeCommandFailure,
+  summarizeMainMemory,
+  summarizeUnifiedMemoryCorePlugin
 } from "../src/runtime-config.js";
 
 const execFileAsync = promisify(execFile);
@@ -125,7 +128,34 @@ async function reloadGateway(options) {
 }
 
 async function readMemoryStatus(options) {
-  const { stdout } = await runCommand(options.openclawBin, ["memory", "status", "--json"]);
+  try {
+    const { stdout } = await runCommand(options.openclawBin, ["memory", "status", "--json"]);
+    return {
+      available: true,
+      source: "openclaw memory status --json",
+      statusList: extractJsonPayload(stdout),
+      error: null
+    };
+  } catch (error) {
+    const summary = summarizeCommandFailure(error);
+    if (!isUnsupportedMemoryStatusFailure(summary)) {
+      throw error;
+    }
+
+    return {
+      available: false,
+      source: "fallback:no-memory-status-command",
+      statusList: null,
+      error: summary
+    };
+  }
+}
+
+async function inspectUnifiedMemoryCorePlugin(options) {
+  const { stdout } = await runCommand(
+    options.openclawBin,
+    ["plugins", "inspect", "unified-memory-core", "--json"]
+  );
   return extractJsonPayload(stdout);
 }
 
@@ -142,6 +172,7 @@ async function main() {
   const launchAgent = await configureLaunchAgent(options);
   const build = await ensureCpuOnlyRuntime(options);
   const reload = await reloadGateway(options);
+  const pluginInspect = await inspectUnifiedMemoryCorePlugin(options);
   const memoryStatus = await readMemoryStatus(options);
 
   console.log(
@@ -153,7 +184,13 @@ async function main() {
         launchAgent,
         build,
         reload,
-        mainMemory: summarizeMainMemory(memoryStatus)
+        unifiedMemoryCore: summarizeUnifiedMemoryCorePlugin(pluginInspect),
+        memoryStatus: {
+          available: memoryStatus.available,
+          source: memoryStatus.source,
+          error: memoryStatus.error
+        },
+        mainMemory: summarizeMainMemory(memoryStatus.statusList)
       },
       null,
       2

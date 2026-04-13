@@ -74,6 +74,85 @@ export function summarizeMainMemory(statusList) {
     : null;
 }
 
+export function summarizeUnifiedMemoryCorePlugin(inspectPayload) {
+  const plugin = inspectPayload?.plugin;
+  if (!plugin || typeof plugin !== "object") {
+    return null;
+  }
+  const install = inspectPayload?.install && typeof inspectPayload.install === "object"
+    ? inspectPayload.install
+    : plugin.install && typeof plugin.install === "object"
+      ? plugin.install
+      : null;
+
+  return {
+    id: plugin.id ?? null,
+    version: plugin.version ?? null,
+    status: plugin.status ?? null,
+    enabled: plugin.enabled ?? null,
+    rootDir: plugin.rootDir ?? null,
+    services: Array.isArray(plugin.services) ? plugin.services : [],
+    typedHooks: Array.isArray(inspectPayload?.typedHooks)
+      ? inspectPayload.typedHooks.map((item) => item?.name).filter(Boolean)
+      : [],
+    install: install
+      ? {
+          source: install.source ?? null,
+          sourcePath: install.sourcePath ?? null,
+          installPath: install.installPath ?? null,
+          version: install.version ?? null,
+          installedAt: install.installedAt ?? null
+        }
+      : null
+  };
+}
+
+export function summarizeCommandFailure(error) {
+  if (!error || typeof error !== "object") {
+    return {
+      message: String(error ?? "Unknown command failure"),
+      code: null,
+      stdout: "",
+      stderr: ""
+    };
+  }
+
+  const stdout = typeof error.stdout === "string" ? error.stdout.trim() : "";
+  const stderr = typeof error.stderr === "string" ? error.stderr.trim() : "";
+  const message = typeof error.message === "string" && error.message.trim()
+    ? error.message.trim()
+    : stderr || stdout || String(error);
+
+  return {
+    message,
+    code: typeof error.code === "number" ? error.code : null,
+    stdout,
+    stderr
+  };
+}
+
+export function isUnsupportedMemoryStatusFailure(summary) {
+  const text = [
+    summary?.message,
+    summary?.stderr,
+    summary?.stdout
+  ]
+    .filter(Boolean)
+    .join("\n")
+    .toLowerCase();
+
+  if (!text) {
+    return false;
+  }
+
+  return (
+    /unknown command ['"]memory['"]/.test(text)
+    || /unknown command ['"]status['"]/.test(text)
+    || /did you mean.*memory/.test(text)
+    || /usage:\s*openclaw memory/.test(text)
+  );
+}
+
 export function extractJsonPayload(text) {
   const value = String(text ?? "").trim();
   if (!value) {

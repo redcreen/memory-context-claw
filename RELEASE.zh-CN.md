@@ -21,7 +21,7 @@ openclaw plugins install git+https://github.com/redcreen/Unified-Memory-Core.git
 所以更推荐的公开安装方式应该是：
 
 ```bash
-openclaw plugins install git+https://github.com/redcreen/Unified-Memory-Core.git#v0.2.0
+openclaw plugins install git+https://github.com/redcreen/Unified-Memory-Core.git#v0.2.1
 ```
 
 ### 推荐发布模型
@@ -72,8 +72,8 @@ openclaw plugins install git+https://github.com/redcreen/Unified-Memory-Core.git
 
 ```bash
 npm run umc:release-preflight -- --format markdown
-git tag v0.2.0
-git push origin v0.2.0
+git tag v0.2.1
+git push origin v0.2.1
 ```
 
 如果你还想做 GitHub Release，就用同一个 tag 去建。
@@ -83,7 +83,7 @@ git push origin v0.2.0
 #### 稳定版
 
 ```bash
-openclaw plugins install git+https://github.com/redcreen/Unified-Memory-Core.git#v0.2.0
+openclaw plugins install git+https://github.com/redcreen/Unified-Memory-Core.git#v0.2.1
 ```
 
 #### 开发头部版本
@@ -92,14 +92,14 @@ openclaw plugins install git+https://github.com/redcreen/Unified-Memory-Core.git
 openclaw plugins install git+https://github.com/redcreen/Unified-Memory-Core.git
 ```
 
-### 当前状态
+### 当前发版目标
 
-当前已发布的 tag：
+这个分支里准备打的下一个稳定 tag：
 
-`v0.2.0`
+`v0.2.1`
 
-所以现在的状态是：
+这意味着：
 
-- 稳定版安装已经可用
-- README 现在可以正式默认推荐 tag 安装
+- 当前分支里的稳定安装示例已经按 `v0.2.1` 准备
+- 在对外推荐这个安装命令之前，先创建并推送对应 tag
 - 后续版本继续沿用这套发布方式即可
