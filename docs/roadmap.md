@@ -20,8 +20,8 @@ For detailed queues, read:
 
 | Horizon | Focus | Exit Signal |
 | --- | --- | --- |
-| Now | keep release-preflight, bundle install, host smoke, and Stage 5 evidence green | `umc:release-preflight`, `umc:openclaw-install-verify`, `umc:openclaw-itest`, and `umc:stage5` stay reliable in routine runs |
-| Next | decide whether later runtime API / service-mode discussion should open at all | runtime API prerequisites remain satisfied over time |
+| Now | expand the OpenClaw CLI memory evaluation into a `100+` case benchmark and use A/B attribution plus failure-driven optimization to tune the algorithms | the `100+` case benchmark is stable, the attribution report is repeatable, and failing cases consistently drive algorithm fixes |
+| Next | decide whether later runtime API / service-mode discussion should open only after the larger evaluation baseline stabilizes | runtime API prerequisites remain satisfied over time and the `100+` case benchmark stops drifting frequently |
 | Later | discuss runtime API / split-ready evolution only from a stable operator baseline | independent-product evidence stays green after Stage 5 closeout |
 
 ## Milestones
@@ -51,3 +51,4 @@ flowchart LR
 - the next dependency is no longer Stage 5 implementation; it is keeping release-preflight and deployment evidence stable over time
 - registry-root cutover policy remains an operator follow-up, not hidden Stage 5 contract work
 - Stage 4 and Stage 5 reports must stay readable while any later service-mode discussion remains deferred
+- the primary post-Stage-5 work is now evaluation-driven optimization, so the roadmap and `.codex/plan.md` must keep case expansion, A/B comparison, failure replay, and algorithm tuning visible

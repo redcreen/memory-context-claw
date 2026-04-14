@@ -3,15 +3,15 @@
 ## Delivery Tier
 
 - Tier: `large`
-- Last reviewed: `2026-04-13`
+- Last reviewed: `2026-04-14`
 
 ## Current Phase
 
-`stage closeout / Stage 5 complete`
+`post-stage5 evaluation-driven optimization`
 
 ## Active Slice
 
-`hold-post-stage5-roadmap-state-aligned`
+`build-openclaw-cli-100-case-benchmark`
 
 ## Done
 
@@ -86,13 +86,16 @@
 
 ## In Progress
 
+- 把 OpenClaw CLI 记忆评测从 `20` 案例扩到 `100+`，并建立分类矩阵
+- 对 benchmark 核心案例持续补 `legacy / unified / bootstrap / retrieval` 来源归因
+- 把 benchmark 失败项转成算法修复清单，并按轮次重跑、更新文档、推 GitHub
 - 保持 release-preflight、bundle install、host smoke、Stage 5 acceptance 证据持续为绿
 - 保持 host-neutral root policy 在 CLI、公开文档和控制面里持续一致
-- 保持 project/workstream roadmap 摘要与当前 Stage 5 closeout 基线持续一致
+- 保持 project/workstream roadmap 摘要与新的评测驱动主线持续一致
 - 继续观察 legacy root 是否只停留在兼容回退窗口，而不是重新变成 active root
 - 把 accepted-action 的 Step 48-52 继续明确维持在 deferred enhancement queue，而不是在 Step 47 完成后继续悄悄并进当前 closeout baseline
 - 保持 OpenClaw `after_tool_call` accepted-action runtime hook 与配置/文档/宿主部署验证持续一致
-- 完成人类 sanity check、最终 operator review，并决定是否创建 / 推送 `v0.2.1` tag
+- 在每轮算法变更后重跑评测并写回可读报告
 
 ## Blockers / Open Decisions
 
@@ -103,9 +106,9 @@
 
 ## Next 3 Actions
 
-1. 在真实 OpenClaw 会话里完成一次最终人类 sanity check，并确认稳定安装示例与 `v0.2.1` 一致。
-2. 做最终 operator review，确认 `registry inspect` 的 `operatorPolicy` 不回退、project/workstream roadmap 不漂移。
-3. 如果上述两项继续为绿，就创建并推送 `v0.2.1` tag；否则先处理漂移项，再讨论新的 enhancement plan 或 legacy root cleanup 窗口。
+1. 定义 `100+` OpenClaw CLI benchmark 的类别矩阵、入口约束和期望结果格式。
+2. 把现有 `20` 案例扩到第一批 `40-60` 案例，并为关键案例补齐 `legacy / unified / bootstrap / retrieval` 归因。
+3. 跑第一轮扩容 benchmark，整理失败清单，按失败驱动开始算法修复与回归保护。
 
 ## Architecture Supervision
 - Signal: `yellow`
@@ -123,22 +126,23 @@
 ## Current Execution Line
 
 - Objective: 保持 post-Stage-5 的 operator baseline、project/workstream roadmap 摘要和 canonical-root policy 同时稳定
-- Plan Link: `hold-post-stage5-roadmap-state-aligned`
-- Runway: one stable-maintenance slice covering roadmap summary、smoke baselines、memory-search governance snapshot、registry inspect、release-preflight、control-surface freshness
-- Progress: `4 / 4` tasks complete
+- Plan Link: `build-openclaw-cli-100-case-benchmark`
+- Runway: benchmark design、case expansion、A/B attribution、failure triage、algorithm iteration、report refresh；并行守住 release-preflight 和 canonical-root policy
+- Progress: `0 / 6` tasks complete
 - Stop Conditions:
-  - validation fails and changes product direction materially
+  - benchmark case design drifts away from real OpenClaw CLI entrypoints
+  - attribution evidence can no longer explain capability source clearly
   - live topology regresses to `legacy_fallback`
-  - later planning pressure tries to reopen a new enhancement phase without stable prerequisites
+  - later planning pressure tries to reopen a new enhancement phase without benchmark stability
 
 ## Execution Tasks
 
-- [x] EL-1 align project/workstream roadmap summaries with the current Stage 5 closeout baseline
-- [x] EL-2 refresh smoke and memory-search governance snapshots in the visible project state
-- [x] EL-3 keep `registry inspect`, release-preflight, and public docs aligned with the operator baseline
-- [x] EL-4 define deeper accepted-action extraction as an explicit deferred enhancement queue
-- [x] EL-5 implement Step 47 field-aware accepted-action extraction with CLI / lifecycle coverage
-- [x] EL-6 keep later enhancement planning gated behind stable runtime API prerequisites instead of reopening the next phase early
+- [ ] EL-1 define the `100+` OpenClaw CLI benchmark matrix and category coverage
+- [ ] EL-2 expand the current 20 cases into the first `40-60` reproducible cases
+- [ ] EL-3 add `legacy / unified / bootstrap / retrieval` attribution notes to benchmark-critical cases
+- [ ] EL-4 run the first larger benchmark pass and summarize failures
+- [ ] EL-5 implement the first benchmark-driven algorithm fixes and rerun the affected cases
+- [ ] EL-6 refresh roadmap / reports / control-surface state and push the benchmark iteration to GitHub
 
 ## Development Log Capture
 

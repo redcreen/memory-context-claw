@@ -192,6 +192,29 @@
 - advanced network-required architecture
 - 已有文档之外的 repo split execution 工作
 
+## Post-Stage-5 评测驱动优化队列
+
+这组步骤属于 Stage 5 之后的新主线。
+
+它的目标不是重开 baseline contract work，而是：
+
+- 把 OpenClaw CLI 记忆评测扩到 `100+` 案例
+- 用 `legacy / unified / bootstrap / retrieval` 对照搞清能力来源
+- 用失败案例持续驱动 assembly / retrieval / policy 算法优化
+
+53. `next` 建立 `100+` 案例 benchmark 设计与分层矩阵。
+   - 至少覆盖：稳定事实、普通检索、当前态覆盖、负向拒答、冲突事实、连续更新、多轮历史、规则提取、项目知识、跨来源归因。
+   - 每个案例必须标明：验证入口、期望答案、允许误差、能力标签、是否需要 A/B 对照。
+54. `todo` 把现有 `20` 案例扩展成可重复运行的 `100+` OpenClaw CLI 测试集。
+   - 默认优先走真实 `openclaw memory search` / `openclaw agent`。
+   - 尽量避免只看 registry 内部状态来宣称“能力成立”。
+55. `todo` 为 benchmark 增加 `legacy / unified / bootstrap / retrieval` 归因对照报告。
+   - 目标不是简单比较分数，而是回答“答案来自哪里”和“哪些能力是扩展增益”。
+56. `todo` 把 benchmark 失败项转成显式算法问题清单，并按优先级推进修复。
+   - 优先修：当前态覆盖失败、旧值污染、错误拒答、错误命中来源、检索漏召回。
+57. `todo` 每一轮算法改动后都要重跑 benchmark、更新文档报告、写回 control surface，并推送到 GitHub。
+58. `todo` 当 `100+` 案例 benchmark 与 A/B 报告稳定后，再决定是否打开 runtime API / service-mode 等更后面的 enhancement phase。
+
 ## 延后增强队列
 
 下面这些事项现在明确标成 `todo`，但它们不属于当前 active stage。

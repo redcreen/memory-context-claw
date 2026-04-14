@@ -88,18 +88,18 @@ flowchart TB
 | Workstream | Status | Current mode |
 | --- | --- | --- |
 | Core capture / fact-card / assembly | `completed` | maintain + tune |
-| Memory search | `phase-complete` | governance + incremental expansion |
+| Memory search | `phase-complete` | governance + benchmark expansion + policy tuning |
 | Self-learning / reflection | `stage-complete` | governed lifecycle, policy adaptation, exports, CLI, and governance surfaces are available |
-| Unified Memory Core | `stage5-complete / closeout` | keep release-preflight, deployment verification, and root policy stable |
+| Unified Memory Core | `stage5-complete / post-closeout` | `100+` case evaluation-driven optimization while keeping release-preflight and root policy stable |
 
 ## Progress Map
 
 ```mermaid
 flowchart TB
-    A["Unified Memory Core Project\nCurrent state: Stage 5 closeout active"] --> B["Foundation Layer\ncompleted"]
+    A["Unified Memory Core Project\nCurrent state: post-Stage-5 evaluation-driven optimization"] --> B["Foundation Layer\ncompleted"]
     A --> C["Unified Memory Core Product Line\nStage 1-5 completed"]
     A --> D["Memory Search Workstream\nphase-complete / governed"]
-    A --> E["Post-Stage-5 Maintenance\noperator baseline + later-phase gate"]
+    A --> E["Post-Stage-5 Mainline\n100+ case benchmark + operator baseline"]
 
     B --> B1["Capture Foundation\ncompleted"]
     B --> B2["Fact / Card Foundation\ncompleted"]
@@ -123,19 +123,20 @@ flowchart TB
     C4 --> C43["Independent execution + root policy\ncompleted"]
 
     D --> D1["Memory Search Governance\nongoing"]
-    D --> D2["Case Expansion / Policy Tuning\nas needed"]
+    D --> D2["100+ Benchmark Expansion / Policy Tuning\nactive"]
 
-    E --> E1["Keep Stage 5 evidence green"]
-    E --> E2["Keep canonical-root operator policy visible"]
-    E --> E3["Only open later enhancement planning after prerequisites stay green"]
+    E --> E1["Expand OpenClaw CLI evaluation to 100+ cases"]
+    E --> E2["Run legacy / unified / bootstrap / retrieval attribution comparisons"]
+    E --> E3["Turn failing cases into algorithm fixes and regression protection"]
+    E --> E4["Keep Stage 5 evidence and canonical-root policy green"]
 
     classDef done fill:#e8f7e8,stroke:#2f855a,color:#1c4532,stroke-width:1.5px;
     classDef active fill:#eef6ff,stroke:#2563eb,color:#123a73,stroke-width:1.5px;
     classDef next fill:#fff4e8,stroke:#d97706,color:#7c2d12,stroke-width:1.5px;
 
     class B,B1,B2,B3,B4,B5,C,C1,C2,C3,C4,C11,C12,C13,C21,C31,C41,C42,C43 done;
-    class A,D,D1,D2,E,E1,E2 active;
-    class E3 next;
+    class A,D,D1,D2,E,E1,E2,E3 active;
+    class E4 next;
 ```
 
 ## Completed Foundation
@@ -222,14 +223,21 @@ Still ongoing:
 
 ### Primary next engineering focus
 
-**Post-Stage-5 Stability Maintenance**
+**Evaluation-driven optimization: grow the OpenClaw CLI benchmark to `100+` cases**
 
 Why this is next:
 
-- the current local-first baseline in `development-plan.md` is complete and already reflected in the top-level roadmap wrapper
-- the main remaining risk is stale evidence or document drift, not missing baseline implementation
-- release-preflight, deployment verification, and the host-neutral root policy must stay visible and green before any later phase opens
-- a fresh enhancement-phase plan should open only after runtime API prerequisites stay green over time
+- the baseline product work is complete, so the next missing piece is a larger and more attributable evaluation surface rather than another blind feature addition
+- the current `20` cases and the minimal A/B report prove that the system works, but they are not enough to support sustained algorithm tuning
+- the benchmark now needs to cover `100+` cases spanning bootstrap, ordinary retrieval, current-state overrides, abstention, conflicting facts, and multi-update histories
+- release-preflight, deployment verification, and the host-neutral root policy still need to stay green, but they are now guardrails rather than the sole mainline objective
+
+This mainline now includes:
+
+- expanding the OpenClaw CLI benchmark to `100+` cases
+- running `legacy / unified / bootstrap / retrieval` attribution comparisons over the same case set
+- turning failing cases into explicit algorithm work items
+- rerunning the benchmark, updating reports, and pushing each meaningful improvement to GitHub
 
 Key documents:
 

@@ -80,18 +80,18 @@ flowchart TB
 | Workstream | 状态 | 当前模式 |
 | --- | --- | --- |
 | 核心 capture / fact-card / assembly | `completed` | maintain + tune |
-| Memory Search | `phase-complete` | governance + incremental expansion |
+| Memory Search | `phase-complete` | governance + benchmark expansion + policy tuning |
 | Self-Learning / Reflection | `stage-complete` | governed lifecycle、policy adaptation、exports、CLI、governance surfaces 已可用 |
-| Unified Memory Core | `stage5-complete / closeout` | 持续保持 release-preflight、deployment verification、root policy 稳定 |
+| Unified Memory Core | `stage5-complete / post-closeout` | `100+` 案例评测驱动优化 + 维护 release-preflight / root policy 稳定 |
 
 ## 进展图
 
 ```mermaid
 flowchart TB
-    A["Unified Memory Core 项目总览\n当前状态：Stage 5 closeout 维护中"] --> B["基础能力层\n已完成"]
+    A["Unified Memory Core 项目总览\n当前状态：Stage 5 完成后进入评测驱动优化"] --> B["基础能力层\n已完成"]
     A --> C["Unified Memory Core 产品主线\nStage 1-5 已完成"]
     A --> D["Memory Search Workstream\nphase-complete / 治理中"]
-    A --> E["Stage 5 之后的维护面\noperator baseline + 后续阶段 gate"]
+    A --> E["Stage 5 之后的主线\n100+ 案例评测 + operator baseline"]
 
     B --> B1["Capture Foundation\n已完成"]
     B --> B2["Fact / Card Foundation\n已完成"]
@@ -115,19 +115,20 @@ flowchart TB
     C4 --> C43["Independent execution + root policy\n已完成"]
 
     D --> D1["Memory Search Governance\n持续进行"]
-    D --> D2["Case Expansion / Policy Tuning\n按需推进"]
+    D --> D2["100+ Benchmark Expansion / Policy Tuning\n当前主线"]
 
-    E --> E1["保持 Stage 5 evidence 持续为绿"]
-    E --> E2["保持 canonical-root operator policy 持续可见"]
-    E --> E3["只有在 prerequisites 持续为绿后，才开启后续增强规划"]
+    E --> E1["扩充 OpenClaw CLI 评测案例到 100+"]
+    E --> E2["做 legacy / unified / bootstrap / retrieval 归因对照"]
+    E --> E3["把失败案例转成算法修复与回归保护"]
+    E --> E4["保持 Stage 5 evidence 与 canonical-root policy 继续为绿"]
 
     classDef done fill:#e8f7e8,stroke:#2f855a,color:#1c4532,stroke-width:1.5px;
     classDef active fill:#eef6ff,stroke:#2563eb,color:#123a73,stroke-width:1.5px;
     classDef next fill:#fff4e8,stroke:#d97706,color:#7c2d12,stroke-width:1.5px;
 
     class B,B1,B2,B3,B4,B5,C,C1,C2,C3,C4,C11,C12,C13,C21,C31,C41,C42,C43 done;
-    class A,D,D1,D2,E,E1,E2 active;
-    class E3 next;
+    class A,D,D1,D2,E,E1,E2,E3 active;
+    class E4 next;
 ```
 
 ## 已完成的项目基础
@@ -214,14 +215,21 @@ flowchart TB
 
 ### 下一条主要工程主线
 
-**Stage 5 收口后的稳定维护**
+**评测驱动优化：扩到 `100+` OpenClaw CLI 记忆案例**
 
 为什么先做这个：
 
-- `development-plan.md` 这条 local-first baseline 已经做完，而且顶层 roadmap 包装页已经对齐
-- 现在的主要风险不再是缺实现，而是证据面或文档状态回退
-- release-preflight、deployment verification、host-neutral root policy 必须继续保持可见且为绿，后续阶段才有资格开启
-- 只有当 runtime API prerequisites 在一段时间内持续为绿时，才适合单独开新的 enhancement plan
+- 基础能力和 Stage 5 收口已经完成，下一步最缺的不是“再加一个功能”，而是更大规模、更可归因的真实评测面
+- 目前的 `20` 案例和最小 A/B 已经够证明“能力存在”，但还不够支撑持续算法优化
+- 只有把测试扩到 `100+`，覆盖 bootstrap、普通检索、当前态覆盖、负向拒答、冲突事实、多轮更新等场景，后续优化才不会靠感觉推进
+- release-preflight、deployment verification、host-neutral root policy 仍要保持为绿，但它们从主线目标变成并行守护线
+
+这一条主线具体包含：
+
+- 扩充 OpenClaw CLI 测试案例到 `100+`
+- 对同一批案例做 `legacy / unified / bootstrap / retrieval` 归因对照
+- 把失败案例整理成算法问题清单
+- 每一轮修改后重跑评测、更新报告、提交到 GitHub
 
 关键文档：
 
@@ -252,6 +260,11 @@ flowchart TB
 - 最新 `eval:memory-search:cases` 摘要保持 `pluginSignalHits = 30/30`
 - 最新 `eval:memory-search:cases` 摘要保持 `pluginSourceHits = 30/30`
 - 最新 `eval:memory-search:cases` 摘要保持 `pluginFastPathLikely = 30/30`
+
+当前新增要求：
+
+- memory-search workstream 不再只做“按需 case 扩充”，而是要服务整个 `100+` 案例 benchmark
+- 新增案例必须优先覆盖容易暴露算法短板的场景，而不是只补静态事实题
 
 关键文档：
 

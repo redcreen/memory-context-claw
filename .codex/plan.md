@@ -2,9 +2,33 @@
 
 ## Current Phase
 
-`stage closeout / Stage 5 complete`
+`post-stage5 evaluation-driven optimization`
 
 ## Slices
+
+- Slice: `build-openclaw-cli-100-case-benchmark`
+  - Objective: 把当前 `20` 案例扩展成 `100+` OpenClaw CLI benchmark，覆盖稳定事实、普通检索、当前态覆盖、负向拒答、冲突事实、连续更新和跨来源归因
+  - Dependencies: 现有 `umceval` 夹具、OpenClaw CLI、评测报告、case fixtures、A/B 对照脚本或手工流程
+  - Risks: 如果只是机械堆案例而没有分类和归因，测试数量会增加，但无法真正驱动算法优化
+  - Validation: `100+` 案例定义文档、机器可读结果、人工可读报告、可重复运行入口
+  - Exit Condition: 至少 `100` 个案例能稳定运行，并能按类别和入口统计结果
+  - Status: `in_progress`
+
+- Slice: `attribute-memory-capability-sources`
+  - Objective: 对同一批核心案例做 `legacy / unified / bootstrap / retrieval` 对照，明确答案来源和扩展增益边界
+  - Dependencies: 临时 legacy profile、当前 unified host profile、benchmark 案例分层、A/B 报告文档
+  - Risks: 如果归因只写结论不留证据，后续优化会再次混淆“原生能力”和“扩展增益”
+  - Validation: A/B 对照报告、关键案例证据、来源分类说明
+  - Exit Condition: 用户能直接从报告看懂哪些能力来自原生、哪些来自扩展、哪些只是 bootstrap 输入
+  - Status: `in_progress`
+
+- Slice: `turn-failures-into-algorithm-iterations`
+  - Objective: 把 benchmark 失败案例转成 retrieval / assembly / policy 算法问题清单，并按轮次修复、复测、提交
+  - Dependencies: benchmark 结果、A/B 报告、`src/assembly.js`、retrieval / policy surfaces、回归测试
+  - Risks: 如果修复后不重跑 benchmark，优化会再次退回“感觉变好了”而不是证据驱动
+  - Validation: 每轮失败清单、对应修复、复测结果、GitHub commit
+  - Exit Condition: benchmark 失败项被持续压缩，且新问题能快速回写成回归保护
+  - Status: `in_progress`
 
 - Slice: `close-stage5-product-hardening-and-independent-operation`
   - Objective: 一口气收掉 `Step 39-46`，把 source hardening、maintenance、reproducibility、release-boundary、split rehearsal、independent review 全部接到 CLI-first 证据面
@@ -88,43 +112,46 @@
 
 ## Execution Order
 
-1. 保持 release-preflight / bundle install / host smoke / Stage 5 evidence 稳定
-2. 保持 host-neutral root operator policy 可见且不回退
-3. 保持 project/workstream roadmap 摘要与当前 Stage 5 closeout 基线持续一致
-4. 保持 accepted-action deeper queue 的 Step 48-52 仍然显式 deferred，不把 admission / negative-path / conflict work 偷渡进当前实现
-5. 保持 Codex `writeAfterTask(...)` 与 OpenClaw async `after_tool_call` 这两条 runtime intake surface 继续对齐同一条 governed loop
-6. 只有在 runtime API prerequisites 持续为绿后，才开启新的 enhancement planning 或讨论 legacy root cleanup 窗口
+1. 建立并扩充 `100+` OpenClaw CLI benchmark case matrix
+2. 对核心案例持续做 `legacy / unified / bootstrap / retrieval` 归因对照
+3. 把失败案例转成算法修复、回归保护和人类可读报告
+4. 每轮修改后重跑 benchmark，并把结果更新到文档 / control surface / GitHub
+5. 并行保持 release-preflight / bundle install / host smoke / Stage 5 evidence 稳定
+6. 保持 host-neutral root operator policy 可见且不回退
+7. 保持 accepted-action deeper queue 的 Step 48-52 仍然显式 deferred，不把 admission / negative-path / conflict work 偷渡进当前实现
+8. 只有在 benchmark 基线和 runtime API prerequisites 持续为绿后，才开启新的 enhancement planning 或讨论 legacy root cleanup 窗口
 
 ## Architecture Supervision
 - Signal: `yellow`
 - Signal Basis: open blockers or architectural risks are still recorded
-- Problem Class: post-stage maintenance, human acceptance, and operator policy
-- Root Cause Hypothesis: 后续真正的风险不再是“cutover 未决”，而是 evidence / roadmap drift 让维护者误判当前阶段，或在 Step 47 已完成后继续把 Step 48-52 过早并进当前 closeout baseline
-- Correct Layer: release preflight evidence, governance evidence, registry-root operator policy, project/workstream roadmap, control surface
+- Problem Class: evaluation expansion, attribution drift, and post-stage operator policy
+- Root Cause Hypothesis: 如果 benchmark 规模、来源归因和算法问题清单没有进入 durable plan，后续优化会退回零散试题和主观判断，无法稳定积累
+- Correct Layer: benchmark definition, A/B attribution reports, algorithm regression surfaces, release preflight evidence, control surface
 - Rejected Shortcut: 跳过 Stage 5 证据面和当前 operator baseline，直接讨论 runtime API / service mode
 - Automatic Review Trigger: no automatic trigger is currently active
 - Escalation Gate: raise but continue
 
 ## Current Execution Line
 
-- Objective: 保持 root-cutover operator policy、project/workstream roadmap 摘要和 release-preflight 证据面同时稳定
-- Plan Link: `hold-post-stage5-roadmap-state-aligned`
-- Runway: one stable-maintenance slice covering roadmap summary、smoke baselines、memory-search governance snapshot、registry inspect、release-preflight、state refresh
+- Objective: 建立 `100+` OpenClaw CLI benchmark、持续做来源归因，并让失败案例驱动算法迭代，同时守住 release-preflight 与 root policy
+- Plan Link: `build-openclaw-cli-100-case-benchmark`
+- Runway: benchmark design、case expansion、A/B attribution、failure triage、algorithm iteration、report refresh
 - Progress: `4 / 4` tasks complete
 - Stop Conditions:
-  - Stage 5 evidence regresses
-  - registry inspect regresses to `legacy_fallback` or `migrate_to_canonical_root`
-  - later service-mode discussion pressures the repo to bypass current evidence or reopen the next phase early
-- Validation: `npm run umc:release-preflight`、`npm run umc:cli -- registry inspect --format markdown`、`npm run umc:openclaw-itest`、`npm run umc:stage5`、`npm run smoke:eval -- --format markdown`、`npm run eval:memory-search:cases -- --skip-builtin --format json`
+  - benchmark case definition drifts away from real OpenClaw CLI entrypoints
+  - attribution report can no longer explain whether answers came from legacy, bootstrap, retrieval, or unified assembly
+  - Stage 5 evidence regresses while benchmark work is ongoing
+  - later planning pressure tries to bypass benchmark work and reopen a new phase early
+- Validation: benchmark case docs、A/B reports、`openclaw memory search` / `openclaw agent` results、`npm run umc:release-preflight`、`npm run umc:cli -- registry inspect --format markdown`
 
 ## Execution Tasks
 
-- [x] EL-1 align project/workstream roadmap summaries with the current Stage 5 closeout baseline
-- [x] EL-2 refresh smoke and memory-search governance snapshots in the visible project state
-- [x] EL-3 keep public docs, `registry inspect`, and `.codex/*` state aligned with the operator baseline
-- [x] EL-4 define deeper accepted-action extraction as a deferred enhancement queue instead of an implicit next-step assumption
-- [x] EL-5 implement Step 47 field-aware accepted-action extraction without reopening the rest of the deferred queue
-- [x] EL-6 keep later enhancement planning gated behind stable runtime API prerequisites instead of reopening the next phase early
+- [ ] EL-1 define the `100+` OpenClaw CLI benchmark matrix and category coverage
+- [ ] EL-2 expand the current 20 cases into the first `40-60` reproducible cases
+- [ ] EL-3 add `legacy / unified / bootstrap / retrieval` attribution notes to benchmark-critical cases
+- [ ] EL-4 run the first larger benchmark pass, summarize failures, and convert them into algorithm work items
+- [ ] EL-5 implement the first benchmark-driven algorithm fixes and rerun the affected cases
+- [ ] EL-6 refresh roadmap / reports / control-surface state and push the benchmark iteration to GitHub
 
 ## Development Log Capture
 

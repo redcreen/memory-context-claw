@@ -192,6 +192,29 @@ Do not start with:
 - advanced network-required architecture
 - repo split execution work beyond what is already documented
 
+## Post-Stage-5 Evaluation-Driven Optimization Queue
+
+This queue is the new mainline after Stage 5.
+
+The goal is not to reopen baseline contract work. The goal is to:
+
+- grow the OpenClaw CLI memory evaluation into a `100+` case benchmark
+- use `legacy / unified / bootstrap / retrieval` comparisons to explain where answers come from
+- use failing cases to drive assembly / retrieval / policy algorithm iterations
+
+53. `next` Define the `100+` case benchmark design and coverage matrix.
+   - It must at least cover: stable facts, ordinary retrieval, current-state overrides, abstention, conflicting facts, repeated updates, multi-turn history, rule extraction, project knowledge, and cross-source attribution.
+   - Every case must specify: evaluation entrypoint, expected answer, acceptable variance, capability tags, and whether A/B comparison is required.
+54. `todo` Expand the current `20` cases into a reproducible `100+` OpenClaw CLI benchmark.
+   - Prefer real `openclaw memory search` / `openclaw agent` entrypoints by default.
+   - Avoid claiming success from internal registry state alone.
+55. `todo` Add `legacy / unified / bootstrap / retrieval` attribution reports for the benchmark.
+   - The point is not just to compare scores, but to explain where answers came from and which capabilities are extension gains.
+56. `todo` Turn benchmark failures into an explicit algorithm work queue and prioritize fixes.
+   - Prioritize: current-state override failures, stale-value leakage, incorrect abstention, wrong source attribution, and retrieval misses.
+57. `todo` Rerun the benchmark after each meaningful algorithm change, update the reports, refresh the control surface, and push the iteration to GitHub.
+58. `todo` Decide whether to open runtime API / service-mode work only after the `100+` benchmark and the attribution reports stabilize.
+
 ## Deferred Enhancement Queue
 
 These items are intentionally `todo`, not the current active stage.
