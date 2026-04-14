@@ -18,3 +18,24 @@ test("openclaw CLI memory benchmark includes legacy attribution probes", () => {
   assert.ok(compared.some((item) => item.attributionKind === "bootstrap"));
   assert.ok(compared.some((item) => item.attributionKind === "temporal"));
 });
+
+test("openclaw CLI memory benchmark includes a larger answer-level agent matrix", () => {
+  const agentCases = cases.filter((item) => item.entrypoint === "agent");
+  assert.ok(agentCases.length >= 35);
+  assert.ok(agentCases.some((item) => item.category === "agent-preference"));
+  assert.ok(agentCases.some((item) => item.category === "agent-rule"));
+  assert.ok(agentCases.some((item) => item.category === "agent-history"));
+});
+
+test("openclaw CLI memory benchmark includes cross-source and supersede retrieval probes", () => {
+  assert.ok(cases.some((item) => item.category === "cross-source"));
+  assert.ok(cases.some((item) => item.category === "supersede"));
+  assert.ok(
+    cases.some(
+      (item) =>
+        item.entrypoint === "memory_search"
+        && Array.isArray(item.expectedSourceGroups)
+        && item.expectedSourceGroups.length >= 2
+    )
+  );
+});

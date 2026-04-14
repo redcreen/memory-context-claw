@@ -8,6 +8,7 @@ function makeSearchSeries(prefix, category, queries, expectedAny, options = {}) 
     expectedAll: options.expectedAll || [],
     forbiddenAny: options.forbiddenAny || [],
     expectedSources: options.expectedSources || [],
+    expectedSourceGroups: options.expectedSourceGroups || [],
     compareLegacy: options.compareLegacy === true,
     attributionKind: options.attributionKind || "retrieval",
     note: options.note || ""
@@ -368,6 +369,73 @@ const cases = [
     }
   ),
   ...makeSearchSeries(
+    "cross-source-travel-search",
+    "cross-source",
+    [
+      "Maya carry-on aisle seat",
+      "travel preference carry-on and aisle",
+      "seat preference plus carry-on habit",
+      "aisle seat with only a carry-on"
+    ],
+    ["carry-on", "aisle"],
+    {
+      expectedSources: ["MEMORY.md", "notes/personal-profile.md"],
+      expectedSourceGroups: [["MEMORY.md"], ["notes/personal-profile.md"]],
+      attributionKind: "retrieval",
+      note: "cross-source preference retrieval should surface both stable memory and notes"
+    }
+  ),
+  ...makeSearchSeries(
+    "cross-source-region-search",
+    "cross-source",
+    [
+      "current deploy region older us-east-1 ignored",
+      "deploy region final decision versus older draft",
+      "eu-west-1 current and us-east-1 draft",
+      "which region is current and what older draft should be ignored"
+    ],
+    ["eu-west-1", "us-east-1"],
+    {
+      expectedAll: ["eu-west-1", "us-east-1"],
+      expectedSources: ["MEMORY.md", "memory/2026-04-10.md", "memory/2026-04-12.md"],
+      expectedSourceGroups: [["MEMORY.md"], ["memory/2026-04-10.md"], ["memory/2026-04-12.md"]],
+      attributionKind: "temporal",
+      note: "cross-source supersede retrieval should surface current stable, current daily, and old daily"
+    }
+  ),
+  ...makeSearchSeries(
+    "supersede-editor-search",
+    "supersede",
+    [
+      "current editor and previous editor",
+      "Zed replaced Vim",
+      "what editor is current versus older"
+    ],
+    ["Zed", "Vim"],
+    {
+      expectedAll: ["Zed", "Vim"],
+      expectedSources: ["memory/2026-04-10.md", "memory/2026-04-12.md"],
+      expectedSourceGroups: [["memory/2026-04-10.md"], ["memory/2026-04-12.md"]],
+      attributionKind: "temporal"
+    }
+  ),
+  ...makeSearchSeries(
+    "supersede-demo-search",
+    "supersede",
+    [
+      "clinic demo now versus before",
+      "15:00 demo replaced 10:00",
+      "current clinic demo time and previous time"
+    ],
+    ["15:00", "10:00"],
+    {
+      expectedAll: ["15:00", "10:00"],
+      expectedSources: ["memory/2026-04-10.md", "memory/2026-04-12.md"],
+      expectedSourceGroups: [["memory/2026-04-10.md"], ["memory/2026-04-12.md"]],
+      attributionKind: "temporal"
+    }
+  ),
+  ...makeSearchSeries(
     "current-editor-search",
     "temporal-current",
     [
@@ -575,6 +643,273 @@ const cases = [
     {
       forbiddenAny: ["blue pocket notebook"],
       compareLegacy: true,
+      attributionKind: "temporal"
+    }
+  ),
+  ...makeAgentSeries(
+    "agent-role",
+    "agent-profile",
+    [
+      "Based only on your memory for this agent, what is the user's role? If memory is missing, reply exactly: I don't know based on current memory.",
+      "Based only on your memory for this agent, what does Maya Chen do? If memory is missing, reply exactly: I don't know based on current memory."
+    ],
+    ["independent product engineer", "clinic analytics assistant"],
+    {
+      compareLegacy: true,
+      attributionKind: "bootstrap"
+    }
+  ),
+  ...makeAgentSeries(
+    "agent-preference-async",
+    "agent-preference",
+    [
+      "Based only on your memory for this agent, does the user prefer async written updates or live voice calls? If memory is missing, reply exactly: I don't know based on current memory.",
+      "Based only on your memory for this agent, should you avoid voice calls when async text will work? If memory is missing, reply exactly: I don't know based on current memory."
+    ],
+    ["async", "voice calls"],
+    {
+      attributionKind: "retrieval"
+    }
+  ),
+  ...makeAgentSeries(
+    "agent-preference-coffee",
+    "agent-preference",
+    [
+      "Based only on your memory for this agent, what coffee order should you assume for the user? If memory is missing, reply exactly: I don't know based on current memory.",
+      "Based only on your memory for this agent, how does Maya order coffee? If memory is missing, reply exactly: I don't know based on current memory."
+    ],
+    ["flat white", "oat milk", "no sugar"],
+    {
+      attributionKind: "bootstrap"
+    }
+  ),
+  ...makeAgentSeries(
+    "agent-preference-seat",
+    "agent-preference",
+    [
+      "Based only on your memory for this agent, what seat should be preferred for flights? If memory is missing, reply exactly: I don't know based on current memory.",
+      "Based only on your memory for this agent, does Maya prefer an aisle or window seat? If memory is missing, reply exactly: I don't know based on current memory."
+    ],
+    ["aisle"],
+    {
+      attributionKind: "retrieval"
+    }
+  ),
+  ...makeAgentSeries(
+    "agent-preference-carry-on",
+    "agent-preference",
+    [
+      "Based only on your memory for this agent, does the user usually travel with only a carry-on? If memory is missing, reply exactly: I don't know based on current memory.",
+      "Based only on your memory for this agent, what is Maya's carry-on travel preference? If memory is missing, reply exactly: I don't know based on current memory."
+    ],
+    ["carry-on"],
+    {
+      attributionKind: "retrieval"
+    }
+  ),
+  ...makeAgentSeries(
+    "agent-preference-charts",
+    "agent-preference",
+    [
+      "Based only on your memory for this agent, how should charts be optimized for Maya? If memory is missing, reply exactly: I don't know based on current memory.",
+      "Based only on your memory for this agent, what chart style improves readability for the user? If memory is missing, reply exactly: I don't know based on current memory."
+    ],
+    ["readability", "high contrast"],
+    {
+      attributionKind: "retrieval"
+    }
+  ),
+  ...makeAgentSeries(
+    "agent-rule-debug",
+    "agent-rule",
+    [
+      "Based only on your memory for this agent, what debugging rule should you follow first? If memory is missing, reply exactly: I don't know based on current memory.",
+      "Based only on your memory for this agent, should debugging start from broad fixes or the smallest reproducible example? If memory is missing, reply exactly: I don't know based on current memory."
+    ],
+    ["smallest reproducible example"],
+    {
+      attributionKind: "bootstrap"
+    }
+  ),
+  ...makeAgentSeries(
+    "agent-rule-release",
+    "agent-rule",
+    [
+      "Based only on your memory for this agent, what tag format should stable releases use? If memory is missing, reply exactly: I don't know based on current memory.",
+      "Based only on your memory for this agent, how should stable release tags be written? If memory is missing, reply exactly: I don't know based on current memory."
+    ],
+    ["vX.Y.Z"],
+    {
+      attributionKind: "bootstrap"
+    }
+  ),
+  ...makeAgentSeries(
+    "agent-rule-no-guess",
+    "agent-rule",
+    [
+      "Based only on your memory for this agent, what should happen if memory is missing or conflicting? If memory is missing, reply exactly: I don't know based on current memory.",
+      "Based only on your memory for this agent, should you guess when memory conflicts? If memory is missing, reply exactly: I don't know based on current memory."
+    ],
+    ["do not guess", "conflicting", "missing"],
+    {
+      attributionKind: "bootstrap"
+    }
+  ),
+  ...makeAgentSeries(
+    "agent-project-codename",
+    "agent-project",
+    [
+      "Based only on your memory for this agent, what is the codename for Project Lantern? If memory is missing, reply exactly: I don't know based on current memory.",
+      "Based only on your memory for this agent, what codename should you associate with the clinic analytics assistant project? If memory is missing, reply exactly: I don't know based on current memory."
+    ],
+    ["Lantern"],
+    {
+      attributionKind: "retrieval"
+    }
+  ),
+  ...makeAgentSeries(
+    "agent-project-milestone",
+    "agent-project",
+    [
+      "Based only on your memory for this agent, what is the current milestone for Project Lantern? If memory is missing, reply exactly: I don't know based on current memory.",
+      "Based only on your memory for this agent, which phase is Project Lantern in now? If memory is missing, reply exactly: I don't know based on current memory."
+    ],
+    ["Stage 2 pilot"],
+    {
+      attributionKind: "retrieval"
+    }
+  ),
+  ...makeAgentSeries(
+    "agent-project-kpi",
+    "agent-project",
+    [
+      "Based only on your memory for this agent, what is the primary KPI for Project Lantern? If memory is missing, reply exactly: I don't know based on current memory.",
+      "Based only on your memory for this agent, which KPI matters most for the Project Lantern pilot? If memory is missing, reply exactly: I don't know based on current memory."
+    ],
+    ["weekly active clinics"],
+    {
+      attributionKind: "retrieval"
+    }
+  ),
+  ...makeAgentSeries(
+    "agent-project-sla",
+    "agent-project",
+    [
+      "Based only on your memory for this agent, what support SLA applies to pilot customers? If memory is missing, reply exactly: I don't know based on current memory.",
+      "Based only on your memory for this agent, how quickly should pilot customer support respond? If memory is missing, reply exactly: I don't know based on current memory."
+    ],
+    ["4 business hours"],
+    {
+      attributionKind: "retrieval"
+    }
+  ),
+  ...makeAgentSeries(
+    "agent-project-reporting",
+    "agent-project",
+    [
+      "Based only on your memory for this agent, when should the pilot summary be sent? If memory is missing, reply exactly: I don't know based on current memory.",
+      "Based only on your memory for this agent, what reporting cadence does Project Lantern use? If memory is missing, reply exactly: I don't know based on current memory."
+    ],
+    ["Friday", "pilot summary"],
+    {
+      attributionKind: "retrieval"
+    }
+  ),
+  ...makeAgentSeries(
+    "agent-project-city",
+    "agent-project",
+    [
+      "Based only on your memory for this agent, what is the launch city for the pilot? If memory is missing, reply exactly: I don't know based on current memory.",
+      "Based only on your memory for this agent, where is the Project Lantern pilot launching? If memory is missing, reply exactly: I don't know based on current memory."
+    ],
+    ["Singapore"],
+    {
+      attributionKind: "retrieval"
+    }
+  ),
+  ...makeAgentSeries(
+    "agent-current-keyboard",
+    "agent-temporal",
+    [
+      "Based only on your memory for this agent, what is the user's current keyboard preference? If memory is missing, reply exactly: I don't know based on current memory.",
+      "Based only on your memory for this agent, should the user prefer tactile switches or linear red switches now? If memory is missing, reply exactly: I don't know based on current memory."
+    ],
+    ["tactile switches"],
+    {
+      forbiddenAny: ["linear red switches"],
+      attributionKind: "temporal"
+    }
+  ),
+  ...makeAgentSeries(
+    "agent-history-editor",
+    "agent-history",
+    [
+      "Based only on your memory for this agent, what editor was Maya still using on 2026-04-10? If memory is missing, reply exactly: I don't know based on current memory.",
+      "Based only on your memory for this agent, before switching to Zed, which editor was the main editor? If memory is missing, reply exactly: I don't know based on current memory."
+    ],
+    ["Vim"],
+    {
+      attributionKind: "history"
+    }
+  ),
+  ...makeAgentSeries(
+    "agent-history-demo",
+    "agent-history",
+    [
+      "Based only on your memory for this agent, what time was the clinic demo planned for on 2026-04-10? If memory is missing, reply exactly: I don't know based on current memory.",
+      "Based only on your memory for this agent, before the latest update, when was the clinic demo scheduled? If memory is missing, reply exactly: I don't know based on current memory."
+    ],
+    ["10:00", "Shanghai"],
+    {
+      attributionKind: "history"
+    }
+  ),
+  ...makeAgentSeries(
+    "agent-history-region",
+    "agent-history",
+    [
+      "Based only on your memory for this agent, what draft deploy region appeared before the final decision? If memory is missing, reply exactly: I don't know based on current memory.",
+      "Based only on your memory for this agent, before eu-west-1 was confirmed, which region was only a draft? If memory is missing, reply exactly: I don't know based on current memory."
+    ],
+    ["us-east-1"],
+    {
+      attributionKind: "history"
+    }
+  ),
+  ...makeAgentSeries(
+    "agent-zh-profile",
+    "agent-zh",
+    [
+      "仅根据你当前这个 agent 的记忆，用户希望你怎么称呼她？如果记忆里没有，请直接回答：I don't know based on current memory.",
+      "仅根据你当前这个 agent 的记忆，用户的时区是什么？如果记忆里没有，请直接回答：I don't know based on current memory."
+    ],
+    ["Maya Chen", "Asia/Shanghai"],
+    {
+      attributionKind: "bootstrap"
+    }
+  ),
+  ...makeAgentSeries(
+    "agent-zh-project",
+    "agent-zh",
+    [
+      "仅根据你当前这个 agent 的记忆，Project Lantern 现在的里程碑是什么？如果记忆里没有，请直接回答：I don't know based on current memory.",
+      "仅根据你当前这个 agent 的记忆，Project Lantern 的试点城市在哪里？如果记忆里没有，请直接回答：I don't know based on current memory."
+    ],
+    ["Stage 2 pilot", "Singapore"],
+    {
+      attributionKind: "retrieval"
+    }
+  ),
+  ...makeAgentSeries(
+    "agent-zh-temporal",
+    "agent-zh",
+    [
+      "仅根据你当前这个 agent 的记忆，用户现在主要用什么编辑器？如果记忆里没有，请直接回答：I don't know based on current memory.",
+      "仅根据你当前这个 agent 的记忆，用户当前默认部署区域是什么？如果记忆里没有，请直接回答：I don't know based on current memory."
+    ],
+    ["Zed", "eu-west-1"],
+    {
+      forbiddenAny: ["Vim", "us-east-1"],
       attributionKind: "temporal"
     }
   ),

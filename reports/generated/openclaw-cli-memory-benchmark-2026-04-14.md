@@ -1,9 +1,9 @@
 # OpenClaw CLI Memory Benchmark
 
-- generatedAt: `2026-04-14T03:19:16.593Z`
+- generatedAt: `2026-04-14T04:41:41.926Z`
 - agent: `umceval`
-- totalCases: `111`
-- currentPassed: `111`
+- totalCases: `125`
+- currentPassed: `125`
 - currentFailed: `0`
 - legacyCompared: `0`
 - legacyPassed: `0`
@@ -13,17 +13,19 @@
 - preference: `32/32`
 - rule: `12/12`
 - project: `28/28`
+- cross-source: `8/8`
+- supersede: `6/6`
 - temporal-current: `19/19`
 - temporal-history: `9/9`
 
 ## Attribution Summary
-- not-compared: `111`
+- not-compared: `125`
 
 ## Transport Summary
-- local_sqlite_index: `111`
+- local_sqlite_index: `125`
 
 ## Entrypoint Summary
-- memory_search: `111`
+- memory_search: `125`
 
 ## Failing Cases
 - none

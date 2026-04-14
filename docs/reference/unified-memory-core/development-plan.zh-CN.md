@@ -202,18 +202,33 @@
 - 用 `legacy / unified / bootstrap / retrieval` 对照搞清能力来源
 - 用失败案例持续驱动 assembly / retrieval / policy 算法优化
 
-53. `next` 建立 `100+` 案例 benchmark 设计与分层矩阵。
+53. `completed` 建立 `100+` 案例 benchmark 设计与分层矩阵。
    - 至少覆盖：稳定事实、普通检索、当前态覆盖、负向拒答、冲突事实、连续更新、多轮历史、规则提取、项目知识、跨来源归因。
    - 每个案例必须标明：验证入口、期望答案、允许误差、能力标签、是否需要 A/B 对照。
-54. `todo` 把现有 `20` 案例扩展成可重复运行的 `100+` OpenClaw CLI 测试集。
+54. `completed` 把现有 `20` 案例扩展成可重复运行的 `100+` OpenClaw CLI 测试集。
    - 默认优先走真实 `openclaw memory search` / `openclaw agent`。
    - 尽量避免只看 registry 内部状态来宣称“能力成立”。
-55. `todo` 为 benchmark 增加 `legacy / unified / bootstrap / retrieval` 归因对照报告。
+55. `completed` 为 benchmark 增加 `legacy / unified / bootstrap / retrieval` 归因对照报告。
    - 目标不是简单比较分数，而是回答“答案来自哪里”和“哪些能力是扩展增益”。
-56. `todo` 把 benchmark 失败项转成显式算法问题清单，并按优先级推进修复。
+56. `completed` 把 benchmark 失败项转成显式算法问题清单，并按优先级推进修复。
    - 优先修：当前态覆盖失败、旧值污染、错误拒答、错误命中来源、检索漏召回。
-57. `todo` 每一轮算法改动后都要重跑 benchmark、更新文档报告、写回 control surface，并推送到 GitHub。
-58. `todo` 当 `100+` 案例 benchmark 与 A/B 报告稳定后，再决定是否打开 runtime API / service-mode 等更后面的 enhancement phase。
+57. `completed` 每一轮算法改动后都要重跑 benchmark、更新文档报告、写回 control surface，并推送到 GitHub。
+58. `completed` 当 `100+` 案例 benchmark 与 A/B 报告稳定后，再决定是否打开 runtime API / service-mode 等更后面的 enhancement phase。
+   - 当前结论仍是：不要打开 runtime API / service-mode；先把 answer-level path、transport watchlist 和更全面 benchmark 规划收口。
+
+## 下一阶段规划队列
+
+59. `next` review 当前 benchmark 覆盖面，并把矩阵规划到更全面的 `200` case。
+   - 重点是 coverage blind spots，而不是机械堆数量。
+   - 必须显式覆盖：跨来源混合、冲突事实、supersede / current-vs-history、多轮 history、负向拒答、answer-level host path。
+60. `todo` 把中文案例占比规划到至少 `50%`。
+   - 中文不是附带翻译，而是要覆盖真实中文问法、中文 current-state 问题、中文规则题和中英混合问法。
+61. `todo` 把 live `openclaw agent` answer-level matrix 和 raw transport watchlist 一起纳入下一轮正式门禁。
+   - answer-level red path 必须单独看，不要继续和 raw transport instability 混在一起。
+62. `todo` 为 retrieval / assembly / answer-level 主链路建立性能专项计划。
+   - 至少定义：baseline 命令、测量维度、慢点分层、性能回归门禁。
+63. `todo` 拿到主链路性能基线，并把最慢路径按 retrieval、assembly、宿主 answer-level、transport 分层归因。
+64. `todo` 只有当 `200` case coverage 规划和主链路 perf baseline 都清晰后，才安排下一轮执行和优化优先级。
 
 ## 延后增强队列
 

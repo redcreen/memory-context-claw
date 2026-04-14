@@ -4,9 +4,29 @@ function uniqStrings(values) {
   return [...new Set(values.filter(Boolean))];
 }
 
+function stripAgentMemoryInstruction(query) {
+  return String(query || "")
+    .replace(
+      /^based only on your memory for this agent,\s*/i,
+      ""
+    )
+    .replace(
+      /\s*if memory is missing,\s*reply exactly:\s*i don't know based on current memory\.?\s*$/i,
+      ""
+    )
+    .replace(
+      /^仅根据你当前这个 agent 的记忆[，,]\s*/i,
+      ""
+    )
+    .replace(
+      /\s*如果记忆里没有[，,]\s*请直接回答[：:]\s*我不知道当前记忆里有没有这条信息。?\s*$/i,
+      ""
+    );
+}
+
 function compressQuery(query) {
   return normalizeWhitespace(
-    String(query || "")
+    stripAgentMemoryInstruction(query)
       .replace(/[？?！!，,。；;：:]/g, " ")
       .replace(/\s+/g, " ")
   );

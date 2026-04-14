@@ -82,7 +82,7 @@ flowchart TB
 | 核心 capture / fact-card / assembly | `completed` | maintain + tune |
 | Memory Search | `phase-complete` | governance + benchmark expansion + policy tuning |
 | Self-Learning / Reflection | `stage-complete` | governed lifecycle、policy adaptation、exports、CLI、governance surfaces 已可用 |
-| Unified Memory Core | `stage5-complete / post-closeout` | `100+` 案例评测驱动优化 + 维护 release-preflight / root policy 稳定 |
+| Unified Memory Core | `stage5-complete / post-closeout` | `187` case benchmark + answer-level / transport 分层 + 下一轮 `200` case / perf planning |
 
 ## 进展图
 
@@ -215,21 +215,24 @@ flowchart TB
 
 ### 下一条主要工程主线
 
-**评测驱动优化：扩到 `100+` OpenClaw CLI 记忆案例**
+**评测驱动优化：从 `100+` benchmark 收口到 `200` case / perf planning**
 
 为什么先做这个：
 
 - 基础能力和 Stage 5 收口已经完成，下一步最缺的不是“再加一个功能”，而是更大规模、更可归因的真实评测面
 - 目前的 `20` 案例和最小 A/B 已经够证明“能力存在”，但还不够支撑持续算法优化
-- 只有把测试扩到 `100+`，覆盖 bootstrap、普通检索、当前态覆盖、负向拒答、冲突事实、多轮更新等场景，后续优化才不会靠感觉推进
+- 当前 benchmark 已扩到 `187` case，但下一轮要先做 coverage review，避免只追数量不补盲区
+- retrieval-heavy host index 现在是绿的：`125 / 125`
+- raw `openclaw memory search` transport 已独立成 watchlist：`17 / 24` raw ok，`7` 条 empty-result
+- live `openclaw agent` answer-level 子矩阵当前是红的：`0 / 36`，这说明宿主问答链路要单独 triage，不能继续和 retrieval / transport 混在一起
 - release-preflight、deployment verification、host-neutral root policy 仍要保持为绿，但它们从主线目标变成并行守护线
 
 这一条主线具体包含：
 
-- 扩充 OpenClaw CLI 测试案例到 `100+`
-- 对同一批案例做 `legacy / unified / bootstrap / retrieval` 归因对照
-- 把失败案例整理成算法问题清单
-- 每一轮修改后重跑评测、更新报告、提交到 GitHub
+- review 当前 benchmark 覆盖面，并规划到更全面的 `200` case
+- 明确要求下一轮中文案例占比至少 `50%`
+- 保持 `legacy / unified / bootstrap / retrieval` 归因对照，但把 answer-level host path 作为单独红线
+- 为 retrieval / assembly / answer-level 主链路建立性能专项计划
 
 关键文档：
 

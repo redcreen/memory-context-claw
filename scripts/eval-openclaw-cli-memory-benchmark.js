@@ -34,6 +34,7 @@ function parseArgs(argv) {
     writeMarkdown: defaultMarkdownPath,
     only: [],
     categories: [],
+    entrypoints: [],
     maxCases: 0,
     searchTimeoutMs: 30_000,
     agentTimeoutMs: 120_000,
@@ -62,6 +63,12 @@ function parseArgs(argv) {
         .map((item) => item.trim())
         .filter(Boolean);
     }
+    else if (arg === "--entrypoints") {
+      args.entrypoints = String(argv[++index] || "")
+        .split(",")
+        .map((item) => item.trim())
+        .filter(Boolean);
+    }
     else if (arg === "--max-cases") args.maxCases = Number(argv[++index] || 0);
     else if (arg === "--search-timeout-ms") args.searchTimeoutMs = Number(argv[++index] || 30_000);
     else if (arg === "--agent-timeout-ms") args.agentTimeoutMs = Number(argv[++index] || 120_000);
@@ -81,6 +88,7 @@ function parseArgs(argv) {
           "  --write-markdown <path>     Write human-readable report",
           "  --only <ids>                Comma-separated case ids",
           "  --categories <names>        Comma-separated category filters",
+          "  --entrypoints <names>       Comma-separated entrypoint filters",
           "  --max-cases <n>             Limit case count",
           "  --search-timeout-ms <ms>    Timeout for openclaw memory search",
           "  --agent-timeout-ms <ms>     Timeout for openclaw agent",
@@ -126,6 +134,17 @@ function hitsExpectedSources(results, expectedSources = []) {
   return results.some((item) => {
     const target = `${item?.path || ""}\n${item?.citation || ""}\n${item?.source || ""}`;
     return expectedSources.some((pattern) => target.includes(pattern));
+  });
+}
+
+function hitsExpectedSourceGroups(results, expectedSourceGroups = []) {
+  if (!expectedSourceGroups.length) return true;
+  return expectedSourceGroups.every((group) => {
+    const patterns = Array.isArray(group) ? group : [group];
+    return results.some((item) => {
+      const target = `${item?.path || ""}\n${item?.citation || ""}\n${item?.source || ""}`;
+      return patterns.some((pattern) => target.includes(pattern));
+    });
   });
 }
 
@@ -276,7 +295,10 @@ function evaluateCase(caseDef, run) {
   const forbiddenOk = excludesAll(text, caseDef.forbiddenAny || []);
   const sourcesOk =
     caseDef.entrypoint === "memory_search"
-      ? hitsExpectedSources(run.results || [], caseDef.expectedSources || [])
+      ? (
+        hitsExpectedSources(run.results || [], caseDef.expectedSources || [])
+        && hitsExpectedSourceGroups(run.results || [], caseDef.expectedSourceGroups || [])
+      )
       : true;
   const passed = expectedAnyOk && expectedAllOk && forbiddenOk && sourcesOk;
   return {
@@ -585,6 +607,10 @@ async function main() {
   if (args.categories.length > 0) {
     const allow = new Set(args.categories);
     cases = cases.filter((item) => allow.has(item.category));
+  }
+  if (args.entrypoints.length > 0) {
+    const allow = new Set(args.entrypoints);
+    cases = cases.filter((item) => allow.has(item.entrypoint));
   }
   if (args.maxCases > 0) {
     cases = cases.slice(0, args.maxCases);

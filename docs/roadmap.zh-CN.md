@@ -20,8 +20,8 @@
 
 | 时间层级 | 重点 | 退出信号 |
 | --- | --- | --- |
-| 当前 | 把 OpenClaw CLI 记忆评测扩到 `100+` 案例，并用 A/B、来源归因和失败驱动优化持续调优算法 | `100+` 案例评测基线稳定、A/B 归因报告可重复、失败案例能稳定驱动算法修复 |
-| 下一步 | 在大规模评测基线稳定后，再决定是否真的打开 runtime API / service-mode 讨论 | runtime API prerequisites 持续满足，且 `100+` 案例基线不再频繁漂移 |
+| 当前 | 把 retrieval、answer-level、transport 三条证据面分开，规划更全面的 `200` case benchmark，并补主链路性能专项计划 | `200` case coverage 规划明确、下一轮矩阵中文案例占比达到 `50%`、transport watchlist 保持独立、性能 baseline 入口已文档化 |
+| 下一步 | 用更全面的 benchmark 和性能 baseline 决定下一轮优化顺序，再讨论是否真的打开 runtime API / service-mode | answer-level host-path 回退已可解释、主链路性能 baseline 稳定、benchmark 不再盲目漂移 |
 | 更后面 | 只在 operator baseline 稳定后，再讨论 runtime API / split-ready 演进 | Stage 5 收口后的独立产品证据继续保持绿色 |
 
 ## 里程碑
@@ -51,4 +51,4 @@ flowchart LR
 - 当前的下一依赖不再是 Stage 5 实现，而是让 release-preflight 与 deployment 证据面长期保持稳定
 - registry-root cutover policy 仍是 operator follow-up，但不再算隐藏的 Stage 5 contract 工作
 - 只要后续 service-mode 讨论继续延后，Stage 4 和 Stage 5 的报告都必须保持可读
-- 新的主要工程主线已经转成“评测驱动优化”，所以 roadmap 和 `.codex/plan.md` 必须明确记录案例扩充、A/B 对照、失败回归和算法迭代，不要再只停留在 Stage 5 收口表述
+- 新的主要工程主线已经转成“评测驱动优化”，所以 roadmap 和 `.codex/plan.md` 必须明确记录案例扩充、A/B 对照、answer-level 回退、transport watchlist 和性能规划，不要再只停留在 Stage 5 收口表述

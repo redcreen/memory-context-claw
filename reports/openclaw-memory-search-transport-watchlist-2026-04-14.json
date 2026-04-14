@@ -1,0 +1,317 @@
+{
+  "generatedAt": "2026-04-14T04:45:49.639Z",
+  "agentId": "umceval",
+  "summary": {
+    "total": 24,
+    "ok": 17,
+    "emptyResults": 7,
+    "timeout": 0,
+    "invalidJson": 0,
+    "commandFailed": 0,
+    "otherFailure": 0,
+    "watchlist": [
+      {
+        "id": "profile-name-2",
+        "category": "profile",
+        "status": "empty_results",
+        "reason": "raw openclaw memory search returned no results"
+      },
+      {
+        "id": "pref-reply-style-2",
+        "category": "preference",
+        "status": "empty_results",
+        "reason": "raw openclaw memory search returned no results"
+      },
+      {
+        "id": "rule-debug-3",
+        "category": "rule",
+        "status": "empty_results",
+        "reason": "raw openclaw memory search returned no results"
+      },
+      {
+        "id": "supersede-editor-search-1",
+        "category": "supersede",
+        "status": "empty_results",
+        "reason": "raw openclaw memory search returned no results"
+      },
+      {
+        "id": "supersede-editor-search-2",
+        "category": "supersede",
+        "status": "empty_results",
+        "reason": "raw openclaw memory search returned no results"
+      },
+      {
+        "id": "supersede-editor-search-3",
+        "category": "supersede",
+        "status": "empty_results",
+        "reason": "raw openclaw memory search returned no results"
+      },
+      {
+        "id": "history-editor-search-1",
+        "category": "temporal-history",
+        "status": "empty_results",
+        "reason": "raw openclaw memory search returned no results"
+      }
+    ],
+    "byCategory": {
+      "profile": {
+        "total": 3,
+        "ok": 2,
+        "failures": 1
+      },
+      "preference": {
+        "total": 3,
+        "ok": 2,
+        "failures": 1
+      },
+      "rule": {
+        "total": 3,
+        "ok": 2,
+        "failures": 1
+      },
+      "project": {
+        "total": 3,
+        "ok": 3,
+        "failures": 0
+      },
+      "cross-source": {
+        "total": 3,
+        "ok": 3,
+        "failures": 0
+      },
+      "supersede": {
+        "total": 3,
+        "ok": 0,
+        "failures": 3
+      },
+      "temporal-current": {
+        "total": 3,
+        "ok": 3,
+        "failures": 0
+      },
+      "temporal-history": {
+        "total": 3,
+        "ok": 2,
+        "failures": 1
+      }
+    }
+  },
+  "results": [
+    {
+      "id": "profile-name-1",
+      "category": "profile",
+      "query": "preferred name",
+      "status": "ok",
+      "resultCount": 1,
+      "provider": "",
+      "mode": ""
+    },
+    {
+      "id": "profile-name-2",
+      "category": "profile",
+      "query": "user preferred name",
+      "status": "empty_results",
+      "resultCount": 0,
+      "provider": "",
+      "mode": ""
+    },
+    {
+      "id": "profile-name-3",
+      "category": "profile",
+      "query": "what name should I use for the user",
+      "status": "ok",
+      "resultCount": 2,
+      "provider": "",
+      "mode": ""
+    },
+    {
+      "id": "pref-reply-style-1",
+      "category": "preference",
+      "query": "preferred reply style",
+      "status": "ok",
+      "resultCount": 1,
+      "provider": "",
+      "mode": ""
+    },
+    {
+      "id": "pref-reply-style-2",
+      "category": "preference",
+      "query": "how should replies be formatted",
+      "status": "empty_results",
+      "resultCount": 0,
+      "provider": "",
+      "mode": ""
+    },
+    {
+      "id": "pref-reply-style-3",
+      "category": "preference",
+      "query": "concise bullets first rationale if needed",
+      "status": "ok",
+      "resultCount": 1,
+      "provider": "",
+      "mode": ""
+    },
+    {
+      "id": "rule-debug-1",
+      "category": "rule",
+      "query": "debugging rule",
+      "status": "ok",
+      "resultCount": 1,
+      "provider": "",
+      "mode": ""
+    },
+    {
+      "id": "rule-debug-2",
+      "category": "rule",
+      "query": "smallest reproducible example",
+      "status": "ok",
+      "resultCount": 1,
+      "provider": "",
+      "mode": ""
+    },
+    {
+      "id": "rule-debug-3",
+      "category": "rule",
+      "query": "how should debugging start",
+      "status": "empty_results",
+      "resultCount": 0,
+      "provider": "",
+      "mode": ""
+    },
+    {
+      "id": "project-desc-1",
+      "category": "project",
+      "query": "Project Lantern",
+      "status": "ok",
+      "resultCount": 1,
+      "provider": "",
+      "mode": ""
+    },
+    {
+      "id": "project-desc-2",
+      "category": "project",
+      "query": "what is Project Lantern",
+      "status": "ok",
+      "resultCount": 1,
+      "provider": "",
+      "mode": ""
+    },
+    {
+      "id": "project-desc-3",
+      "category": "project",
+      "query": "clinic managers analytics assistant",
+      "status": "ok",
+      "resultCount": 2,
+      "provider": "",
+      "mode": ""
+    },
+    {
+      "id": "cross-source-travel-search-1",
+      "category": "cross-source",
+      "query": "Maya carry-on aisle seat",
+      "status": "ok",
+      "resultCount": 1,
+      "provider": "",
+      "mode": ""
+    },
+    {
+      "id": "cross-source-travel-search-2",
+      "category": "cross-source",
+      "query": "travel preference carry-on and aisle",
+      "status": "ok",
+      "resultCount": 2,
+      "provider": "",
+      "mode": ""
+    },
+    {
+      "id": "cross-source-travel-search-3",
+      "category": "cross-source",
+      "query": "seat preference plus carry-on habit",
+      "status": "ok",
+      "resultCount": 2,
+      "provider": "",
+      "mode": ""
+    },
+    {
+      "id": "supersede-editor-search-1",
+      "category": "supersede",
+      "query": "current editor and previous editor",
+      "status": "empty_results",
+      "resultCount": 0,
+      "provider": "",
+      "mode": ""
+    },
+    {
+      "id": "supersede-editor-search-2",
+      "category": "supersede",
+      "query": "Zed replaced Vim",
+      "status": "empty_results",
+      "resultCount": 0,
+      "provider": "",
+      "mode": ""
+    },
+    {
+      "id": "supersede-editor-search-3",
+      "category": "supersede",
+      "query": "what editor is current versus older",
+      "status": "empty_results",
+      "resultCount": 0,
+      "provider": "",
+      "mode": ""
+    },
+    {
+      "id": "current-editor-search-1",
+      "category": "temporal-current",
+      "query": "current main editor",
+      "status": "ok",
+      "resultCount": 1,
+      "provider": "",
+      "mode": ""
+    },
+    {
+      "id": "current-editor-search-2",
+      "category": "temporal-current",
+      "query": "what is Maya using as main editor now",
+      "status": "ok",
+      "resultCount": 4,
+      "provider": "",
+      "mode": ""
+    },
+    {
+      "id": "current-editor-search-3",
+      "category": "temporal-current",
+      "query": "switched from Vim to Zed",
+      "status": "ok",
+      "resultCount": 1,
+      "provider": "",
+      "mode": ""
+    },
+    {
+      "id": "history-editor-search-1",
+      "category": "temporal-history",
+      "query": "previous editor before Zed",
+      "status": "empty_results",
+      "resultCount": 0,
+      "provider": "",
+      "mode": ""
+    },
+    {
+      "id": "history-editor-search-2",
+      "category": "temporal-history",
+      "query": "still using Vim",
+      "status": "ok",
+      "resultCount": 1,
+      "provider": "",
+      "mode": ""
+    },
+    {
+      "id": "history-editor-search-3",
+      "category": "temporal-history",
+      "query": "main editor on 2026-04-10",
+      "status": "ok",
+      "resultCount": 2,
+      "provider": "",
+      "mode": ""
+    }
+  ]
+}

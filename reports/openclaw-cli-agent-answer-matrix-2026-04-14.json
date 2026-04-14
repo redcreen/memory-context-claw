@@ -1,0 +1,53 @@
+{
+  "generatedAt": "2026-04-14T05:26:48.594Z",
+  "agentId": "umceval",
+  "casesPath": "/Users/redcreen/Project/unified-memory-core/evals/openclaw-cli-memory-benchmark-cases.js",
+  "summary": {
+    "total": 1,
+    "passed": 0,
+    "failed": 1,
+    "comparedLegacy": 1,
+    "legacyPassed": 0,
+    "byCategory": {
+      "agent-profile": {
+        "total": 1,
+        "passed": 0
+      }
+    },
+    "byAttribution": {
+      "unified-failed": 1
+    },
+    "byTransport": {
+      "agent": 1
+    },
+    "byEntrypoint": {
+      "agent": 1
+    }
+  },
+  "results": [
+    {
+      "id": "agent-name-1",
+      "category": "agent-profile",
+      "entrypoint": "agent",
+      "query": "",
+      "message": "Based only on your memory for this agent, what is the user's preferred name? If memory is missing, reply exactly: I don't know based on current memory.",
+      "compareLegacy": true,
+      "attributionKind": "bootstrap",
+      "attribution": "unified-failed",
+      "current": {
+        "ok": true,
+        "answer": "I don't know based on current memory.",
+        "injectedWorkspaceFiles": [],
+        "observedSessionKey": "",
+        "observedSessionId": "826c69fd-a36e-4a46-9ee4-8001da5b6382",
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "sourcesOk": true,
+        "reason": "expectation mismatch"
+      },
+      "legacy": null
+    }
+  ]
+}

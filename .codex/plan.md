@@ -14,6 +14,14 @@
   - Exit Condition: 至少 `100` 个案例能稳定运行，并能按类别和入口统计结果
   - Status: `completed`
 
+- Slice: `plan-200-case-benchmark-and-main-path-performance`
+  - Objective: 把当前 `187` case 评测面 review 成更全面的 `200` case 计划，并为 retrieval / assembly / answer-level 主链路建立性能专项计划
+  - Dependencies: 当前 benchmark 结果、answer-level matrix 报告、transport watchlist、现有 release-preflight / Stage 5 证据
+  - Risks: 如果只追求 200 这个数字而不补盲区，coverage 会失真；如果不先规划性能面，answer-level 与 retrieval 成本会继续模糊
+  - Validation: roadmap / development plan / control surface 同步，明确中文案例 `>= 50%`、coverage review 方法、主链路 perf baseline 入口
+  - Exit Condition: 下一轮执行可以直接按 coverage matrix 和 perf plan 开工，而不是重新定义问题
+  - Status: `in_progress`
+
 - Slice: `attribute-memory-capability-sources`
   - Objective: 对同一批核心案例做 `legacy / unified / bootstrap / retrieval` 对照，明确答案来源和扩展增益边界
   - Dependencies: 临时 legacy profile、当前 unified host profile、benchmark 案例分层、A/B 报告文档
@@ -112,14 +120,15 @@
 
 ## Execution Order
 
-1. 建立并扩充 `100+` OpenClaw CLI benchmark case matrix
-2. 对核心案例持续做 `legacy / unified / bootstrap / retrieval` 归因对照
-3. 把失败案例转成算法修复、回归保护和人类可读报告
-4. 每轮修改后重跑 benchmark，并把结果更新到文档 / control surface / GitHub
-5. 并行保持 release-preflight / bundle install / host smoke / Stage 5 evidence 稳定
-6. 保持 host-neutral root operator policy 可见且不回退
-7. 保持 accepted-action deeper queue 的 Step 48-52 仍然显式 deferred，不把 admission / negative-path / conflict work 偷渡进当前实现
-8. 只有在 benchmark 基线和 runtime API prerequisites 持续为绿后，才开启新的 enhancement planning 或讨论 legacy root cleanup 窗口
+1. 保持当前 `187` case benchmark、answer-level matrix 和 transport watchlist 的结果持续可重跑
+2. review 当前 coverage blind spots，并把 benchmark 规划到更全面的 `200` case
+3. 在下一轮 benchmark 规划里显式要求中文案例占比至少 `50%`
+4. 把 live answer-level host-path regression 单独看作 triage 输入，不与 raw transport 或 retrieval 质量混淆
+5. 为 retrieval / assembly / answer-level 主链路建立性能专项计划与 baseline 入口
+6. 并行保持 release-preflight / bundle install / host smoke / Stage 5 evidence 稳定
+7. 保持 host-neutral root operator policy 可见且不回退
+8. 保持 accepted-action deeper queue 的 Step 48-52 仍然显式 deferred，不把 admission / negative-path / conflict work 偷渡进当前实现
+9. 只有在 benchmark、answer-level triage 和 perf baseline 同时清晰后，才开启新的 enhancement planning 或讨论 legacy root cleanup 窗口
 
 ## Architecture Supervision
 - Signal: `yellow`
@@ -133,25 +142,23 @@
 
 ## Current Execution Line
 
-- Objective: 建立 `100+` OpenClaw CLI benchmark、持续做来源归因，并让失败案例驱动算法迭代，同时守住 release-preflight 与 root policy
-- Plan Link: `build-openclaw-cli-100-case-benchmark`
-- Runway: benchmark design、case expansion、A/B attribution、failure triage、algorithm iteration、report refresh
-- Progress: `6 / 6` tasks complete
+- Objective: 把当前 benchmark / answer-level / transport 三条证据面收口到下一阶段计划上：`200` case 更全面 coverage + 中文占比 + main-path perf planning
+- Plan Link: `plan-200-case-benchmark-and-main-path-performance`
+- Runway: coverage review、中文比例约束、answer-level triage input、main-path perf planning、report refresh
+- Progress: `0 / 4` tasks complete
 - Stop Conditions:
-  - benchmark case definition drifts away from real OpenClaw CLI entrypoints
-  - attribution report can no longer explain whether answers came from legacy, bootstrap, retrieval, or unified assembly
+  - case count grows but blind spots remain
+  - answer-level regression gets misdiagnosed as raw transport noise
+  - performance planning starts without explicit baseline and measurement entrypoints
   - Stage 5 evidence regresses while benchmark work is ongoing
-  - later planning pressure tries to bypass benchmark work and reopen a new phase early
-- Validation: benchmark case docs、A/B reports、`openclaw memory search` / `openclaw agent` results、`npm run umc:release-preflight`、`npm run umc:cli -- registry inspect --format markdown`
+- Validation: benchmark case docs、answer-level matrix report、transport watchlist、roadmap / development plan、`npm run umc:release-preflight`、`npm run umc:cli -- registry inspect --format markdown`
 
 ## Execution Tasks
 
-- [x] EL-1 define the `100+` OpenClaw CLI benchmark matrix and category coverage
-- [x] EL-2 expand the current 20 cases into the first `129` reproducible benchmark cases
-- [x] EL-3 add `legacy / unified / bootstrap / retrieval` attribution notes to benchmark-critical cases
-- [x] EL-4 run the first larger benchmark pass, summarize failures, and convert them into algorithm work items
-- [x] EL-5 implement the first benchmark-driven algorithm fixes and rerun the affected cases
-- [x] EL-6 refresh roadmap / reports / control-surface state and push the benchmark iteration to GitHub
+- [ ] EL-1 review benchmark coverage and define the `200`-case matrix with breadth-first rules instead of raw count chasing
+- [ ] EL-2 require Chinese cases to reach at least `50%` of the next benchmark matrix
+- [ ] EL-3 define the main-path performance plan for retrieval / assembly / answer-level and the baseline measurement entrypoints
+- [ ] EL-4 refresh roadmap / development plan / control-surface state around the next-stage benchmark + performance plan
 
 ## Development Log Capture
 

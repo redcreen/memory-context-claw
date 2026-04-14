@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-04-14T03:19:16.593Z",
+  "generatedAt": "2026-04-14T04:41:41.926Z",
   "agentId": "umceval",
   "casesPath": "/Users/redcreen/Project/unified-memory-core/evals/openclaw-cli-memory-benchmark-cases.js",
   "summary": {
-    "total": 111,
-    "passed": 111,
+    "total": 125,
+    "passed": 125,
     "failed": 0,
     "comparedLegacy": 0,
     "legacyPassed": 0,
@@ -25,6 +25,14 @@
         "total": 28,
         "passed": 28
       },
+      "cross-source": {
+        "total": 8,
+        "passed": 8
+      },
+      "supersede": {
+        "total": 6,
+        "passed": 6
+      },
       "temporal-current": {
         "total": 19,
         "passed": 19
@@ -35,13 +43,13 @@
       }
     },
     "byAttribution": {
-      "not-compared": 111
+      "not-compared": 125
     },
     "byTransport": {
-      "local_sqlite_index": 111
+      "local_sqlite_index": 125
     },
     "byEntrypoint": {
-      "memory_search": 111
+      "memory_search": 125
     }
   },
   "results": [
@@ -3830,6 +3838,745 @@
         ],
         "topFamilies": {
           "notes/%": 1
+        },
+        "provider": "local-sqlite",
+        "mode": "fallback",
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "sourcesOk": true,
+        "reason": "matched"
+      },
+      "legacy": null
+    },
+    {
+      "id": "cross-source-travel-search-1",
+      "category": "cross-source",
+      "entrypoint": "memory_search",
+      "query": "Maya carry-on aisle seat",
+      "message": "",
+      "compareLegacy": false,
+      "attributionKind": "retrieval",
+      "attribution": "not-compared",
+      "current": {
+        "ok": true,
+        "transport": "local_sqlite_index",
+        "results": [
+          {
+            "path": "notes/personal-profile.md",
+            "snippet": "# Personal Profile Notes\n\n- Maya prefers async written updates over live calls.\n- Maya often travels with only a carry-on and prefers aisle seats.\n- Maya wants charts optimized for readability, especially high contrast.\n- When release notes are unclear, Maya wants the answer to name the exact tag instead of saying \\\"latest stable\\\" vaguely.\n- Maya does not want guesses presented as facts.",
+            "source": "memory",
+            "citation": "notes/personal-profile.md"
+          },
+          {
+            "path": "MEMORY.md",
+            "snippet": "# Long-Term Memory\n\n- Preferred name: Maya Chen.\n- Role: independent product engineer building a clinic analytics assistant.\n- Timezone: Asia/Shanghai.\n- Preferred reply style: concise bullets first, then a one-line rationale only if needed.\n- Strong dislike: avoid voice calls when async text will work.\n- Coffee order: oat milk flat white with no sugar.\n- Seat preference for flights: aisle seat.\n- Debugging rule: start from the smallest reproducible example before trying broad fixes.\n- Release rule: stable releases use semantic version tags in the form `vX.Y.Z`.\n- Default deploy region: `eu-west-1`.\n- Primary database version: PostgreSQL 16.\n- If memory is missing or conflicting and no current answer is available, say \\\"I don't know based on current memory.\\\"\n- Billing preference: monthly invoice, not annual prepaid.\n- Accessibility preference: high-contrast charts beat decorative gradients.",
+            "source": "memory",
+            "citation": "MEMORY.md"
+          },
+          {
+            "path": "memory/2026-04-12.md",
+            "snippet": "# Daily Memory 2026-04-12\n\n- Confirmed update: Maya switched the main editor from Vim to Zed last week.\n- Confirmed update: the clinic demo moved to next Tuesday at 15:00 Shanghai time.\n- Confirmed update: the deploy region decision is now `eu-west-1`; the older `us-east-1` draft should be ignored.\n- Current keyboard preference: tactile switches over linear red switches.\n- Current notebook for meetings: the charcoal A5 notebook, not the old blue pocket notebook.",
+            "source": "memory",
+            "citation": "memory/2026-04-12.md"
+          },
+          {
+            "path": "memory/2026-04-10.md",
+            "snippet": "# Daily Memory 2026-04-10\n\n- At that point Maya was still using Vim as the main editor.\n- The clinic demo was still planned for next Tuesday at 10:00 Shanghai time.\n- A draft note said the default deployment region might be `us-east-1`, but it was not finalized.",
+            "source": "memory",
+            "citation": "memory/2026-04-10.md"
+          }
+        ],
+        "topFamilies": {
+          "notes/%": 1,
+          "MEMORY.md": 1,
+          "memory/%": 2
+        },
+        "provider": "local-sqlite",
+        "mode": "fallback",
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "sourcesOk": true,
+        "reason": "matched"
+      },
+      "legacy": null
+    },
+    {
+      "id": "cross-source-travel-search-2",
+      "category": "cross-source",
+      "entrypoint": "memory_search",
+      "query": "travel preference carry-on and aisle",
+      "message": "",
+      "compareLegacy": false,
+      "attributionKind": "retrieval",
+      "attribution": "not-compared",
+      "current": {
+        "ok": true,
+        "transport": "local_sqlite_index",
+        "results": [
+          {
+            "path": "notes/personal-profile.md",
+            "snippet": "# Personal Profile Notes\n\n- Maya prefers async written updates over live calls.\n- Maya often travels with only a carry-on and prefers aisle seats.\n- Maya wants charts optimized for readability, especially high contrast.\n- When release notes are unclear, Maya wants the answer to name the exact tag instead of saying \\\"latest stable\\\" vaguely.\n- Maya does not want guesses presented as facts.",
+            "source": "memory",
+            "citation": "notes/personal-profile.md"
+          },
+          {
+            "path": "MEMORY.md",
+            "snippet": "# Long-Term Memory\n\n- Preferred name: Maya Chen.\n- Role: independent product engineer building a clinic analytics assistant.\n- Timezone: Asia/Shanghai.\n- Preferred reply style: concise bullets first, then a one-line rationale only if needed.\n- Strong dislike: avoid voice calls when async text will work.\n- Coffee order: oat milk flat white with no sugar.\n- Seat preference for flights: aisle seat.\n- Debugging rule: start from the smallest reproducible example before trying broad fixes.\n- Release rule: stable releases use semantic version tags in the form `vX.Y.Z`.\n- Default deploy region: `eu-west-1`.\n- Primary database version: PostgreSQL 16.\n- If memory is missing or conflicting and no current answer is available, say \\\"I don't know based on current memory.\\\"\n- Billing preference: monthly invoice, not annual prepaid.\n- Accessibility preference: high-contrast charts beat decorative gradients.",
+            "source": "memory",
+            "citation": "MEMORY.md"
+          },
+          {
+            "path": "memory/2026-04-12.md",
+            "snippet": "# Daily Memory 2026-04-12\n\n- Confirmed update: Maya switched the main editor from Vim to Zed last week.\n- Confirmed update: the clinic demo moved to next Tuesday at 15:00 Shanghai time.\n- Confirmed update: the deploy region decision is now `eu-west-1`; the older `us-east-1` draft should be ignored.\n- Current keyboard preference: tactile switches over linear red switches.\n- Current notebook for meetings: the charcoal A5 notebook, not the old blue pocket notebook.",
+            "source": "memory",
+            "citation": "memory/2026-04-12.md"
+          }
+        ],
+        "topFamilies": {
+          "notes/%": 1,
+          "MEMORY.md": 1,
+          "memory/%": 1
+        },
+        "provider": "local-sqlite",
+        "mode": "fallback",
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "sourcesOk": true,
+        "reason": "matched"
+      },
+      "legacy": null
+    },
+    {
+      "id": "cross-source-travel-search-3",
+      "category": "cross-source",
+      "entrypoint": "memory_search",
+      "query": "seat preference plus carry-on habit",
+      "message": "",
+      "compareLegacy": false,
+      "attributionKind": "retrieval",
+      "attribution": "not-compared",
+      "current": {
+        "ok": true,
+        "transport": "local_sqlite_index",
+        "results": [
+          {
+            "path": "notes/personal-profile.md",
+            "snippet": "# Personal Profile Notes\n\n- Maya prefers async written updates over live calls.\n- Maya often travels with only a carry-on and prefers aisle seats.\n- Maya wants charts optimized for readability, especially high contrast.\n- When release notes are unclear, Maya wants the answer to name the exact tag instead of saying \\\"latest stable\\\" vaguely.\n- Maya does not want guesses presented as facts.",
+            "source": "memory",
+            "citation": "notes/personal-profile.md"
+          },
+          {
+            "path": "MEMORY.md",
+            "snippet": "# Long-Term Memory\n\n- Preferred name: Maya Chen.\n- Role: independent product engineer building a clinic analytics assistant.\n- Timezone: Asia/Shanghai.\n- Preferred reply style: concise bullets first, then a one-line rationale only if needed.\n- Strong dislike: avoid voice calls when async text will work.\n- Coffee order: oat milk flat white with no sugar.\n- Seat preference for flights: aisle seat.\n- Debugging rule: start from the smallest reproducible example before trying broad fixes.\n- Release rule: stable releases use semantic version tags in the form `vX.Y.Z`.\n- Default deploy region: `eu-west-1`.\n- Primary database version: PostgreSQL 16.\n- If memory is missing or conflicting and no current answer is available, say \\\"I don't know based on current memory.\\\"\n- Billing preference: monthly invoice, not annual prepaid.\n- Accessibility preference: high-contrast charts beat decorative gradients.",
+            "source": "memory",
+            "citation": "MEMORY.md"
+          },
+          {
+            "path": "memory/2026-04-12.md",
+            "snippet": "# Daily Memory 2026-04-12\n\n- Confirmed update: Maya switched the main editor from Vim to Zed last week.\n- Confirmed update: the clinic demo moved to next Tuesday at 15:00 Shanghai time.\n- Confirmed update: the deploy region decision is now `eu-west-1`; the older `us-east-1` draft should be ignored.\n- Current keyboard preference: tactile switches over linear red switches.\n- Current notebook for meetings: the charcoal A5 notebook, not the old blue pocket notebook.",
+            "source": "memory",
+            "citation": "memory/2026-04-12.md"
+          }
+        ],
+        "topFamilies": {
+          "notes/%": 1,
+          "MEMORY.md": 1,
+          "memory/%": 1
+        },
+        "provider": "local-sqlite",
+        "mode": "fallback",
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "sourcesOk": true,
+        "reason": "matched"
+      },
+      "legacy": null
+    },
+    {
+      "id": "cross-source-travel-search-4",
+      "category": "cross-source",
+      "entrypoint": "memory_search",
+      "query": "aisle seat with only a carry-on",
+      "message": "",
+      "compareLegacy": false,
+      "attributionKind": "retrieval",
+      "attribution": "not-compared",
+      "current": {
+        "ok": true,
+        "transport": "local_sqlite_index",
+        "results": [
+          {
+            "path": "notes/personal-profile.md",
+            "snippet": "# Personal Profile Notes\n\n- Maya prefers async written updates over live calls.\n- Maya often travels with only a carry-on and prefers aisle seats.\n- Maya wants charts optimized for readability, especially high contrast.\n- When release notes are unclear, Maya wants the answer to name the exact tag instead of saying \\\"latest stable\\\" vaguely.\n- Maya does not want guesses presented as facts.",
+            "source": "memory",
+            "citation": "notes/personal-profile.md"
+          },
+          {
+            "path": "MEMORY.md",
+            "snippet": "# Long-Term Memory\n\n- Preferred name: Maya Chen.\n- Role: independent product engineer building a clinic analytics assistant.\n- Timezone: Asia/Shanghai.\n- Preferred reply style: concise bullets first, then a one-line rationale only if needed.\n- Strong dislike: avoid voice calls when async text will work.\n- Coffee order: oat milk flat white with no sugar.\n- Seat preference for flights: aisle seat.\n- Debugging rule: start from the smallest reproducible example before trying broad fixes.\n- Release rule: stable releases use semantic version tags in the form `vX.Y.Z`.\n- Default deploy region: `eu-west-1`.\n- Primary database version: PostgreSQL 16.\n- If memory is missing or conflicting and no current answer is available, say \\\"I don't know based on current memory.\\\"\n- Billing preference: monthly invoice, not annual prepaid.\n- Accessibility preference: high-contrast charts beat decorative gradients.",
+            "source": "memory",
+            "citation": "MEMORY.md"
+          },
+          {
+            "path": "notes/project-lantern.md",
+            "snippet": "# Project Lantern\n\nProject Lantern is a B2B analytics assistant for clinic managers.\n\nCurrent facts:\n\n- Codename: Lantern.\n- Current milestone: Stage 2 pilot.\n- Primary KPI: weekly active clinics.\n- Support SLA for pilot customers: respond within 4 business hours.\n- Design partner: Northwind Health.\n- Reporting cadence: send the pilot summary every Friday.\n- Launch city for the pilot: Singapore.",
+            "source": "memory",
+            "citation": "notes/project-lantern.md"
+          }
+        ],
+        "topFamilies": {
+          "notes/%": 2,
+          "MEMORY.md": 1
+        },
+        "provider": "local-sqlite",
+        "mode": "fallback",
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "sourcesOk": true,
+        "reason": "matched"
+      },
+      "legacy": null
+    },
+    {
+      "id": "cross-source-region-search-1",
+      "category": "cross-source",
+      "entrypoint": "memory_search",
+      "query": "current deploy region older us-east-1 ignored",
+      "message": "",
+      "compareLegacy": false,
+      "attributionKind": "temporal",
+      "attribution": "not-compared",
+      "current": {
+        "ok": true,
+        "transport": "local_sqlite_index",
+        "results": [
+          {
+            "path": "memory/2026-04-12.md",
+            "snippet": "# Daily Memory 2026-04-12\n\n- Confirmed update: Maya switched the main editor from Vim to Zed last week.\n- Confirmed update: the clinic demo moved to next Tuesday at 15:00 Shanghai time.\n- Confirmed update: the deploy region decision is now `eu-west-1`; the older `us-east-1` draft should be ignored.\n- Current keyboard preference: tactile switches over linear red switches.\n- Current notebook for meetings: the charcoal A5 notebook, not the old blue pocket notebook.",
+            "source": "memory",
+            "citation": "memory/2026-04-12.md"
+          },
+          {
+            "path": "MEMORY.md",
+            "snippet": "# Long-Term Memory\n\n- Preferred name: Maya Chen.\n- Role: independent product engineer building a clinic analytics assistant.\n- Timezone: Asia/Shanghai.\n- Preferred reply style: concise bullets first, then a one-line rationale only if needed.\n- Strong dislike: avoid voice calls when async text will work.\n- Coffee order: oat milk flat white with no sugar.\n- Seat preference for flights: aisle seat.\n- Debugging rule: start from the smallest reproducible example before trying broad fixes.\n- Release rule: stable releases use semantic version tags in the form `vX.Y.Z`.\n- Default deploy region: `eu-west-1`.\n- Primary database version: PostgreSQL 16.\n- If memory is missing or conflicting and no current answer is available, say \\\"I don't know based on current memory.\\\"\n- Billing preference: monthly invoice, not annual prepaid.\n- Accessibility preference: high-contrast charts beat decorative gradients.",
+            "source": "memory",
+            "citation": "MEMORY.md"
+          },
+          {
+            "path": "memory/2026-04-10.md",
+            "snippet": "# Daily Memory 2026-04-10\n\n- At that point Maya was still using Vim as the main editor.\n- The clinic demo was still planned for next Tuesday at 10:00 Shanghai time.\n- A draft note said the default deployment region might be `us-east-1`, but it was not finalized.",
+            "source": "memory",
+            "citation": "memory/2026-04-10.md"
+          },
+          {
+            "path": "notes/project-lantern.md",
+            "snippet": "# Project Lantern\n\nProject Lantern is a B2B analytics assistant for clinic managers.\n\nCurrent facts:\n\n- Codename: Lantern.\n- Current milestone: Stage 2 pilot.\n- Primary KPI: weekly active clinics.\n- Support SLA for pilot customers: respond within 4 business hours.\n- Design partner: Northwind Health.\n- Reporting cadence: send the pilot summary every Friday.\n- Launch city for the pilot: Singapore.",
+            "source": "memory",
+            "citation": "notes/project-lantern.md"
+          }
+        ],
+        "topFamilies": {
+          "memory/%": 2,
+          "MEMORY.md": 1,
+          "notes/%": 1
+        },
+        "provider": "local-sqlite",
+        "mode": "fallback",
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "sourcesOk": true,
+        "reason": "matched"
+      },
+      "legacy": null
+    },
+    {
+      "id": "cross-source-region-search-2",
+      "category": "cross-source",
+      "entrypoint": "memory_search",
+      "query": "deploy region final decision versus older draft",
+      "message": "",
+      "compareLegacy": false,
+      "attributionKind": "temporal",
+      "attribution": "not-compared",
+      "current": {
+        "ok": true,
+        "transport": "local_sqlite_index",
+        "results": [
+          {
+            "path": "memory/2026-04-12.md",
+            "snippet": "# Daily Memory 2026-04-12\n\n- Confirmed update: Maya switched the main editor from Vim to Zed last week.\n- Confirmed update: the clinic demo moved to next Tuesday at 15:00 Shanghai time.\n- Confirmed update: the deploy region decision is now `eu-west-1`; the older `us-east-1` draft should be ignored.\n- Current keyboard preference: tactile switches over linear red switches.\n- Current notebook for meetings: the charcoal A5 notebook, not the old blue pocket notebook.",
+            "source": "memory",
+            "citation": "memory/2026-04-12.md"
+          },
+          {
+            "path": "memory/2026-04-10.md",
+            "snippet": "# Daily Memory 2026-04-10\n\n- At that point Maya was still using Vim as the main editor.\n- The clinic demo was still planned for next Tuesday at 10:00 Shanghai time.\n- A draft note said the default deployment region might be `us-east-1`, but it was not finalized.",
+            "source": "memory",
+            "citation": "memory/2026-04-10.md"
+          },
+          {
+            "path": "MEMORY.md",
+            "snippet": "# Long-Term Memory\n\n- Preferred name: Maya Chen.\n- Role: independent product engineer building a clinic analytics assistant.\n- Timezone: Asia/Shanghai.\n- Preferred reply style: concise bullets first, then a one-line rationale only if needed.\n- Strong dislike: avoid voice calls when async text will work.\n- Coffee order: oat milk flat white with no sugar.\n- Seat preference for flights: aisle seat.\n- Debugging rule: start from the smallest reproducible example before trying broad fixes.\n- Release rule: stable releases use semantic version tags in the form `vX.Y.Z`.\n- Default deploy region: `eu-west-1`.\n- Primary database version: PostgreSQL 16.\n- If memory is missing or conflicting and no current answer is available, say \\\"I don't know based on current memory.\\\"\n- Billing preference: monthly invoice, not annual prepaid.\n- Accessibility preference: high-contrast charts beat decorative gradients.",
+            "source": "memory",
+            "citation": "MEMORY.md"
+          }
+        ],
+        "topFamilies": {
+          "memory/%": 2,
+          "MEMORY.md": 1
+        },
+        "provider": "local-sqlite",
+        "mode": "fallback",
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "sourcesOk": true,
+        "reason": "matched"
+      },
+      "legacy": null
+    },
+    {
+      "id": "cross-source-region-search-3",
+      "category": "cross-source",
+      "entrypoint": "memory_search",
+      "query": "eu-west-1 current and us-east-1 draft",
+      "message": "",
+      "compareLegacy": false,
+      "attributionKind": "temporal",
+      "attribution": "not-compared",
+      "current": {
+        "ok": true,
+        "transport": "local_sqlite_index",
+        "results": [
+          {
+            "path": "memory/2026-04-12.md",
+            "snippet": "# Daily Memory 2026-04-12\n\n- Confirmed update: Maya switched the main editor from Vim to Zed last week.\n- Confirmed update: the clinic demo moved to next Tuesday at 15:00 Shanghai time.\n- Confirmed update: the deploy region decision is now `eu-west-1`; the older `us-east-1` draft should be ignored.\n- Current keyboard preference: tactile switches over linear red switches.\n- Current notebook for meetings: the charcoal A5 notebook, not the old blue pocket notebook.",
+            "source": "memory",
+            "citation": "memory/2026-04-12.md"
+          },
+          {
+            "path": "MEMORY.md",
+            "snippet": "# Long-Term Memory\n\n- Preferred name: Maya Chen.\n- Role: independent product engineer building a clinic analytics assistant.\n- Timezone: Asia/Shanghai.\n- Preferred reply style: concise bullets first, then a one-line rationale only if needed.\n- Strong dislike: avoid voice calls when async text will work.\n- Coffee order: oat milk flat white with no sugar.\n- Seat preference for flights: aisle seat.\n- Debugging rule: start from the smallest reproducible example before trying broad fixes.\n- Release rule: stable releases use semantic version tags in the form `vX.Y.Z`.\n- Default deploy region: `eu-west-1`.\n- Primary database version: PostgreSQL 16.\n- If memory is missing or conflicting and no current answer is available, say \\\"I don't know based on current memory.\\\"\n- Billing preference: monthly invoice, not annual prepaid.\n- Accessibility preference: high-contrast charts beat decorative gradients.",
+            "source": "memory",
+            "citation": "MEMORY.md"
+          },
+          {
+            "path": "memory/2026-04-10.md",
+            "snippet": "# Daily Memory 2026-04-10\n\n- At that point Maya was still using Vim as the main editor.\n- The clinic demo was still planned for next Tuesday at 10:00 Shanghai time.\n- A draft note said the default deployment region might be `us-east-1`, but it was not finalized.",
+            "source": "memory",
+            "citation": "memory/2026-04-10.md"
+          },
+          {
+            "path": "notes/project-lantern.md",
+            "snippet": "# Project Lantern\n\nProject Lantern is a B2B analytics assistant for clinic managers.\n\nCurrent facts:\n\n- Codename: Lantern.\n- Current milestone: Stage 2 pilot.\n- Primary KPI: weekly active clinics.\n- Support SLA for pilot customers: respond within 4 business hours.\n- Design partner: Northwind Health.\n- Reporting cadence: send the pilot summary every Friday.\n- Launch city for the pilot: Singapore.",
+            "source": "memory",
+            "citation": "notes/project-lantern.md"
+          },
+          {
+            "path": "notes/personal-profile.md",
+            "snippet": "# Personal Profile Notes\n\n- Maya prefers async written updates over live calls.\n- Maya often travels with only a carry-on and prefers aisle seats.\n- Maya wants charts optimized for readability, especially high contrast.\n- When release notes are unclear, Maya wants the answer to name the exact tag instead of saying \\\"latest stable\\\" vaguely.\n- Maya does not want guesses presented as facts.",
+            "source": "memory",
+            "citation": "notes/personal-profile.md"
+          }
+        ],
+        "topFamilies": {
+          "memory/%": 2,
+          "MEMORY.md": 1,
+          "notes/%": 2
+        },
+        "provider": "local-sqlite",
+        "mode": "fallback",
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "sourcesOk": true,
+        "reason": "matched"
+      },
+      "legacy": null
+    },
+    {
+      "id": "cross-source-region-search-4",
+      "category": "cross-source",
+      "entrypoint": "memory_search",
+      "query": "which region is current and what older draft should be ignored",
+      "message": "",
+      "compareLegacy": false,
+      "attributionKind": "temporal",
+      "attribution": "not-compared",
+      "current": {
+        "ok": true,
+        "transport": "local_sqlite_index",
+        "results": [
+          {
+            "path": "memory/2026-04-12.md",
+            "snippet": "# Daily Memory 2026-04-12\n\n- Confirmed update: Maya switched the main editor from Vim to Zed last week.\n- Confirmed update: the clinic demo moved to next Tuesday at 15:00 Shanghai time.\n- Confirmed update: the deploy region decision is now `eu-west-1`; the older `us-east-1` draft should be ignored.\n- Current keyboard preference: tactile switches over linear red switches.\n- Current notebook for meetings: the charcoal A5 notebook, not the old blue pocket notebook.",
+            "source": "memory",
+            "citation": "memory/2026-04-12.md"
+          },
+          {
+            "path": "MEMORY.md",
+            "snippet": "# Long-Term Memory\n\n- Preferred name: Maya Chen.\n- Role: independent product engineer building a clinic analytics assistant.\n- Timezone: Asia/Shanghai.\n- Preferred reply style: concise bullets first, then a one-line rationale only if needed.\n- Strong dislike: avoid voice calls when async text will work.\n- Coffee order: oat milk flat white with no sugar.\n- Seat preference for flights: aisle seat.\n- Debugging rule: start from the smallest reproducible example before trying broad fixes.\n- Release rule: stable releases use semantic version tags in the form `vX.Y.Z`.\n- Default deploy region: `eu-west-1`.\n- Primary database version: PostgreSQL 16.\n- If memory is missing or conflicting and no current answer is available, say \\\"I don't know based on current memory.\\\"\n- Billing preference: monthly invoice, not annual prepaid.\n- Accessibility preference: high-contrast charts beat decorative gradients.",
+            "source": "memory",
+            "citation": "MEMORY.md"
+          },
+          {
+            "path": "memory/2026-04-10.md",
+            "snippet": "# Daily Memory 2026-04-10\n\n- At that point Maya was still using Vim as the main editor.\n- The clinic demo was still planned for next Tuesday at 10:00 Shanghai time.\n- A draft note said the default deployment region might be `us-east-1`, but it was not finalized.",
+            "source": "memory",
+            "citation": "memory/2026-04-10.md"
+          },
+          {
+            "path": "notes/project-lantern.md",
+            "snippet": "# Project Lantern\n\nProject Lantern is a B2B analytics assistant for clinic managers.\n\nCurrent facts:\n\n- Codename: Lantern.\n- Current milestone: Stage 2 pilot.\n- Primary KPI: weekly active clinics.\n- Support SLA for pilot customers: respond within 4 business hours.\n- Design partner: Northwind Health.\n- Reporting cadence: send the pilot summary every Friday.\n- Launch city for the pilot: Singapore.",
+            "source": "memory",
+            "citation": "notes/project-lantern.md"
+          },
+          {
+            "path": "notes/personal-profile.md",
+            "snippet": "# Personal Profile Notes\n\n- Maya prefers async written updates over live calls.\n- Maya often travels with only a carry-on and prefers aisle seats.\n- Maya wants charts optimized for readability, especially high contrast.\n- When release notes are unclear, Maya wants the answer to name the exact tag instead of saying \\\"latest stable\\\" vaguely.\n- Maya does not want guesses presented as facts.",
+            "source": "memory",
+            "citation": "notes/personal-profile.md"
+          }
+        ],
+        "topFamilies": {
+          "memory/%": 2,
+          "MEMORY.md": 1,
+          "notes/%": 2
+        },
+        "provider": "local-sqlite",
+        "mode": "fallback",
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "sourcesOk": true,
+        "reason": "matched"
+      },
+      "legacy": null
+    },
+    {
+      "id": "supersede-editor-search-1",
+      "category": "supersede",
+      "entrypoint": "memory_search",
+      "query": "current editor and previous editor",
+      "message": "",
+      "compareLegacy": false,
+      "attributionKind": "temporal",
+      "attribution": "not-compared",
+      "current": {
+        "ok": true,
+        "transport": "local_sqlite_index",
+        "results": [
+          {
+            "path": "MEMORY.md",
+            "snippet": "# Long-Term Memory\n\n- Preferred name: Maya Chen.\n- Role: independent product engineer building a clinic analytics assistant.\n- Timezone: Asia/Shanghai.\n- Preferred reply style: concise bullets first, then a one-line rationale only if needed.\n- Strong dislike: avoid voice calls when async text will work.\n- Coffee order: oat milk flat white with no sugar.\n- Seat preference for flights: aisle seat.\n- Debugging rule: start from the smallest reproducible example before trying broad fixes.\n- Release rule: stable releases use semantic version tags in the form `vX.Y.Z`.\n- Default deploy region: `eu-west-1`.\n- Primary database version: PostgreSQL 16.\n- If memory is missing or conflicting and no current answer is available, say \\\"I don't know based on current memory.\\\"\n- Billing preference: monthly invoice, not annual prepaid.\n- Accessibility preference: high-contrast charts beat decorative gradients.",
+            "source": "memory",
+            "citation": "MEMORY.md"
+          },
+          {
+            "path": "memory/2026-04-12.md",
+            "snippet": "# Daily Memory 2026-04-12\n\n- Confirmed update: Maya switched the main editor from Vim to Zed last week.\n- Confirmed update: the clinic demo moved to next Tuesday at 15:00 Shanghai time.\n- Confirmed update: the deploy region decision is now `eu-west-1`; the older `us-east-1` draft should be ignored.\n- Current keyboard preference: tactile switches over linear red switches.\n- Current notebook for meetings: the charcoal A5 notebook, not the old blue pocket notebook.",
+            "source": "memory",
+            "citation": "memory/2026-04-12.md"
+          },
+          {
+            "path": "notes/project-lantern.md",
+            "snippet": "# Project Lantern\n\nProject Lantern is a B2B analytics assistant for clinic managers.\n\nCurrent facts:\n\n- Codename: Lantern.\n- Current milestone: Stage 2 pilot.\n- Primary KPI: weekly active clinics.\n- Support SLA for pilot customers: respond within 4 business hours.\n- Design partner: Northwind Health.\n- Reporting cadence: send the pilot summary every Friday.\n- Launch city for the pilot: Singapore.",
+            "source": "memory",
+            "citation": "notes/project-lantern.md"
+          },
+          {
+            "path": "notes/personal-profile.md",
+            "snippet": "# Personal Profile Notes\n\n- Maya prefers async written updates over live calls.\n- Maya often travels with only a carry-on and prefers aisle seats.\n- Maya wants charts optimized for readability, especially high contrast.\n- When release notes are unclear, Maya wants the answer to name the exact tag instead of saying \\\"latest stable\\\" vaguely.\n- Maya does not want guesses presented as facts.",
+            "source": "memory",
+            "citation": "notes/personal-profile.md"
+          },
+          {
+            "path": "memory/2026-04-10.md",
+            "snippet": "# Daily Memory 2026-04-10\n\n- At that point Maya was still using Vim as the main editor.\n- The clinic demo was still planned for next Tuesday at 10:00 Shanghai time.\n- A draft note said the default deployment region might be `us-east-1`, but it was not finalized.",
+            "source": "memory",
+            "citation": "memory/2026-04-10.md"
+          }
+        ],
+        "topFamilies": {
+          "MEMORY.md": 1,
+          "memory/%": 2,
+          "notes/%": 2
+        },
+        "provider": "local-sqlite",
+        "mode": "fallback",
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "sourcesOk": true,
+        "reason": "matched"
+      },
+      "legacy": null
+    },
+    {
+      "id": "supersede-editor-search-2",
+      "category": "supersede",
+      "entrypoint": "memory_search",
+      "query": "Zed replaced Vim",
+      "message": "",
+      "compareLegacy": false,
+      "attributionKind": "temporal",
+      "attribution": "not-compared",
+      "current": {
+        "ok": true,
+        "transport": "local_sqlite_index",
+        "results": [
+          {
+            "path": "memory/2026-04-10.md",
+            "snippet": "# Daily Memory 2026-04-10\n\n- At that point Maya was still using Vim as the main editor.\n- The clinic demo was still planned for next Tuesday at 10:00 Shanghai time.\n- A draft note said the default deployment region might be `us-east-1`, but it was not finalized.",
+            "source": "memory",
+            "citation": "memory/2026-04-10.md"
+          },
+          {
+            "path": "memory/2026-04-12.md",
+            "snippet": "# Daily Memory 2026-04-12\n\n- Confirmed update: Maya switched the main editor from Vim to Zed last week.\n- Confirmed update: the clinic demo moved to next Tuesday at 15:00 Shanghai time.\n- Confirmed update: the deploy region decision is now `eu-west-1`; the older `us-east-1` draft should be ignored.\n- Current keyboard preference: tactile switches over linear red switches.\n- Current notebook for meetings: the charcoal A5 notebook, not the old blue pocket notebook.",
+            "source": "memory",
+            "citation": "memory/2026-04-12.md"
+          },
+          {
+            "path": "notes/personal-profile.md",
+            "snippet": "# Personal Profile Notes\n\n- Maya prefers async written updates over live calls.\n- Maya often travels with only a carry-on and prefers aisle seats.\n- Maya wants charts optimized for readability, especially high contrast.\n- When release notes are unclear, Maya wants the answer to name the exact tag instead of saying \\\"latest stable\\\" vaguely.\n- Maya does not want guesses presented as facts.",
+            "source": "memory",
+            "citation": "notes/personal-profile.md"
+          }
+        ],
+        "topFamilies": {
+          "memory/%": 2,
+          "notes/%": 1
+        },
+        "provider": "local-sqlite",
+        "mode": "fallback",
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "sourcesOk": true,
+        "reason": "matched"
+      },
+      "legacy": null
+    },
+    {
+      "id": "supersede-editor-search-3",
+      "category": "supersede",
+      "entrypoint": "memory_search",
+      "query": "what editor is current versus older",
+      "message": "",
+      "compareLegacy": false,
+      "attributionKind": "temporal",
+      "attribution": "not-compared",
+      "current": {
+        "ok": true,
+        "transport": "local_sqlite_index",
+        "results": [
+          {
+            "path": "memory/2026-04-12.md",
+            "snippet": "# Daily Memory 2026-04-12\n\n- Confirmed update: Maya switched the main editor from Vim to Zed last week.\n- Confirmed update: the clinic demo moved to next Tuesday at 15:00 Shanghai time.\n- Confirmed update: the deploy region decision is now `eu-west-1`; the older `us-east-1` draft should be ignored.\n- Current keyboard preference: tactile switches over linear red switches.\n- Current notebook for meetings: the charcoal A5 notebook, not the old blue pocket notebook.",
+            "source": "memory",
+            "citation": "memory/2026-04-12.md"
+          },
+          {
+            "path": "MEMORY.md",
+            "snippet": "# Long-Term Memory\n\n- Preferred name: Maya Chen.\n- Role: independent product engineer building a clinic analytics assistant.\n- Timezone: Asia/Shanghai.\n- Preferred reply style: concise bullets first, then a one-line rationale only if needed.\n- Strong dislike: avoid voice calls when async text will work.\n- Coffee order: oat milk flat white with no sugar.\n- Seat preference for flights: aisle seat.\n- Debugging rule: start from the smallest reproducible example before trying broad fixes.\n- Release rule: stable releases use semantic version tags in the form `vX.Y.Z`.\n- Default deploy region: `eu-west-1`.\n- Primary database version: PostgreSQL 16.\n- If memory is missing or conflicting and no current answer is available, say \\\"I don't know based on current memory.\\\"\n- Billing preference: monthly invoice, not annual prepaid.\n- Accessibility preference: high-contrast charts beat decorative gradients.",
+            "source": "memory",
+            "citation": "MEMORY.md"
+          },
+          {
+            "path": "notes/project-lantern.md",
+            "snippet": "# Project Lantern\n\nProject Lantern is a B2B analytics assistant for clinic managers.\n\nCurrent facts:\n\n- Codename: Lantern.\n- Current milestone: Stage 2 pilot.\n- Primary KPI: weekly active clinics.\n- Support SLA for pilot customers: respond within 4 business hours.\n- Design partner: Northwind Health.\n- Reporting cadence: send the pilot summary every Friday.\n- Launch city for the pilot: Singapore.",
+            "source": "memory",
+            "citation": "notes/project-lantern.md"
+          },
+          {
+            "path": "memory/2026-04-10.md",
+            "snippet": "# Daily Memory 2026-04-10\n\n- At that point Maya was still using Vim as the main editor.\n- The clinic demo was still planned for next Tuesday at 10:00 Shanghai time.\n- A draft note said the default deployment region might be `us-east-1`, but it was not finalized.",
+            "source": "memory",
+            "citation": "memory/2026-04-10.md"
+          },
+          {
+            "path": "notes/personal-profile.md",
+            "snippet": "# Personal Profile Notes\n\n- Maya prefers async written updates over live calls.\n- Maya often travels with only a carry-on and prefers aisle seats.\n- Maya wants charts optimized for readability, especially high contrast.\n- When release notes are unclear, Maya wants the answer to name the exact tag instead of saying \\\"latest stable\\\" vaguely.\n- Maya does not want guesses presented as facts.",
+            "source": "memory",
+            "citation": "notes/personal-profile.md"
+          }
+        ],
+        "topFamilies": {
+          "memory/%": 2,
+          "MEMORY.md": 1,
+          "notes/%": 2
+        },
+        "provider": "local-sqlite",
+        "mode": "fallback",
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "sourcesOk": true,
+        "reason": "matched"
+      },
+      "legacy": null
+    },
+    {
+      "id": "supersede-demo-search-1",
+      "category": "supersede",
+      "entrypoint": "memory_search",
+      "query": "clinic demo now versus before",
+      "message": "",
+      "compareLegacy": false,
+      "attributionKind": "temporal",
+      "attribution": "not-compared",
+      "current": {
+        "ok": true,
+        "transport": "local_sqlite_index",
+        "results": [
+          {
+            "path": "MEMORY.md",
+            "snippet": "# Long-Term Memory\n\n- Preferred name: Maya Chen.\n- Role: independent product engineer building a clinic analytics assistant.\n- Timezone: Asia/Shanghai.\n- Preferred reply style: concise bullets first, then a one-line rationale only if needed.\n- Strong dislike: avoid voice calls when async text will work.\n- Coffee order: oat milk flat white with no sugar.\n- Seat preference for flights: aisle seat.\n- Debugging rule: start from the smallest reproducible example before trying broad fixes.\n- Release rule: stable releases use semantic version tags in the form `vX.Y.Z`.\n- Default deploy region: `eu-west-1`.\n- Primary database version: PostgreSQL 16.\n- If memory is missing or conflicting and no current answer is available, say \\\"I don't know based on current memory.\\\"\n- Billing preference: monthly invoice, not annual prepaid.\n- Accessibility preference: high-contrast charts beat decorative gradients.",
+            "source": "memory",
+            "citation": "MEMORY.md"
+          },
+          {
+            "path": "memory/2026-04-12.md",
+            "snippet": "# Daily Memory 2026-04-12\n\n- Confirmed update: Maya switched the main editor from Vim to Zed last week.\n- Confirmed update: the clinic demo moved to next Tuesday at 15:00 Shanghai time.\n- Confirmed update: the deploy region decision is now `eu-west-1`; the older `us-east-1` draft should be ignored.\n- Current keyboard preference: tactile switches over linear red switches.\n- Current notebook for meetings: the charcoal A5 notebook, not the old blue pocket notebook.",
+            "source": "memory",
+            "citation": "memory/2026-04-12.md"
+          },
+          {
+            "path": "memory/2026-04-10.md",
+            "snippet": "# Daily Memory 2026-04-10\n\n- At that point Maya was still using Vim as the main editor.\n- The clinic demo was still planned for next Tuesday at 10:00 Shanghai time.\n- A draft note said the default deployment region might be `us-east-1`, but it was not finalized.",
+            "source": "memory",
+            "citation": "memory/2026-04-10.md"
+          },
+          {
+            "path": "notes/project-lantern.md",
+            "snippet": "# Project Lantern\n\nProject Lantern is a B2B analytics assistant for clinic managers.\n\nCurrent facts:\n\n- Codename: Lantern.\n- Current milestone: Stage 2 pilot.\n- Primary KPI: weekly active clinics.\n- Support SLA for pilot customers: respond within 4 business hours.\n- Design partner: Northwind Health.\n- Reporting cadence: send the pilot summary every Friday.\n- Launch city for the pilot: Singapore.",
+            "source": "memory",
+            "citation": "notes/project-lantern.md"
+          }
+        ],
+        "topFamilies": {
+          "MEMORY.md": 1,
+          "memory/%": 2,
+          "notes/%": 1
+        },
+        "provider": "local-sqlite",
+        "mode": "fallback",
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "sourcesOk": true,
+        "reason": "matched"
+      },
+      "legacy": null
+    },
+    {
+      "id": "supersede-demo-search-2",
+      "category": "supersede",
+      "entrypoint": "memory_search",
+      "query": "15:00 demo replaced 10:00",
+      "message": "",
+      "compareLegacy": false,
+      "attributionKind": "temporal",
+      "attribution": "not-compared",
+      "current": {
+        "ok": true,
+        "transport": "local_sqlite_index",
+        "results": [
+          {
+            "path": "memory/2026-04-12.md",
+            "snippet": "# Daily Memory 2026-04-12\n\n- Confirmed update: Maya switched the main editor from Vim to Zed last week.\n- Confirmed update: the clinic demo moved to next Tuesday at 15:00 Shanghai time.\n- Confirmed update: the deploy region decision is now `eu-west-1`; the older `us-east-1` draft should be ignored.\n- Current keyboard preference: tactile switches over linear red switches.\n- Current notebook for meetings: the charcoal A5 notebook, not the old blue pocket notebook.",
+            "source": "memory",
+            "citation": "memory/2026-04-12.md"
+          },
+          {
+            "path": "memory/2026-04-10.md",
+            "snippet": "# Daily Memory 2026-04-10\n\n- At that point Maya was still using Vim as the main editor.\n- The clinic demo was still planned for next Tuesday at 10:00 Shanghai time.\n- A draft note said the default deployment region might be `us-east-1`, but it was not finalized.",
+            "source": "memory",
+            "citation": "memory/2026-04-10.md"
+          }
+        ],
+        "topFamilies": {
+          "memory/%": 2
+        },
+        "provider": "local-sqlite",
+        "mode": "fallback",
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "sourcesOk": true,
+        "reason": "matched"
+      },
+      "legacy": null
+    },
+    {
+      "id": "supersede-demo-search-3",
+      "category": "supersede",
+      "entrypoint": "memory_search",
+      "query": "current clinic demo time and previous time",
+      "message": "",
+      "compareLegacy": false,
+      "attributionKind": "temporal",
+      "attribution": "not-compared",
+      "current": {
+        "ok": true,
+        "transport": "local_sqlite_index",
+        "results": [
+          {
+            "path": "MEMORY.md",
+            "snippet": "# Long-Term Memory\n\n- Preferred name: Maya Chen.\n- Role: independent product engineer building a clinic analytics assistant.\n- Timezone: Asia/Shanghai.\n- Preferred reply style: concise bullets first, then a one-line rationale only if needed.\n- Strong dislike: avoid voice calls when async text will work.\n- Coffee order: oat milk flat white with no sugar.\n- Seat preference for flights: aisle seat.\n- Debugging rule: start from the smallest reproducible example before trying broad fixes.\n- Release rule: stable releases use semantic version tags in the form `vX.Y.Z`.\n- Default deploy region: `eu-west-1`.\n- Primary database version: PostgreSQL 16.\n- If memory is missing or conflicting and no current answer is available, say \\\"I don't know based on current memory.\\\"\n- Billing preference: monthly invoice, not annual prepaid.\n- Accessibility preference: high-contrast charts beat decorative gradients.",
+            "source": "memory",
+            "citation": "MEMORY.md"
+          },
+          {
+            "path": "memory/2026-04-12.md",
+            "snippet": "# Daily Memory 2026-04-12\n\n- Confirmed update: Maya switched the main editor from Vim to Zed last week.\n- Confirmed update: the clinic demo moved to next Tuesday at 15:00 Shanghai time.\n- Confirmed update: the deploy region decision is now `eu-west-1`; the older `us-east-1` draft should be ignored.\n- Current keyboard preference: tactile switches over linear red switches.\n- Current notebook for meetings: the charcoal A5 notebook, not the old blue pocket notebook.",
+            "source": "memory",
+            "citation": "memory/2026-04-12.md"
+          },
+          {
+            "path": "memory/2026-04-10.md",
+            "snippet": "# Daily Memory 2026-04-10\n\n- At that point Maya was still using Vim as the main editor.\n- The clinic demo was still planned for next Tuesday at 10:00 Shanghai time.\n- A draft note said the default deployment region might be `us-east-1`, but it was not finalized.",
+            "source": "memory",
+            "citation": "memory/2026-04-10.md"
+          },
+          {
+            "path": "notes/project-lantern.md",
+            "snippet": "# Project Lantern\n\nProject Lantern is a B2B analytics assistant for clinic managers.\n\nCurrent facts:\n\n- Codename: Lantern.\n- Current milestone: Stage 2 pilot.\n- Primary KPI: weekly active clinics.\n- Support SLA for pilot customers: respond within 4 business hours.\n- Design partner: Northwind Health.\n- Reporting cadence: send the pilot summary every Friday.\n- Launch city for the pilot: Singapore.",
+            "source": "memory",
+            "citation": "notes/project-lantern.md"
+          },
+          {
+            "path": "notes/personal-profile.md",
+            "snippet": "# Personal Profile Notes\n\n- Maya prefers async written updates over live calls.\n- Maya often travels with only a carry-on and prefers aisle seats.\n- Maya wants charts optimized for readability, especially high contrast.\n- When release notes are unclear, Maya wants the answer to name the exact tag instead of saying \\\"latest stable\\\" vaguely.\n- Maya does not want guesses presented as facts.",
+            "source": "memory",
+            "citation": "notes/personal-profile.md"
+          }
+        ],
+        "topFamilies": {
+          "MEMORY.md": 1,
+          "memory/%": 2,
+          "notes/%": 2
         },
         "provider": "local-sqlite",
         "mode": "fallback",

@@ -11,7 +11,7 @@
 
 ## Active Slice
 
-`build-openclaw-cli-100-case-benchmark`
+`plan-200-case-benchmark-and-main-path-performance`
 
 ## Done
 
@@ -55,10 +55,15 @@
   - 已安装插件的真实 `after_tool_call` hook 已在 canonical registry 上写入一条 canary `accepted_action`：`target_fact` 成功 promote，`outcome_artifact` 保持 observation
 - post-Stage-5 评测驱动优化的第一轮 baseline 已落地：
   - repo 内已新增 `evals/openclaw-cli-memory-fixture/` fixture 镜像，覆盖稳定事实、项目知识、旧状态和当前状态
-  - `evals/openclaw-cli-memory-benchmark-cases.js` 已定义 `129` 个 benchmark case
-  - `scripts/eval-openclaw-cli-memory-benchmark.js` 已成为统一 benchmark 入口，支持 case filtering、Markdown/JSON 报告和关键 legacy attribution
-  - retrieval-heavy host-index benchmark 已完成：`111/111`
+  - `evals/openclaw-cli-memory-benchmark-cases.js` 已扩到 `187` 个 benchmark case，其中 `62` 条是 live `openclaw agent` answer-level case
+  - `scripts/eval-openclaw-cli-memory-benchmark.js` 已成为统一 benchmark 入口，支持 case filtering、entrypoint filtering、Markdown/JSON 报告和关键 legacy attribution
+  - `scripts/eval-openclaw-cli-agent-answer-matrix.js` 已补上专门的 answer-level matrix 入口
+  - `scripts/watch-openclaw-memory-search-transport.js` 已把 raw `openclaw memory search` transport 单独收口成 watchlist
+  - retrieval-heavy host-index benchmark 已扩到：`125/125`
+  - transport watchlist 首轮结果：`17/24` raw ok，`7` 条 empty-result，不再与算法判断混在一起
+  - live answer-level current-path 子矩阵已自动化，但当前结果是红的：`0/36`
   - benchmark-driven 第一轮修复已落地：`guessing policy` query rewrite 与 fallback rewrite fan-out 已补齐，失败项归零
+  - answer-level benchmark wrapper prompt 现在会在 query rewrite 前被剥掉，不再让 `Based only on your memory...` 这类测试包装语污染 retrieval query
   - 总览报告已补齐：[reports/generated/openclaw-cli-memory-eval-program-2026-04-14.md](../reports/generated/openclaw-cli-memory-eval-program-2026-04-14.md)
 - control-surface 与 host-neutral workstream docs 已再次对齐：
   - 不再把 canonical-root cutover 描述成“仍待决定的窗口”
@@ -82,8 +87,10 @@
   - `openclaw plugins list`：`pass`
   - `openclaw plugins inspect unified-memory-core --json`：`pass`（loaded/install version `0.2.1`）
   - `npm run runtime:check`：`pass`
-  - `node --test test/openclaw-cli-memory-benchmark-cases.test.js test/query-rewrite.test.js`：`pass`
-  - `node scripts/eval-openclaw-cli-memory-benchmark.js --categories profile,preference,rule,project,temporal-current,temporal-history ...`：`111/111`
+  - `node --test test/openclaw-cli-memory-benchmark-cases.test.js test/query-rewrite.test.js test/openclaw-memory-search-transport-watch.test.js`：`pass`
+  - `node scripts/eval-openclaw-cli-memory-benchmark.js --entrypoints memory_search --skip-legacy ...`：`125/125`
+  - `node scripts/watch-openclaw-memory-search-transport.js --format markdown`：`17/24 raw ok；7 watchlist`
+  - `node scripts/eval-openclaw-cli-agent-answer-matrix.js --skip-legacy --max-cases 36 --format markdown`：`0/36`（当前 answer-level host path red）
   - `npm run umc:cli -- registry migrate --source-dir ~/.openclaw/unified-memory-core/registry --target-dir ~/.unified-memory-core/registry --format markdown`：`noop / adopt_canonical_root`
   - `npm run umc:cli -- review split-rehearsal --source-dir ~/.unified-memory-core/registry --target-dir /tmp/umc-split-rehearsal --format markdown`：`pass`
   - `npm run smoke:eval -- --format markdown`：`28/28`
@@ -95,7 +102,8 @@
 
 ## In Progress
 
-- 准备下一轮更大规模的 live `openclaw agent` answer-level matrix，而不是停留在当前 `20-case` current-path + 关键 A/B
+- 下一阶段已明确切到两条 planning 主线：`200` case 更全面 benchmark planning，以及主链路性能专项 planning
+- 当前 live `openclaw agent` answer-level path 需要单独看待：retrieval-heavy `125/125` 与 transport watchlist 已拆开，但当前 `agent` 子矩阵 `0/36`，说明宿主问答链路现在没有把同一份记忆有效用起来
 - 保持 release-preflight、bundle install、host smoke、Stage 5 acceptance 证据持续为绿
 - 保持 host-neutral root policy 在 CLI、公开文档和控制面里持续一致
 - 保持 project/workstream roadmap 摘要与新的评测驱动主线持续一致
@@ -106,16 +114,16 @@
 
 ## Blockers / Open Decisions
 
-- none at the implementation layer
+- answer-level host path 当前是红的：live `openclaw agent` 子矩阵 `0/36`
 - operator / planning follow-up 只剩：
   - 什么时候清理过时的 legacy root 副本
   - accepted-action Step 48-52 何时具备重开实现的前置条件
 
 ## Next 3 Actions
 
-1. 把 live `openclaw agent` answer-level matrix 从当前 `20-case` current-path 扩到更大规模，并继续保留关键 A/B。
-2. 继续扩充 retrieval-heavy benchmark 到更多冲突、supersede、跨来源混合场景。
-3. 单独收敛 raw `openclaw memory search` transport instability，避免宿主问题污染算法判断。
+1. review 当前 benchmark 覆盖面并规划到 `200` case，要求覆盖面比数量更重要，且中文案例占比达到 `50%`。
+2. 制定主链路性能专项计划，先拿到 retrieval / assembly / answer-level 的基线，再决定优化顺序。
+3. 把当前 red 的 answer-level host path 单独列成下一轮 triage 输入，而不是继续和 raw transport / retrieval benchmark 混在一起。
 
 ## Architecture Supervision
 - Signal: `yellow`
@@ -132,24 +140,20 @@
 
 ## Current Execution Line
 
-- Objective: 保持 post-Stage-5 的 operator baseline、project/workstream roadmap 摘要和 canonical-root policy 同时稳定
-- Plan Link: `build-openclaw-cli-100-case-benchmark`
-- Runway: benchmark design、case expansion、A/B attribution、failure triage、algorithm iteration、report refresh；并行守住 release-preflight 和 canonical-root policy
-- Progress: `6 / 6` tasks complete
+- Objective: 收口 `187` case benchmark、answer-level matrix 和 transport watchlist 的当前真相，并把下一阶段切到 `200` case coverage planning + main-path performance planning
+- Plan Link: `plan-200-case-benchmark-and-main-path-performance`
+- Runway: benchmark coverage review、中文占比约束、answer-level red-path triage input、main-path perf planning、report refresh；并行守住 release-preflight 和 canonical-root policy
+- Progress: `3 / 3` tasks complete
 - Stop Conditions:
-  - benchmark case design drifts away from real OpenClaw CLI entrypoints
-  - attribution evidence can no longer explain capability source clearly
-  - live topology regresses to `legacy_fallback`
-  - later planning pressure tries to reopen a new enhancement phase without benchmark stability
+  - benchmark coverage review degenerates into pure case count chasing
+  - answer-level host-path regression gets misclassified as raw transport or retrieval quality
+  - main-path performance planning starts before baseline evidence is written down
 
 ## Execution Tasks
 
-- [x] EL-1 define the `100+` OpenClaw CLI benchmark matrix and category coverage
-- [x] EL-2 expand the current 20 cases into `129` reproducible benchmark cases
-- [x] EL-3 add `legacy / unified / bootstrap / retrieval` attribution notes to benchmark-critical cases
-- [x] EL-4 run the first larger benchmark pass and summarize failures
-- [x] EL-5 implement the first benchmark-driven algorithm fixes and rerun the affected cases
-- [x] EL-6 refresh roadmap / reports / control-surface state and push the benchmark iteration to GitHub
+- [x] EL-1 expand the benchmark matrix to `187` cases, including a much larger agent answer-level surface
+- [x] EL-2 extend retrieval-heavy benchmark coverage to cross-source and supersede scenarios and rerun it green (`125/125`)
+- [x] EL-3 separate raw transport instability into a dedicated watchlist and refresh reports / control-surface state
 
 ## Development Log Capture
 

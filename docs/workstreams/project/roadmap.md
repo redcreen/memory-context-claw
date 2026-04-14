@@ -90,7 +90,7 @@ flowchart TB
 | Core capture / fact-card / assembly | `completed` | maintain + tune |
 | Memory search | `phase-complete` | governance + benchmark expansion + policy tuning |
 | Self-learning / reflection | `stage-complete` | governed lifecycle, policy adaptation, exports, CLI, and governance surfaces are available |
-| Unified Memory Core | `stage5-complete / post-closeout` | `100+` case evaluation-driven optimization while keeping release-preflight and root policy stable |
+| Unified Memory Core | `stage5-complete / post-closeout` | `187` case benchmark + separated answer-level / transport evidence + next `200` case / performance planning |
 
 ## Progress Map
 
@@ -223,21 +223,24 @@ Still ongoing:
 
 ### Primary next engineering focus
 
-**Evaluation-driven optimization: grow the OpenClaw CLI benchmark to `100+` cases**
+**Evaluation-driven optimization: move from the first `100+` benchmark to `200`-case / performance planning**
 
 Why this is next:
 
 - the baseline product work is complete, so the next missing piece is a larger and more attributable evaluation surface rather than another blind feature addition
 - the current `20` cases and the minimal A/B report prove that the system works, but they are not enough to support sustained algorithm tuning
-- the benchmark now needs to cover `100+` cases spanning bootstrap, ordinary retrieval, current-state overrides, abstention, conflicting facts, and multi-update histories
+- the benchmark has now grown to `187` cases, so the next problem is coverage quality rather than raw count
+- retrieval-heavy host index is green at `125 / 125`
+- raw `openclaw memory search` transport now has its own watchlist: `17 / 24` raw ok, `7` empty-result probes
+- the live `openclaw agent` answer-level sub-matrix is currently red at `0 / 36`, so the host answer path must be triaged separately instead of being mixed into retrieval or raw transport judgment
 - release-preflight, deployment verification, and the host-neutral root policy still need to stay green, but they are now guardrails rather than the sole mainline objective
 
 This mainline now includes:
 
-- expanding the OpenClaw CLI benchmark to `100+` cases
-- running `legacy / unified / bootstrap / retrieval` attribution comparisons over the same case set
-- turning failing cases into explicit algorithm work items
-- rerunning the benchmark, updating reports, and pushing each meaningful improvement to GitHub
+- reviewing the current benchmark coverage and planning a broader `200`-case matrix
+- requiring the next benchmark design to reach at least `50%` Chinese coverage
+- keeping `legacy / unified / bootstrap / retrieval` attribution while treating the answer-level host path as its own red line
+- defining a dedicated performance plan for the retrieval / assembly / answer-level main path
 
 Key documents:
 

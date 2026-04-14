@@ -202,18 +202,33 @@ The goal is not to reopen baseline contract work. The goal is to:
 - use `legacy / unified / bootstrap / retrieval` comparisons to explain where answers come from
 - use failing cases to drive assembly / retrieval / policy algorithm iterations
 
-53. `next` Define the `100+` case benchmark design and coverage matrix.
+53. `completed` Define the `100+` case benchmark design and coverage matrix.
    - It must at least cover: stable facts, ordinary retrieval, current-state overrides, abstention, conflicting facts, repeated updates, multi-turn history, rule extraction, project knowledge, and cross-source attribution.
    - Every case must specify: evaluation entrypoint, expected answer, acceptable variance, capability tags, and whether A/B comparison is required.
-54. `todo` Expand the current `20` cases into a reproducible `100+` OpenClaw CLI benchmark.
+54. `completed` Expand the current `20` cases into a reproducible `100+` OpenClaw CLI benchmark.
    - Prefer real `openclaw memory search` / `openclaw agent` entrypoints by default.
    - Avoid claiming success from internal registry state alone.
-55. `todo` Add `legacy / unified / bootstrap / retrieval` attribution reports for the benchmark.
+55. `completed` Add `legacy / unified / bootstrap / retrieval` attribution reports for the benchmark.
    - The point is not just to compare scores, but to explain where answers came from and which capabilities are extension gains.
-56. `todo` Turn benchmark failures into an explicit algorithm work queue and prioritize fixes.
+56. `completed` Turn benchmark failures into an explicit algorithm work queue and prioritize fixes.
    - Prioritize: current-state override failures, stale-value leakage, incorrect abstention, wrong source attribution, and retrieval misses.
-57. `todo` Rerun the benchmark after each meaningful algorithm change, update the reports, refresh the control surface, and push the iteration to GitHub.
-58. `todo` Decide whether to open runtime API / service-mode work only after the `100+` benchmark and the attribution reports stabilize.
+57. `completed` Rerun the benchmark after each meaningful algorithm change, update the reports, refresh the control surface, and push the iteration to GitHub.
+58. `completed` Decide whether to open runtime API / service-mode work only after the `100+` benchmark and the attribution reports stabilize.
+   - The current answer is still no: keep runtime API / service-mode closed until the answer-level path, transport watchlist, and broader benchmark planning are stable.
+
+## Next-stage Planning Queue
+
+59. `next` Review the current benchmark coverage and plan a broader `200`-case matrix.
+   - The goal is coverage breadth, not raw count chasing.
+   - Explicitly cover cross-source mixes, conflicting facts, supersede/current-vs-history cases, multi-step history, abstention, and the answer-level host path.
+60. `todo` Plan the next benchmark so Chinese cases account for at least `50%`.
+   - Chinese coverage should include real Chinese phrasings, current-state questions, rule questions, and mixed Chinese-English prompts.
+61. `todo` Bring the live `openclaw agent` answer-level matrix and the raw transport watchlist into the next formal gate.
+   - The answer-level red path must stay separate from raw transport instability.
+62. `todo` Define a dedicated performance plan for the retrieval / assembly / answer-level main path.
+   - At minimum define baseline commands, measurement dimensions, slow-path layers, and performance regression gates.
+63. `todo` Capture the first main-path performance baseline and attribute the slowest paths across retrieval, assembly, host answer-level, and transport.
+64. `todo` Only schedule the next execution round after both the `200`-case coverage plan and the main-path performance baseline are clear.
 
 ## Deferred Enhancement Queue
 
