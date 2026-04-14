@@ -5,6 +5,8 @@
 评测方式：真实 `OpenClaw CLI` 宿主链路  
 最终结果：`20 / 20` 通过
 
+补充说明：如果你关心“这些答案到底来自原生基线、workspace bootstrap，还是 `Unified Memory Core` 扩展”，需要同时看 [openclaw-contextengine-ab-eval-2026-04-14.md](./openclaw-contextengine-ab-eval-2026-04-14.md)。本报告只证明当前激活链路可用，不单独证明扩展增益归因。
+
 ## 1. 这轮测试要回答什么
 
 这轮测试只想回答一个问题：
@@ -298,6 +300,10 @@ OpenClaw 对这个 agent 的真实索引状态是：
 - “compat 路径和当前路径之间差多少”
 
 如果要回答这些问题，需要单独补一份 `A/B` 对照报告。
+
+本仓库已经补了最小 A/B 报告，可继续查看：
+
+- [openclaw-contextengine-ab-eval-2026-04-14.md](./openclaw-contextengine-ab-eval-2026-04-14.md)
 
 ## 8. 结论
 
