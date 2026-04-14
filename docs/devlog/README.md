@@ -8,6 +8,7 @@ This directory records durable implementation narratives: what went wrong, what 
 
 ## Entries
 
+- [Close 59-64 planning and open 200-case execution](2026-04-14-close-59-64-planning-and-open-200-case-execution.md)
 - [Expand benchmark coverage, separate transport watch, and expose answer-path regression](2026-04-14-expand-benchmark-separate-transport-and-expose-answer-path-regression.md)
 - [Isolate compaction fallback test from host config](2026-04-13-isolate-compaction-fallback-test-from-host-config.md)
 - [Skip builtin memory-search checks in release preflight](2026-04-13-skip-builtin-memory-search-checks-in-release-preflight.md)

@@ -5,6 +5,7 @@ import path from "node:path";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { performance } from "node:perf_hooks";
 
 import { extractJsonPayload } from "../src/retrieval.js";
 import {
@@ -73,6 +74,7 @@ function selectProbeCases(cases, args) {
 }
 
 async function runRawProbe(caseDef, args) {
+  const startedAt = performance.now();
   try {
     const result = await execFileAsync(
       args.openclawBin,
@@ -99,6 +101,7 @@ async function runRawProbe(caseDef, args) {
       category: caseDef.category,
       query: caseDef.query,
       status: results.length > 0 ? "ok" : "empty_results",
+      durationMs: Math.round(performance.now() - startedAt),
       resultCount: results.length,
       provider: payload?.provider || "",
       mode: payload?.mode || ""
@@ -106,7 +109,14 @@ async function runRawProbe(caseDef, args) {
   } catch (error) {
     const text = String(error?.message || error);
     if (/timed out/i.test(text)) {
-      return { id: caseDef.id, category: caseDef.category, query: caseDef.query, status: "timeout", error: text };
+      return {
+        id: caseDef.id,
+        category: caseDef.category,
+        query: caseDef.query,
+        status: "timeout",
+        durationMs: Math.round(performance.now() - startedAt),
+        error: text
+      };
     }
     if (String(error?.stdout || "").trim()) {
       try {
@@ -117,15 +127,30 @@ async function runRawProbe(caseDef, args) {
           category: caseDef.category,
           query: caseDef.query,
           status: results.length > 0 ? "ok" : "empty_results",
+          durationMs: Math.round(performance.now() - startedAt),
           resultCount: results.length,
           provider: payload?.provider || "",
           mode: payload?.mode || ""
         };
       } catch {
-        return { id: caseDef.id, category: caseDef.category, query: caseDef.query, status: "invalid_json", error: text };
+        return {
+          id: caseDef.id,
+          category: caseDef.category,
+          query: caseDef.query,
+          status: "invalid_json",
+          durationMs: Math.round(performance.now() - startedAt),
+          error: text
+        };
       }
     }
-    return { id: caseDef.id, category: caseDef.category, query: caseDef.query, status: "command_failed", error: text };
+    return {
+      id: caseDef.id,
+      category: caseDef.category,
+      query: caseDef.query,
+      status: "command_failed",
+      durationMs: Math.round(performance.now() - startedAt),
+      error: text
+    };
   }
 }
 

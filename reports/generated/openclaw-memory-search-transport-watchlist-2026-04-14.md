@@ -1,32 +1,35 @@
 # OpenClaw Memory Search Transport Watchlist
 
-- generatedAt: `2026-04-14T04:45:49.639Z`
-- totalProbes: `24`
-- rawOk: `17`
-- emptyResults: `7`
+- generatedAt: `2026-04-14T06:26:00.011Z`
+- totalProbes: `8`
+- rawOk: `0`
+- emptyResults: `0`
 - timeout: `0`
-- invalidJson: `0`
+- invalidJson: `8`
 - commandFailed: `0`
 - otherFailure: `0`
+- averageDurationMs: `9863`
+- maxDurationMs: `15140`
 
 ## Category Summary
-- profile: ok=`2` failures=`1` total=`3`
-- preference: ok=`2` failures=`1` total=`3`
-- rule: ok=`2` failures=`1` total=`3`
-- project: ok=`3` failures=`0` total=`3`
-- cross-source: ok=`3` failures=`0` total=`3`
-- supersede: ok=`0` failures=`3` total=`3`
-- temporal-current: ok=`3` failures=`0` total=`3`
-- temporal-history: ok=`2` failures=`1` total=`3`
+- profile: ok=`0` failures=`1` total=`1` avgMs=`12153` maxMs=`12153`
+- preference: ok=`0` failures=`1` total=`1` avgMs=`8636` maxMs=`8636`
+- rule: ok=`0` failures=`1` total=`1` avgMs=`9004` maxMs=`9004`
+- project: ok=`0` failures=`1` total=`1` avgMs=`9288` maxMs=`9288`
+- cross-source: ok=`0` failures=`1` total=`1` avgMs=`8406` maxMs=`8406`
+- supersede: ok=`0` failures=`1` total=`1` avgMs=`8191` maxMs=`8191`
+- temporal-current: ok=`0` failures=`1` total=`1` avgMs=`8082` maxMs=`8082`
+- temporal-history: ok=`0` failures=`1` total=`1` avgMs=`15140` maxMs=`15140`
 
 ## Watchlist
-- profile-name-2 [profile] `empty_results`: raw openclaw memory search returned no results
-- pref-reply-style-2 [preference] `empty_results`: raw openclaw memory search returned no results
-- rule-debug-3 [rule] `empty_results`: raw openclaw memory search returned no results
-- supersede-editor-search-1 [supersede] `empty_results`: raw openclaw memory search returned no results
-- supersede-editor-search-2 [supersede] `empty_results`: raw openclaw memory search returned no results
-- supersede-editor-search-3 [supersede] `empty_results`: raw openclaw memory search returned no results
-- history-editor-search-1 [temporal-history] `empty_results`: raw openclaw memory search returned no results
+- profile-name-1 [profile] `invalid_json`: raw openclaw memory search returned a non-JSON payload
+- pref-reply-style-1 [preference] `invalid_json`: raw openclaw memory search returned a non-JSON payload
+- rule-debug-1 [rule] `invalid_json`: raw openclaw memory search returned a non-JSON payload
+- project-desc-1 [project] `invalid_json`: raw openclaw memory search returned a non-JSON payload
+- cross-source-travel-search-1 [cross-source] `invalid_json`: raw openclaw memory search returned a non-JSON payload
+- supersede-editor-search-1 [supersede] `invalid_json`: raw openclaw memory search returned a non-JSON payload
+- current-editor-search-1 [temporal-current] `invalid_json`: raw openclaw memory search returned a non-JSON payload
+- history-editor-search-1 [temporal-history] `invalid_json`: raw openclaw memory search returned a non-JSON payload
 
 ## Notes
 - This watchlist tracks raw `openclaw memory search` transport health only.

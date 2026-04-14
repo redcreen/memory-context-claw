@@ -10,6 +10,7 @@ Testing planning entrypoints:
 - [openclaw-cli-integration.md](openclaw-cli-integration.md)
 - [openclaw-bundle-install.md](openclaw-bundle-install.md)
 - [release-preflight.md](release-preflight.md)
+- [main-path-performance-plan.md](main-path-performance-plan.md)
 
 Preferred operator flow:
 

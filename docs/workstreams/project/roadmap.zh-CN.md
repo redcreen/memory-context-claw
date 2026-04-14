@@ -82,7 +82,7 @@ flowchart TB
 | 核心 capture / fact-card / assembly | `completed` | maintain + tune |
 | Memory Search | `phase-complete` | governance + benchmark expansion + policy tuning |
 | Self-Learning / Reflection | `stage-complete` | governed lifecycle、policy adaptation、exports、CLI、governance surfaces 已可用 |
-| Unified Memory Core | `stage5-complete / post-closeout` | `187` case benchmark + answer-level / transport 分层 + 下一轮 `200` case / perf planning |
+| Unified Memory Core | `stage5-complete / post-closeout` | `187` case benchmark + `200+` case 执行队列 + answer-level red-path / transport gate / perf baseline |
 
 ## 进展图
 
@@ -215,24 +215,24 @@ flowchart TB
 
 ### 下一条主要工程主线
 
-**评测驱动优化：从 `100+` benchmark 收口到 `200` case / perf planning**
+**评测驱动优化：从 `187` case baseline 进入 `200+` case 执行与主链路优化**
 
 为什么先做这个：
 
 - 基础能力和 Stage 5 收口已经完成，下一步最缺的不是“再加一个功能”，而是更大规模、更可归因的真实评测面
 - 目前的 `20` 案例和最小 A/B 已经够证明“能力存在”，但还不够支撑持续算法优化
-- 当前 benchmark 已扩到 `187` case，但下一轮要先做 coverage review，避免只追数量不补盲区
+- 当前 benchmark 已扩到 `187` case，coverage review 和主链路 perf baseline 也已落地，下一轮不再是“继续规划”，而是开始执行 `200+` case 扩面
 - retrieval-heavy host index 现在是绿的：`125 / 125`
-- raw `openclaw memory search` transport 已独立成 watchlist：`17 / 24` raw ok，`7` 条 empty-result
-- live `openclaw agent` answer-level 子矩阵当前是红的：`0 / 36`，这说明宿主问答链路要单独 triage，不能继续和 retrieval / transport 混在一起
+- raw `openclaw memory search` transport 已独立成 watchlist，这轮主链路基线样本进一步显示 `8 / 8 invalid_json`
+- live `openclaw agent` answer-level 子矩阵仍是红的；首轮性能基线样本显示 answer-level 平均约 `32s`，而且会直接 abstain 或超时
 - release-preflight、deployment verification、host-neutral root policy 仍要保持为绿，但它们从主线目标变成并行守护线
 
 这一条主线具体包含：
 
-- review 当前 benchmark 覆盖面，并规划到更全面的 `200` case
-- 明确要求下一轮中文案例占比至少 `50%`
-- 保持 `legacy / unified / bootstrap / retrieval` 归因对照，但把 answer-level host path 作为单独红线
-- 为 retrieval / assembly / answer-level 主链路建立性能专项计划
+- 把 benchmark 从 `187` 扩到 coverage-first 的 `200+`
+- 把中文案例真正做到不少于 `50%`
+- 把 answer-level host path 与 raw transport watchlist 纳入正式门禁
+- 优先修复 answer-level red path，并按 perf baseline 解释最慢层
 
 关键文档：
 

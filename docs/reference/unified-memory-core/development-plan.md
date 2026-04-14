@@ -218,17 +218,26 @@ The goal is not to reopen baseline contract work. The goal is to:
 
 ## Next-stage Planning Queue
 
-59. `next` Review the current benchmark coverage and plan a broader `200`-case matrix.
+59. `completed` Review the current benchmark coverage and plan a broader `200`-case matrix.
    - The goal is coverage breadth, not raw count chasing.
    - Explicitly cover cross-source mixes, conflicting facts, supersede/current-vs-history cases, multi-step history, abstention, and the answer-level host path.
-60. `todo` Plan the next benchmark so Chinese cases account for at least `50%`.
+60. `completed` Plan the next benchmark so Chinese cases account for at least `50%`.
    - Chinese coverage should include real Chinese phrasings, current-state questions, rule questions, and mixed Chinese-English prompts.
-61. `todo` Bring the live `openclaw agent` answer-level matrix and the raw transport watchlist into the next formal gate.
+61. `completed` Bring the live `openclaw agent` answer-level matrix and the raw transport watchlist into the next formal gate.
    - The answer-level red path must stay separate from raw transport instability.
-62. `todo` Define a dedicated performance plan for the retrieval / assembly / answer-level main path.
+62. `completed` Define a dedicated performance plan for the retrieval / assembly / answer-level main path.
    - At minimum define baseline commands, measurement dimensions, slow-path layers, and performance regression gates.
-63. `todo` Capture the first main-path performance baseline and attribute the slowest paths across retrieval, assembly, host answer-level, and transport.
-64. `todo` Only schedule the next execution round after both the `200`-case coverage plan and the main-path performance baseline are clear.
+63. `completed` Capture the first main-path performance baseline and attribute the slowest paths across retrieval, assembly, host answer-level, and transport.
+64. `completed` Only schedule the next execution round after both the `200`-case coverage plan and the main-path performance baseline are clear.
+
+## Next Execution Queue
+
+65. `next` Expand the benchmark from `187` to a coverage-first `200+` cases and fill blind spots instead of padding with rewrites.
+66. `todo` Turn Chinese coverage into at least `50%` of the real runnable matrix across retrieval, answer-level, and abstention surfaces.
+67. `todo` Promote the answer-level host path and the raw transport watchlist into the formal benchmark gate with pass rate, abstention rate, and watchlist reporting.
+68. `todo` Triage and fix the live `openclaw agent` answer-level red path until it no longer systemically returns `I don't know` or times out.
+69. `todo` Use the main-path performance baseline to optimize the slowest layer, prioritizing host answer-level first, raw transport second, and only then retrieval / assembly if needed.
+70. `todo` Rerun the `200+` benchmark, answer-level gate, transport watchlist, and main-path perf baseline, then use that evidence to decide whether later enhancement planning can open.
 
 ## Deferred Enhancement Queue
 

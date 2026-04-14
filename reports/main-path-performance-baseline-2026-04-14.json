@@ -1,0 +1,309 @@
+{
+  "generatedAt": "2026-04-14T06:28:08.052Z",
+  "retrievalAssembly": {
+    "summary": {
+      "preset": "safe-local",
+      "cases": 5,
+      "softExceeded": 0,
+      "hardExceeded": 0,
+      "failures": 0,
+      "averageTotalMs": 20
+    },
+    "results": [
+      {
+        "name": "food-preference-latency",
+        "query": "我爱吃什么",
+        "softLimitMs": 3000,
+        "hardLimitMs": 15000,
+        "retrievalMs": 34,
+        "scoringMs": 3,
+        "assemblyMs": 2,
+        "totalMs": 40,
+        "candidateCount": 6,
+        "selectedCount": 1,
+        "withinSoft": true,
+        "withinHard": true
+      },
+      {
+        "name": "identity-name-latency",
+        "query": "你怎么称呼我",
+        "softLimitMs": 3000,
+        "hardLimitMs": 15000,
+        "retrievalMs": 6,
+        "scoringMs": 1,
+        "assemblyMs": 1,
+        "totalMs": 8,
+        "candidateCount": 6,
+        "selectedCount": 1,
+        "withinSoft": true,
+        "withinHard": true
+      },
+      {
+        "name": "memory-md-scope-latency",
+        "query": "MEMORY.md 应该放什么内容",
+        "softLimitMs": 4000,
+        "hardLimitMs": 18000,
+        "retrievalMs": 23,
+        "scoringMs": 0,
+        "assemblyMs": 0,
+        "totalMs": 24,
+        "candidateCount": 6,
+        "selectedCount": 1,
+        "withinSoft": true,
+        "withinHard": true
+      },
+      {
+        "name": "project-positioning-latency",
+        "query": "这个项目主要解决什么问题",
+        "softLimitMs": 4000,
+        "hardLimitMs": 18000,
+        "retrievalMs": 13,
+        "scoringMs": 0,
+        "assemblyMs": 1,
+        "totalMs": 14,
+        "candidateCount": 6,
+        "selectedCount": 1,
+        "withinSoft": true,
+        "withinHard": true
+      },
+      {
+        "name": "daughter-profile-latency",
+        "query": "我女儿叫什么，生日是哪天，现在几年级？",
+        "softLimitMs": 4000,
+        "hardLimitMs": 18000,
+        "retrievalMs": 11,
+        "scoringMs": 0,
+        "assemblyMs": 0,
+        "totalMs": 12,
+        "candidateCount": 6,
+        "selectedCount": 1,
+        "withinSoft": true,
+        "withinHard": true
+      }
+    ]
+  },
+  "transport": {
+    "generatedAt": "2026-04-14T06:26:00.011Z",
+    "agentId": "umceval",
+    "summary": {
+      "total": 8,
+      "ok": 0,
+      "emptyResults": 0,
+      "timeout": 0,
+      "invalidJson": 8,
+      "commandFailed": 0,
+      "otherFailure": 0,
+      "averageDurationMs": 9863,
+      "maxDurationMs": 15140,
+      "watchlist": [
+        {
+          "id": "profile-name-1",
+          "category": "profile",
+          "status": "invalid_json",
+          "reason": "raw openclaw memory search returned a non-JSON payload"
+        },
+        {
+          "id": "pref-reply-style-1",
+          "category": "preference",
+          "status": "invalid_json",
+          "reason": "raw openclaw memory search returned a non-JSON payload"
+        },
+        {
+          "id": "rule-debug-1",
+          "category": "rule",
+          "status": "invalid_json",
+          "reason": "raw openclaw memory search returned a non-JSON payload"
+        },
+        {
+          "id": "project-desc-1",
+          "category": "project",
+          "status": "invalid_json",
+          "reason": "raw openclaw memory search returned a non-JSON payload"
+        },
+        {
+          "id": "cross-source-travel-search-1",
+          "category": "cross-source",
+          "status": "invalid_json",
+          "reason": "raw openclaw memory search returned a non-JSON payload"
+        },
+        {
+          "id": "supersede-editor-search-1",
+          "category": "supersede",
+          "status": "invalid_json",
+          "reason": "raw openclaw memory search returned a non-JSON payload"
+        },
+        {
+          "id": "current-editor-search-1",
+          "category": "temporal-current",
+          "status": "invalid_json",
+          "reason": "raw openclaw memory search returned a non-JSON payload"
+        },
+        {
+          "id": "history-editor-search-1",
+          "category": "temporal-history",
+          "status": "invalid_json",
+          "reason": "raw openclaw memory search returned a non-JSON payload"
+        }
+      ],
+      "byCategory": {
+        "profile": {
+          "total": 1,
+          "ok": 0,
+          "failures": 1,
+          "averageDurationMs": 12153,
+          "maxDurationMs": 12153
+        },
+        "preference": {
+          "total": 1,
+          "ok": 0,
+          "failures": 1,
+          "averageDurationMs": 8636,
+          "maxDurationMs": 8636
+        },
+        "rule": {
+          "total": 1,
+          "ok": 0,
+          "failures": 1,
+          "averageDurationMs": 9004,
+          "maxDurationMs": 9004
+        },
+        "project": {
+          "total": 1,
+          "ok": 0,
+          "failures": 1,
+          "averageDurationMs": 9288,
+          "maxDurationMs": 9288
+        },
+        "cross-source": {
+          "total": 1,
+          "ok": 0,
+          "failures": 1,
+          "averageDurationMs": 8406,
+          "maxDurationMs": 8406
+        },
+        "supersede": {
+          "total": 1,
+          "ok": 0,
+          "failures": 1,
+          "averageDurationMs": 8191,
+          "maxDurationMs": 8191
+        },
+        "temporal-current": {
+          "total": 1,
+          "ok": 0,
+          "failures": 1,
+          "averageDurationMs": 8082,
+          "maxDurationMs": 8082
+        },
+        "temporal-history": {
+          "total": 1,
+          "ok": 0,
+          "failures": 1,
+          "averageDurationMs": 15140,
+          "maxDurationMs": 15140
+        }
+      }
+    },
+    "results": [
+      {
+        "id": "profile-name-1",
+        "category": "profile",
+        "query": "preferred name",
+        "status": "invalid_json",
+        "durationMs": 12153,
+        "error": "Command failed: openclaw memory search --agent umceval --query preferred name --max-results 5 --json\n"
+      },
+      {
+        "id": "pref-reply-style-1",
+        "category": "preference",
+        "query": "preferred reply style",
+        "status": "invalid_json",
+        "durationMs": 8636,
+        "error": "Command failed: openclaw memory search --agent umceval --query preferred reply style --max-results 5 --json\n"
+      },
+      {
+        "id": "rule-debug-1",
+        "category": "rule",
+        "query": "debugging rule",
+        "status": "invalid_json",
+        "durationMs": 9004,
+        "error": "Command failed: openclaw memory search --agent umceval --query debugging rule --max-results 5 --json\n"
+      },
+      {
+        "id": "project-desc-1",
+        "category": "project",
+        "query": "Project Lantern",
+        "status": "invalid_json",
+        "durationMs": 9288,
+        "error": "Command failed: openclaw memory search --agent umceval --query Project Lantern --max-results 5 --json\n"
+      },
+      {
+        "id": "cross-source-travel-search-1",
+        "category": "cross-source",
+        "query": "Maya carry-on aisle seat",
+        "status": "invalid_json",
+        "durationMs": 8406,
+        "error": "Command failed: openclaw memory search --agent umceval --query Maya carry-on aisle seat --max-results 5 --json\n"
+      },
+      {
+        "id": "supersede-editor-search-1",
+        "category": "supersede",
+        "query": "current editor and previous editor",
+        "status": "invalid_json",
+        "durationMs": 8191,
+        "error": "Command failed: openclaw memory search --agent umceval --query current editor and previous editor --max-results 5 --json\n"
+      },
+      {
+        "id": "current-editor-search-1",
+        "category": "temporal-current",
+        "query": "current main editor",
+        "status": "invalid_json",
+        "durationMs": 8082,
+        "error": "Command failed: openclaw memory search --agent umceval --query current main editor --max-results 5 --json\n(node:54291) [OPENCLAW_PLUGIN_SDK_COMPAT_DEPRECATED] Warning: openclaw/plugin-sdk/compat is deprecated for new plugins. Migrate to focused openclaw/plugin-sdk/<subpath> imports. See https://docs.openclaw.ai/plugins/sdk-migration\nBundled plugins must use scoped plugin-sdk subpaths. External plugins may keep compat temporarily while migrating. Migration guide: https://docs.openclaw.ai/plugins/sdk-migration\n(Use `node --trace-warnings ...` to show where the warning was created)\n"
+      },
+      {
+        "id": "history-editor-search-1",
+        "category": "temporal-history",
+        "query": "previous editor before Zed",
+        "status": "invalid_json",
+        "durationMs": 15140,
+        "error": "Command failed: openclaw memory search --agent umceval --query previous editor before Zed --max-results 5 --json\n(node:54494) [OPENCLAW_PLUGIN_SDK_COMPAT_DEPRECATED] Warning: openclaw/plugin-sdk/compat is deprecated for new plugins. Migrate to focused openclaw/plugin-sdk/<subpath> imports. See https://docs.openclaw.ai/plugins/sdk-migration\nBundled plugins must use scoped plugin-sdk subpaths. External plugins may keep compat temporarily while migrating. Migration guide: https://docs.openclaw.ai/plugins/sdk-migration\n(Use `node --trace-warnings ...` to show where the warning was created)\n"
+      }
+    ]
+  },
+  "answerLevel": {
+    "results": [
+      {
+        "ok": false,
+        "message": "Based only on your memory for this agent, what is the user's preferred name? If memory is missing, reply exactly: I don't know based on current memory.",
+        "answer": "",
+        "durationMs": 45049,
+        "sessionId": "",
+        "provider": "",
+        "model": "",
+        "error": "Command failed: openclaw agent --agent umceval --thinking off --timeout 30 --json --message Based only on your memory for this agent, what is the user's preferred name? If memory is missing, reply exactly: I don't know based on current memory.\n"
+      },
+      {
+        "ok": true,
+        "message": "Based only on your memory for this agent, what is Project Lantern? If memory is missing, reply exactly: I don't know based on current memory.",
+        "answer": "I don't know based on current memory.",
+        "durationMs": 25895,
+        "sessionId": "826c69fd-a36e-4a46-9ee4-8001da5b6382",
+        "provider": "openai-codex",
+        "model": "gpt-5.4",
+        "error": null
+      },
+      {
+        "ok": true,
+        "message": "Based only on your memory for this agent, what is the confirmed default deploy region now? If memory is missing, reply exactly: I don't know based on current memory.",
+        "answer": "I don't know based on current memory.",
+        "durationMs": 30502,
+        "sessionId": "826c69fd-a36e-4a46-9ee4-8001da5b6382",
+        "provider": "openai-codex",
+        "model": "gpt-5.4",
+        "error": null
+      }
+    ],
+    "averageDurationMs": 33815
+  }
+}

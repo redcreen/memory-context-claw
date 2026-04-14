@@ -205,3 +205,21 @@
 1. review 当前 benchmark 覆盖面，把矩阵扩到更全面的 `200` case，而不是只追求数量；其中中文案例占比至少 `50%`
 2. 让 live answer-level agent path 成为正式红线，并定位为什么当前 `openclaw agent` 几乎统一 abstain
 3. 为主链路建立性能专项计划，先拿到可解释的 baseline，再决定优化顺序
+
+## 7. `59-64` 已经补出的后续资产
+
+这轮在 `53-58` 之外，已经把下一阶段 planning queue 也收成了正式资产：
+
+- `200` case coverage review / blind-spot 规划：
+  [openclaw-cli-memory-coverage-plan-2026-04-14.md](./openclaw-cli-memory-coverage-plan-2026-04-14.md)
+- 主链路性能专项计划：
+  [../../docs/reference/unified-memory-core/testing/main-path-performance-plan.zh-CN.md](../../docs/reference/unified-memory-core/testing/main-path-performance-plan.zh-CN.md)
+- 主链路性能首轮 baseline：
+  [main-path-performance-baseline-2026-04-14.md](./main-path-performance-baseline-2026-04-14.md)
+
+这意味着当前下一条主线已经从“继续规划”切到了：
+
+1. 把 benchmark 从 `187` 扩成 coverage-first 的 `200+`
+2. 把中文案例真正做到不少于 `50%`
+3. 把 answer-level host path 与 transport watch 变成正式 gate
+4. 按 perf baseline 优先处理最慢的 answer-level host path

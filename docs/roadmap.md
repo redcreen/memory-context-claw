@@ -20,9 +20,23 @@ For detailed queues, read:
 
 | Horizon | Focus | Exit Signal |
 | --- | --- | --- |
-| Now | separate retrieval, answer-level, and transport evidence; expand the benchmark toward a broader `200` cases; and define a main-path performance plan | the `200`-case coverage plan is explicit, Chinese cases reach `50%` in the next matrix design, transport watch stays separate, and the performance baseline entrypoints are documented |
-| Next | use the broader benchmark and the performance baseline to decide the next optimization order before any later runtime API / service-mode discussion | answer-level host-path regressions are explainable, main-path performance baselines are stable, and the broader benchmark stops drifting blindly |
+| Now | execute the coverage-first `200+` case expansion, turn Chinese cases into a real `50%` share of the runnable matrix, and promote the answer-level host path plus transport watch into formal gates | `200+` cases are implemented, Chinese cases reach `50%` in practice, the answer-level gate is repeatable, and transport watch no longer pollutes algorithm judgment |
+| Next | use the formal gates and the main-path performance baseline to choose the next optimization order before any later runtime API / service-mode discussion | answer-level host-path regressions are fixed or explainable, the slowest layer shows real improvement, and the benchmark no longer has obvious blind spots |
 | Later | discuss runtime API / split-ready evolution only from a stable operator baseline | independent-product evidence stays green after Stage 5 closeout |
+
+## Current Execution Focus
+
+The current roadmap horizon also maps to the concrete next execution work:
+
+1. expand the current `187`-case benchmark into a coverage-first `200+` matrix, prioritizing blind spots over more rewrites
+2. make Chinese cases a real `50%` share of the runnable matrix across retrieval, answer-level, and negative surfaces
+3. turn the live `openclaw agent` answer-level gate and the raw transport watchlist into formal gates, then fix the answer-level red path
+4. use the main-path performance baseline to explain and optimize the slowest layer before choosing later algorithm work
+
+When resuming work:
+
+- use `65-70` in [reference/unified-memory-core/development-plan.md](reference/unified-memory-core/development-plan.md) for execution order
+- use [../.codex/plan.md](../.codex/plan.md) and [../.codex/status.md](../.codex/status.md) for the live state
 
 ## Milestones
 

@@ -20,6 +20,14 @@
   - Risks: 如果只追求 200 这个数字而不补盲区，coverage 会失真；如果不先规划性能面，answer-level 与 retrieval 成本会继续模糊
   - Validation: roadmap / development plan / control surface 同步，明确中文案例 `>= 50%`、coverage review 方法、主链路 perf baseline 入口
   - Exit Condition: 下一轮执行可以直接按 coverage matrix 和 perf plan 开工，而不是重新定义问题
+  - Status: `completed`
+
+- Slice: `execute-200-case-benchmark-and-answer-path-triage`
+  - Objective: 把 benchmark 从 `187` 扩成 coverage-first 的 `200+` case，真正把中文做到 `50%`，并把 answer-level host path red line 与 transport watchlist 变成正式门禁
+  - Dependencies: 当前 `187` case 结果、coverage review 报告、main-path perf baseline、answer-level matrix 入口、transport watchlist 入口
+  - Risks: 如果继续只做 retrieval-heavy 扩面，answer-level host path 会持续红而且无法被正式约束；如果中文只做翻译版，coverage 会继续失真
+  - Validation: `200+` case 定义、中文案例实际占比统计、answer-level gate 报告、transport watchlist 报告、main-path perf baseline refresh
+  - Exit Condition: 下一轮 benchmark 不再有明显 coverage blind spots，answer-level/transport gate 进入常规门禁，且最慢层已有可解释优化路径
   - Status: `in_progress`
 
 - Slice: `attribute-memory-capability-sources`
@@ -120,45 +128,45 @@
 
 ## Execution Order
 
-1. 保持当前 `187` case benchmark、answer-level matrix 和 transport watchlist 的结果持续可重跑
-2. review 当前 coverage blind spots，并把 benchmark 规划到更全面的 `200` case
-3. 在下一轮 benchmark 规划里显式要求中文案例占比至少 `50%`
-4. 把 live answer-level host-path regression 单独看作 triage 输入，不与 raw transport 或 retrieval 质量混淆
-5. 为 retrieval / assembly / answer-level 主链路建立性能专项计划与 baseline 入口
+1. 把当前 `187` case benchmark 扩成 coverage-first 的 `200+`
+2. 把中文案例真正做到不少于 `50%` 的实际可运行矩阵
+3. 把 live answer-level host-path regression 单独看作主线 red path，不与 raw transport 或 retrieval 质量混淆
+4. 把 answer-level gate 与 transport watchlist 纳入正式 benchmark gate
+5. 按主链路 perf baseline 先解释并优化最慢层
 6. 并行保持 release-preflight / bundle install / host smoke / Stage 5 evidence 稳定
 7. 保持 host-neutral root operator policy 可见且不回退
 8. 保持 accepted-action deeper queue 的 Step 48-52 仍然显式 deferred，不把 admission / negative-path / conflict work 偷渡进当前实现
-9. 只有在 benchmark、answer-level triage 和 perf baseline 同时清晰后，才开启新的 enhancement planning 或讨论 legacy root cleanup 窗口
+9. 只有在 `200+` benchmark、answer-level gate 和 perf baseline refresh 同时清晰后，才开启新的 enhancement planning 或讨论 legacy root cleanup 窗口
 
 ## Architecture Supervision
 - Signal: `yellow`
 - Signal Basis: open blockers or architectural risks are still recorded
-- Problem Class: evaluation expansion, attribution drift, and post-stage operator policy
-- Root Cause Hypothesis: 如果 benchmark 规模、来源归因和算法问题清单没有进入 durable plan，后续优化会退回零散试题和主观判断，无法稳定积累
-- Correct Layer: benchmark definition, A/B attribution reports, algorithm regression surfaces, release preflight evidence, control surface
+- Problem Class: answer-level red path, benchmark coverage blind spots, and main-path performance prioritization
+- Root Cause Hypothesis: 如果中文 coverage、answer-level gate 和主链路慢点没有进入正式执行线，后续优化会继续被 retrieval 绿灯掩盖，用户侧问答体验仍然无法改善
+- Correct Layer: benchmark definition, answer-level gate, transport watchlist, main-path performance baseline, release preflight evidence, control surface
 - Rejected Shortcut: 跳过 Stage 5 证据面和当前 operator baseline，直接讨论 runtime API / service mode
 - Automatic Review Trigger: no automatic trigger is currently active
 - Escalation Gate: raise but continue
 
 ## Current Execution Line
 
-- Objective: 把当前 benchmark / answer-level / transport 三条证据面收口到下一阶段计划上：`200` case 更全面 coverage + 中文占比 + main-path perf planning
-- Plan Link: `plan-200-case-benchmark-and-main-path-performance`
-- Runway: coverage review、中文比例约束、answer-level triage input、main-path perf planning、report refresh
+- Objective: 执行 `200+` case coverage-first 扩面、中文 `50%`、answer-level gate / transport watch 正式化，以及基于 perf baseline 的主链路优化顺序
+- Plan Link: `execute-200-case-benchmark-and-answer-path-triage`
+- Runway: 200+ case 扩面、中文案例补盲、answer-level red-path triage、正式门禁、perf-baseline-driven optimization
 - Progress: `0 / 4` tasks complete
 - Stop Conditions:
   - case count grows but blind spots remain
   - answer-level regression gets misdiagnosed as raw transport noise
-  - performance planning starts without explicit baseline and measurement entrypoints
+  - perf optimization starts before answer-level red path and transport watch have separate evidence
   - Stage 5 evidence regresses while benchmark work is ongoing
-- Validation: benchmark case docs、answer-level matrix report、transport watchlist、roadmap / development plan、`npm run umc:release-preflight`、`npm run umc:cli -- registry inspect --format markdown`
+- Validation: `200+` case docs、中文占比统计、answer-level gate report、transport watchlist、main-path perf baseline、roadmap / development plan、`npm run umc:release-preflight`、`npm run umc:cli -- registry inspect --format markdown`
 
 ## Execution Tasks
 
-- [ ] EL-1 review benchmark coverage and define the `200`-case matrix with breadth-first rules instead of raw count chasing
-- [ ] EL-2 require Chinese cases to reach at least `50%` of the next benchmark matrix
-- [ ] EL-3 define the main-path performance plan for retrieval / assembly / answer-level and the baseline measurement entrypoints
-- [ ] EL-4 refresh roadmap / development plan / control-surface state around the next-stage benchmark + performance plan
+- [ ] EL-1 expand the benchmark from `187` to a coverage-first `200+` cases, prioritizing blind spots over more rewrites
+- [ ] EL-2 make Chinese cases at least `50%` of the runnable matrix across retrieval, answer-level, and negative surfaces
+- [ ] EL-3 turn the answer-level host path and the raw transport watchlist into formal gates, then triage the answer-level red path
+- [ ] EL-4 use the main-path performance baseline to prioritize optimization work and refresh roadmap / development plan / control-surface state
 
 ## Development Log Capture
 

@@ -20,9 +20,23 @@
 
 | 时间层级 | 重点 | 退出信号 |
 | --- | --- | --- |
-| 当前 | 把 retrieval、answer-level、transport 三条证据面分开，规划更全面的 `200` case benchmark，并补主链路性能专项计划 | `200` case coverage 规划明确、下一轮矩阵中文案例占比达到 `50%`、transport watchlist 保持独立、性能 baseline 入口已文档化 |
-| 下一步 | 用更全面的 benchmark 和性能 baseline 决定下一轮优化顺序，再讨论是否真的打开 runtime API / service-mode | answer-level host-path 回退已可解释、主链路性能 baseline 稳定、benchmark 不再盲目漂移 |
+| 当前 | 执行 coverage-first 的 `200+` case 扩展、把中文案例真正做到 `50%`、并把 answer-level host path 红线和 transport watchlist 变成正式门禁 | `200+` case 已落地、中文案例实际占比达到 `50%`、answer-level gate 可持续复跑、transport watchlist 不再污染算法判断 |
+| 下一步 | 用新的正式门禁和主链路性能基线决定优化顺序，再讨论是否真的打开 runtime API / service-mode | answer-level host-path 回退已被修掉或可解释、性能最慢层已有实质优化、benchmark coverage 不再有明显盲区 |
 | 更后面 | 只在 operator baseline 稳定后，再讨论 runtime API / split-ready 演进 | Stage 5 收口后的独立产品证据继续保持绿色 |
+
+## 当前执行重点
+
+主 roadmap 里的“当前”不只是方向，也对应接下来要执行的具体工作：
+
+1. 把当前 `187` case benchmark 扩成 coverage-first 的 `200+`，优先补 blind spots，而不是继续堆改写。
+2. 把中文案例真正做到不少于 `50%` 的实际可运行矩阵，覆盖 retrieval、answer-level 和 negative surfaces。
+3. 把 live `openclaw agent` answer-level gate 与 raw transport watchlist 变成正式门禁，并先修 answer-level red path。
+4. 按主链路性能基线先解释并优化最慢层，再决定后续算法优化顺序。
+
+恢复执行时：
+
+- 主顺序看 [reference/unified-memory-core/development-plan.zh-CN.md](reference/unified-memory-core/development-plan.zh-CN.md) 的 `65-70`
+- 实时执行状态看 [../.codex/plan.md](../.codex/plan.md) 和 [../.codex/status.md](../.codex/status.md)
 
 ## 里程碑
 

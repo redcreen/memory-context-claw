@@ -90,7 +90,7 @@ flowchart TB
 | Core capture / fact-card / assembly | `completed` | maintain + tune |
 | Memory search | `phase-complete` | governance + benchmark expansion + policy tuning |
 | Self-learning / reflection | `stage-complete` | governed lifecycle, policy adaptation, exports, CLI, and governance surfaces are available |
-| Unified Memory Core | `stage5-complete / post-closeout` | `187` case benchmark + separated answer-level / transport evidence + next `200` case / performance planning |
+| Unified Memory Core | `stage5-complete / post-closeout` | `187` case benchmark + `200+` case execution queue + answer-level red-path / transport gate / perf baseline |
 
 ## Progress Map
 
@@ -223,24 +223,24 @@ Still ongoing:
 
 ### Primary next engineering focus
 
-**Evaluation-driven optimization: move from the first `100+` benchmark to `200`-case / performance planning**
+**Evaluation-driven optimization: move from the `187`-case baseline into `200+` case execution and main-path optimization**
 
 Why this is next:
 
 - the baseline product work is complete, so the next missing piece is a larger and more attributable evaluation surface rather than another blind feature addition
 - the current `20` cases and the minimal A/B report prove that the system works, but they are not enough to support sustained algorithm tuning
-- the benchmark has now grown to `187` cases, so the next problem is coverage quality rather than raw count
+- the benchmark has now grown to `187` cases, and the coverage review plus main-path perf baseline are now written down, so the next phase is execution rather than more planning
 - retrieval-heavy host index is green at `125 / 125`
-- raw `openclaw memory search` transport now has its own watchlist: `17 / 24` raw ok, `7` empty-result probes
-- the live `openclaw agent` answer-level sub-matrix is currently red at `0 / 36`, so the host answer path must be triaged separately instead of being mixed into retrieval or raw transport judgment
+- raw `openclaw memory search` transport now has its own watchlist; the first main-path baseline sample further shows `8 / 8 invalid_json` probes
+- the live `openclaw agent` answer-level sub-matrix remains red; the first main-path baseline sample shows roughly `32s` average latency with abstention or timeout
 - release-preflight, deployment verification, and the host-neutral root policy still need to stay green, but they are now guardrails rather than the sole mainline objective
 
 This mainline now includes:
 
-- reviewing the current benchmark coverage and planning a broader `200`-case matrix
-- requiring the next benchmark design to reach at least `50%` Chinese coverage
-- keeping `legacy / unified / bootstrap / retrieval` attribution while treating the answer-level host path as its own red line
-- defining a dedicated performance plan for the retrieval / assembly / answer-level main path
+- expanding the benchmark from `187` to a coverage-first `200+`
+- making Chinese cases a real `50%` share of the runnable matrix
+- promoting the answer-level host path and the raw transport watchlist into formal gates
+- fixing the answer-level red path first, then optimizing the slowest main-path layer based on the baseline
 
 Key documents:
 

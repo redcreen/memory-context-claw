@@ -11,7 +11,7 @@
 
 ## Active Slice
 
-`plan-200-case-benchmark-and-main-path-performance`
+`execute-200-case-benchmark-and-answer-path-triage`
 
 ## Done
 
@@ -65,6 +65,12 @@
   - benchmark-driven 第一轮修复已落地：`guessing policy` query rewrite 与 fallback rewrite fan-out 已补齐，失败项归零
   - answer-level benchmark wrapper prompt 现在会在 query rewrite 前被剥掉，不再让 `Based only on your memory...` 这类测试包装语污染 retrieval query
   - 总览报告已补齐：[reports/generated/openclaw-cli-memory-eval-program-2026-04-14.md](../reports/generated/openclaw-cli-memory-eval-program-2026-04-14.md)
+- development plan `59-64` 已收口成正式产物：
+  - `187` case coverage review 与 `200+` 扩面规划已写成报告：[reports/generated/openclaw-cli-memory-coverage-plan-2026-04-14.md](../reports/generated/openclaw-cli-memory-coverage-plan-2026-04-14.md)
+  - 中文案例 `50%` 的下一轮约束已写回 roadmap / development plan / control surface
+  - retrieval / assembly / answer-level 主链路性能专项计划已补齐：[docs/reference/unified-memory-core/testing/main-path-performance-plan.zh-CN.md](../docs/reference/unified-memory-core/testing/main-path-performance-plan.zh-CN.md)
+  - 主链路性能首轮基线已落地：[reports/generated/main-path-performance-baseline-2026-04-14.md](../reports/generated/main-path-performance-baseline-2026-04-14.md)
+  - 首轮 perf 归因已经明确：retrieval / assembly 仍是毫秒级，raw transport 继续 watchlist，answer-level host path 是当前最慢红线
 - control-surface 与 host-neutral workstream docs 已再次对齐：
   - 不再把 canonical-root cutover 描述成“仍待决定的窗口”
   - 当前维护重点是防止 policy drift，而不是重新定义 hard gate
@@ -102,8 +108,8 @@
 
 ## In Progress
 
-- 下一阶段已明确切到两条 planning 主线：`200` case 更全面 benchmark planning，以及主链路性能专项 planning
-- 当前 live `openclaw agent` answer-level path 需要单独看待：retrieval-heavy `125/125` 与 transport watchlist 已拆开，但当前 `agent` 子矩阵 `0/36`，说明宿主问答链路现在没有把同一份记忆有效用起来
+- 下一阶段已从 planning 切到 execution：`200+` case 扩面、中文 `50%`、answer-level gate / transport watch 正式化、主链路慢点优化
+- 当前 live `openclaw agent` answer-level path 仍需要单独看待：retrieval-heavy `125/125` 与 transport watchlist 已拆开，但当前 `agent` 子矩阵 `0/36`，而且首轮 perf baseline 样本显示 answer-level 平均约 `32s`
 - 保持 release-preflight、bundle install、host smoke、Stage 5 acceptance 证据持续为绿
 - 保持 host-neutral root policy 在 CLI、公开文档和控制面里持续一致
 - 保持 project/workstream roadmap 摘要与新的评测驱动主线持续一致
@@ -114,16 +120,16 @@
 
 ## Blockers / Open Decisions
 
-- answer-level host path 当前是红的：live `openclaw agent` 子矩阵 `0/36`
+- answer-level host path 当前是红的：live `openclaw agent` 子矩阵 `0/36`，首轮 perf baseline 还显示 `~32s` 平均耗时与直接 abstain / timeout
 - operator / planning follow-up 只剩：
   - 什么时候清理过时的 legacy root 副本
   - accepted-action Step 48-52 何时具备重开实现的前置条件
 
 ## Next 3 Actions
 
-1. review 当前 benchmark 覆盖面并规划到 `200` case，要求覆盖面比数量更重要，且中文案例占比达到 `50%`。
-2. 制定主链路性能专项计划，先拿到 retrieval / assembly / answer-level 的基线，再决定优化顺序。
-3. 把当前 red 的 answer-level host path 单独列成下一轮 triage 输入，而不是继续和 raw transport / retrieval benchmark 混在一起。
+1. 把 benchmark 从 `187` 扩到 coverage-first 的 `200+`，优先补中文、cross-source、supersede、negative 和 answer-level 盲区。
+2. 把中文案例真正做到不少于 `50%` 的实际运行面，并把 answer-level / negative 的中文题补齐。
+3. 先把 answer-level host path red line 当成正式门禁和 triage 主线，再按 perf baseline 优化最慢层。
 
 ## Architecture Supervision
 - Signal: `yellow`
@@ -140,20 +146,21 @@
 
 ## Current Execution Line
 
-- Objective: 收口 `187` case benchmark、answer-level matrix 和 transport watchlist 的当前真相，并把下一阶段切到 `200` case coverage planning + main-path performance planning
-- Plan Link: `plan-200-case-benchmark-and-main-path-performance`
-- Runway: benchmark coverage review、中文占比约束、answer-level red-path triage input、main-path perf planning、report refresh；并行守住 release-preflight 和 canonical-root policy
-- Progress: `3 / 3` tasks complete
+- Objective: 执行 `200+` case coverage-first 扩面、中文 `50%`、answer-level gate / transport watch 正式化，并按 perf baseline 推进主链路优化
+- Plan Link: `execute-200-case-benchmark-and-answer-path-triage`
+- Runway: 200+ case 扩面、中文案例补盲、answer-level red-path triage、正式门禁、perf-baseline-driven optimization；并行守住 release-preflight 和 canonical-root policy
+- Progress: `0 / 4` tasks complete
 - Stop Conditions:
-  - benchmark coverage review degenerates into pure case count chasing
+  - benchmark expansion degenerates into pure case count chasing
   - answer-level host-path regression gets misclassified as raw transport or retrieval quality
-  - main-path performance planning starts before baseline evidence is written down
+  - slow-path optimization starts before answer-level and transport evidence are separated
 
 ## Execution Tasks
 
-- [x] EL-1 expand the benchmark matrix to `187` cases, including a much larger agent answer-level surface
-- [x] EL-2 extend retrieval-heavy benchmark coverage to cross-source and supersede scenarios and rerun it green (`125/125`)
-- [x] EL-3 separate raw transport instability into a dedicated watchlist and refresh reports / control-surface state
+- [ ] EL-1 expand the benchmark from `187` to a coverage-first `200+` cases
+- [ ] EL-2 make Chinese cases at least `50%` of the runnable matrix
+- [ ] EL-3 turn the answer-level host path and raw transport watchlist into formal gates, then triage the answer-level red path
+- [ ] EL-4 use the perf baseline to prioritize slow-path optimization and refresh reports / control-surface state
 
 ## Development Log Capture
 

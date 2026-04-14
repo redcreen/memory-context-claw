@@ -7,14 +7,24 @@ export function summarizeTransportProbeResults(results = []) {
     invalidJson: 0,
     commandFailed: 0,
     otherFailure: 0,
+    averageDurationMs: 0,
+    maxDurationMs: 0,
     watchlist: [],
     byCategory: {}
   };
 
+  const durations = [];
+
   for (const item of results) {
     const category = item.category || "unknown";
-    summary.byCategory[category] ||= { total: 0, ok: 0, failures: 0 };
+    summary.byCategory[category] ||= { total: 0, ok: 0, failures: 0, averageDurationMs: 0, maxDurationMs: 0 };
     summary.byCategory[category].total += 1;
+    if (Number.isFinite(item.durationMs)) {
+      durations.push(item.durationMs);
+      const bucket = summary.byCategory[category];
+      bucket.averageDurationMs += item.durationMs;
+      bucket.maxDurationMs = Math.max(bucket.maxDurationMs, item.durationMs);
+    }
 
     switch (item.status) {
       case "ok":
@@ -74,6 +84,18 @@ export function summarizeTransportProbeResults(results = []) {
     }
   }
 
+  if (durations.length > 0) {
+    summary.averageDurationMs = Math.round(
+      durations.reduce((sum, value) => sum + value, 0) / durations.length
+    );
+    summary.maxDurationMs = Math.max(...durations);
+  }
+  for (const bucket of Object.values(summary.byCategory)) {
+    if (bucket.total > 0) {
+      bucket.averageDurationMs = Math.round(bucket.averageDurationMs / bucket.total);
+    }
+  }
+
   return summary;
 }
 
@@ -92,10 +114,12 @@ export function renderTransportWatchReport(report, { generatedAt } = {}) {
   lines.push(`- invalidJson: \`${summary.invalidJson}\``);
   lines.push(`- commandFailed: \`${summary.commandFailed}\``);
   lines.push(`- otherFailure: \`${summary.otherFailure}\``);
+  lines.push(`- averageDurationMs: \`${summary.averageDurationMs}\``);
+  lines.push(`- maxDurationMs: \`${summary.maxDurationMs}\``);
   lines.push("");
   lines.push("## Category Summary");
   for (const [category, stats] of Object.entries(summary.byCategory)) {
-    lines.push(`- ${category}: ok=\`${stats.ok}\` failures=\`${stats.failures}\` total=\`${stats.total}\``);
+    lines.push(`- ${category}: ok=\`${stats.ok}\` failures=\`${stats.failures}\` total=\`${stats.total}\` avgMs=\`${stats.averageDurationMs}\` maxMs=\`${stats.maxDurationMs}\``);
   }
   lines.push("");
   lines.push("## Watchlist");
