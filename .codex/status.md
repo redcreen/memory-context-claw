@@ -53,6 +53,13 @@
   - 一次性 outcome 目前仍保持 observation，Step 48-52 的 admission routing / negative-path / conflict policy 继续维持在 deferred TODO 队列
   - 宿主侧 live verification 已补齐：失效的 `status-codex-quota` 配置残留已清理，`openclaw plugins list` 已恢复正常
   - 已安装插件的真实 `after_tool_call` hook 已在 canonical registry 上写入一条 canary `accepted_action`：`target_fact` 成功 promote，`outcome_artifact` 保持 observation
+- post-Stage-5 评测驱动优化的第一轮 baseline 已落地：
+  - repo 内已新增 `evals/openclaw-cli-memory-fixture/` fixture 镜像，覆盖稳定事实、项目知识、旧状态和当前状态
+  - `evals/openclaw-cli-memory-benchmark-cases.js` 已定义 `129` 个 benchmark case
+  - `scripts/eval-openclaw-cli-memory-benchmark.js` 已成为统一 benchmark 入口，支持 case filtering、Markdown/JSON 报告和关键 legacy attribution
+  - retrieval-heavy host-index benchmark 已完成：`111/111`
+  - benchmark-driven 第一轮修复已落地：`guessing policy` query rewrite 与 fallback rewrite fan-out 已补齐，失败项归零
+  - 总览报告已补齐：[reports/generated/openclaw-cli-memory-eval-program-2026-04-14.md](../reports/generated/openclaw-cli-memory-eval-program-2026-04-14.md)
 - control-surface 与 host-neutral workstream docs 已再次对齐：
   - 不再把 canonical-root cutover 描述成“仍待决定的窗口”
   - 当前维护重点是防止 policy drift，而不是重新定义 hard gate
@@ -75,6 +82,8 @@
   - `openclaw plugins list`：`pass`
   - `openclaw plugins inspect unified-memory-core --json`：`pass`（loaded/install version `0.2.1`）
   - `npm run runtime:check`：`pass`
+  - `node --test test/openclaw-cli-memory-benchmark-cases.test.js test/query-rewrite.test.js`：`pass`
+  - `node scripts/eval-openclaw-cli-memory-benchmark.js --categories profile,preference,rule,project,temporal-current,temporal-history ...`：`111/111`
   - `npm run umc:cli -- registry migrate --source-dir ~/.openclaw/unified-memory-core/registry --target-dir ~/.unified-memory-core/registry --format markdown`：`noop / adopt_canonical_root`
   - `npm run umc:cli -- review split-rehearsal --source-dir ~/.unified-memory-core/registry --target-dir /tmp/umc-split-rehearsal --format markdown`：`pass`
   - `npm run smoke:eval -- --format markdown`：`28/28`
@@ -86,9 +95,7 @@
 
 ## In Progress
 
-- 把 OpenClaw CLI 记忆评测从 `20` 案例扩到 `100+`，并建立分类矩阵
-- 对 benchmark 核心案例持续补 `legacy / unified / bootstrap / retrieval` 来源归因
-- 把 benchmark 失败项转成算法修复清单，并按轮次重跑、更新文档、推 GitHub
+- 准备下一轮更大规模的 live `openclaw agent` answer-level matrix，而不是停留在当前 `20-case` current-path + 关键 A/B
 - 保持 release-preflight、bundle install、host smoke、Stage 5 acceptance 证据持续为绿
 - 保持 host-neutral root policy 在 CLI、公开文档和控制面里持续一致
 - 保持 project/workstream roadmap 摘要与新的评测驱动主线持续一致
@@ -106,9 +113,9 @@
 
 ## Next 3 Actions
 
-1. 定义 `100+` OpenClaw CLI benchmark 的类别矩阵、入口约束和期望结果格式。
-2. 把现有 `20` 案例扩到第一批 `40-60` 案例，并为关键案例补齐 `legacy / unified / bootstrap / retrieval` 归因。
-3. 跑第一轮扩容 benchmark，整理失败清单，按失败驱动开始算法修复与回归保护。
+1. 把 live `openclaw agent` answer-level matrix 从当前 `20-case` current-path 扩到更大规模，并继续保留关键 A/B。
+2. 继续扩充 retrieval-heavy benchmark 到更多冲突、supersede、跨来源混合场景。
+3. 单独收敛 raw `openclaw memory search` transport instability，避免宿主问题污染算法判断。
 
 ## Architecture Supervision
 - Signal: `yellow`
@@ -128,7 +135,7 @@
 - Objective: 保持 post-Stage-5 的 operator baseline、project/workstream roadmap 摘要和 canonical-root policy 同时稳定
 - Plan Link: `build-openclaw-cli-100-case-benchmark`
 - Runway: benchmark design、case expansion、A/B attribution、failure triage、algorithm iteration、report refresh；并行守住 release-preflight 和 canonical-root policy
-- Progress: `0 / 6` tasks complete
+- Progress: `6 / 6` tasks complete
 - Stop Conditions:
   - benchmark case design drifts away from real OpenClaw CLI entrypoints
   - attribution evidence can no longer explain capability source clearly
@@ -137,12 +144,12 @@
 
 ## Execution Tasks
 
-- [ ] EL-1 define the `100+` OpenClaw CLI benchmark matrix and category coverage
-- [ ] EL-2 expand the current 20 cases into the first `40-60` reproducible cases
-- [ ] EL-3 add `legacy / unified / bootstrap / retrieval` attribution notes to benchmark-critical cases
-- [ ] EL-4 run the first larger benchmark pass and summarize failures
-- [ ] EL-5 implement the first benchmark-driven algorithm fixes and rerun the affected cases
-- [ ] EL-6 refresh roadmap / reports / control-surface state and push the benchmark iteration to GitHub
+- [x] EL-1 define the `100+` OpenClaw CLI benchmark matrix and category coverage
+- [x] EL-2 expand the current 20 cases into `129` reproducible benchmark cases
+- [x] EL-3 add `legacy / unified / bootstrap / retrieval` attribution notes to benchmark-critical cases
+- [x] EL-4 run the first larger benchmark pass and summarize failures
+- [x] EL-5 implement the first benchmark-driven algorithm fixes and rerun the affected cases
+- [x] EL-6 refresh roadmap / reports / control-surface state and push the benchmark iteration to GitHub
 
 ## Development Log Capture
 

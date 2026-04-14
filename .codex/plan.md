@@ -12,7 +12,7 @@
   - Risks: 如果只是机械堆案例而没有分类和归因，测试数量会增加，但无法真正驱动算法优化
   - Validation: `100+` 案例定义文档、机器可读结果、人工可读报告、可重复运行入口
   - Exit Condition: 至少 `100` 个案例能稳定运行，并能按类别和入口统计结果
-  - Status: `in_progress`
+  - Status: `completed`
 
 - Slice: `attribute-memory-capability-sources`
   - Objective: 对同一批核心案例做 `legacy / unified / bootstrap / retrieval` 对照，明确答案来源和扩展增益边界
@@ -20,7 +20,7 @@
   - Risks: 如果归因只写结论不留证据，后续优化会再次混淆“原生能力”和“扩展增益”
   - Validation: A/B 对照报告、关键案例证据、来源分类说明
   - Exit Condition: 用户能直接从报告看懂哪些能力来自原生、哪些来自扩展、哪些只是 bootstrap 输入
-  - Status: `in_progress`
+  - Status: `completed`
 
 - Slice: `turn-failures-into-algorithm-iterations`
   - Objective: 把 benchmark 失败案例转成 retrieval / assembly / policy 算法问题清单，并按轮次修复、复测、提交
@@ -28,7 +28,7 @@
   - Risks: 如果修复后不重跑 benchmark，优化会再次退回“感觉变好了”而不是证据驱动
   - Validation: 每轮失败清单、对应修复、复测结果、GitHub commit
   - Exit Condition: benchmark 失败项被持续压缩，且新问题能快速回写成回归保护
-  - Status: `in_progress`
+  - Status: `completed`
 
 - Slice: `close-stage5-product-hardening-and-independent-operation`
   - Objective: 一口气收掉 `Step 39-46`，把 source hardening、maintenance、reproducibility、release-boundary、split rehearsal、independent review 全部接到 CLI-first 证据面
@@ -136,7 +136,7 @@
 - Objective: 建立 `100+` OpenClaw CLI benchmark、持续做来源归因，并让失败案例驱动算法迭代，同时守住 release-preflight 与 root policy
 - Plan Link: `build-openclaw-cli-100-case-benchmark`
 - Runway: benchmark design、case expansion、A/B attribution、failure triage、algorithm iteration、report refresh
-- Progress: `4 / 4` tasks complete
+- Progress: `6 / 6` tasks complete
 - Stop Conditions:
   - benchmark case definition drifts away from real OpenClaw CLI entrypoints
   - attribution report can no longer explain whether answers came from legacy, bootstrap, retrieval, or unified assembly
@@ -146,12 +146,12 @@
 
 ## Execution Tasks
 
-- [ ] EL-1 define the `100+` OpenClaw CLI benchmark matrix and category coverage
-- [ ] EL-2 expand the current 20 cases into the first `40-60` reproducible cases
-- [ ] EL-3 add `legacy / unified / bootstrap / retrieval` attribution notes to benchmark-critical cases
-- [ ] EL-4 run the first larger benchmark pass, summarize failures, and convert them into algorithm work items
-- [ ] EL-5 implement the first benchmark-driven algorithm fixes and rerun the affected cases
-- [ ] EL-6 refresh roadmap / reports / control-surface state and push the benchmark iteration to GitHub
+- [x] EL-1 define the `100+` OpenClaw CLI benchmark matrix and category coverage
+- [x] EL-2 expand the current 20 cases into the first `129` reproducible benchmark cases
+- [x] EL-3 add `legacy / unified / bootstrap / retrieval` attribution notes to benchmark-critical cases
+- [x] EL-4 run the first larger benchmark pass, summarize failures, and convert them into algorithm work items
+- [x] EL-5 implement the first benchmark-driven algorithm fixes and rerun the affected cases
+- [x] EL-6 refresh roadmap / reports / control-surface state and push the benchmark iteration to GitHub
 
 ## Development Log Capture
 

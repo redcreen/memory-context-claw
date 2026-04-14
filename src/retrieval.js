@@ -117,7 +117,7 @@ function mergeLocalSearchCandidate(target, candidate) {
   return target;
 }
 
-function searchLocalMemoryIndex({
+export function searchLocalMemoryIndex({
   agentId,
   query,
   maxCandidates,

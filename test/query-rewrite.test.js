@@ -18,3 +18,11 @@ test("rewriteRetrievalQueries limits rewrite count", () => {
 
   assert.equal(queries.length, 2);
 });
+
+test("rewriteRetrievalQueries expands guess-policy wording", () => {
+  const queries = rewriteRetrievalQueries("guessing policy", {
+    maxQueries: 4
+  });
+
+  assert.ok(queries.some((item) => item.includes("guesses facts do not guess")));
+});

@@ -37,6 +37,14 @@ function buildContrastRewrite(query) {
   return "";
 }
 
+function buildPolicyRewrite(query) {
+  const q = String(query || "");
+  if (/guess/i.test(q)) {
+    return `${q} guesses facts do not guess`;
+  }
+  return "";
+}
+
 export function rewriteRetrievalQueries(query, options = {}) {
   const base = compressQuery(query);
   if (!base) {
@@ -47,6 +55,7 @@ export function rewriteRetrievalQueries(query, options = {}) {
     base,
     base.replace(/\s+/g, " "),
     buildContrastRewrite(base),
+    buildPolicyRewrite(base),
     buildIntentRewrite(base)
   ]);
 
