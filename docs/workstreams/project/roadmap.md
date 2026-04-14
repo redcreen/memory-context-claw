@@ -90,7 +90,7 @@ flowchart TB
 | Core capture / fact-card / assembly | `completed` | maintain + tune |
 | Memory search | `phase-complete` | governance + benchmark expansion + policy tuning |
 | Self-learning / reflection | `stage-complete` | governed lifecycle, policy adaptation, exports, CLI, and governance surfaces are available |
-| Unified Memory Core | `stage5-complete / post-closeout` | `187` case benchmark + `200+` case execution queue + answer-level red-path / transport gate / perf baseline |
+| Unified Memory Core | `stage5-complete / post-closeout` | `368` case runnable matrix + `50.82%` Chinese coverage + isolated local answer-level formal gate `6/6` + transport watchlist / perf baseline |
 
 ## Progress Map
 
@@ -99,7 +99,7 @@ flowchart TB
     A["Unified Memory Core Project\nCurrent state: post-Stage-5 evaluation-driven optimization"] --> B["Foundation Layer\ncompleted"]
     A --> C["Unified Memory Core Product Line\nStage 1-5 completed"]
     A --> D["Memory Search Workstream\nphase-complete / governed"]
-    A --> E["Post-Stage-5 Mainline\n100+ case benchmark + operator baseline"]
+    A --> E["Post-Stage-5 Mainline\nformal benchmark gates + operator baseline"]
 
     B --> B1["Capture Foundation\ncompleted"]
     B --> B2["Fact / Card Foundation\ncompleted"]
@@ -123,12 +123,12 @@ flowchart TB
     C4 --> C43["Independent execution + root policy\ncompleted"]
 
     D --> D1["Memory Search Governance\nongoing"]
-    D --> D2["100+ Benchmark Expansion / Policy Tuning\nactive"]
+    D --> D2["Formal Benchmark Gates / Policy Tuning\nactive"]
 
-    E --> E1["Expand OpenClaw CLI evaluation to 100+ cases"]
-    E --> E2["Run legacy / unified / bootstrap / retrieval attribution comparisons"]
-    E --> E3["Turn failing cases into algorithm fixes and regression protection"]
-    E --> E4["Keep Stage 5 evidence and canonical-root policy green"]
+    E --> E1["Maintain the 368-case runnable matrix + 50%+ Chinese coverage"]
+    E --> E2["Expand the isolated local answer-level formal gate"]
+    E --> E3["Keep gateway/raw transport noise on separate watchlists"]
+    E --> E4["Optimize the slowest layer from the perf baseline while keeping Stage 5 evidence green"]
 
     classDef done fill:#e8f7e8,stroke:#2f855a,color:#1c4532,stroke-width:1.5px;
     classDef active fill:#eef6ff,stroke:#2563eb,color:#123a73,stroke-width:1.5px;
@@ -223,24 +223,24 @@ Still ongoing:
 
 ### Primary next engineering focus
 
-**Evaluation-driven optimization: move from the `187`-case baseline into `200+` case execution and main-path optimization**
+**Evaluation-driven optimization: move from `200+` case execution into formal-gate maintenance and answer-level expansion**
 
 Why this is next:
 
-- the baseline product work is complete, so the next missing piece is a larger and more attributable evaluation surface rather than another blind feature addition
-- the current `20` cases and the minimal A/B report prove that the system works, but they are not enough to support sustained algorithm tuning
-- the benchmark has now grown to `187` cases, and the coverage review plus main-path perf baseline are now written down, so the next phase is execution rather than more planning
-- retrieval-heavy host index is green at `125 / 125`
-- raw `openclaw memory search` transport now has its own watchlist; the first main-path baseline sample further shows `8 / 8 invalid_json` probes
-- the live `openclaw agent` answer-level sub-matrix remains red; the first main-path baseline sample shows roughly `32s` average latency with abstention or timeout
+- the baseline product work is complete, so the next missing piece is not another blind feature addition but a stable formal-gate and optimization program
+- the runnable matrix is now `368` cases, with `187 / 368 = 50.82%` zh-bearing coverage
+- retrieval-heavy formal gating is now green at `250 / 250`
+- the isolated local answer-level formal gate is no longer red; it now passes `6 / 6` through `openclaw agent --local` with the isolated eval agent `umceval65`
+- raw `openclaw memory search` transport now has its own host watchlist; the current formal watch sample is `0 / 8 raw ok`, all `invalid_json`
+- the refreshed main-path baseline now separates the layers cleanly: retrieval / assembly average `85ms`, raw transport average `15127ms`, isolated local answer-level average `39281ms`
 - release-preflight, deployment verification, and the host-neutral root policy still need to stay green, but they are now guardrails rather than the sole mainline objective
 
 This mainline now includes:
 
-- expanding the benchmark from `187` to a coverage-first `200+`
-- making Chinese cases a real `50%` share of the runnable matrix
-- promoting the answer-level host path and the raw transport watchlist into formal gates
-- fixing the answer-level red path first, then optimizing the slowest main-path layer based on the baseline
+- keeping the `368` case runnable matrix and `50%+` Chinese coverage stable
+- expanding the answer-level formal gate beyond the current `6` representative samples
+- keeping gateway/session-lock noise and raw transport on separate watchlists so host instability does not get misread as algorithm regression
+- optimizing the slowest answer-level layer from the refreshed perf baseline
 
 Key documents:
 

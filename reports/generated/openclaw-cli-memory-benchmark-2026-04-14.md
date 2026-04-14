@@ -1,31 +1,38 @@
 # OpenClaw CLI Memory Benchmark
 
-- generatedAt: `2026-04-14T04:41:41.926Z`
+- generatedAt: `2026-04-14T07:43:26.865Z`
 - agent: `umceval`
-- totalCases: `125`
-- currentPassed: `125`
+- totalCases: `250`
+- currentPassed: `250`
 - currentFailed: `0`
 - legacyCompared: `0`
 - legacyPassed: `0`
+- abstained: `0`
+- abstentionRate: `0`
+- zhBearingCases: `125/250`
+
+## Language Summary
+- zhBearing: `125`
+- nonZh: `125`
 
 ## Category Summary
-- profile: `11/11`
-- preference: `32/32`
-- rule: `12/12`
-- project: `28/28`
-- cross-source: `8/8`
-- supersede: `6/6`
-- temporal-current: `19/19`
-- temporal-history: `9/9`
+- profile: `22/22`
+- preference: `64/64`
+- rule: `24/24`
+- project: `56/56`
+- cross-source: `16/16`
+- supersede: `12/12`
+- temporal-current: `38/38`
+- temporal-history: `18/18`
 
 ## Attribution Summary
-- not-compared: `125`
+- not-compared: `250`
 
 ## Transport Summary
-- local_sqlite_index: `125`
+- local_sqlite_index: `250`
 
 ## Entrypoint Summary
-- memory_search: `125`
+- memory_search: `250`
 
 ## Failing Cases
 - none
@@ -74,4 +81,5 @@
 - Use `--raw-search-cli` only when you explicitly want to probe that unstable transport and accept fallback noise.
 - Legacy comparison is only enabled for benchmark-critical attribution cases, not the full matrix.
 - The current fixture mirror lives under `evals/openclaw-cli-memory-fixture/`.
+- Agent cases use an explicit memory_search tool hint before answering.
 

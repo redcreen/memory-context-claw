@@ -1,27 +1,56 @@
 {
-  "generatedAt": "2026-04-14T05:26:48.594Z",
-  "agentId": "umceval",
+  "generatedAt": "2026-04-14T15:52:23.698Z",
+  "agentId": "umceval65",
+  "agentToolHint": true,
+  "agentLocal": true,
   "casesPath": "/Users/redcreen/Project/unified-memory-core/evals/openclaw-cli-memory-benchmark-cases.js",
   "summary": {
-    "total": 1,
-    "passed": 0,
-    "failed": 1,
-    "comparedLegacy": 1,
+    "total": 6,
+    "passed": 6,
+    "failed": 0,
+    "comparedLegacy": 3,
     "legacyPassed": 0,
+    "abstained": 0,
+    "abstentionRate": 0,
+    "byLanguage": {
+      "zhBearing": 1,
+      "nonZh": 5
+    },
     "byCategory": {
       "agent-profile": {
         "total": 1,
-        "passed": 0
+        "passed": 1
+      },
+      "agent-project": {
+        "total": 1,
+        "passed": 1
+      },
+      "agent-temporal": {
+        "total": 1,
+        "passed": 1
+      },
+      "agent-history": {
+        "total": 1,
+        "passed": 1
+      },
+      "agent-zh": {
+        "total": 1,
+        "passed": 1
+      },
+      "negative": {
+        "total": 1,
+        "passed": 1
       }
     },
     "byAttribution": {
-      "unified-failed": 1
+      "legacy-skipped": 3,
+      "not-compared": 3
     },
     "byTransport": {
-      "agent": 1
+      "agent_local": 6
     },
     "byEntrypoint": {
-      "agent": 1
+      "agent": 6
     }
   },
   "results": [
@@ -33,19 +62,205 @@
       "message": "Based only on your memory for this agent, what is the user's preferred name? If memory is missing, reply exactly: I don't know based on current memory.",
       "compareLegacy": true,
       "attributionKind": "bootstrap",
-      "attribution": "unified-failed",
+      "attribution": "legacy-skipped",
       "current": {
         "ok": true,
-        "answer": "I don't know based on current memory.",
-        "injectedWorkspaceFiles": [],
-        "observedSessionKey": "",
-        "observedSessionId": "826c69fd-a36e-4a46-9ee4-8001da5b6382",
-        "passed": false,
-        "expectedAnyOk": false,
+        "transport": "agent_local",
+        "answer": "Maya Chen",
+        "injectedWorkspaceFiles": [
+          "AGENTS.md",
+          "SOUL.md",
+          "TOOLS.md",
+          "IDENTITY.md",
+          "USER.md",
+          "HEARTBEAT.md",
+          "BOOTSTRAP.md",
+          "MEMORY.md"
+        ],
+        "observedSessionKey": "agent:umceval65:main",
+        "observedSessionId": "umc-bench-agent-name-1-54fb78e4",
+        "warning": "",
+        "passed": true,
+        "expectedAnyOk": true,
         "expectedAllOk": true,
         "forbiddenOk": true,
         "sourcesOk": true,
-        "reason": "expectation mismatch"
+        "reason": "matched"
+      },
+      "legacy": null
+    },
+    {
+      "id": "agent-project-1",
+      "category": "agent-project",
+      "entrypoint": "agent",
+      "query": "",
+      "message": "Based only on your memory for this agent, what is Project Lantern? If memory is missing, reply exactly: I don't know based on current memory.",
+      "compareLegacy": true,
+      "attributionKind": "retrieval",
+      "attribution": "legacy-skipped",
+      "current": {
+        "ok": true,
+        "transport": "agent_local",
+        "answer": "Project Lantern is a B2B analytics assistant for clinic managers. Source: notes/project-lantern.md#L1-L15",
+        "injectedWorkspaceFiles": [
+          "AGENTS.md",
+          "SOUL.md",
+          "TOOLS.md",
+          "IDENTITY.md",
+          "USER.md",
+          "HEARTBEAT.md",
+          "BOOTSTRAP.md",
+          "MEMORY.md"
+        ],
+        "observedSessionKey": "agent:umceval65:main",
+        "observedSessionId": "umc-bench-agent-project-1-699702ac",
+        "warning": "",
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "sourcesOk": true,
+        "reason": "matched"
+      },
+      "legacy": null
+    },
+    {
+      "id": "agent-current-editor-1",
+      "category": "agent-temporal",
+      "entrypoint": "agent",
+      "query": "",
+      "message": "Based only on your memory for this agent, what is the user's current main editor now? If memory is missing, reply exactly: I don't know based on current memory.",
+      "compareLegacy": true,
+      "attributionKind": "temporal",
+      "attribution": "legacy-skipped",
+      "current": {
+        "ok": true,
+        "transport": "agent_local",
+        "answer": "Zed.",
+        "injectedWorkspaceFiles": [
+          "AGENTS.md",
+          "SOUL.md",
+          "TOOLS.md",
+          "IDENTITY.md",
+          "USER.md",
+          "HEARTBEAT.md",
+          "BOOTSTRAP.md",
+          "MEMORY.md"
+        ],
+        "observedSessionKey": "agent:umceval65:main",
+        "observedSessionId": "umc-bench-agent-current-editor-1-e13942a7",
+        "warning": "",
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "sourcesOk": true,
+        "reason": "matched"
+      },
+      "legacy": null
+    },
+    {
+      "id": "agent-history-editor-1",
+      "category": "agent-history",
+      "entrypoint": "agent",
+      "query": "",
+      "message": "Based only on your memory for this agent, what editor was Maya still using on 2026-04-10? If memory is missing, reply exactly: I don't know based on current memory.",
+      "compareLegacy": false,
+      "attributionKind": "history",
+      "attribution": "not-compared",
+      "current": {
+        "ok": true,
+        "transport": "agent_local",
+        "answer": "Vim.",
+        "injectedWorkspaceFiles": [
+          "AGENTS.md",
+          "SOUL.md",
+          "TOOLS.md",
+          "IDENTITY.md",
+          "USER.md",
+          "HEARTBEAT.md",
+          "BOOTSTRAP.md",
+          "MEMORY.md"
+        ],
+        "observedSessionKey": "agent:umceval65:main",
+        "observedSessionId": "umc-bench-agent-history-editor-1-0f6379fc",
+        "warning": "",
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "sourcesOk": true,
+        "reason": "matched"
+      },
+      "legacy": null
+    },
+    {
+      "id": "agent-zh-temporal-1",
+      "category": "agent-zh",
+      "entrypoint": "agent",
+      "query": "",
+      "message": "仅根据你当前这个 agent 的记忆，用户现在主要用什么编辑器？如果记忆里没有，请直接回答：I don't know based on current memory.",
+      "compareLegacy": false,
+      "attributionKind": "temporal",
+      "attribution": "not-compared",
+      "current": {
+        "ok": true,
+        "transport": "agent_local",
+        "answer": "Zed.",
+        "injectedWorkspaceFiles": [
+          "AGENTS.md",
+          "SOUL.md",
+          "TOOLS.md",
+          "IDENTITY.md",
+          "USER.md",
+          "HEARTBEAT.md",
+          "BOOTSTRAP.md",
+          "MEMORY.md"
+        ],
+        "observedSessionKey": "agent:umceval65:main",
+        "observedSessionId": "umc-bench-agent-zh-temporal-1-61096b41",
+        "warning": "",
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "sourcesOk": true,
+        "reason": "matched"
+      },
+      "legacy": null
+    },
+    {
+      "id": "agent-negative-1",
+      "category": "negative",
+      "entrypoint": "agent",
+      "query": "",
+      "message": "Based only on your memory for this agent, what is the user's favorite programming language? If memory is missing, reply exactly: I don't know based on current memory.",
+      "compareLegacy": false,
+      "attributionKind": "negative",
+      "attribution": "not-compared",
+      "current": {
+        "ok": true,
+        "transport": "agent_local",
+        "answer": "I don't know based on current memory.",
+        "injectedWorkspaceFiles": [
+          "AGENTS.md",
+          "SOUL.md",
+          "TOOLS.md",
+          "IDENTITY.md",
+          "USER.md",
+          "HEARTBEAT.md",
+          "BOOTSTRAP.md",
+          "MEMORY.md"
+        ],
+        "observedSessionKey": "agent:umceval65:main",
+        "observedSessionId": "umc-bench-agent-negative-1-f9c12f59",
+        "warning": "",
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "sourcesOk": true,
+        "reason": "matched"
       },
       "legacy": null
     }

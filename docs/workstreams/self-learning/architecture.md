@@ -124,6 +124,27 @@ Cross-adapter target:
 
 - the same learning outputs can be consumed by OpenClaw, Codex, and future consumers
 
+## New Real-Time Learning Path
+
+To stop ordinary conversation rules from depending only on nightly backfill, this workstream now includes a forward real-time path:
+
+`return reply + memory_extraction in one turn and run governed ingest immediately in runtime`
+
+This path is meant to:
+
+- let explicit future-behavior rules enter source ingest in real time
+- push nightly back into a safety-net and drift-review role
+- use the main model's semantic judgment instead of relying mostly on hardcoded durable-rule keywords
+
+Its relationship to accepted-action is complementary, not replacement:
+
+- `accepted_action` fits structured events where the user accepted an action and execution succeeded
+- `memory_extraction` fits explicit long-lived rules, tool preferences, and user preferences stated in ordinary conversation
+
+See:
+
+- [../../reference/unified-memory-core/architecture/realtime-memory-intent-ingestion.md](../../reference/unified-memory-core/architecture/realtime-memory-intent-ingestion.md)
+
 ## Design Principles
 
 1. Learning is structured, not magical.

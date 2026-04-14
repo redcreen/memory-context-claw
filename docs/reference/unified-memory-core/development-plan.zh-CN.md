@@ -232,12 +232,31 @@
 
 ## 下一轮执行队列
 
-65. `next` 把 benchmark 从 `187` 扩成 coverage-first 的 `200+` case，并按 blind spot 补齐，而不是只堆改写。
-66. `todo` 把中文案例真正做成不少于 `50%` 的实际执行面，并在 retrieval / answer-level / negative 三层都占有实体比例。
-67. `todo` 把 answer-level host path 与 raw transport watchlist 纳入正式 benchmark gate，持续报告通过率、abstention rate、watchlist 分布。
-68. `todo` 单独 triage 并修复 live `openclaw agent` answer-level red path，直到它不再系统性地 `I don't know` 或超时。
-69. `todo` 按主链路性能基线优化最慢层，优先解释 host answer-level，再处理 raw transport，再决定 retrieval / assembly 是否需要继续微调。
-70. `todo` 重跑 `200+` case benchmark、answer-level gate、transport watchlist 和 main-path perf baseline，并以新证据决定是否打开后续 enhancement planning。
+65. `completed` 把 benchmark 从 `187` 扩成 coverage-first 的 `200+` case，并按 blind spot 补齐，而不是只堆改写。
+   - 当前 runnable matrix = `368` cases，其中 retrieval-heavy = `250`，answer-level = `118`。
+66. `completed` 把中文案例真正做成不少于 `50%` 的实际执行面，并在 retrieval / answer-level / negative 三层都占有实体比例。
+   - 当前 zh-bearing runnable matrix = `187 / 368 = 50.82%`。
+67. `completed` 把 answer-level host path 与 raw transport watchlist 纳入正式 benchmark gate，持续报告通过率、abstention rate、watchlist 分布。
+   - retrieval-heavy gate：`250/250`
+   - answer-level formal gate：`6/6`（`openclaw agent --local` + isolated eval agent `umceval65`）
+   - transport watchlist：`0/8 raw ok`，全部归类为 host transport invalid-json
+68. `completed` 单独 triage 并修复 live `openclaw agent` answer-level red path，直到它不再系统性地 `I don't know` 或超时。
+   - 根因已拆开：gateway/session-lock 噪声、agent main-session 复用污染、CLI `--local` JSON 输出写在 stderr。
+   - 当前正式 gate 改走 isolated local answer path；gateway 路径继续保留在 watchlist，不再污染算法判断。
+69. `completed` 按主链路性能基线优化最慢层，优先解释 host answer-level，再处理 raw transport，再决定 retrieval / assembly 是否需要继续微调。
+   - 当前 main-path baseline：retrieval / assembly `85ms` 平均；raw transport `15127ms` 平均；isolated local answer-level `39281ms` 平均，`3/3` 通过。
+70. `completed` 重跑 `200+` case benchmark、answer-level gate、transport watchlist 和 main-path perf baseline，并以新证据决定是否打开后续 enhancement planning。
+   - 结论：继续推进 benchmark / perf / transport work，但不把 raw transport 或 gateway 噪声误报成 retrieval / answer-level 算法退化。
+71. `done` 为 memory-intent replay 建立正式回归面，覆盖 durable rule、tool routing preference、session constraint、task-only instruction、user profile fact 和 no-memory 噪音。
+72. `done` 在 Codex runtime 写回面补上 `reply + memory_extraction` 的最小实时 ingest 闭环，不再让普通 conversation rule 只能等 nightly self-learning。
+73. `done` 把 `memory_extraction` output schema 提升成正式产品契约，而不是只停留在局部 runtime seam。
+   - 新增共享 `memory_intent` contract / source type，显式定义 category、durability、confidence、admission route 和 structured rule。
+74. `done` 为 `session_constraint`、`task_instruction`、`durable_rule`、`tool_routing_preference` 明确 admission routing，而不是先统一压成 `manual` source 文本。
+   - durable rule / tool routing 走 promotable candidate，session / task-local 走 observation，`none` / `should_write_memory=false` 直接 skip。
+75. `done` 为 realtime memory-intent ingestion 增加 richer reflection、dedupe、supersede、negative-path 和治理回归。
+   - `memory_intent` 已进入 reflection + lifecycle loop，并补上 contract/source/reflection/runtime/CLI 回归面。
+76. `done` 把 replay suite 接进正式 gate，避免后续 prompt / schema 漂移重新把显式规则打回 nightly 漏斗。
+   - `npm run verify:memory-intent` 已成为这条 slice 的正式 gate。
 
 ## 延后增强队列
 

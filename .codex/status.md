@@ -55,22 +55,33 @@
   - 已安装插件的真实 `after_tool_call` hook 已在 canonical registry 上写入一条 canary `accepted_action`：`target_fact` 成功 promote，`outcome_artifact` 保持 observation
 - post-Stage-5 评测驱动优化的第一轮 baseline 已落地：
   - repo 内已新增 `evals/openclaw-cli-memory-fixture/` fixture 镜像，覆盖稳定事实、项目知识、旧状态和当前状态
-  - `evals/openclaw-cli-memory-benchmark-cases.js` 已扩到 `187` 个 benchmark case，其中 `62` 条是 live `openclaw agent` answer-level case
+  - `evals/openclaw-cli-memory-benchmark-cases.js` 已形成 `368` 条 runnable matrix，其中 zh-bearing = `187 / 368 = 50.82%`
   - `scripts/eval-openclaw-cli-memory-benchmark.js` 已成为统一 benchmark 入口，支持 case filtering、entrypoint filtering、Markdown/JSON 报告和关键 legacy attribution
-  - `scripts/eval-openclaw-cli-agent-answer-matrix.js` 已补上专门的 answer-level matrix 入口
   - `scripts/watch-openclaw-memory-search-transport.js` 已把 raw `openclaw memory search` transport 单独收口成 watchlist
-  - retrieval-heavy host-index benchmark 已扩到：`125/125`
-  - transport watchlist 首轮结果：`17/24` raw ok，`7` 条 empty-result，不再与算法判断混在一起
-  - live answer-level current-path 子矩阵已自动化，但当前结果是红的：`0/36`
+  - retrieval-heavy formal gate 已扩到：`250/250`
+  - transport watchlist 当前 formal watch 结果：`0/8 raw ok`，全部 `invalid_json`
+  - isolated local answer-level formal gate 已收口为：`6/6`，正式路径是 `openclaw agent --local` + isolated eval agent `umceval65`
   - benchmark-driven 第一轮修复已落地：`guessing policy` query rewrite 与 fallback rewrite fan-out 已补齐，失败项归零
   - answer-level benchmark wrapper prompt 现在会在 query rewrite 前被剥掉，不再让 `Based only on your memory...` 这类测试包装语污染 retrieval query
   - 总览报告已补齐：[reports/generated/openclaw-cli-memory-eval-program-2026-04-14.md](../reports/generated/openclaw-cli-memory-eval-program-2026-04-14.md)
-- development plan `59-64` 已收口成正式产物：
+- development plan `59-70` 已收口成正式产物：
   - `187` case coverage review 与 `200+` 扩面规划已写成报告：[reports/generated/openclaw-cli-memory-coverage-plan-2026-04-14.md](../reports/generated/openclaw-cli-memory-coverage-plan-2026-04-14.md)
-  - 中文案例 `50%` 的下一轮约束已写回 roadmap / development plan / control surface
+  - runnable matrix 已扩到 `368` cases；zh-bearing runnable matrix = `187/368 = 50.82%`
+  - retrieval-heavy 正式 gate 已扩到 `250/250`
+  - answer-level formal gate 已收口成 isolated local gate：`6/6`，使用 `openclaw agent --local` + isolated eval agent `umceval65`
+  - raw `openclaw memory search` transport watchlist 已固定为独立 host watch：`0/8 raw ok`，全部 `invalid_json`
   - retrieval / assembly / answer-level 主链路性能专项计划已补齐：[docs/reference/unified-memory-core/testing/main-path-performance-plan.zh-CN.md](../docs/reference/unified-memory-core/testing/main-path-performance-plan.zh-CN.md)
-  - 主链路性能首轮基线已落地：[reports/generated/main-path-performance-baseline-2026-04-14.md](../reports/generated/main-path-performance-baseline-2026-04-14.md)
-  - 首轮 perf 归因已经明确：retrieval / assembly 仍是毫秒级，raw transport 继续 watchlist，answer-level host path 是当前最慢红线
+  - 主链路性能刷新基线已落地：[reports/generated/main-path-performance-baseline-2026-04-14.md](../reports/generated/main-path-performance-baseline-2026-04-14.md)
+  - 当前 perf 归因已经明确：retrieval / assembly 平均 `85ms`；raw transport 平均 `15127ms`；isolated local answer-level 平均 `39281ms`
+  - answer-level root cause 已显式拆开：gateway/session-lock 噪声、agent main-session 复用污染、CLI `--local` JSON 走 stderr
+- realtime memory-intent ingestion 的 doc-first baseline 已落地：
+  - memory-intent replay 回归面已补到 `7` 条高混淆案例，覆盖 durable / session / task-only / no-memory / profile / workflow-rule 边界
+  - `scripts/eval-memory-intent-replay.js`、`evals/memory-intent-replay-cases.json`、`test/memory-intent-replay-cases.test.js` 已形成正式 replay 面
+  - `memory_intent` 现在已成为正式 source type / contract，显式包含 category、durability、confidence、admission route、structured rule
+  - Codex adapter `writeAfterTask(...)` 已能消费 `memoryExtraction` / `memory_extraction`，并在 `should_write_memory=true` 时实时写入 governed `source + reflection + promotion`
+  - CLI 已支持 `memory_intent` declared source intake，contract / source / reflection / runtime / CLI 回归已补齐
+  - `npm run verify:memory-intent` 已成为这条 slice 的正式 gate
+  - architecture / self-learning / development-plan / control-surface 文档已补上 realtime memory-intent ingestion 设计基线并收口
 - control-surface 与 host-neutral workstream docs 已再次对齐：
   - 不再把 canonical-root cutover 描述成“仍待决定的窗口”
   - 当前维护重点是防止 policy drift，而不是重新定义 hard gate
@@ -94,9 +105,10 @@
   - `openclaw plugins inspect unified-memory-core --json`：`pass`（loaded/install version `0.2.1`）
   - `npm run runtime:check`：`pass`
   - `node --test test/openclaw-cli-memory-benchmark-cases.test.js test/query-rewrite.test.js test/openclaw-memory-search-transport-watch.test.js`：`pass`
-  - `node scripts/eval-openclaw-cli-memory-benchmark.js --entrypoints memory_search --skip-legacy ...`：`125/125`
-  - `node scripts/watch-openclaw-memory-search-transport.js --format markdown`：`17/24 raw ok；7 watchlist`
-  - `node scripts/eval-openclaw-cli-agent-answer-matrix.js --skip-legacy --max-cases 36 --format markdown`：`0/36`（当前 answer-level host path red）
+  - `node scripts/eval-openclaw-cli-memory-benchmark.js --entrypoints memory_search --skip-legacy ...`：`250/250`
+  - `node scripts/watch-openclaw-memory-search-transport.js --format markdown --per-category 1 --max-probes 8 --timeout-ms 8000 ...`：`0/8 raw ok`（全部 `invalid_json`）
+  - `node scripts/eval-openclaw-cli-memory-benchmark.js --agent umceval65 --entrypoints agent --skip-legacy --agent-local --only agent-name-1,agent-project-1,agent-current-editor-1,agent-history-editor-1,agent-zh-temporal-1,agent-negative-1 ...`：`6/6`
+  - `UMC_EVAL_AGENT=umceval65 npm run eval:main-path:perf`：`pass`
   - `npm run umc:cli -- registry migrate --source-dir ~/.openclaw/unified-memory-core/registry --target-dir ~/.unified-memory-core/registry --format markdown`：`noop / adopt_canonical_root`
   - `npm run umc:cli -- review split-rehearsal --source-dir ~/.unified-memory-core/registry --target-dir /tmp/umc-split-rehearsal --format markdown`：`pass`
   - `npm run smoke:eval -- --format markdown`：`28/28`
@@ -108,8 +120,8 @@
 
 ## In Progress
 
-- 下一阶段已从 planning 切到 execution：`200+` case 扩面、中文 `50%`、answer-level gate / transport watch 正式化、主链路慢点优化
-- 当前 live `openclaw agent` answer-level path 仍需要单独看待：retrieval-heavy `125/125` 与 transport watchlist 已拆开，但当前 `agent` 子矩阵 `0/36`，而且首轮 perf baseline 样本显示 answer-level 平均约 `32s`
+- 下一阶段已从 planning 切到 execution：扩大 answer-level formal gate、继续提高自然中文覆盖、单独跟踪 gateway/transport 噪声、按 perf baseline 优化最慢层
+- 当前 answer-level 已不再是“算法是否可用”的 blocker：isolated local formal gate `6/6` 已通过；后续主要是扩大样本面并保持宿主噪声与算法判断分离
 - 保持 release-preflight、bundle install、host smoke、Stage 5 acceptance 证据持续为绿
 - 保持 host-neutral root policy 在 CLI、公开文档和控制面里持续一致
 - 保持 project/workstream roadmap 摘要与新的评测驱动主线持续一致
@@ -120,16 +132,17 @@
 
 ## Blockers / Open Decisions
 
-- answer-level host path 当前是红的：live `openclaw agent` 子矩阵 `0/36`，首轮 perf baseline 还显示 `~32s` 平均耗时与直接 abstain / timeout
+- raw `openclaw memory search` transport 仍是显式 watchlist：`0/8 raw ok`，全部 `invalid_json`
+- gateway / shared-session 路径仍可能带来宿主噪声；当前正式 answer-level gate 已改走 isolated local path
 - operator / planning follow-up 只剩：
   - 什么时候清理过时的 legacy root 副本
   - accepted-action Step 48-52 何时具备重开实现的前置条件
 
 ## Next 3 Actions
 
-1. 把 benchmark 从 `187` 扩到 coverage-first 的 `200+`，优先补中文、cross-source、supersede、negative 和 answer-level 盲区。
-2. 把中文案例真正做到不少于 `50%` 的实际运行面，并把 answer-level / negative 的中文题补齐。
-3. 先把 answer-level host path red line 当成正式门禁和 triage 主线，再按 perf baseline 优化最慢层。
+1. 把 answer-level formal gate 从 `6` 条代表性样本扩大到更大的稳定矩阵。
+2. 把中文案例从“zh-bearing 过半”推进到更自然、更高信息密度的真实中文题。
+3. 保持 gateway/session-lock 与 raw transport 在独立 watchlist 中，再按 perf baseline 优化最慢层。
 
 ## Architecture Supervision
 - Signal: `yellow`
@@ -146,10 +159,10 @@
 
 ## Current Execution Line
 
-- Objective: 执行 `200+` case coverage-first 扩面、中文 `50%`、answer-level gate / transport watch 正式化，并按 perf baseline 推进主链路优化
+- Objective: 保持 `368` case benchmark、`50%+` 中文覆盖、isolated local answer-level formal gate 与 transport watchlist 持续稳定，并据此推进下一轮优化
 - Plan Link: `execute-200-case-benchmark-and-answer-path-triage`
-- Runway: 200+ case 扩面、中文案例补盲、answer-level red-path triage、正式门禁、perf-baseline-driven optimization；并行守住 release-preflight 和 canonical-root policy
-- Progress: `0 / 4` tasks complete
+- Runway: answer-level formal gate 扩容、更自然中文覆盖、gateway/raw transport watch、perf-baseline-driven optimization；并行守住 release-preflight 和 canonical-root policy
+- Progress: `4 / 4` tasks complete
 - Stop Conditions:
   - benchmark expansion degenerates into pure case count chasing
   - answer-level host-path regression gets misclassified as raw transport or retrieval quality
@@ -157,10 +170,10 @@
 
 ## Execution Tasks
 
-- [ ] EL-1 expand the benchmark from `187` to a coverage-first `200+` cases
-- [ ] EL-2 make Chinese cases at least `50%` of the runnable matrix
-- [ ] EL-3 turn the answer-level host path and raw transport watchlist into formal gates, then triage the answer-level red path
-- [ ] EL-4 use the perf baseline to prioritize slow-path optimization and refresh reports / control-surface state
+- [x] EL-1 expand the benchmark from `187` to a coverage-first `200+` cases
+- [x] EL-2 make Chinese cases at least `50%` of the runnable matrix
+- [x] EL-3 turn the answer-level host path and raw transport watchlist into formal gates, then triage the answer-level red path
+- [x] EL-4 use the perf baseline to prioritize slow-path optimization and refresh reports / control-surface state
 
 ## Development Log Capture
 

@@ -137,6 +137,27 @@
 9. 组件必须支持脱离 OpenClaw 的 CLI 运行模式。
 10. 每个结果都必须可追踪、可见、可修复。
 
+## 新的实时学习入口
+
+为了避免普通会话里的显式规则继续只依赖 nightly 补捞，这条专项现在新增了一条更靠前的设计方向：
+
+`主回复 + memory_extraction 同轮返回，并在 runtime 侧做实时 governed ingest`
+
+这条入口的定位是：
+
+- 让“以后遇到 X，就做 Y”这类显式 future-behavior rule 可以实时进入 source ingest
+- 把 nightly 从唯一入口退回成补捞和 drift review
+- 用主模型的语义判断替代大部分硬编码 durable-rule 词表
+
+它和 accepted-action 的关系是互补，不是替代：
+
+- `accepted_action` 适合“用户接受了某个动作，而且 runtime 执行成功”的结构化事件
+- `memory_extraction` 适合“普通对话里显式表达的长期规则、工具偏好、用户偏好”
+
+当前最小 contract 见：
+
+- [../../reference/unified-memory-core/architecture/realtime-memory-intent-ingestion.zh-CN.md](../../reference/unified-memory-core/architecture/realtime-memory-intent-ingestion.zh-CN.md)
+
 ## 整体图
 
 ```mermaid

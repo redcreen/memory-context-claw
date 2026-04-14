@@ -110,6 +110,20 @@ Entry criteria for reopening this TODO:
 - current release-preflight evidence stays green
 - the repo explicitly opens a later enhancement phase instead of appending more work into the closeout baseline
 
+## Completed Memory-Intent Slice
+
+After the accepted-action path, the next enhancement slice was:
+
+`formalize reply + memory_extraction as governed real-time ingest`
+
+That slice is now complete:
+
+1. replay cases exist for durable, session, task-local, profile, and no-memory boundaries
+2. `memory_extraction` is now formalized as a shared `memory_intent` contract and source type
+3. admission routing is explicit across skip, observation, and promotable candidate paths
+4. runtime, source, reflection, CLI, and control-surface coverage now align on the same contract
+5. `npm run verify:memory-intent` now acts as the formal gate
+
 ## Phase Map
 
 ```mermaid

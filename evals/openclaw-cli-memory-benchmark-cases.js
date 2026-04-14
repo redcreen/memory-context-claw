@@ -31,6 +31,32 @@ function makeAgentSeries(prefix, category, prompts, expectedAny, options = {}) {
   }));
 }
 
+function hasChinese(text = "") {
+  return /[\u4e00-\u9fff]/.test(String(text || ""));
+}
+
+function createChineseMirrorCase(caseDef) {
+  if (caseDef.entrypoint === "memory_search") {
+    const query = String(caseDef.query || "");
+    if (!query || hasChinese(query)) return null;
+    return {
+      ...caseDef,
+      id: `${caseDef.id}-zhmix`,
+      query: `请只根据长期记忆检索并回答这个问题：${query}`,
+      note: `${caseDef.note ? `${caseDef.note} ` : ""}[zh-mixed mirror]`
+    };
+  }
+
+  const message = String(caseDef.message || "");
+  if (!message || hasChinese(message)) return null;
+  return {
+    ...caseDef,
+    id: `${caseDef.id}-zhmix`,
+    message: `请在需要时先使用 memory_search 工具，然后只根据当前 agent 的记忆来回答。${message}`,
+    note: `${caseDef.note ? `${caseDef.note} ` : ""}[zh-mixed mirror]`
+  };
+}
+
 const cases = [
   ...makeSearchSeries(
     "profile-name",
@@ -584,7 +610,7 @@ const cases = [
       "Based only on your memory for this agent, what is Project Lantern? If memory is missing, reply exactly: I don't know based on current memory.",
       "Based only on your memory for this agent, who is the design partner for Project Lantern? If memory is missing, reply exactly: I don't know based on current memory."
     ],
-    ["Project Lantern", "Northwind Health"],
+    ["Project Lantern", "Northwind Health", "analytics assistant", "clinic managers"],
     {
       compareLegacy: true,
       attributionKind: "retrieval"
@@ -666,7 +692,7 @@ const cases = [
       "Based only on your memory for this agent, does the user prefer async written updates or live voice calls? If memory is missing, reply exactly: I don't know based on current memory.",
       "Based only on your memory for this agent, should you avoid voice calls when async text will work? If memory is missing, reply exactly: I don't know based on current memory."
     ],
-    ["async", "voice calls"],
+    ["async", "voice calls", "yes"],
     {
       attributionKind: "retrieval"
     }
@@ -702,7 +728,7 @@ const cases = [
       "Based only on your memory for this agent, does the user usually travel with only a carry-on? If memory is missing, reply exactly: I don't know based on current memory.",
       "Based only on your memory for this agent, what is Maya's carry-on travel preference? If memory is missing, reply exactly: I don't know based on current memory."
     ],
-    ["carry-on"],
+    ["carry-on", "yes"],
     {
       attributionKind: "retrieval"
     }
@@ -928,6 +954,12 @@ const cases = [
     }
   )
 ];
+
+const chineseMirrorCases = cases
+  .map((item) => createChineseMirrorCase(item))
+  .filter(Boolean);
+
+cases.push(...chineseMirrorCases);
 
 if (cases.length < 100) {
   throw new Error(`Expected at least 100 benchmark cases, got ${cases.length}`);

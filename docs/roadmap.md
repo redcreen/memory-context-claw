@@ -20,18 +20,18 @@ For detailed queues, read:
 
 | Horizon | Focus | Exit Signal |
 | --- | --- | --- |
-| Now | execute the coverage-first `200+` case expansion, turn Chinese cases into a real `50%` share of the runnable matrix, and promote the answer-level host path plus transport watch into formal gates | `200+` cases are implemented, Chinese cases reach `50%` in practice, the answer-level gate is repeatable, and transport watch no longer pollutes algorithm judgment |
-| Next | use the formal gates and the main-path performance baseline to choose the next optimization order before any later runtime API / service-mode discussion | answer-level host-path regressions are fixed or explainable, the slowest layer shows real improvement, and the benchmark no longer has obvious blind spots |
+| Now | keep the formal gates stable: maintain the `368`-case runnable matrix, `50%+` Chinese coverage, the isolated local answer-level gate, and the raw transport watchlist | retrieval-heavy, answer-level, transport-watch, and perf-baseline evidence can all be rerun without reopening scope |
+| Next | expand the answer-level formal gate, improve natural Chinese prompts, and optimize the slowest layer before any later runtime API / service-mode discussion | the answer-level gate is larger than the representative subset, Chinese cases read more naturally, and gateway / transport noise no longer dominates conclusions |
 | Later | discuss runtime API / split-ready evolution only from a stable operator baseline | independent-product evidence stays green after Stage 5 closeout |
 
 ## Current Execution Focus
 
 The current roadmap horizon also maps to the concrete next execution work:
 
-1. expand the current `187`-case benchmark into a coverage-first `200+` matrix, prioritizing blind spots over more rewrites
-2. make Chinese cases a real `50%` share of the runnable matrix across retrieval, answer-level, and negative surfaces
-3. turn the live `openclaw agent` answer-level gate and the raw transport watchlist into formal gates, then fix the answer-level red path
-4. use the main-path performance baseline to explain and optimize the slowest layer before choosing later algorithm work
+1. expand the answer-level formal gate beyond the current `6` representative isolated-local samples
+2. turn the current `50%+` Chinese coverage into more natural, higher-information prompts instead of just zh-bearing surface coverage
+3. keep gateway/session-lock noise and raw `openclaw memory search` transport instability on separate watchlists so they do not get misread as algorithm regressions
+4. use the refreshed main-path performance baseline to reduce the slowest answer-level layer before choosing later algorithm work
 
 When resuming work:
 

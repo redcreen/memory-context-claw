@@ -191,3 +191,43 @@ test("source system normalizes accepted_action sources into structured evidence"
     }
   ]);
 });
+
+test("source system normalizes memory_intent sources into structured evidence", async () => {
+  const sourceSystem = createSourceSystem();
+  const result = await sourceSystem.ingestDeclaredSource({
+    sourceType: "memory_intent",
+    declaredBy: "test",
+    shouldWriteMemory: true,
+    category: "tool_routing_preference",
+    durability: "durable",
+    confidence: 0.98,
+    summary: "User wants Xiaohongshu links handled with capture_xiaohongshu_note in future conversations.",
+    userMessage: "以后你收到小红书的链接，就使用 capture_xiaohongshu_note 工具来处理；记住了！",
+    assistantReply: "记住了。以后收到小红书链接时，我会优先使用 capture_xiaohongshu_note 来处理。",
+    structuredRule: {
+      trigger: {
+        content_kind: "xiaohongshu_link",
+        domains: ["xhslink.com", "xiaohongshu.com"]
+      },
+      action: {
+        tool: "capture_xiaohongshu_note"
+      }
+    },
+    namespace: {
+      tenant: "local",
+      scope: "workspace",
+      resource: "unified-memory-core",
+      key: "memory-intent"
+    },
+    visibility: "workspace"
+  });
+
+  assert.equal(result.sourceArtifact.source_type, "memory_intent");
+  assert.equal(result.sourceArtifact.normalized_payload.format, "memory_intent");
+  assert.equal(result.sourceArtifact.normalized_payload.admission_route, "candidate_rule");
+  assert.equal(result.sourceArtifact.normalized_payload.structured_rule.action.tool, "capture_xiaohongshu_note");
+  assert.deepEqual(result.sourceArtifact.normalized_payload.structured_rule.trigger.domains, [
+    "xhslink.com",
+    "xiaohongshu.com"
+  ]);
+});

@@ -28,7 +28,15 @@
   - Risks: 如果继续只做 retrieval-heavy 扩面，answer-level host path 会持续红而且无法被正式约束；如果中文只做翻译版，coverage 会继续失真
   - Validation: `200+` case 定义、中文案例实际占比统计、answer-level gate 报告、transport watchlist 报告、main-path perf baseline refresh
   - Exit Condition: 下一轮 benchmark 不再有明显 coverage blind spots，answer-level/transport gate 进入常规门禁，且最慢层已有可解释优化路径
-  - Status: `in_progress`
+  - Status: `completed`
+
+- Slice: `formalize-realtime-memory-intent-ingestion`
+  - Objective: 把“主回复 + `memory_extraction`”从局部 runtime seam 收口成正式产品契约，补上 ordinary conversation rule 的实时 governed ingest 入口
+  - Dependencies: `evals/memory-intent-replay-cases.json`、`scripts/eval-memory-intent-replay.js`、`src/codex-adapter.js`、self-learning / codex-adapter architecture docs、development plan
+  - Risks: 如果继续把普通 conversation rule 留给 nightly 补捞，明显规则仍会漏；如果在 schema / admission route 未清晰前直接扩大 rollout，会把 session 与 durable 混淆
+  - Validation: replay suite、Codex adapter tests、architecture docs、development plan、control-surface state
+  - Exit Condition: `memory_extraction` contract、admission routing 方向和 replay gate 都已明确，后续实现不再依赖聊天上下文恢复
+  - Status: `completed`
 
 - Slice: `attribute-memory-capability-sources`
   - Objective: 对同一批核心案例做 `legacy / unified / bootstrap / retrieval` 对照，明确答案来源和扩展增益边界
@@ -128,21 +136,21 @@
 
 ## Execution Order
 
-1. 把当前 `187` case benchmark 扩成 coverage-first 的 `200+`
-2. 把中文案例真正做到不少于 `50%` 的实际可运行矩阵
-3. 把 live answer-level host-path regression 单独看作主线 red path，不与 raw transport 或 retrieval 质量混淆
-4. 把 answer-level gate 与 transport watchlist 纳入正式 benchmark gate
-5. 按主链路 perf baseline 先解释并优化最慢层
+1. 把 answer-level formal gate 从当前 `6` 条代表性样本继续扩成更大的稳定矩阵
+2. 把中文案例从 `50%+` zh-bearing 覆盖继续推向更自然、更高信息密度的真实中文题
+3. 把 gateway/shared-session 与 raw transport 继续保持在独立 watchlist，不与算法判断混淆
+4. 按主链路 perf baseline 继续解释并优化最慢的 answer-level 层
+5. 保持 retrieval-heavy、answer-level、transport watch、perf baseline 这四条正式门禁持续可复跑
 6. 并行保持 release-preflight / bundle install / host smoke / Stage 5 evidence 稳定
 7. 保持 host-neutral root operator policy 可见且不回退
 8. 保持 accepted-action deeper queue 的 Step 48-52 仍然显式 deferred，不把 admission / negative-path / conflict work 偷渡进当前实现
-9. 只有在 `200+` benchmark、answer-level gate 和 perf baseline refresh 同时清晰后，才开启新的 enhancement planning 或讨论 legacy root cleanup 窗口
+9. memory-intent slice 已收口完成；后续只在更高层 benchmark / runtime adoption 里继续观察 drift
 
 ## Architecture Supervision
 - Signal: `yellow`
 - Signal Basis: open blockers or architectural risks are still recorded
-- Problem Class: answer-level red path, benchmark coverage blind spots, and main-path performance prioritization
-- Root Cause Hypothesis: 如果中文 coverage、answer-level gate 和主链路慢点没有进入正式执行线，后续优化会继续被 retrieval 绿灯掩盖，用户侧问答体验仍然无法改善
+- Problem Class: answer-level gate expansion, host-noise separation, and main-path performance prioritization
+- Root Cause Hypothesis: 如果 isolated local 正式门禁不继续扩容、gateway/raw transport 噪声不继续隔离，后续优化仍会把宿主不稳定和算法问题混在一起
 - Correct Layer: benchmark definition, answer-level gate, transport watchlist, main-path performance baseline, release preflight evidence, control surface
 - Rejected Shortcut: 跳过 Stage 5 证据面和当前 operator baseline，直接讨论 runtime API / service mode
 - Automatic Review Trigger: no automatic trigger is currently active
@@ -150,23 +158,23 @@
 
 ## Current Execution Line
 
-- Objective: 执行 `200+` case coverage-first 扩面、中文 `50%`、answer-level gate / transport watch 正式化，以及基于 perf baseline 的主链路优化顺序
+- Objective: 保持 `368` case benchmark、`50%+` 中文覆盖、isolated local answer-level gate 与 transport watchlist 稳定，并推进 answer-level 扩容与最慢层优化
 - Plan Link: `execute-200-case-benchmark-and-answer-path-triage`
-- Runway: 200+ case 扩面、中文案例补盲、answer-level red-path triage、正式门禁、perf-baseline-driven optimization
-- Progress: `0 / 4` tasks complete
+- Runway: answer-level formal gate 扩容、自然中文补强、gateway/raw transport watch、perf-baseline-driven optimization
+- Progress: `4 / 4` tasks complete
 - Stop Conditions:
   - case count grows but blind spots remain
   - answer-level regression gets misdiagnosed as raw transport noise
-  - perf optimization starts before answer-level red path and transport watch have separate evidence
-  - Stage 5 evidence regresses while benchmark work is ongoing
+  - perf optimization starts before gateway/session-lock and raw transport have separate evidence
+  - Stage 5 evidence regresses while this enhancement work is ongoing
 - Validation: `200+` case docs、中文占比统计、answer-level gate report、transport watchlist、main-path perf baseline、roadmap / development plan、`npm run umc:release-preflight`、`npm run umc:cli -- registry inspect --format markdown`
 
 ## Execution Tasks
 
-- [ ] EL-1 expand the benchmark from `187` to a coverage-first `200+` cases, prioritizing blind spots over more rewrites
-- [ ] EL-2 make Chinese cases at least `50%` of the runnable matrix across retrieval, answer-level, and negative surfaces
-- [ ] EL-3 turn the answer-level host path and the raw transport watchlist into formal gates, then triage the answer-level red path
-- [ ] EL-4 use the main-path performance baseline to prioritize optimization work and refresh roadmap / development plan / control-surface state
+- [x] EL-1 expand the benchmark from `187` to a coverage-first `200+` cases, prioritizing blind spots over more rewrites
+- [x] EL-2 make Chinese cases at least `50%` of the runnable matrix across retrieval, answer-level, and negative surfaces
+- [x] EL-3 turn the answer-level host path and the raw transport watchlist into formal gates, then triage the answer-level red path
+- [x] EL-4 use the main-path performance baseline to prioritize optimization work and refresh roadmap / development plan / control-surface state
 
 ## Development Log Capture
 

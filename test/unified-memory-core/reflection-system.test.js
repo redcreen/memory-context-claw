@@ -215,3 +215,87 @@ test("reflection system splits accepted_action sources into target facts and out
   assert.match(result.outputs[0].candidate_artifact.summary, /reusable target redcreen\/redcreen\.github\.io/);
   assert.match(result.outputs[1].candidate_artifact.summary, /brain-reinstall-jingangjing/);
 });
+
+test("reflection system routes durable memory_intent sources into promotable rule candidates", async () => {
+  const sourceSystem = createSourceSystem({
+    idGenerator: createIdGenerator(),
+    clock: createFixedClock()
+  });
+  const reflectionSystem = createReflectionSystem({
+    idGenerator: createIdGenerator(),
+    clock: createFixedClock()
+  });
+
+  const { sourceArtifact } = await sourceSystem.ingestDeclaredSource({
+    sourceType: "memory_intent",
+    declaredBy: "test",
+    shouldWriteMemory: true,
+    category: "tool_routing_preference",
+    durability: "durable",
+    confidence: 0.98,
+    summary: "User wants Xiaohongshu links handled with capture_xiaohongshu_note in future conversations.",
+    userMessage: "以后你收到小红书的链接，就使用 capture_xiaohongshu_note 工具来处理；记住了！",
+    assistantReply: "记住了。以后收到小红书链接时，我会优先使用 capture_xiaohongshu_note 来处理。",
+    structuredRule: {
+      trigger: {
+        content_kind: "xiaohongshu_link",
+        domains: ["xhslink.com", "xiaohongshu.com"]
+      },
+      action: {
+        tool: "capture_xiaohongshu_note"
+      }
+    },
+    namespace: {
+      tenant: "local",
+      scope: "workspace",
+      resource: "unified-memory-core",
+      key: "reflection-memory-intent"
+    },
+    visibility: "workspace"
+  });
+
+  const result = await reflectionSystem.reflectSourceArtifact(sourceArtifact);
+
+  assert.equal(result.primary_label, "stable_rule_candidate");
+  assert.equal(result.output_count, 1);
+  assert.equal(result.outputs[0].candidate_artifact.attributes.memory_intent_admission_route, "candidate_rule");
+  assert.equal(result.outputs[0].candidate_artifact.state, "candidate");
+  assert.equal(result.outputs[0].recommendation.should_promote, true);
+});
+
+test("reflection system keeps session memory_intent sources in observation state", async () => {
+  const sourceSystem = createSourceSystem({
+    idGenerator: createIdGenerator(),
+    clock: createFixedClock()
+  });
+  const reflectionSystem = createReflectionSystem({
+    idGenerator: createIdGenerator(),
+    clock: createFixedClock()
+  });
+
+  const { sourceArtifact } = await sourceSystem.ingestDeclaredSource({
+    sourceType: "memory_intent",
+    declaredBy: "test",
+    shouldWriteMemory: true,
+    category: "session_constraint",
+    durability: "session",
+    confidence: 0.93,
+    summary: "Use Chinese replies and keep answers short in this session.",
+    userMessage: "接下来这个会话里你都用中文，而且回复尽量短。",
+    assistantReply: "好，这个会话里我会用中文，并尽量简短回复。",
+    namespace: {
+      tenant: "local",
+      scope: "workspace",
+      resource: "unified-memory-core",
+      key: "reflection-memory-session"
+    },
+    visibility: "workspace"
+  });
+
+  const result = await reflectionSystem.reflectSourceArtifact(sourceArtifact);
+
+  assert.equal(result.primary_label, "observation_candidate");
+  assert.equal(result.outputs[0].candidate_artifact.state, "observation");
+  assert.equal(result.outputs[0].candidate_artifact.attributes.memory_intent_admission_route, "observation_session");
+  assert.equal(result.outputs[0].recommendation.should_promote, false);
+});

@@ -160,6 +160,47 @@ test("artifact contracts accept accepted_action source artifacts", () => {
   assert.equal(source.normalized_payload.action_type, "publish_site");
 });
 
+test("artifact contracts accept memory_intent source artifacts", () => {
+  const source = parseSourceArtifact({
+    artifact_id: "artifact_source_memory_intent_1",
+    artifact_type: "source_artifact",
+    contract_version: "1.0.0",
+    source_id: "source_memory_intent_1",
+    source_type: "memory_intent",
+    declared_by: "test",
+    namespace,
+    visibility: "workspace",
+    locator: { kind: "memory_intent", value: "tool_routing_preference:durable" },
+    normalized_payload: {
+      format: "memory_intent",
+      should_write_memory: true,
+      category: "tool_routing_preference",
+      durability: "durable",
+      confidence: 0.98,
+      summary: "User wants Xiaohongshu links handled with capture_xiaohongshu_note in future conversations.",
+      admission_route: "candidate_rule",
+      structured_rule: {
+        trigger: {
+          content_kind: "xiaohongshu_link",
+          domains: ["xhslink.com", "xiaohongshu.com"]
+        },
+        action: {
+          tool: "capture_xiaohongshu_note"
+        }
+      },
+      text: "memory intent category: tool_routing_preference"
+    },
+    raw_metadata: { source_type: "memory_intent", category: "tool_routing_preference" },
+    fingerprint: "memoryintent123",
+    ingest_run_id: "ingest_memory_intent_1",
+    created_at: "2026-04-11T00:00:00.000Z"
+  });
+
+  assert.equal(source.source_type, "memory_intent");
+  assert.equal(source.normalized_payload.category, "tool_routing_preference");
+  assert.equal(source.normalized_payload.structured_rule.action.tool, "capture_xiaohongshu_note");
+});
+
 test("contracts reject invalid visibility", () => {
   assert.throws(
     () =>

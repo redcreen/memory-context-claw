@@ -306,29 +306,42 @@ export function extractJsonPayload(stdout) {
     throw new Error("Empty stdout");
   }
 
-  const jsonStart = text.search(/[\[{]/);
-  if (jsonStart === -1) {
-    throw new Error("No JSON payload found in stdout");
+  const startOffsets = [];
+  if (text.startsWith("{") || text.startsWith("[")) {
+    startOffsets.push(0);
+  }
+  for (const pattern of ["\n{", "\n["]) {
+    let index = text.indexOf(pattern);
+    while (index !== -1) {
+      startOffsets.push(index + 1);
+      index = text.indexOf(pattern, index + pattern.length);
+    }
   }
 
-  let candidate = text.slice(jsonStart).trim();
-  try {
-    return JSON.parse(candidate);
-  } catch {
-    const lines = candidate.split("\n");
-    for (let index = 1; index < lines.length; index += 1) {
-      const joined = lines.slice(index).join("\n").trim();
-      if (!joined) {
-        continue;
-      }
-      try {
-        return JSON.parse(joined);
-      } catch {
-        continue;
+  const uniqueOffsets = [...new Set(startOffsets)].sort((left, right) => left - right);
+  for (const offset of uniqueOffsets) {
+    const candidate = text.slice(offset).trim();
+    if (!candidate) {
+      continue;
+    }
+    try {
+      return JSON.parse(candidate);
+    } catch {
+      const lines = candidate.split("\n");
+      for (let index = 1; index < lines.length; index += 1) {
+        const joined = lines.slice(index).join("\n").trim();
+        if (!joined) {
+          continue;
+        }
+        try {
+          return JSON.parse(joined);
+        } catch {
+          continue;
+        }
       }
     }
-    throw new Error("Unable to parse JSON payload from stdout");
   }
+  throw new Error("Unable to parse JSON payload from stdout");
 }
 
 export async function retrieveMemoryCandidates({

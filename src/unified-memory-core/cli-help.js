@@ -144,7 +144,7 @@ const NAMESPACE_OPTIONS = [
 const SOURCE_INPUT_OPTIONS = [
   {
     flag: "--source-type <type>",
-    description: "Declared source type (manual|conversation|file|directory|url|image|accepted_action)"
+    description: "Declared source type (manual|conversation|file|directory|url|image|accepted_action|memory_intent)"
   },
   {
     flag: "--content <text>",
@@ -213,6 +213,38 @@ const SOURCE_INPUT_OPTIONS = [
   {
     flag: "--artifacts <list>",
     description: "Comma-separated artifact paths produced by accepted_action sources"
+  },
+  {
+    flag: "--summary <text>",
+    description: "Structured memory summary when --source-type memory_intent is used"
+  },
+  {
+    flag: "--user-message <text>",
+    description: "User message captured by a memory_intent source"
+  },
+  {
+    flag: "--assistant-reply <text>",
+    description: "Assistant reply captured by a memory_intent source"
+  },
+  {
+    flag: "--category <type>",
+    description: "Memory-intent category such as durable_rule or tool_routing_preference"
+  },
+  {
+    flag: "--durability <type>",
+    description: "Memory-intent durability such as session or durable"
+  },
+  {
+    flag: "--confidence <number>",
+    description: "Memory-intent confidence between 0 and 1"
+  },
+  {
+    flag: "--tool <name>",
+    description: "Structured tool name when --source-type memory_intent is used"
+  },
+  {
+    flag: "--domains <list>",
+    description: "Comma-separated trigger domains when --source-type memory_intent is used"
   }
 ];
 

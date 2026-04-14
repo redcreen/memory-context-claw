@@ -35,8 +35,9 @@
 2. 在 coding task 前加载 shared code memory
 3. 在 coding task 后回写治理过的事件
 4. 当 task-result metadata 提供结构化字段时，通过 `writeAfterTask(...)` 发出 governed accepted-action 证据
-5. 同时兼容 standalone 和 embedded 两条执行路径
-6. 保持在单机与未来多主机场景下都可用
+5. 当主模型同轮返回结构化 `memory_extraction` 时，通过 `writeAfterTask(...)` 发出实时 governed conversation-rule intake
+6. 同时兼容 standalone 和 embedded 两条执行路径
+7. 保持在单机与未来多主机场景下都可用
 
 ## 主流程
 
@@ -62,6 +63,19 @@ Codex adapter 现在有一条显式的写侧学习接缝：
 - 同一个调用在 task-result metadata 带有显式 accepted-action 字段时，也会发出结构化 `accepted_action` 证据
 - promotion 仍然受 reflection 和 lifecycle 规则治理，而不是 adapter-local 硬编码
 ```
+
+## Reply + Memory-Extraction 边界
+
+Codex adapter 现在还有第二条更轻量的写侧学习接缝：
+
+- 同一轮主模型输出除了 `user_visible_reply`，还可以返回隐藏的 `memory_extraction`
+- `writeAfterTask(...)` 在 `should_write_memory=true` 时会立即发出 governed source ingest，而不是等 nightly self-learning 补捞
+- 当前实现已经把这条信号收口成正式 `memory_intent` source type，并显式保留 category / durability / confidence / admission_route / structured_rule
+- 这条入口的目标是补上“普通对话显式规则”缺失的实时入口，而不是替代 `accepted_action`
+
+相关设计详见：
+
+- [realtime-memory-intent-ingestion.zh-CN.md](realtime-memory-intent-ingestion.zh-CN.md)
 
 ## 运行模式
 

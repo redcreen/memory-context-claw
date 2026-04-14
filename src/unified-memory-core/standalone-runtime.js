@@ -117,6 +117,17 @@ function summarizeDeclaredSource(declaredSource) {
       ).slice(0, 120)
     };
   }
+  if (sourceType === "memory_intent") {
+    return {
+      source_type: sourceType,
+      preview: normalizeString(
+        declaredSource.summary
+        || declaredSource.content
+        || declaredSource.category,
+        ""
+      ).slice(0, 120)
+    };
+  }
   if (sourceType === "image") {
     return {
       source_type: sourceType,

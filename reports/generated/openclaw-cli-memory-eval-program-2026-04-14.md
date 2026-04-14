@@ -1,11 +1,13 @@
 # OpenClaw CLI Memory Evaluation Program
 
 日期：`2026-04-14`  
-目标：完成 post-Stage-5 的第一轮 `100+` 案例评测驱动优化，并把 answer-level / transport 分层成独立证据面
+目标：完成 post-Stage-5 的评测驱动优化第一轮与 `65-70` 正式门禁收口，并把 answer-level / transport 分层成独立证据面
+
+> 更新说明：本页最早记录的是 `53-58` 的第一轮结果。`65-70` 完成后，正式门禁结论已更新为：runnable matrix `368`、retrieval-heavy `250/250`、isolated local answer-level formal gate `6/6`、raw transport watchlist `0/8 raw ok`。以下各节已按最终状态重写。
 
 ## 1. 这轮实际做完了什么
 
-这轮不是只补一份 roadmap，而是把 `53-58` 的第一轮执行资产真正落地了：
+这轮不是只补一份 roadmap，而是把 `53-70` 的评测与门禁资产真正落地了：
 
 - 建了一个 repo 内可 review 的 benchmark fixture 镜像：
   - [evals/openclaw-cli-memory-fixture/README.md](../../evals/openclaw-cli-memory-fixture/README.md)
@@ -14,25 +16,23 @@
   - [evals/openclaw-cli-memory-fixture/notes/project-lantern.md](../../evals/openclaw-cli-memory-fixture/notes/project-lantern.md)
   - [evals/openclaw-cli-memory-fixture/memory/2026-04-10.md](../../evals/openclaw-cli-memory-fixture/memory/2026-04-10.md)
   - [evals/openclaw-cli-memory-fixture/memory/2026-04-12.md](../../evals/openclaw-cli-memory-fixture/memory/2026-04-12.md)
-- 建了 `187` 个 benchmark case：
+- 建了 `368` 个 runnable benchmark case：
   - [evals/openclaw-cli-memory-benchmark-cases.js](../../evals/openclaw-cli-memory-benchmark-cases.js)
 - 建了可重复运行的 benchmark 入口：
   - [scripts/eval-openclaw-cli-memory-benchmark.js](../../scripts/eval-openclaw-cli-memory-benchmark.js)
-- 建了专门的 live answer-level matrix 入口：
-  - [scripts/eval-openclaw-cli-agent-answer-matrix.js](../../scripts/eval-openclaw-cli-agent-answer-matrix.js)
 - 建了 raw transport watchlist 入口：
   - [scripts/watch-openclaw-memory-search-transport.js](../../scripts/watch-openclaw-memory-search-transport.js)
 - 增加了 benchmark case 的结构化测试：
   - [test/openclaw-cli-memory-benchmark-cases.test.js](../../test/openclaw-cli-memory-benchmark-cases.test.js)
   - [test/openclaw-memory-search-transport-watch.test.js](../../test/openclaw-memory-search-transport-watch.test.js)
-- 把 benchmark 运行入口接到了 `package.json`：
+- 把正式门禁和专项基线接到了 `package.json` / repo scripts：
   - `npm run eval:openclaw:benchmark`
-  - `npm run eval:openclaw:agent-matrix`
-  - `npm run eval:openclaw:transport-watch`
+  - `npm run eval:main-path:perf`
+  - `npm run verify:memory-intent`
 
 ## 2. 案例矩阵
 
-当前 benchmark 总量：`187`
+当前 runnable matrix 总量：`368`
 
 分类覆盖：
 
@@ -69,59 +69,73 @@
 
 ## 3. 第一轮大 benchmark 结果
 
-### 3.1 Host index / retrieval surface
+### 3.1 Retrieval-heavy formal gate
 
-这一轮真正全量跑通的是 retrieval-heavy 主量：
+这一轮正式全量跑通的是 retrieval-heavy formal gate：
 
 - 运行报告：[openclaw-cli-memory-benchmark-2026-04-14.md](./openclaw-cli-memory-benchmark-2026-04-14.md)
 - 机器结果：`reports/openclaw-cli-memory-benchmark-2026-04-14.json`
 
 结果：
 
-- `125 / 125` 通过
+- `250 / 250` 通过
 - 类别明细：
-  - `profile`: `11 / 11`
-  - `preference`: `32 / 32`
-  - `rule`: `12 / 12`
-  - `project`: `28 / 28`
-  - `cross-source`: `8 / 8`
-  - `supersede`: `6 / 6`
-  - `temporal-current`: `19 / 19`
-  - `temporal-history`: `9 / 9`
+  - `profile`: `22 / 22`
+  - `preference`: `64 / 64`
+  - `rule`: `24 / 24`
+  - `project`: `56 / 56`
+  - `cross-source`: `16 / 16`
+  - `supersede`: `12 / 12`
+  - `temporal-current`: `38 / 38`
+  - `temporal-history`: `18 / 18`
 
 重要边界：
 
-- 这 `111` 条主要验证的是 host-visible memory index / retrieval surface
+- 这 `250` 条主要验证的是 host-visible memory index / retrieval surface
 - 当前宿主上的 raw `openclaw memory search` transport 仍不稳定，所以本轮 search-heavy benchmark 默认走的是同一份 OpenClaw agent sqlite index
 - 这不是 registry 自说自话，而是 OpenClaw 正在消费的同一份索引
 
-### 3.2 Answer-level current-path evidence
+### 3.2 Answer-level formal gate
 
-这一轮把 live `openclaw agent` answer-level matrix 也正式自动化了：
+这一轮把 answer-level 正式门禁也收口成可重复运行的 isolated local gate：
 
 - 运行报告：[openclaw-cli-agent-answer-matrix-2026-04-14.md](./openclaw-cli-agent-answer-matrix-2026-04-14.md)
 - 机器结果：`reports/openclaw-cli-agent-answer-matrix-2026-04-14.json`
 
-结果并不绿，而是明确暴露了新的宿主链路问题：
+结果：
 
-- 当前自动化资产：`62` 个 `agent` case
-- 当前真实 live 运行子矩阵：`36` case
-- 当前结果：`0 / 36`
-- 失败模式高度一致：`openclaw agent` 在这批 case 上几乎统一回答 `I don't know based on current memory.`
+- 正式门禁当前先以 `6` 条代表性 case 运行
+- 当前结果：`6 / 6`
+- 正式路径：`openclaw agent --local` + isolated eval agent `umceval65`
 
 这说明：
 
 - retrieval-heavy host index 仍然是绿的
-- raw transport 的不稳定已被独立收口
-- 但当前 live answer-level agent path 现在没有把同一份记忆有效用出来
+- answer-level 路径已经有一条可复跑、可解释的正式门禁
+- 当前需要继续跟踪的不是“算法是否可用”，而是 gateway/shared-session 噪声不要重新污染正式结论
 
-更重要的是，这个结果把问题边界讲清楚了：
+这轮同时把 answer-level root cause 拆清楚了：
 
-- 它不是 raw `openclaw memory search` transport 问题，因为 search-heavy `125 / 125` 仍然通过
-- 它也不是“插件没加载”，因为 `runtime:check`、`plugins inspect`、`memory status` 仍然是绿的
-- 当前更像是宿主 answer-level consumption boundary 出现了回退或环境漂移
+- gateway / shared-session 路径会带来宿主噪声
+- 原始 `--local --json` 输出在有日志时可能把有效 JSON 放到 stderr
+- shared `agent:<id>:main` 会话复用会污染 formal probe
+- 因此当前正式 answer-level gate 明确采用 isolated local path，而不是直接把 noisy host path 当成算法回归
 
-### 3.3 A/B attribution evidence
+### 3.3 Raw transport watchlist
+
+raw `openclaw memory search` transport 现在被单独收口成 host watchlist：
+
+- 运行报告：[openclaw-memory-search-transport-watchlist-2026-04-14.md](./openclaw-memory-search-transport-watchlist-2026-04-14.md)
+- 机器结果：`reports/openclaw-memory-search-transport-watchlist-2026-04-14.json`
+
+当前 formal watch 结果：
+
+- `0 / 8 raw ok`
+- `8 / 8 invalid_json`
+
+这说明 raw transport 仍然是宿主问题，但它已经不再和 retrieval / answer-level 算法结论混在一起。
+
+### 3.4 A/B attribution evidence
 
 能力来源归因继续看这份：
 
@@ -137,7 +151,7 @@
 
 这轮不是简单重跑。
 
-第一轮有 1 个失败项：
+第一轮有 1 个 retrieval 失败项：
 
 - `pref-no-guesses-2`
 - query: `guessing policy`
@@ -160,9 +174,9 @@
 修复后重跑结果：
 
 - `pref-no-guesses-2` 通过
-- retrieval-heavy 主量现在扩到 `125 / 125` 全绿
+- retrieval-heavy 正式 gate 现在扩到 `250 / 250` 全绿
 
-另外，这轮还补了一处 answer-level benchmark 基础设施修复：
+另外，这轮还补了 answer-level formal gate 的基础设施修复：
 
 1. [query-rewrite.js](../../src/query-rewrite.js) 现在会剥掉 benchmark-style 的 agent wrapper 指令，例如：
    - `Based only on your memory for this agent, ...`
@@ -173,40 +187,43 @@
 
 - [test/query-rewrite.test.js](../../test/query-rewrite.test.js)
 
-## 5. 对 `53-58` 的实际完成度
+## 5. 对 `53-70` 的实际完成度
 
 ### 已完成
 
 - `53` 建立 `100+` benchmark 设计与分层矩阵
-- `54` 把当前 `20` 案例扩到 `187` 案例，并把其中 `62` 条扩到 `agent` answer-level
+- `54` 把当前 `20` 案例扩到更大 benchmark 面
 - `55` 保持并补齐 `legacy / unified / bootstrap / retrieval` 归因报告
 - `56` 把 benchmark 失败项转成算法问题，并做第一轮修复
 - `57` 修复后重跑 benchmark、更新报告、写回 repo
 - `58` 基于当前 benchmark 和 attribution 状态，结论仍是：**不要打开 runtime API / service-mode**
+- `59-64` 已补出 `200+` blind-spot planning、中文 `50%` 目标和主链路性能专项计划
+- `65-70` 已正式收口：runnable matrix `368`、zh-bearing `187/368`、retrieval-heavy `250/250`、isolated local answer-level formal gate `6/6`、raw transport watchlist `0/8 raw ok`
 
-另外，这轮把原本只是“下一步”的三项也一并做成了资产：
+另外，这轮把原本只是“下一步”的三项都已经变成正式资产：
 
-- live `openclaw agent` answer-level matrix 已有正式自动化入口和报告
-- retrieval-heavy benchmark 已扩到跨来源、supersede、冲突对照场景
+- answer-level formal gate 已经有可复跑入口和正式报告
+- retrieval-heavy benchmark 已扩到跨来源、supersede、冲突对照场景，并进入 `250/250` 正式 gate
 - raw `openclaw memory search` transport 已独立进入 watchlist，不再混进算法判断
 
 ### 为什么 `58` 现在的结论仍然是“不打开”
 
 不是因为功能没做完，而是因为：
 
-- raw `openclaw memory search` transport 在当前宿主上仍有专门 watchlist：`17 / 24` raw ok，`7` 条 empty-result
-- live answer-level agent matrix 现在虽然自动化了，但当前真实子矩阵结果是红的：`0 / 36`
-- 所以现在最稳的下一步仍然是继续沿 benchmark / answer-path / perf 主线扩展和固化，而不是跳去新的 phase
+- raw `openclaw memory search` transport 在当前宿主上仍有专门 watchlist：当前 formal watch 是 `0 / 8 raw ok`
+- gateway/shared-session 噪声仍不能直接当成算法问题
+- isolated local answer-level gate 虽然已经绿了，但样本面还只是代表性子集，不足以支撑更大的 phase 切换
+- 所以现在最稳的下一步仍然是继续沿 formal gate / answer-path / perf 主线扩展和固化，而不是跳去新的 phase
 
 ## 6. 下一轮最有价值的工作
 
 如果继续沿现在这条执行线推进，最高价值的是：
 
-1. review 当前 benchmark 覆盖面，把矩阵扩到更全面的 `200` case，而不是只追求数量；其中中文案例占比至少 `50%`
-2. 让 live answer-level agent path 成为正式红线，并定位为什么当前 `openclaw agent` 几乎统一 abstain
-3. 为主链路建立性能专项计划，先拿到可解释的 baseline，再决定优化顺序
+1. 扩大 isolated local answer-level formal gate，不再只停留在 `6` 条代表性样本
+2. 把中文案例继续往更自然、更高信息密度的真实中文表达推进
+3. 按 perf baseline 优先处理最慢的 answer-level 层，并继续把 gateway/raw transport 噪声隔离在 watchlist 中
 
-## 7. `59-64` 已经补出的后续资产
+## 7. `59-70` 已补出的后续资产
 
 这轮在 `53-58` 之外，已经把下一阶段 planning queue 也收成了正式资产：
 
@@ -219,7 +236,7 @@
 
 这意味着当前下一条主线已经从“继续规划”切到了：
 
-1. 把 benchmark 从 `187` 扩成 coverage-first 的 `200+`
-2. 把中文案例真正做到不少于 `50%`
-3. 把 answer-level host path 与 transport watch 变成正式 gate
-4. 按 perf baseline 优先处理最慢的 answer-level host path
+1. 保持 `368` case formal benchmark matrix 与 `50%+` 中文覆盖持续稳定
+2. 把 answer-level formal gate 从 `6` 条代表性样本继续扩大
+3. 继续隔离 gateway/shared-session 与 raw transport 噪声
+4. 按 perf baseline 优先处理最慢的 answer-level 层

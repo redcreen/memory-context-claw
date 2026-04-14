@@ -35,8 +35,9 @@ Related documents:
 2. load shared code memory before coding tasks
 3. write back governed events after coding tasks
 4. emit governed accepted-action evidence from `writeAfterTask(...)` when structured task-result metadata is present
-5. stay compatible with standalone and embedded execution paths
-6. keep the adapter usable across one-host and future multi-host deployments
+5. emit real-time governed conversation-rule intake from `writeAfterTask(...)` when the main reply includes structured `memory_extraction`
+6. stay compatible with standalone and embedded execution paths
+7. keep the adapter usable across one-host and future multi-host deployments
 
 ## Core Flow
 
@@ -62,6 +63,19 @@ The Codex adapter now has one explicit write-side learning seam:
 - the same call can also emit structured `accepted_action` evidence when task-result metadata includes explicit accepted-action fields
 - promotion remains governed by reflection and lifecycle rules, not by adapter-local hardcoding
 ```
+
+## Reply + Memory-Extraction Boundary
+
+The Codex adapter now also exposes a lighter write-side learning seam:
+
+- the same main-model turn can return hidden `memory_extraction` beside `user_visible_reply`
+- `writeAfterTask(...)` immediately emits governed source ingest when `should_write_memory=true` instead of waiting for nightly self-learning backfill
+- the current implementation formalizes this signal as a governed `memory_intent` source type while preserving category, durability, confidence, admission_route, and `structured_rule`
+- this path fills the real-time gap for explicit conversation rules; it does not replace `accepted_action`
+
+See:
+
+- [realtime-memory-intent-ingestion.md](realtime-memory-intent-ingestion.md)
 
 ## Runtime Modes
 

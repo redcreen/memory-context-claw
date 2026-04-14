@@ -7,9 +7,11 @@ import {
   createContractId,
   createContractTimestamp,
   createMemoryRegistry,
+  parseMemoryIntentExtraction,
   createPolicyContext,
   createProjectionSystem,
   createReflectionSystem,
+  renderMemoryIntentText,
   createSourceSystem,
   createNamespaceKey,
   parseNamespace,
@@ -120,6 +122,16 @@ function resolveAcceptedActionPayload(input = {}) {
     ...(nested || {}),
     ...input
   };
+}
+
+function resolveMemoryExtractionPayload(input = {}) {
+  const nested = input.memoryExtraction && typeof input.memoryExtraction === "object" && !Array.isArray(input.memoryExtraction)
+    ? input.memoryExtraction
+    : input.memory_extraction && typeof input.memory_extraction === "object" && !Array.isArray(input.memory_extraction)
+      ? input.memory_extraction
+      : null;
+
+  return nested ? { ...nested } : null;
 }
 
 function formatWriteBackContent(event) {
@@ -350,6 +362,65 @@ export function createCodexAcceptedActionSource(input = {}, context = {}, option
   }
 
   return declaredSource;
+}
+
+export function createCodexMemoryExtractionSource(input = {}, context = {}, options = {}) {
+  const payload = resolveMemoryExtractionPayload(input);
+  if (!payload) {
+    return null;
+  }
+
+  const clock = options.clock || (() => new Date());
+  const config = resolveCodexAdapterConfig(context);
+  const namespacePlan = resolveCodexNamespacePlan(context);
+  const namespace = parseNamespace(options.namespace || namespacePlan.primaryNamespace);
+  const memoryIntent = parseMemoryIntentExtraction({
+    ...payload,
+    summary: payload.summary || input.memorySummary || input.memory_summary || input.summary || "",
+    userMessage: input.userMessage || input.user_message || payload.userMessage || payload.user_message || "",
+    assistantReply:
+      input.assistantReply
+      || input.assistant_reply
+      || input.userVisibleReply
+      || input.user_visible_reply
+      || payload.userVisibleReply
+      || payload.user_visible_reply
+      || ""
+  });
+
+  if (!memoryIntent.should_write_memory || !memoryIntent.summary || memoryIntent.admission_route === "skip") {
+    return null;
+  }
+
+  return {
+    sourceType: "memory_intent",
+    declaredBy: `codex-adapter:${normalizeString(input.actorId || input.actor_id, config.userId)}`,
+    namespace,
+    visibility: parseVisibility(input.visibility || config.writeBackVisibility),
+    shouldWriteMemory: memoryIntent.should_write_memory,
+    category: memoryIntent.category,
+    durability: memoryIntent.durability,
+    confidence: memoryIntent.confidence,
+    summary: memoryIntent.summary,
+    userMessage: memoryIntent.user_message,
+    assistantReply: memoryIntent.assistant_reply,
+    structuredRule: memoryIntent.structured_rule,
+    exportHints: [
+      "codex",
+      "memory_extraction",
+      `memory_category:${memoryIntent.category}`,
+      `memory_durability:${memoryIntent.durability}`,
+      `memory_route:${memoryIntent.admission_route}`,
+      ...(memoryIntent.structured_rule?.action?.tool
+        ? [`memory_tool:${memoryIntent.structured_rule.action.tool}`]
+        : [])
+    ],
+    metadata: {
+      captured_at: createContractTimestamp(clock),
+      text: renderMemoryIntentText(memoryIntent),
+      ...memoryIntent
+    }
+  };
 }
 
 export function mapCodexExportToTaskMemory(exportResult, { taskPrompt, maxItems, policyContext } = {}) {
@@ -597,7 +668,66 @@ export function createCodexAdapterRuntime(options = {}) {
           config.writeBackVisibility
         )
       }, { clock });
+      const memoryExtractionSource = createCodexMemoryExtractionSource(input, {
+        registryDir: config.registryDir,
+        projectPath: normalizeString(input.projectPath, config.projectPath),
+        projectId: normalizeString(input.projectId, config.projectId),
+        userId: normalizeString(input.userId, config.userId),
+        tenant: normalizeString(input.tenant, config.tenant),
+        scope: normalizeString(input.scope, config.scope),
+        resource: normalizeString(input.resource, config.resource),
+        namespaceHint: normalizeString(input.namespaceHint, config.namespaceHint),
+        workspaceId: normalizeString(input.workspaceId, config.workspaceId),
+        agentId: normalizeString(input.agentId, config.agentId),
+        agentNamespaceEnabled:
+          input.agentNamespaceEnabled === undefined
+            ? config.agentNamespaceEnabled
+            : input.agentNamespaceEnabled === true,
+        host: normalizeString(input.host, config.host),
+        writeBackVisibility: normalizeString(
+          input.visibility,
+          config.writeBackVisibility
+        )
+      }, { clock });
+      let memoryExtractionPersistence = null;
       let acceptedActionPersistence = null;
+
+      if (memoryExtractionSource) {
+        const memoryIntentSourceResult = await sourceSystem.ingestDeclaredSource(memoryExtractionSource);
+        const memoryIntentSourceRecord = await registry.persistSourceArtifact(
+          memoryIntentSourceResult.sourceArtifact
+        );
+        const reflection = await reflectionSystem.runReflection({
+          sourceArtifacts: [memoryIntentSourceResult.sourceArtifact],
+          persistCandidates: true,
+          decidedBy: `codex-adapter:${event.actor_id}`
+        });
+        const promoted = [];
+
+        for (const output of reflection.outputs) {
+          if (!output.recommendation.should_promote) {
+            continue;
+          }
+          promoted.push(await registry.promoteCandidateToStable({
+            candidateArtifactId: output.candidate_artifact.artifact_id,
+            decidedBy: `codex-adapter:${event.actor_id}`,
+            reasonCodes: [
+              "codex_memory_intent_promotion",
+              `label:${output.primary_label}`,
+              `route:${output.candidate_artifact.attributes?.memory_intent_admission_route || "unknown"}`
+            ]
+          }));
+        }
+
+        memoryExtractionPersistence = {
+          declared_source: memoryExtractionSource,
+          sourceManifest: memoryIntentSourceResult.sourceManifest,
+          sourceArtifact: memoryIntentSourceResult.sourceArtifact,
+          sourceRecord: memoryIntentSourceRecord,
+          reflection,
+          promoted
+        };
+      }
 
       if (acceptedActionSource) {
         const acceptedActionSourceResult = await sourceSystem.ingestDeclaredSource(acceptedActionSource);
@@ -641,6 +771,7 @@ export function createCodexAdapterRuntime(options = {}) {
 
       return {
         write_back_event: event,
+        memory_extraction: memoryExtractionPersistence,
         accepted_action: acceptedActionPersistence,
         ...persistence
       };

@@ -7,6 +7,7 @@ import path from "node:path";
 import {
   createCodexAcceptedActionSource,
   createCodexAdapterRuntime,
+  createCodexMemoryExtractionSource,
   createCodexWriteBackEvent,
   mapCodexExportToTaskMemory,
   resolveCodexAdapterConfig
@@ -411,6 +412,53 @@ test("createCodexAcceptedActionSource maps task result metadata into an accepted
   });
 });
 
+test("createCodexMemoryExtractionSource maps structured memory extraction into a memory_intent ingest source", () => {
+  const declaredSource = createCodexMemoryExtractionSource(
+    {
+      userMessage: "以后你收到小红书的链接，就使用 capture_xiaohongshu_note 工具来处理；记住了！",
+      assistantReply: "记住了。以后收到小红书链接时，我会优先使用 capture_xiaohongshu_note 来处理。",
+      memoryExtraction: {
+        should_write_memory: true,
+        category: "tool_routing_preference",
+        durability: "durable",
+        confidence: 0.98,
+        summary: "User wants Xiaohongshu links handled with capture_xiaohongshu_note in future conversations.",
+        structured_rule: {
+          trigger: {
+            content_kind: "xiaohongshu_link",
+            domains: ["xhslink.com", "xiaohongshu.com"]
+          },
+          action: {
+            tool: "capture_xiaohongshu_note"
+          }
+        }
+      }
+    },
+    {
+      projectPath: "/tmp/unified-memory-core",
+      userId: "codex-user",
+      agentId: "code"
+    },
+    {
+      clock: () => new Date("2026-04-11T00:00:00.000Z")
+    }
+  );
+
+  assert.equal(declaredSource.sourceType, "memory_intent");
+  assert.equal(declaredSource.category, "tool_routing_preference");
+  assert.equal(declaredSource.durability, "durable");
+  assert.equal(declaredSource.structuredRule.action.tool, "capture_xiaohongshu_note");
+  assert.deepEqual(declaredSource.structuredRule.trigger.domains, ["xhslink.com", "xiaohongshu.com"]);
+  assert.deepEqual(declaredSource.exportHints, [
+    "codex",
+    "memory_extraction",
+    "memory_category:tool_routing_preference",
+    "memory_durability:durable",
+    "memory_route:candidate_rule",
+    "memory_tool:capture_xiaohongshu_note"
+  ]);
+});
+
 test("codex adapter auto-emits accepted_action signals from write-after-task input", async () => {
   const registryRoot = await fs.mkdtemp(path.join(os.tmpdir(), "umc-codex-accepted-action-"));
   const clock = () => new Date("2026-04-11T00:00:00.000Z");
@@ -460,4 +508,100 @@ test("codex adapter auto-emits accepted_action signals from write-after-task inp
   );
   assert.equal(records.length, 7);
   assert.equal(trails.length, 6);
+});
+
+test("codex adapter writes structured memory extraction signals into source and candidate records", async () => {
+  const registryRoot = await fs.mkdtemp(path.join(os.tmpdir(), "umc-codex-memory-extraction-"));
+  const clock = () => new Date("2026-04-11T00:00:00.000Z");
+  const adapter = createCodexAdapterRuntime({
+    clock,
+    logger: { info() {} },
+    config: {
+      registryDir: registryRoot,
+      scope: "workspace",
+      resource: "openclaw-shared-memory",
+      workspaceId: "code-workspace",
+      agentId: "code",
+      agentNamespaceEnabled: true
+    }
+  });
+
+  const persisted = await adapter.writeAfterTask({
+    taskId: "task_memory_1",
+    taskTitle: "验证 reply + memory_extraction",
+    summary: "主回复返回了一个可持久化的工具路由偏好。",
+    userMessage: "以后你收到小红书的链接，就使用 capture_xiaohongshu_note 工具来处理；记住了！",
+    assistantReply: "记住了。以后收到小红书链接时，我会优先使用 capture_xiaohongshu_note 来处理。",
+    memoryExtraction: {
+      should_write_memory: true,
+      category: "tool_routing_preference",
+      durability: "durable",
+      confidence: 0.98,
+      summary: "User wants Xiaohongshu links handled with capture_xiaohongshu_note in future conversations.",
+      structured_rule: {
+        trigger: {
+          content_kind: "xiaohongshu_link",
+          domains: ["xhslink.com", "xiaohongshu.com"]
+        },
+        action: {
+          tool: "capture_xiaohongshu_note"
+        }
+      }
+    }
+  });
+
+  const registry = createMemoryRegistry({ rootDir: registryRoot, clock });
+  const records = await registry.listRecords();
+  const trails = await registry.listDecisionTrails();
+  const memoryIntentSources = records.filter(
+    (record) => record.record_type === "source_artifact" && record.payload?.source_type === "memory_intent"
+  );
+  const memorySource = memoryIntentSources[0];
+
+  assert.ok(persisted.memory_extraction);
+  assert.equal(persisted.memory_extraction.sourceArtifact.source_type, "memory_intent");
+  assert.equal(persisted.memory_extraction.sourceArtifact.normalized_payload.admission_route, "candidate_rule");
+  assert.match(persisted.memory_extraction.sourceArtifact.normalized_payload.text, /capture_xiaohongshu_note/);
+  assert.equal(persisted.memory_extraction.reflection.outputs[0].candidate_artifact.state, "candidate");
+  assert.equal(
+    persisted.memory_extraction.reflection.outputs[0].candidate_artifact.attributes.memory_intent_category,
+    "tool_routing_preference"
+  );
+  assert.equal(persisted.memory_extraction.promoted.length, 1);
+  assert.equal(records.length, 5);
+  assert.equal(trails.length, 4);
+  assert.ok(memorySource);
+});
+
+test("codex adapter ignores memory extraction payloads marked as non-durable write skips", async () => {
+  const registryRoot = await fs.mkdtemp(path.join(os.tmpdir(), "umc-codex-memory-skip-"));
+  const clock = () => new Date("2026-04-11T00:00:00.000Z");
+  const adapter = createCodexAdapterRuntime({
+    clock,
+    logger: { info() {} },
+    config: {
+      registryDir: registryRoot,
+      projectPath: "/tmp/unified-memory-core",
+      userId: "codex-user"
+    }
+  });
+
+  const persisted = await adapter.writeAfterTask({
+    taskId: "task_memory_skip",
+    taskTitle: "忽略非记忆意图",
+    summary: "这一轮只有一次性的任务指令。",
+    memoryExtraction: {
+      should_write_memory: false,
+      category: "task_instruction",
+      durability: "none",
+      confidence: 0.91,
+      summary: "One-off instruction only."
+    }
+  });
+
+  const registry = createMemoryRegistry({ rootDir: registryRoot, clock });
+  const records = await registry.listRecords();
+
+  assert.equal(persisted.memory_extraction, null);
+  assert.equal(records.length, 2);
 });

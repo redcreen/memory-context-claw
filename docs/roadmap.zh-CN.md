@@ -20,18 +20,18 @@
 
 | 时间层级 | 重点 | 退出信号 |
 | --- | --- | --- |
-| 当前 | 执行 coverage-first 的 `200+` case 扩展、把中文案例真正做到 `50%`、并把 answer-level host path 红线和 transport watchlist 变成正式门禁 | `200+` case 已落地、中文案例实际占比达到 `50%`、answer-level gate 可持续复跑、transport watchlist 不再污染算法判断 |
-| 下一步 | 用新的正式门禁和主链路性能基线决定优化顺序，再讨论是否真的打开 runtime API / service-mode | answer-level host-path 回退已被修掉或可解释、性能最慢层已有实质优化、benchmark coverage 不再有明显盲区 |
+| 当前 | 用新的正式门禁继续收敛主链路：保持 `368` case benchmark、`50%+` 中文覆盖、isolated local answer-level gate 和 transport watchlist 一起稳定 | retrieval-heavy gate、answer-level formal gate、transport watchlist、main-path perf baseline 都能持续复跑 |
+| 下一步 | 扩大 answer-level formal gate 和自然中文案例，继续压低最慢层，再讨论是否真的打开 runtime API / service-mode | answer-level formal gate 不再只依赖代表性子集、中文案例更接近自然表达、transport/gateway 噪声不再主导评测结论 |
 | 更后面 | 只在 operator baseline 稳定后，再讨论 runtime API / split-ready 演进 | Stage 5 收口后的独立产品证据继续保持绿色 |
 
 ## 当前执行重点
 
 主 roadmap 里的“当前”不只是方向，也对应接下来要执行的具体工作：
 
-1. 把当前 `187` case benchmark 扩成 coverage-first 的 `200+`，优先补 blind spots，而不是继续堆改写。
-2. 把中文案例真正做到不少于 `50%` 的实际可运行矩阵，覆盖 retrieval、answer-level 和 negative surfaces。
-3. 把 live `openclaw agent` answer-level gate 与 raw transport watchlist 变成正式门禁，并先修 answer-level red path。
-4. 按主链路性能基线先解释并优化最慢层，再决定后续算法优化顺序。
+1. 扩大 answer-level formal gate，不再只停留在 `6` 条代表性样本。
+2. 把中文案例从“zh-bearing 过半”继续推到更自然、更高信息密度的真实中文表达。
+3. 单独跟踪 gateway/session-lock 与 raw transport，不让宿主噪声重新污染算法判断。
+4. 继续按主链路性能基线压低 answer-level 最慢层，再决定后续算法优化顺序。
 
 恢复执行时：
 

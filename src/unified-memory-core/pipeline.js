@@ -30,6 +30,10 @@ function summarizeSourceArtifact(sourceArtifact) {
     return payload.text || payload.summary || payload.action_type || "accepted action source";
   }
 
+  if (sourceArtifact.source_type === "memory_intent") {
+    return payload.text || payload.summary || payload.category || "memory intent source";
+  }
+
   if (sourceArtifact.source_type === "image") {
     return payload.text || payload.path || "image source";
   }

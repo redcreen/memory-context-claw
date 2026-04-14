@@ -147,6 +147,44 @@ test("umc source add accepts structured accepted_action sources", async () => {
   assert.match(payload.sourceArtifact.normalized_payload.text, /publish target/);
 });
 
+test("umc source add accepts structured memory_intent sources", async () => {
+  const registryDir = await fs.mkdtemp(path.join(os.tmpdir(), "umc-memory-intent-cli-"));
+  const result = runUmc([
+    "--no-cli-path",
+    "source",
+    "add",
+    "--registry-dir",
+    registryDir,
+    "--source-type",
+    "memory_intent",
+    "--category",
+    "tool_routing_preference",
+    "--durability",
+    "durable",
+    "--confidence",
+    "0.98",
+    "--summary",
+    "User wants Xiaohongshu links handled with capture_xiaohongshu_note in future conversations.",
+    "--user-message",
+    "以后你收到小红书的链接，就使用 capture_xiaohongshu_note 工具来处理；记住了！",
+    "--assistant-reply",
+    "记住了。以后收到小红书链接时，我会优先使用 capture_xiaohongshu_note 来处理。",
+    "--tool",
+    "capture_xiaohongshu_note",
+    "--domains",
+    "xhslink.com,xiaohongshu.com",
+    "--content-kind",
+    "xiaohongshu_link"
+  ]);
+
+  assert.equal(result.status, 0, result.stderr);
+  const payload = JSON.parse(result.stdout);
+  assert.equal(payload.sourceArtifact.source_type, "memory_intent");
+  assert.equal(payload.sourceArtifact.normalized_payload.category, "tool_routing_preference");
+  assert.equal(payload.sourceArtifact.normalized_payload.admission_route, "candidate_rule");
+  assert.equal(payload.sourceArtifact.normalized_payload.structured_rule.action.tool, "capture_xiaohongshu_note");
+});
+
 test("umc learn lifecycle-run promotes accepted_action signals through the governed loop", async () => {
   const registryDir = await fs.mkdtemp(path.join(os.tmpdir(), "umc-action-lifecycle-"));
   const result = runUmc([

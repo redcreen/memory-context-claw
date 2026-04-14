@@ -43,7 +43,8 @@ function getSourceText(sourceArtifact) {
   if (sourceArtifact.source_type === "manual"
     || sourceArtifact.source_type === "file"
     || sourceArtifact.source_type === "url"
-    || sourceArtifact.source_type === "accepted_action") {
+    || sourceArtifact.source_type === "accepted_action"
+    || sourceArtifact.source_type === "memory_intent") {
     return typeof payload.text === "string" ? payload.text.trim() : "";
   }
 
@@ -110,6 +111,21 @@ function detectLabels(sourceArtifact, text) {
     labels.add("stable_fact_candidate");
     if (/\b(rule|policy|default|always|never|must|should)\b|规则|策略|默认|必须|应该/iu.test(normalizedText)) {
       labels.add("stable_rule_candidate");
+    }
+    return [...labels];
+  }
+
+  if (sourceArtifact.source_type === "memory_intent") {
+    const admissionRoute = String(sourceArtifact.normalized_payload?.admission_route || "").trim();
+    if (admissionRoute.startsWith("candidate_rule")) {
+      labels.add("stable_rule_candidate");
+    } else if (admissionRoute === "candidate_profile") {
+      labels.add("stable_preference_candidate");
+    } else if (admissionRoute === "observation_session" || admissionRoute === "observation_task_instruction" || admissionRoute === "observation_low_confidence") {
+      labels.add("observation_candidate");
+    }
+    if (labels.size === 0) {
+      labels.add("stable_fact_candidate");
     }
     return [...labels];
   }
@@ -495,6 +511,86 @@ function deriveAcceptedActionFieldAwareOutputs({
   return outputs;
 }
 
+function deriveMemoryIntentOutputs({
+  sourceArtifact,
+  text,
+  repeatedSourceCount,
+  explicitRememberSignal,
+  now,
+  idGenerator,
+  priorRecords,
+  existingStableArtifacts,
+  promoteConfidenceThreshold
+}) {
+  const payload = sourceArtifact.normalized_payload || {};
+  const category = String(payload.category || "").trim();
+  const durability = String(payload.durability || "").trim();
+  const summary = normalizeSummaryText(payload.summary || payload.text || "");
+  const confidence = Number.isFinite(payload.confidence)
+    ? Math.max(0, Math.min(1, Number(payload.confidence)))
+    : 0.5;
+  const admissionRoute = String(payload.admission_route || "").trim() || "skip";
+  const structuredRule = payload.structured_rule || {};
+  const trigger = structuredRule.trigger || {};
+  const action = structuredRule.action || {};
+  let labels = ["observation_candidate"];
+  let title = buildCandidateTitle(sourceArtifact, "observation_candidate");
+  let exportHints = [
+    "memory_intent",
+    `memory_intent:category:${category || "unknown"}`,
+    `memory_intent:durability:${durability || "unknown"}`,
+    `memory_intent:route:${admissionRoute || "unknown"}`
+  ];
+
+  if (admissionRoute === "candidate_rule") {
+    labels = ["stable_rule_candidate"];
+    title = `memory-intent-rule:${sourceArtifact.source_id}`;
+  } else if (admissionRoute === "candidate_profile") {
+    labels = ["stable_preference_candidate"];
+    title = `memory-intent-profile:${sourceArtifact.source_id}`;
+  } else if (admissionRoute === "candidate_generic") {
+    labels = ["stable_fact_candidate"];
+    title = `memory-intent-fact:${sourceArtifact.source_id}`;
+  } else {
+    title = `memory-intent-observation:${sourceArtifact.source_id}`;
+  }
+
+  if (action.tool) {
+    exportHints.push(`memory_intent:tool:${action.tool}`);
+  }
+  if (Array.isArray(trigger.domains)) {
+    exportHints = exportHints.concat(
+      trigger.domains.filter(Boolean).slice(0, 3).map((domain) => `memory_intent:domain:${domain}`)
+    );
+  }
+
+  return [buildReflectionOutput({
+    sourceArtifact,
+    sourceText: text,
+    labels,
+    summary,
+    repeatedSourceCount,
+    explicitRememberSignal,
+    now,
+    idGenerator,
+    priorRecords,
+    promoteConfidenceThreshold,
+    existingStableArtifacts,
+    title,
+    confidence,
+    attributes: {
+      memory_intent_category: category,
+      memory_intent_durability: durability,
+      memory_intent_confidence: confidence,
+      memory_intent_admission_route: admissionRoute,
+      memory_intent_tool: String(action.tool || "").trim(),
+      memory_intent_trigger_kind: String(trigger.content_kind || "").trim(),
+      memory_intent_trigger_domains: Array.isArray(trigger.domains) ? [...trigger.domains] : []
+    },
+    exportHints
+  })];
+}
+
 function buildRunSummary(outputs) {
   const byLabel = {};
   const byState = {};
@@ -561,6 +657,18 @@ export function createReflectionSystem(options = {}) {
           existingStableArtifacts,
           promoteConfidenceThreshold
         })
+      : sourceArtifact.source_type === "memory_intent"
+        ? deriveMemoryIntentOutputs({
+            sourceArtifact,
+            text,
+            repeatedSourceCount,
+            explicitRememberSignal,
+            now,
+            idGenerator,
+            priorRecords,
+            existingStableArtifacts,
+            promoteConfidenceThreshold
+          })
       : [];
     const reflectionOutputs = fieldAwareOutputs.length > 0
       ? fieldAwareOutputs
@@ -650,7 +758,11 @@ export function createReflectionSystem(options = {}) {
             reflection_label: output.primary_label,
             repeated_source_count: output.repeated_source_count,
             accepted_action_extraction_class:
-              output.candidate_artifact.attributes?.accepted_action_extraction_class || ""
+              output.candidate_artifact.attributes?.accepted_action_extraction_class || "",
+            memory_intent_admission_route:
+              output.candidate_artifact.attributes?.memory_intent_admission_route || "",
+            memory_intent_category:
+              output.candidate_artifact.attributes?.memory_intent_category || ""
           }
         });
 

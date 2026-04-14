@@ -13,6 +13,10 @@ import {
   parseSourceArtifact,
   parseVisibility
 } from "./contracts.js";
+import {
+  parseMemoryIntentExtraction,
+  renderMemoryIntentText
+} from "./memory-intent-contract.js";
 
 function createFingerprint(payload) {
   return createHash("sha256").update(JSON.stringify(payload)).digest("hex");
@@ -543,6 +547,49 @@ async function normalizeAcceptedActionSource(declaredSource) {
   };
 }
 
+async function normalizeMemoryIntentSource(declaredSource) {
+  const memoryIntent = parseMemoryIntentExtraction({
+    shouldWriteMemory: declaredSource.shouldWriteMemory ?? declaredSource.should_write_memory,
+    category: declaredSource.category,
+    durability: declaredSource.durability,
+    confidence: declaredSource.confidence,
+    summary: declaredSource.summary,
+    userMessage: declaredSource.userMessage || declaredSource.user_message,
+    assistantReply: declaredSource.assistantReply
+      || declaredSource.assistant_reply
+      || declaredSource.userVisibleReply
+      || declaredSource.user_visible_reply,
+    structuredRule: declaredSource.structuredRule || declaredSource.structured_rule,
+    metadata: declaredSource.metadata
+  });
+
+  if (!memoryIntent.summary) {
+    throw new TypeError("memory_intent source requires summary");
+  }
+
+  const text = renderMemoryIntentText(memoryIntent);
+  return {
+    locator: {
+      kind: "memory_intent",
+      value: `${memoryIntent.category}:${memoryIntent.durability}`
+    },
+    normalizedPayload: {
+      format: "memory_intent",
+      ...memoryIntent,
+      text,
+      char_count: text.length
+    },
+    rawMetadata: {
+      source_type: "memory_intent",
+      category: memoryIntent.category,
+      durability: memoryIntent.durability,
+      should_write_memory: memoryIntent.should_write_memory,
+      confidence: memoryIntent.confidence,
+      admission_route: memoryIntent.admission_route
+    }
+  };
+}
+
 export function createSourceSystem(options = {}) {
   const idGenerator = options.idGenerator || randomUUID;
   const clock = options.clock || (() => new Date());
@@ -640,6 +687,11 @@ export function createSourceSystem(options = {}) {
     } else if (sourceType === "accepted_action") {
       const normalized = await normalizeAcceptedActionSource(declaredSource);
       locator = toLocator(declaredSource.locator || normalized.locator, "accepted_action");
+      normalizedPayload = normalized.normalizedPayload;
+      rawMetadata = normalized.rawMetadata;
+    } else if (sourceType === "memory_intent") {
+      const normalized = await normalizeMemoryIntentSource(declaredSource);
+      locator = toLocator(declaredSource.locator || normalized.locator, "memory_intent");
       normalizedPayload = normalized.normalizedPayload;
       rawMetadata = normalized.rawMetadata;
     } else {

@@ -3,8 +3,8 @@ import assert from "node:assert/strict";
 
 import cases from "../evals/openclaw-cli-memory-benchmark-cases.js";
 
-test("openclaw CLI memory benchmark defines at least 100 cases", () => {
-  assert.ok(cases.length >= 100);
+test("openclaw CLI memory benchmark defines at least 200 cases", () => {
+  assert.ok(cases.length >= 200);
 });
 
 test("openclaw CLI memory benchmark case ids are unique", () => {
@@ -25,6 +25,7 @@ test("openclaw CLI memory benchmark includes a larger answer-level agent matrix"
   assert.ok(agentCases.some((item) => item.category === "agent-preference"));
   assert.ok(agentCases.some((item) => item.category === "agent-rule"));
   assert.ok(agentCases.some((item) => item.category === "agent-history"));
+  assert.ok(agentCases.some((item) => item.category === "negative"));
 });
 
 test("openclaw CLI memory benchmark includes cross-source and supersede retrieval probes", () => {
@@ -38,4 +39,12 @@ test("openclaw CLI memory benchmark includes cross-source and supersede retrieva
         && item.expectedSourceGroups.length >= 2
     )
   );
+});
+
+test("openclaw CLI memory benchmark keeps zh-bearing coverage at or above 50%", () => {
+  const zhBearing = cases.filter((item) => /[\u4e00-\u9fff]/.test(String(item.query || item.message || "")));
+  assert.ok(zhBearing.length / cases.length >= 0.5);
+  assert.ok(zhBearing.some((item) => item.entrypoint === "memory_search"));
+  assert.ok(zhBearing.some((item) => item.entrypoint === "agent"));
+  assert.ok(zhBearing.some((item) => item.category === "negative"));
 });

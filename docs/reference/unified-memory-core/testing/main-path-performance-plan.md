@@ -127,7 +127,7 @@ Use engineering budgets first, not product SLA promises:
 
 ## Next optimization order
 
-1. explain why the answer-level host path is currently `0/36`
-2. decide whether the problem sits in host integration, prompt/context assembly, or call boundary behavior
-3. keep raw transport watchlist separate from answer-level conclusions
+1. keep the isolated local answer-level formal gate green and expand it beyond the current `6` representative cases
+2. continue isolating gateway/session-lock noise and raw transport failures so they do not contaminate answer-level conclusions
+3. once the formal gate is stable, decide whether the slowest layer sits in host integration, prompt/context assembly, or call-boundary behavior
 4. rerun the baseline after each meaningful performance change and write back a fresh report

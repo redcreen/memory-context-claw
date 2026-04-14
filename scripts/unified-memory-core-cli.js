@@ -177,6 +177,28 @@ function buildDeclaredSource(flags) {
     declaredSource.targets = parseListFlag(flags.targets, []);
     declaredSource.artifacts = parseListFlag(flags.artifacts, []);
     declaredSource.content = normalizeString(flags.content || flags.summary);
+  } else if (sourceType === "memory_intent") {
+    declaredSource.shouldWriteMemory = parseBooleanFlag(flags["should-write-memory"], true);
+    declaredSource.category = normalizeString(flags.category);
+    declaredSource.durability = normalizeString(flags.durability);
+    declaredSource.confidence = parseNumberFlag(flags.confidence, 0);
+    declaredSource.summary = normalizeString(flags.summary || flags.content);
+    declaredSource.userMessage = normalizeString(flags["user-message"]);
+    declaredSource.assistantReply = normalizeString(flags["assistant-reply"]);
+    const tool = normalizeString(flags.tool);
+    const domains = parseListFlag(flags.domains, []);
+    const contentKind = normalizeString(flags["content-kind"]);
+    if (tool || domains.length > 0 || contentKind) {
+      declaredSource.structuredRule = {
+        trigger: {
+          content_kind: contentKind,
+          domains
+        },
+        action: {
+          tool
+        }
+      };
+    }
   } else if (sourceType === "conversation") {
     declaredSource.messages = [
       {

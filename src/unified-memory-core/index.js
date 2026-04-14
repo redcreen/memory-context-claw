@@ -17,6 +17,13 @@ export {
   createContractTimestamp,
   createContractId
 } from "./contracts.js";
+export {
+  MEMORY_INTENT_CATEGORIES,
+  MEMORY_INTENT_DURABILITIES,
+  determineMemoryIntentAdmission,
+  parseMemoryIntentExtraction,
+  renderMemoryIntentText
+} from "./memory-intent-contract.js";
 
 export { createSourceSystem } from "./source-system.js";
 export { createMemoryRegistry } from "./memory-registry.js";

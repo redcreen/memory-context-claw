@@ -40,7 +40,9 @@ function parseArgs(argv) {
     agentTimeoutMs: 120_000,
     maxResults: 5,
     skipLegacy: false,
-    rawSearchCli: false
+    rawSearchCli: false,
+    agentToolHint: true,
+    agentLocal: false
   };
 
   for (let index = 0; index < argv.length; index += 1) {
@@ -75,6 +77,8 @@ function parseArgs(argv) {
     else if (arg === "--max-results") args.maxResults = Number(argv[++index] || 5);
     else if (arg === "--skip-legacy") args.skipLegacy = true;
     else if (arg === "--raw-search-cli") args.rawSearchCli = true;
+    else if (arg === "--no-agent-tool-hint") args.agentToolHint = false;
+    else if (arg === "--agent-local") args.agentLocal = true;
     else if (arg === "--help" || arg === "-h") {
       console.log(
         [
@@ -94,7 +98,9 @@ function parseArgs(argv) {
           "  --agent-timeout-ms <ms>     Timeout for openclaw agent",
           "  --max-results <n>           Memory search max results",
           "  --skip-legacy               Skip legacy A/B runs",
-          "  --raw-search-cli            Force raw `openclaw memory search` before sqlite fallback"
+          "  --raw-search-cli            Force raw `openclaw memory search` before sqlite fallback",
+          "  --no-agent-tool-hint        Do not prepend the explicit memory_search tool hint for agent cases",
+          "  --agent-local               Run answer-level cases via `openclaw agent --local`"
         ].join("\n")
       );
       process.exit(0);
@@ -116,17 +122,24 @@ function familyFromPath(pathValue) {
 
 function includesAny(text, patterns = []) {
   if (!patterns.length) return true;
-  return patterns.some((pattern) => text.includes(pattern));
+  const haystack = String(text || "").toLowerCase();
+  return patterns.some((pattern) => haystack.includes(String(pattern || "").toLowerCase()));
 }
 
 function includesAll(text, patterns = []) {
   if (!patterns.length) return true;
-  return patterns.every((pattern) => text.includes(pattern));
+  const haystack = String(text || "").toLowerCase();
+  return patterns.every((pattern) => haystack.includes(String(pattern || "").toLowerCase()));
 }
 
 function excludesAll(text, patterns = []) {
   if (!patterns.length) return true;
-  return patterns.every((pattern) => !text.includes(pattern));
+  const haystack = String(text || "").toLowerCase();
+  return patterns.every((pattern) => !haystack.includes(String(pattern || "").toLowerCase()));
+}
+
+function hasChinese(text = "") {
+  return /[\u4e00-\u9fff]/.test(String(text || ""));
 }
 
 function hitsExpectedSources(results, expectedSources = []) {
@@ -193,6 +206,10 @@ async function runCommand(bin, args, options = {}) {
   }
 }
 
+function pickJsonText(stdout = "", stderr = "") {
+  return String(stdout || "").trim() ? String(stdout || "") : String(stderr || "");
+}
+
 async function importCases(casesPath) {
   const moduleUrl = pathToFileURL(casesPath).href;
   const imported = await import(moduleUrl);
@@ -215,6 +232,20 @@ async function copyRecursive(sourcePath, targetPath) {
   }
   await fs.mkdir(path.dirname(targetPath), { recursive: true });
   await fs.copyFile(sourcePath, targetPath);
+}
+
+async function resetAgentSessionState(agentId) {
+  const sessionsDir = path.join(os.homedir(), ".openclaw", "agents", agentId, "sessions");
+  try {
+    await fs.mkdir(sessionsDir, { recursive: true });
+    const entries = await fs.readdir(sessionsDir);
+    for (const entry of entries) {
+      await fs.rm(path.join(sessionsDir, entry), { force: true, recursive: true });
+    }
+    await fs.writeFile(path.join(sessionsDir, "sessions.json"), "{}\n", "utf8");
+  } catch {
+    // best effort; local answer-level eval should not fail just because cleanup was partial
+  }
 }
 
 async function prepareLegacyStateDir(agentId) {
@@ -260,12 +291,21 @@ async function prepareLegacyStateDir(agentId) {
 }
 
 function extractAgentText(payload) {
-  const parts = payload?.result?.payloads || payload?.result?.content || [];
+  const parts =
+    payload?.result?.payloads
+    || payload?.result?.content
+    || payload?.payloads
+    || payload?.content
+    || [];
   return parts.map((item) => item?.text || "").join("\n").trim();
 }
 
 function extractInjectedWorkspaceFiles(payload) {
-  return payload?.result?.systemPromptReport?.injectedWorkspaceFiles || [];
+  const items =
+    payload?.result?.systemPromptReport?.injectedWorkspaceFiles
+    || payload?.meta?.systemPromptReport?.injectedWorkspaceFiles
+    || [];
+  return items.map((item) => item?.name || item?.path || "");
 }
 
 function buildCaseText(caseDef, run) {
@@ -420,12 +460,19 @@ async function runSearchCase(caseDef, args, env) {
 }
 
 async function runAgentCase(caseDef, args, env) {
+  if (args.agentLocal) {
+    await resetAgentSessionState(args.agentId);
+  }
   const sessionId = `umc-bench-${caseDef.id}-${randomUUID().slice(0, 8)}`;
   const timeoutSecs = Math.max(10, Math.ceil(args.agentTimeoutMs / 1000));
+  const message = args.agentToolHint
+    ? `Use the memory_search tool first if needed before answering. ${caseDef.message}`
+    : caseDef.message;
   const command = await runCommand(
     args.openclawBin,
     [
       "agent",
+      ...(args.agentLocal ? ["--local"] : []),
       "--agent",
       args.agentId,
       "--session-id",
@@ -436,23 +483,31 @@ async function runAgentCase(caseDef, args, env) {
       String(timeoutSecs),
       "--json",
       "--message",
-      caseDef.message
+      message
     ],
     { timeoutMs: args.agentTimeoutMs, env }
   );
-  if (!command.ok) {
-    return { ok: false, error: command.error, stdout: command.stdout, stderr: command.stderr };
-  }
   try {
-    const payload = extractJsonPayload(command.stdout);
+    const payload = extractJsonPayload(pickJsonText(command.stdout, command.stderr));
     return {
       ok: true,
+      transport: args.agentLocal ? "agent_local" : "agent",
       answer: extractAgentText(payload),
       injectedWorkspaceFiles: extractInjectedWorkspaceFiles(payload),
-      observedSessionKey: payload?.result?.systemPromptReport?.sessionKey || "",
-      observedSessionId: payload?.result?.meta?.agentMeta?.sessionId || ""
+      observedSessionKey:
+        payload?.result?.systemPromptReport?.sessionKey
+        || payload?.meta?.systemPromptReport?.sessionKey
+        || "",
+      observedSessionId:
+        payload?.result?.meta?.agentMeta?.sessionId
+        || payload?.meta?.agentMeta?.sessionId
+        || "",
+      warning: command.ok ? "" : (command.error || command.stderr || "").trim()
     };
   } catch (error) {
+    if (!command.ok) {
+      return { ok: false, error: command.error, stdout: command.stdout, stderr: command.stderr };
+    }
     return {
       ok: false,
       error: String(error?.message || error),
@@ -506,6 +561,11 @@ function summarizeResults(results) {
   const byAttribution = {};
   const byTransport = {};
   const byEntrypoint = {};
+  const byLanguage = {
+    zhBearing: 0,
+    nonZh: 0
+  };
+  let abstained = 0;
   for (const result of results) {
     const category = result.category || "unknown";
     const attribution = result.attribution || "unknown";
@@ -518,6 +578,15 @@ function summarizeResults(results) {
     const transport = result.current?.transport || result.entrypoint;
     byTransport[transport] = (byTransport[transport] || 0) + 1;
     byEntrypoint[result.entrypoint] = (byEntrypoint[result.entrypoint] || 0) + 1;
+    const prompt = result.query || result.message || "";
+    if (hasChinese(prompt)) {
+      byLanguage.zhBearing += 1;
+    } else {
+      byLanguage.nonZh += 1;
+    }
+    if (String(result.current?.observed || "").includes("I don't know based on current memory.")) {
+      abstained += 1;
+    }
   }
 
   return {
@@ -526,6 +595,9 @@ function summarizeResults(results) {
     failed: results.filter((item) => !item.current?.passed).length,
     comparedLegacy: results.filter((item) => item.compareLegacy).length,
     legacyPassed: results.filter((item) => item.legacy?.passed).length,
+    abstained,
+    abstentionRate: results.length > 0 ? Number((abstained / results.length).toFixed(4)) : 0,
+    byLanguage,
     byCategory,
     byAttribution,
     byTransport,
@@ -544,6 +616,16 @@ function renderMarkdown(report) {
   lines.push(`- currentFailed: \`${report.summary.failed}\``);
   lines.push(`- legacyCompared: \`${report.summary.comparedLegacy}\``);
   lines.push(`- legacyPassed: \`${report.summary.legacyPassed}\``);
+  lines.push(`- abstained: \`${report.summary.abstained}\``);
+  lines.push(`- abstentionRate: \`${report.summary.abstentionRate}\``);
+  lines.push(
+    `- zhBearingCases: \`${report.summary.byLanguage?.zhBearing || 0}/${report.summary.total}\``
+  );
+  lines.push("");
+  lines.push("## Language Summary");
+  for (const [key, count] of Object.entries(report.summary.byLanguage || {})) {
+    lines.push(`- ${key}: \`${count}\``);
+  }
   lines.push("");
   lines.push("## Category Summary");
   for (const [category, stats] of Object.entries(report.summary.byCategory)) {
@@ -593,6 +675,8 @@ function renderMarkdown(report) {
   lines.push("- Use `--raw-search-cli` only when you explicitly want to probe that unstable transport and accept fallback noise.");
   lines.push("- Legacy comparison is only enabled for benchmark-critical attribution cases, not the full matrix.");
   lines.push("- The current fixture mirror lives under `evals/openclaw-cli-memory-fixture/`.");
+  lines.push(`- Agent cases ${report.agentToolHint === false ? "do not use" : "use"} an explicit memory_search tool hint before answering.`);
+  lines.push(`- Agent cases ${report.agentLocal === true ? "run via `openclaw agent --local` to avoid gateway/session-lock noise" : "run via the default gateway path"}.`);
   lines.push("");
   return `${lines.join("\n")}\n`;
 }
@@ -633,6 +717,8 @@ async function main() {
   const report = {
     generatedAt: new Date().toISOString(),
     agentId: args.agentId,
+    agentToolHint: args.agentToolHint,
+    agentLocal: args.agentLocal,
     casesPath: args.casesPath,
     summary: summarizeResults(results),
     results

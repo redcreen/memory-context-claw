@@ -82,7 +82,7 @@ flowchart TB
 | 核心 capture / fact-card / assembly | `completed` | maintain + tune |
 | Memory Search | `phase-complete` | governance + benchmark expansion + policy tuning |
 | Self-Learning / Reflection | `stage-complete` | governed lifecycle、policy adaptation、exports、CLI、governance surfaces 已可用 |
-| Unified Memory Core | `stage5-complete / post-closeout` | `187` case benchmark + `200+` case 执行队列 + answer-level red-path / transport gate / perf baseline |
+| Unified Memory Core | `stage5-complete / post-closeout` | `368` case runnable matrix + `50.82%` 中文覆盖 + isolated local answer-level formal gate `6/6` + transport watchlist / perf baseline |
 
 ## 进展图
 
@@ -91,7 +91,7 @@ flowchart TB
     A["Unified Memory Core 项目总览\n当前状态：Stage 5 完成后进入评测驱动优化"] --> B["基础能力层\n已完成"]
     A --> C["Unified Memory Core 产品主线\nStage 1-5 已完成"]
     A --> D["Memory Search Workstream\nphase-complete / 治理中"]
-    A --> E["Stage 5 之后的主线\n100+ 案例评测 + operator baseline"]
+    A --> E["Stage 5 之后的主线\nformal benchmark gates + operator baseline"]
 
     B --> B1["Capture Foundation\n已完成"]
     B --> B2["Fact / Card Foundation\n已完成"]
@@ -115,12 +115,12 @@ flowchart TB
     C4 --> C43["Independent execution + root policy\n已完成"]
 
     D --> D1["Memory Search Governance\n持续进行"]
-    D --> D2["100+ Benchmark Expansion / Policy Tuning\n当前主线"]
+    D --> D2["Formal Benchmark Gates / Policy Tuning\n当前主线"]
 
-    E --> E1["扩充 OpenClaw CLI 评测案例到 100+"]
-    E --> E2["做 legacy / unified / bootstrap / retrieval 归因对照"]
-    E --> E3["把失败案例转成算法修复与回归保护"]
-    E --> E4["保持 Stage 5 evidence 与 canonical-root policy 继续为绿"]
+    E --> E1["维持 368-case runnable matrix + 50%+ 中文覆盖"]
+    E --> E2["扩大 isolated local answer-level formal gate"]
+    E --> E3["把 gateway/raw transport 噪声独立成 watchlist"]
+    E --> E4["按主链路 perf baseline 优化最慢层并保持 Stage 5 evidence 继续为绿"]
 
     classDef done fill:#e8f7e8,stroke:#2f855a,color:#1c4532,stroke-width:1.5px;
     classDef active fill:#eef6ff,stroke:#2563eb,color:#123a73,stroke-width:1.5px;
@@ -215,24 +215,24 @@ flowchart TB
 
 ### 下一条主要工程主线
 
-**评测驱动优化：从 `187` case baseline 进入 `200+` case 执行与主链路优化**
+**评测驱动优化：从 `200+` 扩面执行进入正式门禁维护与 answer-level 扩容**
 
 为什么先做这个：
 
-- 基础能力和 Stage 5 收口已经完成，下一步最缺的不是“再加一个功能”，而是更大规模、更可归因的真实评测面
-- 目前的 `20` 案例和最小 A/B 已经够证明“能力存在”，但还不够支撑持续算法优化
-- 当前 benchmark 已扩到 `187` case，coverage review 和主链路 perf baseline 也已落地，下一轮不再是“继续规划”，而是开始执行 `200+` case 扩面
-- retrieval-heavy host index 现在是绿的：`125 / 125`
-- raw `openclaw memory search` transport 已独立成 watchlist，这轮主链路基线样本进一步显示 `8 / 8 invalid_json`
-- live `openclaw agent` answer-level 子矩阵仍是红的；首轮性能基线样本显示 answer-level 平均约 `32s`，而且会直接 abstain 或超时
+- 基础能力和 Stage 5 收口已经完成，下一步最缺的不是“再加一个功能”，而是把正式门禁和下一轮优化顺序稳定下来
+- runnable matrix 现在已扩到 `368`，其中 zh-bearing case = `187 / 368 = 50.82%`
+- retrieval-heavy 正式 gate 现在是绿的：`250 / 250`
+- isolated local answer-level formal gate 已经不是红线，而是 `6 / 6` 通过；正式路径是 `openclaw agent --local` + isolated eval agent `umceval65`
+- raw `openclaw memory search` transport 已独立成 host watchlist；当前 formal watch 样本是 `0 / 8 raw ok`，全部 `invalid_json`
+- 当前主链路 perf baseline 已把问题边界拆清楚：retrieval / assembly 平均 `85ms`，raw transport 平均 `15127ms`，isolated local answer-level 平均 `39281ms`
 - release-preflight、deployment verification、host-neutral root policy 仍要保持为绿，但它们从主线目标变成并行守护线
 
 这一条主线具体包含：
 
-- 把 benchmark 从 `187` 扩到 coverage-first 的 `200+`
-- 把中文案例真正做到不少于 `50%`
-- 把 answer-level host path 与 raw transport watchlist 纳入正式门禁
-- 优先修复 answer-level red path，并按 perf baseline 解释最慢层
+- 保持 `368` case runnable matrix 与 `50%+` 中文覆盖持续稳定
+- 把 answer-level formal gate 从 `6` 条代表性样本扩成更大的稳定矩阵
+- 把 gateway/session-lock 与 raw transport 保持在独立 watchlist，不让宿主噪声污染算法判断
+- 按 perf baseline 优先优化最慢的 answer-level 层
 
 关键文档：
 
@@ -266,7 +266,7 @@ flowchart TB
 
 当前新增要求：
 
-- memory-search workstream 不再只做“按需 case 扩充”，而是要服务整个 `100+` 案例 benchmark
+- memory-search workstream 不再只做“按需 case 扩充”，而是要服务整个 `368` case formal benchmark matrix
 - 新增案例必须优先覆盖容易暴露算法短板的场景，而不是只补静态事实题
 
 关键文档：

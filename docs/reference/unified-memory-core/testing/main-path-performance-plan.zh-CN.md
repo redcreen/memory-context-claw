@@ -127,7 +127,7 @@ npm run eval:main-path:perf
 
 ## 下一轮优化顺序
 
-1. 先解释清楚 answer-level host path 为什么当前 `0/36`
-2. 再决定是宿主接入、prompt/context 组装，还是调用边界的问题
-3. 在 answer-level 红线明确前，不让 raw transport watchlist 干扰算法结论
+1. 保持 isolated local answer-level formal gate 继续为绿，并把样本面从当前 `6` 条代表性 case 扩大
+2. 把 gateway/session-lock 噪声与 raw transport failure 继续隔离，避免重新污染 answer-level 结论
+3. 在正式门禁稳定的前提下，再决定最慢层是宿主接入、prompt/context 组装，还是调用边界的问题
 4. 每轮性能优化后都要重跑 baseline，并写回报告

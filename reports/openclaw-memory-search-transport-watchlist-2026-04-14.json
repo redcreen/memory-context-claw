@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-14T06:26:00.011Z",
+  "generatedAt": "2026-04-14T16:00:49.581Z",
   "agentId": "umceval",
   "summary": {
     "total": 8,
@@ -9,8 +9,8 @@
     "invalidJson": 8,
     "commandFailed": 0,
     "otherFailure": 0,
-    "averageDurationMs": 9863,
-    "maxDurationMs": 15140,
+    "averageDurationMs": 15127,
+    "maxDurationMs": 22497,
     "watchlist": [
       {
         "id": "profile-name-1",
@@ -66,57 +66,57 @@
         "total": 1,
         "ok": 0,
         "failures": 1,
-        "averageDurationMs": 12153,
-        "maxDurationMs": 12153
+        "averageDurationMs": 22497,
+        "maxDurationMs": 22497
       },
       "preference": {
         "total": 1,
         "ok": 0,
         "failures": 1,
-        "averageDurationMs": 8636,
-        "maxDurationMs": 8636
+        "averageDurationMs": 15214,
+        "maxDurationMs": 15214
       },
       "rule": {
         "total": 1,
         "ok": 0,
         "failures": 1,
-        "averageDurationMs": 9004,
-        "maxDurationMs": 9004
+        "averageDurationMs": 11101,
+        "maxDurationMs": 11101
       },
       "project": {
         "total": 1,
         "ok": 0,
         "failures": 1,
-        "averageDurationMs": 9288,
-        "maxDurationMs": 9288
+        "averageDurationMs": 11198,
+        "maxDurationMs": 11198
       },
       "cross-source": {
         "total": 1,
         "ok": 0,
         "failures": 1,
-        "averageDurationMs": 8406,
-        "maxDurationMs": 8406
+        "averageDurationMs": 10489,
+        "maxDurationMs": 10489
       },
       "supersede": {
         "total": 1,
         "ok": 0,
         "failures": 1,
-        "averageDurationMs": 8191,
-        "maxDurationMs": 8191
+        "averageDurationMs": 16397,
+        "maxDurationMs": 16397
       },
       "temporal-current": {
         "total": 1,
         "ok": 0,
         "failures": 1,
-        "averageDurationMs": 8082,
-        "maxDurationMs": 8082
+        "averageDurationMs": 17464,
+        "maxDurationMs": 17464
       },
       "temporal-history": {
         "total": 1,
         "ok": 0,
         "failures": 1,
-        "averageDurationMs": 15140,
-        "maxDurationMs": 15140
+        "averageDurationMs": 16656,
+        "maxDurationMs": 16656
       }
     }
   },
@@ -126,7 +126,7 @@
       "category": "profile",
       "query": "preferred name",
       "status": "invalid_json",
-      "durationMs": 12153,
+      "durationMs": 22497,
       "error": "Command failed: openclaw memory search --agent umceval --query preferred name --max-results 5 --json\n"
     },
     {
@@ -134,7 +134,7 @@
       "category": "preference",
       "query": "preferred reply style",
       "status": "invalid_json",
-      "durationMs": 8636,
+      "durationMs": 15214,
       "error": "Command failed: openclaw memory search --agent umceval --query preferred reply style --max-results 5 --json\n"
     },
     {
@@ -142,7 +142,7 @@
       "category": "rule",
       "query": "debugging rule",
       "status": "invalid_json",
-      "durationMs": 9004,
+      "durationMs": 11101,
       "error": "Command failed: openclaw memory search --agent umceval --query debugging rule --max-results 5 --json\n"
     },
     {
@@ -150,7 +150,7 @@
       "category": "project",
       "query": "Project Lantern",
       "status": "invalid_json",
-      "durationMs": 9288,
+      "durationMs": 11198,
       "error": "Command failed: openclaw memory search --agent umceval --query Project Lantern --max-results 5 --json\n"
     },
     {
@@ -158,7 +158,7 @@
       "category": "cross-source",
       "query": "Maya carry-on aisle seat",
       "status": "invalid_json",
-      "durationMs": 8406,
+      "durationMs": 10489,
       "error": "Command failed: openclaw memory search --agent umceval --query Maya carry-on aisle seat --max-results 5 --json\n"
     },
     {
@@ -166,7 +166,7 @@
       "category": "supersede",
       "query": "current editor and previous editor",
       "status": "invalid_json",
-      "durationMs": 8191,
+      "durationMs": 16397,
       "error": "Command failed: openclaw memory search --agent umceval --query current editor and previous editor --max-results 5 --json\n"
     },
     {
@@ -174,16 +174,16 @@
       "category": "temporal-current",
       "query": "current main editor",
       "status": "invalid_json",
-      "durationMs": 8082,
-      "error": "Command failed: openclaw memory search --agent umceval --query current main editor --max-results 5 --json\n(node:54291) [OPENCLAW_PLUGIN_SDK_COMPAT_DEPRECATED] Warning: openclaw/plugin-sdk/compat is deprecated for new plugins. Migrate to focused openclaw/plugin-sdk/<subpath> imports. See https://docs.openclaw.ai/plugins/sdk-migration\nBundled plugins must use scoped plugin-sdk subpaths. External plugins may keep compat temporarily while migrating. Migration guide: https://docs.openclaw.ai/plugins/sdk-migration\n(Use `node --trace-warnings ...` to show where the warning was created)\n"
+      "durationMs": 17464,
+      "error": "Command failed: openclaw memory search --agent umceval --query current main editor --max-results 5 --json\n"
     },
     {
       "id": "history-editor-search-1",
       "category": "temporal-history",
       "query": "previous editor before Zed",
       "status": "invalid_json",
-      "durationMs": 15140,
-      "error": "Command failed: openclaw memory search --agent umceval --query previous editor before Zed --max-results 5 --json\n(node:54494) [OPENCLAW_PLUGIN_SDK_COMPAT_DEPRECATED] Warning: openclaw/plugin-sdk/compat is deprecated for new plugins. Migrate to focused openclaw/plugin-sdk/<subpath> imports. See https://docs.openclaw.ai/plugins/sdk-migration\nBundled plugins must use scoped plugin-sdk subpaths. External plugins may keep compat temporarily while migrating. Migration guide: https://docs.openclaw.ai/plugins/sdk-migration\n(Use `node --trace-warnings ...` to show where the warning was created)\n"
+      "durationMs": 16656,
+      "error": "Command failed: openclaw memory search --agent umceval --query previous editor before Zed --max-results 5 --json\n"
     }
   ]
 }

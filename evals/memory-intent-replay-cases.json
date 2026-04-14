@@ -1,0 +1,228 @@
+[
+  {
+    "id": "telegram-xiaohongshu-tool-routing",
+    "channel": "telegram",
+    "sessionKey": "agent:main:telegram:direct:8705812936",
+    "model": "gpt-5.4",
+    "promptVersion": "v1",
+    "description": "A user turns an explicit one-off tool instruction into a future behavior rule for Xiaohongshu links.",
+    "expected": {
+      "should_write_memory": true,
+      "category": "tool_routing_preference",
+      "durability": "durable",
+      "min_confidence": 0.9,
+      "tool": "capture_xiaohongshu_note",
+      "domains": [
+        "xhslink.com",
+        "xiaohongshu.com"
+      ]
+    },
+    "transcript": [
+      {
+        "role": "assistant",
+        "content": "✅ New session started · model: openai-codex/gpt-5.4"
+      },
+      {
+        "role": "assistant",
+        "content": "Hey, 超哥。刚上线，模型是 openai-codex/gpt-5.4。今天想做什么？"
+      },
+      {
+        "role": "user",
+        "content": "敦煌花卉纹，把盛唐繁花绣在纸上✨ 纹样控和国风党直... http://xhslink.com/o/60a6dv9SePa 复制后打开【小红书】查看笔记！"
+      },
+      {
+        "role": "assistant",
+        "content": "已收到小红书笔记链接。需要我帮你提取这篇关于敦煌花卉纹的内容吗？"
+      },
+      {
+        "role": "user",
+        "content": "你使用 capture_xiaohongshu_note 这个工具来处理 小红书的链接；"
+      },
+      {
+        "role": "assistant",
+        "content": "<tool call> functions.capture_xiaohongshu_note({\"url\":\"http://xhslink.com/o/60a6dv9SePa\"})"
+      },
+      {
+        "role": "user",
+        "content": "以后你收到小红书的链接，就使用 capture_xiaohongshu_note 工具来处理；记住了！"
+      }
+    ]
+  },
+  {
+    "id": "telegram-oneoff-tool-instruction",
+    "channel": "telegram",
+    "sessionKey": "agent:main:telegram:direct:oneoff-tool",
+    "model": "gpt-5.4",
+    "promptVersion": "v1",
+    "description": "A one-off tool instruction should stay task-local and should not become durable memory.",
+    "expected": {
+      "should_write_memory": false,
+      "category": "task_instruction",
+      "durability": "none",
+      "min_confidence": 0.8
+    },
+    "transcript": [
+      {
+        "role": "assistant",
+        "content": "✅ New session started · model: openai-codex/gpt-5.4"
+      },
+      {
+        "role": "user",
+        "content": "这次帮我看一下这个小红书链接。"
+      },
+      {
+        "role": "assistant",
+        "content": "可以，我来处理。"
+      },
+      {
+        "role": "user",
+        "content": "只处理这一次就行，这条链接用 capture_xiaohongshu_note；不用记住，也别默认以后都这么做。"
+      }
+    ]
+  },
+  {
+    "id": "telegram-session-reply-style",
+    "channel": "telegram",
+    "sessionKey": "agent:main:telegram:direct:session-style",
+    "model": "gpt-5.4",
+    "promptVersion": "v1",
+    "description": "A reply-style constraint for the rest of the current chat should be session memory, not durable.",
+    "expected": {
+      "should_write_memory": true,
+      "category": "session_constraint",
+      "durability": "session",
+      "min_confidence": 0.8
+    },
+    "transcript": [
+      {
+        "role": "assistant",
+        "content": "✅ New session started · model: openai-codex/gpt-5.4"
+      },
+      {
+        "role": "assistant",
+        "content": "今天想继续哪条线？"
+      },
+      {
+        "role": "user",
+        "content": "接下来这个会话里你都用中文，而且回复尽量短。"
+      }
+    ]
+  },
+  {
+    "id": "telegram-small-talk-no-memory",
+    "channel": "telegram",
+    "sessionKey": "agent:main:telegram:direct:small-talk",
+    "model": "gpt-5.4",
+    "promptVersion": "v1",
+    "description": "Small talk should not be written into durable or session memory.",
+    "expected": {
+      "should_write_memory": false,
+      "category": "none",
+      "durability": "none",
+      "min_confidence": 0.8
+    },
+    "transcript": [
+      {
+        "role": "assistant",
+        "content": "✅ New session started · model: openai-codex/gpt-5.4"
+      },
+      {
+        "role": "assistant",
+        "content": "早。"
+      },
+      {
+        "role": "user",
+        "content": "哈哈，今天先随便聊聊，刚刚路上有点堵。"
+      }
+    ]
+  },
+  {
+    "id": "telegram-user-profile-language-preference",
+    "channel": "telegram",
+    "sessionKey": "agent:main:telegram:direct:language-pref",
+    "model": "gpt-5.4",
+    "promptVersion": "v1",
+    "description": "A stable language preference should be captured as durable user profile memory.",
+    "expected": {
+      "should_write_memory": true,
+      "category": "user_profile_fact",
+      "durability": "durable",
+      "min_confidence": 0.85
+    },
+    "transcript": [
+      {
+        "role": "assistant",
+        "content": "✅ New session started · model: openai-codex/gpt-5.4"
+      },
+      {
+        "role": "assistant",
+        "content": "你更想看中文资料还是英文资料？"
+      },
+      {
+        "role": "user",
+        "content": "我平时主要看中文资料；英文能看，但默认优先给我中文。"
+      }
+    ]
+  },
+  {
+    "id": "telegram-durable-reusable-workflow-rule",
+    "channel": "telegram",
+    "sessionKey": "agent:main:telegram:direct:workflow-rule",
+    "model": "gpt-5.4",
+    "promptVersion": "v1",
+    "description": "A reusable future workflow rule should be durable memory even when it is not tied to a specific tool schema.",
+    "expected": {
+      "should_write_memory": true,
+      "category": "durable_rule",
+      "durability": "durable",
+      "min_confidence": 0.85
+    },
+    "transcript": [
+      {
+        "role": "assistant",
+        "content": "✅ New session started · model: openai-codex/gpt-5.4"
+      },
+      {
+        "role": "assistant",
+        "content": "收到 GitHub 仓库链接后，你希望我怎么处理？"
+      },
+      {
+        "role": "user",
+        "content": "以后只要我发 GitHub 仓库链接，你都先看 README，再给结论。"
+      }
+    ]
+  },
+  {
+    "id": "telegram-session-tool-routing-project-local",
+    "channel": "telegram",
+    "sessionKey": "agent:main:telegram:direct:session-tool-rule",
+    "model": "gpt-5.4",
+    "promptVersion": "v1",
+    "description": "A tool-routing preference scoped to this project should be kept for the session, not promoted as a global durable rule.",
+    "expected": {
+      "should_write_memory": true,
+      "category": "session_constraint",
+      "durability": "session",
+      "min_confidence": 0.8,
+      "tool": "capture_xiaohongshu_note",
+      "domains": [
+        "xhslink.com",
+        "xiaohongshu.com"
+      ]
+    },
+    "transcript": [
+      {
+        "role": "assistant",
+        "content": "✅ New session started · model: openai-codex/gpt-5.4"
+      },
+      {
+        "role": "assistant",
+        "content": "这轮想继续哪个项目？"
+      },
+      {
+        "role": "user",
+        "content": "就在这个项目里，如果我后面再发小红书链接，都用 capture_xiaohongshu_note 处理；离开这个项目就不用保留。"
+      }
+    ]
+  }
+]

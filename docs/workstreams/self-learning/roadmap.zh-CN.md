@@ -113,6 +113,32 @@ TODO backlog：
 - 当前 release-preflight 证据持续为绿
 - 仓库明确开启新的 enhancement phase，而不是继续往 closeout baseline 上叠加工作
 
+## 新开启的 memory-intent enhancement slice
+
+accepted-action 之后，下一条更合理的增强主线不是继续补 nightly 硬编码规则，而是：
+
+`把主回复里的结构化 memory_extraction 接成实时 governed ingest`
+
+这条 slice 解决的问题是：
+
+- 普通 conversation rule 没有实时入口
+- nightly self-learning 即使补捞，也可能在硬编码压缩层丢掉明显规则
+- session constraint、task instruction、durable rule 目前没有统一结构化判定面
+
+建议顺序：
+
+1. 先建立 replay cases，固定 durable / session / task / none 的分类边界
+2. 再让 runtime 能消费 `memory_extraction`
+3. 再决定 session-scoped signal 的 admission route
+4. 最后再补 richer reflection、dedupe、negative-path 与 supersede policy
+
+当前状态：
+
+- 这条 slice 已完成
+- `memory_extraction` 已正式收口成共享 `memory_intent` contract / source type
+- admission routing 已显式化
+- `npm run verify:memory-intent` 已成为正式 gate
+
 ## 阶段图
 
 ```mermaid
