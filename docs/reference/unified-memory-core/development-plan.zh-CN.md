@@ -230,8 +230,8 @@
 - 自然中文代表性 retrieval slice：`5 / 5`
 - 自然中文代表性 answer-level slice：`6 / 6`
 - raw transport watchlist：`0 / 8 raw ok`，全部归类为 host `missing_json_payload`
-- 最新 perf baseline：retrieval / assembly `43ms`；raw transport `15570ms`；isolated local answer-level `36155ms`
-- 当前解释：`200+` case 扩面、自然中文补强、watchlist failure-class 化、perf baseline 刷新，以及 answer-level formal gate 从 `6/6` 扩到 `12/12` 都已收口；后续主线是继续把这个更大的 gate 做深
+- 最新 perf baseline：retrieval / assembly `8ms`；raw transport `8335ms`；isolated local answer-level `24553ms`
+- 当前解释：`200+` case 扩面、自然中文补强、watchlist failure-class 化、perf baseline 刷新，以及 answer-level formal gate 从 `6/6` 扩到 `12/12` 都已收口；更深的 watch 也已从 `7/18` 提升到 `12/18`，但后续主线仍是继续把这个更大的 gate 做深
 
 ## 下一阶段规划队列
 
@@ -255,13 +255,13 @@
    - 当前 zh-bearing runnable matrix = `211 / 392 = 53.83%`。
 67. `completed` 把 answer-level host path 与 raw transport watchlist 纳入正式 benchmark gate，持续报告通过率、abstention rate、watchlist 分布。
    - retrieval-heavy gate：`250/250`
-   - answer-level formal gate：`6/6`（`openclaw agent --local` + isolated eval agent `umceval65`）
+   - answer-level formal gate：`12/12`（`openclaw agent --local` + isolated eval agent `umceval65`）
    - transport watchlist：`0/8 raw ok`，全部归类为 host transport invalid-json
 68. `completed` 单独 triage 并修复 live `openclaw agent` answer-level red path，直到它不再系统性地 `I don't know` 或超时。
    - 根因已拆开：gateway/session-lock 噪声、agent main-session 复用污染、CLI `--local` JSON 输出写在 stderr。
    - 当前正式 gate 改走 isolated local answer path；gateway 路径继续保留在 watchlist，不再污染算法判断。
 69. `completed` 按主链路性能基线优化最慢层，优先解释 host answer-level，再处理 raw transport，再决定 retrieval / assembly 是否需要继续微调。
-   - 最新 main-path baseline：retrieval / assembly `43ms` 平均；raw transport `15570ms` 平均；isolated local answer-level `36155ms` 平均，`3/3` 通过。
+   - 最新 main-path baseline：retrieval / assembly `8ms` 平均；raw transport `8335ms` 平均；isolated local answer-level `24553ms` 平均，`3/3` 通过。
 70. `completed` 重跑 `200+` case benchmark、answer-level gate、transport watchlist 和 main-path perf baseline，并以新证据决定是否打开后续 enhancement planning。
    - 结论：继续推进 benchmark / perf / transport work，但不把 raw transport 或 gateway 噪声误报成 retrieval / answer-level 算法退化。
 71. `done` 为 memory-intent replay 建立正式回归面，覆盖 durable rule、tool routing preference、session constraint、task-only instruction、user profile fact 和 no-memory 噪音。
@@ -285,7 +285,7 @@
 79. `completed` 持续把 gateway/session-lock 与 raw `openclaw memory search` transport 保持在独立 watchlist。
    - 最新 raw transport watchlist = `0/8 raw ok`，全部 failure-class 为 `missing_json_payload`；这条 watchlist 只代表 host instability，不代表 retrieval / answer-level 算法退化。
 80. `completed` 按主链路性能基线继续优化最慢层，并在每轮优化后重跑正式门禁。
-   - 当前优先级仍是 isolated local answer-level 慢路径，其次是 raw transport；最新 perf baseline 已刷新到 retrieval / assembly `43ms`、raw transport `15570ms`、isolated local answer-level `36155ms`。
+   - 当前优先级仍是 isolated local answer-level 慢路径，其次是 raw transport；最新 perf baseline 已刷新到 retrieval / assembly `8ms`、raw transport `8335ms`、isolated local answer-level `24553ms`。
 81. `completed` 把更大的 isolated local answer-level formal gate 固化成 repo-default 入口，而不是继续依赖手工 `--only` 组合。
    - `scripts/eval-openclaw-cli-agent-answer-matrix.js` 现在默认使用 isolated eval agent `umceval65`、`--agent-local`、`--skip-legacy`，以及固定的 `12` 条 formal gate case ids。
 82. `completed` 重跑更大的 answer-level formal gate，并发布新的 `2026-04-15` 正式报告。
@@ -295,12 +295,12 @@
    - 主路线图、control surface 和 development plan 现在都不再把 answer-level formal gate 写成 `6/6`。
 84. `in_progress` 把当前 `12` 条稳定 answer-level formal gate 继续做深到 cross-source、conflict、multi-step history 和更深的自然中文覆盖。
    - 当前已建立 `18` case deeper watch matrix，并补上 cross-source、history、conflict 与更深自然中文 answer-level case。
-   - 当前 watch 结果：`7 / 18`；`11` 条失败都表现为 host JSON parse noise，所以这组 case 目前仍停留在 watch surface，而不是直接替换 repo-default formal gate。
+   - 当前 watch 结果：`12 / 18`；剩余 `6` 条失败已经不再只是单一 host JSON parse noise，而是 residual host output-shape 问题和真正的 expectation mismatch 混合，所以这组 case 目前仍停留在 watch surface，而不是直接替换 repo-default formal gate。
    - 参考报告：[reports/generated/openclaw-cli-agent-answer-watch-2026-04-15.md](../../../reports/generated/openclaw-cli-agent-answer-watch-2026-04-15.md)
 85. `in_progress` 提高自然中文在 answer-level formal gate 本身里的占比，而不只是全局 runnable matrix 过半。
-   - 当前 deeper watch 里 zh-bearing = `9 / 18`，自然中文 case = `6`；说明中文扩容方向成立，但还不能在 host 噪声未清理前直接替换 `12 / 12` 稳定 gate。
+   - 当前 deeper watch 里 zh-bearing = `9 / 18`，自然中文 case = `6`；说明中文扩容方向成立，但还不能在更深样本面仍有 residual host noise 和 harder expectation mismatch 时直接替换 `12 / 12` 稳定 gate。
 86. `in_progress` 在更深的 answer-level watch 建立后，重看 main-path perf baseline 和 A/B 归因，确认更大 gate 不会让宿主噪声重新污染结论。
-   - 当前结论是：会。下一轮 perf / A-B 重跑要建立在 host output-shape handling 更稳的前提上，否则更深矩阵会把宿主问题重新误报成 answer-level 退化。
+   - 当前结论是：stable gate 已经被新的 output-shape handling 保住，但更深矩阵还不够干净。下一轮 perf / A-B 重跑要建立在更深 watch 继续收敛的前提上，否则会把 harder answer-level failure 和宿主问题重新混在一起。
 
 ## 延后增强队列
 

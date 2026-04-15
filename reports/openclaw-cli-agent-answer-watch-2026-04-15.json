@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-04-15T11:52:20.205Z",
+  "generatedAt": "2026-04-15T12:51:05.271Z",
   "agentId": "umceval65",
   "agentToolHint": true,
   "agentLocal": true,
   "casesPath": "/Users/redcreen/Project/unified-memory-core/evals/openclaw-cli-memory-benchmark-cases.js",
   "summary": {
     "total": 18,
-    "passed": 7,
-    "failed": 11,
+    "passed": 12,
+    "failed": 6,
     "comparedLegacy": 14,
     "legacyPassed": 0,
     "abstained": 0,
@@ -27,7 +27,7 @@
       },
       "agent-temporal": {
         "total": 2,
-        "passed": 0
+        "passed": 1
       },
       "agent-cross-source": {
         "total": 1,
@@ -35,7 +35,7 @@
       },
       "agent-rule": {
         "total": 1,
-        "passed": 0
+        "passed": 1
       },
       "agent-history": {
         "total": 1,
@@ -43,11 +43,11 @@
       },
       "agent-zh": {
         "total": 2,
-        "passed": 0
+        "passed": 2
       },
       "agent-zh-natural": {
         "total": 6,
-        "passed": 3
+        "passed": 4
       },
       "negative": {
         "total": 2,
@@ -55,13 +55,13 @@
       }
     },
     "byAttribution": {
-      "unified-failed": 10,
-      "not-compared": 4,
-      "legacy-skipped": 4
+      "unified-failed": 6,
+      "legacy-skipped": 8,
+      "not-compared": 4
     },
     "byTransport": {
-      "agent": 11,
-      "agent_local": 7
+      "agent_local": 17,
+      "agent": 1
     },
     "byEntrypoint": {
       "agent": 18
@@ -78,15 +78,28 @@
       "attributionKind": "bootstrap",
       "attribution": "unified-failed",
       "current": {
-        "ok": false,
-        "error": "Unable to parse JSON payload from stdout",
-        "stdout": "",
+        "ok": true,
+        "transport": "agent_local",
+        "answer": "Project Lantern is a B2B analytics assistant for clinic managers.",
+        "injectedWorkspaceFiles": [
+          "AGENTS.md",
+          "SOUL.md",
+          "TOOLS.md",
+          "IDENTITY.md",
+          "USER.md",
+          "HEARTBEAT.md",
+          "BOOTSTRAP.md",
+          "MEMORY.md"
+        ],
+        "observedSessionKey": "agent:umceval65:main",
+        "observedSessionId": "umc-bench-agent-preference-async-1-469f47bd",
+        "warning": "",
         "passed": false,
         "expectedAnyOk": false,
-        "expectedAllOk": false,
-        "forbiddenOk": false,
-        "sourcesOk": false,
-        "reason": "Unable to parse JSON payload from stdout"
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "sourcesOk": true,
+        "reason": "expectation mismatch"
       },
       "legacy": null
     },
@@ -100,15 +113,28 @@
       "attributionKind": "retrieval",
       "attribution": "unified-failed",
       "current": {
-        "ok": false,
-        "error": "Unable to parse JSON payload from stdout",
-        "stdout": "",
+        "ok": true,
+        "transport": "agent_local",
+        "answer": "I don't know based on current memory.",
+        "injectedWorkspaceFiles": [
+          "AGENTS.md",
+          "SOUL.md",
+          "TOOLS.md",
+          "IDENTITY.md",
+          "USER.md",
+          "HEARTBEAT.md",
+          "BOOTSTRAP.md",
+          "MEMORY.md"
+        ],
+        "observedSessionKey": "agent:umceval65:main",
+        "observedSessionId": "umc-bench-agent-preference-async-1-469f47bd",
+        "warning": "",
         "passed": false,
         "expectedAnyOk": false,
-        "expectedAllOk": false,
-        "forbiddenOk": false,
-        "sourcesOk": false,
-        "reason": "Unable to parse JSON payload from stdout"
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "sourcesOk": true,
+        "reason": "expectation mismatch"
       },
       "legacy": null
     },
@@ -122,15 +148,28 @@
       "attributionKind": "temporal",
       "attribution": "unified-failed",
       "current": {
-        "ok": false,
-        "error": "Unable to parse JSON payload from stdout",
-        "stdout": "",
+        "ok": true,
+        "transport": "agent_local",
+        "answer": "I don't know based on current memory.",
+        "injectedWorkspaceFiles": [
+          "AGENTS.md",
+          "SOUL.md",
+          "TOOLS.md",
+          "IDENTITY.md",
+          "USER.md",
+          "HEARTBEAT.md",
+          "BOOTSTRAP.md",
+          "MEMORY.md"
+        ],
+        "observedSessionKey": "agent:umceval65:main",
+        "observedSessionId": "umc-bench-agent-preference-async-1-469f47bd",
+        "warning": "",
         "passed": false,
         "expectedAnyOk": false,
-        "expectedAllOk": false,
-        "forbiddenOk": false,
-        "sourcesOk": false,
-        "reason": "Unable to parse JSON payload from stdout"
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "sourcesOk": true,
+        "reason": "expectation mismatch"
       },
       "legacy": null
     },
@@ -142,17 +181,30 @@
       "message": "Based only on your memory for this agent, when is the clinic demo scheduled now? If memory is missing, reply exactly: I don't know based on current memory.",
       "compareLegacy": true,
       "attributionKind": "temporal",
-      "attribution": "unified-failed",
+      "attribution": "legacy-skipped",
       "current": {
-        "ok": false,
-        "error": "Unable to parse JSON payload from stdout",
-        "stdout": "",
-        "passed": false,
-        "expectedAnyOk": false,
-        "expectedAllOk": false,
-        "forbiddenOk": false,
-        "sourcesOk": false,
-        "reason": "Unable to parse JSON payload from stdout"
+        "ok": true,
+        "transport": "agent_local",
+        "answer": "The clinic demo is scheduled for next Tuesday at 15:00 Shanghai time.",
+        "injectedWorkspaceFiles": [
+          "AGENTS.md",
+          "SOUL.md",
+          "TOOLS.md",
+          "IDENTITY.md",
+          "USER.md",
+          "HEARTBEAT.md",
+          "BOOTSTRAP.md",
+          "MEMORY.md"
+        ],
+        "observedSessionKey": "agent:umceval65:main",
+        "observedSessionId": "umc-bench-agent-preference-async-1-469f47bd",
+        "warning": "",
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "sourcesOk": true,
+        "reason": "matched"
       },
       "legacy": null
     },
@@ -166,15 +218,28 @@
       "attributionKind": "retrieval",
       "attribution": "unified-failed",
       "current": {
-        "ok": false,
-        "error": "Unable to parse JSON payload from stdout",
-        "stdout": "",
+        "ok": true,
+        "transport": "agent_local",
+        "answer": "Yes.",
+        "injectedWorkspaceFiles": [
+          "AGENTS.md",
+          "SOUL.md",
+          "TOOLS.md",
+          "IDENTITY.md",
+          "USER.md",
+          "HEARTBEAT.md",
+          "BOOTSTRAP.md",
+          "MEMORY.md"
+        ],
+        "observedSessionKey": "agent:umceval65:main",
+        "observedSessionId": "umc-bench-agent-preference-async-1-469f47bd",
+        "warning": "",
         "passed": false,
         "expectedAnyOk": false,
-        "expectedAllOk": false,
-        "forbiddenOk": false,
-        "sourcesOk": false,
-        "reason": "Unable to parse JSON payload from stdout"
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "sourcesOk": true,
+        "reason": "expectation mismatch"
       },
       "legacy": null
     },
@@ -188,15 +253,28 @@
       "attributionKind": "bootstrap",
       "attribution": "not-compared",
       "current": {
-        "ok": false,
-        "error": "Unable to parse JSON payload from stdout",
-        "stdout": "",
-        "passed": false,
-        "expectedAnyOk": false,
-        "expectedAllOk": false,
-        "forbiddenOk": false,
-        "sourcesOk": false,
-        "reason": "Unable to parse JSON payload from stdout"
+        "ok": true,
+        "transport": "agent_local",
+        "answer": "I don't know based on current memory.",
+        "injectedWorkspaceFiles": [
+          "AGENTS.md",
+          "SOUL.md",
+          "TOOLS.md",
+          "IDENTITY.md",
+          "USER.md",
+          "HEARTBEAT.md",
+          "BOOTSTRAP.md",
+          "MEMORY.md"
+        ],
+        "observedSessionKey": "agent:umceval65:main",
+        "observedSessionId": "umc-bench-agent-preference-async-1-469f47bd",
+        "warning": "",
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "sourcesOk": true,
+        "reason": "matched"
       },
       "legacy": null
     },
@@ -224,8 +302,8 @@
           "MEMORY.md"
         ],
         "observedSessionKey": "agent:umceval65:main",
-        "observedSessionId": "umc-bench-agent-project-city-1-ce35d95f",
-        "warning": "Command failed: openclaw agent --local --agent umceval65 --session-id umc-bench-agent-project-city-1-ce35d95f --thinking off --timeout 35 --json --message Based only on your memory for this agent, what is the launch city for the pilot? If memory is missing, reply exactly: I don't know based on current memory.\n[plugins] [unified-memory-core] loaded (enabled=true, llmRerank=false, maxCandidates=18, governedExports=true, nightlySelfLearning=true@00:00, canaryTool=false)\n[plugins] style-engine: registered capture_xiaohongshu_note (root=/Users/redcreen/Project/style engine/workspace/sytle-images)\n[plugins] [task-system] plugin loaded (root=/Users/redcreen/.openclaw/extensions/openclaw-task-system)\n(node:78925) [OPENCLAW_PLUGIN_SDK_COMPAT_DEPRECATED] Warning: openclaw/plugin-sdk/compat is deprecated for new plugins. Migrate to focused openclaw/plugin-sdk/<subpath> imports. See https://docs.openclaw.ai/plugins/sdk-migration\nBundled plugins must use scoped plugin-sdk subpaths. External plugins may keep compat temporarily while migrating. Migration guide: https://docs.openclaw.ai/plugins/sdk-migration\n(Use `node --trace-warnings ...` to show where the warning was created)\n[plugins] [unified-memory-core] loaded (enabled=true, llmRerank=false, maxCandidates=18, governedExports=true, nightlySelfLearning=true@00:00, canaryTool=false)\n[plugins] style-engine: registered capture_xiaohongshu_note (root=/Users/redcreen/Project/style engine/workspace/sytle-images)\n[plugins] [task-system] plugin loaded (root=/Users/redcreen/.openclaw/extensions/openclaw-task-system)\n{\n  \"payloads\": [\n    {\n      \"text\": \"Singapore.\",\n      \"mediaUrl\": null\n    }\n  ],\n  \"meta\": {\n    \"durationMs\": 14995,\n    \"agentMeta\": {\n      \"sessionId\": \"umc-bench-agent-project-city-1-ce35d95f\",\n      \"provider\": \"openai-codex\",\n      \"model\": \"gpt-5.4\",\n      \"usage\": {\n        \"input\": 34522,\n        \"output\": 53,\n        \"cacheRead\": 33152,\n        \"total\": 34395\n      },\n      \"lastCallUsage\": {\n        \"input\": 1232,\n        \"output\": 11,\n        \"cacheRead\": 33152,\n        \"cacheWrite\": 0,\n        \"total\": 34395\n      },\n      \"promptTokens\": 34384\n    },\n    \"aborted\": false,\n    \"systemPromptReport\": {\n      \"source\": \"run\",\n      \"generatedAt\": 1776253299052,\n      \"sessionId\": \"umc-bench-agent-project-city-1-ce35d95f\",\n      \"sessionKey\": \"agent:umceval65:main\",\n      \"provider\": \"openai-codex\",\n      \"model\": \"gpt-5.4\",\n      \"workspaceDir\": \"/Users/redcreen/.openclaw/workspace-umc-eval-agent\",\n      \"bootstrapMaxChars\": 20000,\n      \"bootstrapTotalMaxChars\": 150000,\n      \"bootstrapTruncation\": {\n        \"warningMode\": \"once\",\n        \"warningShown\": false,\n        \"truncatedFiles\": 0,\n        \"nearLimitFiles\": 0,\n        \"totalNearLimit\": false\n      },\n      \"sandbox\": {\n        \"mode\": \"off\",\n        \"sandboxed\": false\n      },\n      \"systemPrompt\": {\n        \"chars\": 45127,\n        \"projectContextChars\": 14722,\n        \"nonProjectContextChars\": 30405\n      },\n      \"injectedWorkspaceFiles\": [\n        {\n          \"name\": \"AGENTS.md\",\n          \"path\": \"/Users/redcreen/.openclaw/workspace-umc-eval-agent/AGENTS.md\",\n          \"missing\": false,\n          \"rawChars\": 7809,\n          \"injectedChars\": 7809,\n          \"truncated\": false\n        },\n        {\n          \"name\": \"SOUL.md\",\n          \"path\": \"/Users/redcreen/.openclaw/workspace-umc-eval-agent/SOUL.md\",\n          \"missing\": false,\n          \"rawChars\": 1664,\n          \"injectedChars\": 1664,\n          \"truncated\": false\n        },\n        {\n          \"name\": \"TOOLS.md\",\n          \"path\": \"/Users/redcreen/.openclaw/workspace-umc-eval-agent/TOOLS.md\",\n          \"missing\": false,\n          \"rawChars\": 850,\n          \"injectedChars\": 850,\n          \"truncated\": false\n        },\n        {\n          \"name\": \"IDENTITY.md\",\n          \"path\": \"/Users/redcreen/.openclaw/workspace-umc-eval-agent/IDENTITY.md\",\n          \"missing\": false,\n          \"rawChars\": 633,\n          \"injectedChars\": 633,\n          \"truncated\": false\n        },\n        {\n          \"name\": \"USER.md\",\n          \"path\": \"/Users/redcreen/.openclaw/workspace-umc-eval-agent/USER.md\",\n          \"missing\": false,\n          \"rawChars\": 474,\n          \"injectedChars\": 474,\n          \"truncated\": false\n        },\n        {\n          \"name\": \"HEARTBEAT.md\",\n          \"path\": \"/Users/redcreen/.openclaw/workspace-umc-eval-agent/HEARTBEAT.md\",\n          \"missing\": false,\n          \"rawChars\": 192,\n          \"injectedChars\": 192,\n          \"truncated\": false\n        },\n        {\n          \"name\": \"BOOTSTRAP.md\",\n          \"path\": \"/Users/redcreen/.openclaw/workspace-umc-eval-agent/BOOTSTRAP.md\",\n          \"missing\": false,\n          \"rawChars\": 1450,\n          \"injectedChars\": 1450,\n          \"truncated\": false\n        },\n        {\n          \"name\": \"MEMORY.md\",\n          \"path\": \"/Users/redcreen/.openclaw/workspace-umc-eval-agent/MEMORY.md\",\n          \"missing\": false,\n          \"rawChars\": 904,\n          \"injectedChars\": 904,\n          \"truncated\": false\n        }\n      ],\n      \"skills\": {\n        \"promptChars\": 10271,\n        \"entries\": [\n          {\n            \"name\": \"acp-router\",\n            \"blockChars\": 583\n          },\n          {\n            \"name\": \"feishu-bitable\",\n            \"blockChars\": 443\n          },\n          {\n            \"name\": \"feishu-calendar\",\n            \"blockChars\": 213\n          },\n          {\n            \"name\": \"feishu-channel-rules\",\n            \"blockChars\": 257\n          },\n          {\n            \"name\": \"feishu-create-doc\",\n            \"blockChars\": 249\n          },\n          {\n            \"name\": \"feishu-fetch-doc\",\n            \"blockChars\": 249\n          },\n          {\n            \"name\": \"feishu-im-read\",\n            \"blockChars\": 498\n          },\n          {\n            \"name\": \"feishu-task\",\n            \"blockChars\": 380\n          },\n          {\n            \"name\": \"feishu-troubleshoot\",\n            \"blockChars\": 320\n          },\n          {\n            \"name\": \"feishu-update-doc\",\n            \"blockChars\": 225\n          },\n          {\n            \"name\": \"apple-reminders\",\n            \"blockChars\": 305\n          },\n          {\n            \"name\": \"clawflow\",\n            \"blockChars\": 479\n          },\n          {\n            \"name\": \"clawflow-inbox-triage\",\n            \"blockChars\": 413\n          },\n          {\n            \"name\": \"clawhub\",\n            \"blockChars\": 427\n          },\n          {\n            \"name\": \"coding-agent\",\n            \"blockChars\": 827\n          },\n          {\n            \"name\": \"gh-issues\",\n            \"blockChars\": 503\n          },\n          {\n            \"name\": \"github\",\n            \"blockChars\": 567\n          },\n          {\n            \"name\": \"healthcheck\",\n            \"blockChars\": 486\n          },\n          {\n            \"name\": \"imsg\",\n            \"blockChars\": 236\n          },\n          {\n            \"name\": \"node-connect\",\n            \"blockChars\": 536\n          },\n          {\n            \"name\": \"session-logs\",\n            \"blockChars\": 248\n          },\n          {\n            \"name\": \"skill-creator\",\n            \"blockChars\": 754\n          },\n          {\n            \"name\": \"video-frames\",\n            \"blockChars\": 224\n          },\n          {\n            \"name\": \"weather\",\n            \"blockChars\": 411\n          }\n        ]\n      },\n      \"tools\": {\n        \"listChars\": 11794,\n        \"schemaChars\": 60244,\n        \"entries\": [\n          {\n            \"name\": \"read\",\n            \"summaryChars\": 298,\n            \"schemaChars\": 574,\n            \"propertiesCount\": 6\n          },\n          {\n            \"name\": \"edit\",\n            \"summaryChars\": 326,\n            \"schemaChars\": 1103,\n            \"propertiesCount\": 5\n          },\n          {\n            \"name\": \"write\",\n            \"summaryChars\": 127,\n            \"schemaChars\": 497,\n            \"propertiesCount\": 5\n          },\n          {\n            \"name\": \"apply_patch\",\n            \"summaryChars\": 132,\n            \"schemaChars\": 153,\n            \"propertiesCount\": 1\n          },\n          {\n            \"name\": \"exec\",\n            \"summaryChars\": 181,\n            \"schemaChars\": 1098,\n            \"propertiesCount\": 12\n          },\n          {\n            \"name\": \"process\",\n            \"summaryChars\": 85,\n            \"schemaChars\": 961,\n            \"propertiesCount\": 12\n          },\n          {\n            \"name\": \"canvas\",\n            \"summaryChars\": 106,\n            \"schemaChars\": 661,\n            \"propertiesCount\": 18\n          },\n          {\n            \"name\": \"nodes\",\n            \"summaryChars\": 118,\n            \"schemaChars\": 1589,\n            \"propertiesCount\": 32\n          },\n          {\n            \"name\": \"cron\",\n            \"summaryChars\": 3570,\n            \"schemaChars\": 6761,\n            \"propertiesCount\": 13\n          },\n          {\n            \"name\": \"message\",\n            \"summaryChars\": 161,\n            \"schemaChars\": 6825,\n            \"propertiesCount\": 109\n          },\n          {\n            \"name\": \"tts\",\n            \"summaryChars\": 152,\n            \"schemaChars\": 223,\n            \"propertiesCount\": 2\n          },\n          {\n            \"name\": \"gateway\",\n            \"summaryChars\": 464,\n            \"schemaChars\": 497,\n            \"propertiesCount\": 12\n          },\n          {\n            \"name\": \"agents_list\",\n            \"summaryChars\": 118,\n            \"schemaChars\": 33,\n            \"propertiesCount\": 0\n          },\n          {\n            \"name\": \"sessions_list\",\n            \"summaryChars\": 54,\n            \"schemaChars\": 212,\n            \"propertiesCount\": 4\n          },\n          {\n            \"name\": \"sessions_history\",\n            \"summaryChars\": 36,\n            \"schemaChars\": 161,\n            \"propertiesCount\": 3\n          },\n          {\n            \"name\": \"sessions_send\",\n            \"summaryChars\": 84,\n            \"schemaChars\": 274,\n            \"propertiesCount\": 5\n          },\n          {\n            \"name\": \"sessions_yield\",\n            \"summaryChars\": 97,\n            \"schemaChars\": 60,\n            \"propertiesCount\": 1\n          },\n          {\n            \"name\": \"sessions_spawn\",\n            \"summaryChars\": 198,\n            \"schemaChars\": 1179,\n            \"propertiesCount\": 17\n          },\n          {\n            \"name\": \"subagents\",\n            \"summaryChars\": 105,\n            \"schemaChars\": 191,\n            \"propertiesCount\": 4\n          },\n          {\n            \"name\": \"session_status\",\n            \"summaryChars\": 262,\n            \"schemaChars\": 89,\n            \"propertiesCount\": 2\n          },\n          {\n            \"name\": \"web_search\",\n            \"summaryChars\": 93,\n            \"schemaChars\": 446,\n            \"propertiesCount\": 4\n          },\n          {\n            \"name\": \"web_fetch\",\n            \"summaryChars\": 129,\n            \"schemaChars\": 374,\n            \"propertiesCount\": 3\n          },\n          {\n            \"name\": \"image\",\n            \"summaryChars\": 260,\n            \"schemaChars\": 342,\n            \"propertiesCount\": 6\n          },\n          {\n            \"name\": \"pdf\",\n            \"summaryChars\": 275,\n            \"schemaChars\": 400,\n            \"propertiesCount\": 6\n          },\n          {\n            \"name\": \"capture_xiaohongshu_note\",\n            \"summaryChars\": 71,\n            \"schemaChars\": 409,\n            \"propertiesCount\": 4\n          },\n          {\n            \"name\": \"memory_search\",\n            \"summaryChars\": 334,\n            \"schemaChars\": 139,\n            \"propertiesCount\": 3\n          },\n          {\n            \"name\": \"memory_get\",\n            \"summaryChars\": 151,\n            \"schemaChars\": 128,\n            \"propertiesCount\": 3\n          },\n          {\n            \"name\": \"feishu_get_user\",\n            \"summaryChars\": 75,\n            \"schemaChars\": 185,\n            \"propertiesCount\": 2\n          },\n          {\n            \"name\": \"feishu_search_user\",\n            \"summaryChars\": 55,\n            \"schemaChars\": 311,\n            \"propertiesCount\": 3\n          },\n          {\n            \"name\": \"feishu_chat\",\n            \"summaryChars\": 92,\n            \"schemaChars\": 519,\n            \"propertiesCount\": 6\n          },\n          {\n            \"name\": \"feishu_chat_members\",\n            \"summaryChars\": 54,\n            \"schemaChars\": 353,\n            \"propertiesCount\": 4\n          },\n          {\n            \"name\": \"feishu_im_user_message\",\n            \"summaryChars\": 402,\n            \"schemaChars\": 1149,\n            \"propertiesCount\": 8\n          },\n          {\n            \"name\": \"feishu_im_user_fetch_resource\",\n            \"summaryChars\": 456,\n            \"schemaChars\": 371,\n            \"propertiesCount\": 3\n          },\n          {\n            \"name\": \"feishu_im_user_get_messages\",\n            \"summaryChars\": 386,\n            \"schemaChars\": 912,\n            \"propertiesCount\": 8\n          },\n          {\n            \"name\": \"feishu_im_user_get_thread_messages\",\n            \"summaryChars\": 166,\n            \"schemaChars\": 395,\n            \"propertiesCount\": 4\n          },\n          {\n            \"name\": \"feishu_im_user_search_messages\",\n            \"summaryChars\": 522,\n            \"schemaChars\": 1364,\n            \"propertiesCount\": 12\n          },\n          {\n            \"name\": \"feishu_calendar_calendar\",\n            \"summaryChars\": 93,\n            \"schemaChars\": 389,\n            \"propertiesCount\": 4\n          },\n          {\n            \"name\": \"feishu_calendar_event\",\n            \"summaryChars\": 455,\n            \"schemaChars\": 3200,\n            \"propertiesCount\": 21\n          },\n          {\n            \"name\": \"feishu_calendar_event_attendee\",\n            \"summaryChars\": 75,\n            \"schemaChars\": 981,\n            \"propertiesCount\": 9\n          },\n          {\n            \"name\": \"feishu_calendar_freebusy\",\n            \"summaryChars\": 80,\n            \"schemaChars\": 504,\n            \"propertiesCount\": 4\n          },\n          {\n            \"name\": \"feishu_task_task\",\n            \"summaryChars\": 167,\n            \"schemaChars\": 1868,\n            \"propertiesCount\": 15\n          },\n          {\n            \"name\": \"feishu_task_tasklist\",\n            \"summaryChars\": 163,\n            \"schemaChars\": 769,\n            \"propertiesCount\": 7\n          },\n          {\n            \"name\": \"feishu_task_comment\",\n            \"summaryChars\": 95,\n            \"schemaChars\": 671,\n            \"propertiesCount\": 9\n          },\n          {\n            \"name\": \"feishu_task_subtask\",\n            \"summaryChars\": 86,\n            \"schemaChars\": 1128,\n            \"propertiesCount\": 9\n          },\n          {\n            \"name\": \"feishu_bitable_app\",\n            \"summaryChars\": 139,\n            \"schemaChars\": 511,\n            \"propertiesCount\": 7\n          },\n          {\n            \"name\": \"feishu_bitable_app_table\",\n            \"summaryChars\": 285,\n            \"schemaChars\": 1152,\n            \"propertiesCount\": 8\n          },\n          {\n            \"name\": \"feishu_bitable_app_table_record\",\n            \"summaryChars\": 292,\n            \"schemaChars\": 2381,\n            \"propertiesCount\": 14\n          },\n          {\n            \"name\": \"feishu_bitable_app_table_field\",\n            \"summaryChars\": 134,\n            \"schemaChars\": 824,\n            \"propertiesCount\": 10\n          },\n          {\n            \"name\": \"feishu_bitable_app_table_view\",\n            \"summaryChars\": 108,\n            \"schemaChars\": 692,\n            \"propertiesCount\": 8\n          },\n          {\n            \"name\": \"feishu_search_doc_wiki\",\n            \"summaryChars\": 212,\n            \"schemaChars\": 1806,\n            \"propertiesCount\": 5\n          },\n          {\n            \"name\": \"feishu_drive_file\",\n            \"summaryChars\": 703,\n            \"schemaChars\": 2278,\n            \"propertiesCount\": 16\n          },\n          {\n            \"name\": \"feishu_doc_comments\",\n            \"summaryChars\": 114,\n            \"schemaChars\": 1305,\n            \"propertiesCount\": 11\n          },\n          {\n            \"name\": \"feishu_doc_media\",\n            \"summaryChars\": 200,\n            \"schemaChars\": 963,\n            \"propertiesCount\": 9\n          },\n          {\n            \"name\": \"feishu_wiki_space\",\n            \"summaryChars\": 179,\n            \"schemaChars\": 451,\n            \"propertiesCount\": 6\n          },\n          {\n            \"name\": \"feishu_wiki_space_node\",\n            \"summaryChars\": 205,\n            \"schemaChars\": 995,\n            \"propertiesCount\": 13\n          },\n          {\n            \"name\": \"feishu_sheet\",\n            \"summaryChars\": 474,\n            \"schemaChars\": 1905,\n            \"propertiesCount\": 18\n          },\n          {\n            \"name\": \"feishu_im_bot_image\",\n            \"summaryChars\": 241,\n            \"schemaChars\": 384,\n            \"propertiesCount\": 3\n          },\n          {\n            \"name\": \"feishu_fetch_doc\",\n            \"summaryChars\": 42,\n            \"schemaChars\": 281,\n            \"propertiesCount\": 3\n          },\n          {\n            \"name\": \"feishu_create_doc\",\n            \"summaryChars\": 33,\n            \"schemaChars\": 427,\n            \"propertiesCount\": 6\n          },\n          {\n            \"name\": \"feishu_update_doc\",\n            \"summaryChars\": 105,\n            \"schemaChars\": 811,\n            \"propertiesCount\": 7\n          },\n          {\n            \"name\": \"feishu_oauth\",\n            \"summaryChars\": 168,\n            \"schemaChars\": 290,\n            \"propertiesCount\": 1\n          },\n          {\n            \"name\": \"feishu_oauth_batch_auth\",\n            \"summaryChars\": 55,\n            \"schemaChars\": 162,\n            \"propertiesCount\": 0\n          },\n          {\n            \"name\": \"feishu_ask_user_question\",\n            \"summaryChars\": 355,\n            \"schemaChars\": 962,\n            \"propertiesCount\": 1\n          },\n          {\n            \"name\": \"ts_attach_promise_guard\",\n            \"summaryChars\": 85,\n            \"schemaChars\": 244,\n            \"propertiesCount\": 4\n          },\n          {\n            \"name\": \"ts_create_followup_plan\",\n            \"summaryChars\": 83,\n            \"schemaChars\": 552,\n            \"propertiesCount\": 10\n          },\n          {\n            \"name\": \"ts_schedule_followup_from_plan\",\n            \"summaryChars\": 92,\n            \"schemaChars\": 210,\n            \"propertiesCount\": 3\n          },\n          {\n            \"name\": \"ts_finalize_planned_followup\",\n            \"summaryChars\": 110,\n            \"schemaChars\": 210,\n            \"propertiesCount\": 3\n          }\n        ]\n      }\n    },\n    \"stopReason\": \"stop\"\n  }\n}",
+        "observedSessionId": "umc-bench-agent-preference-async-1-469f47bd",
+        "warning": "",
         "passed": true,
         "expectedAnyOk": true,
         "expectedAllOk": true,
@@ -259,7 +337,7 @@
           "MEMORY.md"
         ],
         "observedSessionKey": "agent:umceval65:main",
-        "observedSessionId": "umc-bench-agent-history-editor-1-49b946b5",
+        "observedSessionId": "umc-bench-agent-preference-async-1-469f47bd",
         "warning": "",
         "passed": true,
         "expectedAnyOk": true,
@@ -278,17 +356,30 @@
       "message": "仅根据你当前这个 agent 的记忆，Project Lantern 现在的里程碑是什么？如果记忆里没有，请直接回答：I don't know based on current memory.",
       "compareLegacy": true,
       "attributionKind": "retrieval",
-      "attribution": "unified-failed",
+      "attribution": "legacy-skipped",
       "current": {
-        "ok": false,
-        "error": "Unable to parse JSON payload from stdout",
-        "stdout": "",
-        "passed": false,
-        "expectedAnyOk": false,
-        "expectedAllOk": false,
-        "forbiddenOk": false,
-        "sourcesOk": false,
-        "reason": "Unable to parse JSON payload from stdout"
+        "ok": true,
+        "transport": "agent_local",
+        "answer": "Stage 2 pilot.",
+        "injectedWorkspaceFiles": [
+          "AGENTS.md",
+          "SOUL.md",
+          "TOOLS.md",
+          "IDENTITY.md",
+          "USER.md",
+          "HEARTBEAT.md",
+          "BOOTSTRAP.md",
+          "MEMORY.md"
+        ],
+        "observedSessionKey": "agent:umceval65:main",
+        "observedSessionId": "umc-bench-agent-preference-async-1-469f47bd",
+        "warning": "",
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "sourcesOk": true,
+        "reason": "matched"
       },
       "legacy": null
     },
@@ -300,17 +391,30 @@
       "message": "仅根据你当前这个 agent 的记忆，用户现在主要用什么编辑器？如果记忆里没有，请直接回答：I don't know based on current memory.",
       "compareLegacy": true,
       "attributionKind": "temporal",
-      "attribution": "unified-failed",
+      "attribution": "legacy-skipped",
       "current": {
-        "ok": false,
-        "error": "Unable to parse JSON payload from stdout",
-        "stdout": "",
-        "passed": false,
-        "expectedAnyOk": false,
-        "expectedAllOk": false,
-        "forbiddenOk": false,
-        "sourcesOk": false,
-        "reason": "Unable to parse JSON payload from stdout"
+        "ok": true,
+        "transport": "agent_local",
+        "answer": "Zed.",
+        "injectedWorkspaceFiles": [
+          "AGENTS.md",
+          "SOUL.md",
+          "TOOLS.md",
+          "IDENTITY.md",
+          "USER.md",
+          "HEARTBEAT.md",
+          "BOOTSTRAP.md",
+          "MEMORY.md"
+        ],
+        "observedSessionKey": "agent:umceval65:main",
+        "observedSessionId": "umc-bench-agent-preference-async-1-469f47bd",
+        "warning": "",
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "sourcesOk": true,
+        "reason": "matched"
       },
       "legacy": null
     },
@@ -322,17 +426,30 @@
       "message": "只根据当前记忆，平时我希望你怎么称呼我？如果没有这条记忆，就只回答：I don't know based on current memory.",
       "compareLegacy": true,
       "attributionKind": "bootstrap",
-      "attribution": "unified-failed",
+      "attribution": "legacy-skipped",
       "current": {
-        "ok": false,
-        "error": "Unable to parse JSON payload from stdout",
-        "stdout": "",
-        "passed": false,
-        "expectedAnyOk": false,
-        "expectedAllOk": false,
-        "forbiddenOk": false,
-        "sourcesOk": false,
-        "reason": "Unable to parse JSON payload from stdout"
+        "ok": true,
+        "transport": "agent_local",
+        "answer": "Maya Chen.",
+        "injectedWorkspaceFiles": [
+          "AGENTS.md",
+          "SOUL.md",
+          "TOOLS.md",
+          "IDENTITY.md",
+          "USER.md",
+          "HEARTBEAT.md",
+          "BOOTSTRAP.md",
+          "MEMORY.md"
+        ],
+        "observedSessionKey": "agent:umceval65:main",
+        "observedSessionId": "umc-bench-agent-preference-async-1-469f47bd",
+        "warning": "",
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "sourcesOk": true,
+        "reason": "matched"
       },
       "legacy": null
     },
@@ -344,17 +461,30 @@
       "message": "只根据当前记忆，Project Lantern 到底是在做什么？如果没有这条记忆，就只回答：I don't know based on current memory.",
       "compareLegacy": true,
       "attributionKind": "retrieval",
-      "attribution": "unified-failed",
+      "attribution": "legacy-skipped",
       "current": {
-        "ok": false,
-        "error": "Unable to parse JSON payload from stdout",
-        "stdout": "",
-        "passed": false,
-        "expectedAnyOk": false,
-        "expectedAllOk": false,
-        "forbiddenOk": false,
-        "sourcesOk": false,
-        "reason": "Unable to parse JSON payload from stdout"
+        "ok": true,
+        "transport": "agent_local",
+        "answer": "Project Lantern is a B2B analytics assistant for clinic managers.",
+        "injectedWorkspaceFiles": [
+          "AGENTS.md",
+          "SOUL.md",
+          "TOOLS.md",
+          "IDENTITY.md",
+          "USER.md",
+          "HEARTBEAT.md",
+          "BOOTSTRAP.md",
+          "MEMORY.md"
+        ],
+        "observedSessionKey": "agent:umceval65:main",
+        "observedSessionId": "umc-bench-agent-preference-async-1-469f47bd",
+        "warning": "",
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "sourcesOk": true,
+        "reason": "matched"
       },
       "legacy": null
     },
@@ -382,7 +512,7 @@
           "MEMORY.md"
         ],
         "observedSessionKey": "agent:umceval65:main",
-        "observedSessionId": "umc-bench-agent-zh-natural-editor-1-7a237790",
+        "observedSessionId": "umc-bench-agent-preference-async-1-469f47bd",
         "warning": "",
         "passed": true,
         "expectedAnyOk": true,
@@ -405,7 +535,7 @@
       "current": {
         "ok": true,
         "transport": "agent_local",
-        "answer": "Vim",
+        "answer": "Vim.",
         "injectedWorkspaceFiles": [
           "AGENTS.md",
           "SOUL.md",
@@ -417,7 +547,7 @@
           "MEMORY.md"
         ],
         "observedSessionKey": "agent:umceval65:main",
-        "observedSessionId": "umc-bench-agent-zh-natural-history-editor-1-fead36e0",
+        "observedSessionId": "umc-bench-agent-preference-async-1-469f47bd",
         "warning": "",
         "passed": true,
         "expectedAnyOk": true,
@@ -436,30 +566,18 @@
       "message": "只根据当前记忆，如果旧草稿里写过 us-east-1，但现在要按当前默认部署区域执行，应该用哪个 region？如果没有这条记忆，就只回答：I don't know based on current memory.",
       "compareLegacy": true,
       "attributionKind": "temporal",
-      "attribution": "legacy-skipped",
+      "attribution": "unified-failed",
       "current": {
-        "ok": true,
-        "transport": "agent_local",
-        "answer": "eu-west-1",
-        "injectedWorkspaceFiles": [
-          "AGENTS.md",
-          "SOUL.md",
-          "TOOLS.md",
-          "IDENTITY.md",
-          "USER.md",
-          "HEARTBEAT.md",
-          "BOOTSTRAP.md",
-          "MEMORY.md"
-        ],
-        "observedSessionKey": "agent:umceval65:main",
-        "observedSessionId": "umc-bench-agent-zh-natural-conflict-region-1-0ae1f03c",
-        "warning": "",
-        "passed": true,
-        "expectedAnyOk": true,
-        "expectedAllOk": true,
-        "forbiddenOk": true,
-        "sourcesOk": true,
-        "reason": "matched"
+        "ok": false,
+        "error": "Unable to parse JSON payload from stdout",
+        "stdout": "",
+        "stderr": "[plugins] [unified-memory-core] loaded (enabled=true, llmRerank=false, maxCandidates=18, governedExports=true, nightlySelfLearning=true@00:00, canaryTool=false)\n[plugins] style-engine: registered capture_xiaohongshu_note (root=/Users/redcreen/Project/style engine/workspace/sytle-images)\n[plugins] [task-system] plugin loaded (root=/Users/redcreen/.openclaw/extensions/openclaw-task-system)\n(node:98857) [OPENCLAW_PLUGIN_SDK_COMPAT_DEPRECATED] Warning: openclaw/plugin-sdk/compat is deprecated for new plugins. Migrate to focused openclaw/plugin-sdk/<subpath> imports. See https://docs.openclaw.ai/plugins/sdk-migration\nBundled plugins must use scoped plugin-sdk subpaths. External plugins may keep compat temporarily while migrating. Migration guide: https://docs.openclaw.ai/plugins/sdk-migration\n(Use `node --trace-warnings ...` to show where the warning was created)\n[plugins] [unified-memory-core] loaded (enabled=true, llmRerank=false, maxCandidates=18, governedExports=true, nightlySelfLearning=true@00:00, canaryTool=false)\n[plugins] style-engine: registered capture_xiaohongshu_note (root=/Users/redcreen/Project/style engine/workspace/sytle-images)\n[plugins] [task-system] plugin loaded (root=/Users/redcreen/.openclaw/extensions/openclaw-task-system)\n",
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "sourcesOk": false,
+        "reason": "Unable to parse JSON payload from stdout"
       },
       "legacy": null
     },
@@ -473,15 +591,28 @@
       "attributionKind": "retrieval",
       "attribution": "unified-failed",
       "current": {
-        "ok": false,
-        "error": "Unable to parse JSON payload from stdout",
-        "stdout": "",
+        "ok": true,
+        "transport": "agent_local",
+        "answer": "尽量避免语音。",
+        "injectedWorkspaceFiles": [
+          "AGENTS.md",
+          "SOUL.md",
+          "TOOLS.md",
+          "IDENTITY.md",
+          "USER.md",
+          "HEARTBEAT.md",
+          "BOOTSTRAP.md",
+          "MEMORY.md"
+        ],
+        "observedSessionKey": "agent:umceval65:main",
+        "observedSessionId": "umc-bench-agent-preference-async-1-469f47bd",
+        "warning": "",
         "passed": false,
         "expectedAnyOk": false,
-        "expectedAllOk": false,
-        "forbiddenOk": false,
-        "sourcesOk": false,
-        "reason": "Unable to parse JSON payload from stdout"
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "sourcesOk": true,
+        "reason": "expectation mismatch"
       },
       "legacy": null
     },
@@ -509,8 +640,8 @@
           "MEMORY.md"
         ],
         "observedSessionKey": "agent:umceval65:main",
-        "observedSessionId": "umc-bench-agent-zh-natural-negative-1-10e644a3",
-        "warning": "",
+        "observedSessionId": "umc-bench-agent-preference-async-1-469f47bd",
+        "warning": "Command failed: openclaw agent --local --agent umceval65 --session-id umc-bench-agent-zh-natural-negative-1-f888ce81 --thinking off --timeout 35 --json --message 只根据当前记忆，我最喜欢的编程语言是什么？如果没有这条记忆，就只回答：I don't know based on current memory.\n[plugins] [unified-memory-core] loaded (enabled=true, llmRerank=false, maxCandidates=18, governedExports=true, nightlySelfLearning=true@00:00, canaryTool=false)\n[plugins] style-engine: registered capture_xiaohongshu_note (root=/Users/redcreen/Project/style engine/workspace/sytle-images)\n[plugins] [task-system] plugin loaded (root=/Users/redcreen/.openclaw/extensions/openclaw-task-system)\n(node:99433) [OPENCLAW_PLUGIN_SDK_COMPAT_DEPRECATED] Warning: openclaw/plugin-sdk/compat is deprecated for new plugins. Migrate to focused openclaw/plugin-sdk/<subpath> imports. See https://docs.openclaw.ai/plugins/sdk-migration\nBundled plugins must use scoped plugin-sdk subpaths. External plugins may keep compat temporarily while migrating. Migration guide: https://docs.openclaw.ai/plugins/sdk-migration\n(Use `node --trace-warnings ...` to show where the warning was created)\n[plugins] [unified-memory-core] loaded (enabled=true, llmRerank=false, maxCandidates=18, governedExports=true, nightlySelfLearning=true@00:00, canaryTool=false)\n[plugins] style-engine: registered capture_xiaohongshu_note (root=/Users/redcreen/Project/style engine/workspace/sytle-images)\n[plugins] [task-system] plugin loaded (root=/Users/redcreen/.openclaw/extensions/openclaw-task-system)\n[agent/embedded] Removed orphaned user message to prevent consecutive user turns. runId=umc-bench-agent-zh-natural-negative-1-f888ce81 sessionId=umc-bench-agent-zh-natural-negative-1-f888ce81\n{\n  \"payloads\": [\n    {\n      \"text\": \"I don't know based on current memory.\",\n      \"mediaUrl\": null\n    }\n  ],\n  \"meta\": {\n    \"durationMs\": 18639,\n    \"agentMeta\": {\n      \"sessionId\": \"umc-bench-agent-preference-async-1-469f47bd\",\n      \"provider\": \"openai-codex\",\n      \"model\": \"gpt-5.4-mini\",\n      \"usage\": {\n        \"input\": 620,\n        \"output\": 12,\n        \"cacheRead\": 56832,\n        \"total\": 57464\n      },\n      \"lastCallUsage\": {\n        \"input\": 620,\n        \"output\": 12,\n        \"cacheRead\": 56832,\n        \"cacheWrite\": 0,\n        \"total\": 57464\n      },\n      \"promptTokens\": 57452\n    },\n    \"aborted\": false,\n    \"systemPromptReport\": {\n      \"source\": \"run\",\n      \"generatedAt\": 1776257414837,\n      \"sessionId\": \"umc-bench-agent-zh-natural-negative-1-f888ce81\",\n      \"sessionKey\": \"agent:umceval65:main\",\n      \"provider\": \"openai-codex\",\n      \"model\": \"gpt-5.4-mini\",\n      \"workspaceDir\": \"/Users/redcreen/.openclaw/workspace-umc-eval-agent\",\n      \"bootstrapMaxChars\": 20000,\n      \"bootstrapTotalMaxChars\": 150000,\n      \"bootstrapTruncation\": {\n        \"warningMode\": \"once\",\n        \"warningShown\": false,\n        \"truncatedFiles\": 0,\n        \"nearLimitFiles\": 0,\n        \"totalNearLimit\": false\n      },\n      \"sandbox\": {\n        \"mode\": \"off\",\n        \"sandboxed\": false\n      },\n      \"systemPrompt\": {\n        \"chars\": 45137,\n        \"projectContextChars\": 14722,\n        \"nonProjectContextChars\": 30415\n      },\n      \"injectedWorkspaceFiles\": [\n        {\n          \"name\": \"AGENTS.md\",\n          \"path\": \"/Users/redcreen/.openclaw/workspace-umc-eval-agent/AGENTS.md\",\n          \"missing\": false,\n          \"rawChars\": 7809,\n          \"injectedChars\": 7809,\n          \"truncated\": false\n        },\n        {\n          \"name\": \"SOUL.md\",\n          \"path\": \"/Users/redcreen/.openclaw/workspace-umc-eval-agent/SOUL.md\",\n          \"missing\": false,\n          \"rawChars\": 1664,\n          \"injectedChars\": 1664,\n          \"truncated\": false\n        },\n        {\n          \"name\": \"TOOLS.md\",\n          \"path\": \"/Users/redcreen/.openclaw/workspace-umc-eval-agent/TOOLS.md\",\n          \"missing\": false,\n          \"rawChars\": 850,\n          \"injectedChars\": 850,\n          \"truncated\": false\n        },\n        {\n          \"name\": \"IDENTITY.md\",\n          \"path\": \"/Users/redcreen/.openclaw/workspace-umc-eval-agent/IDENTITY.md\",\n          \"missing\": false,\n          \"rawChars\": 633,\n          \"injectedChars\": 633,\n          \"truncated\": false\n        },\n        {\n          \"name\": \"USER.md\",\n          \"path\": \"/Users/redcreen/.openclaw/workspace-umc-eval-agent/USER.md\",\n          \"missing\": false,\n          \"rawChars\": 474,\n          \"injectedChars\": 474,\n          \"truncated\": false\n        },\n        {\n          \"name\": \"HEARTBEAT.md\",\n          \"path\": \"/Users/redcreen/.openclaw/workspace-umc-eval-agent/HEARTBEAT.md\",\n          \"missing\": false,\n          \"rawChars\": 192,\n          \"injectedChars\": 192,\n          \"truncated\": false\n        },\n        {\n          \"name\": \"BOOTSTRAP.md\",\n          \"path\": \"/Users/redcreen/.openclaw/workspace-umc-eval-agent/BOOTSTRAP.md\",\n          \"missing\": false,\n          \"rawChars\": 1450,\n          \"injectedChars\": 1450,\n          \"truncated\": false\n        },\n        {\n          \"name\": \"MEMORY.md\",\n          \"path\": \"/Users/redcreen/.openclaw/workspace-umc-eval-agent/MEMORY.md\",\n          \"missing\": false,\n          \"rawChars\": 904,\n          \"injectedChars\": 904,\n          \"truncated\": false\n        }\n      ],\n      \"skills\": {\n        \"promptChars\": 10271,\n        \"entries\": [\n          {\n            \"name\": \"acp-router\",\n            \"blockChars\": 583\n          },\n          {\n            \"name\": \"feishu-bitable\",\n            \"blockChars\": 443\n          },\n          {\n            \"name\": \"feishu-calendar\",\n            \"blockChars\": 213\n          },\n          {\n            \"name\": \"feishu-channel-rules\",\n            \"blockChars\": 257\n          },\n          {\n            \"name\": \"feishu-create-doc\",\n            \"blockChars\": 249\n          },\n          {\n            \"name\": \"feishu-fetch-doc\",\n            \"blockChars\": 249\n          },\n          {\n            \"name\": \"feishu-im-read\",\n            \"blockChars\": 498\n          },\n          {\n            \"name\": \"feishu-task\",\n            \"blockChars\": 380\n          },\n          {\n            \"name\": \"feishu-troubleshoot\",\n            \"blockChars\": 320\n          },\n          {\n            \"name\": \"feishu-update-doc\",\n            \"blockChars\": 225\n          },\n          {\n            \"name\": \"apple-reminders\",\n            \"blockChars\": 305\n          },\n          {\n            \"name\": \"clawflow\",\n            \"blockChars\": 479\n          },\n          {\n            \"name\": \"clawflow-inbox-triage\",\n            \"blockChars\": 413\n          },\n          {\n            \"name\": \"clawhub\",\n            \"blockChars\": 427\n          },\n          {\n            \"name\": \"coding-agent\",\n            \"blockChars\": 827\n          },\n          {\n            \"name\": \"gh-issues\",\n            \"blockChars\": 503\n          },\n          {\n            \"name\": \"github\",\n            \"blockChars\": 567\n          },\n          {\n            \"name\": \"healthcheck\",\n            \"blockChars\": 486\n          },\n          {\n            \"name\": \"imsg\",\n            \"blockChars\": 236\n          },\n          {\n            \"name\": \"node-connect\",\n            \"blockChars\": 536\n          },\n          {\n            \"name\": \"session-logs\",\n            \"blockChars\": 248\n          },\n          {\n            \"name\": \"skill-creator\",\n            \"blockChars\": 754\n          },\n          {\n            \"name\": \"video-frames\",\n            \"blockChars\": 224\n          },\n          {\n            \"name\": \"weather\",\n            \"blockChars\": 411\n          }\n        ]\n      },\n      \"tools\": {\n        \"listChars\": 11794,\n        \"schemaChars\": 60244,\n        \"entries\": [\n          {\n            \"name\": \"read\",\n            \"summaryChars\": 298,\n            \"schemaChars\": 574,\n            \"propertiesCount\": 6\n          },\n          {\n            \"name\": \"edit\",\n            \"summaryChars\": 326,\n            \"schemaChars\": 1103,\n            \"propertiesCount\": 5\n          },\n          {\n            \"name\": \"write\",\n            \"summaryChars\": 127,\n            \"schemaChars\": 497,\n            \"propertiesCount\": 5\n          },\n          {\n            \"name\": \"apply_patch\",\n            \"summaryChars\": 132,\n            \"schemaChars\": 153,\n            \"propertiesCount\": 1\n          },\n          {\n            \"name\": \"exec\",\n            \"summaryChars\": 181,\n            \"schemaChars\": 1098,\n            \"propertiesCount\": 12\n          },\n          {\n            \"name\": \"process\",\n            \"summaryChars\": 85,\n            \"schemaChars\": 961,\n            \"propertiesCount\": 12\n          },\n          {\n            \"name\": \"canvas\",\n            \"summaryChars\": 106,\n            \"schemaChars\": 661,\n            \"propertiesCount\": 18\n          },\n          {\n            \"name\": \"nodes\",\n            \"summaryChars\": 118,\n            \"schemaChars\": 1589,\n            \"propertiesCount\": 32\n          },\n          {\n            \"name\": \"cron\",\n            \"summaryChars\": 3570,\n            \"schemaChars\": 6761,\n            \"propertiesCount\": 13\n          },\n          {\n            \"name\": \"message\",\n            \"summaryChars\": 161,\n            \"schemaChars\": 6825,\n            \"propertiesCount\": 109\n          },\n          {\n            \"name\": \"tts\",\n            \"summaryChars\": 152,\n            \"schemaChars\": 223,\n            \"propertiesCount\": 2\n          },\n          {\n            \"name\": \"gateway\",\n            \"summaryChars\": 464,\n            \"schemaChars\": 497,\n            \"propertiesCount\": 12\n          },\n          {\n            \"name\": \"agents_list\",\n            \"summaryChars\": 118,\n            \"schemaChars\": 33,\n            \"propertiesCount\": 0\n          },\n          {\n            \"name\": \"sessions_list\",\n            \"summaryChars\": 54,\n            \"schemaChars\": 212,\n            \"propertiesCount\": 4\n          },\n          {\n            \"name\": \"sessions_history\",\n            \"summaryChars\": 36,\n            \"schemaChars\": 161,\n            \"propertiesCount\": 3\n          },\n          {\n            \"name\": \"sessions_send\",\n            \"summaryChars\": 84,\n            \"schemaChars\": 274,\n            \"propertiesCount\": 5\n          },\n          {\n            \"name\": \"sessions_yield\",\n            \"summaryChars\": 97,\n            \"schemaChars\": 60,\n            \"propertiesCount\": 1\n          },\n          {\n            \"name\": \"sessions_spawn\",\n            \"summaryChars\": 198,\n            \"schemaChars\": 1179,\n            \"propertiesCount\": 17\n          },\n          {\n            \"name\": \"subagents\",\n            \"summaryChars\": 105,\n            \"schemaChars\": 191,\n            \"propertiesCount\": 4\n          },\n          {\n            \"name\": \"session_status\",\n            \"summaryChars\": 262,\n            \"schemaChars\": 89,\n            \"propertiesCount\": 2\n          },\n          {\n            \"name\": \"web_search\",\n            \"summaryChars\": 93,\n            \"schemaChars\": 446,\n            \"propertiesCount\": 4\n          },\n          {\n            \"name\": \"web_fetch\",\n            \"summaryChars\": 129,\n            \"schemaChars\": 374,\n            \"propertiesCount\": 3\n          },\n          {\n            \"name\": \"image\",\n            \"summaryChars\": 260,\n            \"schemaChars\": 342,\n            \"propertiesCount\": 6\n          },\n          {\n            \"name\": \"pdf\",\n            \"summaryChars\": 275,\n            \"schemaChars\": 400,\n            \"propertiesCount\": 6\n          },\n          {\n            \"name\": \"capture_xiaohongshu_note\",\n            \"summaryChars\": 71,\n            \"schemaChars\": 409,\n            \"propertiesCount\": 4\n          },\n          {\n            \"name\": \"memory_search\",\n            \"summaryChars\": 334,\n            \"schemaChars\": 139,\n            \"propertiesCount\": 3\n          },\n          {\n            \"name\": \"memory_get\",\n            \"summaryChars\": 151,\n            \"schemaChars\": 128,\n            \"propertiesCount\": 3\n          },\n          {\n            \"name\": \"feishu_get_user\",\n            \"summaryChars\": 75,\n            \"schemaChars\": 185,\n            \"propertiesCount\": 2\n          },\n          {\n            \"name\": \"feishu_search_user\",\n            \"summaryChars\": 55,\n            \"schemaChars\": 311,\n            \"propertiesCount\": 3\n          },\n          {\n            \"name\": \"feishu_chat\",\n            \"summaryChars\": 92,\n            \"schemaChars\": 519,\n            \"propertiesCount\": 6\n          },\n          {\n            \"name\": \"feishu_chat_members\",\n            \"summaryChars\": 54,\n            \"schemaChars\": 353,\n            \"propertiesCount\": 4\n          },\n          {\n            \"name\": \"feishu_im_user_message\",\n            \"summaryChars\": 402,\n            \"schemaChars\": 1149,\n            \"propertiesCount\": 8\n          },\n          {\n            \"name\": \"feishu_im_user_fetch_resource\",\n            \"summaryChars\": 456,\n            \"schemaChars\": 371,\n            \"propertiesCount\": 3\n          },\n          {\n            \"name\": \"feishu_im_user_get_messages\",\n            \"summaryChars\": 386,\n            \"schemaChars\": 912,\n            \"propertiesCount\": 8\n          },\n          {\n            \"name\": \"feishu_im_user_get_thread_messages\",\n            \"summaryChars\": 166,\n            \"schemaChars\": 395,\n            \"propertiesCount\": 4\n          },\n          {\n            \"name\": \"feishu_im_user_search_messages\",\n            \"summaryChars\": 522,\n            \"schemaChars\": 1364,\n            \"propertiesCount\": 12\n          },\n          {\n            \"name\": \"feishu_calendar_calendar\",\n            \"summaryChars\": 93,\n            \"schemaChars\": 389,\n            \"propertiesCount\": 4\n          },\n          {\n            \"name\": \"feishu_calendar_event\",\n            \"summaryChars\": 455,\n            \"schemaChars\": 3200,\n            \"propertiesCount\": 21\n          },\n          {\n            \"name\": \"feishu_calendar_event_attendee\",\n            \"summaryChars\": 75,\n            \"schemaChars\": 981,\n            \"propertiesCount\": 9\n          },\n          {\n            \"name\": \"feishu_calendar_freebusy\",\n            \"summaryChars\": 80,\n            \"schemaChars\": 504,\n            \"propertiesCount\": 4\n          },\n          {\n            \"name\": \"feishu_task_task\",\n            \"summaryChars\": 167,\n            \"schemaChars\": 1868,\n            \"propertiesCount\": 15\n          },\n          {\n            \"name\": \"feishu_task_tasklist\",\n            \"summaryChars\": 163,\n            \"schemaChars\": 769,\n            \"propertiesCount\": 7\n          },\n          {\n            \"name\": \"feishu_task_comment\",\n            \"summaryChars\": 95,\n            \"schemaChars\": 671,\n            \"propertiesCount\": 9\n          },\n          {\n            \"name\": \"feishu_task_subtask\",\n            \"summaryChars\": 86,\n            \"schemaChars\": 1128,\n            \"propertiesCount\": 9\n          },\n          {\n            \"name\": \"feishu_bitable_app\",\n            \"summaryChars\": 139,\n            \"schemaChars\": 511,\n            \"propertiesCount\": 7\n          },\n          {\n            \"name\": \"feishu_bitable_app_table\",\n            \"summaryChars\": 285,\n            \"schemaChars\": 1152,\n            \"propertiesCount\": 8\n          },\n          {\n            \"name\": \"feishu_bitable_app_table_record\",\n            \"summaryChars\": 292,\n            \"schemaChars\": 2381,\n            \"propertiesCount\": 14\n          },\n          {\n            \"name\": \"feishu_bitable_app_table_field\",\n            \"summaryChars\": 134,\n            \"schemaChars\": 824,\n            \"propertiesCount\": 10\n          },\n          {\n            \"name\": \"feishu_bitable_app_table_view\",\n            \"summaryChars\": 108,\n            \"schemaChars\": 692,\n            \"propertiesCount\": 8\n          },\n          {\n            \"name\": \"feishu_search_doc_wiki\",\n            \"summaryChars\": 212,\n            \"schemaChars\": 1806,\n            \"propertiesCount\": 5\n          },\n          {\n            \"name\": \"feishu_drive_file\",\n            \"summaryChars\": 703,\n            \"schemaChars\": 2278,\n            \"propertiesCount\": 16\n          },\n          {\n            \"name\": \"feishu_doc_comments\",\n            \"summaryChars\": 114,\n            \"schemaChars\": 1305,\n            \"propertiesCount\": 11\n          },\n          {\n            \"name\": \"feishu_doc_media\",\n            \"summaryChars\": 200,\n            \"schemaChars\": 963,\n            \"propertiesCount\": 9\n          },\n          {\n            \"name\": \"feishu_wiki_space\",\n            \"summaryChars\": 179,\n            \"schemaChars\": 451,\n            \"propertiesCount\": 6\n          },\n          {\n            \"name\": \"feishu_wiki_space_node\",\n            \"summaryChars\": 205,\n            \"schemaChars\": 995,\n            \"propertiesCount\": 13\n          },\n          {\n            \"name\": \"feishu_sheet\",\n            \"summaryChars\": 474,\n            \"schemaChars\": 1905,\n            \"propertiesCount\": 18\n          },\n          {\n            \"name\": \"feishu_im_bot_image\",\n            \"summaryChars\": 241,\n            \"schemaChars\": 384,\n            \"propertiesCount\": 3\n          },\n          {\n            \"name\": \"feishu_fetch_doc\",\n            \"summaryChars\": 42,\n            \"schemaChars\": 281,\n            \"propertiesCount\": 3\n          },\n          {\n            \"name\": \"feishu_create_doc\",\n            \"summaryChars\": 33,\n            \"schemaChars\": 427,\n            \"propertiesCount\": 6\n          },\n          {\n            \"name\": \"feishu_update_doc\",\n            \"summaryChars\": 105,\n            \"schemaChars\": 811,\n            \"propertiesCount\": 7\n          },\n          {\n            \"name\": \"feishu_oauth\",\n            \"summaryChars\": 168,\n            \"schemaChars\": 290,\n            \"propertiesCount\": 1\n          },\n          {\n            \"name\": \"feishu_oauth_batch_auth\",\n            \"summaryChars\": 55,\n            \"schemaChars\": 162,\n            \"propertiesCount\": 0\n          },\n          {\n            \"name\": \"feishu_ask_user_question\",\n            \"summaryChars\": 355,\n            \"schemaChars\": 962,\n            \"propertiesCount\": 1\n          },\n          {\n            \"name\": \"ts_attach_promise_guard\",\n            \"summaryChars\": 85,\n            \"schemaChars\": 244,\n            \"propertiesCount\": 4\n          },\n          {\n            \"name\": \"ts_create_followup_plan\",\n            \"summaryChars\": 83,\n            \"schemaChars\": 552,\n            \"propertiesCount\": 10\n          },\n          {\n            \"name\": \"ts_schedule_followup_from_plan\",\n            \"summaryChars\": 92,\n            \"schemaChars\": 210,\n            \"propertiesCount\": 3\n          },\n          {\n            \"name\": \"ts_finalize_planned_followup\",\n            \"summaryChars\": 110,\n            \"schemaChars\": 210,\n            \"propertiesCount\": 3\n          }\n        ]\n      }\n    },\n    \"stopReason\": \"stop\"\n  }\n}",
         "passed": true,
         "expectedAnyOk": true,
         "expectedAllOk": true,
@@ -544,7 +675,7 @@
           "MEMORY.md"
         ],
         "observedSessionKey": "agent:umceval65:main",
-        "observedSessionId": "umc-bench-agent-negative-1-4f6e1bdb",
+        "observedSessionId": "umc-bench-agent-preference-async-1-469f47bd",
         "warning": "",
         "passed": true,
         "expectedAnyOk": true,

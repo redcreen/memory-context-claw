@@ -1,70 +1,94 @@
-# OpenClaw CLI Agent Answer Watch
+# OpenClaw CLI Memory Benchmark
 
-- generatedAt: `2026-04-15T11:52:20.205Z`
-- scope: deeper isolated local answer-level watch matrix, not the repo-default formal gate
-- source artifact: [openclaw-cli-agent-answer-watch-2026-04-15.json](../openclaw-cli-agent-answer-watch-2026-04-15.json)
+- generatedAt: `2026-04-15T12:51:05.271Z`
+- agent: `umceval65`
+- totalCases: `18`
+- currentPassed: `12`
+- currentFailed: `6`
+- legacyCompared: `14`
+- legacyPassed: `0`
+- abstained: `0`
+- abstentionRate: `0`
+- zhBearingCases: `9/18`
 
-## Why This Exists
+## Language Summary
+- zhBearing: `9`
+- nonZh: `9`
 
-The repo-default formal gate remains the stable `12 / 12` isolated local answer-level matrix.
+## Category Summary
+- agent-profile: `0/1`
+- agent-project: `1/2`
+- agent-temporal: `1/2`
+- agent-cross-source: `0/1`
+- agent-rule: `1/1`
+- agent-history: `1/1`
+- agent-zh: `2/2`
+- agent-zh-natural: `4/6`
+- negative: `2/2`
 
-This watch report answers a different question:
+## Attribution Summary
+- unified-failed: `6`
+- legacy-skipped: `8`
+- not-compared: `4`
 
-- what happens if the answer-level path is pushed further into `cross-source`, `conflict`, `multi-step history`, and denser natural-Chinese prompts right now?
+## Transport Summary
+- agent_local: `17`
+- agent: `1`
 
-## Current Watch Result
+## Entrypoint Summary
+- agent: `18`
 
-- total cases: `18`
-- passed: `7 / 18`
-- failed: `11 / 18`
-- zh-bearing: `9 / 18`
-- compared legacy: `14`
-- legacy passed: `0`
+## Failing Cases
+- agent-name-1: expectation mismatch
+- agent-project-1: expectation mismatch
+- agent-current-editor-1: expectation mismatch
+- agent-cross-source-calls-1: expectation mismatch
+- agent-zh-natural-conflict-region-1: Unable to parse JSON payload from stdout
+- agent-zh-natural-cross-source-calls-1: expectation mismatch
 
-Category split:
+## Sample Results
+- agent-name-1 [agent-profile] `agent` pass=`false` attribution=`unified-failed`
+  prompt: Based only on your memory for this agent, what is the user's preferred name? If memory is missing, reply exactly: I don't know based on current memory.
+  observed: Project Lantern is a B2B analytics assistant for clinic managers.
+- agent-project-1 [agent-project] `agent` pass=`false` attribution=`unified-failed`
+  prompt: Based only on your memory for this agent, what is Project Lantern? If memory is missing, reply exactly: I don't know based on current memory.
+  observed: I don't know based on current memory.
+- agent-current-editor-1 [agent-temporal] `agent` pass=`false` attribution=`unified-failed`
+  prompt: Based only on your memory for this agent, what is the user's current main editor now? If memory is missing, reply exactly: I don't know based on current memory.
+  observed: I don't know based on current memory.
+- agent-current-demo-1 [agent-temporal] `agent` pass=`true` attribution=`legacy-skipped`
+  prompt: Based only on your memory for this agent, when is the clinic demo scheduled now? If memory is missing, reply exactly: I don't know based on current memory.
+  observed: The clinic demo is scheduled for next Tuesday at 15:00 Shanghai time.
+- agent-cross-source-calls-1 [agent-cross-source] `agent` pass=`false` attribution=`unified-failed`
+  prompt: Based only on your memory for this agent, if async text will work, should you avoid voice calls? If memory is missing, reply exactly: I don't know based on current memory.
+  observed: Yes.
+- agent-rule-no-guess-1 [agent-rule] `agent` pass=`true` attribution=`not-compared`
+  prompt: Based only on your memory for this agent, what should happen if memory is missing or conflicting? If memory is missing, reply exactly: I don't know based on current memory.
+  observed: I don't know based on current memory.
+- agent-project-city-1 [agent-project] `agent` pass=`true` attribution=`not-compared`
+  prompt: Based only on your memory for this agent, what is the launch city for the pilot? If memory is missing, reply exactly: I don't know based on current memory.
+  observed: Singapore.
+- agent-history-editor-1 [agent-history] `agent` pass=`true` attribution=`not-compared`
+  prompt: Based only on your memory for this agent, what editor was Maya still using on 2026-04-10? If memory is missing, reply exactly: I don't know based on current memory.
+  observed: Vim.
+- agent-zh-project-1 [agent-zh] `agent` pass=`true` attribution=`legacy-skipped`
+  prompt: 仅根据你当前这个 agent 的记忆，Project Lantern 现在的里程碑是什么？如果记忆里没有，请直接回答：I don't know based on current memory.
+  observed: Stage 2 pilot.
+- agent-zh-temporal-1 [agent-zh] `agent` pass=`true` attribution=`legacy-skipped`
+  prompt: 仅根据你当前这个 agent 的记忆，用户现在主要用什么编辑器？如果记忆里没有，请直接回答：I don't know based on current memory.
+  observed: Zed.
+- agent-zh-natural-name-1 [agent-zh-natural] `agent` pass=`true` attribution=`legacy-skipped`
+  prompt: 只根据当前记忆，平时我希望你怎么称呼我？如果没有这条记忆，就只回答：I don't know based on current memory.
+  observed: Maya Chen.
+- agent-zh-natural-project-1 [agent-zh-natural] `agent` pass=`true` attribution=`legacy-skipped`
+  prompt: 只根据当前记忆，Project Lantern 到底是在做什么？如果没有这条记忆，就只回答：I don't know based on current memory.
+  observed: Project Lantern is a B2B analytics assistant for clinic managers.
 
-- agent-profile: `0 / 1`
-- agent-project: `1 / 2`
-- agent-temporal: `0 / 2`
-- agent-cross-source: `0 / 1`
-- agent-rule: `0 / 1`
-- agent-history: `1 / 1`
-- agent-zh: `0 / 2`
-- agent-zh-natural: `3 / 6`
-- negative: `2 / 2`
-
-## Main Finding
-
-This deeper matrix is currently not failing because Memory Core forgot the facts.
-
-It is failing because the host answer-level path is reintroducing output-shape noise:
-
-- `11` cases failed with `Unable to parse JSON payload from stdout`
-- observed transport split:
-  - `agent_local`: `7`
-  - `agent`: `11`
-
-That means this matrix is useful as a watch surface, but not yet trustworthy enough to replace the stable repo-default formal gate.
-
-## What This Means
-
-- keep the stable repo-default formal gate at `12 / 12`
-- keep this deeper `18`-case matrix as a watch / triage surface
-- continue separating host output-shape noise from actual retrieval / assembly quality
-
-## Chinese Coverage In The Deeper Watch
-
-The deeper watch matrix already improves answer-level Chinese pressure:
-
-- zh-bearing cases: `9 / 18`
-- natural-Chinese cases inside the watch: `6`
-
-So the Chinese expansion work is real, but the host path is not yet clean enough for these cases to become the default formal gate.
-
-## Next Implication
-
-Before promoting this deeper matrix into the repo-default formal gate, the next work should focus on:
-
-1. keeping the stable `12 / 12` gate green
-2. isolating why some `openclaw agent --local` runs still return non-parseable output shapes
-3. rerunning this deeper watch after host-noise handling is cleaner
+## Notes
+- This script supports both retrieval-level and answer-level cases; the entrypoint summary above shows which ones were selected in this run.
+- Search-heavy cases default to the same OpenClaw agent sqlite index because raw `openclaw memory search` is currently unstable on this host.
+- Use `--raw-search-cli` only when you explicitly want to probe that unstable transport and accept fallback noise.
+- Legacy comparison is only enabled for benchmark-critical attribution cases, not the full matrix.
+- The current fixture mirror lives under `evals/openclaw-cli-memory-fixture/`.
+- Agent cases use an explicit memory_search tool hint before answering.
+- Agent cases run via `openclaw agent --local` to avoid gateway/session-lock noise.

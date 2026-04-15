@@ -249,6 +249,22 @@ async function resetAgentSessionState(agentId) {
   }
 }
 
+async function clearAgentSessionLocks(agentId) {
+  const sessionsDir = path.join(os.homedir(), ".openclaw", "agents", agentId, "sessions");
+  try {
+    await fs.mkdir(sessionsDir, { recursive: true });
+    const entries = await fs.readdir(sessionsDir);
+    for (const entry of entries) {
+      if (!entry.endsWith(".lock")) {
+        continue;
+      }
+      await fs.rm(path.join(sessionsDir, entry), { force: true });
+    }
+  } catch {
+    // best effort for isolated eval agents
+  }
+}
+
 async function prepareLegacyStateDir(agentId) {
   const sourceRoot = path.join(os.homedir(), ".openclaw");
   const tempRoot = await fs.mkdtemp(path.join(os.tmpdir(), "umc-bench-legacy-"));
@@ -461,60 +477,72 @@ async function runSearchCase(caseDef, args, env) {
 }
 
 async function runAgentCase(caseDef, args, env) {
-  if (args.agentLocal) {
-    await resetAgentSessionState(args.agentId);
-  }
-  const sessionId = `umc-bench-${caseDef.id}-${randomUUID().slice(0, 8)}`;
   const timeoutSecs = Math.max(10, Math.ceil(args.agentTimeoutMs / 1000));
   const message = buildAgentEvalPrompt(caseDef.message, {
     toolHintEnabled: args.agentToolHint
   });
-  const command = await runCommand(
-    args.openclawBin,
-    [
-      "agent",
-      ...(args.agentLocal ? ["--local"] : []),
-      "--agent",
-      args.agentId,
-      "--session-id",
-      sessionId,
-      "--thinking",
-      "off",
-      "--timeout",
-      String(timeoutSecs),
-      "--json",
-      "--message",
-      message
-    ],
-    { timeoutMs: args.agentTimeoutMs, env }
-  );
-  try {
-    const payload = extractJsonPayload(pickJsonText(command.stdout, command.stderr));
-    return {
-      ok: true,
-      transport: args.agentLocal ? "agent_local" : "agent",
-      answer: extractAgentText(payload),
-      injectedWorkspaceFiles: extractInjectedWorkspaceFiles(payload),
-      observedSessionKey:
-        payload?.result?.systemPromptReport?.sessionKey
-        || payload?.meta?.systemPromptReport?.sessionKey
-        || "",
-      observedSessionId:
-        payload?.result?.meta?.agentMeta?.sessionId
-        || payload?.meta?.agentMeta?.sessionId
-        || "",
-      warning: command.ok ? "" : (command.error || command.stderr || "").trim()
-    };
-  } catch (error) {
-    if (!command.ok) {
-      return { ok: false, error: command.error, stdout: command.stdout, stderr: command.stderr };
+
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    const sessionId = `umc-bench-${caseDef.id}-${randomUUID().slice(0, 8)}`;
+    const command = await runCommand(
+      args.openclawBin,
+      [
+        "agent",
+        ...(args.agentLocal ? ["--local"] : []),
+        "--agent",
+        args.agentId,
+        "--session-id",
+        sessionId,
+        "--thinking",
+        "off",
+        "--timeout",
+        String(timeoutSecs),
+        "--json",
+        "--message",
+        message
+      ],
+      { timeoutMs: args.agentTimeoutMs, env }
+    );
+
+    try {
+      const payload = extractJsonPayload(pickJsonText(command.stdout, command.stderr));
+      return {
+        ok: true,
+        transport: args.agentLocal ? "agent_local" : "agent",
+        answer: extractAgentText(payload),
+        injectedWorkspaceFiles: extractInjectedWorkspaceFiles(payload),
+        observedSessionKey:
+          payload?.result?.systemPromptReport?.sessionKey
+          || payload?.meta?.systemPromptReport?.sessionKey
+          || "",
+        observedSessionId:
+          payload?.result?.meta?.agentMeta?.sessionId
+          || payload?.meta?.agentMeta?.sessionId
+          || "",
+        warning: command.ok ? "" : (command.error || command.stderr || "").trim()
+      };
+    } catch (error) {
+      const parseError = String(error?.message || error);
+      const retriable = command.ok && attempt === 0;
+      if (retriable) {
+        continue;
+      }
+      if (!command.ok) {
+        return { ok: false, error: command.error, stdout: command.stdout, stderr: command.stderr };
+      }
+      return {
+        ok: false,
+        error: parseError,
+        stdout: command.stdout,
+        stderr: command.stderr
+      };
     }
-    return {
-      ok: false,
-      error: String(error?.message || error),
-      stdout: command.stdout
-    };
   }
+
+  return {
+    ok: false,
+    error: "Agent run exhausted retries without a parseable JSON payload"
+  };
 }
 
 async function runOne(caseDef, args, legacyStateDir) {
@@ -702,6 +730,10 @@ async function main() {
   }
   if (cases.length === 0) {
     throw new Error("No benchmark cases selected.");
+  }
+
+  if (args.agentLocal) {
+    await clearAgentSessionLocks(args.agentId);
   }
 
   const legacyStateDir = args.skipLegacy ? null : await prepareLegacyStateDir(args.agentId);

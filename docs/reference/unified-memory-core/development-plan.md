@@ -238,13 +238,13 @@ The goal is not to reopen baseline contract work. The goal is to:
    - The current zh-bearing runnable matrix is `211 / 392 = 53.83%`.
 67. `completed` Promote the answer-level host path and the raw transport watchlist into the formal benchmark gate with pass rate, abstention rate, and watchlist reporting.
    - retrieval-heavy gate: `250/250`
-   - answer-level formal gate: `6/6` via `openclaw agent --local` with isolated eval agent `umceval65`
+   - answer-level formal gate: `12/12` via `openclaw agent --local` with isolated eval agent `umceval65`
    - transport watchlist: `0/8 raw ok`, all classified as host transport invalid-json
 68. `completed` Triage and fix the live `openclaw agent` answer-level red path until it no longer systemically returns `I don't know` or times out.
    - Root causes are now separated: gateway/session-lock noise, agent main-session reuse contamination, and CLI `--local` JSON emitted on stderr.
    - The formal gate now uses the isolated local answer path; the gateway path stays on the watchlist instead of polluting algorithm judgments.
 69. `completed` Use the main-path performance baseline to optimize the slowest layer, prioritizing host answer-level first, raw transport second, and only then retrieval / assembly if needed.
-   - Latest main-path baseline: retrieval / assembly avg `43ms`; raw transport avg `15570ms`; isolated local answer-level avg `36155ms` with `3/3` passing.
+   - Latest main-path baseline: retrieval / assembly avg `8ms`; raw transport avg `8335ms`; isolated local answer-level avg `24553ms` with `3/3` passing.
 70. `completed` Rerun the `200+` benchmark, answer-level gate, transport watchlist, and main-path perf baseline, then use that evidence to decide whether later enhancement planning can open.
    - Conclusion: continue benchmark / perf / transport work, but do not misclassify raw transport or gateway noise as retrieval / answer-level algorithm regressions.
 71. `done` Establish a formal memory-intent replay regression surface covering durable rules, tool-routing preferences, session constraints, task-only instructions, user-profile facts, and no-memory noise.
@@ -268,7 +268,7 @@ The goal is not to reopen baseline contract work. The goal is to:
 79. `completed` Keep gateway/session-lock behavior and raw `openclaw memory search` transport on explicit watchlists.
    - The latest raw transport watchlist is `0/8 raw ok`, all classified as `missing_json_payload`; this watchlist tracks host instability, not retrieval / answer-level algorithm regressions.
 80. `completed` Continue optimizing the slowest layer from the main-path performance baseline and rerun the formal gates after each meaningful change.
-   - The current priority remains isolated local answer-level first and raw transport second; the latest perf baseline is now retrieval / assembly `43ms`, raw transport `15570ms`, isolated local answer-level `36155ms`.
+   - The current priority remains isolated local answer-level first and raw transport second; the latest perf baseline is now retrieval / assembly `8ms`, raw transport `8335ms`, isolated local answer-level `24553ms`.
 81. `completed` Turn the larger isolated local answer-level formal gate into a repo-default entry instead of relying on hand-built `--only` commands.
    - `scripts/eval-openclaw-cli-agent-answer-matrix.js` now defaults to isolated eval agent `umceval65`, `--agent-local`, `--skip-legacy`, and a fixed `12`-case formal gate matrix.
 82. `completed` Rerun the larger answer-level formal gate and publish a new `2026-04-15` formal report.
@@ -278,12 +278,12 @@ The goal is not to reopen baseline contract work. The goal is to:
    - The roadmap, control surface, and development plan no longer describe the answer-level formal gate as just `6/6`.
 84. `in_progress` Deepen the current `12`-case stable answer-level formal gate with cross-source, conflict, multi-step history, and deeper natural-Chinese coverage.
    - A deeper `18`-case watch matrix now exists with added cross-source, history, conflict, and denser natural-Chinese answer-level coverage.
-   - Current watch result: `7 / 18`; the `11` failures currently collapse into host JSON-parse noise, so this matrix remains a watch surface instead of replacing the repo-default formal gate.
+   - Current watch result: `12 / 18`; the remaining `6` failures are no longer just one bucket of host JSON-parse noise, but a mix of residual host output-shape problems and genuine expectation mismatches, so this matrix remains a watch surface instead of replacing the repo-default formal gate.
    - Reference report: [reports/generated/openclaw-cli-agent-answer-watch-2026-04-15.md](../../../reports/generated/openclaw-cli-agent-answer-watch-2026-04-15.md)
 85. `in_progress` Increase the natural-Chinese share inside the answer-level formal gate itself, not just the global runnable matrix.
    - The deeper watch already runs at `9 / 18` zh-bearing with `6` natural-Chinese cases, which proves the expansion direction, but it is not yet clean enough to replace the stable `12 / 12` formal gate.
 86. `in_progress` Revisit the main-path perf baseline and A/B attribution after the deeper answer-level watch is in place so the larger surface does not quietly re-mix host noise into the conclusions.
-   - Current conclusion: it still does. The next perf / A-B rerun must wait for cleaner host output-shape handling, otherwise the deeper matrix will misreport host noise as answer-level regression.
+   - Current conclusion: the stable gate is now protected by better output-shape handling, but the deeper watch still mixes host and harder answer-level failures. The next perf / A-B rerun should happen only after that deeper watch gets cleaner.
 
 ## Deferred Enhancement Queue
 

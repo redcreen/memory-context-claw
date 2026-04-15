@@ -30,8 +30,8 @@ This block is here to answer "where did the `200+` case program actually land?" 
 - Natural-Chinese representative retrieval slice: `5 / 5`
 - Natural-Chinese representative answer-level slice: `6 / 6`
 - Raw transport watchlist: `0 / 8 raw ok`, all isolated as host `missing_json_payload`
-- Main-path perf baseline: retrieval / assembly `43ms`; raw transport `15570ms`; isolated local answer-level `36155ms`
-- Interpretation: the `200+` case buildout, natural-Chinese hardening, watchlist classification, perf-baseline refresh, and the first answer-level gate expansion from `6/6` to `12/12` are complete; the next phase is to deepen that larger gate
+- Main-path perf baseline: retrieval / assembly `8ms`; raw transport `8335ms`; isolated local answer-level `24553ms`
+- Interpretation: the `200+` case buildout, natural-Chinese hardening, watchlist classification, perf-baseline refresh, and the first answer-level gate expansion from `6/6` to `12/12` are complete; the deeper watch has also improved from `7/18` to `12/18`, but the next phase is still to deepen that larger gate further
 
 Supporting evidence:
 
@@ -54,7 +54,7 @@ Supporting evidence:
 The current roadmap horizon also maps to the concrete next execution work:
 
 1. expand the answer-level formal gate beyond the current `12`-case stable baseline
-Current progress: a deeper `18`-case answer-level watch matrix now exists, but it is currently `7 / 18`, with failures dominated by host JSON-parse noise, so it does not replace the repo-default `12 / 12` formal gate yet.
+Current progress: a deeper `18`-case answer-level watch matrix now exists and currently lands at `12 / 18`; that is materially better than the earlier `7 / 18`, but it still mixes residual host output-shape noise with genuine expectation mismatches, so it does not replace the repo-default `12 / 12` formal gate yet.
 2. keep the `24` natural-Chinese cases green during that expansion instead of slipping back to zh-bearing-only coverage
 3. keep gateway/session-lock noise and raw `openclaw memory search` transport instability classified as `missing_json_payload` watchlist evidence, not algorithm regressions
 4. use the refreshed `2026-04-15` main-path performance baseline to reduce the slowest answer-level layer before choosing later algorithm work

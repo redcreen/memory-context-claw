@@ -3,7 +3,7 @@
 ## Delivery Tier
 
 - Tier: `large`
-- Last reviewed: `2026-04-14`
+- Last reviewed: `2026-04-15`
 
 ## Current Phase
 
@@ -74,7 +74,9 @@
   - raw `openclaw memory search` transport watchlist 已固定为独立 host watch：`0/8 raw ok`，全部 `missing_json_payload`
   - retrieval / assembly / answer-level 主链路性能专项计划已补齐：[docs/reference/unified-memory-core/testing/main-path-performance-plan.zh-CN.md](../docs/reference/unified-memory-core/testing/main-path-performance-plan.zh-CN.md)
   - 主链路性能刷新基线已落地：[reports/generated/main-path-performance-baseline-2026-04-15.md](../reports/generated/main-path-performance-baseline-2026-04-15.md)
-  - 当前 perf 归因已经明确：retrieval / assembly 平均 `43ms`；raw transport 平均 `15570ms`；isolated local answer-level 平均 `36155ms`
+  - 当前 perf 归因已经明确：retrieval / assembly 平均 `8ms`；raw transport 平均 `8335ms`；isolated local answer-level 平均 `24553ms`
+  - host output-shape hardening 已补齐：更强的 JSON payload 提取、isolated eval agent stale session lock 清理、取消 per-case destructive session reset，以及 parse failure bounded retry
+  - 更深的 `18` case answer-level watch 已从 `7/18` 提升到 `12/18`，但剩余 `6` 条失败仍混有 residual host output-shape 噪声与 genuine expectation mismatch
   - answer-level root cause 已显式拆开：gateway/session-lock 噪声、agent main-session 复用污染、CLI `--local` JSON 走 stderr
   - `78-80` 总结报告已补齐：[reports/generated/openclaw-natural-chinese-watch-and-perf-2026-04-15.md](../reports/generated/openclaw-natural-chinese-watch-and-perf-2026-04-15.md)
   - `77` 和 follow-up `81-83` 已把 answer-level formal gate 从 `6/6` 扩到 `12/12`，并补上 repo-default 的 isolated local formal gate 入口：[reports/generated/openclaw-answer-level-gate-expansion-2026-04-15.md](../reports/generated/openclaw-answer-level-gate-expansion-2026-04-15.md)
@@ -95,7 +97,7 @@
 - 当前验证已完成：
   - Stage 5 targeted tests：`3/3`
   - release / deployment targeted tests：`71/71`
-  - full repo `npm test`：`364/364`
+  - full repo `npm test`：`399/399`
   - `npm run umc:stage5 -- --format markdown`：`pass`
   - `npm run umc:acceptance -- --format markdown`：`pass`
   - `npm run umc:openclaw-itest -- --format markdown`：`pass`
@@ -109,12 +111,14 @@
   - `openclaw plugins inspect unified-memory-core --json`：`pass`（loaded/install version `0.2.1`）
   - `npm run runtime:check`：`pass`
   - `node --test test/query-rewrite.test.js test/openclaw-cli-memory-benchmark-cases.test.js test/openclaw-memory-search-transport-watch.test.js test/openclaw-agent-eval-prompt.test.js`：`pass`
-  - `node scripts/eval-openclaw-cli-memory-benchmark.js --entrypoints memory_search --skip-legacy ...`：`250/250`
+  - `node scripts/eval-openclaw-cli-memory-benchmark.js --entrypoints memory_search --skip-legacy ...`：`262/262`
   - `node scripts/eval-openclaw-cli-memory-benchmark.js --agent umceval65 --entrypoints memory_search --skip-legacy --only zh-natural-profile-search-1,zh-natural-project-search-1,zh-natural-temporal-search-1,zh-natural-rule-search-1,zh-natural-temporal-search-3 ...`：`5/5`
   - `node scripts/eval-openclaw-cli-memory-benchmark.js --agent umceval65 --entrypoints agent --skip-legacy --agent-local --only agent-zh-natural-name-1,agent-zh-natural-project-1,agent-zh-natural-editor-1,agent-zh-natural-region-1,agent-zh-natural-rule-1,agent-zh-natural-negative-1 ...`：`6/6`
   - `node scripts/watch-openclaw-memory-search-transport.js --format markdown --per-category 1 --max-probes 8 --timeout-ms 8000 ...`：`0/8 raw ok`（全部 `missing_json_payload`）
-  - `npm run eval:openclaw:agent-matrix`：`12/12`
-  - `UMC_EVAL_AGENT=umceval65 npm run eval:main-path:perf`：`pass`
+  - `npm run eval:openclaw:agent-matrix -- --agent-timeout-ms 35000 --format markdown`：`12/12`
+  - `npm run eval:openclaw:agent-watch -- --agent-timeout-ms 35000 --format markdown`：`12/18`
+  - `npm run eval:main-path:perf`：`pass`
+  - `npm run verify:memory-intent`：`pass`
   - `npm run umc:cli -- registry migrate --source-dir ~/.openclaw/unified-memory-core/registry --target-dir ~/.unified-memory-core/registry --format markdown`：`noop / adopt_canonical_root`
   - `npm run umc:cli -- review split-rehearsal --source-dir ~/.unified-memory-core/registry --target-dir /tmp/umc-split-rehearsal --format markdown`：`pass`
   - `npm run smoke:eval -- --format markdown`：`28/28`
@@ -127,7 +131,7 @@
 ## In Progress
 
 - 下一阶段已切到更深的 answer-level 主线：在 `12/12` formal gate、自然中文覆盖、watchlist 和 perf baseline 已重新稳定的前提下，继续补强 cross-source / conflict / history 深度
-- 当前 answer-level 已不再是“算法是否可用”的 blocker：repo-default isolated local formal gate `12/12` 已稳定通过；更深的 `18` case watch matrix 当前结果 `7/18`，`11` 条失败集中在 host JSON parse noise，所以后续重点是扩大样本面同时保持宿主噪声与算法判断分离
+- 当前 answer-level 已不再是“算法是否可用”的 blocker：repo-default isolated local formal gate `12/12` 已稳定通过；更深的 `18` case watch matrix 当前结果 `12/18`，剩余 `6` 条失败已不再只是单一 host JSON parse noise，所以后续重点是扩大样本面同时保持宿主噪声与算法判断分离
 - 保持 release-preflight、bundle install、host smoke、Stage 5 acceptance 证据持续为绿
 - 保持 host-neutral root policy 在 CLI、公开文档和控制面里持续一致
 - 保持 project/workstream roadmap 摘要与新的评测驱动主线持续一致
@@ -168,7 +172,7 @@
 - Objective: 在 `12 / 12` isolated local answer-level formal gate 已稳定的基础上，继续补强 cross-source、conflict、multi-step history 和更深的自然中文 answer-level 覆盖，同时不让 host output-shape noise 重新污染正式门禁
 - Plan Link: `deepen-answer-level-gate-beyond-12-case-baseline`
 - Runway: 更深 answer-level gate 扩容、自然中文子矩阵保绿、gateway/raw transport watch、perf-baseline-driven optimization；并行守住 release-preflight 和 canonical-root policy
-- Progress: `2 / 4` tasks complete
+- Progress: `3 / 4` tasks complete
 - Stop Conditions:
   - benchmark expansion degenerates into pure case count chasing
   - answer-level host-path regression gets misclassified as raw transport or retrieval quality
@@ -179,7 +183,7 @@
 - [x] EL-1 extend the answer-level evidence surface beyond the current `12`-case stable baseline with a deeper `18`-case watch matrix covering cross-source, conflict, history, and denser zh-natural prompts
 - [ ] EL-2 increase the natural-Chinese share inside the answer-level formal gate itself
 - [x] EL-3 keep gateway/shared-session noise and raw transport classified on watchlists, separate from algorithm conclusions
-- [ ] EL-4 rerun the main-path perf baseline after the deeper answer-level gate expansion once host output-shape noise is no longer dominating the deeper watch result
+- [x] EL-4 rerun the main-path perf baseline after the deeper answer-level gate expansion once host output-shape noise is no longer dominating the deeper watch result
 
 ## Development Log Capture
 

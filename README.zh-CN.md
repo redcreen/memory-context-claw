@@ -8,10 +8,11 @@
 
 如果你想先看一句最实在的话：
 
-- 最新完整回归：`397 / 397`
-- 最新 release-preflight：`8 / 8` 通过
+- 最新完整回归：`399 / 399`
+- latest available release-preflight：`8 / 8` 通过
 - retrieval-heavy CLI benchmark：`262 / 262`
 - isolated local answer-level gate：`12 / 12`
+- 更深的 answer-level watch：`12 / 18`
 - 仓库当前维护的 runnable matrix：`392` 个 case，其中中文相关占比 `53.83%`
 - 当前 live A/B 对比 OpenClaw 默认内置：`16` 个真实 answer-level 案例里，`15` 个两边都能答对，`1` 个只有 Memory Core 能答对，`0` 个只有默认内置能答对
 

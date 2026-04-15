@@ -1,94 +1,57 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 
-import {
-  isUnsupportedMemoryStatusFailure,
-  summarizeCommandFailure,
-  summarizeUnifiedMemoryCorePlugin
-} from "../src/runtime-config.js";
+import { extractJsonPayload } from "../src/runtime-config.js";
+import { extractJsonPayload as extractRetrievalJsonPayload } from "../src/retrieval.js";
 
-test("summarizeUnifiedMemoryCorePlugin returns stable runtime fields", () => {
-  const summary = summarizeUnifiedMemoryCorePlugin({
-    plugin: {
-      id: "unified-memory-core",
-      version: "0.2.1",
-      status: "loaded",
-      enabled: true,
-      rootDir: "/tmp/unified-memory-core",
-      services: ["unified-memory-core-nightly-self-learning"],
-      install: {
-        source: "path",
-        sourcePath: "/tmp/source",
-        installPath: "/tmp/install",
-        version: "0.2.1",
-        installedAt: "2026-04-13T00:00:00.000Z"
-      }
-    },
-    typedHooks: [{ name: "after_tool_call" }]
-  });
+test("extractJsonPayload parses JSON after plugin logs in stderr-style output", () => {
+  const raw = [
+    "[plugins] [unified-memory-core] loaded",
+    "[plugins] style-engine: registered capture_xiaohongshu_note",
+    "(node:1) [OPENCLAW_PLUGIN_SDK_COMPAT_DEPRECATED] Warning: compat is deprecated",
+    "Bundled plugins must use scoped plugin-sdk subpaths.",
+    "{",
+    '  "payloads": [',
+    '    { "text": "Maya Chen", "mediaUrl": null }',
+    "  ],",
+    '  "meta": { "durationMs": 19301 }',
+    "}"
+  ].join("\n");
 
-  assert.deepEqual(summary, {
-    id: "unified-memory-core",
-    version: "0.2.1",
-    status: "loaded",
-    enabled: true,
-    rootDir: "/tmp/unified-memory-core",
-    services: ["unified-memory-core-nightly-self-learning"],
-    typedHooks: ["after_tool_call"],
-    install: {
-      source: "path",
-      sourcePath: "/tmp/source",
-      installPath: "/tmp/install",
-      version: "0.2.1",
-      installedAt: "2026-04-13T00:00:00.000Z"
-    }
-  });
+  const payload = extractJsonPayload(raw);
+  assert.equal(payload.payloads[0].text, "Maya Chen");
+  assert.equal(payload.meta.durationMs, 19301);
 });
 
-test("summarizeCommandFailure normalizes exec failures", () => {
-  const summary = summarizeCommandFailure({
-    message: "Command failed: openclaw memory status --json",
-    code: 1,
-    stdout: "stdout text\n",
-    stderr: "stderr text\n"
-  });
+test("extractJsonPayload prefers the trailing JSON block over earlier bracketed log prefixes", () => {
+  const raw = [
+    "[plugins] preload",
+    "[plugins] second log line",
+    "{",
+    '  "ok": true,',
+    '  "results": [1, 2, 3]',
+    "}"
+  ].join("\n");
 
-  assert.deepEqual(summary, {
-    message: "Command failed: openclaw memory status --json",
-    code: 1,
-    stdout: "stdout text",
-    stderr: "stderr text"
-  });
+  const payload = extractJsonPayload(raw);
+  assert.equal(payload.ok, true);
+  assert.deepEqual(payload.results, [1, 2, 3]);
 });
 
-test("isUnsupportedMemoryStatusFailure detects unsupported memory/status commands", () => {
-  assert.equal(
-    isUnsupportedMemoryStatusFailure(
-      summarizeCommandFailure({
-        message: "Command failed",
-        stderr: "error: unknown command 'memory'"
-      })
-    ),
-    true
-  );
+test("retrieval extractJsonPayload parses stderr-style host output with plugin logs", () => {
+  const raw = [
+    "[plugins] [unified-memory-core] loaded",
+    "[plugins] [task-system] plugin loaded",
+    "(node:1) warning",
+    "{",
+    '  "payloads": [',
+    '    { "text": "Maya Chen" }',
+    "  ],",
+    '  "meta": { "durationMs": 20561 }',
+    "}"
+  ].join("\n");
 
-  assert.equal(
-    isUnsupportedMemoryStatusFailure(
-      summarizeCommandFailure({
-        message: "Command failed",
-        stderr: "error: unknown command 'status'"
-      })
-    ),
-    true
-  );
-
-  assert.equal(
-    isUnsupportedMemoryStatusFailure(
-      summarizeCommandFailure({
-        message: "Command failed",
-        stderr: "Config invalid"
-      })
-    ),
-    false
-  );
+  const payload = extractRetrievalJsonPayload(raw);
+  assert.equal(payload.payloads[0].text, "Maya Chen");
+  assert.equal(payload.meta.durationMs, 20561);
 });

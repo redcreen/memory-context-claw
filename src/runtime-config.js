@@ -159,27 +159,54 @@ export function extractJsonPayload(text) {
     throw new Error("Empty output");
   }
 
-  const start = value.search(/[\[{]/);
-  if (start === -1) {
+  const indices = [];
+  for (let index = 0; index < value.length; index += 1) {
+    const char = value[index];
+    if (char === "{" || char === "[") {
+      indices.push(index);
+    }
+  }
+
+  if (indices.length === 0) {
     throw new Error("No JSON payload found");
   }
 
-  const candidate = value.slice(start).trim();
-  try {
-    return JSON.parse(candidate);
-  } catch {
-    const lines = candidate.split("\n");
-    for (let index = 1; index < lines.length; index += 1) {
-      const joined = lines.slice(index).join("\n").trim();
-      if (!joined) {
-        continue;
-      }
-      try {
-        return JSON.parse(joined);
-      } catch {
-        continue;
+  for (let position = indices.length - 1; position >= 0; position -= 1) {
+    const candidate = value.slice(indices[position]).trim();
+    try {
+      return JSON.parse(candidate);
+    } catch {
+      const lines = candidate.split("\n");
+      for (let index = 1; index < lines.length; index += 1) {
+        const joined = lines.slice(index).join("\n").trim();
+        if (!joined) {
+          continue;
+        }
+        try {
+          return JSON.parse(joined);
+        } catch {
+          continue;
+        }
       }
     }
-    throw new Error("Unable to parse JSON payload");
   }
+
+  const lines = value.split("\n");
+  for (let index = 0; index < lines.length; index += 1) {
+    const line = lines[index].trimStart();
+    if (!line.startsWith("{") && !line.startsWith("[")) {
+      continue;
+    }
+    const joined = lines.slice(index).join("\n").trim();
+    if (!joined) {
+      continue;
+    }
+    try {
+      return JSON.parse(joined);
+    } catch {
+      continue;
+    }
+  }
+
+  throw new Error("Unable to parse JSON payload");
 }

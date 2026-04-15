@@ -307,18 +307,14 @@ export function extractJsonPayload(stdout) {
   }
 
   const startOffsets = [];
-  if (text.startsWith("{") || text.startsWith("[")) {
-    startOffsets.push(0);
-  }
-  for (const pattern of ["\n{", "\n["]) {
-    let index = text.indexOf(pattern);
-    while (index !== -1) {
-      startOffsets.push(index + 1);
-      index = text.indexOf(pattern, index + pattern.length);
+  for (let index = 0; index < text.length; index += 1) {
+    const char = text[index];
+    if (char === "{" || char === "[") {
+      startOffsets.push(index);
     }
   }
 
-  const uniqueOffsets = [...new Set(startOffsets)].sort((left, right) => left - right);
+  const uniqueOffsets = [...new Set(startOffsets)].sort((left, right) => right - left);
   for (const offset of uniqueOffsets) {
     const candidate = text.slice(offset).trim();
     if (!candidate) {
@@ -341,6 +337,24 @@ export function extractJsonPayload(stdout) {
       }
     }
   }
+
+  const lines = text.split("\n");
+  for (let index = 0; index < lines.length; index += 1) {
+    const line = lines[index].trimStart();
+    if (!line.startsWith("{") && !line.startsWith("[")) {
+      continue;
+    }
+    const joined = lines.slice(index).join("\n").trim();
+    if (!joined) {
+      continue;
+    }
+    try {
+      return JSON.parse(joined);
+    } catch {
+      continue;
+    }
+  }
+
   throw new Error("Unable to parse JSON payload from stdout");
 }
 

@@ -23,8 +23,8 @@ The current answers are:
 ### Repo Regression
 
 - `npm test`
-- `npm run umc:release-preflight -- --format markdown`
 - `npm run verify:memory-intent`
+- latest same-day `npm run umc:release-preflight -- --format markdown` evidence
 
 ### CLI Memory Benchmarks
 
@@ -60,11 +60,11 @@ The broader runnable matrix currently maintained in the repo is:
 
 ### Regression And Release Gates
 
-- `npm test`: `397 / 397` pass
-- `npm run umc:release-preflight -- --format markdown`: `pass`
-- release-preflight checks: `8 / 8` pass
-- markdown link scan: fixed and green in this round
+- `npm test`: `399 / 399` pass
 - `npm run verify:memory-intent`: pass
+- latest available `release-preflight` evidence in this round: `8 / 8` pass
+- note: an immediate post-fix rerun of `release-preflight` was attempted, but it did not complete within this session budget, so the final conclusions below rely on the directly rerun sub-gates instead
+- markdown link scan: green
 
 ### Retrieval-Heavy CLI Benchmark
 
@@ -93,6 +93,13 @@ Category coverage:
 
 This gate proves that the current answer-level path is not only retrieving memory, but can still answer correctly on a stable local host path.
 
+This `12 / 12` result was rerun after the host-output hardening in this round:
+
+- stronger JSON extraction from plugin-log-prefixed stderr/stdout payloads
+- stale session lock cleanup for isolated eval agents
+- no per-case destructive session reset inside the benchmark runner
+- one bounded retry for empty/parse-failed host payloads
+
 This is a real live host-path gate, but it is not the same as the builtin-vs-UMC A/B set below:
 
 - `12` cases: current UMC answer-level health gate
@@ -111,15 +118,29 @@ Interpretation:
 - it is no longer treated as proof that Memory Core retrieval is wrong
 - retrieval conclusions in this report come from the stable local sqlite-backed benchmark path instead
 
+### Deeper Answer-Level Watch Surface
+
+- report: [openclaw-cli-agent-answer-watch-2026-04-15.md](openclaw-cli-agent-answer-watch-2026-04-15.md)
+- total cases: `18`
+- passed: `12 / 18`
+- failed: `6`
+- zh-bearing cases: `9 / 18`
+
+Interpretation:
+
+- this surface improved from the earlier `7 / 18` watch result
+- but it is still not strong enough to replace the repo-default `12 / 12` formal gate
+- the remaining failures are no longer just one bucket of host noise; they are now a mix of residual output-shape problems and genuine answer-level expectation mismatches
+
 ### Main-Path Performance Baseline
 
 - report: [main-path-performance-baseline-2026-04-15.md](main-path-performance-baseline-2026-04-15.md)
 
 Current baseline:
 
-- retrieval / assembly average: `22 ms`
-- raw transport average: `10765 ms`
-- answer-level average: `28340 ms`
+- retrieval / assembly average: `8 ms`
+- raw transport average: `8335 ms`
+- answer-level average: `24553 ms`
 
 Interpretation:
 
@@ -196,10 +217,13 @@ Even when many simple prompts are shared wins, Memory Core is already materially
 3. Stable answer-level gate
    The isolated local answer-level gate is now `12 / 12`, which gives a repeatable host path for future optimization work.
 
-4. Host transport noise isolation
+4. Better separation between stable gate and deeper watch
+   The deeper `18`-case watch surface has improved to `12 / 18`, but it is still explicitly kept out of the repo-default formal gate. That keeps host noise and harder answer-level regressions from quietly polluting the stable health signal.
+
+5. Host transport noise isolation
    Raw `openclaw memory search` instability is tracked separately, so host JSON failures no longer get misread as algorithm regressions.
 
-5. Governed self-learning lifecycle
+6. Governed self-learning lifecycle
    Memory Core already includes nightly self-learning, governed candidate promotion, decision trails, and replay / audit tooling. OpenClaw builtin memory alone does not expose this same governed lifecycle surface in this repo.
 
 ## Current Progress And Next Step
@@ -213,7 +237,7 @@ Current `next` in the development plan:
 
 - deepen the stable answer-level formal gate into more `cross-source`, `conflict`, `multi-step history`, and more natural Chinese coverage
 
-That means this round has finished the broad regression and evidence pass, and the next phase is no longer “prove basic health”, but “widen the answer-level edge where Memory Core beats the builtin baseline more often”.
+That means this round has finished the broad regression and evidence pass, and the next phase is no longer “prove basic health”, but “turn the improved `12 / 18` deeper watch into a cleaner, promotable gate where Memory Core beats the builtin baseline more often”.
 
 ## Related Reports
 

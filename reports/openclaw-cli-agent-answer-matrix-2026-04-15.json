@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-15T03:58:00.402Z",
+  "generatedAt": "2026-04-15T12:57:31.050Z",
   "agentId": "umceval65",
   "agentToolHint": true,
   "agentLocal": true,
@@ -8,7 +8,7 @@
     "total": 12,
     "passed": 12,
     "failed": 0,
-    "comparedLegacy": 5,
+    "comparedLegacy": 7,
     "legacyPassed": 0,
     "abstained": 0,
     "abstentionRate": 0,
@@ -55,8 +55,8 @@
       }
     },
     "byAttribution": {
-      "legacy-skipped": 5,
-      "not-compared": 7
+      "legacy-skipped": 7,
+      "not-compared": 5
     },
     "byTransport": {
       "agent_local": 12
@@ -78,7 +78,7 @@
       "current": {
         "ok": true,
         "transport": "agent_local",
-        "answer": "Maya Chen",
+        "answer": "Maya Chen.",
         "injectedWorkspaceFiles": [
           "AGENTS.md",
           "SOUL.md",
@@ -90,7 +90,7 @@
           "MEMORY.md"
         ],
         "observedSessionKey": "agent:umceval65:main",
-        "observedSessionId": "umc-bench-agent-name-1-10faf24c",
+        "observedSessionId": "umc-bench-agent-preference-async-1-469f47bd",
         "warning": "",
         "passed": true,
         "expectedAnyOk": true,
@@ -113,7 +113,7 @@
       "current": {
         "ok": true,
         "transport": "agent_local",
-        "answer": "Project Lantern is a B2B analytics assistant for clinic managers. Source: notes/project-lantern.md#L1-L15",
+        "answer": "Project Lantern is a B2B analytics assistant for clinic managers.",
         "injectedWorkspaceFiles": [
           "AGENTS.md",
           "SOUL.md",
@@ -125,7 +125,7 @@
           "MEMORY.md"
         ],
         "observedSessionKey": "agent:umceval65:main",
-        "observedSessionId": "umc-bench-agent-project-1-8d0e5de1",
+        "observedSessionId": "umc-bench-agent-preference-async-1-469f47bd",
         "warning": "",
         "passed": true,
         "expectedAnyOk": true,
@@ -160,7 +160,7 @@
           "MEMORY.md"
         ],
         "observedSessionKey": "agent:umceval65:main",
-        "observedSessionId": "umc-bench-agent-current-editor-1-333b599e",
+        "observedSessionId": "umc-bench-agent-preference-async-1-469f47bd",
         "warning": "",
         "passed": true,
         "expectedAnyOk": true,
@@ -183,7 +183,7 @@
       "current": {
         "ok": true,
         "transport": "agent_local",
-        "answer": "eu-west-1",
+        "answer": "eu-west-1.",
         "injectedWorkspaceFiles": [
           "AGENTS.md",
           "SOUL.md",
@@ -195,7 +195,7 @@
           "MEMORY.md"
         ],
         "observedSessionKey": "agent:umceval65:main",
-        "observedSessionId": "umc-bench-agent-current-region-1-7d9545bd",
+        "observedSessionId": "umc-bench-agent-preference-async-1-469f47bd",
         "warning": "",
         "passed": true,
         "expectedAnyOk": true,
@@ -230,7 +230,7 @@
           "MEMORY.md"
         ],
         "observedSessionKey": "agent:umceval65:main",
-        "observedSessionId": "umc-bench-agent-current-notebook-1-aad1da6b",
+        "observedSessionId": "umc-bench-agent-preference-async-1-469f47bd",
         "warning": "",
         "passed": true,
         "expectedAnyOk": true,
@@ -253,7 +253,7 @@
       "current": {
         "ok": true,
         "transport": "agent_local",
-        "answer": "Async written updates, not live voice calls.",
+        "answer": "Async written updates.",
         "injectedWorkspaceFiles": [
           "AGENTS.md",
           "SOUL.md",
@@ -265,7 +265,7 @@
           "MEMORY.md"
         ],
         "observedSessionKey": "agent:umceval65:main",
-        "observedSessionId": "umc-bench-agent-preference-async-1-e3a75640",
+        "observedSessionId": "umc-bench-agent-preference-async-1-469f47bd",
         "warning": "",
         "passed": true,
         "expectedAnyOk": true,
@@ -300,7 +300,7 @@
           "MEMORY.md"
         ],
         "observedSessionKey": "agent:umceval65:main",
-        "observedSessionId": "umc-bench-agent-rule-no-guess-1-fd35c925",
+        "observedSessionId": "umc-bench-agent-preference-async-1-469f47bd",
         "warning": "",
         "passed": true,
         "expectedAnyOk": true,
@@ -335,7 +335,7 @@
           "MEMORY.md"
         ],
         "observedSessionKey": "agent:umceval65:main",
-        "observedSessionId": "umc-bench-agent-project-city-1-a3144dd2",
+        "observedSessionId": "umc-bench-agent-preference-async-1-469f47bd",
         "warning": "",
         "passed": true,
         "expectedAnyOk": true,
@@ -370,7 +370,7 @@
           "MEMORY.md"
         ],
         "observedSessionKey": "agent:umceval65:main",
-        "observedSessionId": "umc-bench-agent-history-editor-1-9ff89053",
+        "observedSessionId": "umc-bench-agent-preference-async-1-469f47bd",
         "warning": "",
         "passed": true,
         "expectedAnyOk": true,
@@ -387,9 +387,9 @@
       "entrypoint": "agent",
       "query": "",
       "message": "仅根据你当前这个 agent 的记忆，用户现在主要用什么编辑器？如果记忆里没有，请直接回答：I don't know based on current memory.",
-      "compareLegacy": false,
+      "compareLegacy": true,
       "attributionKind": "temporal",
-      "attribution": "not-compared",
+      "attribution": "legacy-skipped",
       "current": {
         "ok": true,
         "transport": "agent_local",
@@ -405,7 +405,7 @@
           "MEMORY.md"
         ],
         "observedSessionKey": "agent:umceval65:main",
-        "observedSessionId": "umc-bench-agent-zh-temporal-1-43253129",
+        "observedSessionId": "umc-bench-agent-preference-async-1-469f47bd",
         "warning": "",
         "passed": true,
         "expectedAnyOk": true,
@@ -422,13 +422,13 @@
       "entrypoint": "agent",
       "query": "",
       "message": "只根据当前记忆，Project Lantern 到底是在做什么？如果没有这条记忆，就只回答：I don't know based on current memory.",
-      "compareLegacy": false,
+      "compareLegacy": true,
       "attributionKind": "retrieval",
-      "attribution": "not-compared",
+      "attribution": "legacy-skipped",
       "current": {
         "ok": true,
         "transport": "agent_local",
-        "answer": "- Project Lantern is a B2B analytics assistant for clinic managers. Source: notes/project-lantern.md#L1-L15",
+        "answer": "Project Lantern is a B2B analytics assistant for clinic managers.",
         "injectedWorkspaceFiles": [
           "AGENTS.md",
           "SOUL.md",
@@ -440,7 +440,7 @@
           "MEMORY.md"
         ],
         "observedSessionKey": "agent:umceval65:main",
-        "observedSessionId": "umc-bench-agent-zh-natural-project-1-8c08c673",
+        "observedSessionId": "umc-bench-agent-preference-async-1-469f47bd",
         "warning": "",
         "passed": true,
         "expectedAnyOk": true,
@@ -475,7 +475,7 @@
           "MEMORY.md"
         ],
         "observedSessionKey": "agent:umceval65:main",
-        "observedSessionId": "umc-bench-agent-negative-1-232f1695",
+        "observedSessionId": "umc-bench-agent-preference-async-1-469f47bd",
         "warning": "",
         "passed": true,
         "expectedAnyOk": true,

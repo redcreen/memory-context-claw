@@ -30,8 +30,8 @@
 - 自然中文代表性 retrieval slice：`5 / 5`
 - 自然中文代表性 answer-level slice：`6 / 6`
 - raw transport watchlist：`0 / 8 raw ok`，全部隔离为 host `missing_json_payload`
-- main-path perf baseline：retrieval / assembly `43ms`；raw transport `15570ms`；isolated local answer-level `36155ms`
-- 当前结论：`200+` case 建设、自然中文补强、transport watchlist failure-class 化、perf baseline 刷新，以及 answer-level formal gate 从 `6/6` 扩到 `12/12` 都已收口；当前真正的下一步是把这个更大的 gate 继续做深
+- main-path perf baseline：retrieval / assembly `8ms`；raw transport `8335ms`；isolated local answer-level `24553ms`
+- 当前结论：`200+` case 建设、自然中文补强、transport watchlist failure-class 化、perf baseline 刷新，以及 answer-level formal gate 从 `6/6` 扩到 `12/12` 都已收口；更深的 watch 也已从 `7/18` 提升到 `12/18`，但当前真正的下一步仍是把这个更大的 gate 继续做深
 
 对应证据：
 
@@ -54,7 +54,7 @@
 主 roadmap 里的“当前”不只是方向，也对应接下来要执行的具体工作：
 
 1. 扩大 answer-level formal gate，不再只停留在当前 `12` 条稳定样本。
-当前进展：更深的 `18` case answer-level watch matrix 已建立，但当前 `7 / 18`，失败主要是 host JSON parse noise，所以还没有直接替换 repo-default `12 / 12` formal gate。
+当前进展：更深的 `18` case answer-level watch matrix 已建立，当前 `12 / 18`；它已经明显好于之前的 `7 / 18`，但仍然混有 residual host output-shape 噪声和真正的 expectation mismatch，所以还没有直接替换 repo-default `12 / 12` formal gate。
 2. 在后续扩容中保持 `24` 条自然中文案例持续为绿，而不是退回只有 zh-bearing 数量。
 3. 持续把 gateway/session-lock 与 raw transport 维持在 `missing_json_payload` watchlist，不让宿主噪声重新污染算法判断。
 4. 继续按 `2026-04-15` 主链路性能基线压低 answer-level 最慢层，再决定后续算法优化顺序。

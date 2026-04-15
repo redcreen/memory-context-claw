@@ -25,10 +25,11 @@
 
 这一轮关键结果：
 
-- 仓库回归：`397 / 397`
-- release-preflight：`8 / 8` 通过
+- 仓库回归：`399 / 399`
+- latest available release-preflight 证据：`8 / 8` 通过
 - retrieval-heavy CLI benchmark：`262 / 262`
 - isolated local answer-level gate：`12 / 12`
+- 更深的 answer-level watch：`12 / 18`
 - 仓库当前维护的 runnable matrix：`392` cases
 - 其中中文相关 case 占比：`53.83%`
 
@@ -56,6 +57,22 @@
 
 1. OpenClaw 内置记忆在很多简单事实题上本来就不差。
 2. Memory Core 的当前净增益已经出现了，但主要集中在更难的自然问法，尤其是中文问法，而不是所有简单题都立刻拉开差距。
+
+## 这轮新增修复带来了什么
+
+这轮不是只重跑测试，我还把 answer-level runner 的宿主噪声处理补强了：
+
+- 更强的 JSON payload 提取
+- isolated eval agent 的 stale session lock 清理
+- 不再在每个 case 前 destructive reset session
+- 空 payload / parse failure 时做一次 bounded retry
+
+结果是：
+
+- repo-default stable answer-level formal gate 重新稳定在 `12 / 12`
+- 更深的 watch 面从之前的 `7 / 18` 提升到现在的 `12 / 18`
+
+这说明当前主问题已经不再是“stable gate 根本不可信”，而是“更深、更难的 answer-level 覆盖还没完全收口”。
 
 ## 一个更有说服力的真实例子
 
