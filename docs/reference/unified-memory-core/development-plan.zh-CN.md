@@ -222,12 +222,16 @@
 
 - 专项：`execute-200-case-benchmark-and-answer-path-triage`
 - 当前状态：`completed`
-- runnable matrix：`368` cases
-- 中文占比：`187 / 368 = 50.82%`
+- runnable matrix：`392` cases
+- 中文占比：`211 / 392 = 53.83%`
+- 自然中文案例：`24`（`12` retrieval + `12` answer-level）
 - retrieval-heavy formal gate：`250 / 250`
 - isolated local answer-level formal gate：`6 / 6`
-- raw transport watchlist：`0 / 8 raw ok`，全部归类为 host `invalid_json`
-- 当前解释：`200+` case 扩面和第一轮正式门禁已经收口；后续主线不再是“补到 200”，而是继续扩大 answer-level 样本、提高中文自然度，并按 perf baseline 优化最慢层
+- 自然中文代表性 retrieval slice：`5 / 5`
+- 自然中文代表性 answer-level slice：`6 / 6`
+- raw transport watchlist：`0 / 8 raw ok`，全部归类为 host `missing_json_payload`
+- 最新 perf baseline：retrieval / assembly `43ms`；raw transport `15570ms`；isolated local answer-level `36155ms`
+- 当前解释：`200+` case 扩面、自然中文补强、watchlist failure-class 化和 perf baseline 刷新都已收口；后续主线不再是“补到 200”，而是继续扩大 answer-level 样本
 
 ## 下一阶段规划队列
 
@@ -246,9 +250,9 @@
 ## 下一轮执行队列
 
 65. `completed` 把 benchmark 从 `187` 扩成 coverage-first 的 `200+` case，并按 blind spot 补齐，而不是只堆改写。
-   - 当前 runnable matrix = `368` cases，其中 retrieval-heavy = `250`，answer-level = `118`。
+   - 当前 runnable matrix = `392` cases，其中 retrieval-heavy = `262`，answer-level = `130`。
 66. `completed` 把中文案例真正做成不少于 `50%` 的实际执行面，并在 retrieval / answer-level / negative 三层都占有实体比例。
-   - 当前 zh-bearing runnable matrix = `187 / 368 = 50.82%`。
+   - 当前 zh-bearing runnable matrix = `211 / 392 = 53.83%`。
 67. `completed` 把 answer-level host path 与 raw transport watchlist 纳入正式 benchmark gate，持续报告通过率、abstention rate、watchlist 分布。
    - retrieval-heavy gate：`250/250`
    - answer-level formal gate：`6/6`（`openclaw agent --local` + isolated eval agent `umceval65`）
@@ -257,7 +261,7 @@
    - 根因已拆开：gateway/session-lock 噪声、agent main-session 复用污染、CLI `--local` JSON 输出写在 stderr。
    - 当前正式 gate 改走 isolated local answer path；gateway 路径继续保留在 watchlist，不再污染算法判断。
 69. `completed` 按主链路性能基线优化最慢层，优先解释 host answer-level，再处理 raw transport，再决定 retrieval / assembly 是否需要继续微调。
-   - 当前 main-path baseline：retrieval / assembly `85ms` 平均；raw transport `15127ms` 平均；isolated local answer-level `39281ms` 平均，`3/3` 通过。
+   - 最新 main-path baseline：retrieval / assembly `43ms` 平均；raw transport `15570ms` 平均；isolated local answer-level `36155ms` 平均，`3/3` 通过。
 70. `completed` 重跑 `200+` case benchmark、answer-level gate、transport watchlist 和 main-path perf baseline，并以新证据决定是否打开后续 enhancement planning。
    - 结论：继续推进 benchmark / perf / transport work，但不把 raw transport 或 gateway 噪声误报成 retrieval / answer-level 算法退化。
 71. `done` 为 memory-intent replay 建立正式回归面，覆盖 durable rule、tool routing preference、session constraint、task-only instruction、user profile fact 和 no-memory 噪音。
@@ -276,12 +280,12 @@
 77. `next` 把 isolated local answer-level formal gate 从 `6` 条代表性样本扩大到更大的稳定矩阵。
    - 目标不是只增加题数，而是覆盖更多 current-vs-history、跨来源、冲突和 abstention answer-level 场景。
    - 扩容后必须继续与 raw transport watchlist 分离，不允许把宿主噪声重新混回算法结论。
-78. `todo` 把中文案例从“占比过半”继续推进到更自然、更高信息密度的真实中文表达。
-   - 不再接受只有翻译味的 zh-bearing case；必须补真实中文 current-state 问法、中文规则题、含上下文省略的中文提问和中英混合问法。
-79. `todo` 持续把 gateway/session-lock 与 raw `openclaw memory search` transport 保持在独立 watchlist。
-   - 这条队列的目标不是把 watchlist 做成绿色，而是确保 host instability 不再污染 retrieval / answer-level 算法判断。
-80. `todo` 按主链路性能基线继续优化最慢层，并在每轮优化后重跑正式门禁。
-   - 当前优先级仍是 isolated local answer-level 慢路径，其次是 raw transport；只有在这两层边界继续清楚后，才讨论 retrieval / assembly 的进一步微调。
+78. `completed` 把中文案例从“占比过半”继续推进到更自然、更高信息密度的真实中文表达。
+   - 当前已形成 `24` 条 `[zh-natural]` 案例（`12` retrieval + `12` answer-level），代表性 retrieval slice `5/5`，代表性 answer-level slice `6/6`。
+79. `completed` 持续把 gateway/session-lock 与 raw `openclaw memory search` transport 保持在独立 watchlist。
+   - 最新 raw transport watchlist = `0/8 raw ok`，全部 failure-class 为 `missing_json_payload`；这条 watchlist 只代表 host instability，不代表 retrieval / answer-level 算法退化。
+80. `completed` 按主链路性能基线继续优化最慢层，并在每轮优化后重跑正式门禁。
+   - 当前优先级仍是 isolated local answer-level 慢路径，其次是 raw transport；最新 perf baseline 已刷新到 retrieval / assembly `43ms`、raw transport `15570ms`、isolated local answer-level `36155ms`。
 
 ## 延后增强队列
 

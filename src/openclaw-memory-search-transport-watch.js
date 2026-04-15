@@ -1,3 +1,27 @@
+function classifyFailureClass(item = {}) {
+  const status = String(item.status || "");
+  const errorText = String(item.error || "").toLowerCase();
+  const stderrPreview = String(item.stderrPreview || "").toLowerCase();
+  const joined = `${errorText}\n${stderrPreview}`;
+
+  if (status === "ok") return "ok";
+  if (status === "timeout") return "timeout";
+  if (status === "empty_results") return "empty_results";
+  if (status === "invalid_json") {
+    if (!joined.trim()) return "missing_json_payload";
+    if (joined.includes("gateway")) return "gateway_noise";
+    if (joined.includes("session")) return "session_noise";
+    return "missing_json_payload";
+  }
+  if (status === "command_failed") {
+    if (joined.includes("timed out")) return "timeout";
+    if (joined.includes("gateway")) return "gateway_noise";
+    if (joined.includes("session")) return "session_noise";
+    return "command_failed";
+  }
+  return "other_failure";
+}
+
 export function summarizeTransportProbeResults(results = []) {
   const summary = {
     total: results.length,
@@ -10,7 +34,8 @@ export function summarizeTransportProbeResults(results = []) {
     averageDurationMs: 0,
     maxDurationMs: 0,
     watchlist: [],
-    byCategory: {}
+    byCategory: {},
+    byFailureClass: {}
   };
 
   const durations = [];
@@ -30,54 +55,74 @@ export function summarizeTransportProbeResults(results = []) {
       case "ok":
         summary.ok += 1;
         summary.byCategory[category].ok += 1;
+        summary.byFailureClass.ok = (summary.byFailureClass.ok || 0) + 1;
         break;
       case "empty_results":
         summary.emptyResults += 1;
         summary.byCategory[category].failures += 1;
+        summary.byFailureClass.empty_results = (summary.byFailureClass.empty_results || 0) + 1;
         summary.watchlist.push({
           id: item.id,
           category,
           status: item.status,
+          failureClass: classifyFailureClass(item),
           reason: "raw openclaw memory search returned no results"
         });
         break;
       case "timeout":
         summary.timeout += 1;
         summary.byCategory[category].failures += 1;
+        summary.byFailureClass.timeout = (summary.byFailureClass.timeout || 0) + 1;
         summary.watchlist.push({
           id: item.id,
           category,
           status: item.status,
+          failureClass: classifyFailureClass(item),
           reason: "raw openclaw memory search timed out"
         });
         break;
       case "invalid_json":
         summary.invalidJson += 1;
         summary.byCategory[category].failures += 1;
+        {
+          const failureClass = classifyFailureClass(item);
+          summary.byFailureClass[failureClass] = (summary.byFailureClass[failureClass] || 0) + 1;
+        }
         summary.watchlist.push({
           id: item.id,
           category,
           status: item.status,
+          failureClass: classifyFailureClass(item),
           reason: "raw openclaw memory search returned a non-JSON payload"
         });
         break;
       case "command_failed":
         summary.commandFailed += 1;
         summary.byCategory[category].failures += 1;
+        {
+          const failureClass = classifyFailureClass(item);
+          summary.byFailureClass[failureClass] = (summary.byFailureClass[failureClass] || 0) + 1;
+        }
         summary.watchlist.push({
           id: item.id,
           category,
           status: item.status,
+          failureClass: classifyFailureClass(item),
           reason: item.error || "raw openclaw memory search command failed"
         });
         break;
       default:
         summary.otherFailure += 1;
         summary.byCategory[category].failures += 1;
+        {
+          const failureClass = classifyFailureClass(item);
+          summary.byFailureClass[failureClass] = (summary.byFailureClass[failureClass] || 0) + 1;
+        }
         summary.watchlist.push({
           id: item.id,
           category,
           status: item.status || "other_failure",
+          failureClass: classifyFailureClass(item),
           reason: item.error || "unexpected raw transport failure"
         });
         break;
@@ -122,12 +167,17 @@ export function renderTransportWatchReport(report, { generatedAt } = {}) {
     lines.push(`- ${category}: ok=\`${stats.ok}\` failures=\`${stats.failures}\` total=\`${stats.total}\` avgMs=\`${stats.averageDurationMs}\` maxMs=\`${stats.maxDurationMs}\``);
   }
   lines.push("");
+  lines.push("## Failure Classes");
+  for (const [failureClass, count] of Object.entries(summary.byFailureClass || {})) {
+    lines.push(`- ${failureClass}: \`${count}\``);
+  }
+  lines.push("");
   lines.push("## Watchlist");
   if (summary.watchlist.length === 0) {
     lines.push("- none");
   } else {
     for (const item of summary.watchlist) {
-      lines.push(`- ${item.id} [${item.category}] \`${item.status}\`: ${item.reason}`);
+      lines.push(`- ${item.id} [${item.category}] \`${item.status}\` / \`${item.failureClass || "unknown"}\`: ${item.reason}`);
     }
   }
   lines.push("");

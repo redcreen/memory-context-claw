@@ -233,9 +233,9 @@ The goal is not to reopen baseline contract work. The goal is to:
 ## Next Execution Queue
 
 65. `completed` Expand the benchmark from `187` to a coverage-first `200+` cases and fill blind spots instead of padding with rewrites.
-   - The runnable matrix is now `368` cases, with `250` retrieval-heavy and `118` answer-level cases.
+   - The runnable matrix is now `392` cases, with `262` retrieval-heavy and `130` answer-level cases.
 66. `completed` Turn Chinese coverage into at least `50%` of the real runnable matrix across retrieval, answer-level, and abstention surfaces.
-   - The current zh-bearing runnable matrix is `187 / 368 = 50.82%`.
+   - The current zh-bearing runnable matrix is `211 / 392 = 53.83%`.
 67. `completed` Promote the answer-level host path and the raw transport watchlist into the formal benchmark gate with pass rate, abstention rate, and watchlist reporting.
    - retrieval-heavy gate: `250/250`
    - answer-level formal gate: `6/6` via `openclaw agent --local` with isolated eval agent `umceval65`
@@ -244,7 +244,7 @@ The goal is not to reopen baseline contract work. The goal is to:
    - Root causes are now separated: gateway/session-lock noise, agent main-session reuse contamination, and CLI `--local` JSON emitted on stderr.
    - The formal gate now uses the isolated local answer path; the gateway path stays on the watchlist instead of polluting algorithm judgments.
 69. `completed` Use the main-path performance baseline to optimize the slowest layer, prioritizing host answer-level first, raw transport second, and only then retrieval / assembly if needed.
-   - Current main-path baseline: retrieval / assembly avg `85ms`; raw transport avg `15127ms`; isolated local answer-level avg `39281ms` with `3/3` passing.
+   - Latest main-path baseline: retrieval / assembly avg `43ms`; raw transport avg `15570ms`; isolated local answer-level avg `36155ms` with `3/3` passing.
 70. `completed` Rerun the `200+` benchmark, answer-level gate, transport watchlist, and main-path perf baseline, then use that evidence to decide whether later enhancement planning can open.
    - Conclusion: continue benchmark / perf / transport work, but do not misclassify raw transport or gateway noise as retrieval / answer-level algorithm regressions.
 71. `done` Establish a formal memory-intent replay regression surface covering durable rules, tool-routing preferences, session constraints, task-only instructions, user-profile facts, and no-memory noise.
@@ -263,12 +263,12 @@ The goal is not to reopen baseline contract work. The goal is to:
 77. `next` Expand the isolated local answer-level formal gate beyond the current `6` representative samples into a larger stable matrix.
    - The goal is not raw count growth; it is broader answer-level coverage for current-vs-history, cross-source, conflict, and abstention scenarios.
    - The larger gate must stay separate from the raw transport watchlist so host noise does not get mixed back into algorithm conclusions.
-78. `todo` Push Chinese coverage beyond "more than half" into more natural, higher-information real Chinese prompts.
-   - zh-bearing surface coverage is no longer enough; add real Chinese current-state questions, rule prompts, elliptical prompts, and mixed Chinese-English queries.
-79. `todo` Keep gateway/session-lock behavior and raw `openclaw memory search` transport on explicit watchlists.
-   - The goal is not to make the watchlist green immediately; it is to keep host instability from contaminating retrieval / answer-level algorithm judgment.
-80. `todo` Continue optimizing the slowest layer from the main-path performance baseline and rerun the formal gates after each meaningful change.
-   - The current priority remains isolated local answer-level first, raw transport second; only after those boundaries stay clear should further retrieval / assembly tuning be reconsidered.
+78. `completed` Push Chinese coverage beyond "more than half" into more natural, higher-information real Chinese prompts.
+   - The matrix now includes `24` `[zh-natural]` cases (`12` retrieval + `12` answer-level) with a representative retrieval slice of `5/5` and a representative answer-level slice of `6/6`.
+79. `completed` Keep gateway/session-lock behavior and raw `openclaw memory search` transport on explicit watchlists.
+   - The latest raw transport watchlist is `0/8 raw ok`, all classified as `missing_json_payload`; this watchlist tracks host instability, not retrieval / answer-level algorithm regressions.
+80. `completed` Continue optimizing the slowest layer from the main-path performance baseline and rerun the formal gates after each meaningful change.
+   - The current priority remains isolated local answer-level first and raw transport second; the latest perf baseline is now retrieval / assembly `43ms`, raw transport `15570ms`, isolated local answer-level `36155ms`.
 
 ## Deferred Enhancement Queue
 

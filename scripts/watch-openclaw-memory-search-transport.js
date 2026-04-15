@@ -115,7 +115,8 @@ async function runRawProbe(caseDef, args) {
         query: caseDef.query,
         status: "timeout",
         durationMs: Math.round(performance.now() - startedAt),
-        error: text
+        error: text,
+        stderrPreview: text.slice(0, 240)
       };
     }
     if (String(error?.stdout || "").trim()) {
@@ -139,7 +140,9 @@ async function runRawProbe(caseDef, args) {
           query: caseDef.query,
           status: "invalid_json",
           durationMs: Math.round(performance.now() - startedAt),
-          error: text
+          error: text,
+          stdoutPreview: String(error.stdout || "").slice(0, 240),
+          stderrPreview: String(error.stderr || "").slice(0, 240)
         };
       }
     }
@@ -149,7 +152,9 @@ async function runRawProbe(caseDef, args) {
       query: caseDef.query,
       status: "command_failed",
       durationMs: Math.round(performance.now() - startedAt),
-      error: text
+      error: text,
+      stdoutPreview: String(error?.stdout || "").slice(0, 240),
+      stderrPreview: String(error?.stderr || "").slice(0, 240)
     };
   }
 }

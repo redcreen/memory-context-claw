@@ -44,3 +44,35 @@ test("rewriteRetrievalQueries strips Chinese benchmark-style agent wrapper instr
 
   assert.equal(queries[0], "用户现在默认部署区域是什么");
 });
+
+test("rewriteRetrievalQueries expands natural Chinese preferred-name wording", () => {
+  const queries = rewriteRetrievalQueries("平时我希望你怎么称呼我", {
+    maxQueries: 5
+  });
+
+  assert.ok(queries.some((item) => item.includes("preferred name")));
+});
+
+test("rewriteRetrievalQueries expands natural Chinese deploy-region wording", () => {
+  const queries = rewriteRetrievalQueries("现在默认部署区域到底用哪个", {
+    maxQueries: 5
+  });
+
+  assert.ok(queries.some((item) => item.includes("current deploy region")));
+});
+
+test("rewriteRetrievalQueries expands natural Chinese no-guess wording", () => {
+  const queries = rewriteRetrievalQueries("如果记忆不完整你应该怎么处理", {
+    maxQueries: 5
+  });
+
+  assert.ok(queries.some((item) => item.includes("do not guess")));
+});
+
+test("rewriteRetrievalQueries expands natural Chinese notebook wording", () => {
+  const queries = rewriteRetrievalQueries("开会现在用的是哪本本子", {
+    maxQueries: 5
+  });
+
+  assert.ok(queries.some((item) => item.includes("current notebook for meetings")));
+});

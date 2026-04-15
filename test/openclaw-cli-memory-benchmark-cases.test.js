@@ -48,3 +48,10 @@ test("openclaw CLI memory benchmark keeps zh-bearing coverage at or above 50%", 
   assert.ok(zhBearing.some((item) => item.entrypoint === "agent"));
   assert.ok(zhBearing.some((item) => item.category === "negative"));
 });
+
+test("openclaw CLI memory benchmark includes natural Chinese cases beyond translated mirrors", () => {
+  const naturalZh = cases.filter((item) => String(item.note || "").includes("[zh-natural]"));
+  assert.ok(naturalZh.length >= 12);
+  assert.ok(naturalZh.some((item) => item.entrypoint === "memory_search"));
+  assert.ok(naturalZh.some((item) => item.entrypoint === "agent"));
+});

@@ -22,25 +22,30 @@ This block is here to answer "where did the `200+` case program actually land?" 
 
 - Program: `execute-200-case-benchmark-and-answer-path-triage`
 - Status: `completed`
-- Runnable matrix: `368` cases
-- Chinese coverage: `187 / 368 = 50.82%`
+- Runnable matrix: `392` cases
+- Chinese coverage: `211 / 392 = 53.83%`
+- Natural Chinese cases: `24` (`12` retrieval + `12` answer-level)
 - Retrieval-heavy formal gate: `250 / 250`
 - Isolated local answer-level formal gate: `6 / 6`
-- Raw transport watchlist: `0 / 8 raw ok`, all isolated as host `invalid_json`
-- Interpretation: the `200+` case buildout and first formal gates are complete; the next phase is answer-level expansion, more natural Chinese prompts, transport isolation, and slow-path optimization
+- Natural-Chinese representative retrieval slice: `5 / 5`
+- Natural-Chinese representative answer-level slice: `6 / 6`
+- Raw transport watchlist: `0 / 8 raw ok`, all isolated as host `missing_json_payload`
+- Main-path perf baseline: retrieval / assembly `43ms`; raw transport `15570ms`; isolated local answer-level `36155ms`
+- Interpretation: the `200+` case buildout, natural-Chinese hardening, watchlist classification, and perf-baseline refresh are complete; the next phase is answer-level expansion on top of those stabilized surfaces
 
 Supporting evidence:
 
 - [../.codex/status.md](../.codex/status.md)
 - [../.codex/plan.md](../.codex/plan.md)
 - [generated/openclaw-cli-memory-eval-program-2026-04-14.md](generated/openclaw-cli-memory-eval-program-2026-04-14.md)
+- [generated/openclaw-natural-chinese-watch-and-perf-2026-04-15.md](generated/openclaw-natural-chinese-watch-and-perf-2026-04-15.md)
 
 ## Now / Next / Later
 
 | Horizon | Focus | Exit Signal |
 | --- | --- | --- |
-| Now | keep the formal gates stable: maintain the `368`-case runnable matrix, `50%+` Chinese coverage, the isolated local answer-level gate, and the raw transport watchlist | retrieval-heavy, answer-level, transport-watch, and perf-baseline evidence can all be rerun without reopening scope |
-| Next | expand the answer-level formal gate, improve natural Chinese prompts, and optimize the slowest layer before any later runtime API / service-mode discussion | the answer-level gate is larger than the representative subset, Chinese cases read more naturally, and gateway / transport noise no longer dominates conclusions |
+| Now | expand the answer-level formal gate on top of the refreshed `392`-case matrix, `53.83%` Chinese coverage, failure-class transport watchlist, and `2026-04-15` perf baseline | the answer-level gate is larger than the current `6` representative samples while the natural-Chinese, watchlist, and perf evidence all stay stable |
+| Next | turn that larger answer-level gate into routine evidence before any later runtime API / service-mode discussion | the larger isolated local answer-level gate reruns cleanly without gateway/raw transport noise bleeding back into conclusions |
 | Later | discuss runtime API / split-ready evolution only from a stable operator baseline | independent-product evidence stays green after Stage 5 closeout |
 
 ## Current Execution Focus
@@ -48,13 +53,13 @@ Supporting evidence:
 The current roadmap horizon also maps to the concrete next execution work:
 
 1. expand the answer-level formal gate beyond the current `6` representative isolated-local samples
-2. turn the current `50%+` Chinese coverage into more natural, higher-information prompts instead of just zh-bearing surface coverage
-3. keep gateway/session-lock noise and raw `openclaw memory search` transport instability on separate watchlists so they do not get misread as algorithm regressions
-4. use the refreshed main-path performance baseline to reduce the slowest answer-level layer before choosing later algorithm work
+2. keep the `24` natural-Chinese cases green during that expansion instead of slipping back to zh-bearing-only coverage
+3. keep gateway/session-lock noise and raw `openclaw memory search` transport instability classified as `missing_json_payload` watchlist evidence, not algorithm regressions
+4. use the refreshed `2026-04-15` main-path performance baseline to reduce the slowest answer-level layer before choosing later algorithm work
 
 When resuming work:
 
-- use `77-80` in [reference/unified-memory-core/development-plan.md](reference/unified-memory-core/development-plan.md) for execution order
+- use `77` in [reference/unified-memory-core/development-plan.md](reference/unified-memory-core/development-plan.md) for the current execution order
 - use [../.codex/plan.md](../.codex/plan.md) and [../.codex/status.md](../.codex/status.md) for the live state
 
 ## Milestones

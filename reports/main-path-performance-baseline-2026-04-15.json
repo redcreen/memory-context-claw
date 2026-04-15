@@ -1,0 +1,341 @@
+{
+  "generatedAt": "2026-04-15T03:14:06.581Z",
+  "retrievalAssembly": {
+    "summary": {
+      "preset": "safe-local",
+      "cases": 5,
+      "softExceeded": 0,
+      "hardExceeded": 0,
+      "failures": 0,
+      "averageTotalMs": 43
+    },
+    "results": [
+      {
+        "name": "food-preference-latency",
+        "query": "我爱吃什么",
+        "softLimitMs": 3000,
+        "hardLimitMs": 15000,
+        "retrievalMs": 79,
+        "scoringMs": 5,
+        "assemblyMs": 2,
+        "totalMs": 86,
+        "candidateCount": 6,
+        "selectedCount": 1,
+        "withinSoft": true,
+        "withinHard": true
+      },
+      {
+        "name": "identity-name-latency",
+        "query": "你怎么称呼我",
+        "softLimitMs": 3000,
+        "hardLimitMs": 15000,
+        "retrievalMs": 19,
+        "scoringMs": 0,
+        "assemblyMs": 1,
+        "totalMs": 21,
+        "candidateCount": 6,
+        "selectedCount": 1,
+        "withinSoft": true,
+        "withinHard": true
+      },
+      {
+        "name": "memory-md-scope-latency",
+        "query": "MEMORY.md 应该放什么内容",
+        "softLimitMs": 4000,
+        "hardLimitMs": 18000,
+        "retrievalMs": 26,
+        "scoringMs": 0,
+        "assemblyMs": 0,
+        "totalMs": 27,
+        "candidateCount": 6,
+        "selectedCount": 1,
+        "withinSoft": true,
+        "withinHard": true
+      },
+      {
+        "name": "project-positioning-latency",
+        "query": "这个项目主要解决什么问题",
+        "softLimitMs": 4000,
+        "hardLimitMs": 18000,
+        "retrievalMs": 24,
+        "scoringMs": 0,
+        "assemblyMs": 0,
+        "totalMs": 25,
+        "candidateCount": 6,
+        "selectedCount": 1,
+        "withinSoft": true,
+        "withinHard": true
+      },
+      {
+        "name": "daughter-profile-latency",
+        "query": "我女儿叫什么，生日是哪天，现在几年级？",
+        "softLimitMs": 4000,
+        "hardLimitMs": 18000,
+        "retrievalMs": 57,
+        "scoringMs": 0,
+        "assemblyMs": 0,
+        "totalMs": 58,
+        "candidateCount": 6,
+        "selectedCount": 1,
+        "withinSoft": true,
+        "withinHard": true
+      }
+    ]
+  },
+  "transport": {
+    "generatedAt": "2026-04-15T03:10:08.034Z",
+    "agentId": "umceval",
+    "summary": {
+      "total": 8,
+      "ok": 0,
+      "emptyResults": 0,
+      "timeout": 0,
+      "invalidJson": 8,
+      "commandFailed": 0,
+      "otherFailure": 0,
+      "averageDurationMs": 15570,
+      "maxDurationMs": 25216,
+      "watchlist": [
+        {
+          "id": "profile-name-1",
+          "category": "profile",
+          "status": "invalid_json",
+          "failureClass": "missing_json_payload",
+          "reason": "raw openclaw memory search returned a non-JSON payload"
+        },
+        {
+          "id": "pref-reply-style-1",
+          "category": "preference",
+          "status": "invalid_json",
+          "failureClass": "missing_json_payload",
+          "reason": "raw openclaw memory search returned a non-JSON payload"
+        },
+        {
+          "id": "rule-debug-1",
+          "category": "rule",
+          "status": "invalid_json",
+          "failureClass": "missing_json_payload",
+          "reason": "raw openclaw memory search returned a non-JSON payload"
+        },
+        {
+          "id": "project-desc-1",
+          "category": "project",
+          "status": "invalid_json",
+          "failureClass": "missing_json_payload",
+          "reason": "raw openclaw memory search returned a non-JSON payload"
+        },
+        {
+          "id": "cross-source-travel-search-1",
+          "category": "cross-source",
+          "status": "invalid_json",
+          "failureClass": "missing_json_payload",
+          "reason": "raw openclaw memory search returned a non-JSON payload"
+        },
+        {
+          "id": "supersede-editor-search-1",
+          "category": "supersede",
+          "status": "invalid_json",
+          "failureClass": "missing_json_payload",
+          "reason": "raw openclaw memory search returned a non-JSON payload"
+        },
+        {
+          "id": "current-editor-search-1",
+          "category": "temporal-current",
+          "status": "invalid_json",
+          "failureClass": "missing_json_payload",
+          "reason": "raw openclaw memory search returned a non-JSON payload"
+        },
+        {
+          "id": "history-editor-search-1",
+          "category": "temporal-history",
+          "status": "invalid_json",
+          "failureClass": "missing_json_payload",
+          "reason": "raw openclaw memory search returned a non-JSON payload"
+        }
+      ],
+      "byCategory": {
+        "profile": {
+          "total": 1,
+          "ok": 0,
+          "failures": 1,
+          "averageDurationMs": 25216,
+          "maxDurationMs": 25216
+        },
+        "preference": {
+          "total": 1,
+          "ok": 0,
+          "failures": 1,
+          "averageDurationMs": 8235,
+          "maxDurationMs": 8235
+        },
+        "rule": {
+          "total": 1,
+          "ok": 0,
+          "failures": 1,
+          "averageDurationMs": 8156,
+          "maxDurationMs": 8156
+        },
+        "project": {
+          "total": 1,
+          "ok": 0,
+          "failures": 1,
+          "averageDurationMs": 22039,
+          "maxDurationMs": 22039
+        },
+        "cross-source": {
+          "total": 1,
+          "ok": 0,
+          "failures": 1,
+          "averageDurationMs": 18476,
+          "maxDurationMs": 18476
+        },
+        "supersede": {
+          "total": 1,
+          "ok": 0,
+          "failures": 1,
+          "averageDurationMs": 14379,
+          "maxDurationMs": 14379
+        },
+        "temporal-current": {
+          "total": 1,
+          "ok": 0,
+          "failures": 1,
+          "averageDurationMs": 14952,
+          "maxDurationMs": 14952
+        },
+        "temporal-history": {
+          "total": 1,
+          "ok": 0,
+          "failures": 1,
+          "averageDurationMs": 13110,
+          "maxDurationMs": 13110
+        }
+      },
+      "byFailureClass": {
+        "missing_json_payload": 8
+      }
+    },
+    "results": [
+      {
+        "id": "profile-name-1",
+        "category": "profile",
+        "query": "preferred name",
+        "status": "invalid_json",
+        "durationMs": 25216,
+        "error": "Command failed: openclaw memory search --agent umceval --query preferred name --max-results 5 --json\n",
+        "stdoutPreview": "[plugins] [unified-memory-core] loaded (enabled=true, llmRerank=false, maxCandidates=18, governedExports=true, nightlySelfLearning=true@00:00, canaryTool=false)\n[plugins] style-engine: registered capture_xiaohongshu_note (root=/Users/redcre",
+        "stderrPreview": ""
+      },
+      {
+        "id": "pref-reply-style-1",
+        "category": "preference",
+        "query": "preferred reply style",
+        "status": "invalid_json",
+        "durationMs": 8235,
+        "error": "Command failed: openclaw memory search --agent umceval --query preferred reply style --max-results 5 --json\n",
+        "stdoutPreview": "[plugins] [unified-memory-core] loaded (enabled=true, llmRerank=false, maxCandidates=18, governedExports=true, nightlySelfLearning=true@00:00, canaryTool=false)\n[plugins] style-engine: registered capture_xiaohongshu_note (root=/Users/redcre",
+        "stderrPreview": ""
+      },
+      {
+        "id": "rule-debug-1",
+        "category": "rule",
+        "query": "debugging rule",
+        "status": "invalid_json",
+        "durationMs": 8156,
+        "error": "Command failed: openclaw memory search --agent umceval --query debugging rule --max-results 5 --json\n",
+        "stdoutPreview": "[plugins] [unified-memory-core] loaded (enabled=true, llmRerank=false, maxCandidates=18, governedExports=true, nightlySelfLearning=true@00:00, canaryTool=false)\n[plugins] style-engine: registered capture_xiaohongshu_note (root=/Users/redcre",
+        "stderrPreview": ""
+      },
+      {
+        "id": "project-desc-1",
+        "category": "project",
+        "query": "Project Lantern",
+        "status": "invalid_json",
+        "durationMs": 22039,
+        "error": "Command failed: openclaw memory search --agent umceval --query Project Lantern --max-results 5 --json\n",
+        "stdoutPreview": "[plugins] [unified-memory-core] loaded (enabled=true, llmRerank=false, maxCandidates=18, governedExports=true, nightlySelfLearning=true@00:00, canaryTool=false)\n[plugins] style-engine: registered capture_xiaohongshu_note (root=/Users/redcre",
+        "stderrPreview": ""
+      },
+      {
+        "id": "cross-source-travel-search-1",
+        "category": "cross-source",
+        "query": "Maya carry-on aisle seat",
+        "status": "invalid_json",
+        "durationMs": 18476,
+        "error": "Command failed: openclaw memory search --agent umceval --query Maya carry-on aisle seat --max-results 5 --json\n",
+        "stdoutPreview": "[plugins] [unified-memory-core] loaded (enabled=true, llmRerank=false, maxCandidates=18, governedExports=true, nightlySelfLearning=true@00:00, canaryTool=false)\n[plugins] style-engine: registered capture_xiaohongshu_note (root=/Users/redcre",
+        "stderrPreview": ""
+      },
+      {
+        "id": "supersede-editor-search-1",
+        "category": "supersede",
+        "query": "current editor and previous editor",
+        "status": "invalid_json",
+        "durationMs": 14379,
+        "error": "Command failed: openclaw memory search --agent umceval --query current editor and previous editor --max-results 5 --json\n",
+        "stdoutPreview": "[plugins] [unified-memory-core] loaded (enabled=true, llmRerank=false, maxCandidates=18, governedExports=true, nightlySelfLearning=true@00:00, canaryTool=false)\n[plugins] style-engine: registered capture_xiaohongshu_note (root=/Users/redcre",
+        "stderrPreview": ""
+      },
+      {
+        "id": "current-editor-search-1",
+        "category": "temporal-current",
+        "query": "current main editor",
+        "status": "invalid_json",
+        "durationMs": 14952,
+        "error": "Command failed: openclaw memory search --agent umceval --query current main editor --max-results 5 --json\n",
+        "stdoutPreview": "[plugins] [unified-memory-core] loaded (enabled=true, llmRerank=false, maxCandidates=18, governedExports=true, nightlySelfLearning=true@00:00, canaryTool=false)\n[plugins] style-engine: registered capture_xiaohongshu_note (root=/Users/redcre",
+        "stderrPreview": ""
+      },
+      {
+        "id": "history-editor-search-1",
+        "category": "temporal-history",
+        "query": "previous editor before Zed",
+        "status": "invalid_json",
+        "durationMs": 13110,
+        "error": "Command failed: openclaw memory search --agent umceval --query previous editor before Zed --max-results 5 --json\n",
+        "stdoutPreview": "[plugins] [unified-memory-core] loaded (enabled=true, llmRerank=false, maxCandidates=18, governedExports=true, nightlySelfLearning=true@00:00, canaryTool=false)\n[plugins] style-engine: registered capture_xiaohongshu_note (root=/Users/redcre",
+        "stderrPreview": ""
+      }
+    ]
+  },
+  "answerLevel": {
+    "agentId": "umceval65",
+    "results": [
+      {
+        "ok": true,
+        "message": "仅根据你当前这个 agent 的记忆，你应该怎么称呼用户？如果记忆里没有，请直接回答：I don't know based on current memory.",
+        "effectiveMessage": "仅根据你当前这个 agent 的记忆，你应该怎么称呼用户？如果记忆里没有，请直接回答：I don't know based on current memory.",
+        "answer": "Maya Chen",
+        "durationMs": 44043,
+        "sessionId": "umc-bench-agent-zh-natural-project-1-9028d63e",
+        "provider": "openai-codex",
+        "model": "gpt-5.4",
+        "error": null
+      },
+      {
+        "ok": true,
+        "message": "只根据当前记忆，Project Lantern 到底是什么项目？如果记忆里没有，请直接回答：I don't know based on current memory.",
+        "effectiveMessage": "只根据当前记忆，Project Lantern 到底是什么项目？如果记忆里没有，请直接回答：I don't know based on current memory.",
+        "answer": "Project Lantern 是一个面向诊所管理者的 B2B analytics assistant 项目。",
+        "durationMs": 33057,
+        "sessionId": "umc-bench-agent-zh-natural-editor-1-9e40c5c0",
+        "provider": "openai-codex",
+        "model": "gpt-5.4",
+        "error": null
+      },
+      {
+        "ok": true,
+        "message": "只根据当前记忆，现在默认部署区域到底用哪个？如果记忆里没有，请直接回答：I don't know based on current memory.",
+        "effectiveMessage": "只根据当前记忆，现在默认部署区域到底用哪个？如果记忆里没有，请直接回答：I don't know based on current memory.",
+        "answer": "`eu-west-1`\nSource: MEMORY.md#L12",
+        "durationMs": 31364,
+        "sessionId": "umc-bench-agent-zh-natural-region-1-86841113",
+        "provider": "openai-codex",
+        "model": "gpt-5.4",
+        "error": null
+      }
+    ],
+    "passed": 3,
+    "averageDurationMs": 36155
+  }
+}

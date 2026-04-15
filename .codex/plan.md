@@ -8,12 +8,16 @@
 
 - Program: `execute-200-case-benchmark-and-answer-path-triage`
 - Status: `completed`
-- Runnable matrix: `368` cases
-- Chinese coverage: `187 / 368 = 50.82%`
+- Runnable matrix: `392` cases
+- Chinese coverage: `211 / 392 = 53.83%`
+- Natural Chinese cases: `24` (`12` retrieval + `12` answer-level)
 - Retrieval-heavy formal gate: `250 / 250`
 - Isolated local answer-level formal gate: `6 / 6`
-- Raw transport watchlist: `0 / 8 raw ok`, all classified as host `invalid_json`
-- Interpretation: the `200+` case buildout and first formal gates are complete; the next phase is answer-level expansion, more natural Chinese prompts, transport isolation, and slow-path optimization
+- Natural-Chinese representative retrieval slice: `5 / 5`
+- Natural-Chinese representative answer-level slice: `6 / 6`
+- Raw transport watchlist: `0 / 8 raw ok`, all classified as host `missing_json_payload`
+- Main-path perf baseline: retrieval / assembly avg `43ms`; raw transport avg `15570ms`; isolated local answer-level avg `36155ms`
+- Interpretation: the `200+` case buildout and first formal gates are complete; the natural-Chinese / watchlist / perf hardening follow-up is also closed, and the next phase is answer-level expansion on top of those stabilized surfaces
 
 ## Slices
 
@@ -40,6 +44,14 @@
   - Validation: `200+` case 定义、中文案例实际占比统计、answer-level gate 报告、transport watchlist 报告、main-path perf baseline refresh
   - Exit Condition: 下一轮 benchmark 不再有明显 coverage blind spots，answer-level/transport gate 进入常规门禁，且最慢层已有可解释优化路径
   - Status: `completed`
+
+- Slice: `expand-answer-level-formal-gate-after-natural-zh-hardening`
+  - Objective: 在自然中文覆盖、raw transport watchlist 和 main-path perf baseline 已重新稳定的前提下，把 isolated local answer-level formal gate 从 `6` 条代表性样本继续扩成更大的稳定矩阵
+  - Dependencies: `392` case runnable matrix、自然中文代表性子矩阵、transport failure-class watchlist、`2026-04-15` perf baseline、isolated eval agent `umceval65`
+  - Risks: 如果 answer-level 扩容时重新把 gateway/shared-session 噪声混回正式结论，新的 larger matrix 会再次失真；如果只加题数不补 conflict / abstention blind spots，扩容不会真正提升证据质量
+  - Validation: 更大的 isolated local answer-level gate 报告、与 raw transport watchlist 分离的归因、中文 answer-level 子矩阵持续为绿、main-path perf baseline 重跑
+  - Exit Condition: answer-level formal gate 不再依赖 `6` 条代表性样本，同时自然中文、watchlist、perf 这三条已完成基线继续保持稳定
+  - Status: `ongoing`
 
 - Slice: `formalize-realtime-memory-intent-ingestion`
   - Objective: 把“主回复 + `memory_extraction`”从局部 runtime seam 收口成正式产品契约，补上 ordinary conversation rule 的实时 governed ingest 入口
@@ -148,7 +160,7 @@
 ## Execution Order
 
 1. 把 answer-level formal gate 从当前 `6` 条代表性样本继续扩成更大的稳定矩阵
-2. 把中文案例从 `50%+` zh-bearing 覆盖继续推向更自然、更高信息密度的真实中文题
+2. 保持 `24` 条自然中文案例、`missing_json_payload` transport watchlist 和 `2026-04-15` perf baseline 在后续扩容中持续稳定
 3. 把 gateway/shared-session 与 raw transport 继续保持在独立 watchlist，不与算法判断混淆
 4. 按主链路 perf baseline 继续解释并优化最慢的 answer-level 层
 5. 保持 retrieval-heavy、answer-level、transport watch、perf baseline 这四条正式门禁持续可复跑
@@ -169,10 +181,10 @@
 
 ## Current Execution Line
 
-- Objective: 保持 `368` case benchmark、`50%+` 中文覆盖、isolated local answer-level gate 与 transport watchlist 稳定，并推进 answer-level 扩容与最慢层优化
-- Plan Link: `execute-200-case-benchmark-and-answer-path-triage`
-- Runway: answer-level formal gate 扩容、自然中文补强、gateway/raw transport watch、perf-baseline-driven optimization
-- Progress: `4 / 4` tasks complete
+- Objective: 在 `392` case matrix、自然中文补强、failure-class watchlist 和 `2026-04-15` perf baseline 已稳定的基础上，继续扩大 isolated local answer-level formal gate
+- Plan Link: `expand-answer-level-formal-gate-after-natural-zh-hardening`
+- Runway: answer-level formal gate 扩容、自然中文子矩阵保绿、gateway/raw transport watch、perf-baseline-driven optimization
+- Progress: `0 / 4` tasks complete
 - Stop Conditions:
   - case count grows but blind spots remain
   - answer-level regression gets misdiagnosed as raw transport noise
@@ -182,10 +194,10 @@
 
 ## Execution Tasks
 
-- [x] EL-1 expand the benchmark from `187` to a coverage-first `200+` cases, prioritizing blind spots over more rewrites
-- [x] EL-2 make Chinese cases at least `50%` of the runnable matrix across retrieval, answer-level, and negative surfaces
-- [x] EL-3 turn the answer-level host path and the raw transport watchlist into formal gates, then triage the answer-level red path
-- [x] EL-4 use the main-path performance baseline to prioritize optimization work and refresh roadmap / development plan / control-surface state
+- [ ] EL-1 expand the isolated local answer-level gate beyond the current `6` representative samples
+- [ ] EL-2 keep the `24` natural-Chinese cases green while answer-level coverage expands
+- [ ] EL-3 keep gateway/shared-session noise and raw transport classified on watchlists, separate from algorithm conclusions
+- [ ] EL-4 rerun the main-path perf baseline after meaningful answer-level gate expansion changes
 
 ## Development Log Capture
 

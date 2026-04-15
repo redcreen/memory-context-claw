@@ -9,6 +9,7 @@ import { promisify } from "node:util";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 import { extractJsonPayload, searchLocalMemoryIndex } from "../src/retrieval.js";
+import { buildAgentEvalPrompt } from "../src/openclaw-agent-eval-prompt.js";
 import { rewriteRetrievalQueries } from "../src/query-rewrite.js";
 
 const execFileAsync = promisify(execFile);
@@ -465,9 +466,9 @@ async function runAgentCase(caseDef, args, env) {
   }
   const sessionId = `umc-bench-${caseDef.id}-${randomUUID().slice(0, 8)}`;
   const timeoutSecs = Math.max(10, Math.ceil(args.agentTimeoutMs / 1000));
-  const message = args.agentToolHint
-    ? `Use the memory_search tool first if needed before answering. ${caseDef.message}`
-    : caseDef.message;
+  const message = buildAgentEvalPrompt(caseDef.message, {
+    toolHintEnabled: args.agentToolHint
+  });
   const command = await runCommand(
     args.openclawBin,
     [

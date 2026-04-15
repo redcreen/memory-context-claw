@@ -22,25 +22,30 @@
 
 - 专项名称：`execute-200-case-benchmark-and-answer-path-triage`
 - 当前状态：`completed`
-- runnable matrix：`368` cases
-- 中文占比：`187 / 368 = 50.82%`
+- runnable matrix：`392` cases
+- 中文占比：`211 / 392 = 53.83%`
+- 自然中文案例：`24`（`12` retrieval + `12` answer-level）
 - retrieval-heavy formal gate：`250 / 250`
 - isolated local answer-level formal gate：`6 / 6`
-- raw transport watchlist：`0 / 8 raw ok`，全部隔离为 host `invalid_json`
-- 当前结论：`200+` case 建设与第一轮正式门禁已收口；下一阶段不是继续补到 200，而是扩大 answer-level 样本、提高中文自然度，并继续优化最慢层
+- 自然中文代表性 retrieval slice：`5 / 5`
+- 自然中文代表性 answer-level slice：`6 / 6`
+- raw transport watchlist：`0 / 8 raw ok`，全部隔离为 host `missing_json_payload`
+- main-path perf baseline：retrieval / assembly `43ms`；raw transport `15570ms`；isolated local answer-level `36155ms`
+- 当前结论：`200+` case 建设、自然中文补强、transport watchlist failure-class 化和 perf baseline 刷新都已收口；当前真正的下一步只剩 answer-level formal gate 扩容
 
 对应证据：
 
 - [../.codex/status.md](../.codex/status.md)
 - [../.codex/plan.md](../.codex/plan.md)
 - [generated/openclaw-cli-memory-eval-program-2026-04-14.md](generated/openclaw-cli-memory-eval-program-2026-04-14.md)
+- [generated/openclaw-natural-chinese-watch-and-perf-2026-04-15.md](generated/openclaw-natural-chinese-watch-and-perf-2026-04-15.md)
 
 ## 当前 / 下一步 / 更后面
 
 | 时间层级 | 重点 | 退出信号 |
 | --- | --- | --- |
-| 当前 | 用新的正式门禁继续收敛主链路：保持 `368` case benchmark、`50%+` 中文覆盖、isolated local answer-level gate 和 transport watchlist 一起稳定 | retrieval-heavy gate、answer-level formal gate、transport watchlist、main-path perf baseline 都能持续复跑 |
-| 下一步 | 扩大 answer-level formal gate 和自然中文案例，继续压低最慢层，再讨论是否真的打开 runtime API / service-mode | answer-level formal gate 不再只依赖代表性子集、中文案例更接近自然表达、transport/gateway 噪声不再主导评测结论 |
+| 当前 | 在新的 `392` case / `53.83%` 中文 / failure-class watchlist / `2026-04-15` perf baseline 上继续扩大 answer-level formal gate | answer-level formal gate 不再只依赖 `6` 条代表性样本，且自然中文、watchlist、perf baseline 继续保持稳定 |
+| 下一步 | 把更大的 answer-level gate 变成常规证据面，再讨论是否真的打开 runtime API / service-mode | 更大的 isolated local answer-level gate 可以稳定复跑，且不会重新混入 gateway/raw transport 噪声 |
 | 更后面 | 只在 operator baseline 稳定后，再讨论 runtime API / split-ready 演进 | Stage 5 收口后的独立产品证据继续保持绿色 |
 
 ## 当前执行重点
@@ -48,13 +53,13 @@
 主 roadmap 里的“当前”不只是方向，也对应接下来要执行的具体工作：
 
 1. 扩大 answer-level formal gate，不再只停留在 `6` 条代表性样本。
-2. 把中文案例从“zh-bearing 过半”继续推到更自然、更高信息密度的真实中文表达。
-3. 单独跟踪 gateway/session-lock 与 raw transport，不让宿主噪声重新污染算法判断。
-4. 继续按主链路性能基线压低 answer-level 最慢层，再决定后续算法优化顺序。
+2. 在后续扩容中保持 `24` 条自然中文案例持续为绿，而不是退回只有 zh-bearing 数量。
+3. 持续把 gateway/session-lock 与 raw transport 维持在 `missing_json_payload` watchlist，不让宿主噪声重新污染算法判断。
+4. 继续按 `2026-04-15` 主链路性能基线压低 answer-level 最慢层，再决定后续算法优化顺序。
 
 恢复执行时：
 
-- 主顺序看 [reference/unified-memory-core/development-plan.zh-CN.md](reference/unified-memory-core/development-plan.zh-CN.md) 的 `77-80`
+- 主顺序看 [reference/unified-memory-core/development-plan.zh-CN.md](reference/unified-memory-core/development-plan.zh-CN.md) 的 `77`
 - 实时执行状态看 [../.codex/plan.md](../.codex/plan.md) 和 [../.codex/status.md](../.codex/status.md)
 
 ## 里程碑

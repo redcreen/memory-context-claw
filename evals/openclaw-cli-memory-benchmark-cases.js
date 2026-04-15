@@ -577,6 +577,66 @@ const cases = [
       attributionKind: "history"
     }
   ),
+  ...makeSearchSeries(
+    "zh-natural-profile-search",
+    "profile",
+    [
+      "平时我希望你怎么称呼我",
+      "你之后一般该怎么叫我",
+      "如果正常跟我说话，你会怎么称呼我"
+    ],
+    ["Maya Chen"],
+    {
+      expectedSources: ["MEMORY.md"],
+      attributionKind: "bootstrap",
+      note: "[zh-natural] natural Chinese preference-name retrieval"
+    }
+  ),
+  ...makeSearchSeries(
+    "zh-natural-project-search",
+    "project",
+    [
+      "Project Lantern 现在到底是在做什么",
+      "这个 Lantern 项目主要是给谁用的",
+      "Lantern 这个项目的定位到底是什么"
+    ],
+    ["B2B analytics assistant", "clinic managers"],
+    {
+      expectedSources: ["notes/project-lantern.md"],
+      attributionKind: "retrieval",
+      note: "[zh-natural] natural Chinese project-description retrieval"
+    }
+  ),
+  ...makeSearchSeries(
+    "zh-natural-temporal-search",
+    "temporal-current",
+    [
+      "现在默认部署区域到底用哪个",
+      "编辑器现在到底切到哪个了",
+      "开会现在用的是哪本本子"
+    ],
+    ["eu-west-1", "Zed", "charcoal A5 notebook"],
+    {
+      expectedSources: ["memory/2026-04-12.md"],
+      attributionKind: "temporal",
+      note: "[zh-natural] natural Chinese current-state retrieval"
+    }
+  ),
+  ...makeSearchSeries(
+    "zh-natural-rule-search",
+    "rule",
+    [
+      "如果记忆不完整你应该怎么处理",
+      "记忆互相打架的时候你该怎么办",
+      "遇到拿不准的记忆时应该猜吗"
+    ],
+    ["missing", "conflicting", "guess"],
+    {
+      expectedSources: ["MEMORY.md", "notes/personal-profile.md"],
+      attributionKind: "bootstrap",
+      note: "[zh-natural] natural Chinese rule retrieval"
+    }
+  ),
   ...makeAgentSeries(
     "agent-name",
     "agent-profile",
@@ -937,6 +997,86 @@ const cases = [
     {
       forbiddenAny: ["Vim", "us-east-1"],
       attributionKind: "temporal"
+    }
+  ),
+  ...makeAgentSeries(
+    "agent-zh-natural-name",
+    "agent-zh-natural",
+    [
+      "只根据当前记忆，平时我希望你怎么称呼我？如果没有这条记忆，就只回答：I don't know based on current memory.",
+      "只根据当前记忆，之后你一般应该怎么叫我？如果没有这条记忆，就只回答：I don't know based on current memory."
+    ],
+    ["Maya Chen"],
+    {
+      attributionKind: "bootstrap",
+      note: "[zh-natural] natural Chinese answer-level name"
+    }
+  ),
+  ...makeAgentSeries(
+    "agent-zh-natural-project",
+    "agent-zh-natural",
+    [
+      "只根据当前记忆，Project Lantern 到底是在做什么？如果没有这条记忆，就只回答：I don't know based on current memory.",
+      "只根据当前记忆，Lantern 这个项目主要是服务谁的？如果没有这条记忆，就只回答：I don't know based on current memory."
+    ],
+    ["Project Lantern", "clinic managers", "analytics assistant"],
+    {
+      attributionKind: "retrieval",
+      note: "[zh-natural] natural Chinese answer-level project"
+    }
+  ),
+  ...makeAgentSeries(
+    "agent-zh-natural-editor",
+    "agent-zh-natural",
+    [
+      "只根据当前记忆，我现在主力编辑器到底换成什么了？如果没有这条记忆，就只回答：I don't know based on current memory.",
+      "只根据当前记忆，现在我平时主要用哪个编辑器？如果没有这条记忆，就只回答：I don't know based on current memory."
+    ],
+    ["Zed"],
+    {
+      forbiddenAny: ["Vim"],
+      attributionKind: "temporal",
+      note: "[zh-natural] natural Chinese answer-level current editor"
+    }
+  ),
+  ...makeAgentSeries(
+    "agent-zh-natural-region",
+    "agent-zh-natural",
+    [
+      "只根据当前记忆，现在默认部署区域到底应该用哪个？如果没有这条记忆，就只回答：I don't know based on current memory.",
+      "只根据当前记忆，部署默认应该落在哪个 region？如果没有这条记忆，就只回答：I don't know based on current memory."
+    ],
+    ["eu-west-1"],
+    {
+      forbiddenAny: ["us-east-1"],
+      attributionKind: "temporal",
+      note: "[zh-natural] natural Chinese answer-level current region"
+    }
+  ),
+  ...makeAgentSeries(
+    "agent-zh-natural-rule",
+    "agent-zh-natural",
+    [
+      "只根据当前记忆，如果记忆不完整或者互相打架，你应该怎么处理？如果没有这条记忆，就只回答：I don't know based on current memory.",
+      "只根据当前记忆，遇到拿不准的记忆时你应该猜吗？如果没有这条记忆，就只回答：I don't know based on current memory."
+    ],
+    ["do not guess", "I don't know based on current memory.", "conflicting", "missing"],
+    {
+      attributionKind: "bootstrap",
+      note: "[zh-natural] natural Chinese answer-level rule"
+    }
+  ),
+  ...makeAgentSeries(
+    "agent-zh-natural-negative",
+    "negative",
+    [
+      "只根据当前记忆，我最喜欢的编程语言是什么？如果没有这条记忆，就只回答：I don't know based on current memory.",
+      "只根据当前记忆，我老家是哪里？如果没有这条记忆，就只回答：I don't know based on current memory."
+    ],
+    ["I don't know based on current memory."],
+    {
+      attributionKind: "negative",
+      note: "[zh-natural] natural Chinese abstention"
     }
   ),
   ...makeAgentSeries(

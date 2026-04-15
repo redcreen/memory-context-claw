@@ -6,6 +6,8 @@ import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 import { fileURLToPath } from "node:url";
 
+import { buildAgentEvalPrompt } from "../src/openclaw-agent-eval-prompt.js";
+
 const execFileAsync = promisify(execFile);
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -111,7 +113,7 @@ async function runTransportBaseline() {
 async function runAgentPrompt(agentId, message) {
   await resetAgentSessionState(agentId);
   const startedAt = Date.now();
-  const effectiveMessage = `Use the memory_search tool first if needed before answering. ${message}`;
+  const effectiveMessage = buildAgentEvalPrompt(message, { toolHintEnabled: true });
   const hostTimeoutSecs = "60";
   const result = await runJsonCommand(
     "openclaw",
@@ -188,19 +190,19 @@ async function main() {
   answerLevelResults.push(
     await runAgentPrompt(
       answerAgentId,
-      "Based only on your memory for this agent, what is the user's preferred name? If memory is missing, reply exactly: I don't know based on current memory."
+      "仅根据你当前这个 agent 的记忆，你应该怎么称呼用户？如果记忆里没有，请直接回答：I don't know based on current memory."
     )
   );
   answerLevelResults.push(
     await runAgentPrompt(
       answerAgentId,
-      "Based only on your memory for this agent, what is Project Lantern? If memory is missing, reply exactly: I don't know based on current memory."
+      "只根据当前记忆，Project Lantern 到底是什么项目？如果记忆里没有，请直接回答：I don't know based on current memory."
     )
   );
   answerLevelResults.push(
     await runAgentPrompt(
       answerAgentId,
-      "Based only on your memory for this agent, what is the confirmed default deploy region now? If memory is missing, reply exactly: I don't know based on current memory."
+      "只根据当前记忆，现在默认部署区域到底用哪个？如果记忆里没有，请直接回答：I don't know based on current memory."
     )
   );
 

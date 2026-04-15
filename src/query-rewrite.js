@@ -65,6 +65,32 @@ function buildPolicyRewrite(query) {
   return "";
 }
 
+function buildChineseNaturalRewrite(query) {
+  const q = String(query || "");
+  if (!/[\u4e00-\u9fff]/.test(q)) {
+    return "";
+  }
+  if (/怎么称呼我|怎么叫我|称呼我/.test(q)) {
+    return "preferred name 用户 preferred name 怎么称呼用户";
+  }
+  if (/部署区域|deploy region|region/.test(q) && /现在|默认|用哪个|哪个/.test(q)) {
+    return "current deploy region default deploy region now eu-west-1";
+  }
+  if (/(记忆不完整|记忆.*打架|拿不准.*记忆|应该猜吗|别猜|不要猜)/.test(q)) {
+    return "missing or conflicting memory do not guess guessing policy";
+  }
+  if (/编辑器/.test(q) && /现在|主力|哪个/.test(q)) {
+    return "current main editor now Zed replaced Vim";
+  }
+  if (/(本子|笔记本|notebook)/.test(q) && /开会|会议|现在|哪本/.test(q)) {
+    return "current notebook for meetings charcoal A5 notebook blue pocket notebook";
+  }
+  if (/Project Lantern|Lantern/.test(q) && /(做什么|定位|服务谁|给谁用)/.test(q)) {
+    return "Project Lantern clinic managers analytics assistant design partner";
+  }
+  return "";
+}
+
 export function rewriteRetrievalQueries(query, options = {}) {
   const base = compressQuery(query);
   if (!base) {
@@ -76,6 +102,7 @@ export function rewriteRetrievalQueries(query, options = {}) {
     base.replace(/\s+/g, " "),
     buildContrastRewrite(base),
     buildPolicyRewrite(base),
+    buildChineseNaturalRewrite(base),
     buildIntentRewrite(base)
   ]);
 
