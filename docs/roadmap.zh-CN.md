@@ -16,6 +16,25 @@
 - [项目 workstream roadmap](workstreams/project/roadmap.zh-CN.md)
 - [unified-memory-core/development-plan.zh-CN.md](reference/unified-memory-core/development-plan.zh-CN.md)
 
+## 当前专项结果快照
+
+这块用于直接回答“`200+` case 专项现在做到哪了”，避免只看主 roadmap 时还要再跳回 control surface。
+
+- 专项名称：`execute-200-case-benchmark-and-answer-path-triage`
+- 当前状态：`completed`
+- runnable matrix：`368` cases
+- 中文占比：`187 / 368 = 50.82%`
+- retrieval-heavy formal gate：`250 / 250`
+- isolated local answer-level formal gate：`6 / 6`
+- raw transport watchlist：`0 / 8 raw ok`，全部隔离为 host `invalid_json`
+- 当前结论：`200+` case 建设与第一轮正式门禁已收口；下一阶段不是继续补到 200，而是扩大 answer-level 样本、提高中文自然度，并继续优化最慢层
+
+对应证据：
+
+- [../.codex/status.md](../.codex/status.md)
+- [../.codex/plan.md](../.codex/plan.md)
+- [generated/openclaw-cli-memory-eval-program-2026-04-14.md](generated/openclaw-cli-memory-eval-program-2026-04-14.md)
+
 ## 当前 / 下一步 / 更后面
 
 | 时间层级 | 重点 | 退出信号 |

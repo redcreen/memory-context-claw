@@ -16,6 +16,25 @@ For detailed queues, read:
 - [project workstream roadmap](workstreams/project/roadmap.md)
 - [unified-memory-core/development-plan.md](reference/unified-memory-core/development-plan.md)
 
+## Current Program Snapshot
+
+This block is here to answer "where did the `200+` case program actually land?" without forcing a jump back to the control surface.
+
+- Program: `execute-200-case-benchmark-and-answer-path-triage`
+- Status: `completed`
+- Runnable matrix: `368` cases
+- Chinese coverage: `187 / 368 = 50.82%`
+- Retrieval-heavy formal gate: `250 / 250`
+- Isolated local answer-level formal gate: `6 / 6`
+- Raw transport watchlist: `0 / 8 raw ok`, all isolated as host `invalid_json`
+- Interpretation: the `200+` case buildout and first formal gates are complete; the next phase is answer-level expansion, more natural Chinese prompts, transport isolation, and slow-path optimization
+
+Supporting evidence:
+
+- [../.codex/status.md](../.codex/status.md)
+- [../.codex/plan.md](../.codex/plan.md)
+- [generated/openclaw-cli-memory-eval-program-2026-04-14.md](generated/openclaw-cli-memory-eval-program-2026-04-14.md)
+
 ## Now / Next / Later
 
 | Horizon | Focus | Exit Signal |

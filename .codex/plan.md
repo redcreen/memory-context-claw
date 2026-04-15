@@ -4,6 +4,17 @@
 
 `post-stage5 evaluation-driven optimization`
 
+## Current Results Snapshot
+
+- Program: `execute-200-case-benchmark-and-answer-path-triage`
+- Status: `completed`
+- Runnable matrix: `368` cases
+- Chinese coverage: `187 / 368 = 50.82%`
+- Retrieval-heavy formal gate: `250 / 250`
+- Isolated local answer-level formal gate: `6 / 6`
+- Raw transport watchlist: `0 / 8 raw ok`, all classified as host `invalid_json`
+- Interpretation: the `200+` case buildout and first formal gates are complete; the next phase is answer-level expansion, more natural Chinese prompts, transport isolation, and slow-path optimization
+
 ## Slices
 
 - Slice: `build-openclaw-cli-100-case-benchmark`
