@@ -260,15 +260,27 @@ The goal is not to reopen baseline contract work. The goal is to:
 
 ## Current Execution Queue
 
-77. `next` Expand the isolated local answer-level formal gate beyond the current `6` representative samples into a larger stable matrix.
-   - The goal is not raw count growth; it is broader answer-level coverage for current-vs-history, cross-source, conflict, and abstention scenarios.
-   - The larger gate must stay separate from the raw transport watchlist so host noise does not get mixed back into algorithm conclusions.
+77. `completed` Expand the isolated local answer-level formal gate beyond the current `6` representative samples into a larger stable matrix.
+   - The repo-default isolated local formal gate now runs `12/12` via `npm run eval:openclaw:agent-matrix`.
+   - The current stable `12`-case matrix covers profile, project, preference, rule, temporal current, history, zh, zh-natural, and negative surfaces.
 78. `completed` Push Chinese coverage beyond "more than half" into more natural, higher-information real Chinese prompts.
    - The matrix now includes `24` `[zh-natural]` cases (`12` retrieval + `12` answer-level) with a representative retrieval slice of `5/5` and a representative answer-level slice of `6/6`.
 79. `completed` Keep gateway/session-lock behavior and raw `openclaw memory search` transport on explicit watchlists.
    - The latest raw transport watchlist is `0/8 raw ok`, all classified as `missing_json_payload`; this watchlist tracks host instability, not retrieval / answer-level algorithm regressions.
 80. `completed` Continue optimizing the slowest layer from the main-path performance baseline and rerun the formal gates after each meaningful change.
    - The current priority remains isolated local answer-level first and raw transport second; the latest perf baseline is now retrieval / assembly `43ms`, raw transport `15570ms`, isolated local answer-level `36155ms`.
+81. `completed` Turn the larger isolated local answer-level formal gate into a repo-default entry instead of relying on hand-built `--only` commands.
+   - `scripts/eval-openclaw-cli-agent-answer-matrix.js` now defaults to isolated eval agent `umceval65`, `--agent-local`, `--skip-legacy`, and a fixed `12`-case formal gate matrix.
+82. `completed` Rerun the larger answer-level formal gate and publish a new `2026-04-15` formal report.
+   - New formal report: [reports/generated/openclaw-cli-agent-answer-matrix-2026-04-15.md](../../../../reports/generated/openclaw-cli-agent-answer-matrix-2026-04-15.md)
+   - Latest result: `12 / 12`
+83. `completed` Sync the larger answer-level formal gate result back into the roadmap, development plan, and control surface, then reset the next execution pointer.
+   - The roadmap, control surface, and development plan no longer describe the answer-level formal gate as just `6/6`.
+84. `next` Deepen the current `12`-case stable answer-level formal gate with cross-source, conflict, multi-step history, and deeper natural-Chinese coverage.
+   - The goal is not raw case count growth; it is to pull the remaining answer-level blind spots into the formal gate.
+85. `todo` Increase the natural-Chinese share inside the answer-level formal gate itself, not just the global runnable matrix.
+   - The next answer-level expansion should explicitly include more zh-natural current/history/conflict coverage.
+86. `todo` Rerun the main-path perf baseline and A/B attribution report after the deeper answer-level gate expansion so the larger gate does not quietly re-mix host noise into the conclusions.
 
 ## Deferred Enhancement Queue
 

@@ -226,12 +226,12 @@
 - 中文占比：`211 / 392 = 53.83%`
 - 自然中文案例：`24`（`12` retrieval + `12` answer-level）
 - retrieval-heavy formal gate：`250 / 250`
-- isolated local answer-level formal gate：`6 / 6`
+- isolated local answer-level formal gate：`12 / 12`
 - 自然中文代表性 retrieval slice：`5 / 5`
 - 自然中文代表性 answer-level slice：`6 / 6`
 - raw transport watchlist：`0 / 8 raw ok`，全部归类为 host `missing_json_payload`
 - 最新 perf baseline：retrieval / assembly `43ms`；raw transport `15570ms`；isolated local answer-level `36155ms`
-- 当前解释：`200+` case 扩面、自然中文补强、watchlist failure-class 化和 perf baseline 刷新都已收口；后续主线不再是“补到 200”，而是继续扩大 answer-level 样本
+- 当前解释：`200+` case 扩面、自然中文补强、watchlist failure-class 化、perf baseline 刷新，以及 answer-level formal gate 从 `6/6` 扩到 `12/12` 都已收口；后续主线是继续把这个更大的 gate 做深
 
 ## 下一阶段规划队列
 
@@ -277,15 +277,27 @@
 
 ## 当前执行队列
 
-77. `next` 把 isolated local answer-level formal gate 从 `6` 条代表性样本扩大到更大的稳定矩阵。
-   - 目标不是只增加题数，而是覆盖更多 current-vs-history、跨来源、冲突和 abstention answer-level 场景。
-   - 扩容后必须继续与 raw transport watchlist 分离，不允许把宿主噪声重新混回算法结论。
+77. `completed` 把 isolated local answer-level formal gate 从 `6` 条代表性样本扩大到更大的稳定矩阵。
+   - 当前 repo-default 的 isolated local formal gate 已扩大到 `12/12`，正式入口是 `npm run eval:openclaw:agent-matrix`。
+   - 当前 `12` 条稳定样本覆盖 profile、project、preference、rule、temporal current、history、zh、zh-natural、negative。
 78. `completed` 把中文案例从“占比过半”继续推进到更自然、更高信息密度的真实中文表达。
    - 当前已形成 `24` 条 `[zh-natural]` 案例（`12` retrieval + `12` answer-level），代表性 retrieval slice `5/5`，代表性 answer-level slice `6/6`。
 79. `completed` 持续把 gateway/session-lock 与 raw `openclaw memory search` transport 保持在独立 watchlist。
    - 最新 raw transport watchlist = `0/8 raw ok`，全部 failure-class 为 `missing_json_payload`；这条 watchlist 只代表 host instability，不代表 retrieval / answer-level 算法退化。
 80. `completed` 按主链路性能基线继续优化最慢层，并在每轮优化后重跑正式门禁。
    - 当前优先级仍是 isolated local answer-level 慢路径，其次是 raw transport；最新 perf baseline 已刷新到 retrieval / assembly `43ms`、raw transport `15570ms`、isolated local answer-level `36155ms`。
+81. `completed` 把更大的 isolated local answer-level formal gate 固化成 repo-default 入口，而不是继续依赖手工 `--only` 组合。
+   - `scripts/eval-openclaw-cli-agent-answer-matrix.js` 现在默认使用 isolated eval agent `umceval65`、`--agent-local`、`--skip-legacy`，以及固定的 `12` 条 formal gate case ids。
+82. `completed` 重跑更大的 answer-level formal gate，并发布新的 `2026-04-15` 正式报告。
+   - 新的正式报告：[reports/generated/openclaw-cli-agent-answer-matrix-2026-04-15.md](../../../../reports/generated/openclaw-cli-agent-answer-matrix-2026-04-15.md)
+   - 最新结果：`12 / 12`
+83. `completed` 把更大的 answer-level formal gate 结果写回 roadmap、development plan、control surface，并重置下一步执行指针。
+   - 主路线图、control surface 和 development plan 现在都不再把 answer-level formal gate 写成 `6/6`。
+84. `next` 把当前 `12` 条稳定 answer-level formal gate 继续做深到 cross-source、conflict、multi-step history 和更深的自然中文覆盖。
+   - 重点不是再机械加题，而是把目前仍主要靠 retrieval-heavy 和代表性 answer 样本支撑的 blind spots 收进正式门禁。
+85. `todo` 提高自然中文在 answer-level formal gate 本身里的占比，而不只是全局 runnable matrix 过半。
+   - 下一轮 answer-level 扩容至少要显式包含更多 zh-natural current/history/conflict 场景。
+86. `todo` 在更深的 answer-level formal gate 完成后，重跑 main-path perf baseline 和 A/B 归因报告，确认更大 gate 不会让宿主噪声重新污染结论。
 
 ## 延后增强队列
 

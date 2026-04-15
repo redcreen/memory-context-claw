@@ -11,7 +11,7 @@
 
 ## Active Slice
 
-`expand-answer-level-formal-gate-after-natural-zh-hardening`
+`deepen-answer-level-gate-beyond-12-case-baseline`
 
 ## Done
 
@@ -61,7 +61,7 @@
   - retrieval-heavy formal gate 已扩到：`250/250`
   - 自然中文补强已落地：`24` 条 `[zh-natural]` 案例（`12` retrieval + `12` answer-level），代表性 retrieval slice `5/5`、代表性 answer-level slice `6/6`
   - transport watchlist 当前 formal watch 结果：`0/8 raw ok`，全部归类为 host `missing_json_payload`
-  - isolated local answer-level formal gate 已收口为：`6/6`，正式路径是 `openclaw agent --local` + isolated eval agent `umceval65`
+  - isolated local answer-level formal gate 已扩大并收口为：`12/12`，正式路径是 `openclaw agent --local` + isolated eval agent `umceval65`
   - benchmark-driven 第一轮修复已落地：`guessing policy` query rewrite 与 fallback rewrite fan-out 已补齐，失败项归零
   - answer-level benchmark wrapper prompt 现在会在 query rewrite 前被剥掉，不再让 `Based only on your memory...` 这类测试包装语污染 retrieval query
   - 总览报告已补齐：[reports/generated/openclaw-cli-memory-eval-program-2026-04-14.md](../reports/generated/openclaw-cli-memory-eval-program-2026-04-14.md)
@@ -69,7 +69,7 @@
   - `187` case coverage review 与 `200+` 扩面规划已写成报告：[reports/generated/openclaw-cli-memory-coverage-plan-2026-04-14.md](../reports/generated/openclaw-cli-memory-coverage-plan-2026-04-14.md)
   - runnable matrix 已扩到 `392` cases；zh-bearing runnable matrix = `211/392 = 53.83%`
   - retrieval-heavy 正式 gate 已扩到 `250/250`
-  - answer-level formal gate 已收口成 isolated local gate：`6/6`，使用 `openclaw agent --local` + isolated eval agent `umceval65`
+  - answer-level formal gate 已收口成更大的 isolated local gate：`12/12`，使用 `openclaw agent --local` + isolated eval agent `umceval65`
   - 自然中文专项已补齐：代表性 retrieval slice `5/5`，代表性 answer-level slice `6/6`
   - raw `openclaw memory search` transport watchlist 已固定为独立 host watch：`0/8 raw ok`，全部 `missing_json_payload`
   - retrieval / assembly / answer-level 主链路性能专项计划已补齐：[docs/reference/unified-memory-core/testing/main-path-performance-plan.zh-CN.md](../docs/reference/unified-memory-core/testing/main-path-performance-plan.zh-CN.md)
@@ -77,6 +77,7 @@
   - 当前 perf 归因已经明确：retrieval / assembly 平均 `43ms`；raw transport 平均 `15570ms`；isolated local answer-level 平均 `36155ms`
   - answer-level root cause 已显式拆开：gateway/session-lock 噪声、agent main-session 复用污染、CLI `--local` JSON 走 stderr
   - `78-80` 总结报告已补齐：[reports/generated/openclaw-natural-chinese-watch-and-perf-2026-04-15.md](../reports/generated/openclaw-natural-chinese-watch-and-perf-2026-04-15.md)
+  - `77` 和 follow-up `81-83` 已把 answer-level formal gate 从 `6/6` 扩到 `12/12`，并补上 repo-default 的 isolated local formal gate 入口：[reports/generated/openclaw-answer-level-gate-expansion-2026-04-15.md](../reports/generated/openclaw-answer-level-gate-expansion-2026-04-15.md)
 - realtime memory-intent ingestion 的 doc-first baseline 已落地：
   - memory-intent replay 回归面已补到 `7` 条高混淆案例，覆盖 durable / session / task-only / no-memory / profile / workflow-rule 边界
   - `scripts/eval-memory-intent-replay.js`、`evals/memory-intent-replay-cases.json`、`test/memory-intent-replay-cases.test.js` 已形成正式 replay 面
@@ -112,7 +113,7 @@
   - `node scripts/eval-openclaw-cli-memory-benchmark.js --agent umceval65 --entrypoints memory_search --skip-legacy --only zh-natural-profile-search-1,zh-natural-project-search-1,zh-natural-temporal-search-1,zh-natural-rule-search-1,zh-natural-temporal-search-3 ...`：`5/5`
   - `node scripts/eval-openclaw-cli-memory-benchmark.js --agent umceval65 --entrypoints agent --skip-legacy --agent-local --only agent-zh-natural-name-1,agent-zh-natural-project-1,agent-zh-natural-editor-1,agent-zh-natural-region-1,agent-zh-natural-rule-1,agent-zh-natural-negative-1 ...`：`6/6`
   - `node scripts/watch-openclaw-memory-search-transport.js --format markdown --per-category 1 --max-probes 8 --timeout-ms 8000 ...`：`0/8 raw ok`（全部 `missing_json_payload`）
-  - `node scripts/eval-openclaw-cli-memory-benchmark.js --agent umceval65 --entrypoints agent --skip-legacy --agent-local --only agent-name-1,agent-project-1,agent-current-editor-1,agent-history-editor-1,agent-zh-temporal-1,agent-negative-1 ...`：`6/6`
+  - `npm run eval:openclaw:agent-matrix`：`12/12`
   - `UMC_EVAL_AGENT=umceval65 npm run eval:main-path:perf`：`pass`
   - `npm run umc:cli -- registry migrate --source-dir ~/.openclaw/unified-memory-core/registry --target-dir ~/.unified-memory-core/registry --format markdown`：`noop / adopt_canonical_root`
   - `npm run umc:cli -- review split-rehearsal --source-dir ~/.unified-memory-core/registry --target-dir /tmp/umc-split-rehearsal --format markdown`：`pass`
@@ -125,7 +126,7 @@
 
 ## In Progress
 
-- 下一阶段已切到单一主线：在自然中文覆盖、watchlist 和 perf baseline 已重新稳定的前提下，继续扩大 answer-level formal gate
+- 下一阶段已切到更深的 answer-level 主线：在 `12/12` formal gate、自然中文覆盖、watchlist 和 perf baseline 已重新稳定的前提下，继续补强 cross-source / conflict / history 深度
 - 当前 answer-level 已不再是“算法是否可用”的 blocker：isolated local formal gate `6/6` 已通过；后续主要是扩大样本面并保持宿主噪声与算法判断分离
 - 保持 release-preflight、bundle install、host smoke、Stage 5 acceptance 证据持续为绿
 - 保持 host-neutral root policy 在 CLI、公开文档和控制面里持续一致
@@ -145,9 +146,9 @@
 
 ## Next 3 Actions
 
-1. 把 answer-level formal gate 从 `6` 条代表性样本扩大到更大的稳定矩阵。
-2. 保持 `24` 条自然中文案例与 `missing_json_payload` transport watchlist 在扩容过程中持续稳定。
-3. 在 answer-level 扩容后继续重跑 main-path perf baseline，避免慢路径归因重新漂移。
+1. 把 answer-level formal gate 从当前 `12` 条稳定样本继续扩大到更深的覆盖矩阵。
+2. 把更深的 cross-source / conflict / multi-step history 场景带进 formal gate，同时保持 `24` 条自然中文案例持续稳定。
+3. 在更深的 answer-level 扩容后继续重跑 main-path perf baseline，避免慢路径归因重新漂移。
 
 ## Architecture Supervision
 - Signal: `yellow`
@@ -164,9 +165,9 @@
 
 ## Current Execution Line
 
-- Objective: 在 `392` case matrix、自然中文补强、failure-class watchlist 和 `2026-04-15` perf baseline 已稳定的基础上，把 isolated local answer-level formal gate 从 `6` 条代表性样本继续扩大
-- Plan Link: `expand-answer-level-formal-gate-after-natural-zh-hardening`
-- Runway: answer-level formal gate 扩容、自然中文子矩阵保绿、gateway/raw transport watch、perf-baseline-driven optimization；并行守住 release-preflight 和 canonical-root policy
+- Objective: 在 `12 / 12` isolated local answer-level formal gate 已稳定的基础上，继续补强 cross-source、conflict、multi-step history 和更深的自然中文 answer-level 覆盖
+- Plan Link: `deepen-answer-level-gate-beyond-12-case-baseline`
+- Runway: 更深 answer-level gate 扩容、自然中文子矩阵保绿、gateway/raw transport watch、perf-baseline-driven optimization；并行守住 release-preflight 和 canonical-root policy
 - Progress: `0 / 4` tasks complete
 - Stop Conditions:
   - benchmark expansion degenerates into pure case count chasing
@@ -175,10 +176,10 @@
 
 ## Execution Tasks
 
-- [ ] EL-1 expand the isolated local answer-level gate beyond the current `6` representative samples
-- [ ] EL-2 keep the `24` natural-Chinese cases green while answer-level coverage expands
+- [ ] EL-1 extend the formal gate beyond the current `12`-case stable baseline with deeper cross-source and conflict cases
+- [ ] EL-2 increase the natural-Chinese share inside the answer-level formal gate itself
 - [ ] EL-3 keep gateway/shared-session noise and raw transport classified on watchlists, separate from algorithm conclusions
-- [ ] EL-4 rerun the main-path perf baseline after meaningful answer-level gate expansion changes
+- [ ] EL-4 rerun the main-path perf baseline after the deeper answer-level gate expansion
 
 ## Development Log Capture
 

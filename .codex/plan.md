@@ -12,12 +12,12 @@
 - Chinese coverage: `211 / 392 = 53.83%`
 - Natural Chinese cases: `24` (`12` retrieval + `12` answer-level)
 - Retrieval-heavy formal gate: `250 / 250`
-- Isolated local answer-level formal gate: `6 / 6`
+- Isolated local answer-level formal gate: `12 / 12`
 - Natural-Chinese representative retrieval slice: `5 / 5`
 - Natural-Chinese representative answer-level slice: `6 / 6`
 - Raw transport watchlist: `0 / 8 raw ok`, all classified as host `missing_json_payload`
 - Main-path perf baseline: retrieval / assembly avg `43ms`; raw transport avg `15570ms`; isolated local answer-level avg `36155ms`
-- Interpretation: the `200+` case buildout and first formal gates are complete; the natural-Chinese / watchlist / perf hardening follow-up is also closed, and the next phase is answer-level expansion on top of those stabilized surfaces
+- Interpretation: the `200+` case buildout, natural-Chinese / watchlist / perf hardening, and the first answer-level gate expansion are complete; the next phase is to deepen the larger answer-level gate beyond the current `12`-case stable baseline
 
 ## Slices
 
@@ -51,6 +51,14 @@
   - Risks: 如果 answer-level 扩容时重新把 gateway/shared-session 噪声混回正式结论，新的 larger matrix 会再次失真；如果只加题数不补 conflict / abstention blind spots，扩容不会真正提升证据质量
   - Validation: 更大的 isolated local answer-level gate 报告、与 raw transport watchlist 分离的归因、中文 answer-level 子矩阵持续为绿、main-path perf baseline 重跑
   - Exit Condition: answer-level formal gate 不再依赖 `6` 条代表性样本，同时自然中文、watchlist、perf 这三条已完成基线继续保持稳定
+  - Status: `completed`
+
+- Slice: `deepen-answer-level-gate-beyond-12-case-baseline`
+  - Objective: 在 `12 / 12` isolated local answer-level formal gate 已稳定的基础上，继续补强 cross-source、conflict、multi-step history 和更深的自然中文 answer-level coverage
+  - Dependencies: `2026-04-15` answer-level formal gate report、`392` case matrix、`24` natural-Chinese cases、transport failure-class watchlist、main-path perf baseline
+  - Risks: 如果继续只靠当前 `12` 条稳定样本，formal gate 会再次偏向“容易答对的代表题”；如果扩容时把 gateway/shared-session 噪声混回正式门禁，结论会再次失真
+  - Validation: 更深 answer-level gate 报告、control-surface 更新、与 transport watchlist 分离的结论、main-path perf baseline refresh
+  - Exit Condition: formal gate 覆盖面超出当前 `12` 条稳定基线，同时 current/history/conflict/cross-source/zh-natural 深度补齐
   - Status: `ongoing`
 
 - Slice: `formalize-realtime-memory-intent-ingestion`
@@ -159,7 +167,7 @@
 
 ## Execution Order
 
-1. 把 answer-level formal gate 从当前 `6` 条代表性样本继续扩成更大的稳定矩阵
+1. 把 answer-level formal gate 从当前 `12` 条稳定样本继续扩成更深的覆盖矩阵
 2. 保持 `24` 条自然中文案例、`missing_json_payload` transport watchlist 和 `2026-04-15` perf baseline 在后续扩容中持续稳定
 3. 把 gateway/shared-session 与 raw transport 继续保持在独立 watchlist，不与算法判断混淆
 4. 按主链路 perf baseline 继续解释并优化最慢的 answer-level 层
@@ -181,9 +189,9 @@
 
 ## Current Execution Line
 
-- Objective: 在 `392` case matrix、自然中文补强、failure-class watchlist 和 `2026-04-15` perf baseline 已稳定的基础上，继续扩大 isolated local answer-level formal gate
-- Plan Link: `expand-answer-level-formal-gate-after-natural-zh-hardening`
-- Runway: answer-level formal gate 扩容、自然中文子矩阵保绿、gateway/raw transport watch、perf-baseline-driven optimization
+- Objective: 在 `12 / 12` isolated local answer-level formal gate 已稳定的基础上，继续补强 cross-source、conflict、multi-step history 和更深的自然中文 answer-level 覆盖
+- Plan Link: `deepen-answer-level-gate-beyond-12-case-baseline`
+- Runway: 更深 answer-level gate 扩容、自然中文子矩阵保绿、gateway/raw transport watch、perf-baseline-driven optimization
 - Progress: `0 / 4` tasks complete
 - Stop Conditions:
   - case count grows but blind spots remain
@@ -194,10 +202,10 @@
 
 ## Execution Tasks
 
-- [ ] EL-1 expand the isolated local answer-level gate beyond the current `6` representative samples
-- [ ] EL-2 keep the `24` natural-Chinese cases green while answer-level coverage expands
+- [ ] EL-1 extend the formal gate beyond the current `12`-case stable baseline with deeper cross-source and conflict cases
+- [ ] EL-2 increase the natural-Chinese share inside the answer-level formal gate itself
 - [ ] EL-3 keep gateway/shared-session noise and raw transport classified on watchlists, separate from algorithm conclusions
-- [ ] EL-4 rerun the main-path perf baseline after meaningful answer-level gate expansion changes
+- [ ] EL-4 rerun the main-path perf baseline after the deeper answer-level gate expansion
 
 ## Development Log Capture
 

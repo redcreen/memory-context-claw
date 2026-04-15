@@ -1,0 +1,490 @@
+{
+  "generatedAt": "2026-04-15T03:58:00.402Z",
+  "agentId": "umceval65",
+  "agentToolHint": true,
+  "agentLocal": true,
+  "casesPath": "/Users/redcreen/Project/unified-memory-core/evals/openclaw-cli-memory-benchmark-cases.js",
+  "summary": {
+    "total": 12,
+    "passed": 12,
+    "failed": 0,
+    "comparedLegacy": 5,
+    "legacyPassed": 0,
+    "abstained": 0,
+    "abstentionRate": 0,
+    "byLanguage": {
+      "zhBearing": 2,
+      "nonZh": 10
+    },
+    "byCategory": {
+      "agent-profile": {
+        "total": 1,
+        "passed": 1
+      },
+      "agent-project": {
+        "total": 2,
+        "passed": 2
+      },
+      "agent-temporal": {
+        "total": 3,
+        "passed": 3
+      },
+      "agent-preference": {
+        "total": 1,
+        "passed": 1
+      },
+      "agent-rule": {
+        "total": 1,
+        "passed": 1
+      },
+      "agent-history": {
+        "total": 1,
+        "passed": 1
+      },
+      "agent-zh": {
+        "total": 1,
+        "passed": 1
+      },
+      "agent-zh-natural": {
+        "total": 1,
+        "passed": 1
+      },
+      "negative": {
+        "total": 1,
+        "passed": 1
+      }
+    },
+    "byAttribution": {
+      "legacy-skipped": 5,
+      "not-compared": 7
+    },
+    "byTransport": {
+      "agent_local": 12
+    },
+    "byEntrypoint": {
+      "agent": 12
+    }
+  },
+  "results": [
+    {
+      "id": "agent-name-1",
+      "category": "agent-profile",
+      "entrypoint": "agent",
+      "query": "",
+      "message": "Based only on your memory for this agent, what is the user's preferred name? If memory is missing, reply exactly: I don't know based on current memory.",
+      "compareLegacy": true,
+      "attributionKind": "bootstrap",
+      "attribution": "legacy-skipped",
+      "current": {
+        "ok": true,
+        "transport": "agent_local",
+        "answer": "Maya Chen",
+        "injectedWorkspaceFiles": [
+          "AGENTS.md",
+          "SOUL.md",
+          "TOOLS.md",
+          "IDENTITY.md",
+          "USER.md",
+          "HEARTBEAT.md",
+          "BOOTSTRAP.md",
+          "MEMORY.md"
+        ],
+        "observedSessionKey": "agent:umceval65:main",
+        "observedSessionId": "umc-bench-agent-name-1-10faf24c",
+        "warning": "",
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "sourcesOk": true,
+        "reason": "matched"
+      },
+      "legacy": null
+    },
+    {
+      "id": "agent-project-1",
+      "category": "agent-project",
+      "entrypoint": "agent",
+      "query": "",
+      "message": "Based only on your memory for this agent, what is Project Lantern? If memory is missing, reply exactly: I don't know based on current memory.",
+      "compareLegacy": true,
+      "attributionKind": "retrieval",
+      "attribution": "legacy-skipped",
+      "current": {
+        "ok": true,
+        "transport": "agent_local",
+        "answer": "Project Lantern is a B2B analytics assistant for clinic managers. Source: notes/project-lantern.md#L1-L15",
+        "injectedWorkspaceFiles": [
+          "AGENTS.md",
+          "SOUL.md",
+          "TOOLS.md",
+          "IDENTITY.md",
+          "USER.md",
+          "HEARTBEAT.md",
+          "BOOTSTRAP.md",
+          "MEMORY.md"
+        ],
+        "observedSessionKey": "agent:umceval65:main",
+        "observedSessionId": "umc-bench-agent-project-1-8d0e5de1",
+        "warning": "",
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "sourcesOk": true,
+        "reason": "matched"
+      },
+      "legacy": null
+    },
+    {
+      "id": "agent-current-editor-1",
+      "category": "agent-temporal",
+      "entrypoint": "agent",
+      "query": "",
+      "message": "Based only on your memory for this agent, what is the user's current main editor now? If memory is missing, reply exactly: I don't know based on current memory.",
+      "compareLegacy": true,
+      "attributionKind": "temporal",
+      "attribution": "legacy-skipped",
+      "current": {
+        "ok": true,
+        "transport": "agent_local",
+        "answer": "Zed.",
+        "injectedWorkspaceFiles": [
+          "AGENTS.md",
+          "SOUL.md",
+          "TOOLS.md",
+          "IDENTITY.md",
+          "USER.md",
+          "HEARTBEAT.md",
+          "BOOTSTRAP.md",
+          "MEMORY.md"
+        ],
+        "observedSessionKey": "agent:umceval65:main",
+        "observedSessionId": "umc-bench-agent-current-editor-1-333b599e",
+        "warning": "",
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "sourcesOk": true,
+        "reason": "matched"
+      },
+      "legacy": null
+    },
+    {
+      "id": "agent-current-region-1",
+      "category": "agent-temporal",
+      "entrypoint": "agent",
+      "query": "",
+      "message": "Based only on your memory for this agent, what is the confirmed default deploy region now? If memory is missing, reply exactly: I don't know based on current memory.",
+      "compareLegacy": true,
+      "attributionKind": "temporal",
+      "attribution": "legacy-skipped",
+      "current": {
+        "ok": true,
+        "transport": "agent_local",
+        "answer": "eu-west-1",
+        "injectedWorkspaceFiles": [
+          "AGENTS.md",
+          "SOUL.md",
+          "TOOLS.md",
+          "IDENTITY.md",
+          "USER.md",
+          "HEARTBEAT.md",
+          "BOOTSTRAP.md",
+          "MEMORY.md"
+        ],
+        "observedSessionKey": "agent:umceval65:main",
+        "observedSessionId": "umc-bench-agent-current-region-1-7d9545bd",
+        "warning": "",
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "sourcesOk": true,
+        "reason": "matched"
+      },
+      "legacy": null
+    },
+    {
+      "id": "agent-current-notebook-1",
+      "category": "agent-temporal",
+      "entrypoint": "agent",
+      "query": "",
+      "message": "Based only on your memory for this agent, what notebook does the user currently use for meetings? If memory is missing, reply exactly: I don't know based on current memory.",
+      "compareLegacy": true,
+      "attributionKind": "temporal",
+      "attribution": "legacy-skipped",
+      "current": {
+        "ok": true,
+        "transport": "agent_local",
+        "answer": "The charcoal A5 notebook.",
+        "injectedWorkspaceFiles": [
+          "AGENTS.md",
+          "SOUL.md",
+          "TOOLS.md",
+          "IDENTITY.md",
+          "USER.md",
+          "HEARTBEAT.md",
+          "BOOTSTRAP.md",
+          "MEMORY.md"
+        ],
+        "observedSessionKey": "agent:umceval65:main",
+        "observedSessionId": "umc-bench-agent-current-notebook-1-aad1da6b",
+        "warning": "",
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "sourcesOk": true,
+        "reason": "matched"
+      },
+      "legacy": null
+    },
+    {
+      "id": "agent-preference-async-1",
+      "category": "agent-preference",
+      "entrypoint": "agent",
+      "query": "",
+      "message": "Based only on your memory for this agent, does the user prefer async written updates or live voice calls? If memory is missing, reply exactly: I don't know based on current memory.",
+      "compareLegacy": false,
+      "attributionKind": "retrieval",
+      "attribution": "not-compared",
+      "current": {
+        "ok": true,
+        "transport": "agent_local",
+        "answer": "Async written updates, not live voice calls.",
+        "injectedWorkspaceFiles": [
+          "AGENTS.md",
+          "SOUL.md",
+          "TOOLS.md",
+          "IDENTITY.md",
+          "USER.md",
+          "HEARTBEAT.md",
+          "BOOTSTRAP.md",
+          "MEMORY.md"
+        ],
+        "observedSessionKey": "agent:umceval65:main",
+        "observedSessionId": "umc-bench-agent-preference-async-1-e3a75640",
+        "warning": "",
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "sourcesOk": true,
+        "reason": "matched"
+      },
+      "legacy": null
+    },
+    {
+      "id": "agent-rule-no-guess-1",
+      "category": "agent-rule",
+      "entrypoint": "agent",
+      "query": "",
+      "message": "Based only on your memory for this agent, what should happen if memory is missing or conflicting? If memory is missing, reply exactly: I don't know based on current memory.",
+      "compareLegacy": false,
+      "attributionKind": "bootstrap",
+      "attribution": "not-compared",
+      "current": {
+        "ok": true,
+        "transport": "agent_local",
+        "answer": "I don't know based on current memory.",
+        "injectedWorkspaceFiles": [
+          "AGENTS.md",
+          "SOUL.md",
+          "TOOLS.md",
+          "IDENTITY.md",
+          "USER.md",
+          "HEARTBEAT.md",
+          "BOOTSTRAP.md",
+          "MEMORY.md"
+        ],
+        "observedSessionKey": "agent:umceval65:main",
+        "observedSessionId": "umc-bench-agent-rule-no-guess-1-fd35c925",
+        "warning": "",
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "sourcesOk": true,
+        "reason": "matched"
+      },
+      "legacy": null
+    },
+    {
+      "id": "agent-project-city-1",
+      "category": "agent-project",
+      "entrypoint": "agent",
+      "query": "",
+      "message": "Based only on your memory for this agent, what is the launch city for the pilot? If memory is missing, reply exactly: I don't know based on current memory.",
+      "compareLegacy": false,
+      "attributionKind": "retrieval",
+      "attribution": "not-compared",
+      "current": {
+        "ok": true,
+        "transport": "agent_local",
+        "answer": "Singapore.",
+        "injectedWorkspaceFiles": [
+          "AGENTS.md",
+          "SOUL.md",
+          "TOOLS.md",
+          "IDENTITY.md",
+          "USER.md",
+          "HEARTBEAT.md",
+          "BOOTSTRAP.md",
+          "MEMORY.md"
+        ],
+        "observedSessionKey": "agent:umceval65:main",
+        "observedSessionId": "umc-bench-agent-project-city-1-a3144dd2",
+        "warning": "",
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "sourcesOk": true,
+        "reason": "matched"
+      },
+      "legacy": null
+    },
+    {
+      "id": "agent-history-editor-1",
+      "category": "agent-history",
+      "entrypoint": "agent",
+      "query": "",
+      "message": "Based only on your memory for this agent, what editor was Maya still using on 2026-04-10? If memory is missing, reply exactly: I don't know based on current memory.",
+      "compareLegacy": false,
+      "attributionKind": "history",
+      "attribution": "not-compared",
+      "current": {
+        "ok": true,
+        "transport": "agent_local",
+        "answer": "Vim.",
+        "injectedWorkspaceFiles": [
+          "AGENTS.md",
+          "SOUL.md",
+          "TOOLS.md",
+          "IDENTITY.md",
+          "USER.md",
+          "HEARTBEAT.md",
+          "BOOTSTRAP.md",
+          "MEMORY.md"
+        ],
+        "observedSessionKey": "agent:umceval65:main",
+        "observedSessionId": "umc-bench-agent-history-editor-1-9ff89053",
+        "warning": "",
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "sourcesOk": true,
+        "reason": "matched"
+      },
+      "legacy": null
+    },
+    {
+      "id": "agent-zh-temporal-1",
+      "category": "agent-zh",
+      "entrypoint": "agent",
+      "query": "",
+      "message": "仅根据你当前这个 agent 的记忆，用户现在主要用什么编辑器？如果记忆里没有，请直接回答：I don't know based on current memory.",
+      "compareLegacy": false,
+      "attributionKind": "temporal",
+      "attribution": "not-compared",
+      "current": {
+        "ok": true,
+        "transport": "agent_local",
+        "answer": "Zed.",
+        "injectedWorkspaceFiles": [
+          "AGENTS.md",
+          "SOUL.md",
+          "TOOLS.md",
+          "IDENTITY.md",
+          "USER.md",
+          "HEARTBEAT.md",
+          "BOOTSTRAP.md",
+          "MEMORY.md"
+        ],
+        "observedSessionKey": "agent:umceval65:main",
+        "observedSessionId": "umc-bench-agent-zh-temporal-1-43253129",
+        "warning": "",
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "sourcesOk": true,
+        "reason": "matched"
+      },
+      "legacy": null
+    },
+    {
+      "id": "agent-zh-natural-project-1",
+      "category": "agent-zh-natural",
+      "entrypoint": "agent",
+      "query": "",
+      "message": "只根据当前记忆，Project Lantern 到底是在做什么？如果没有这条记忆，就只回答：I don't know based on current memory.",
+      "compareLegacy": false,
+      "attributionKind": "retrieval",
+      "attribution": "not-compared",
+      "current": {
+        "ok": true,
+        "transport": "agent_local",
+        "answer": "- Project Lantern is a B2B analytics assistant for clinic managers. Source: notes/project-lantern.md#L1-L15",
+        "injectedWorkspaceFiles": [
+          "AGENTS.md",
+          "SOUL.md",
+          "TOOLS.md",
+          "IDENTITY.md",
+          "USER.md",
+          "HEARTBEAT.md",
+          "BOOTSTRAP.md",
+          "MEMORY.md"
+        ],
+        "observedSessionKey": "agent:umceval65:main",
+        "observedSessionId": "umc-bench-agent-zh-natural-project-1-8c08c673",
+        "warning": "",
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "sourcesOk": true,
+        "reason": "matched"
+      },
+      "legacy": null
+    },
+    {
+      "id": "agent-negative-1",
+      "category": "negative",
+      "entrypoint": "agent",
+      "query": "",
+      "message": "Based only on your memory for this agent, what is the user's favorite programming language? If memory is missing, reply exactly: I don't know based on current memory.",
+      "compareLegacy": false,
+      "attributionKind": "negative",
+      "attribution": "not-compared",
+      "current": {
+        "ok": true,
+        "transport": "agent_local",
+        "answer": "I don't know based on current memory.",
+        "injectedWorkspaceFiles": [
+          "AGENTS.md",
+          "SOUL.md",
+          "TOOLS.md",
+          "IDENTITY.md",
+          "USER.md",
+          "HEARTBEAT.md",
+          "BOOTSTRAP.md",
+          "MEMORY.md"
+        ],
+        "observedSessionKey": "agent:umceval65:main",
+        "observedSessionId": "umc-bench-agent-negative-1-232f1695",
+        "warning": "",
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "sourcesOk": true,
+        "reason": "matched"
+      },
+      "legacy": null
+    }
+  ]
+}

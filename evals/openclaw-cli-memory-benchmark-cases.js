@@ -836,7 +836,7 @@ const cases = [
       "Based only on your memory for this agent, what should happen if memory is missing or conflicting? If memory is missing, reply exactly: I don't know based on current memory.",
       "Based only on your memory for this agent, should you guess when memory conflicts? If memory is missing, reply exactly: I don't know based on current memory."
     ],
-    ["do not guess", "conflicting", "missing"],
+    ["do not guess", "conflicting", "missing", "I don't know based on current memory."],
     {
       attributionKind: "bootstrap"
     }
