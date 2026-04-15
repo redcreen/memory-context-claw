@@ -114,7 +114,7 @@
   - `npm run smoke:eval -- --format markdown`：`28/28`
   - `npm run smoke:eval:critical -- --format markdown`：`18/18`
   - `npm run eval:memory-search:cases -- --skip-builtin --format json`：plugin signal/source `30/30`
-  - live host `after_tool_call` accepted-action canary：`pass`（1 条 `target_fact` stable；2 条 `outcome_artifact` observation）
+  - live host `after_tool_call` accepted-action canary：`pass`（debug-only `umc_emit_accepted_action_canary` 经真实 OpenClaw tool execution -> event bus -> hook 自动写入 canonical registry；本轮结果为 `2` 条 `outcome_artifact` observation，`promoted=0`，符合一次性 canary outcome 预期）
   - Markdown 链接扫描：`251` files scanned；source docs `issueCount = 0`（忽略 `dist/openclaw-release/` 生成产物）
   - `git diff --check`：`pass`
 

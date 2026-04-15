@@ -118,6 +118,67 @@ It intentionally does not use:
 - sync `tool_result_persist` for registry writes
 - implicit inference from arbitrary successful tool results
 
+## Host Canary Design
+
+To verify the real host end-to-end path instead of only unit tests or direct hook invocation, the adapter now includes one dedicated canary tool:
+
+- `umc_emit_accepted_action_canary`
+
+Its boundary is intentional:
+
+- not registered by default
+- registered only when `openclawAdapter.debug.canaryTool = true`
+- used only for host verification, not for normal memory retrieval, assembly, or nightly flow
+
+Why it exists:
+
+- `unified-memory-core` is not itself a business tool
+- but proving that a real OpenClaw tool execution automatically triggers `after_tool_call` and writes governed `accepted_action` evidence into the canonical registry requires one controlled, repeatable, non-invasive tool sample
+- the earlier dependency on an external tool for live canaries has now been removed; UMC owns this verification path directly
+
+## What Is Verified Now
+
+This adapter slice is now verified at the real-host level, not just as design intent:
+
+1. OpenClaw loads `unified-memory-core v0.2.1`
+2. when debug mode is enabled, the host tool list includes `umc_emit_accepted_action_canary`
+3. a real `openclaw agent --local` run can call that tool
+4. the host really emits async `after_tool_call`
+5. the canonical registry automatically receives the `accepted_action` source and reflection outputs
+6. once debug mode is disabled, the tool disappears from the normal host tool list again
+
+Readable report:
+
+- [../../../../reports/generated/openclaw-accepted-action-canary-2026-04-15.md](../../../../reports/generated/openclaw-accepted-action-canary-2026-04-15.md)
+
+This host canary produced:
+
+- source artifact: written
+- reflection outputs: `outcome_artifact` candidates
+- promotion: `0`
+
+`promoted=0` is correct here, not a failure. The canary intentionally emits one-off outcomes rather than reusable target facts, so governance should keep them in observation.
+
+## Is This Slice Done
+
+If "done" means:
+
+- OpenClaw async `after_tool_call` integration exists
+- structured `accepted_action` governed intake works
+- the path is proven on the real host end-to-end
+- live canary verification no longer depends on an external project tool
+
+then this slice can now be treated as complete.
+
+If "done" means the whole OpenClaw / benchmark / performance line, then no. Remaining work still includes:
+
+- larger answer-level benchmark expansion
+- stronger Chinese coverage
+- continued transport-watchlist isolation
+- main-path performance optimization
+
+So what is complete here is the adapter write-side accepted-action host-verification slice, not the entire project roadmap.
+
 ## Required Boundaries
 
 The adapter must keep separate:
