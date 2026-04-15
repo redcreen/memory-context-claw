@@ -89,7 +89,7 @@ Category coverage:
 - report: [openclaw-cli-agent-answer-matrix-2026-04-15.md](openclaw-cli-agent-answer-matrix-2026-04-15.md)
 - total cases: `12`
 - passed: `12 / 12`
-- zh-bearing cases: `2 / 12`
+- zh-bearing cases: `6 / 12`
 
 This gate proves that the current answer-level path is not only retrieving memory, but can still answer correctly on a stable local host path.
 
@@ -110,7 +110,7 @@ This is a real live host-path gate, but it is not the same as the builtin-vs-UMC
 - report: [openclaw-memory-search-transport-watchlist-2026-04-15.md](openclaw-memory-search-transport-watchlist-2026-04-15.md)
 - probes: `8`
 - raw ok: `0 / 8`
-- current failure class: `missing_json_payload / invalid_json`
+- current failure class: `missing_json_payload`
 
 Interpretation:
 
@@ -122,15 +122,16 @@ Interpretation:
 
 - report: [openclaw-cli-agent-answer-watch-2026-04-15.md](openclaw-cli-agent-answer-watch-2026-04-15.md)
 - total cases: `18`
-- passed: `12 / 18`
-- failed: `6`
+- passed: `14 / 18`
+- failed: `4`
 - zh-bearing cases: `9 / 18`
 
 Interpretation:
 
-- this surface improved from the earlier `7 / 18` watch result
+- this surface improved from the earlier `7 / 18` watch result, then from `12 / 18` to `14 / 18` in this round
 - but it is still not strong enough to replace the repo-default `12 / 12` formal gate
-- the remaining failures are no longer just one bucket of host noise; they are now a mix of residual output-shape problems and genuine answer-level expectation mismatches
+- the remaining failures are now concentrated into four harder cases instead of broad host-noise collapse
+- the still-open cases are `agent-current-editor-1`, `agent-cross-source-calls-1`, `agent-zh-project-1`, and `agent-zh-natural-cross-source-calls-1`
 
 ### Main-Path Performance Baseline
 
@@ -215,10 +216,10 @@ Even when many simple prompts are shared wins, Memory Core is already materially
    The project now maintains a runnable matrix of `392` cases with `53.83%` Chinese-bearing coverage, plus a `262 / 262` retrieval-heavy formal gate.
 
 3. Stable answer-level gate
-   The isolated local answer-level gate is now `12 / 12`, which gives a repeatable host path for future optimization work.
+   The isolated local answer-level gate is now `12 / 12`, and the formal gate itself now carries `6 / 12` zh-bearing cases instead of only a token Chinese slice.
 
 4. Better separation between stable gate and deeper watch
-   The deeper `18`-case watch surface has improved to `12 / 18`, but it is still explicitly kept out of the repo-default formal gate. That keeps host noise and harder answer-level regressions from quietly polluting the stable health signal.
+   The deeper `18`-case watch surface has improved to `14 / 18`, but it is still explicitly kept out of the repo-default formal gate. That keeps the remaining four harder answer-level failures from quietly polluting the stable health signal.
 
 5. Host transport noise isolation
    Raw `openclaw memory search` instability is tracked separately, so host JSON failures no longer get misread as algorithm regressions.
@@ -237,7 +238,7 @@ Current `next` in the development plan:
 
 - deepen the stable answer-level formal gate into more `cross-source`, `conflict`, `multi-step history`, and more natural Chinese coverage
 
-That means this round has finished the broad regression and evidence pass, and the next phase is no longer “prove basic health”, but “turn the improved `12 / 18` deeper watch into a cleaner, promotable gate where Memory Core beats the builtin baseline more often”.
+That means this round has finished the broad regression and evidence pass, and the next phase is no longer “prove basic health”, but “turn the improved `14 / 18` deeper watch into a promotable next formal-gate layer where Memory Core beats the builtin baseline more often”.
 
 ## Related Reports
 

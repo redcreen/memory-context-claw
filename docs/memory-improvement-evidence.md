@@ -28,8 +28,8 @@ Current test highlights:
 - repo regression: `399 / 399`
 - latest available release-preflight evidence: `8 / 8` pass
 - retrieval-heavy CLI benchmark: `262 / 262`
-- isolated local answer-level gate: `12 / 12`
-- deeper answer-level watch: `12 / 18`
+- isolated local answer-level gate: `12 / 12`, with `6 / 12` zh-bearing cases inside the formal gate itself
+- deeper answer-level watch: `14 / 18`
 - runnable matrix already maintained in the repo: `392` cases
 - Chinese-bearing share in the runnable matrix: `53.83%`
 
@@ -63,6 +63,7 @@ This round was not just another test rerun. The answer-level runner itself was h
 - one bounded retry for empty or parse-failed host payloads
 
 That moved the stable answer-level gate back to a reliable `12 / 12`, and it also improved the deeper watch surface from `7 / 18` to `12 / 18`.
+After the next formal-gate rebalance and reruns in this round, the deeper watch now lands at `14 / 18`.
 
 That does not mean the deeper gate is solved yet. It means the stable signal is clean again, and the remaining deeper failures are now a smaller, more honest mix of host-noise residue and real answer-level misses.
 

@@ -1,6 +1,6 @@
 # OpenClaw Memory Improvement Summary
 
-- generatedAt: `2026-04-15T05:06:04.108Z`
+- generatedAt: `2026-04-15T13:37:40.173Z`
 - comparedCases: `16`
 - unifiedPassed: `16`
 - legacyPassed: `15`

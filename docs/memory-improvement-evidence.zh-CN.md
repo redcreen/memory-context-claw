@@ -28,8 +28,8 @@
 - 仓库回归：`399 / 399`
 - latest available release-preflight 证据：`8 / 8` 通过
 - retrieval-heavy CLI benchmark：`262 / 262`
-- isolated local answer-level gate：`12 / 12`
-- 更深的 answer-level watch：`12 / 18`
+- isolated local answer-level gate：`12 / 12`，其中中文样本 `6 / 12`
+- 更深的 answer-level watch：`14 / 18`
 - 仓库当前维护的 runnable matrix：`392` cases
 - 其中中文相关 case 占比：`53.83%`
 
@@ -70,7 +70,8 @@
 结果是：
 
 - repo-default stable answer-level formal gate 重新稳定在 `12 / 12`
-- 更深的 watch 面从之前的 `7 / 18` 提升到现在的 `12 / 18`
+- formal gate 本身的中文占比已经抬到 `6 / 12`
+- 更深的 watch 面从之前的 `7 / 18` 提升到现在的 `14 / 18`
 
 这说明当前主问题已经不再是“stable gate 根本不可信”，而是“更深、更难的 answer-level 覆盖还没完全收口”。
 

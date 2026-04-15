@@ -11,8 +11,8 @@ If you want the shortest practical answer before reading the whole repo:
 - latest full regression: `399 / 399`
 - latest available release-preflight: `8 / 8` pass
 - retrieval-heavy CLI benchmark: `262 / 262`
-- isolated local answer-level gate: `12 / 12`
-- deeper answer-level watch: `12 / 18`
+- isolated local answer-level gate: `12 / 12`, with `6 / 12` zh-bearing cases inside the formal gate
+- deeper answer-level watch: `14 / 18`
 - maintained runnable matrix: `392` cases with `53.83%` Chinese-bearing coverage
 - current live A/B against OpenClaw builtin: `16` real answer-level cases, `15` shared wins, `1` Memory Core-only win, `0` builtin-only wins
 

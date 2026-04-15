@@ -1,6 +1,6 @@
 # OpenClaw Memory Search Transport Watchlist
 
-- generatedAt: `2026-04-15T13:13:40.903Z`
+- generatedAt: `2026-04-15T13:48:47.752Z`
 - totalProbes: `8`
 - rawOk: `0`
 - emptyResults: `0`
@@ -8,18 +8,18 @@
 - invalidJson: `8`
 - commandFailed: `0`
 - otherFailure: `0`
-- averageDurationMs: `8541`
-- maxDurationMs: `9208`
+- averageDurationMs: `8385`
+- maxDurationMs: `8864`
 
 ## Category Summary
-- profile: ok=`0` failures=`1` total=`1` avgMs=`8550` maxMs=`8550`
-- preference: ok=`0` failures=`1` total=`1` avgMs=`8540` maxMs=`8540`
-- rule: ok=`0` failures=`1` total=`1` avgMs=`8392` maxMs=`8392`
-- project: ok=`0` failures=`1` total=`1` avgMs=`8314` maxMs=`8314`
-- cross-source: ok=`0` failures=`1` total=`1` avgMs=`8927` maxMs=`8927`
-- supersede: ok=`0` failures=`1` total=`1` avgMs=`8249` maxMs=`8249`
-- temporal-current: ok=`0` failures=`1` total=`1` avgMs=`8151` maxMs=`8151`
-- temporal-history: ok=`0` failures=`1` total=`1` avgMs=`9208` maxMs=`9208`
+- profile: ok=`0` failures=`1` total=`1` avgMs=`8594` maxMs=`8594`
+- preference: ok=`0` failures=`1` total=`1` avgMs=`8864` maxMs=`8864`
+- rule: ok=`0` failures=`1` total=`1` avgMs=`8041` maxMs=`8041`
+- project: ok=`0` failures=`1` total=`1` avgMs=`8256` maxMs=`8256`
+- cross-source: ok=`0` failures=`1` total=`1` avgMs=`8495` maxMs=`8495`
+- supersede: ok=`0` failures=`1` total=`1` avgMs=`8102` maxMs=`8102`
+- temporal-current: ok=`0` failures=`1` total=`1` avgMs=`8267` maxMs=`8267`
+- temporal-history: ok=`0` failures=`1` total=`1` avgMs=`8458` maxMs=`8458`
 
 ## Failure Classes
 - missing_json_payload: `8`

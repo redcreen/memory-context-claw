@@ -26,12 +26,12 @@
 - 中文占比：`211 / 392 = 53.83%`
 - 自然中文案例：`24`（`12` retrieval + `12` answer-level）
 - retrieval-heavy formal gate：`250 / 250`
-- isolated local answer-level formal gate：`12 / 12`
+- isolated local answer-level formal gate：`12 / 12`（formal gate 内中文样本 `6 / 12`）
 - 自然中文代表性 retrieval slice：`5 / 5`
 - 自然中文代表性 answer-level slice：`6 / 6`
 - raw transport watchlist：`0 / 8 raw ok`，全部隔离为 host `missing_json_payload`
 - main-path perf baseline：retrieval / assembly `8ms`；raw transport `8335ms`；isolated local answer-level `24553ms`
-- 当前结论：`200+` case 建设、自然中文补强、transport watchlist failure-class 化、perf baseline 刷新，以及 answer-level formal gate 从 `6/6` 扩到 `12/12` 都已收口；更深的 watch 也已从 `7/18` 提升到 `12/18`，但当前真正的下一步仍是把这个更大的 gate 继续做深
+- 当前结论：`200+` case 建设、自然中文补强、transport watchlist failure-class 化、perf baseline 刷新，以及 answer-level formal gate 从 `6/6` 扩到 `12/12` 都已收口；formal gate 自身的中文占比也已抬到 `6 / 12`；更深的 watch 已从 `7/18` 提升到 `14/18`，当前真正的下一步是把剩余 `4` 条 harder failures 收掉
 
 对应证据：
 
@@ -53,11 +53,11 @@
 
 主 roadmap 里的“当前”不只是方向，也对应接下来要执行的具体工作：
 
-1. 扩大 answer-level formal gate，不再只停留在当前 `12` 条稳定样本。
-当前进展：更深的 `18` case answer-level watch matrix 已建立，当前 `12 / 18`；它已经明显好于之前的 `7 / 18`，但仍然混有 residual host output-shape 噪声和真正的 expectation mismatch，所以还没有直接替换 repo-default `12 / 12` formal gate。
-2. 在后续扩容中保持 `24` 条自然中文案例持续为绿，而不是退回只有 zh-bearing 数量。
+1. 收掉 deeper watch 剩余的 `4` 条 harder failures，让它从 triage surface 继续逼近可晋升门槛。
+当前进展：更深的 `18` case answer-level watch matrix 当前 `14 / 18`，剩余失败集中在 current-editor、cross-source-calls、zh-project 和 zh-natural-cross-source-calls。
+2. 继续保持 formal gate 内部 `6 / 12` 的自然中文占比，不退回“全局过半、正式门禁里却很少中文”的状态。
 3. 持续把 gateway/session-lock 与 raw transport 维持在 `missing_json_payload` watchlist，不让宿主噪声重新污染算法判断。
-4. 继续按 `2026-04-15` 主链路性能基线压低 answer-level 最慢层，再决定后续算法优化顺序。
+4. 在下一轮 deeper-failure 收敛后，再重跑 release-preflight / perf / A-B，把新一轮结果固定成下一个基线。
 
 恢复执行时：
 

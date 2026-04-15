@@ -1,6 +1,6 @@
 # OpenClaw CLI Memory Benchmark
 
-- generatedAt: `2026-04-15T04:03:24.293Z`
+- generatedAt: `2026-04-15T13:46:26.723Z`
 - agent: `umceval`
 - totalCases: `262`
 - currentPassed: `262`

@@ -1,10 +1,10 @@
 # OpenClaw CLI Memory Benchmark
 
-- generatedAt: `2026-04-15T12:51:05.271Z`
+- generatedAt: `2026-04-15T13:33:30.006Z`
 - agent: `umceval65`
 - totalCases: `18`
-- currentPassed: `12`
-- currentFailed: `6`
+- currentPassed: `14`
+- currentFailed: `4`
 - legacyCompared: `14`
 - legacyPassed: `0`
 - abstained: `0`
@@ -16,49 +16,46 @@
 - nonZh: `9`
 
 ## Category Summary
-- agent-profile: `0/1`
-- agent-project: `1/2`
+- agent-profile: `1/1`
+- agent-project: `2/2`
 - agent-temporal: `1/2`
 - agent-cross-source: `0/1`
 - agent-rule: `1/1`
 - agent-history: `1/1`
-- agent-zh: `2/2`
-- agent-zh-natural: `4/6`
+- agent-zh: `1/2`
+- agent-zh-natural: `5/6`
 - negative: `2/2`
 
 ## Attribution Summary
-- unified-failed: `6`
-- legacy-skipped: `8`
+- legacy-skipped: `10`
+- unified-failed: `4`
 - not-compared: `4`
 
 ## Transport Summary
-- agent_local: `17`
-- agent: `1`
+- agent_local: `18`
 
 ## Entrypoint Summary
 - agent: `18`
 
 ## Failing Cases
-- agent-name-1: expectation mismatch
-- agent-project-1: expectation mismatch
 - agent-current-editor-1: expectation mismatch
 - agent-cross-source-calls-1: expectation mismatch
-- agent-zh-natural-conflict-region-1: Unable to parse JSON payload from stdout
+- agent-zh-project-1: expectation mismatch
 - agent-zh-natural-cross-source-calls-1: expectation mismatch
 
 ## Sample Results
-- agent-name-1 [agent-profile] `agent` pass=`false` attribution=`unified-failed`
+- agent-name-1 [agent-profile] `agent` pass=`true` attribution=`legacy-skipped`
   prompt: Based only on your memory for this agent, what is the user's preferred name? If memory is missing, reply exactly: I don't know based on current memory.
-  observed: Project Lantern is a B2B analytics assistant for clinic managers.
-- agent-project-1 [agent-project] `agent` pass=`false` attribution=`unified-failed`
+  observed: Maya Chen
+- agent-project-1 [agent-project] `agent` pass=`true` attribution=`legacy-skipped`
   prompt: Based only on your memory for this agent, what is Project Lantern? If memory is missing, reply exactly: I don't know based on current memory.
-  observed: I don't know based on current memory.
+  observed: Project Lantern is a B2B analytics assistant for clinic managers.
 - agent-current-editor-1 [agent-temporal] `agent` pass=`false` attribution=`unified-failed`
   prompt: Based only on your memory for this agent, what is the user's current main editor now? If memory is missing, reply exactly: I don't know based on current memory.
-  observed: I don't know based on current memory.
+  observed: Yes.
 - agent-current-demo-1 [agent-temporal] `agent` pass=`true` attribution=`legacy-skipped`
   prompt: Based only on your memory for this agent, when is the clinic demo scheduled now? If memory is missing, reply exactly: I don't know based on current memory.
-  observed: The clinic demo is scheduled for next Tuesday at 15:00 Shanghai time.
+  observed: Next Tuesday at 15:00 Shanghai time.
 - agent-cross-source-calls-1 [agent-cross-source] `agent` pass=`false` attribution=`unified-failed`
   prompt: Based only on your memory for this agent, if async text will work, should you avoid voice calls? If memory is missing, reply exactly: I don't know based on current memory.
   observed: Yes.
@@ -67,19 +64,19 @@
   observed: I don't know based on current memory.
 - agent-project-city-1 [agent-project] `agent` pass=`true` attribution=`not-compared`
   prompt: Based only on your memory for this agent, what is the launch city for the pilot? If memory is missing, reply exactly: I don't know based on current memory.
-  observed: Singapore.
+  observed: Singapore
 - agent-history-editor-1 [agent-history] `agent` pass=`true` attribution=`not-compared`
   prompt: Based only on your memory for this agent, what editor was Maya still using on 2026-04-10? If memory is missing, reply exactly: I don't know based on current memory.
-  observed: Vim.
-- agent-zh-project-1 [agent-zh] `agent` pass=`true` attribution=`legacy-skipped`
+  observed: Vim
+- agent-zh-project-1 [agent-zh] `agent` pass=`false` attribution=`unified-failed`
   prompt: 仅根据你当前这个 agent 的记忆，Project Lantern 现在的里程碑是什么？如果记忆里没有，请直接回答：I don't know based on current memory.
-  observed: Stage 2 pilot.
+  observed: Based on my memory, the user now primarily uses **Zed** as their main editor.  Source: memory/2026-04-12.md#L2 - "Confirmed update: Maya switched the main editor from Vim to Zed la
 - agent-zh-temporal-1 [agent-zh] `agent` pass=`true` attribution=`legacy-skipped`
   prompt: 仅根据你当前这个 agent 的记忆，用户现在主要用什么编辑器？如果记忆里没有，请直接回答：I don't know based on current memory.
-  observed: Zed.
+  observed: Zed
 - agent-zh-natural-name-1 [agent-zh-natural] `agent` pass=`true` attribution=`legacy-skipped`
   prompt: 只根据当前记忆，平时我希望你怎么称呼我？如果没有这条记忆，就只回答：I don't know based on current memory.
-  observed: Maya Chen.
+  observed: Maya Chen
 - agent-zh-natural-project-1 [agent-zh-natural] `agent` pass=`true` attribution=`legacy-skipped`
   prompt: 只根据当前记忆，Project Lantern 到底是在做什么？如果没有这条记忆，就只回答：I don't know based on current memory.
   observed: Project Lantern is a B2B analytics assistant for clinic managers.

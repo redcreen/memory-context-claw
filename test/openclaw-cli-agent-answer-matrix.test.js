@@ -13,5 +13,6 @@ test("default answer-level formal gate keeps the stable 12-case slice", async ()
   assert.equal(ids.length, 12, "formal gate should stay on the stable 12-case slice");
   assert.ok(ids.includes("agent-history-editor-1"));
   assert.ok(ids.includes("agent-zh-natural-project-1"));
-  assert.ok(ids.includes("agent-negative-1"));
+  assert.ok(ids.includes("agent-zh-natural-negative-1"));
+  assert.ok(ids.filter((id) => /agent-zh/u.test(id)).length >= 5, "formal gate should now carry a larger natural-Chinese share");
 });

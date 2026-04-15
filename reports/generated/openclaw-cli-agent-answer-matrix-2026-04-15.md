@@ -1,34 +1,33 @@
 # OpenClaw CLI Memory Benchmark
 
-- generatedAt: `2026-04-15T12:57:31.050Z`
+- generatedAt: `2026-04-15T13:45:29.144Z`
 - agent: `umceval65`
 - totalCases: `12`
 - currentPassed: `12`
 - currentFailed: `0`
-- legacyCompared: `7`
+- legacyCompared: `8`
 - legacyPassed: `0`
 - abstained: `0`
 - abstentionRate: `0`
-- zhBearingCases: `2/12`
+- zhBearingCases: `6/12`
 
 ## Language Summary
-- zhBearing: `2`
-- nonZh: `10`
+- zhBearing: `6`
+- nonZh: `6`
 
 ## Category Summary
 - agent-profile: `1/1`
-- agent-project: `2/2`
-- agent-temporal: `3/3`
+- agent-temporal: `1/1`
 - agent-preference: `1/1`
 - agent-rule: `1/1`
+- agent-project: `1/1`
 - agent-history: `1/1`
-- agent-zh: `1/1`
-- agent-zh-natural: `1/1`
+- agent-zh-natural: `5/5`
 - negative: `1/1`
 
 ## Attribution Summary
-- legacy-skipped: `7`
-- not-compared: `5`
+- legacy-skipped: `8`
+- not-compared: `4`
 
 ## Transport Summary
 - agent_local: `12`
@@ -42,19 +41,10 @@
 ## Sample Results
 - agent-name-1 [agent-profile] `agent` pass=`true` attribution=`legacy-skipped`
   prompt: Based only on your memory for this agent, what is the user's preferred name? If memory is missing, reply exactly: I don't know based on current memory.
-  observed: Maya Chen.
-- agent-project-1 [agent-project] `agent` pass=`true` attribution=`legacy-skipped`
-  prompt: Based only on your memory for this agent, what is Project Lantern? If memory is missing, reply exactly: I don't know based on current memory.
-  observed: Project Lantern is a B2B analytics assistant for clinic managers.
-- agent-current-editor-1 [agent-temporal] `agent` pass=`true` attribution=`legacy-skipped`
-  prompt: Based only on your memory for this agent, what is the user's current main editor now? If memory is missing, reply exactly: I don't know based on current memory.
-  observed: Zed.
-- agent-current-region-1 [agent-temporal] `agent` pass=`true` attribution=`legacy-skipped`
-  prompt: Based only on your memory for this agent, what is the confirmed default deploy region now? If memory is missing, reply exactly: I don't know based on current memory.
-  observed: eu-west-1.
-- agent-current-notebook-1 [agent-temporal] `agent` pass=`true` attribution=`legacy-skipped`
-  prompt: Based only on your memory for this agent, what notebook does the user currently use for meetings? If memory is missing, reply exactly: I don't know based on current memory.
-  observed: The charcoal A5 notebook.
+  observed: Maya Chen
+- agent-current-demo-1 [agent-temporal] `agent` pass=`true` attribution=`legacy-skipped`
+  prompt: Based only on your memory for this agent, when is the clinic demo scheduled now? If memory is missing, reply exactly: I don't know based on current memory.
+  observed: Next Tuesday at 15:00 Shanghai time.
 - agent-preference-async-1 [agent-preference] `agent` pass=`true` attribution=`not-compared`
   prompt: Based only on your memory for this agent, does the user prefer async written updates or live voice calls? If memory is missing, reply exactly: I don't know based on current memory.
   observed: Async written updates.
@@ -63,18 +53,27 @@
   observed: I don't know based on current memory.
 - agent-project-city-1 [agent-project] `agent` pass=`true` attribution=`not-compared`
   prompt: Based only on your memory for this agent, what is the launch city for the pilot? If memory is missing, reply exactly: I don't know based on current memory.
-  observed: Singapore.
+  observed: Singapore
 - agent-history-editor-1 [agent-history] `agent` pass=`true` attribution=`not-compared`
   prompt: Based only on your memory for this agent, what editor was Maya still using on 2026-04-10? If memory is missing, reply exactly: I don't know based on current memory.
-  observed: Vim.
-- agent-zh-temporal-1 [agent-zh] `agent` pass=`true` attribution=`legacy-skipped`
-  prompt: 仅根据你当前这个 agent 的记忆，用户现在主要用什么编辑器？如果记忆里没有，请直接回答：I don't know based on current memory.
-  observed: Zed.
+  observed: Vim
+- agent-zh-natural-name-1 [agent-zh-natural] `agent` pass=`true` attribution=`legacy-skipped`
+  prompt: 只根据当前记忆，平时我希望你怎么称呼我？如果没有这条记忆，就只回答：I don't know based on current memory.
+  observed: Maya Chen
 - agent-zh-natural-project-1 [agent-zh-natural] `agent` pass=`true` attribution=`legacy-skipped`
   prompt: 只根据当前记忆，Project Lantern 到底是在做什么？如果没有这条记忆，就只回答：I don't know based on current memory.
   observed: Project Lantern is a B2B analytics assistant for clinic managers.
-- agent-negative-1 [negative] `agent` pass=`true` attribution=`not-compared`
-  prompt: Based only on your memory for this agent, what is the user's favorite programming language? If memory is missing, reply exactly: I don't know based on current memory.
+- agent-zh-natural-editor-1 [agent-zh-natural] `agent` pass=`true` attribution=`legacy-skipped`
+  prompt: 只根据当前记忆，我现在主力编辑器到底换成什么了？如果没有这条记忆，就只回答：I don't know based on current memory.
+  observed: Zed
+- agent-zh-natural-region-1 [agent-zh-natural] `agent` pass=`true` attribution=`legacy-skipped`
+  prompt: 只根据当前记忆，现在默认部署区域到底应该用哪个？如果没有这条记忆，就只回答：I don't know based on current memory.
+  observed: eu-west-1
+- agent-zh-natural-rule-1 [agent-zh-natural] `agent` pass=`true` attribution=`legacy-skipped`
+  prompt: 只根据当前记忆，如果记忆不完整或者互相打架，你应该怎么处理？如果没有这条记忆，就只回答：I don't know based on current memory.
+  observed: I don't know based on current memory.
+- agent-zh-natural-negative-1 [negative] `agent` pass=`true` attribution=`legacy-skipped`
+  prompt: 只根据当前记忆，我最喜欢的编程语言是什么？如果没有这条记忆，就只回答：I don't know based on current memory.
   observed: I don't know based on current memory.
 
 ## Notes

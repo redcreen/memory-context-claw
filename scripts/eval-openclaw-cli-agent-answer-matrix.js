@@ -12,17 +12,17 @@ const date = new Date().toISOString().slice(0, 10);
 const defaultAgentId = process.env.UMC_EVAL_AGENT || "umceval65";
 const defaultFormalGateCaseIds = [
   "agent-name-1",
-  "agent-project-1",
   "agent-preference-async-1",
-  "agent-rule-no-guess-1",
-  "agent-current-editor-1",
-  "agent-current-region-1",
-  "agent-current-notebook-1",
+  "agent-current-demo-1",
   "agent-history-editor-1",
   "agent-project-city-1",
-  "agent-zh-temporal-1",
+  "agent-zh-natural-name-1",
   "agent-zh-natural-project-1",
-  "agent-negative-1"
+  "agent-zh-natural-editor-1",
+  "agent-zh-natural-region-1",
+  "agent-zh-natural-rule-1",
+  "agent-zh-natural-negative-1",
+  "agent-rule-no-guess-1"
 ];
 
 const forwarded = process.argv.slice(2);

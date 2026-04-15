@@ -11,7 +11,7 @@
 
 ## Active Slice
 
-`deepen-answer-level-gate-beyond-12-case-baseline`
+`close-remaining-deeper-watch-failures-after-14-of-18`
 
 ## Done
 
@@ -76,7 +76,7 @@
   - 主链路性能刷新基线已落地：[reports/generated/main-path-performance-baseline-2026-04-15.md](../reports/generated/main-path-performance-baseline-2026-04-15.md)
   - 当前 perf 归因已经明确：retrieval / assembly 平均 `8ms`；raw transport 平均 `8335ms`；isolated local answer-level 平均 `24553ms`
   - host output-shape hardening 已补齐：更强的 JSON payload 提取、isolated eval agent stale session lock 清理、取消 per-case destructive session reset，以及 parse failure bounded retry
-  - 更深的 `18` case answer-level watch 已从 `7/18` 提升到 `12/18`，但剩余 `6` 条失败仍混有 residual host output-shape 噪声与 genuine expectation mismatch
+  - 更深的 `18` case answer-level watch 已从 `7/18` 提升到 `14/18`，formal gate 本身的中文占比也已抬到 `6/12`；剩余 `4` 条失败现在集中在 current-editor、cross-source-calls、zh-project 和 zh-natural-cross-source-calls
   - answer-level root cause 已显式拆开：gateway/session-lock 噪声、agent main-session 复用污染、CLI `--local` JSON 走 stderr
   - `78-80` 总结报告已补齐：[reports/generated/openclaw-natural-chinese-watch-and-perf-2026-04-15.md](../reports/generated/openclaw-natural-chinese-watch-and-perf-2026-04-15.md)
   - `77` 和 follow-up `81-83` 已把 answer-level formal gate 从 `6/6` 扩到 `12/12`，并补上 repo-default 的 isolated local formal gate 入口：[reports/generated/openclaw-answer-level-gate-expansion-2026-04-15.md](../reports/generated/openclaw-answer-level-gate-expansion-2026-04-15.md)
@@ -116,7 +116,7 @@
   - `node scripts/eval-openclaw-cli-memory-benchmark.js --agent umceval65 --entrypoints agent --skip-legacy --agent-local --only agent-zh-natural-name-1,agent-zh-natural-project-1,agent-zh-natural-editor-1,agent-zh-natural-region-1,agent-zh-natural-rule-1,agent-zh-natural-negative-1 ...`：`6/6`
   - `node scripts/watch-openclaw-memory-search-transport.js --format markdown --per-category 1 --max-probes 8 --timeout-ms 8000 ...`：`0/8 raw ok`（全部 `missing_json_payload`）
   - `npm run eval:openclaw:agent-matrix -- --agent-timeout-ms 35000 --format markdown`：`12/12`
-  - `npm run eval:openclaw:agent-watch -- --agent-timeout-ms 35000 --format markdown`：`12/18`
+  - `node scripts/eval-openclaw-cli-memory-benchmark.js --entrypoints agent --agent umceval65 --skip-legacy --agent-local --only agent-name-1,agent-project-1,agent-rule-no-guess-1,agent-cross-source-calls-1,agent-current-editor-1,agent-current-demo-1,agent-history-editor-1,agent-project-city-1,agent-zh-project-1,agent-zh-temporal-1,agent-zh-natural-name-1,agent-zh-natural-project-1,agent-zh-natural-editor-1,agent-zh-natural-history-editor-1,agent-zh-natural-conflict-region-1,agent-zh-natural-cross-source-calls-1,agent-zh-natural-negative-1,agent-negative-1 ...`：`14/18`
   - `npm run eval:main-path:perf`：`pass`
   - `npm run verify:memory-intent`：`pass`
   - `npm run umc:cli -- registry migrate --source-dir ~/.openclaw/unified-memory-core/registry --target-dir ~/.unified-memory-core/registry --format markdown`：`noop / adopt_canonical_root`
@@ -131,7 +131,7 @@
 ## In Progress
 
 - 下一阶段已切到更深的 answer-level 主线：在 `12/12` formal gate、自然中文覆盖、watchlist 和 perf baseline 已重新稳定的前提下，继续补强 cross-source / conflict / history 深度
-- 当前 answer-level 已不再是“算法是否可用”的 blocker：repo-default isolated local formal gate `12/12` 已稳定通过；更深的 `18` case watch matrix 当前结果 `12/18`，剩余 `6` 条失败已不再只是单一 host JSON parse noise，所以后续重点是扩大样本面同时保持宿主噪声与算法判断分离
+- 当前 answer-level 已不再是“算法是否可用”的 blocker：repo-default isolated local formal gate `12/12` 已稳定通过，且 formal gate 内中文样本已提升到 `6/12`；更深的 `18` case watch matrix 当前结果 `14/18`，后续重点是收掉剩余 `4` 条 harder failures
 - 保持 release-preflight、bundle install、host smoke、Stage 5 acceptance 证据持续为绿
 - 保持 host-neutral root policy 在 CLI、公开文档和控制面里持续一致
 - 保持 project/workstream roadmap 摘要与新的评测驱动主线持续一致
@@ -142,7 +142,7 @@
 
 ## Blockers / Open Decisions
 
-- raw `openclaw memory search` transport 仍是显式 watchlist：`0/8 raw ok`，全部 `invalid_json`
+- raw `openclaw memory search` transport 仍是显式 watchlist：`0/8 raw ok`，全部 `missing_json_payload`
 - gateway / shared-session 路径仍可能带来宿主噪声；当前正式 answer-level gate 已改走 isolated local path
 - operator / planning follow-up 只剩：
   - 什么时候清理过时的 legacy root 副本
@@ -150,9 +150,9 @@
 
 ## Next 3 Actions
 
-1. 把 answer-level formal gate 从当前 `12` 条稳定样本继续扩大到更深的覆盖矩阵。
-2. 把更深的 cross-source / conflict / multi-step history 场景带进 formal gate，同时保持 `24` 条自然中文案例持续稳定。
-3. 在更深的 answer-level 扩容后继续重跑 main-path perf baseline，避免慢路径归因重新漂移。
+1. 收掉更深 watch 剩余的 `4` 条失败：`agent-current-editor-1`、`agent-cross-source-calls-1`、`agent-zh-project-1`、`agent-zh-natural-cross-source-calls-1`。
+2. 判断哪些 deeper-watch case 可以安全晋升进下一轮 formal gate，而不破坏当前 `12/12` 稳定基线。
+3. 在下一轮 deeper-watch 修复后，重跑 `release-preflight`、full regression、CLI use cases、perf baseline 和 memory-improvement A/B suite。
 
 ## Architecture Supervision
 - Signal: `yellow`
@@ -169,21 +169,20 @@
 
 ## Current Execution Line
 
-- Objective: 在 `12 / 12` isolated local answer-level formal gate 已稳定的基础上，继续补强 cross-source、conflict、multi-step history 和更深的自然中文 answer-level 覆盖，同时不让 host output-shape noise 重新污染正式门禁
-- Plan Link: `deepen-answer-level-gate-beyond-12-case-baseline`
-- Runway: 更深 answer-level gate 扩容、自然中文子矩阵保绿、gateway/raw transport watch、perf-baseline-driven optimization；并行守住 release-preflight 和 canonical-root policy
-- Progress: `3 / 4` tasks complete
+- Objective: 收掉更深 `18` case answer-level watch 剩余的 `4` 条 harder failures，并决定哪些 case 可以在不破坏当前 `12/12` 稳定性的前提下晋升进下一轮 formal gate
+- Plan Link: `close-remaining-deeper-watch-failures-after-14-of-18`
+- Runway: deeper-watch failure attribution、自然中文子矩阵保绿、gateway/raw transport watch、release-preflight / perf / A/B rerun 准备；并行守住 release-preflight 和 canonical-root policy
+- Progress: `0 / 3` tasks complete
 - Stop Conditions:
-  - benchmark expansion degenerates into pure case count chasing
+  - deeper-watch harder failures get promoted without root-cause attribution
   - answer-level host-path regression gets misclassified as raw transport or retrieval quality
-  - slow-path optimization starts before answer-level and transport evidence are separated
+  - perf / release evidence gets rerun before the deeper-watch closure boundary is clear
 
 ## Execution Tasks
 
-- [x] EL-1 extend the answer-level evidence surface beyond the current `12`-case stable baseline with a deeper `18`-case watch matrix covering cross-source, conflict, history, and denser zh-natural prompts
-- [ ] EL-2 increase the natural-Chinese share inside the answer-level formal gate itself
-- [x] EL-3 keep gateway/shared-session noise and raw transport classified on watchlists, separate from algorithm conclusions
-- [x] EL-4 rerun the main-path perf baseline after the deeper answer-level gate expansion once host output-shape noise is no longer dominating the deeper watch result
+- [ ] EL-1 close the remaining four deeper-watch failures: `agent-current-editor-1`, `agent-cross-source-calls-1`, `agent-zh-project-1`, and `agent-zh-natural-cross-source-calls-1`
+- [ ] EL-2 decide which recovered deeper-watch cases can be promoted into the next formal gate without sacrificing the current `12/12` stability
+- [ ] EL-3 rerun `release-preflight`, full regression, CLI use cases, perf baseline, and the memory-improvement A/B suite after the next deeper-watch fix round
 
 ## Development Log Capture
 

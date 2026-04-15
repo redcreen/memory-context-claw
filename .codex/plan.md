@@ -12,15 +12,15 @@
 - Chinese coverage: `211 / 392 = 53.83%`
 - Natural Chinese cases: `24` (`12` retrieval + `12` answer-level)
 - Retrieval-heavy formal gate: `250 / 250`
-- Isolated local answer-level formal gate: `12 / 12`
+- Isolated local answer-level formal gate: `12 / 12` (`6 / 12` zh-bearing inside the formal gate)
 - Natural-Chinese representative retrieval slice: `5 / 5`
 - Natural-Chinese representative answer-level slice: `6 / 6`
 - Deeper answer-level watch matrix: `18` cases, `9 / 18` zh-bearing
-- Deeper answer-level watch result: `12 / 18`
-- Deeper watch interpretation: useful as a triage surface, not yet promotable into the repo-default formal gate because the remaining `6` failures still mix residual host output-shape noise and genuine expectation mismatches
+- Deeper answer-level watch result: `14 / 18`
+- Deeper watch interpretation: useful as a triage surface, not yet promotable into the repo-default formal gate because the remaining `4` failures are now a smaller harder set that still needs targeted fixing
 - Raw transport watchlist: `0 / 8 raw ok`, all classified as host `missing_json_payload`
 - Main-path perf baseline: retrieval / assembly avg `8ms`; raw transport avg `8335ms`; isolated local answer-level avg `24553ms`
-- Interpretation: the `200+` case buildout, natural-Chinese / watchlist / perf hardening, and the first answer-level gate expansion are complete; the next phase is to deepen the larger answer-level gate beyond the current `12`-case stable baseline
+- Interpretation: the `200+` case buildout, natural-Chinese / watchlist / perf hardening, and the first answer-level gate expansion are complete; the formal gate itself now carries a real Chinese share, and the next phase is to clear the remaining four deeper-watch failures
 
 ## Slices
 
@@ -62,6 +62,14 @@
   - Risks: 如果继续只靠当前 `12` 条稳定样本，formal gate 会再次偏向“容易答对的代表题”；如果扩容时把 gateway/shared-session 噪声混回正式门禁，结论会再次失真
   - Validation: 更深 answer-level gate 报告、control-surface 更新、与 transport watchlist 分离的结论、main-path perf baseline refresh
   - Exit Condition: formal gate 覆盖面超出当前 `12` 条稳定基线，同时 current/history/conflict/cross-source/zh-natural 深度补齐
+  - Status: `completed`
+
+- Slice: `close-remaining-deeper-watch-failures-after-14-of-18`
+  - Objective: 把更深 `18` case answer-level watch 剩余的 `4` 条 harder failures 收掉，并判断哪些 case 可以安全晋升进下一轮 formal gate
+  - Dependencies: `2026-04-15` deeper watch 报告、isolated local formal gate `12 / 12`、raw transport watchlist、main-path perf baseline、memory-improvement A/B summary
+  - Risks: 如果把未收口的 harder failures 直接并进正式门禁，会污染稳定健康信号；如果不继续分类 retrieval / assembly / prompt-routing / host-reuse drift，下一轮扩容仍会失真
+  - Validation: 更深 watch rerun、failure attribution notes、候选晋升清单、release-preflight / full regression / perf / A/B rerun
+  - Exit Condition: 剩余 `4` 条 deeper-watch failure 被关闭或明确归类，且下一轮 formal gate 晋升面已有可执行边界
   - Status: `ongoing`
 
 - Slice: `formalize-realtime-memory-intent-ingestion`
@@ -170,11 +178,11 @@
 
 ## Execution Order
 
-1. 把 answer-level formal gate 从当前 `12` 条稳定样本继续扩成更深的覆盖矩阵
-2. 保持 `24` 条自然中文案例、`missing_json_payload` transport watchlist 和 `2026-04-15` perf baseline 在后续扩容中持续稳定
+1. 收掉更深 `18` case watch 剩余的 `4` 条 harder failures，并把每条问题归类到 retrieval / assembly / prompt-routing / host-reuse drift
+2. 继续保持 `24` 条自然中文案例、`missing_json_payload` transport watchlist 和 `2026-04-15` perf baseline 在下一轮 deeper-watch 修复中持续稳定
 3. 把 gateway/shared-session 与 raw transport 继续保持在独立 watchlist，不与算法判断混淆
-4. 按主链路 perf baseline 继续解释并优化最慢的 answer-level 层
-5. 保持 retrieval-heavy、answer-level、transport watch、perf baseline 这四条正式门禁持续可复跑
+4. 在剩余 `4` 条 harder failures 收口后，决定哪些 case 可以晋升进下一轮 formal gate
+5. 在下一轮晋升边界明确后，重跑 `release-preflight`、full regression、CLI use cases、perf baseline 和 memory-improvement A/B suite
 6. 并行保持 release-preflight / bundle install / host smoke / Stage 5 evidence 稳定
 7. 保持 host-neutral root operator policy 可见且不回退
 8. 保持 accepted-action deeper queue 的 Step 48-52 仍然显式 deferred，不把 admission / negative-path / conflict work 偷渡进当前实现
@@ -183,32 +191,31 @@
 ## Architecture Supervision
 - Signal: `yellow`
 - Signal Basis: open blockers or architectural risks are still recorded
-- Problem Class: answer-level gate expansion, host-noise separation, and main-path performance prioritization
-- Root Cause Hypothesis: 如果 isolated local 正式门禁不继续扩容、gateway/raw transport 噪声不继续隔离，后续优化仍会把宿主不稳定和算法问题混在一起
-- Correct Layer: benchmark definition, answer-level gate, transport watchlist, main-path performance baseline, release preflight evidence, control surface
+- Problem Class: deeper answer-level failure closure, host-noise separation, and evidence refresh sequencing
+- Root Cause Hypothesis: 如果剩余 `4` 条 harder failures 不被逐条归因并关闭，下一轮 formal gate 只能停留在当前 `12 / 12` 稳定层，无法把更深能力正式化
+- Correct Layer: benchmark definition, answer-level watch triage, transport watchlist, main-path performance baseline, release preflight evidence, control surface
 - Rejected Shortcut: 跳过 Stage 5 证据面和当前 operator baseline，直接讨论 runtime API / service mode
 - Automatic Review Trigger: no automatic trigger is currently active
 - Escalation Gate: raise but continue
 
 ## Current Execution Line
 
-- Objective: 在 `12 / 12` isolated local answer-level formal gate 已稳定的基础上，继续补强 cross-source、conflict、multi-step history 和更深的自然中文 answer-level 覆盖，同时不让 host output-shape noise 重新污染正式门禁
-- Plan Link: `deepen-answer-level-gate-beyond-12-case-baseline`
-- Runway: 更深 answer-level gate 扩容、自然中文子矩阵保绿、gateway/raw transport watch、perf-baseline-driven optimization
-- Progress: `3 / 4` tasks complete
+- Objective: 收掉更深 `18` case answer-level watch 剩余的 `4` 条 harder failures，并决定哪些 case 可以在不破坏当前 `12 / 12` 稳定性的前提下晋升进下一轮 formal gate
+- Plan Link: `close-remaining-deeper-watch-failures-after-14-of-18`
+- Runway: deeper-watch failure attribution、自然中文子矩阵保绿、gateway/raw transport watch、release-preflight / perf / A/B rerun 准备
+- Progress: `0 / 3` tasks complete
 - Stop Conditions:
-  - case count grows but blind spots remain
+  - remaining harder failures get promoted without root-cause attribution
   - answer-level regression gets misdiagnosed as raw transport noise
-  - perf optimization starts before gateway/session-lock and raw transport have separate evidence
+  - perf / release evidence is rerun before the deeper-watch closure boundary is clear
   - Stage 5 evidence regresses while this enhancement work is ongoing
-- Validation: `200+` case docs、中文占比统计、answer-level gate report、transport watchlist、main-path perf baseline、roadmap / development plan、`npm run umc:release-preflight`、`npm run umc:cli -- registry inspect --format markdown`
+- Validation: deeper-watch reruns、failure attribution notes、formal-gate promotion decision、`npm run umc:release-preflight`、full regression、CLI use cases、main-path perf baseline、memory-improvement A/B summary、roadmap / development plan、`npm run umc:cli -- registry inspect --format markdown`
 
 ## Execution Tasks
 
-- [x] EL-1 extend the answer-level evidence surface beyond the current `12`-case stable baseline with a deeper `18`-case watch matrix covering cross-source, conflict, history, and denser zh-natural prompts
-- [ ] EL-2 increase the natural-Chinese share inside the answer-level formal gate itself
-- [x] EL-3 keep gateway/shared-session noise and raw transport classified on watchlists, separate from algorithm conclusions
-- [x] EL-4 rerun the main-path perf baseline after the deeper answer-level gate expansion once host output-shape noise is no longer dominating the deeper watch result
+- [ ] EL-1 close the remaining four deeper-watch failures: `agent-current-editor-1`, `agent-cross-source-calls-1`, `agent-zh-project-1`, and `agent-zh-natural-cross-source-calls-1`
+- [ ] EL-2 decide which recovered deeper-watch cases can be promoted into the next formal gate without sacrificing the current `12 / 12` stability
+- [ ] EL-3 rerun `release-preflight`, full regression, CLI use cases, perf baseline, and the memory-improvement A/B suite after the next deeper-watch fix round
 
 ## Development Log Capture
 

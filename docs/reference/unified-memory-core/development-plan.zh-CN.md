@@ -226,12 +226,12 @@
 - 中文占比：`211 / 392 = 53.83%`
 - 自然中文案例：`24`（`12` retrieval + `12` answer-level）
 - retrieval-heavy formal gate：`250 / 250`
-- isolated local answer-level formal gate：`12 / 12`
+- isolated local answer-level formal gate：`12 / 12`（formal gate 内中文样本 `6 / 12`）
 - 自然中文代表性 retrieval slice：`5 / 5`
 - 自然中文代表性 answer-level slice：`6 / 6`
 - raw transport watchlist：`0 / 8 raw ok`，全部归类为 host `missing_json_payload`
 - 最新 perf baseline：retrieval / assembly `8ms`；raw transport `8335ms`；isolated local answer-level `24553ms`
-- 当前解释：`200+` case 扩面、自然中文补强、watchlist failure-class 化、perf baseline 刷新，以及 answer-level formal gate 从 `6/6` 扩到 `12/12` 都已收口；更深的 watch 也已从 `7/18` 提升到 `12/18`，但后续主线仍是继续把这个更大的 gate 做深
+- 当前解释：`200+` case 扩面、自然中文补强、watchlist failure-class 化、perf baseline 刷新，以及 answer-level formal gate 从 `6/6` 扩到 `12/12` 都已收口；formal gate 自身的中文占比也已提升到 `6 / 12`；更深的 watch 已从 `7/18` 提升到 `14/18`，后续主线是收掉剩余 `4` 条 harder failures
 
 ## 下一阶段规划队列
 
@@ -293,14 +293,19 @@
    - 最新结果：`12 / 12`
 83. `completed` 把更大的 answer-level formal gate 结果写回 roadmap、development plan、control surface，并重置下一步执行指针。
    - 主路线图、control surface 和 development plan 现在都不再把 answer-level formal gate 写成 `6/6`。
-84. `in_progress` 把当前 `12` 条稳定 answer-level formal gate 继续做深到 cross-source、conflict、multi-step history 和更深的自然中文覆盖。
+84. `completed` 把当前 `12` 条稳定 answer-level formal gate 继续做深到 cross-source、conflict、multi-step history 和更深的自然中文覆盖。
    - 当前已建立 `18` case deeper watch matrix，并补上 cross-source、history、conflict 与更深自然中文 answer-level case。
-   - 当前 watch 结果：`12 / 18`；剩余 `6` 条失败已经不再只是单一 host JSON parse noise，而是 residual host output-shape 问题和真正的 expectation mismatch 混合，所以这组 case 目前仍停留在 watch surface，而不是直接替换 repo-default formal gate。
+   - 当前 watch 结果：`14 / 18`；剩余 `4` 条失败已经从大面积宿主噪声收敛到少数 harder cases，所以这组 case 目前仍停留在 watch surface，而不是直接替换 repo-default formal gate。
    - 参考报告：[reports/generated/openclaw-cli-agent-answer-watch-2026-04-15.md](../../../reports/generated/openclaw-cli-agent-answer-watch-2026-04-15.md)
-85. `in_progress` 提高自然中文在 answer-level formal gate 本身里的占比，而不只是全局 runnable matrix 过半。
-   - 当前 deeper watch 里 zh-bearing = `9 / 18`，自然中文 case = `6`；说明中文扩容方向成立，但还不能在更深样本面仍有 residual host noise 和 harder expectation mismatch 时直接替换 `12 / 12` 稳定 gate。
-86. `in_progress` 在更深的 answer-level watch 建立后，重看 main-path perf baseline 和 A/B 归因，确认更大 gate 不会让宿主噪声重新污染结论。
-   - 当前结论是：stable gate 已经被新的 output-shape handling 保住，但更深矩阵还不够干净。下一轮 perf / A-B 重跑要建立在更深 watch 继续收敛的前提上，否则会把 harder answer-level failure 和宿主问题重新混在一起。
+85. `completed` 提高自然中文在 answer-level formal gate 本身里的占比，而不只是全局 runnable matrix 过半。
+   - 当前 repo-default formal gate 已重排成 `12` 条稳定样本里的 `6 / 12` 中文样本，其中 `5 / 12` 是 `zh-natural`。
+86. `completed` 在更深的 answer-level watch 建立后，重看 main-path perf baseline 和 A/B 归因，确认更大 gate 不会让宿主噪声重新污染结论。
+   - perf baseline、raw transport watchlist、memory improvement A/B summary 与完整回归都已重跑；当前结论是 stable formal gate 已稳定、deeper watch 已收敛到 `14 / 18`，但仍不宜直接晋升。
+
+87. `next` 收掉 deeper watch 剩余的 `4` 条 harder failures：`agent-current-editor-1`、`agent-cross-source-calls-1`、`agent-zh-project-1`、`agent-zh-natural-cross-source-calls-1`。
+   - 当前目标不是继续加题，而是把这 `4` 条失败拆成 retrieval、assembly、prompt routing 或宿主复用问题并逐条压掉。
+88. `todo` 在剩余 `4` 条 deeper-watch failure 收敛后，决定哪些 case 可以晋升进下一版 formal gate，而不牺牲当前 `12 / 12` 稳定性。
+89. `todo` 在下一轮 deeper-watch 修复后，再重跑 `release-preflight`、完整回归、CLI use-case、perf baseline 和 memory-improvement A/B，发布新的 round report。
 
 ## 延后增强队列
 

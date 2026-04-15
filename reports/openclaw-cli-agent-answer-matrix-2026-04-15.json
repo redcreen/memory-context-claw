@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-15T12:57:31.050Z",
+  "generatedAt": "2026-04-15T13:45:29.144Z",
   "agentId": "umceval65",
   "agentToolHint": true,
   "agentLocal": true,
@@ -8,26 +8,22 @@
     "total": 12,
     "passed": 12,
     "failed": 0,
-    "comparedLegacy": 7,
+    "comparedLegacy": 8,
     "legacyPassed": 0,
     "abstained": 0,
     "abstentionRate": 0,
     "byLanguage": {
-      "zhBearing": 2,
-      "nonZh": 10
+      "zhBearing": 6,
+      "nonZh": 6
     },
     "byCategory": {
       "agent-profile": {
         "total": 1,
         "passed": 1
       },
-      "agent-project": {
-        "total": 2,
-        "passed": 2
-      },
       "agent-temporal": {
-        "total": 3,
-        "passed": 3
+        "total": 1,
+        "passed": 1
       },
       "agent-preference": {
         "total": 1,
@@ -37,17 +33,17 @@
         "total": 1,
         "passed": 1
       },
+      "agent-project": {
+        "total": 1,
+        "passed": 1
+      },
       "agent-history": {
         "total": 1,
         "passed": 1
       },
-      "agent-zh": {
-        "total": 1,
-        "passed": 1
-      },
       "agent-zh-natural": {
-        "total": 1,
-        "passed": 1
+        "total": 5,
+        "passed": 5
       },
       "negative": {
         "total": 1,
@@ -55,8 +51,8 @@
       }
     },
     "byAttribution": {
-      "legacy-skipped": 7,
-      "not-compared": 5
+      "legacy-skipped": 8,
+      "not-compared": 4
     },
     "byTransport": {
       "agent_local": 12
@@ -78,7 +74,7 @@
       "current": {
         "ok": true,
         "transport": "agent_local",
-        "answer": "Maya Chen.",
+        "answer": "Maya Chen",
         "injectedWorkspaceFiles": [
           "AGENTS.md",
           "SOUL.md",
@@ -90,7 +86,7 @@
           "MEMORY.md"
         ],
         "observedSessionKey": "agent:umceval65:main",
-        "observedSessionId": "umc-bench-agent-preference-async-1-469f47bd",
+        "observedSessionId": "d79773de-29a7-4f1f-b284-17e010f036a3",
         "warning": "",
         "passed": true,
         "expectedAnyOk": true,
@@ -102,53 +98,18 @@
       "legacy": null
     },
     {
-      "id": "agent-project-1",
-      "category": "agent-project",
-      "entrypoint": "agent",
-      "query": "",
-      "message": "Based only on your memory for this agent, what is Project Lantern? If memory is missing, reply exactly: I don't know based on current memory.",
-      "compareLegacy": true,
-      "attributionKind": "retrieval",
-      "attribution": "legacy-skipped",
-      "current": {
-        "ok": true,
-        "transport": "agent_local",
-        "answer": "Project Lantern is a B2B analytics assistant for clinic managers.",
-        "injectedWorkspaceFiles": [
-          "AGENTS.md",
-          "SOUL.md",
-          "TOOLS.md",
-          "IDENTITY.md",
-          "USER.md",
-          "HEARTBEAT.md",
-          "BOOTSTRAP.md",
-          "MEMORY.md"
-        ],
-        "observedSessionKey": "agent:umceval65:main",
-        "observedSessionId": "umc-bench-agent-preference-async-1-469f47bd",
-        "warning": "",
-        "passed": true,
-        "expectedAnyOk": true,
-        "expectedAllOk": true,
-        "forbiddenOk": true,
-        "sourcesOk": true,
-        "reason": "matched"
-      },
-      "legacy": null
-    },
-    {
-      "id": "agent-current-editor-1",
+      "id": "agent-current-demo-1",
       "category": "agent-temporal",
       "entrypoint": "agent",
       "query": "",
-      "message": "Based only on your memory for this agent, what is the user's current main editor now? If memory is missing, reply exactly: I don't know based on current memory.",
+      "message": "Based only on your memory for this agent, when is the clinic demo scheduled now? If memory is missing, reply exactly: I don't know based on current memory.",
       "compareLegacy": true,
       "attributionKind": "temporal",
       "attribution": "legacy-skipped",
       "current": {
         "ok": true,
         "transport": "agent_local",
-        "answer": "Zed.",
+        "answer": "Next Tuesday at 15:00 Shanghai time.",
         "injectedWorkspaceFiles": [
           "AGENTS.md",
           "SOUL.md",
@@ -160,77 +121,7 @@
           "MEMORY.md"
         ],
         "observedSessionKey": "agent:umceval65:main",
-        "observedSessionId": "umc-bench-agent-preference-async-1-469f47bd",
-        "warning": "",
-        "passed": true,
-        "expectedAnyOk": true,
-        "expectedAllOk": true,
-        "forbiddenOk": true,
-        "sourcesOk": true,
-        "reason": "matched"
-      },
-      "legacy": null
-    },
-    {
-      "id": "agent-current-region-1",
-      "category": "agent-temporal",
-      "entrypoint": "agent",
-      "query": "",
-      "message": "Based only on your memory for this agent, what is the confirmed default deploy region now? If memory is missing, reply exactly: I don't know based on current memory.",
-      "compareLegacy": true,
-      "attributionKind": "temporal",
-      "attribution": "legacy-skipped",
-      "current": {
-        "ok": true,
-        "transport": "agent_local",
-        "answer": "eu-west-1.",
-        "injectedWorkspaceFiles": [
-          "AGENTS.md",
-          "SOUL.md",
-          "TOOLS.md",
-          "IDENTITY.md",
-          "USER.md",
-          "HEARTBEAT.md",
-          "BOOTSTRAP.md",
-          "MEMORY.md"
-        ],
-        "observedSessionKey": "agent:umceval65:main",
-        "observedSessionId": "umc-bench-agent-preference-async-1-469f47bd",
-        "warning": "",
-        "passed": true,
-        "expectedAnyOk": true,
-        "expectedAllOk": true,
-        "forbiddenOk": true,
-        "sourcesOk": true,
-        "reason": "matched"
-      },
-      "legacy": null
-    },
-    {
-      "id": "agent-current-notebook-1",
-      "category": "agent-temporal",
-      "entrypoint": "agent",
-      "query": "",
-      "message": "Based only on your memory for this agent, what notebook does the user currently use for meetings? If memory is missing, reply exactly: I don't know based on current memory.",
-      "compareLegacy": true,
-      "attributionKind": "temporal",
-      "attribution": "legacy-skipped",
-      "current": {
-        "ok": true,
-        "transport": "agent_local",
-        "answer": "The charcoal A5 notebook.",
-        "injectedWorkspaceFiles": [
-          "AGENTS.md",
-          "SOUL.md",
-          "TOOLS.md",
-          "IDENTITY.md",
-          "USER.md",
-          "HEARTBEAT.md",
-          "BOOTSTRAP.md",
-          "MEMORY.md"
-        ],
-        "observedSessionKey": "agent:umceval65:main",
-        "observedSessionId": "umc-bench-agent-preference-async-1-469f47bd",
+        "observedSessionId": "d79773de-29a7-4f1f-b284-17e010f036a3",
         "warning": "",
         "passed": true,
         "expectedAnyOk": true,
@@ -265,7 +156,7 @@
           "MEMORY.md"
         ],
         "observedSessionKey": "agent:umceval65:main",
-        "observedSessionId": "umc-bench-agent-preference-async-1-469f47bd",
+        "observedSessionId": "d79773de-29a7-4f1f-b284-17e010f036a3",
         "warning": "",
         "passed": true,
         "expectedAnyOk": true,
@@ -300,7 +191,7 @@
           "MEMORY.md"
         ],
         "observedSessionKey": "agent:umceval65:main",
-        "observedSessionId": "umc-bench-agent-preference-async-1-469f47bd",
+        "observedSessionId": "d79773de-29a7-4f1f-b284-17e010f036a3",
         "warning": "",
         "passed": true,
         "expectedAnyOk": true,
@@ -323,7 +214,7 @@
       "current": {
         "ok": true,
         "transport": "agent_local",
-        "answer": "Singapore.",
+        "answer": "Singapore",
         "injectedWorkspaceFiles": [
           "AGENTS.md",
           "SOUL.md",
@@ -335,7 +226,7 @@
           "MEMORY.md"
         ],
         "observedSessionKey": "agent:umceval65:main",
-        "observedSessionId": "umc-bench-agent-preference-async-1-469f47bd",
+        "observedSessionId": "d79773de-29a7-4f1f-b284-17e010f036a3",
         "warning": "",
         "passed": true,
         "expectedAnyOk": true,
@@ -358,7 +249,7 @@
       "current": {
         "ok": true,
         "transport": "agent_local",
-        "answer": "Vim.",
+        "answer": "Vim",
         "injectedWorkspaceFiles": [
           "AGENTS.md",
           "SOUL.md",
@@ -370,7 +261,7 @@
           "MEMORY.md"
         ],
         "observedSessionKey": "agent:umceval65:main",
-        "observedSessionId": "umc-bench-agent-preference-async-1-469f47bd",
+        "observedSessionId": "d79773de-29a7-4f1f-b284-17e010f036a3",
         "warning": "",
         "passed": true,
         "expectedAnyOk": true,
@@ -382,18 +273,18 @@
       "legacy": null
     },
     {
-      "id": "agent-zh-temporal-1",
-      "category": "agent-zh",
+      "id": "agent-zh-natural-name-1",
+      "category": "agent-zh-natural",
       "entrypoint": "agent",
       "query": "",
-      "message": "仅根据你当前这个 agent 的记忆，用户现在主要用什么编辑器？如果记忆里没有，请直接回答：I don't know based on current memory.",
+      "message": "只根据当前记忆，平时我希望你怎么称呼我？如果没有这条记忆，就只回答：I don't know based on current memory.",
       "compareLegacy": true,
-      "attributionKind": "temporal",
+      "attributionKind": "bootstrap",
       "attribution": "legacy-skipped",
       "current": {
         "ok": true,
         "transport": "agent_local",
-        "answer": "Zed.",
+        "answer": "Maya Chen",
         "injectedWorkspaceFiles": [
           "AGENTS.md",
           "SOUL.md",
@@ -405,7 +296,7 @@
           "MEMORY.md"
         ],
         "observedSessionKey": "agent:umceval65:main",
-        "observedSessionId": "umc-bench-agent-preference-async-1-469f47bd",
+        "observedSessionId": "d79773de-29a7-4f1f-b284-17e010f036a3",
         "warning": "",
         "passed": true,
         "expectedAnyOk": true,
@@ -440,7 +331,7 @@
           "MEMORY.md"
         ],
         "observedSessionKey": "agent:umceval65:main",
-        "observedSessionId": "umc-bench-agent-preference-async-1-469f47bd",
+        "observedSessionId": "d79773de-29a7-4f1f-b284-17e010f036a3",
         "warning": "",
         "passed": true,
         "expectedAnyOk": true,
@@ -452,14 +343,84 @@
       "legacy": null
     },
     {
-      "id": "agent-negative-1",
-      "category": "negative",
+      "id": "agent-zh-natural-editor-1",
+      "category": "agent-zh-natural",
       "entrypoint": "agent",
       "query": "",
-      "message": "Based only on your memory for this agent, what is the user's favorite programming language? If memory is missing, reply exactly: I don't know based on current memory.",
-      "compareLegacy": false,
-      "attributionKind": "negative",
-      "attribution": "not-compared",
+      "message": "只根据当前记忆，我现在主力编辑器到底换成什么了？如果没有这条记忆，就只回答：I don't know based on current memory.",
+      "compareLegacy": true,
+      "attributionKind": "temporal",
+      "attribution": "legacy-skipped",
+      "current": {
+        "ok": true,
+        "transport": "agent_local",
+        "answer": "Zed",
+        "injectedWorkspaceFiles": [
+          "AGENTS.md",
+          "SOUL.md",
+          "TOOLS.md",
+          "IDENTITY.md",
+          "USER.md",
+          "HEARTBEAT.md",
+          "BOOTSTRAP.md",
+          "MEMORY.md"
+        ],
+        "observedSessionKey": "agent:umceval65:main",
+        "observedSessionId": "d79773de-29a7-4f1f-b284-17e010f036a3",
+        "warning": "",
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "sourcesOk": true,
+        "reason": "matched"
+      },
+      "legacy": null
+    },
+    {
+      "id": "agent-zh-natural-region-1",
+      "category": "agent-zh-natural",
+      "entrypoint": "agent",
+      "query": "",
+      "message": "只根据当前记忆，现在默认部署区域到底应该用哪个？如果没有这条记忆，就只回答：I don't know based on current memory.",
+      "compareLegacy": true,
+      "attributionKind": "temporal",
+      "attribution": "legacy-skipped",
+      "current": {
+        "ok": true,
+        "transport": "agent_local",
+        "answer": "eu-west-1",
+        "injectedWorkspaceFiles": [
+          "AGENTS.md",
+          "SOUL.md",
+          "TOOLS.md",
+          "IDENTITY.md",
+          "USER.md",
+          "HEARTBEAT.md",
+          "BOOTSTRAP.md",
+          "MEMORY.md"
+        ],
+        "observedSessionKey": "agent:umceval65:main",
+        "observedSessionId": "d79773de-29a7-4f1f-b284-17e010f036a3",
+        "warning": "",
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "sourcesOk": true,
+        "reason": "matched"
+      },
+      "legacy": null
+    },
+    {
+      "id": "agent-zh-natural-rule-1",
+      "category": "agent-zh-natural",
+      "entrypoint": "agent",
+      "query": "",
+      "message": "只根据当前记忆，如果记忆不完整或者互相打架，你应该怎么处理？如果没有这条记忆，就只回答：I don't know based on current memory.",
+      "compareLegacy": true,
+      "attributionKind": "bootstrap",
+      "attribution": "legacy-skipped",
       "current": {
         "ok": true,
         "transport": "agent_local",
@@ -475,7 +436,42 @@
           "MEMORY.md"
         ],
         "observedSessionKey": "agent:umceval65:main",
-        "observedSessionId": "umc-bench-agent-preference-async-1-469f47bd",
+        "observedSessionId": "d79773de-29a7-4f1f-b284-17e010f036a3",
+        "warning": "",
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "sourcesOk": true,
+        "reason": "matched"
+      },
+      "legacy": null
+    },
+    {
+      "id": "agent-zh-natural-negative-1",
+      "category": "negative",
+      "entrypoint": "agent",
+      "query": "",
+      "message": "只根据当前记忆，我最喜欢的编程语言是什么？如果没有这条记忆，就只回答：I don't know based on current memory.",
+      "compareLegacy": true,
+      "attributionKind": "negative",
+      "attribution": "legacy-skipped",
+      "current": {
+        "ok": true,
+        "transport": "agent_local",
+        "answer": "I don't know based on current memory.",
+        "injectedWorkspaceFiles": [
+          "AGENTS.md",
+          "SOUL.md",
+          "TOOLS.md",
+          "IDENTITY.md",
+          "USER.md",
+          "HEARTBEAT.md",
+          "BOOTSTRAP.md",
+          "MEMORY.md"
+        ],
+        "observedSessionKey": "agent:umceval65:main",
+        "observedSessionId": "d79773de-29a7-4f1f-b284-17e010f036a3",
         "warning": "",
         "passed": true,
         "expectedAnyOk": true,

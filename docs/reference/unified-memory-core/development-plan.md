@@ -278,12 +278,17 @@ The goal is not to reopen baseline contract work. The goal is to:
    - The roadmap, control surface, and development plan no longer describe the answer-level formal gate as just `6/6`.
 84. `in_progress` Deepen the current `12`-case stable answer-level formal gate with cross-source, conflict, multi-step history, and deeper natural-Chinese coverage.
    - A deeper `18`-case watch matrix now exists with added cross-source, history, conflict, and denser natural-Chinese answer-level coverage.
-   - Current watch result: `12 / 18`; the remaining `6` failures are no longer just one bucket of host JSON-parse noise, but a mix of residual host output-shape problems and genuine expectation mismatches, so this matrix remains a watch surface instead of replacing the repo-default formal gate.
+- Current watch result: `14 / 18`; the remaining `4` failures have been narrowed down to a smaller harder set, so this matrix remains a watch surface instead of replacing the repo-default formal gate.
    - Reference report: [reports/generated/openclaw-cli-agent-answer-watch-2026-04-15.md](../../../reports/generated/openclaw-cli-agent-answer-watch-2026-04-15.md)
-85. `in_progress` Increase the natural-Chinese share inside the answer-level formal gate itself, not just the global runnable matrix.
-   - The deeper watch already runs at `9 / 18` zh-bearing with `6` natural-Chinese cases, which proves the expansion direction, but it is not yet clean enough to replace the stable `12 / 12` formal gate.
-86. `in_progress` Revisit the main-path perf baseline and A/B attribution after the deeper answer-level watch is in place so the larger surface does not quietly re-mix host noise into the conclusions.
-   - Current conclusion: the stable gate is now protected by better output-shape handling, but the deeper watch still mixes host and harder answer-level failures. The next perf / A-B rerun should happen only after that deeper watch gets cleaner.
+85. `completed` Increase the natural-Chinese share inside the answer-level formal gate itself, not just the global runnable matrix.
+   - The repo-default formal gate now runs with `6 / 12` zh-bearing cases, including `5 / 12` `zh-natural` cases.
+86. `completed` Revisit the main-path perf baseline and A/B attribution after the deeper answer-level watch is in place so the larger surface does not quietly re-mix host noise into the conclusions.
+   - The perf baseline, raw transport watchlist, memory-improvement A/B summary, and full regression pass have all been rerun. The current conclusion is that the stable formal gate is healthy, while the deeper watch is improved but not yet promotable.
+
+87. `next` Clear the remaining four deeper-watch failures: `agent-current-editor-1`, `agent-cross-source-calls-1`, `agent-zh-project-1`, and `agent-zh-natural-cross-source-calls-1`.
+   - The goal is not more case count, but to classify each failure as retrieval, assembly, prompt-routing, or host-reuse drift and then close it.
+88. `todo` After those four deeper-watch failures converge, decide which cases can be promoted into the next formal gate without sacrificing the current `12 / 12` stability.
+89. `todo` After the next deeper-watch fix round, rerun `release-preflight`, full regression, CLI use cases, perf baseline, and the memory-improvement A/B suite, then publish the next round report.
 
 ## Deferred Enhancement Queue
 
