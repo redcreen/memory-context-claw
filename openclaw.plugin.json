@@ -53,6 +53,10 @@
       "label": "Agent Sub Namespace",
       "help": "When enabled, governed memory reads merge workspace-shared memory with the current agent's sub-namespace, and nightly self-learning writes per-agent artifacts into that sub-namespace."
     },
+    "openclawAdapter.debug.canaryTool": {
+      "label": "Canary Tool",
+      "help": "Register the internal accepted-action canary tool for end-to-end host verification only."
+    },
     "openclawAdapter.governedExports.agentWorkspaceIds": {
       "label": "Agent Workspace Overrides",
       "help": "Optional map from agent id to workspace id. Use this when one agent, such as code, should read and learn in a different workspace namespace without moving every agent."
@@ -155,6 +159,15 @@
         "properties": {
           "enabled": {
             "type": "boolean"
+          },
+          "debug": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "canaryTool": {
+                "type": "boolean"
+              }
+            }
           },
           "governedExports": {
             "type": "object",

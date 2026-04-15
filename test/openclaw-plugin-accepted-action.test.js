@@ -10,6 +10,7 @@ import { createMemoryRegistry } from "../src/unified-memory-core/memory-registry
 test("openclaw plugin registers an after_tool_call hook that captures accepted_action signals", async () => {
   const registryRoot = await fs.mkdtemp(path.join(os.tmpdir(), "umc-openclaw-plugin-action-"));
   const hooks = new Map();
+  const tools = new Map();
 
   plugin.register({
     runtime: {},
@@ -34,6 +35,9 @@ test("openclaw plugin registers an after_tool_call hook that captures accepted_a
     },
     registerContextEngine() {},
     registerService() {},
+    registerTool(tool) {
+      tools.set(tool.name, tool);
+    },
     on(hookName, handler) {
       hooks.set(hookName, handler);
     }
@@ -41,6 +45,7 @@ test("openclaw plugin registers an after_tool_call hook that captures accepted_a
 
   const afterToolCall = hooks.get("after_tool_call");
   assert.equal(typeof afterToolCall, "function");
+  assert.equal(tools.has("umc_emit_accepted_action_canary"), false);
 
   const persisted = await afterToolCall({
     toolName: "publish_site",
@@ -117,6 +122,7 @@ test("openclaw accepted_action hook ignores tool results without a structured ac
     },
     registerContextEngine() {},
     registerService() {},
+    registerTool() {},
     on(hookName, handler) {
       hooks.set(hookName, handler);
     }
@@ -139,4 +145,46 @@ test("openclaw accepted_action hook ignores tool results without a structured ac
   const registry = createMemoryRegistry({ rootDir: registryRoot });
   const records = await registry.listRecords();
   assert.equal(records.length, 0);
+});
+
+test("umc canary tool emits a structured accepted_action payload for end-to-end host checks", async () => {
+  const tools = new Map();
+
+  plugin.register({
+    runtime: {},
+    logger: {
+      info() {},
+      warn() {},
+      error() {}
+    },
+    pluginConfig: {
+      openclawAdapter: {
+        debug: {
+          canaryTool: true
+        }
+      }
+    },
+    registerContextEngine() {},
+    registerService() {},
+    registerTool(tool) {
+      tools.set(tool.name, tool);
+    }
+  });
+
+  const tool = tools.get("umc_emit_accepted_action_canary");
+  assert.ok(tool);
+
+  const result = await tool.execute("tool_call_1", {
+    canary_id: "e2e-canary",
+    target: "https://example.invalid/umc/e2e-canary",
+    artifact: "artifacts/e2e-canary.txt"
+  });
+
+  assert.equal(result.accepted_action.actionType, "umc_emit_accepted_action_canary");
+  assert.equal(result.accepted_action.accepted, true);
+  assert.equal(result.accepted_action.succeeded, true);
+  assert.deepEqual(result.accepted_action.targets, ["https://example.invalid/umc/e2e-canary"]);
+  assert.deepEqual(result.accepted_action.artifacts, ["artifacts/e2e-canary.txt"]);
+  assert.equal(result.accepted_action.outputs.canaryId, "e2e-canary");
+  assert.match(result.accepted_action.content, /e2e-canary/);
 });

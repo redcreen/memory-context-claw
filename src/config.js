@@ -52,6 +52,9 @@ const DEFAULT_CONFIG = {
   },
   openclawAdapter: {
     enabled: true,
+    debug: {
+      canaryTool: false
+    },
     acceptedActions: {
       enabled: true,
       visibility: "workspace"
@@ -159,6 +162,10 @@ export function resolvePluginConfig(raw) {
   const acceptedActions = mergeObject(
     DEFAULT_CONFIG.openclawAdapter.acceptedActions,
     openclawAdapter.acceptedActions
+  );
+  const debug = mergeObject(
+    DEFAULT_CONFIG.openclawAdapter.debug,
+    openclawAdapter.debug
   );
   const governedExports = mergeObject(
     DEFAULT_CONFIG.openclawAdapter.governedExports,
@@ -298,6 +305,9 @@ export function resolvePluginConfig(raw) {
     },
     openclawAdapter: {
       enabled: openclawAdapter.enabled !== false,
+      debug: {
+        canaryTool: debug.canaryTool === true
+      },
       acceptedActions: {
         enabled: acceptedActions.enabled !== false,
         visibility:
