@@ -12,6 +12,7 @@
 - [openclaw-adapter.md](openclaw-adapter.md)
 - [codex-adapter.md](codex-adapter.md)
 - [realtime-memory-intent-ingestion.md](realtime-memory-intent-ingestion.md)
+- [context-slimming-and-budgeted-assembly.zh-CN.md](context-slimming-and-budgeted-assembly.zh-CN.md)
 - [execution-modes.zh-CN.md](execution-modes.zh-CN.md)
 - [standalone-mode.md](standalone-mode.md)
 - [independent-execution.md](independent-execution.md)

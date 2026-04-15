@@ -12,6 +12,7 @@ Module architecture documents:
 - [openclaw-adapter.md](openclaw-adapter.md)
 - [codex-adapter.md](codex-adapter.md)
 - [realtime-memory-intent-ingestion.md](realtime-memory-intent-ingestion.md)
+- [context-slimming-and-budgeted-assembly.md](context-slimming-and-budgeted-assembly.md)
 - [execution-modes.md](execution-modes.md)
 - [standalone-mode.md](standalone-mode.md)
 - [independent-execution.md](independent-execution.md)
