@@ -216,6 +216,19 @@
 58. `completed` 当 `100+` 案例 benchmark 与 A/B 报告稳定后，再决定是否打开 runtime API / service-mode 等更后面的 enhancement phase。
    - 当前结论仍是：不要打开 runtime API / service-mode；先把 answer-level path、transport watchlist 和更全面 benchmark 规划收口。
 
+## `200+` case 专项结果快照
+
+这块用于把 `59-70` 的最终结果直接暴露在 plan 文档里，避免只看 development plan 时还需要跳回 `.codex/status.md` 或 benchmark 报告才能确认专项做到哪。
+
+- 专项：`execute-200-case-benchmark-and-answer-path-triage`
+- 当前状态：`completed`
+- runnable matrix：`368` cases
+- 中文占比：`187 / 368 = 50.82%`
+- retrieval-heavy formal gate：`250 / 250`
+- isolated local answer-level formal gate：`6 / 6`
+- raw transport watchlist：`0 / 8 raw ok`，全部归类为 host `invalid_json`
+- 当前解释：`200+` case 扩面和第一轮正式门禁已经收口；后续主线不再是“补到 200”，而是继续扩大 answer-level 样本、提高中文自然度，并按 perf baseline 优化最慢层
+
 ## 下一阶段规划队列
 
 59. `completed` review 当前 benchmark 覆盖面，并把矩阵规划到更全面的 `200` case。
