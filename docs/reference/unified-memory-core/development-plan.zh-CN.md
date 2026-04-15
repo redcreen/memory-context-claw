@@ -271,6 +271,18 @@
 76. `done` 把 replay suite 接进正式 gate，避免后续 prompt / schema 漂移重新把显式规则打回 nightly 漏斗。
    - `npm run verify:memory-intent` 已成为这条 slice 的正式 gate。
 
+## 当前执行队列
+
+77. `next` 把 isolated local answer-level formal gate 从 `6` 条代表性样本扩大到更大的稳定矩阵。
+   - 目标不是只增加题数，而是覆盖更多 current-vs-history、跨来源、冲突和 abstention answer-level 场景。
+   - 扩容后必须继续与 raw transport watchlist 分离，不允许把宿主噪声重新混回算法结论。
+78. `todo` 把中文案例从“占比过半”继续推进到更自然、更高信息密度的真实中文表达。
+   - 不再接受只有翻译味的 zh-bearing case；必须补真实中文 current-state 问法、中文规则题、含上下文省略的中文提问和中英混合问法。
+79. `todo` 持续把 gateway/session-lock 与 raw `openclaw memory search` transport 保持在独立 watchlist。
+   - 这条队列的目标不是把 watchlist 做成绿色，而是确保 host instability 不再污染 retrieval / answer-level 算法判断。
+80. `todo` 按主链路性能基线继续优化最慢层，并在每轮优化后重跑正式门禁。
+   - 当前优先级仍是 isolated local answer-level 慢路径，其次是 raw transport；只有在这两层边界继续清楚后，才讨论 retrieval / assembly 的进一步微调。
+
 ## 延后增强队列
 
 下面这些事项现在明确标成 `todo`，但它们不属于当前 active stage。

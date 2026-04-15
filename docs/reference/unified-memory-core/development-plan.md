@@ -258,6 +258,18 @@ The goal is not to reopen baseline contract work. The goal is to:
 76. `done` Bring the replay suite into the formal gate so future prompt or schema drift cannot quietly push explicit rules back into the nightly funnel.
    - `npm run verify:memory-intent` is now the formal gate for this slice.
 
+## Current Execution Queue
+
+77. `next` Expand the isolated local answer-level formal gate beyond the current `6` representative samples into a larger stable matrix.
+   - The goal is not raw count growth; it is broader answer-level coverage for current-vs-history, cross-source, conflict, and abstention scenarios.
+   - The larger gate must stay separate from the raw transport watchlist so host noise does not get mixed back into algorithm conclusions.
+78. `todo` Push Chinese coverage beyond "more than half" into more natural, higher-information real Chinese prompts.
+   - zh-bearing surface coverage is no longer enough; add real Chinese current-state questions, rule prompts, elliptical prompts, and mixed Chinese-English queries.
+79. `todo` Keep gateway/session-lock behavior and raw `openclaw memory search` transport on explicit watchlists.
+   - The goal is not to make the watchlist green immediately; it is to keep host instability from contaminating retrieval / answer-level algorithm judgment.
+80. `todo` Continue optimizing the slowest layer from the main-path performance baseline and rerun the formal gates after each meaningful change.
+   - The current priority remains isolated local answer-level first, raw transport second; only after those boundaries stay clear should further retrieval / assembly tuning be reconsidered.
+
 ## Deferred Enhancement Queue
 
 These items are intentionally `todo`, not the current active stage.

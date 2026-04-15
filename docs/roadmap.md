@@ -54,7 +54,7 @@ The current roadmap horizon also maps to the concrete next execution work:
 
 When resuming work:
 
-- use `65-70` in [reference/unified-memory-core/development-plan.md](reference/unified-memory-core/development-plan.md) for execution order
+- use `77-80` in [reference/unified-memory-core/development-plan.md](reference/unified-memory-core/development-plan.md) for execution order
 - use [../.codex/plan.md](../.codex/plan.md) and [../.codex/status.md](../.codex/status.md) for the live state
 
 ## Milestones
