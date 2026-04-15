@@ -272,7 +272,7 @@ The goal is not to reopen baseline contract work. The goal is to:
 81. `completed` Turn the larger isolated local answer-level formal gate into a repo-default entry instead of relying on hand-built `--only` commands.
    - `scripts/eval-openclaw-cli-agent-answer-matrix.js` now defaults to isolated eval agent `umceval65`, `--agent-local`, `--skip-legacy`, and a fixed `12`-case formal gate matrix.
 82. `completed` Rerun the larger answer-level formal gate and publish a new `2026-04-15` formal report.
-   - New formal report: [reports/generated/openclaw-cli-agent-answer-matrix-2026-04-15.md](../../../../reports/generated/openclaw-cli-agent-answer-matrix-2026-04-15.md)
+   - New formal report: [reports/generated/openclaw-cli-agent-answer-matrix-2026-04-15.md](../../../reports/generated/openclaw-cli-agent-answer-matrix-2026-04-15.md)
    - Latest result: `12 / 12`
 83. `completed` Sync the larger answer-level formal gate result back into the roadmap, development plan, and control surface, then reset the next execution pointer.
    - The roadmap, control surface, and development plan no longer describe the answer-level formal gate as just `6/6`.

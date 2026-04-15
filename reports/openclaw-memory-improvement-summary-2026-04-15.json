@@ -1,0 +1,85 @@
+{
+  "generatedAt": "2026-04-15T05:06:04.108Z",
+  "sourceReport": "/Users/redcreen/Project/unified-memory-core/reports/openclaw-memory-improvement-ab-2026-04-15.json",
+  "totals": {
+    "comparedCases": 16,
+    "unifiedPassed": 16,
+    "legacyPassed": 15,
+    "bothPass": 15,
+    "umcOnly": 1,
+    "legacyOnly": 0,
+    "bothFail": 0
+  },
+  "byLanguage": {
+    "en": {
+      "comparedCases": 8,
+      "bothPass": 8,
+      "umcOnly": 0,
+      "legacyOnly": 0,
+      "bothFail": 0
+    },
+    "zh": {
+      "comparedCases": 8,
+      "bothPass": 7,
+      "umcOnly": 1,
+      "legacyOnly": 0,
+      "bothFail": 0
+    }
+  },
+  "byAttribution": {
+    "shared-capability": 13,
+    "shared-baseline-retrieval": 2,
+    "unified-retrieval-gain": 1
+  },
+  "samples": {
+    "umcOnly": [
+      {
+        "id": "agent-zh-natural-project-1",
+        "category": "agent-zh-natural",
+        "language": "zh",
+        "attribution": "unified-retrieval-gain",
+        "prompt": "只根据当前记忆，Project Lantern 到底是在做什么？如果没有这条记忆，就只回答：I don't know based on current memory.",
+        "unifiedAnswer": "- Project Lantern 是一个面向诊所管理者的 **B2B analytics assistant**。\n- 当前记忆里就是这么定义的。 Source: notes/project-lantern.md#L1-L15",
+        "legacyAnswer": "面向诊所管理者的 B2B 分析助手。"
+      }
+    ],
+    "bothPass": [
+      {
+        "id": "agent-name-1",
+        "category": "agent-profile",
+        "language": "en",
+        "attribution": "shared-capability",
+        "prompt": "Based only on your memory for this agent, what is the user's preferred name? If memory is missing, reply exactly: I don't know based on current memory.",
+        "unifiedAnswer": "Maya Chen",
+        "legacyAnswer": "Maya Chen"
+      },
+      {
+        "id": "agent-timezone-1",
+        "category": "agent-profile",
+        "language": "en",
+        "attribution": "shared-capability",
+        "prompt": "Based only on your memory for this agent, what is the user's timezone? If memory is missing, reply exactly: I don't know based on current memory.",
+        "unifiedAnswer": "Asia/Shanghai",
+        "legacyAnswer": "Asia/Shanghai"
+      },
+      {
+        "id": "agent-project-1",
+        "category": "agent-project",
+        "language": "en",
+        "attribution": "shared-baseline-retrieval",
+        "prompt": "Based only on your memory for this agent, what is Project Lantern? If memory is missing, reply exactly: I don't know based on current memory.",
+        "unifiedAnswer": "Project Lantern is a B2B analytics assistant for clinic managers. Source: notes/project-lantern.md#L1-L15",
+        "legacyAnswer": "A B2B analytics assistant for clinic managers."
+      },
+      {
+        "id": "agent-current-editor-1",
+        "category": "agent-temporal",
+        "language": "en",
+        "attribution": "shared-capability",
+        "prompt": "Based only on your memory for this agent, what is the user's current main editor now? If memory is missing, reply exactly: I don't know based on current memory.",
+        "unifiedAnswer": "Zed",
+        "legacyAnswer": "Zed"
+      }
+    ]
+  }
+}

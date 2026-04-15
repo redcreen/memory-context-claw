@@ -90,7 +90,7 @@ flowchart TB
 | Core capture / fact-card / assembly | `completed` | maintain + tune |
 | Memory search | `phase-complete` | governance + benchmark expansion + policy tuning |
 | Self-learning / reflection | `stage-complete` | governed lifecycle, policy adaptation, exports, CLI, and governance surfaces are available |
-| Unified Memory Core | `stage5-complete / post-closeout` | `368` case runnable matrix + `50.82%` Chinese coverage + isolated local answer-level formal gate `6/6` + transport watchlist / perf baseline |
+| Unified Memory Core | `stage5-complete / post-closeout` | `392` case runnable matrix + `53.83%` Chinese coverage + isolated local answer-level formal gate `12/12` + transport watchlist / perf baseline |
 
 ## Progress Map
 
@@ -125,7 +125,7 @@ flowchart TB
     D --> D1["Memory Search Governance\nongoing"]
     D --> D2["Formal Benchmark Gates / Policy Tuning\nactive"]
 
-    E --> E1["Maintain the 368-case runnable matrix + 50%+ Chinese coverage"]
+    E --> E1["Maintain the 392-case runnable matrix + 50%+ Chinese coverage"]
     E --> E2["Expand the isolated local answer-level formal gate"]
     E --> E3["Keep gateway/raw transport noise on separate watchlists"]
     E --> E4["Optimize the slowest layer from the perf baseline while keeping Stage 5 evidence green"]
@@ -228,17 +228,17 @@ Still ongoing:
 Why this is next:
 
 - the baseline product work is complete, so the next missing piece is not another blind feature addition but a stable formal-gate and optimization program
-- the runnable matrix is now `368` cases, with `187 / 368 = 50.82%` zh-bearing coverage
+- the runnable matrix is now `392` cases, with `211 / 392 = 53.83%` zh-bearing coverage
 - retrieval-heavy formal gating is now green at `250 / 250`
-- the isolated local answer-level formal gate is no longer red; it now passes `6 / 6` through `openclaw agent --local` with the isolated eval agent `umceval65`
+- the isolated local answer-level formal gate is no longer red; it now passes `12 / 12` through `openclaw agent --local` with the isolated eval agent `umceval65`
 - raw `openclaw memory search` transport now has its own host watchlist; the current formal watch sample is `0 / 8 raw ok`, all `invalid_json`
 - the refreshed main-path baseline now separates the layers cleanly: retrieval / assembly average `85ms`, raw transport average `15127ms`, isolated local answer-level average `39281ms`
 - release-preflight, deployment verification, and the host-neutral root policy still need to stay green, but they are now guardrails rather than the sole mainline objective
 
 This mainline now includes:
 
-- keeping the `368` case runnable matrix and `50%+` Chinese coverage stable
-- expanding the answer-level formal gate beyond the current `6` representative samples
+- keeping the `392` case runnable matrix and `50%+` Chinese coverage stable
+- expanding the answer-level formal gate beyond the current `12` stable samples
 - keeping gateway/session-lock noise and raw transport on separate watchlists so host instability does not get misread as algorithm regression
 - optimizing the slowest answer-level layer from the refreshed perf baseline
 

@@ -289,7 +289,7 @@
 81. `completed` 把更大的 isolated local answer-level formal gate 固化成 repo-default 入口，而不是继续依赖手工 `--only` 组合。
    - `scripts/eval-openclaw-cli-agent-answer-matrix.js` 现在默认使用 isolated eval agent `umceval65`、`--agent-local`、`--skip-legacy`，以及固定的 `12` 条 formal gate case ids。
 82. `completed` 重跑更大的 answer-level formal gate，并发布新的 `2026-04-15` 正式报告。
-   - 新的正式报告：[reports/generated/openclaw-cli-agent-answer-matrix-2026-04-15.md](../../../../reports/generated/openclaw-cli-agent-answer-matrix-2026-04-15.md)
+   - 新的正式报告：[reports/generated/openclaw-cli-agent-answer-matrix-2026-04-15.md](../../../reports/generated/openclaw-cli-agent-answer-matrix-2026-04-15.md)
    - 最新结果：`12 / 12`
 83. `completed` 把更大的 answer-level formal gate 结果写回 roadmap、development plan、control surface，并重置下一步执行指针。
    - 主路线图、control surface 和 development plan 现在都不再把 answer-level formal gate 写成 `6/6`。

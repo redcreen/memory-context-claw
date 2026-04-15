@@ -971,6 +971,7 @@ const cases = [
     ],
     ["Maya Chen", "Asia/Shanghai"],
     {
+      compareLegacy: true,
       attributionKind: "bootstrap"
     }
   ),
@@ -983,6 +984,7 @@ const cases = [
     ],
     ["Stage 2 pilot", "Singapore"],
     {
+      compareLegacy: true,
       attributionKind: "retrieval"
     }
   ),
@@ -996,6 +998,7 @@ const cases = [
     ["Zed", "eu-west-1"],
     {
       forbiddenAny: ["Vim", "us-east-1"],
+      compareLegacy: true,
       attributionKind: "temporal"
     }
   ),
@@ -1008,6 +1011,7 @@ const cases = [
     ],
     ["Maya Chen"],
     {
+      compareLegacy: true,
       attributionKind: "bootstrap",
       note: "[zh-natural] natural Chinese answer-level name"
     }
@@ -1021,6 +1025,7 @@ const cases = [
     ],
     ["Project Lantern", "clinic managers", "analytics assistant"],
     {
+      compareLegacy: true,
       attributionKind: "retrieval",
       note: "[zh-natural] natural Chinese answer-level project"
     }
@@ -1035,6 +1040,7 @@ const cases = [
     ["Zed"],
     {
       forbiddenAny: ["Vim"],
+      compareLegacy: true,
       attributionKind: "temporal",
       note: "[zh-natural] natural Chinese answer-level current editor"
     }
@@ -1049,6 +1055,7 @@ const cases = [
     ["eu-west-1"],
     {
       forbiddenAny: ["us-east-1"],
+      compareLegacy: true,
       attributionKind: "temporal",
       note: "[zh-natural] natural Chinese answer-level current region"
     }
@@ -1062,6 +1069,7 @@ const cases = [
     ],
     ["do not guess", "I don't know based on current memory.", "conflicting", "missing"],
     {
+      compareLegacy: true,
       attributionKind: "bootstrap",
       note: "[zh-natural] natural Chinese answer-level rule"
     }
@@ -1075,6 +1083,7 @@ const cases = [
     ],
     ["I don't know based on current memory."],
     {
+      compareLegacy: true,
       attributionKind: "negative",
       note: "[zh-natural] natural Chinese abstention"
     }

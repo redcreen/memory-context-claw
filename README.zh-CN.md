@@ -4,6 +4,24 @@
 
 > 一套面向 OpenClaw 的受治理共享记忆核心：已经具备事实优先上下文、显式 self-learning lifecycle，以及可用 CLI 验证的发版门禁。
 
+## 为什么现在就值得用
+
+如果你想先看一句最实在的话：
+
+- 最新完整回归：`397 / 397`
+- 最新 release-preflight：`8 / 8` 通过
+- retrieval-heavy CLI benchmark：`262 / 262`
+- isolated local answer-level gate：`12 / 12`
+- 仓库当前维护的 runnable matrix：`392` 个 case，其中中文相关占比 `53.83%`
+- 当前 live A/B 对比 OpenClaw 默认内置：`16` 个真实 answer-level 案例里，`15` 个两边都能答对，`1` 个只有 Memory Core 能答对，`0` 个只有默认内置能答对
+
+建议先看这两份：
+
+- [为什么 Unified Memory Core 用起来更顺手](docs/memory-improvement-evidence.zh-CN.md)
+- [完整回归与记忆提升报告](reports/generated/unified-memory-core-full-regression-and-memory-improvement-2026-04-15.md)
+
+最诚实的结论是：OpenClaw 内置记忆在很多简单题上本来就不差，但 Unified Memory Core 已经把记忆系统变得更可治理、更可测试、更可维护，并且在更难的自然问法上已经出现了真实可验证的提升。
+
 ## 适用对象
 
 如果你已经在用 OpenClaw 长期记忆，并且想提升“最终进入上下文的质量”，这个仓库就是为你准备的。

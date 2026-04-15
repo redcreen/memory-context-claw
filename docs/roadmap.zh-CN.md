@@ -37,9 +37,9 @@
 
 - [../.codex/status.md](../.codex/status.md)
 - [../.codex/plan.md](../.codex/plan.md)
-- [generated/openclaw-cli-memory-eval-program-2026-04-14.md](generated/openclaw-cli-memory-eval-program-2026-04-14.md)
-- [generated/openclaw-natural-chinese-watch-and-perf-2026-04-15.md](generated/openclaw-natural-chinese-watch-and-perf-2026-04-15.md)
-- [generated/openclaw-answer-level-gate-expansion-2026-04-15.md](generated/openclaw-answer-level-gate-expansion-2026-04-15.md)
+- [generated/openclaw-cli-memory-eval-program-2026-04-14.md](../reports/generated/openclaw-cli-memory-eval-program-2026-04-14.md)
+- [generated/openclaw-natural-chinese-watch-and-perf-2026-04-15.md](../reports/generated/openclaw-natural-chinese-watch-and-perf-2026-04-15.md)
+- [generated/openclaw-answer-level-gate-expansion-2026-04-15.md](../reports/generated/openclaw-answer-level-gate-expansion-2026-04-15.md)
 
 ## 当前 / 下一步 / 更后面
 

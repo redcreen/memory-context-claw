@@ -82,7 +82,7 @@ flowchart TB
 | 核心 capture / fact-card / assembly | `completed` | maintain + tune |
 | Memory Search | `phase-complete` | governance + benchmark expansion + policy tuning |
 | Self-Learning / Reflection | `stage-complete` | governed lifecycle、policy adaptation、exports、CLI、governance surfaces 已可用 |
-| Unified Memory Core | `stage5-complete / post-closeout` | `368` case runnable matrix + `50.82%` 中文覆盖 + isolated local answer-level formal gate `6/6` + transport watchlist / perf baseline |
+| Unified Memory Core | `stage5-complete / post-closeout` | `392` case runnable matrix + `53.83%` 中文覆盖 + isolated local answer-level formal gate `12/12` + transport watchlist / perf baseline |
 
 ## 进展图
 
@@ -117,7 +117,7 @@ flowchart TB
     D --> D1["Memory Search Governance\n持续进行"]
     D --> D2["Formal Benchmark Gates / Policy Tuning\n当前主线"]
 
-    E --> E1["维持 368-case runnable matrix + 50%+ 中文覆盖"]
+    E --> E1["维持 392-case runnable matrix + 50%+ 中文覆盖"]
     E --> E2["扩大 isolated local answer-level formal gate"]
     E --> E3["把 gateway/raw transport 噪声独立成 watchlist"]
     E --> E4["按主链路 perf baseline 优化最慢层并保持 Stage 5 evidence 继续为绿"]
@@ -220,17 +220,17 @@ flowchart TB
 为什么先做这个：
 
 - 基础能力和 Stage 5 收口已经完成，下一步最缺的不是“再加一个功能”，而是把正式门禁和下一轮优化顺序稳定下来
-- runnable matrix 现在已扩到 `368`，其中 zh-bearing case = `187 / 368 = 50.82%`
+- runnable matrix 现在已扩到 `392`，其中 zh-bearing case = `211 / 392 = 53.83%`
 - retrieval-heavy 正式 gate 现在是绿的：`250 / 250`
-- isolated local answer-level formal gate 已经不是红线，而是 `6 / 6` 通过；正式路径是 `openclaw agent --local` + isolated eval agent `umceval65`
+- isolated local answer-level formal gate 已经不是红线，而是 `12 / 12` 通过；正式路径是 `openclaw agent --local` + isolated eval agent `umceval65`
 - raw `openclaw memory search` transport 已独立成 host watchlist；当前 formal watch 样本是 `0 / 8 raw ok`，全部 `invalid_json`
 - 当前主链路 perf baseline 已把问题边界拆清楚：retrieval / assembly 平均 `85ms`，raw transport 平均 `15127ms`，isolated local answer-level 平均 `39281ms`
 - release-preflight、deployment verification、host-neutral root policy 仍要保持为绿，但它们从主线目标变成并行守护线
 
 这一条主线具体包含：
 
-- 保持 `368` case runnable matrix 与 `50%+` 中文覆盖持续稳定
-- 把 answer-level formal gate 从 `6` 条代表性样本扩成更大的稳定矩阵
+- 保持 `392` case runnable matrix 与 `50%+` 中文覆盖持续稳定
+- 把 answer-level formal gate 从当前 `12` 条稳定样本继续扩成更深的稳定矩阵
 - 把 gateway/session-lock 与 raw transport 保持在独立 watchlist，不让宿主噪声污染算法判断
 - 按 perf baseline 优先优化最慢的 answer-level 层
 
@@ -266,7 +266,7 @@ flowchart TB
 
 当前新增要求：
 
-- memory-search workstream 不再只做“按需 case 扩充”，而是要服务整个 `368` case formal benchmark matrix
+- memory-search workstream 不再只做“按需 case 扩充”，而是要服务整个 `392` case formal benchmark matrix
 - 新增案例必须优先覆盖容易暴露算法短板的场景，而不是只补静态事实题
 
 关键文档：
