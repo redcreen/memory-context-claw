@@ -15,6 +15,9 @@
 - Isolated local answer-level formal gate: `12 / 12`
 - Natural-Chinese representative retrieval slice: `5 / 5`
 - Natural-Chinese representative answer-level slice: `6 / 6`
+- Deeper answer-level watch matrix: `18` cases, `9 / 18` zh-bearing
+- Deeper answer-level watch result: `7 / 18`
+- Deeper watch interpretation: useful as a triage surface, not yet promotable into the repo-default formal gate because `11` failures currently collapse into host JSON-parse noise
 - Raw transport watchlist: `0 / 8 raw ok`, all classified as host `missing_json_payload`
 - Main-path perf baseline: retrieval / assembly avg `43ms`; raw transport avg `15570ms`; isolated local answer-level avg `36155ms`
 - Interpretation: the `200+` case buildout, natural-Chinese / watchlist / perf hardening, and the first answer-level gate expansion are complete; the next phase is to deepen the larger answer-level gate beyond the current `12`-case stable baseline
@@ -189,10 +192,10 @@
 
 ## Current Execution Line
 
-- Objective: 在 `12 / 12` isolated local answer-level formal gate 已稳定的基础上，继续补强 cross-source、conflict、multi-step history 和更深的自然中文 answer-level 覆盖
+- Objective: 在 `12 / 12` isolated local answer-level formal gate 已稳定的基础上，继续补强 cross-source、conflict、multi-step history 和更深的自然中文 answer-level 覆盖，同时不让 host output-shape noise 重新污染正式门禁
 - Plan Link: `deepen-answer-level-gate-beyond-12-case-baseline`
 - Runway: 更深 answer-level gate 扩容、自然中文子矩阵保绿、gateway/raw transport watch、perf-baseline-driven optimization
-- Progress: `0 / 4` tasks complete
+- Progress: `2 / 4` tasks complete
 - Stop Conditions:
   - case count grows but blind spots remain
   - answer-level regression gets misdiagnosed as raw transport noise
@@ -202,10 +205,10 @@
 
 ## Execution Tasks
 
-- [ ] EL-1 extend the formal gate beyond the current `12`-case stable baseline with deeper cross-source and conflict cases
+- [x] EL-1 extend the answer-level evidence surface beyond the current `12`-case stable baseline with a deeper `18`-case watch matrix covering cross-source, conflict, history, and denser zh-natural prompts
 - [ ] EL-2 increase the natural-Chinese share inside the answer-level formal gate itself
-- [ ] EL-3 keep gateway/shared-session noise and raw transport classified on watchlists, separate from algorithm conclusions
-- [ ] EL-4 rerun the main-path perf baseline after the deeper answer-level gate expansion
+- [x] EL-3 keep gateway/shared-session noise and raw transport classified on watchlists, separate from algorithm conclusions
+- [ ] EL-4 rerun the main-path perf baseline after the deeper answer-level gate expansion once host output-shape noise is no longer dominating the deeper watch result
 
 ## Development Log Capture
 

@@ -276,11 +276,14 @@ The goal is not to reopen baseline contract work. The goal is to:
    - Latest result: `12 / 12`
 83. `completed` Sync the larger answer-level formal gate result back into the roadmap, development plan, and control surface, then reset the next execution pointer.
    - The roadmap, control surface, and development plan no longer describe the answer-level formal gate as just `6/6`.
-84. `next` Deepen the current `12`-case stable answer-level formal gate with cross-source, conflict, multi-step history, and deeper natural-Chinese coverage.
-   - The goal is not raw case count growth; it is to pull the remaining answer-level blind spots into the formal gate.
-85. `todo` Increase the natural-Chinese share inside the answer-level formal gate itself, not just the global runnable matrix.
-   - The next answer-level expansion should explicitly include more zh-natural current/history/conflict coverage.
-86. `todo` Rerun the main-path perf baseline and A/B attribution report after the deeper answer-level gate expansion so the larger gate does not quietly re-mix host noise into the conclusions.
+84. `in_progress` Deepen the current `12`-case stable answer-level formal gate with cross-source, conflict, multi-step history, and deeper natural-Chinese coverage.
+   - A deeper `18`-case watch matrix now exists with added cross-source, history, conflict, and denser natural-Chinese answer-level coverage.
+   - Current watch result: `7 / 18`; the `11` failures currently collapse into host JSON-parse noise, so this matrix remains a watch surface instead of replacing the repo-default formal gate.
+   - Reference report: [reports/generated/openclaw-cli-agent-answer-watch-2026-04-15.md](../../../reports/generated/openclaw-cli-agent-answer-watch-2026-04-15.md)
+85. `in_progress` Increase the natural-Chinese share inside the answer-level formal gate itself, not just the global runnable matrix.
+   - The deeper watch already runs at `9 / 18` zh-bearing with `6` natural-Chinese cases, which proves the expansion direction, but it is not yet clean enough to replace the stable `12 / 12` formal gate.
+86. `in_progress` Revisit the main-path perf baseline and A/B attribution after the deeper answer-level watch is in place so the larger surface does not quietly re-mix host noise into the conclusions.
+   - Current conclusion: it still does. The next perf / A-B rerun must wait for cleaner host output-shape handling, otherwise the deeper matrix will misreport host noise as answer-level regression.
 
 ## Deferred Enhancement Queue
 

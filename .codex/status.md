@@ -127,7 +127,7 @@
 ## In Progress
 
 - 下一阶段已切到更深的 answer-level 主线：在 `12/12` formal gate、自然中文覆盖、watchlist 和 perf baseline 已重新稳定的前提下，继续补强 cross-source / conflict / history 深度
-- 当前 answer-level 已不再是“算法是否可用”的 blocker：isolated local formal gate `6/6` 已通过；后续主要是扩大样本面并保持宿主噪声与算法判断分离
+- 当前 answer-level 已不再是“算法是否可用”的 blocker：repo-default isolated local formal gate `12/12` 已稳定通过；更深的 `18` case watch matrix 当前结果 `7/18`，`11` 条失败集中在 host JSON parse noise，所以后续重点是扩大样本面同时保持宿主噪声与算法判断分离
 - 保持 release-preflight、bundle install、host smoke、Stage 5 acceptance 证据持续为绿
 - 保持 host-neutral root policy 在 CLI、公开文档和控制面里持续一致
 - 保持 project/workstream roadmap 摘要与新的评测驱动主线持续一致
@@ -165,10 +165,10 @@
 
 ## Current Execution Line
 
-- Objective: 在 `12 / 12` isolated local answer-level formal gate 已稳定的基础上，继续补强 cross-source、conflict、multi-step history 和更深的自然中文 answer-level 覆盖
+- Objective: 在 `12 / 12` isolated local answer-level formal gate 已稳定的基础上，继续补强 cross-source、conflict、multi-step history 和更深的自然中文 answer-level 覆盖，同时不让 host output-shape noise 重新污染正式门禁
 - Plan Link: `deepen-answer-level-gate-beyond-12-case-baseline`
 - Runway: 更深 answer-level gate 扩容、自然中文子矩阵保绿、gateway/raw transport watch、perf-baseline-driven optimization；并行守住 release-preflight 和 canonical-root policy
-- Progress: `0 / 4` tasks complete
+- Progress: `2 / 4` tasks complete
 - Stop Conditions:
   - benchmark expansion degenerates into pure case count chasing
   - answer-level host-path regression gets misclassified as raw transport or retrieval quality
@@ -176,10 +176,10 @@
 
 ## Execution Tasks
 
-- [ ] EL-1 extend the formal gate beyond the current `12`-case stable baseline with deeper cross-source and conflict cases
+- [x] EL-1 extend the answer-level evidence surface beyond the current `12`-case stable baseline with a deeper `18`-case watch matrix covering cross-source, conflict, history, and denser zh-natural prompts
 - [ ] EL-2 increase the natural-Chinese share inside the answer-level formal gate itself
-- [ ] EL-3 keep gateway/shared-session noise and raw transport classified on watchlists, separate from algorithm conclusions
-- [ ] EL-4 rerun the main-path perf baseline after the deeper answer-level gate expansion
+- [x] EL-3 keep gateway/shared-session noise and raw transport classified on watchlists, separate from algorithm conclusions
+- [ ] EL-4 rerun the main-path perf baseline after the deeper answer-level gate expansion once host output-shape noise is no longer dominating the deeper watch result
 
 ## Development Log Capture
 

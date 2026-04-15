@@ -293,11 +293,14 @@
    - 最新结果：`12 / 12`
 83. `completed` 把更大的 answer-level formal gate 结果写回 roadmap、development plan、control surface，并重置下一步执行指针。
    - 主路线图、control surface 和 development plan 现在都不再把 answer-level formal gate 写成 `6/6`。
-84. `next` 把当前 `12` 条稳定 answer-level formal gate 继续做深到 cross-source、conflict、multi-step history 和更深的自然中文覆盖。
-   - 重点不是再机械加题，而是把目前仍主要靠 retrieval-heavy 和代表性 answer 样本支撑的 blind spots 收进正式门禁。
-85. `todo` 提高自然中文在 answer-level formal gate 本身里的占比，而不只是全局 runnable matrix 过半。
-   - 下一轮 answer-level 扩容至少要显式包含更多 zh-natural current/history/conflict 场景。
-86. `todo` 在更深的 answer-level formal gate 完成后，重跑 main-path perf baseline 和 A/B 归因报告，确认更大 gate 不会让宿主噪声重新污染结论。
+84. `in_progress` 把当前 `12` 条稳定 answer-level formal gate 继续做深到 cross-source、conflict、multi-step history 和更深的自然中文覆盖。
+   - 当前已建立 `18` case deeper watch matrix，并补上 cross-source、history、conflict 与更深自然中文 answer-level case。
+   - 当前 watch 结果：`7 / 18`；`11` 条失败都表现为 host JSON parse noise，所以这组 case 目前仍停留在 watch surface，而不是直接替换 repo-default formal gate。
+   - 参考报告：[reports/generated/openclaw-cli-agent-answer-watch-2026-04-15.md](../../../reports/generated/openclaw-cli-agent-answer-watch-2026-04-15.md)
+85. `in_progress` 提高自然中文在 answer-level formal gate 本身里的占比，而不只是全局 runnable matrix 过半。
+   - 当前 deeper watch 里 zh-bearing = `9 / 18`，自然中文 case = `6`；说明中文扩容方向成立，但还不能在 host 噪声未清理前直接替换 `12 / 12` 稳定 gate。
+86. `in_progress` 在更深的 answer-level watch 建立后，重看 main-path perf baseline 和 A/B 归因，确认更大 gate 不会让宿主噪声重新污染结论。
+   - 当前结论是：会。下一轮 perf / A-B 重跑要建立在 host output-shape handling 更稳的前提上，否则更深矩阵会把宿主问题重新误报成 answer-level 退化。
 
 ## 延后增强队列
 

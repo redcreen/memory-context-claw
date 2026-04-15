@@ -54,6 +54,7 @@
 主 roadmap 里的“当前”不只是方向，也对应接下来要执行的具体工作：
 
 1. 扩大 answer-level formal gate，不再只停留在当前 `12` 条稳定样本。
+当前进展：更深的 `18` case answer-level watch matrix 已建立，但当前 `7 / 18`，失败主要是 host JSON parse noise，所以还没有直接替换 repo-default `12 / 12` formal gate。
 2. 在后续扩容中保持 `24` 条自然中文案例持续为绿，而不是退回只有 zh-bearing 数量。
 3. 持续把 gateway/session-lock 与 raw transport 维持在 `missing_json_payload` watchlist，不让宿主噪声重新污染算法判断。
 4. 继续按 `2026-04-15` 主链路性能基线压低 answer-level 最慢层，再决定后续算法优化顺序。

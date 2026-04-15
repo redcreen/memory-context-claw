@@ -746,6 +746,34 @@ const cases = [
     }
   ),
   ...makeAgentSeries(
+    "agent-cross-source-calls",
+    "agent-cross-source",
+    [
+      "Based only on your memory for this agent, if async text will work, should you avoid voice calls? If memory is missing, reply exactly: I don't know based on current memory.",
+      "Based only on your memory for this agent, what communication preference applies when a live call is avoidable? If memory is missing, reply exactly: I don't know based on current memory."
+    ],
+    ["async", "avoid voice calls", "written updates"],
+    {
+      compareLegacy: true,
+      attributionKind: "retrieval",
+      note: "[cross-source] MEMORY.md + personal-profile communication preference"
+    }
+  ),
+  ...makeAgentSeries(
+    "agent-cross-source-release",
+    "agent-cross-source",
+    [
+      "Based only on your memory for this agent, when release notes are ambiguous, how should stable versions be named? If memory is missing, reply exactly: I don't know based on current memory.",
+      "Based only on your memory for this agent, should you say \"latest stable\" vaguely, or name the exact semantic version tag? If memory is missing, reply exactly: I don't know based on current memory."
+    ],
+    ["exact tag", "vX.Y.Z", "latest stable"],
+    {
+      compareLegacy: true,
+      attributionKind: "retrieval",
+      note: "[cross-source] MEMORY.md + personal-profile release-note specificity"
+    }
+  ),
+  ...makeAgentSeries(
     "agent-preference-async",
     "agent-preference",
     [
@@ -1058,6 +1086,79 @@ const cases = [
       compareLegacy: true,
       attributionKind: "temporal",
       note: "[zh-natural] natural Chinese answer-level current region"
+    }
+  ),
+  ...makeAgentSeries(
+    "agent-zh-natural-history-editor",
+    "agent-zh-natural",
+    [
+      "只根据当前记忆，在改用 Zed 之前，我之前一直用什么编辑器？如果没有这条记忆，就只回答：I don't know based on current memory.",
+      "只根据当前记忆，切到现在这个编辑器之前，我原来主力是哪个编辑器？如果没有这条记忆，就只回答：I don't know based on current memory."
+    ],
+    ["Vim"],
+    {
+      forbiddenAny: ["Zed"],
+      compareLegacy: true,
+      attributionKind: "history",
+      note: "[zh-natural] natural Chinese answer-level historical editor"
+    }
+  ),
+  ...makeAgentSeries(
+    "agent-zh-natural-history-demo",
+    "agent-zh-natural",
+    [
+      "只根据当前记忆，demo 改到下午三点之前，原来定在几点？如果没有这条记忆，就只回答：I don't know based on current memory.",
+      "只根据当前记忆，在最新调整之前，诊所 demo 原来是什么时间？如果没有这条记忆，就只回答：I don't know based on current memory."
+    ],
+    ["10:00", "Shanghai"],
+    {
+      forbiddenAny: ["15:00"],
+      compareLegacy: true,
+      attributionKind: "history",
+      note: "[zh-natural] natural Chinese answer-level historical demo time"
+    }
+  ),
+  ...makeAgentSeries(
+    "agent-zh-natural-conflict-region",
+    "agent-zh-natural",
+    [
+      "只根据当前记忆，如果旧草稿里写过 us-east-1，但现在要按当前默认部署区域执行，应该用哪个 region？如果没有这条记忆，就只回答：I don't know based on current memory.",
+      "只根据当前记忆，面对旧的 us-east-1 草稿和当前已确认配置冲突时，默认部署区域到底该按哪个？如果没有这条记忆，就只回答：I don't know based on current memory."
+    ],
+    ["eu-west-1"],
+    {
+      forbiddenAny: ["us-east-1"],
+      compareLegacy: true,
+      attributionKind: "temporal",
+      note: "[zh-natural] natural Chinese answer-level conflict resolution for deploy region"
+    }
+  ),
+  ...makeAgentSeries(
+    "agent-zh-natural-cross-source-calls",
+    "agent-zh-natural",
+    [
+      "只根据当前记忆，如果异步文字已经够用，我应该继续约语音还是尽量避免语音？如果没有这条记忆，就只回答：I don't know based on current memory.",
+      "只根据当前记忆，在可以异步沟通的时候，我对语音通话的偏好到底是什么？如果没有这条记忆，就只回答：I don't know based on current memory."
+    ],
+    ["async", "avoid voice calls", "written updates"],
+    {
+      compareLegacy: true,
+      attributionKind: "retrieval",
+      note: "[zh-natural] natural Chinese cross-source communication preference"
+    }
+  ),
+  ...makeAgentSeries(
+    "agent-zh-natural-cross-source-release",
+    "agent-zh-natural",
+    [
+      "只根据当前记忆，如果 release note 写得含糊，你应该直接说 latest stable，还是给出确切 tag？如果没有这条记忆，就只回答：I don't know based on current memory.",
+      "只根据当前记忆，遇到发布说明不清楚时，稳定版本应该怎么表述才符合我的偏好？如果没有这条记忆，就只回答：I don't know based on current memory."
+    ],
+    ["exact tag", "vX.Y.Z", "latest stable"],
+    {
+      compareLegacy: true,
+      attributionKind: "retrieval",
+      note: "[zh-natural] natural Chinese cross-source release-tag specificity"
     }
   ),
   ...makeAgentSeries(

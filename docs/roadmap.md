@@ -54,6 +54,7 @@ Supporting evidence:
 The current roadmap horizon also maps to the concrete next execution work:
 
 1. expand the answer-level formal gate beyond the current `12`-case stable baseline
+Current progress: a deeper `18`-case answer-level watch matrix now exists, but it is currently `7 / 18`, with failures dominated by host JSON-parse noise, so it does not replace the repo-default `12 / 12` formal gate yet.
 2. keep the `24` natural-Chinese cases green during that expansion instead of slipping back to zh-bearing-only coverage
 3. keep gateway/session-lock noise and raw `openclaw memory search` transport instability classified as `missing_json_payload` watchlist evidence, not algorithm regressions
 4. use the refreshed `2026-04-15` main-path performance baseline to reduce the slowest answer-level layer before choosing later algorithm work
