@@ -1,10 +1,10 @@
 # OpenClaw CLI Memory Benchmark
 
-- generatedAt: `2026-04-15T13:33:30.006Z`
+- generatedAt: `2026-04-15T17:58:01.377Z`
 - agent: `umceval65`
 - totalCases: `18`
-- currentPassed: `14`
-- currentFailed: `4`
+- currentPassed: `16`
+- currentFailed: `2`
 - legacyCompared: `14`
 - legacyPassed: `0`
 - abstained: `0`
@@ -18,17 +18,17 @@
 ## Category Summary
 - agent-profile: `1/1`
 - agent-project: `2/2`
-- agent-temporal: `1/2`
+- agent-temporal: `2/2`
 - agent-cross-source: `0/1`
 - agent-rule: `1/1`
 - agent-history: `1/1`
-- agent-zh: `1/2`
+- agent-zh: `2/2`
 - agent-zh-natural: `5/6`
 - negative: `2/2`
 
 ## Attribution Summary
-- legacy-skipped: `10`
-- unified-failed: `4`
+- legacy-skipped: `12`
+- unified-failed: `2`
 - not-compared: `4`
 
 ## Transport Summary
@@ -38,9 +38,7 @@
 - agent: `18`
 
 ## Failing Cases
-- agent-current-editor-1: expectation mismatch
 - agent-cross-source-calls-1: expectation mismatch
-- agent-zh-project-1: expectation mismatch
 - agent-zh-natural-cross-source-calls-1: expectation mismatch
 
 ## Sample Results
@@ -50,9 +48,9 @@
 - agent-project-1 [agent-project] `agent` pass=`true` attribution=`legacy-skipped`
   prompt: Based only on your memory for this agent, what is Project Lantern? If memory is missing, reply exactly: I don't know based on current memory.
   observed: Project Lantern is a B2B analytics assistant for clinic managers.
-- agent-current-editor-1 [agent-temporal] `agent` pass=`false` attribution=`unified-failed`
+- agent-current-editor-1 [agent-temporal] `agent` pass=`true` attribution=`legacy-skipped`
   prompt: Based only on your memory for this agent, what is the user's current main editor now? If memory is missing, reply exactly: I don't know based on current memory.
-  observed: Yes.
+  observed: Zed
 - agent-current-demo-1 [agent-temporal] `agent` pass=`true` attribution=`legacy-skipped`
   prompt: Based only on your memory for this agent, when is the clinic demo scheduled now? If memory is missing, reply exactly: I don't know based on current memory.
   observed: Next Tuesday at 15:00 Shanghai time.
@@ -68,9 +66,9 @@
 - agent-history-editor-1 [agent-history] `agent` pass=`true` attribution=`not-compared`
   prompt: Based only on your memory for this agent, what editor was Maya still using on 2026-04-10? If memory is missing, reply exactly: I don't know based on current memory.
   observed: Vim
-- agent-zh-project-1 [agent-zh] `agent` pass=`false` attribution=`unified-failed`
+- agent-zh-project-1 [agent-zh] `agent` pass=`true` attribution=`legacy-skipped`
   prompt: 仅根据你当前这个 agent 的记忆，Project Lantern 现在的里程碑是什么？如果记忆里没有，请直接回答：I don't know based on current memory.
-  observed: Based on my memory, the user now primarily uses **Zed** as their main editor.  Source: memory/2026-04-12.md#L2 - "Confirmed update: Maya switched the main editor from Vim to Zed la
+  observed: Stage 2 pilot
 - agent-zh-temporal-1 [agent-zh] `agent` pass=`true` attribution=`legacy-skipped`
   prompt: 仅根据你当前这个 agent 的记忆，用户现在主要用什么编辑器？如果记忆里没有，请直接回答：I don't know based on current memory.
   observed: Zed

@@ -78,6 +78,8 @@ function renderMarkdown(summary) {
     lines.push(`### ${lang === "zh" ? "Chinese" : "English"}`);
     lines.push("");
     lines.push(`- comparedCases: \`${item.comparedCases}\``);
+    lines.push(`- unifiedPassed: \`${item.unifiedPassed}\``);
+    lines.push(`- legacyPassed: \`${item.legacyPassed}\``);
     lines.push(`- bothPass: \`${item.bothPass}\``);
     lines.push(`- umcOnly: \`${item.umcOnly}\``);
     lines.push(`- legacyOnly: \`${item.legacyOnly}\``);
@@ -102,6 +104,8 @@ function renderMarkdown(summary) {
 
   const sections = [
     ["UMC-only Samples", summary.samples.umcOnly],
+    ["Legacy-only Samples", summary.samples.legacyOnly],
+    ["Both-fail Samples", summary.samples.bothFail],
     ["Shared-baseline Samples", summary.samples.bothPass]
   ];
 
@@ -149,12 +153,14 @@ async function main() {
       bothFail: 0
     },
     byLanguage: {
-      en: { comparedCases: 0, bothPass: 0, umcOnly: 0, legacyOnly: 0, bothFail: 0 },
-      zh: { comparedCases: 0, bothPass: 0, umcOnly: 0, legacyOnly: 0, bothFail: 0 }
+      en: { comparedCases: 0, unifiedPassed: 0, legacyPassed: 0, bothPass: 0, umcOnly: 0, legacyOnly: 0, bothFail: 0 },
+      zh: { comparedCases: 0, unifiedPassed: 0, legacyPassed: 0, bothPass: 0, umcOnly: 0, legacyOnly: 0, bothFail: 0 }
     },
     byAttribution: {},
     samples: {
       umcOnly: [],
+      legacyOnly: [],
+      bothFail: [],
       bothPass: []
     }
   };
@@ -165,6 +171,8 @@ async function main() {
     const unifiedPassed = item?.current?.passed === true;
     const legacyPassed = item?.legacy?.passed === true;
     summary.byLanguage[lang].comparedCases += 1;
+    if (unifiedPassed) summary.byLanguage[lang].unifiedPassed += 1;
+    if (legacyPassed) summary.byLanguage[lang].legacyPassed += 1;
     pushCount(summary.byLanguage[lang], outcomeField(outcome));
     pushCount(summary.byAttribution, item.attribution || "unknown");
     if (unifiedPassed) summary.totals.unifiedPassed += 1;
@@ -176,6 +184,8 @@ async function main() {
   }
 
   summary.samples.umcOnly = pickSamples(compared, (item) => classifyOutcome(item) === "umc_only");
+  summary.samples.legacyOnly = pickSamples(compared, (item) => classifyOutcome(item) === "legacy_only");
+  summary.samples.bothFail = pickSamples(compared, (item) => classifyOutcome(item) === "both_fail");
   summary.samples.bothPass = pickSamples(compared, (item) => classifyOutcome(item) === "both_pass");
 
   await fs.mkdir(path.dirname(args.outputJson), { recursive: true });

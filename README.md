@@ -8,20 +8,20 @@
 
 If you want the shortest practical answer before reading the whole repo:
 
-- latest full regression: `399 / 399`
+- latest full regression: `403 / 403`
 - latest available release-preflight: `8 / 8` pass
 - retrieval-heavy CLI benchmark: `262 / 262`
 - isolated local answer-level gate: `12 / 12`, with `6 / 12` zh-bearing cases inside the formal gate
 - deeper answer-level watch: `14 / 18`
 - maintained runnable matrix: `392` cases with `53.83%` Chinese-bearing coverage
-- current live A/B against OpenClaw builtin: `16` real answer-level cases, `15` shared wins, `1` Memory Core-only win, `0` builtin-only wins
+- current live A/B against OpenClaw builtin: `100` real answer-level cases, `96` shared wins, `1` Memory Core-only win, `1` builtin-only win, and `2` shared failures
 
 Read these first:
 
 - [Why Unified Memory Core Feels Better](docs/memory-improvement-evidence.md)
 - [Full Regression And Memory Improvement Report](reports/generated/unified-memory-core-full-regression-and-memory-improvement-2026-04-15.md)
 
-The honest takeaway is simple: OpenClaw builtin memory is already decent on many easy prompts, but Unified Memory Core gives you a much more governable and testable memory system, and it is already showing targeted live gains on harder natural phrasing.
+The honest takeaway is simple: OpenClaw builtin memory is already decent on many easy prompts. After `100` live A/B cases, the direct answer-level uplift is still modest, but Unified Memory Core already gives you a much more governable and testable memory system and is beginning to show targeted live gains on harder prompts.
 
 ## Who This Is For
 

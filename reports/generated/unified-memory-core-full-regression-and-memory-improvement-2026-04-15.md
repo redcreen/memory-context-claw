@@ -16,7 +16,7 @@ The current answers are:
 - retrieval-heavy CLI memory coverage: strong
 - isolated answer-level formal gate: green
 - raw host `openclaw memory search` transport: still unstable, but now isolated into a watchlist instead of contaminating algorithm conclusions
-- direct live `unified-memory-core` vs builtin answer-level improvement: real, but concentrated rather than universal on the current agent/index baseline
+- direct live `unified-memory-core` vs builtin answer-level improvement: real but modest on the current agent/index baseline, not a dramatic across-the-board uplift
 
 ## What Was Tested
 
@@ -42,12 +42,12 @@ The direct “does Memory Core help more than builtin memory?” comparison was 
 - same fixture memory
 - `unified-memory-core` versus legacy builtin context engine
 
-The current de-duplicated live A/B set contains `16` distinct cases:
+The current live A/B set contains `100` distinct answer-level cases:
 
-- English: `8`
-- Chinese: `8`
+- English: `50`
+- Chinese: `50`
 
-This set was intentionally reduced to distinct capability points instead of counting prompt paraphrase mirrors as fake extra evidence.
+This set was intentionally expanded to make the comparison harder to hand-wave: same agent family, same memory fixture, two engines, and enough volume to show whether the product really pulls away or merely feels better anecdotally.
 
 The broader runnable matrix currently maintained in the repo is:
 
@@ -60,7 +60,7 @@ The broader runnable matrix currently maintained in the repo is:
 
 ### Regression And Release Gates
 
-- `npm test`: `399 / 399` pass
+- `npm test`: `403 / 403` pass
 - `npm run verify:memory-intent`: pass
 - latest available `release-preflight` evidence in this round: `8 / 8` pass
 - note: an immediate post-fix rerun of `release-preflight` was attempted, but it did not complete within this session budget, so the final conclusions below rely on the directly rerun sub-gates instead
@@ -109,8 +109,9 @@ This is a real live host-path gate, but it is not the same as the builtin-vs-UMC
 
 - report: [openclaw-memory-search-transport-watchlist-2026-04-15.md](openclaw-memory-search-transport-watchlist-2026-04-15.md)
 - probes: `8`
-- raw ok: `0 / 8`
-- current failure class: `missing_json_payload`
+- raw ok: `3 / 8`
+- watchlist: `5`
+- failure classes: `4` `missing_json_payload`, `1` `empty_results`
 
 Interpretation:
 
@@ -139,9 +140,9 @@ Interpretation:
 
 Current baseline:
 
-- retrieval / assembly average: `8 ms`
-- raw transport average: `8335 ms`
-- answer-level average: `24553 ms`
+- retrieval / assembly average: `16 ms`
+- raw transport average: `8061 ms`
+- answer-level average: `11200 ms`
 
 Interpretation:
 
@@ -156,54 +157,67 @@ Interpretation:
 
 ### Topline Counts
 
-- compared real live cases: `16`
-- `unified-memory-core` passed: `16`
-- legacy builtin passed: `15`
-- both passed: `15`
+- compared real live cases: `100`
+- `unified-memory-core` passed: `97`
+- legacy builtin passed: `97`
+- both passed: `96`
 - Memory Core only: `1`
-- legacy only: `0`
-- both failed: `0`
+- legacy only: `1`
+- both failed: `2`
 
 ### English Versus Chinese
 
 #### English
 
-- compared real live cases: `8`
-- both passed: `8`
-- Memory Core only: `0`
+- compared real live cases: `50`
+- `unified-memory-core` passed: `50`
+- legacy builtin passed: `49`
+- both passed: `49`
+- Memory Core only: `1`
 - legacy only: `0`
 - both failed: `0`
 
 #### Chinese
 
-- compared real live cases: `8`
-- both passed: `7`
-- Memory Core only: `1`
-- legacy only: `0`
-- both failed: `0`
+- compared real live cases: `50`
+- `unified-memory-core` passed: `47`
+- legacy builtin passed: `48`
+- both passed: `47`
+- Memory Core only: `0`
+- legacy only: `1`
+- both failed: `2`
 
 ### What The A/B Result Actually Means
 
 The honest reading is:
 
 - OpenClaw builtin memory is already good enough to answer many simple stable-fact and current-state prompts on the current test agent
-- `unified-memory-core` does not magically create a huge visible uplift on every easy prompt
-- the visible current live uplift is concentrated in harder retrieval / phrasing situations, especially natural Chinese phrasing
+- `unified-memory-core` does not currently create a large visible uplift on every easy prompt
+- after `100` real live cases, the direct answer-level gap is still small enough that it would be misleading to market this as a broad built-in replacement win
+- the visible current uplift is concentrated in a narrow slice of harder retrieval / phrasing situations, while one Chinese negative case currently regresses and two harder Chinese history cases still miss on both engines
 
 The single clear current `unified-memory-core`-only win in this live set is:
 
-- case: `agent-zh-natural-project-1`
-- question: `只根据当前记忆，Project Lantern 到底是在做什么？如果没有这条记忆，就只回答：I don't know based on current memory.`
+- case: `ab100-en-project-purpose-5`
+- question: `Based only on your memory for this agent, if someone asks what Lantern does, how should you describe it? If memory is missing, reply exactly: I don't know based on current memory.`
 - result:
   - `unified-memory-core`: pass
   - builtin legacy: fail
 - attribution: `unified-retrieval-gain`
 
+The clear current builtin-only win is:
+
+- case: `ab100-zh-negative-4`
+- question: `只根据当前记忆，我的生日是哪一天？如果没有这条记忆，就只回答：I don't know based on current memory.`
+- result:
+  - `unified-memory-core`: fail, hallucinated `1983-02-06`
+  - builtin legacy: correct abstention
+
 So if the question is “does Memory Core help today?”, the honest answer is:
 
-- yes, but not by replacing every builtin success
+- yes, but the direct live answer-level improvement is modest on this current baseline
 - the bigger immediate value is governed retrieval, cleaner assembly, broader benchmark coverage, nightly self-learning, maintainability, CLI-verifiable gates, and explicit isolation of host transport failures
-- the direct answer-level uplift is currently measurable but still concentrated, not yet broad enough to claim a dramatic across-the-board boost
+- if the goal is “Memory Core should obviously beat builtin in many more real questions”, that goal is not closed yet
 
 ## Where Memory Core Is Already Significantly Better
 
@@ -213,7 +227,7 @@ Even when many simple prompts are shared wins, Memory Core is already materially
    Memory Core has formal handling for conflict, supersede, current-state questions, and stable-fact prioritization instead of relying on a flatter baseline retrieval path.
 
 2. Larger verified memory benchmark surface
-   The project now maintains a runnable matrix of `392` cases with `53.83%` Chinese-bearing coverage, plus a `262 / 262` retrieval-heavy formal gate.
+   The project now maintains a runnable matrix of `392` cases with `53.83%` Chinese-bearing coverage, a `262 / 262` retrieval-heavy formal gate, and a `100`-case live A/B answer-level comparison against the builtin baseline.
 
 3. Stable answer-level gate
    The isolated local answer-level gate is now `12 / 12`, and the formal gate itself now carries `6 / 12` zh-bearing cases instead of only a token Chinese slice.
@@ -231,12 +245,13 @@ Even when many simple prompts are shared wins, Memory Core is already materially
 
 According to the GitHub development plan:
 
-- current completed baseline: the repo has already closed the `12 / 12` isolated answer-level gate and the broader benchmark program
-- current next step: [development-plan.zh-CN.md](../../docs/reference/unified-memory-core/development-plan.zh-CN.md) item `84`
+- current completed baseline: the repo has already closed the `12 / 12` isolated answer-level gate, the broader benchmark program, and this round’s full rerun / A-B refresh
+- current next step: [development-plan.zh-CN.md](../../docs/reference/unified-memory-core/development-plan.zh-CN.md) item `90`
 
 Current `next` in the development plan:
 
-- deepen the stable answer-level formal gate into more `cross-source`, `conflict`, `multi-step history`, and more natural Chinese coverage
+- remove the one confirmed builtin-only regression plus the two shared Chinese history misses from the `100`-case A/B suite
+- target future answer-level gains in `cross-source`, `conflict`, `multi-step history`, and denser natural Chinese prompts where `unified-memory-core` should earn more differentiated wins
 
 That means this round has finished the broad regression and evidence pass, and the next phase is no longer “prove basic health”, but “turn the improved `14 / 18` deeper watch into a promotable next formal-gate layer where Memory Core beats the builtin baseline more often”.
 

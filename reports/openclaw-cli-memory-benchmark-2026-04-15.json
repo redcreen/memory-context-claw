@@ -1,0 +1,71 @@
+{
+  "generatedAt": "2026-04-15T16:37:23.963Z",
+  "agentId": "umceval65",
+  "agentToolHint": true,
+  "agentLocal": true,
+  "casesPath": "/Users/redcreen/Project/unified-memory-core/evals/openclaw-memory-improvement-ab-cases.js",
+  "summary": {
+    "total": 1,
+    "passed": 0,
+    "failed": 1,
+    "comparedLegacy": 1,
+    "legacyPassed": 0,
+    "abstained": 0,
+    "abstentionRate": 0,
+    "byLanguage": {
+      "zhBearing": 0,
+      "nonZh": 1
+    },
+    "byCategory": {
+      "ab-en-bootstrap": {
+        "total": 1,
+        "passed": 0
+      }
+    },
+    "byAttribution": {
+      "unified-failed": 1
+    },
+    "byTransport": {
+      "agent": 1
+    },
+    "byEntrypoint": {
+      "agent": 1
+    }
+  },
+  "results": [
+    {
+      "id": "ab100-en-name-1",
+      "category": "ab-en-bootstrap",
+      "entrypoint": "agent",
+      "query": "",
+      "message": "Based only on your memory for this agent, what is the user's preferred name? If memory is missing, reply exactly: I don't know based on current memory.",
+      "compareLegacy": true,
+      "attributionKind": "bootstrap",
+      "attribution": "unified-failed",
+      "current": {
+        "ok": false,
+        "error": "Unable to parse JSON payload from stdout",
+        "stdout": "",
+        "stderr": "[plugins] [unified-memory-core] loaded (enabled=true, llmRerank=false, maxCandidates=18, governedExports=true, nightlySelfLearning=true@00:00, canaryTool=false)\n[plugins] style-engine: registered capture_xiaohongshu_note (root=/Users/redcreen/Project/style engine/workspace/sytle-images)\n[plugins] [task-system] plugin loaded (root=/Users/redcreen/.openclaw/extensions/openclaw-task-system)\n(node:36211) [OPENCLAW_PLUGIN_SDK_COMPAT_DEPRECATED] Warning: openclaw/plugin-sdk/compat is deprecated for new plugins. Migrate to focused openclaw/plugin-sdk/<subpath> imports. See https://docs.openclaw.ai/plugins/sdk-migration\nBundled plugins must use scoped plugin-sdk subpaths. External plugins may keep compat temporarily while migrating. Migration guide: https://docs.openclaw.ai/plugins/sdk-migration\n(Use `node --trace-warnings ...` to show where the warning was created)\n[plugins] [unified-memory-core] loaded (enabled=true, llmRerank=false, maxCandidates=18, governedExports=true, nightlySelfLearning=true@00:00, canaryTool=false)\n[plugins] style-engine: registered capture_xiaohongshu_note (root=/Users/redcreen/Project/style engine/workspace/sytle-images)\n[plugins] [task-system] plugin loaded (root=/Users/redcreen/.openclaw/extensions/openclaw-task-system)\n",
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "sourcesOk": false,
+        "reason": "Unable to parse JSON payload from stdout"
+      },
+      "legacy": {
+        "ok": false,
+        "error": "Unable to parse JSON payload from stdout",
+        "stdout": "",
+        "stderr": "Config warnings:\\n- plugins.entries.openclaw-lark: plugin not found: openclaw-lark (stale config entry ignored; remove it from plugins config)\n- plugins.entries.openclaw-task-system: plugin not found: openclaw-task-system (stale config entry ignored; remove it from plugins config)\n- plugins.allow: plugin not found: openclaw-lark (stale config entry ignored; remove it from plugins config)\n- plugins.allow: plugin not found: openclaw-task-system (stale config entry ignored; remove it from plugins config)\n[plugins] style-engine: registered capture_xiaohongshu_note (root=/Users/redcreen/Project/style engine/workspace/sytle-images)\n[plugins] style-engine: registered capture_xiaohongshu_note (root=/Users/redcreen/Project/style engine/workspace/sytle-images)\n[tools] tools.allow allowlist contains unknown entries (feishu_bitable_app, feishu_bitable_app_table, feishu_bitable_app_table_field, feishu_bitable_app_table_record, feishu_bitable_app_table_view, feishu_calendar_calendar, feishu_calendar_event, feishu_calendar_event_attendee, feishu_calendar_freebusy, feishu_chat, feishu_chat_members, feishu_create_doc, feishu_doc_comments, feishu_doc_media, feishu_drive_file, feishu_fetch_doc, feishu_get_user, feishu_im_bot_image, feishu_im_user_fetch_resource, feishu_im_user_get_messages, feishu_im_user_get_thread_messages, feishu_im_user_message, feishu_im_user_search_messages, feishu_oauth, feishu_oauth_batch_auth, feishu_search_doc_wiki, feishu_search_user, feishu_sheet, feishu_task_comment, feishu_task_subtask, feishu_task_task, feishu_task_tasklist, feishu_update_doc, feishu_wiki_space, feishu_wiki_space_node). These entries won't match any tool unless the plugin is enabled.\n",
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "sourcesOk": false,
+        "reason": "Unable to parse JSON payload from stdout"
+      }
+    }
+  ]
+}

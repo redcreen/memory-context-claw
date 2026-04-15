@@ -1,70 +1,93 @@
 # OpenClaw Memory Improvement Summary
 
-- generatedAt: `2026-04-15T13:37:40.173Z`
-- comparedCases: `16`
-- unifiedPassed: `16`
-- legacyPassed: `15`
-- bothPass: `15`
+- generatedAt: `2026-04-15T17:46:06.350Z`
+- comparedCases: `100`
+- unifiedPassed: `97`
+- legacyPassed: `97`
+- bothPass: `96`
 - umcOnly: `1`
-- legacyOnly: `0`
-- bothFail: `0`
+- legacyOnly: `1`
+- bothFail: `2`
 
 ## Language Split
 
 ### English
 
-- comparedCases: `8`
-- bothPass: `8`
-- umcOnly: `0`
+- comparedCases: `50`
+- unifiedPassed: `50`
+- legacyPassed: `49`
+- bothPass: `49`
+- umcOnly: `1`
 - legacyOnly: `0`
 - bothFail: `0`
 
 ### Chinese
 
-- comparedCases: `8`
-- bothPass: `7`
-- umcOnly: `1`
-- legacyOnly: `0`
-- bothFail: `0`
+- comparedCases: `50`
+- unifiedPassed: `47`
+- legacyPassed: `48`
+- bothPass: `47`
+- umcOnly: `0`
+- legacyOnly: `1`
+- bothFail: `2`
 
 ## Attribution Summary
 
-- shared-capability: `13`
-- shared-baseline-retrieval: `2`
+- shared-capability: `57`
+- shared-baseline-retrieval: `39`
 - unified-retrieval-gain: `1`
+- unified-failed: `3`
 
 ## Significant Takeaways
 
-- Shared baseline memory capability: `15` / `16` real cases passed in both systems.
-- Memory Core-only gains: `1` / `16` real cases passed only with `unified-memory-core`.
-- Chinese Memory Core-only gains: `1` / `8`.
-- English Memory Core-only gains: `0` / `8`.
+- Shared baseline memory capability: `96` / `100` real cases passed in both systems.
+- Memory Core-only gains: `1` / `100` real cases passed only with `unified-memory-core`.
+- Chinese Memory Core-only gains: `0` / `50`.
+- English Memory Core-only gains: `1` / `50`.
 
 ## UMC-only Samples
 
-- agent-zh-natural-project-1 [agent-zh-natural] (zh) attribution=`unified-retrieval-gain`
-  prompt: 只根据当前记忆，Project Lantern 到底是在做什么？如果没有这条记忆，就只回答：I don't know based on current memory.
-  unified: - Project Lantern 是一个面向诊所管理者的 **B2B analytics assistant**。 - 当前记忆里就是这么定义的。 Source: notes/project-lantern.md#L1-L15
-  legacy: 面向诊所管理者的 B2B 分析助手。
+- ab100-en-project-purpose-5 [ab-en-retrieval] (en) attribution=`unified-retrieval-gain`
+  prompt: Based only on your memory for this agent, if someone asks what Lantern does, how should you describe it? If memory is missing, reply exactly: I don't know based on current memory.
+  unified: A B2B analytics assistant for clinic managers.
+  legacy: I don't know based on current memory.
+
+## Legacy-only Samples
+
+- ab100-zh-negative-4 [ab-zh-negative] (zh) attribution=`unified-failed`
+  prompt: 只根据当前记忆，我的生日是哪一天？如果没有这条记忆，就只回答：I don't know based on current memory.
+  unified: 1983-02-06
+  legacy: I don't know based on current memory.
+
+## Both-fail Samples
+
+- ab100-zh-history-editor-2 [ab-zh-history] (zh) attribution=`unified-failed`
+  prompt: 只根据当前记忆，切到现在这个编辑器之前，我原来主力是哪个编辑器？如果没有这条记忆，就只回答：I don't know based on current memory.
+  unified: I don't know based on current memory.
+  legacy: I don't know based on current memory.
+- ab100-zh-history-editor-4 [ab-zh-history] (zh) attribution=`unified-failed`
+  prompt: 只根据当前记忆，现在虽然已经换了编辑器，但之前那段时间主力到底是什么？如果没有这条记忆，就只回答：I don't know based on current memory.
+  unified: I don't know based on current memory.
+  legacy: I don't know based on current memory.
 
 ## Shared-baseline Samples
 
-- agent-name-1 [agent-profile] (en) attribution=`shared-capability`
+- ab100-en-name-1 [ab-en-bootstrap] (en) attribution=`shared-capability`
   prompt: Based only on your memory for this agent, what is the user's preferred name? If memory is missing, reply exactly: I don't know based on current memory.
   unified: Maya Chen
+  legacy: Maya Chen.
+- ab100-en-name-2 [ab-en-bootstrap] (en) attribution=`shared-capability`
+  prompt: Based only on your memory for this agent, what name should you use when addressing the user? If memory is missing, reply exactly: I don't know based on current memory.
+  unified: Maya Chen
   legacy: Maya Chen
-- agent-timezone-1 [agent-profile] (en) attribution=`shared-capability`
-  prompt: Based only on your memory for this agent, what is the user's timezone? If memory is missing, reply exactly: I don't know based on current memory.
-  unified: Asia/Shanghai
-  legacy: Asia/Shanghai
-- agent-project-1 [agent-project] (en) attribution=`shared-baseline-retrieval`
-  prompt: Based only on your memory for this agent, what is Project Lantern? If memory is missing, reply exactly: I don't know based on current memory.
-  unified: Project Lantern is a B2B analytics assistant for clinic managers. Source: notes/project-lantern.md#L1-L15
-  legacy: A B2B analytics assistant for clinic managers.
-- agent-current-editor-1 [agent-temporal] (en) attribution=`shared-capability`
-  prompt: Based only on your memory for this agent, what is the user's current main editor now? If memory is missing, reply exactly: I don't know based on current memory.
-  unified: Zed
-  legacy: Zed
+- ab100-en-name-3 [ab-en-bootstrap] (en) attribution=`shared-capability`
+  prompt: Based only on your memory for this agent, how should this agent address the user by name? If memory is missing, reply exactly: I don't know based on current memory.
+  unified: Maya Chen
+  legacy: Maya Chen.
+- ab100-en-name-4 [ab-en-bootstrap] (en) attribution=`shared-capability`
+  prompt: Based only on your memory for this agent, what is the name you should call the user? If memory is missing, reply exactly: I don't know based on current memory.
+  unified: Maya Chen
+  legacy: Maya Chen
 
 ## Notes
 

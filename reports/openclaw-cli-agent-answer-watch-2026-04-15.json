@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-04-15T13:33:30.006Z",
+  "generatedAt": "2026-04-15T17:58:01.377Z",
   "agentId": "umceval65",
   "agentToolHint": true,
   "agentLocal": true,
   "casesPath": "/Users/redcreen/Project/unified-memory-core/evals/openclaw-cli-memory-benchmark-cases.js",
   "summary": {
     "total": 18,
-    "passed": 14,
-    "failed": 4,
+    "passed": 16,
+    "failed": 2,
     "comparedLegacy": 14,
     "legacyPassed": 0,
     "abstained": 0,
@@ -27,7 +27,7 @@
       },
       "agent-temporal": {
         "total": 2,
-        "passed": 1
+        "passed": 2
       },
       "agent-cross-source": {
         "total": 1,
@@ -43,7 +43,7 @@
       },
       "agent-zh": {
         "total": 2,
-        "passed": 1
+        "passed": 2
       },
       "agent-zh-natural": {
         "total": 6,
@@ -55,8 +55,8 @@
       }
     },
     "byAttribution": {
-      "legacy-skipped": 10,
-      "unified-failed": 4,
+      "legacy-skipped": 12,
+      "unified-failed": 2,
       "not-compared": 4
     },
     "byTransport": {
@@ -145,11 +145,11 @@
       "message": "Based only on your memory for this agent, what is the user's current main editor now? If memory is missing, reply exactly: I don't know based on current memory.",
       "compareLegacy": true,
       "attributionKind": "temporal",
-      "attribution": "unified-failed",
+      "attribution": "legacy-skipped",
       "current": {
         "ok": true,
         "transport": "agent_local",
-        "answer": "Yes.",
+        "answer": "Zed",
         "injectedWorkspaceFiles": [
           "AGENTS.md",
           "SOUL.md",
@@ -163,12 +163,12 @@
         "observedSessionKey": "agent:umceval65:main",
         "observedSessionId": "d79773de-29a7-4f1f-b284-17e010f036a3",
         "warning": "",
-        "passed": false,
-        "expectedAnyOk": false,
+        "passed": true,
+        "expectedAnyOk": true,
         "expectedAllOk": true,
         "forbiddenOk": true,
         "sourcesOk": true,
-        "reason": "expectation mismatch"
+        "reason": "matched"
       },
       "legacy": null
     },
@@ -355,11 +355,11 @@
       "message": "仅根据你当前这个 agent 的记忆，Project Lantern 现在的里程碑是什么？如果记忆里没有，请直接回答：I don't know based on current memory.",
       "compareLegacy": true,
       "attributionKind": "retrieval",
-      "attribution": "unified-failed",
+      "attribution": "legacy-skipped",
       "current": {
         "ok": true,
         "transport": "agent_local",
-        "answer": "Based on my memory, the user now primarily uses **Zed** as their main editor.\n\nSource: memory/2026-04-12.md#L2 - \"Confirmed update: Maya switched the main editor from Vim to Zed last week.\"",
+        "answer": "Stage 2 pilot",
         "injectedWorkspaceFiles": [
           "AGENTS.md",
           "SOUL.md",
@@ -373,12 +373,12 @@
         "observedSessionKey": "agent:umceval65:main",
         "observedSessionId": "d79773de-29a7-4f1f-b284-17e010f036a3",
         "warning": "",
-        "passed": false,
-        "expectedAnyOk": false,
+        "passed": true,
+        "expectedAnyOk": true,
         "expectedAllOk": true,
         "forbiddenOk": true,
         "sourcesOk": true,
-        "reason": "expectation mismatch"
+        "reason": "matched"
       },
       "legacy": null
     },

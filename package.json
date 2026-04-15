@@ -22,6 +22,7 @@
     "eval:openclaw:benchmark": "node scripts/eval-openclaw-cli-memory-benchmark.js",
     "eval:openclaw:agent-matrix": "node scripts/eval-openclaw-cli-agent-answer-matrix.js",
     "eval:openclaw:agent-watch": "node scripts/eval-openclaw-cli-agent-answer-watch.js",
+    "eval:openclaw:memory-improvement-ab": "node scripts/eval-openclaw-memory-improvement-ab.js",
     "eval:openclaw:transport-watch": "node scripts/watch-openclaw-memory-search-transport.js",
     "eval:main-path:perf": "node scripts/capture-main-path-performance-baseline.js",
     "eval:memory-intent:replay": "node scripts/eval-memory-intent-replay.js",

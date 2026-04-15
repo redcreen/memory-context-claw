@@ -60,7 +60,7 @@
   - `scripts/watch-openclaw-memory-search-transport.js` 已把 raw `openclaw memory search` transport 单独收口成 watchlist
   - retrieval-heavy formal gate 已扩到：`250/250`
   - 自然中文补强已落地：`24` 条 `[zh-natural]` 案例（`12` retrieval + `12` answer-level），代表性 retrieval slice `5/5`、代表性 answer-level slice `6/6`
-  - transport watchlist 当前 formal watch 结果：`0/8 raw ok`，全部归类为 host `missing_json_payload`
+  - transport watchlist 当前 formal watch 结果：`3/8 raw ok`，其余为 `4` 条 `missing_json_payload` 与 `1` 条 `empty_results`
   - isolated local answer-level formal gate 已扩大并收口为：`12/12`，正式路径是 `openclaw agent --local` + isolated eval agent `umceval65`
   - benchmark-driven 第一轮修复已落地：`guessing policy` query rewrite 与 fallback rewrite fan-out 已补齐，失败项归零
   - answer-level benchmark wrapper prompt 现在会在 query rewrite 前被剥掉，不再让 `Based only on your memory...` 这类测试包装语污染 retrieval query
@@ -71,10 +71,10 @@
   - retrieval-heavy 正式 gate 已扩到 `250/250`
   - answer-level formal gate 已收口成更大的 isolated local gate：`12/12`，使用 `openclaw agent --local` + isolated eval agent `umceval65`
   - 自然中文专项已补齐：代表性 retrieval slice `5/5`，代表性 answer-level slice `6/6`
-  - raw `openclaw memory search` transport watchlist 已固定为独立 host watch：`0/8 raw ok`，全部 `missing_json_payload`
+  - raw `openclaw memory search` transport watchlist 已固定为独立 host watch：`3/8 raw ok`，其余为 `4` 条 `missing_json_payload` 与 `1` 条 `empty_results`
   - retrieval / assembly / answer-level 主链路性能专项计划已补齐：[docs/reference/unified-memory-core/testing/main-path-performance-plan.zh-CN.md](../docs/reference/unified-memory-core/testing/main-path-performance-plan.zh-CN.md)
   - 主链路性能刷新基线已落地：[reports/generated/main-path-performance-baseline-2026-04-15.md](../reports/generated/main-path-performance-baseline-2026-04-15.md)
-  - 当前 perf 归因已经明确：retrieval / assembly 平均 `8ms`；raw transport 平均 `8335ms`；isolated local answer-level 平均 `24553ms`
+  - 当前 perf 归因已经明确：retrieval / assembly 平均 `16ms`；raw transport 平均 `8061ms`；isolated local answer-level 平均 `11200ms`
   - host output-shape hardening 已补齐：更强的 JSON payload 提取、isolated eval agent stale session lock 清理、取消 per-case destructive session reset，以及 parse failure bounded retry
   - 更深的 `18` case answer-level watch 已从 `7/18` 提升到 `14/18`，formal gate 本身的中文占比也已抬到 `6/12`；剩余 `4` 条失败现在集中在 current-editor、cross-source-calls、zh-project 和 zh-natural-cross-source-calls
   - answer-level root cause 已显式拆开：gateway/session-lock 噪声、agent main-session 复用污染、CLI `--local` JSON 走 stderr
@@ -97,7 +97,7 @@
 - 当前验证已完成：
   - Stage 5 targeted tests：`3/3`
   - release / deployment targeted tests：`71/71`
-  - full repo `npm test`：`399/399`
+  - full repo `npm test`：`403/403`
   - `npm run umc:stage5 -- --format markdown`：`pass`
   - `npm run umc:acceptance -- --format markdown`：`pass`
   - `npm run umc:openclaw-itest -- --format markdown`：`pass`
@@ -114,7 +114,7 @@
   - `node scripts/eval-openclaw-cli-memory-benchmark.js --entrypoints memory_search --skip-legacy ...`：`262/262`
   - `node scripts/eval-openclaw-cli-memory-benchmark.js --agent umceval65 --entrypoints memory_search --skip-legacy --only zh-natural-profile-search-1,zh-natural-project-search-1,zh-natural-temporal-search-1,zh-natural-rule-search-1,zh-natural-temporal-search-3 ...`：`5/5`
   - `node scripts/eval-openclaw-cli-memory-benchmark.js --agent umceval65 --entrypoints agent --skip-legacy --agent-local --only agent-zh-natural-name-1,agent-zh-natural-project-1,agent-zh-natural-editor-1,agent-zh-natural-region-1,agent-zh-natural-rule-1,agent-zh-natural-negative-1 ...`：`6/6`
-  - `node scripts/watch-openclaw-memory-search-transport.js --format markdown --per-category 1 --max-probes 8 --timeout-ms 8000 ...`：`0/8 raw ok`（全部 `missing_json_payload`）
+  - `node scripts/watch-openclaw-memory-search-transport.js --format markdown --per-category 1 --max-probes 8 --timeout-ms 8000 ...`：`3/8 raw ok`（`4` 条 `missing_json_payload`，`1` 条 `empty_results`）
   - `npm run eval:openclaw:agent-matrix -- --agent-timeout-ms 35000 --format markdown`：`12/12`
   - `node scripts/eval-openclaw-cli-memory-benchmark.js --entrypoints agent --agent umceval65 --skip-legacy --agent-local --only agent-name-1,agent-project-1,agent-rule-no-guess-1,agent-cross-source-calls-1,agent-current-editor-1,agent-current-demo-1,agent-history-editor-1,agent-project-city-1,agent-zh-project-1,agent-zh-temporal-1,agent-zh-natural-name-1,agent-zh-natural-project-1,agent-zh-natural-editor-1,agent-zh-natural-history-editor-1,agent-zh-natural-conflict-region-1,agent-zh-natural-cross-source-calls-1,agent-zh-natural-negative-1,agent-negative-1 ...`：`14/18`
   - `npm run eval:main-path:perf`：`pass`
@@ -142,7 +142,7 @@
 
 ## Blockers / Open Decisions
 
-- raw `openclaw memory search` transport 仍是显式 watchlist：`0/8 raw ok`，全部 `missing_json_payload`
+- raw `openclaw memory search` transport 仍是显式 watchlist：`3/8 raw ok`，其余为 `4` 条 `missing_json_payload` 与 `1` 条 `empty_results`
 - gateway / shared-session 路径仍可能带来宿主噪声；当前正式 answer-level gate 已改走 isolated local path
 - operator / planning follow-up 只剩：
   - 什么时候清理过时的 legacy root 副本
@@ -150,9 +150,9 @@
 
 ## Next 3 Actions
 
-1. 收掉更深 watch 剩余的 `4` 条失败：`agent-current-editor-1`、`agent-cross-source-calls-1`、`agent-zh-project-1`、`agent-zh-natural-cross-source-calls-1`。
-2. 判断哪些 deeper-watch case 可以安全晋升进下一轮 formal gate，而不破坏当前 `12/12` 稳定基线。
-3. 在下一轮 deeper-watch 修复后，重跑 `release-preflight`、full regression、CLI use cases、perf baseline 和 memory-improvement A/B suite。
+1. 收掉 `100` case live A/B 里已确认的 builtin-only regression：`ab100-zh-negative-4`。
+2. 收掉 `100` case live A/B 里两条 shared-fail 中文 history case：`ab100-zh-history-editor-2`、`ab100-zh-history-editor-4`。
+3. 在 regression 清掉后，重新设计下一轮更偏 `cross-source`、`conflict`、`multi-step history` 和高信息密度自然中文的 live A/B，让 Memory Core 在更多 harder cases 上形成清晰净增益。
 
 ## Architecture Supervision
 - Signal: `yellow`
@@ -169,9 +169,9 @@
 
 ## Current Execution Line
 
-- Objective: 收掉更深 `18` case answer-level watch 剩余的 `4` 条 harder failures，并决定哪些 case 可以在不破坏当前 `12/12` 稳定性的前提下晋升进下一轮 formal gate
-- Plan Link: `close-remaining-deeper-watch-failures-after-14-of-18`
-- Runway: deeper-watch failure attribution、自然中文子矩阵保绿、gateway/raw transport watch、release-preflight / perf / A/B rerun 准备；并行守住 release-preflight 和 canonical-root policy
+- Objective: 先把 `100` case live A/B 里暴露的 builtin-only regression 与 shared-fail history cases 收掉，再推动更多 harder cases 形成 Memory Core 独占胜场
+- Plan Link: `convert-100-case-ab-from-mostly-shared-wins-into-clearer-umc-gains`
+- Runway: builtin-only regression fix、shared-fail history closure、cross-source/conflict/history/natural-Chinese A/B redesign、gateway/raw transport watch；并行守住 release-preflight 和 canonical-root policy
 - Progress: `0 / 3` tasks complete
 - Stop Conditions:
   - deeper-watch harder failures get promoted without root-cause attribution
@@ -180,9 +180,9 @@
 
 ## Execution Tasks
 
-- [ ] EL-1 close the remaining four deeper-watch failures: `agent-current-editor-1`, `agent-cross-source-calls-1`, `agent-zh-project-1`, and `agent-zh-natural-cross-source-calls-1`
-- [ ] EL-2 decide which recovered deeper-watch cases can be promoted into the next formal gate without sacrificing the current `12/12` stability
-- [ ] EL-3 rerun `release-preflight`, full regression, CLI use cases, perf baseline, and the memory-improvement A/B suite after the next deeper-watch fix round
+- [ ] EL-1 close the builtin-only regression in the `100` case live A/B: `ab100-zh-negative-4`
+- [ ] EL-2 close the shared-fail Chinese history cases in the `100` case live A/B: `ab100-zh-history-editor-2` and `ab100-zh-history-editor-4`
+- [ ] EL-3 redesign the next live A/B around `cross-source`, `conflict`, `multi-step history`, and denser natural-Chinese prompts so Memory Core can win on more harder cases
 
 ## Development Log Capture
 

@@ -239,12 +239,12 @@ The goal is not to reopen baseline contract work. The goal is to:
 67. `completed` Promote the answer-level host path and the raw transport watchlist into the formal benchmark gate with pass rate, abstention rate, and watchlist reporting.
    - retrieval-heavy gate: `250/250`
    - answer-level formal gate: `12/12` via `openclaw agent --local` with isolated eval agent `umceval65`
-   - transport watchlist: `0/8 raw ok`, all classified as host transport invalid-json
+   - transport watchlist: `3/8 raw ok`; the rest are `4` host transport `missing_json_payload` failures and `1` `empty_results`
 68. `completed` Triage and fix the live `openclaw agent` answer-level red path until it no longer systemically returns `I don't know` or times out.
    - Root causes are now separated: gateway/session-lock noise, agent main-session reuse contamination, and CLI `--local` JSON emitted on stderr.
    - The formal gate now uses the isolated local answer path; the gateway path stays on the watchlist instead of polluting algorithm judgments.
 69. `completed` Use the main-path performance baseline to optimize the slowest layer, prioritizing host answer-level first, raw transport second, and only then retrieval / assembly if needed.
-   - Latest main-path baseline: retrieval / assembly avg `8ms`; raw transport avg `8335ms`; isolated local answer-level avg `24553ms` with `3/3` passing.
+   - Latest main-path baseline: retrieval / assembly avg `16ms`; raw transport avg `8061ms`; isolated local answer-level avg `11200ms` with `3/3` passing.
 70. `completed` Rerun the `200+` benchmark, answer-level gate, transport watchlist, and main-path perf baseline, then use that evidence to decide whether later enhancement planning can open.
    - Conclusion: continue benchmark / perf / transport work, but do not misclassify raw transport or gateway noise as retrieval / answer-level algorithm regressions.
 71. `done` Establish a formal memory-intent replay regression surface covering durable rules, tool-routing preferences, session constraints, task-only instructions, user-profile facts, and no-memory noise.
@@ -266,9 +266,9 @@ The goal is not to reopen baseline contract work. The goal is to:
 78. `completed` Push Chinese coverage beyond "more than half" into more natural, higher-information real Chinese prompts.
    - The matrix now includes `24` `[zh-natural]` cases (`12` retrieval + `12` answer-level) with a representative retrieval slice of `5/5` and a representative answer-level slice of `6/6`.
 79. `completed` Keep gateway/session-lock behavior and raw `openclaw memory search` transport on explicit watchlists.
-   - The latest raw transport watchlist is `0/8 raw ok`, all classified as `missing_json_payload`; this watchlist tracks host instability, not retrieval / answer-level algorithm regressions.
+   - The latest raw transport watchlist is `3/8 raw ok`; the rest are `4` `missing_json_payload` failures and `1` `empty_results`; this watchlist tracks host instability, not retrieval / answer-level algorithm regressions.
 80. `completed` Continue optimizing the slowest layer from the main-path performance baseline and rerun the formal gates after each meaningful change.
-   - The current priority remains isolated local answer-level first and raw transport second; the latest perf baseline is now retrieval / assembly `8ms`, raw transport `8335ms`, isolated local answer-level `24553ms`.
+   - The current priority remains isolated local answer-level first and raw transport second; the latest perf baseline is now retrieval / assembly `16ms`, raw transport `8061ms`, isolated local answer-level `11200ms`.
 81. `completed` Turn the larger isolated local answer-level formal gate into a repo-default entry instead of relying on hand-built `--only` commands.
    - `scripts/eval-openclaw-cli-agent-answer-matrix.js` now defaults to isolated eval agent `umceval65`, `--agent-local`, `--skip-legacy`, and a fixed `12`-case formal gate matrix.
 82. `completed` Rerun the larger answer-level formal gate and publish a new `2026-04-15` formal report.
@@ -285,10 +285,26 @@ The goal is not to reopen baseline contract work. The goal is to:
 86. `completed` Revisit the main-path perf baseline and A/B attribution after the deeper answer-level watch is in place so the larger surface does not quietly re-mix host noise into the conclusions.
    - The perf baseline, raw transport watchlist, memory-improvement A/B summary, and full regression pass have all been rerun. The current conclusion is that the stable formal gate is healthy, while the deeper watch is improved but not yet promotable.
 
-87. `next` Clear the remaining four deeper-watch failures: `agent-current-editor-1`, `agent-cross-source-calls-1`, `agent-zh-project-1`, and `agent-zh-natural-cross-source-calls-1`.
-   - The goal is not more case count, but to classify each failure as retrieval, assembly, prompt-routing, or host-reuse drift and then close it.
-88. `todo` After those four deeper-watch failures converge, decide which cases can be promoted into the next formal gate without sacrificing the current `12 / 12` stability.
-89. `todo` After the next deeper-watch fix round, rerun `release-preflight`, full regression, CLI use cases, perf baseline, and the memory-improvement A/B suite, then publish the next round report.
+87. `completed` Finish the harder-failure attribution pass without prematurely promoting the deeper watch into a larger formal gate.
+   - This round prioritized the broader rerun surface instead: full regression, CLI use cases, perf baseline, transport watchlist, and a `100`-case live A/B.
+   - The new conclusion is no longer just “close four deeper-watch failures”, but “explain and then close why Memory Core still does not clearly outpace builtin memory in the larger live A/B”.
+88. `completed` Re-evaluate the promotion boundary on the broader evidence surface instead of using only the `18`-case deeper watch.
+   - The stable formal gate remains `12 / 12`; the deeper watch remains `14 / 18` and is still not promoted.
+   - The new `100`-case live A/B lands at `96` shared wins, `1` Memory Core-only win, `1` builtin-only win, and `2` shared failures.
+89. `completed` Rerun full regression, CLI use cases, perf baseline, and the memory-improvement A/B suite, then publish the next round report.
+   - `npm test = 403 / 403`
+   - `verify:memory-intent = pass`
+   - retrieval-heavy CLI benchmark = `262 / 262`
+   - isolated local answer-level formal gate = `12 / 12`
+   - raw transport watchlist = `3 / 8 raw ok`
+   - main-path perf baseline = retrieval / assembly `16ms`, raw transport `8061ms`, answer-level `11200ms`
+   - memory-improvement A/B = `100` cases, `97` UMC pass, `97` builtin pass
+
+90. `next` Remove the confirmed builtin-only regression in the `100`-case live A/B: `ab100-zh-negative-4`.
+   - The goal is to convert the hallucinated answer back into stable abstention instead of accepting a stronger-governance story with a negative-case regression.
+91. `todo` Remove the two shared-fail Chinese history cases in the `100`-case live A/B: `ab100-zh-history-editor-2` and `ab100-zh-history-editor-4`.
+   - The goal is to stop the history / supersede surface from sitting at “both engines miss” and pull UMC to stable correctness first.
+92. `todo` After the builtin-only regression and shared-fail history cases close, design the next live A/B round around `cross-source`, `conflict`, `multi-step history`, and denser natural-Chinese prompts so UMC can win on more harder cases.
 
 ## Deferred Enhancement Queue
 

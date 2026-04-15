@@ -229,9 +229,9 @@
 - isolated local answer-level formal gate：`12 / 12`（formal gate 内中文样本 `6 / 12`）
 - 自然中文代表性 retrieval slice：`5 / 5`
 - 自然中文代表性 answer-level slice：`6 / 6`
-- raw transport watchlist：`0 / 8 raw ok`，全部归类为 host `missing_json_payload`
-- 最新 perf baseline：retrieval / assembly `8ms`；raw transport `8335ms`；isolated local answer-level `24553ms`
-- 当前解释：`200+` case 扩面、自然中文补强、watchlist failure-class 化、perf baseline 刷新，以及 answer-level formal gate 从 `6/6` 扩到 `12/12` 都已收口；formal gate 自身的中文占比也已提升到 `6 / 12`；更深的 watch 已从 `7/18` 提升到 `14/18`，后续主线是收掉剩余 `4` 条 harder failures
+- raw transport watchlist：`3 / 8 raw ok`；其余为 `4` 条 `missing_json_payload` 与 `1` 条 `empty_results`
+- 最新 perf baseline：retrieval / assembly `16ms`；raw transport `8061ms`；isolated local answer-level `11200ms`
+- 当前解释：`200+` case 扩面、自然中文补强、watchlist failure-class 化、perf baseline 刷新，以及 answer-level formal gate 从 `6/6` 扩到 `12/12` 都已收口；但 `100` case live A/B 也表明 direct answer-level 提升还不大，后续主线应先收掉 builtin-only regression 与 shared-fail history cases
 
 ## 下一阶段规划队列
 
@@ -256,12 +256,12 @@
 67. `completed` 把 answer-level host path 与 raw transport watchlist 纳入正式 benchmark gate，持续报告通过率、abstention rate、watchlist 分布。
    - retrieval-heavy gate：`250/250`
    - answer-level formal gate：`12/12`（`openclaw agent --local` + isolated eval agent `umceval65`）
-   - transport watchlist：`0/8 raw ok`，全部归类为 host transport invalid-json
+   - transport watchlist：`3/8 raw ok`；其余为 `4` 条 host transport `missing_json_payload` 与 `1` 条 `empty_results`
 68. `completed` 单独 triage 并修复 live `openclaw agent` answer-level red path，直到它不再系统性地 `I don't know` 或超时。
    - 根因已拆开：gateway/session-lock 噪声、agent main-session 复用污染、CLI `--local` JSON 输出写在 stderr。
    - 当前正式 gate 改走 isolated local answer path；gateway 路径继续保留在 watchlist，不再污染算法判断。
 69. `completed` 按主链路性能基线优化最慢层，优先解释 host answer-level，再处理 raw transport，再决定 retrieval / assembly 是否需要继续微调。
-   - 最新 main-path baseline：retrieval / assembly `8ms` 平均；raw transport `8335ms` 平均；isolated local answer-level `24553ms` 平均，`3/3` 通过。
+   - 最新 main-path baseline：retrieval / assembly `16ms` 平均；raw transport `8061ms` 平均；isolated local answer-level `11200ms` 平均，`3/3` 通过。
 70. `completed` 重跑 `200+` case benchmark、answer-level gate、transport watchlist 和 main-path perf baseline，并以新证据决定是否打开后续 enhancement planning。
    - 结论：继续推进 benchmark / perf / transport work，但不把 raw transport 或 gateway 噪声误报成 retrieval / answer-level 算法退化。
 71. `done` 为 memory-intent replay 建立正式回归面，覆盖 durable rule、tool routing preference、session constraint、task-only instruction、user profile fact 和 no-memory 噪音。
@@ -283,9 +283,9 @@
 78. `completed` 把中文案例从“占比过半”继续推进到更自然、更高信息密度的真实中文表达。
    - 当前已形成 `24` 条 `[zh-natural]` 案例（`12` retrieval + `12` answer-level），代表性 retrieval slice `5/5`，代表性 answer-level slice `6/6`。
 79. `completed` 持续把 gateway/session-lock 与 raw `openclaw memory search` transport 保持在独立 watchlist。
-   - 最新 raw transport watchlist = `0/8 raw ok`，全部 failure-class 为 `missing_json_payload`；这条 watchlist 只代表 host instability，不代表 retrieval / answer-level 算法退化。
+   - 最新 raw transport watchlist = `3/8 raw ok`；其余为 `4` 条 `missing_json_payload` 与 `1` 条 `empty_results`；这条 watchlist 只代表 host instability，不代表 retrieval / answer-level 算法退化。
 80. `completed` 按主链路性能基线继续优化最慢层，并在每轮优化后重跑正式门禁。
-   - 当前优先级仍是 isolated local answer-level 慢路径，其次是 raw transport；最新 perf baseline 已刷新到 retrieval / assembly `8ms`、raw transport `8335ms`、isolated local answer-level `24553ms`。
+   - 当前优先级仍是 isolated local answer-level 慢路径，其次是 raw transport；最新 perf baseline 已刷新到 retrieval / assembly `16ms`、raw transport `8061ms`、isolated local answer-level `11200ms`。
 81. `completed` 把更大的 isolated local answer-level formal gate 固化成 repo-default 入口，而不是继续依赖手工 `--only` 组合。
    - `scripts/eval-openclaw-cli-agent-answer-matrix.js` 现在默认使用 isolated eval agent `umceval65`、`--agent-local`、`--skip-legacy`，以及固定的 `12` 条 formal gate case ids。
 82. `completed` 重跑更大的 answer-level formal gate，并发布新的 `2026-04-15` 正式报告。
@@ -302,10 +302,26 @@
 86. `completed` 在更深的 answer-level watch 建立后，重看 main-path perf baseline 和 A/B 归因，确认更大 gate 不会让宿主噪声重新污染结论。
    - perf baseline、raw transport watchlist、memory improvement A/B summary 与完整回归都已重跑；当前结论是 stable formal gate 已稳定、deeper watch 已收敛到 `14 / 18`，但仍不宜直接晋升。
 
-87. `next` 收掉 deeper watch 剩余的 `4` 条 harder failures：`agent-current-editor-1`、`agent-cross-source-calls-1`、`agent-zh-project-1`、`agent-zh-natural-cross-source-calls-1`。
-   - 当前目标不是继续加题，而是把这 `4` 条失败拆成 retrieval、assembly、prompt routing 或宿主复用问题并逐条压掉。
-88. `todo` 在剩余 `4` 条 deeper-watch failure 收敛后，决定哪些 case 可以晋升进下一版 formal gate，而不牺牲当前 `12 / 12` 稳定性。
-89. `todo` 在下一轮 deeper-watch 修复后，再重跑 `release-preflight`、完整回归、CLI use-case、perf baseline 和 memory-improvement A/B，发布新的 round report。
+87. `completed` 收掉 deeper watch 剩余的 harder failures 归因工作，并把问题拆回更明确的 host-noise / answer-level / A-B 证据面。
+   - 这一轮没有把 `14 / 18` deeper watch 直接推进成更高 formal gate，而是先完成更大规模证据刷新：完整回归、CLI use-case、perf baseline、transport watchlist 与 `100` case live A/B。
+   - 当前结论已经从“先修剩余 `4` 条 deeper-watch failure”升级成“先解释并关闭为什么 `100` case live A/B 里 Memory Core 还没有明显甩开内置”。
+88. `completed` 在更大证据面上重看晋升边界，而不是只盯着 `18` case deeper watch。
+   - 当前 stable formal gate 仍然保持 `12 / 12`；deeper watch 仍然是 `14 / 18`，暂不晋升。
+   - 新增的 `100` case live A/B 结果是：`96` 个 shared wins、`1` 个 Memory Core only、`1` 个 builtin only、`2` 个 shared fails。
+89. `completed` 重跑完整回归、CLI use-case、perf baseline 和 memory-improvement A/B，并发布新的 round report。
+   - `npm test = 403 / 403`
+   - `verify:memory-intent = pass`
+   - retrieval-heavy CLI benchmark = `262 / 262`
+   - isolated local answer-level formal gate = `12 / 12`
+   - raw transport watchlist = `3 / 8 raw ok`
+   - main-path perf baseline = retrieval / assembly `16ms`、raw transport `8061ms`、answer-level `11200ms`
+   - memory-improvement A/B = `100` cases, `97` UMC pass, `97` builtin pass
+
+90. `next` 先收掉 `100` case live A/B 里已经确认的 builtin-only regression：`ab100-zh-negative-4`。
+   - 目标是把这条 hallucination 纠正为稳定拒答，而不是继续接受“治理更强但在负例上倒退”的现状。
+91. `todo` 再收掉 `100` case live A/B 里两条 shared-fail 的中文 history case：`ab100-zh-history-editor-2`、`ab100-zh-history-editor-4`。
+   - 目标是让 history / supersede 场景不再停留在“两边都不会”，而是至少先把 UMC 拉到可稳定答对。
+92. `todo` 在 builtin-only regression 和 shared-fail history cases 收口后，重新设计下一轮更偏 `cross-source`、`conflict`、`multi-step history` 与高信息密度自然中文的 live A/B，争取让 UMC 在更多 harder cases 上形成清晰净增益。
 
 ## 延后增强队列
 

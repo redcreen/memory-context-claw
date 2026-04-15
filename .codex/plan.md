@@ -18,9 +18,9 @@
 - Deeper answer-level watch matrix: `18` cases, `9 / 18` zh-bearing
 - Deeper answer-level watch result: `14 / 18`
 - Deeper watch interpretation: useful as a triage surface, not yet promotable into the repo-default formal gate because the remaining `4` failures are now a smaller harder set that still needs targeted fixing
-- Raw transport watchlist: `0 / 8 raw ok`, all classified as host `missing_json_payload`
-- Main-path perf baseline: retrieval / assembly avg `8ms`; raw transport avg `8335ms`; isolated local answer-level avg `24553ms`
-- Interpretation: the `200+` case buildout, natural-Chinese / watchlist / perf hardening, and the first answer-level gate expansion are complete; the formal gate itself now carries a real Chinese share, and the next phase is to clear the remaining four deeper-watch failures
+- Raw transport watchlist: `3 / 8 raw ok`; the rest are `4` `missing_json_payload` failures and `1` `empty_results`
+- Main-path perf baseline: retrieval / assembly avg `16ms`; raw transport avg `8061ms`; isolated local answer-level avg `11200ms`
+- Interpretation: the `200+` case buildout, natural-Chinese / watchlist / perf hardening, and the first answer-level gate expansion are complete; the new `100`-case live A/B also shows that direct answer-level uplift is still modest, so the next phase is to close the builtin-only regression and shared-fail history cases first
 
 ## Slices
 
@@ -64,12 +64,12 @@
   - Exit Condition: formal gate 覆盖面超出当前 `12` 条稳定基线，同时 current/history/conflict/cross-source/zh-natural 深度补齐
   - Status: `completed`
 
-- Slice: `close-remaining-deeper-watch-failures-after-14-of-18`
-  - Objective: 把更深 `18` case answer-level watch 剩余的 `4` 条 harder failures 收掉，并判断哪些 case 可以安全晋升进下一轮 formal gate
-  - Dependencies: `2026-04-15` deeper watch 报告、isolated local formal gate `12 / 12`、raw transport watchlist、main-path perf baseline、memory-improvement A/B summary
-  - Risks: 如果把未收口的 harder failures 直接并进正式门禁，会污染稳定健康信号；如果不继续分类 retrieval / assembly / prompt-routing / host-reuse drift，下一轮扩容仍会失真
-  - Validation: 更深 watch rerun、failure attribution notes、候选晋升清单、release-preflight / full regression / perf / A/B rerun
-  - Exit Condition: 剩余 `4` 条 deeper-watch failure 被关闭或明确归类，且下一轮 formal gate 晋升面已有可执行边界
+- Slice: `convert-100-case-ab-from-mostly-shared-wins-into-clearer-umc-gains`
+  - Objective: 先收掉 `100` case live A/B 里的 builtin-only regression 与 shared-fail history cases，再把更多 harder cases 推成 Memory Core 独占胜场
+  - Dependencies: `2026-04-15` memory-improvement A/B report、isolated local formal gate `12 / 12`、deeper watch `14 / 18`、raw transport watchlist、main-path perf baseline
+  - Risks: 如果继续停留在 `96` shared wins、`1` UMC-only、`1` builtin-only、`2` shared fails，产品很难证明“在真实问题上明显比默认内置更强”
+  - Validation: builtin-only regression fix、shared-fail history closure、下一轮 live A/B 设计、full regression / perf / A/B rerun
+  - Exit Condition: 当前 regression 被关闭，且下一轮 live A/B 已明确瞄准 cross-source / conflict / history / 自然中文的净增益
   - Status: `ongoing`
 
 - Slice: `formalize-realtime-memory-intent-ingestion`
@@ -178,11 +178,11 @@
 
 ## Execution Order
 
-1. 收掉更深 `18` case watch 剩余的 `4` 条 harder failures，并把每条问题归类到 retrieval / assembly / prompt-routing / host-reuse drift
-2. 继续保持 `24` 条自然中文案例、`missing_json_payload` transport watchlist 和 `2026-04-15` perf baseline 在下一轮 deeper-watch 修复中持续稳定
-3. 把 gateway/shared-session 与 raw transport 继续保持在独立 watchlist，不与算法判断混淆
-4. 在剩余 `4` 条 harder failures 收口后，决定哪些 case 可以晋升进下一轮 formal gate
-5. 在下一轮晋升边界明确后，重跑 `release-preflight`、full regression、CLI use cases、perf baseline 和 memory-improvement A/B suite
+1. 先收掉 `100` case live A/B 里 builtin-only regression：`ab100-zh-negative-4`
+2. 再收掉 `100` case live A/B 里两条 shared-fail 中文 history case：`ab100-zh-history-editor-2`、`ab100-zh-history-editor-4`
+3. 继续保持 `24` 条自然中文案例、当前 raw transport watchlist 和 `2026-04-15` perf baseline 在下一轮修复中持续稳定
+4. 把 gateway/shared-session 与 raw transport 继续保持在独立 watchlist，不与算法判断混淆
+5. 在 regression 清掉后，重设计下一轮 live A/B，让更多 `cross-source`、`conflict`、`multi-step history` 与高信息密度自然中文场景变成 Memory Core 独占胜场
 6. 并行保持 release-preflight / bundle install / host smoke / Stage 5 evidence 稳定
 7. 保持 host-neutral root operator policy 可见且不回退
 8. 保持 accepted-action deeper queue 的 Step 48-52 仍然显式 deferred，不把 admission / negative-path / conflict work 偷渡进当前实现
@@ -191,18 +191,18 @@
 ## Architecture Supervision
 - Signal: `yellow`
 - Signal Basis: open blockers or architectural risks are still recorded
-- Problem Class: deeper answer-level failure closure, host-noise separation, and evidence refresh sequencing
-- Root Cause Hypothesis: 如果剩余 `4` 条 harder failures 不被逐条归因并关闭，下一轮 formal gate 只能停留在当前 `12 / 12` 稳定层，无法把更深能力正式化
-- Correct Layer: benchmark definition, answer-level watch triage, transport watchlist, main-path performance baseline, release preflight evidence, control surface
+- Problem Class: builtin-only regression closure, shared-fail history closure, and turning mostly-shared A/B wins into clearer UMC gains
+- Root Cause Hypothesis: 如果 `100` case live A/B 继续停留在 `96` shared wins、`1` UMC-only、`1` builtin-only、`2` shared fails，产品就很难证明“Memory Core 在真实问题上明显比默认内置更强”
+- Correct Layer: live A/B case design, retrieval / assembly behavior, negative-case abstention, history/supersede handling, transport watchlist, main-path performance baseline, control surface
 - Rejected Shortcut: 跳过 Stage 5 证据面和当前 operator baseline，直接讨论 runtime API / service mode
 - Automatic Review Trigger: no automatic trigger is currently active
 - Escalation Gate: raise but continue
 
 ## Current Execution Line
 
-- Objective: 收掉更深 `18` case answer-level watch 剩余的 `4` 条 harder failures，并决定哪些 case 可以在不破坏当前 `12 / 12` 稳定性的前提下晋升进下一轮 formal gate
-- Plan Link: `close-remaining-deeper-watch-failures-after-14-of-18`
-- Runway: deeper-watch failure attribution、自然中文子矩阵保绿、gateway/raw transport watch、release-preflight / perf / A/B rerun 准备
+- Objective: 先把 `100` case live A/B 里暴露的 builtin-only regression 与 shared-fail history cases 收掉，再推动更多 harder cases 形成 Memory Core 独占胜场
+- Plan Link: `convert-100-case-ab-from-mostly-shared-wins-into-clearer-umc-gains`
+- Runway: builtin-only regression fix、shared-fail history closure、cross-source/conflict/history/natural-Chinese A/B redesign、gateway/raw transport watch
 - Progress: `0 / 3` tasks complete
 - Stop Conditions:
   - remaining harder failures get promoted without root-cause attribution
@@ -213,9 +213,9 @@
 
 ## Execution Tasks
 
-- [ ] EL-1 close the remaining four deeper-watch failures: `agent-current-editor-1`, `agent-cross-source-calls-1`, `agent-zh-project-1`, and `agent-zh-natural-cross-source-calls-1`
-- [ ] EL-2 decide which recovered deeper-watch cases can be promoted into the next formal gate without sacrificing the current `12 / 12` stability
-- [ ] EL-3 rerun `release-preflight`, full regression, CLI use cases, perf baseline, and the memory-improvement A/B suite after the next deeper-watch fix round
+- [ ] EL-1 close the builtin-only regression in the `100` case live A/B: `ab100-zh-negative-4`
+- [ ] EL-2 close the shared-fail Chinese history cases in the `100` case live A/B: `ab100-zh-history-editor-2` and `ab100-zh-history-editor-4`
+- [ ] EL-3 redesign the next live A/B around `cross-source`, `conflict`, `multi-step history`, and denser natural-Chinese prompts so Memory Core can win on more harder cases
 
 ## Development Log Capture
 

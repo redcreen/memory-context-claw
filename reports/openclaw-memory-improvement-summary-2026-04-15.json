@@ -1,84 +1,120 @@
 {
-  "generatedAt": "2026-04-15T13:37:40.173Z",
+  "generatedAt": "2026-04-15T17:46:06.350Z",
   "sourceReport": "/Users/redcreen/Project/unified-memory-core/reports/openclaw-memory-improvement-ab-2026-04-15.json",
   "totals": {
-    "comparedCases": 16,
-    "unifiedPassed": 16,
-    "legacyPassed": 15,
-    "bothPass": 15,
+    "comparedCases": 100,
+    "unifiedPassed": 97,
+    "legacyPassed": 97,
+    "bothPass": 96,
     "umcOnly": 1,
-    "legacyOnly": 0,
-    "bothFail": 0
+    "legacyOnly": 1,
+    "bothFail": 2
   },
   "byLanguage": {
     "en": {
-      "comparedCases": 8,
-      "bothPass": 8,
-      "umcOnly": 0,
+      "comparedCases": 50,
+      "unifiedPassed": 50,
+      "legacyPassed": 49,
+      "bothPass": 49,
+      "umcOnly": 1,
       "legacyOnly": 0,
       "bothFail": 0
     },
     "zh": {
-      "comparedCases": 8,
-      "bothPass": 7,
-      "umcOnly": 1,
-      "legacyOnly": 0,
-      "bothFail": 0
+      "comparedCases": 50,
+      "unifiedPassed": 47,
+      "legacyPassed": 48,
+      "bothPass": 47,
+      "umcOnly": 0,
+      "legacyOnly": 1,
+      "bothFail": 2
     }
   },
   "byAttribution": {
-    "shared-capability": 13,
-    "shared-baseline-retrieval": 2,
-    "unified-retrieval-gain": 1
+    "shared-capability": 57,
+    "shared-baseline-retrieval": 39,
+    "unified-retrieval-gain": 1,
+    "unified-failed": 3
   },
   "samples": {
     "umcOnly": [
       {
-        "id": "agent-zh-natural-project-1",
-        "category": "agent-zh-natural",
-        "language": "zh",
+        "id": "ab100-en-project-purpose-5",
+        "category": "ab-en-retrieval",
+        "language": "en",
         "attribution": "unified-retrieval-gain",
-        "prompt": "只根据当前记忆，Project Lantern 到底是在做什么？如果没有这条记忆，就只回答：I don't know based on current memory.",
-        "unifiedAnswer": "- Project Lantern 是一个面向诊所管理者的 **B2B analytics assistant**。\n- 当前记忆里就是这么定义的。 Source: notes/project-lantern.md#L1-L15",
-        "legacyAnswer": "面向诊所管理者的 B2B 分析助手。"
+        "prompt": "Based only on your memory for this agent, if someone asks what Lantern does, how should you describe it? If memory is missing, reply exactly: I don't know based on current memory.",
+        "unifiedAnswer": "A B2B analytics assistant for clinic managers.",
+        "legacyAnswer": "I don't know based on current memory."
+      }
+    ],
+    "legacyOnly": [
+      {
+        "id": "ab100-zh-negative-4",
+        "category": "ab-zh-negative",
+        "language": "zh",
+        "attribution": "unified-failed",
+        "prompt": "只根据当前记忆，我的生日是哪一天？如果没有这条记忆，就只回答：I don't know based on current memory.",
+        "unifiedAnswer": "1983-02-06",
+        "legacyAnswer": "I don't know based on current memory."
+      }
+    ],
+    "bothFail": [
+      {
+        "id": "ab100-zh-history-editor-2",
+        "category": "ab-zh-history",
+        "language": "zh",
+        "attribution": "unified-failed",
+        "prompt": "只根据当前记忆，切到现在这个编辑器之前，我原来主力是哪个编辑器？如果没有这条记忆，就只回答：I don't know based on current memory.",
+        "unifiedAnswer": "I don't know based on current memory.",
+        "legacyAnswer": "I don't know based on current memory."
+      },
+      {
+        "id": "ab100-zh-history-editor-4",
+        "category": "ab-zh-history",
+        "language": "zh",
+        "attribution": "unified-failed",
+        "prompt": "只根据当前记忆，现在虽然已经换了编辑器，但之前那段时间主力到底是什么？如果没有这条记忆，就只回答：I don't know based on current memory.",
+        "unifiedAnswer": "I don't know based on current memory.",
+        "legacyAnswer": "I don't know based on current memory."
       }
     ],
     "bothPass": [
       {
-        "id": "agent-name-1",
-        "category": "agent-profile",
+        "id": "ab100-en-name-1",
+        "category": "ab-en-bootstrap",
         "language": "en",
         "attribution": "shared-capability",
         "prompt": "Based only on your memory for this agent, what is the user's preferred name? If memory is missing, reply exactly: I don't know based on current memory.",
         "unifiedAnswer": "Maya Chen",
+        "legacyAnswer": "Maya Chen."
+      },
+      {
+        "id": "ab100-en-name-2",
+        "category": "ab-en-bootstrap",
+        "language": "en",
+        "attribution": "shared-capability",
+        "prompt": "Based only on your memory for this agent, what name should you use when addressing the user? If memory is missing, reply exactly: I don't know based on current memory.",
+        "unifiedAnswer": "Maya Chen",
         "legacyAnswer": "Maya Chen"
       },
       {
-        "id": "agent-timezone-1",
-        "category": "agent-profile",
+        "id": "ab100-en-name-3",
+        "category": "ab-en-bootstrap",
         "language": "en",
         "attribution": "shared-capability",
-        "prompt": "Based only on your memory for this agent, what is the user's timezone? If memory is missing, reply exactly: I don't know based on current memory.",
-        "unifiedAnswer": "Asia/Shanghai",
-        "legacyAnswer": "Asia/Shanghai"
+        "prompt": "Based only on your memory for this agent, how should this agent address the user by name? If memory is missing, reply exactly: I don't know based on current memory.",
+        "unifiedAnswer": "Maya Chen",
+        "legacyAnswer": "Maya Chen."
       },
       {
-        "id": "agent-project-1",
-        "category": "agent-project",
-        "language": "en",
-        "attribution": "shared-baseline-retrieval",
-        "prompt": "Based only on your memory for this agent, what is Project Lantern? If memory is missing, reply exactly: I don't know based on current memory.",
-        "unifiedAnswer": "Project Lantern is a B2B analytics assistant for clinic managers. Source: notes/project-lantern.md#L1-L15",
-        "legacyAnswer": "A B2B analytics assistant for clinic managers."
-      },
-      {
-        "id": "agent-current-editor-1",
-        "category": "agent-temporal",
+        "id": "ab100-en-name-4",
+        "category": "ab-en-bootstrap",
         "language": "en",
         "attribution": "shared-capability",
-        "prompt": "Based only on your memory for this agent, what is the user's current main editor now? If memory is missing, reply exactly: I don't know based on current memory.",
-        "unifiedAnswer": "Zed",
-        "legacyAnswer": "Zed"
+        "prompt": "Based only on your memory for this agent, what is the name you should call the user? If memory is missing, reply exactly: I don't know based on current memory.",
+        "unifiedAnswer": "Maya Chen",
+        "legacyAnswer": "Maya Chen"
       }
     ]
   }

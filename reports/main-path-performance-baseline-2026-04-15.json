@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-15T13:13:39.113Z",
+  "generatedAt": "2026-04-15T17:51:23.823Z",
   "retrievalAssembly": {
     "summary": {
       "preset": "safe-local",
@@ -7,7 +7,7 @@
       "softExceeded": 0,
       "hardExceeded": 0,
       "failures": 0,
-      "averageTotalMs": 8
+      "averageTotalMs": 16
     },
     "results": [
       {
@@ -15,10 +15,10 @@
         "query": "我爱吃什么",
         "softLimitMs": 3000,
         "hardLimitMs": 15000,
-        "retrievalMs": 15,
-        "scoringMs": 2,
-        "assemblyMs": 2,
-        "totalMs": 19,
+        "retrievalMs": 26,
+        "scoringMs": 1,
+        "assemblyMs": 1,
+        "totalMs": 28,
         "candidateCount": 6,
         "selectedCount": 1,
         "withinSoft": true,
@@ -29,10 +29,10 @@
         "query": "你怎么称呼我",
         "softLimitMs": 3000,
         "hardLimitMs": 15000,
-        "retrievalMs": 4,
+        "retrievalMs": 5,
         "scoringMs": 0,
         "assemblyMs": 0,
-        "totalMs": 5,
+        "totalMs": 6,
         "candidateCount": 6,
         "selectedCount": 1,
         "withinSoft": true,
@@ -43,10 +43,10 @@
         "query": "MEMORY.md 应该放什么内容",
         "softLimitMs": 4000,
         "hardLimitMs": 18000,
-        "retrievalMs": 4,
+        "retrievalMs": 13,
         "scoringMs": 0,
         "assemblyMs": 1,
-        "totalMs": 5,
+        "totalMs": 14,
         "candidateCount": 6,
         "selectedCount": 1,
         "withinSoft": true,
@@ -57,10 +57,10 @@
         "query": "这个项目主要解决什么问题",
         "softLimitMs": 4000,
         "hardLimitMs": 18000,
-        "retrievalMs": 5,
+        "retrievalMs": 26,
         "scoringMs": 0,
         "assemblyMs": 0,
-        "totalMs": 5,
+        "totalMs": 26,
         "candidateCount": 6,
         "selectedCount": 1,
         "withinSoft": true,
@@ -71,8 +71,8 @@
         "query": "我女儿叫什么，生日是哪天，现在几年级？",
         "softLimitMs": 4000,
         "hardLimitMs": 18000,
-        "retrievalMs": 4,
-        "scoringMs": 1,
+        "retrievalMs": 5,
+        "scoringMs": 0,
         "assemblyMs": 1,
         "totalMs": 5,
         "candidateCount": 6,
@@ -83,18 +83,18 @@
     ]
   },
   "transport": {
-    "generatedAt": "2026-04-15T13:11:41.710Z",
+    "generatedAt": "2026-04-15T17:50:14.074Z",
     "agentId": "umceval",
     "summary": {
       "total": 8,
-      "ok": 0,
-      "emptyResults": 0,
+      "ok": 3,
+      "emptyResults": 2,
       "timeout": 0,
-      "invalidJson": 8,
+      "invalidJson": 3,
       "commandFailed": 0,
       "otherFailure": 0,
-      "averageDurationMs": 8335,
-      "maxDurationMs": 8686,
+      "averageDurationMs": 8061,
+      "maxDurationMs": 8621,
       "watchlist": [
         {
           "id": "profile-name-1",
@@ -111,20 +111,6 @@
           "reason": "raw openclaw memory search returned a non-JSON payload"
         },
         {
-          "id": "rule-debug-1",
-          "category": "rule",
-          "status": "invalid_json",
-          "failureClass": "missing_json_payload",
-          "reason": "raw openclaw memory search returned a non-JSON payload"
-        },
-        {
-          "id": "project-desc-1",
-          "category": "project",
-          "status": "invalid_json",
-          "failureClass": "missing_json_payload",
-          "reason": "raw openclaw memory search returned a non-JSON payload"
-        },
-        {
           "id": "cross-source-travel-search-1",
           "category": "cross-source",
           "status": "invalid_json",
@@ -134,23 +120,16 @@
         {
           "id": "supersede-editor-search-1",
           "category": "supersede",
-          "status": "invalid_json",
-          "failureClass": "missing_json_payload",
-          "reason": "raw openclaw memory search returned a non-JSON payload"
-        },
-        {
-          "id": "current-editor-search-1",
-          "category": "temporal-current",
-          "status": "invalid_json",
-          "failureClass": "missing_json_payload",
-          "reason": "raw openclaw memory search returned a non-JSON payload"
+          "status": "empty_results",
+          "failureClass": "empty_results",
+          "reason": "raw openclaw memory search returned no results"
         },
         {
           "id": "history-editor-search-1",
           "category": "temporal-history",
-          "status": "invalid_json",
-          "failureClass": "missing_json_payload",
-          "reason": "raw openclaw memory search returned a non-JSON payload"
+          "status": "empty_results",
+          "failureClass": "empty_results",
+          "reason": "raw openclaw memory search returned no results"
         }
       ],
       "byCategory": {
@@ -158,61 +137,63 @@
           "total": 1,
           "ok": 0,
           "failures": 1,
-          "averageDurationMs": 8541,
-          "maxDurationMs": 8541
+          "averageDurationMs": 8621,
+          "maxDurationMs": 8621
         },
         "preference": {
           "total": 1,
           "ok": 0,
           "failures": 1,
-          "averageDurationMs": 8442,
-          "maxDurationMs": 8442
+          "averageDurationMs": 8089,
+          "maxDurationMs": 8089
         },
         "rule": {
           "total": 1,
-          "ok": 0,
-          "failures": 1,
-          "averageDurationMs": 8340,
-          "maxDurationMs": 8340
+          "ok": 1,
+          "failures": 0,
+          "averageDurationMs": 8020,
+          "maxDurationMs": 8020
         },
         "project": {
           "total": 1,
-          "ok": 0,
-          "failures": 1,
-          "averageDurationMs": 8397,
-          "maxDurationMs": 8397
+          "ok": 1,
+          "failures": 0,
+          "averageDurationMs": 7736,
+          "maxDurationMs": 7736
         },
         "cross-source": {
           "total": 1,
           "ok": 0,
           "failures": 1,
-          "averageDurationMs": 8063,
-          "maxDurationMs": 8063
+          "averageDurationMs": 8109,
+          "maxDurationMs": 8109
         },
         "supersede": {
           "total": 1,
           "ok": 0,
           "failures": 1,
-          "averageDurationMs": 8141,
-          "maxDurationMs": 8141
+          "averageDurationMs": 8077,
+          "maxDurationMs": 8077
         },
         "temporal-current": {
           "total": 1,
-          "ok": 0,
-          "failures": 1,
-          "averageDurationMs": 8686,
-          "maxDurationMs": 8686
+          "ok": 1,
+          "failures": 0,
+          "averageDurationMs": 7817,
+          "maxDurationMs": 7817
         },
         "temporal-history": {
           "total": 1,
           "ok": 0,
           "failures": 1,
-          "averageDurationMs": 8066,
-          "maxDurationMs": 8066
+          "averageDurationMs": 8015,
+          "maxDurationMs": 8015
         }
       },
       "byFailureClass": {
-        "missing_json_payload": 8
+        "missing_json_payload": 3,
+        "ok": 3,
+        "empty_results": 2
       }
     },
     "results": [
@@ -221,93 +202,93 @@
         "category": "profile",
         "query": "preferred name",
         "status": "invalid_json",
-        "durationMs": 8541,
-        "error": "Command failed: openclaw memory search --agent umceval --query preferred name --max-results 5 --json\n(node:4799) [OPENCLAW_PLUGIN_SDK_COMPAT_DEPRECATED] Warning: openclaw/plugin-sdk/compat is deprecated for new plugins. Migrate to focused openclaw/plugin-sdk/<subpath> imports. See https://docs.openclaw.ai/plugins/sdk-migration\nBundled plugins must use scoped plugin-sdk subpaths. External plugins may keep compat temporarily while migrating. Migration guide: https://docs.openclaw.ai/plugins/sdk-migration\n(Use `node --trace-warnings ...` to show where the warning was created)\n",
+        "durationMs": 8621,
+        "error": "Command failed: openclaw memory search --agent umceval --query preferred name --max-results 5 --json\n(node:55090) [OPENCLAW_PLUGIN_SDK_COMPAT_DEPRECATED] Warning: openclaw/plugin-sdk/compat is deprecated for new plugins. Migrate to focused openclaw/plugin-sdk/<subpath> imports. See https://docs.openclaw.ai/plugins/sdk-migration\nBundled plugins must use scoped plugin-sdk subpaths. External plugins may keep compat temporarily while migrating. Migration guide: https://docs.openclaw.ai/plugins/sdk-migration\n(Use `node --trace-warnings ...` to show where the warning was created)\n",
         "stdoutPreview": "[plugins] [unified-memory-core] loaded (enabled=true, llmRerank=false, maxCandidates=18, governedExports=true, nightlySelfLearning=true@00:00, canaryTool=false)\n[plugins] style-engine: registered capture_xiaohongshu_note (root=/Users/redcre",
-        "stderrPreview": "(node:4799) [OPENCLAW_PLUGIN_SDK_COMPAT_DEPRECATED] Warning: openclaw/plugin-sdk/compat is deprecated for new plugins. Migrate to focused openclaw/plugin-sdk/<subpath> imports. See https://docs.openclaw.ai/plugins/sdk-migration\nBundled plug"
+        "stderrPreview": "(node:55090) [OPENCLAW_PLUGIN_SDK_COMPAT_DEPRECATED] Warning: openclaw/plugin-sdk/compat is deprecated for new plugins. Migrate to focused openclaw/plugin-sdk/<subpath> imports. See https://docs.openclaw.ai/plugins/sdk-migration\nBundled plu"
       },
       {
         "id": "pref-reply-style-1",
         "category": "preference",
         "query": "preferred reply style",
         "status": "invalid_json",
-        "durationMs": 8442,
-        "error": "Command failed: openclaw memory search --agent umceval --query preferred reply style --max-results 5 --json\n(node:4890) [OPENCLAW_PLUGIN_SDK_COMPAT_DEPRECATED] Warning: openclaw/plugin-sdk/compat is deprecated for new plugins. Migrate to focused openclaw/plugin-sdk/<subpath> imports. See https://docs.openclaw.ai/plugins/sdk-migration\nBundled plugins must use scoped plugin-sdk subpaths. External plugins may keep compat temporarily while migrating. Migration guide: https://docs.openclaw.ai/plugins/sdk-migration\n(Use `node --trace-warnings ...` to show where the warning was created)\n",
+        "durationMs": 8089,
+        "error": "Command failed: openclaw memory search --agent umceval --query preferred reply style --max-results 5 --json\n(node:55143) [OPENCLAW_PLUGIN_SDK_COMPAT_DEPRECATED] Warning: openclaw/plugin-sdk/compat is deprecated for new plugins. Migrate to focused openclaw/plugin-sdk/<subpath> imports. See https://docs.openclaw.ai/plugins/sdk-migration\nBundled plugins must use scoped plugin-sdk subpaths. External plugins may keep compat temporarily while migrating. Migration guide: https://docs.openclaw.ai/plugins/sdk-migration\n(Use `node --trace-warnings ...` to show where the warning was created)\n",
         "stdoutPreview": "[plugins] [unified-memory-core] loaded (enabled=true, llmRerank=false, maxCandidates=18, governedExports=true, nightlySelfLearning=true@00:00, canaryTool=false)\n[plugins] style-engine: registered capture_xiaohongshu_note (root=/Users/redcre",
-        "stderrPreview": "(node:4890) [OPENCLAW_PLUGIN_SDK_COMPAT_DEPRECATED] Warning: openclaw/plugin-sdk/compat is deprecated for new plugins. Migrate to focused openclaw/plugin-sdk/<subpath> imports. See https://docs.openclaw.ai/plugins/sdk-migration\nBundled plug"
+        "stderrPreview": "(node:55143) [OPENCLAW_PLUGIN_SDK_COMPAT_DEPRECATED] Warning: openclaw/plugin-sdk/compat is deprecated for new plugins. Migrate to focused openclaw/plugin-sdk/<subpath> imports. See https://docs.openclaw.ai/plugins/sdk-migration\nBundled plu"
       },
       {
         "id": "rule-debug-1",
         "category": "rule",
         "query": "debugging rule",
-        "status": "invalid_json",
-        "durationMs": 8340,
-        "error": "Command failed: openclaw memory search --agent umceval --query debugging rule --max-results 5 --json\n(node:4906) [OPENCLAW_PLUGIN_SDK_COMPAT_DEPRECATED] Warning: openclaw/plugin-sdk/compat is deprecated for new plugins. Migrate to focused openclaw/plugin-sdk/<subpath> imports. See https://docs.openclaw.ai/plugins/sdk-migration\nBundled plugins must use scoped plugin-sdk subpaths. External plugins may keep compat temporarily while migrating. Migration guide: https://docs.openclaw.ai/plugins/sdk-migration\n(Use `node --trace-warnings ...` to show where the warning was created)\n",
-        "stdoutPreview": "[plugins] [unified-memory-core] loaded (enabled=true, llmRerank=false, maxCandidates=18, governedExports=true, nightlySelfLearning=true@00:00, canaryTool=false)\n[plugins] style-engine: registered capture_xiaohongshu_note (root=/Users/redcre",
-        "stderrPreview": "(node:4906) [OPENCLAW_PLUGIN_SDK_COMPAT_DEPRECATED] Warning: openclaw/plugin-sdk/compat is deprecated for new plugins. Migrate to focused openclaw/plugin-sdk/<subpath> imports. See https://docs.openclaw.ai/plugins/sdk-migration\nBundled plug"
+        "status": "ok",
+        "durationMs": 8020,
+        "resultCount": 1,
+        "provider": "",
+        "mode": ""
       },
       {
         "id": "project-desc-1",
         "category": "project",
         "query": "Project Lantern",
-        "status": "invalid_json",
-        "durationMs": 8397,
-        "error": "Command failed: openclaw memory search --agent umceval --query Project Lantern --max-results 5 --json\n(node:4933) [OPENCLAW_PLUGIN_SDK_COMPAT_DEPRECATED] Warning: openclaw/plugin-sdk/compat is deprecated for new plugins. Migrate to focused openclaw/plugin-sdk/<subpath> imports. See https://docs.openclaw.ai/plugins/sdk-migration\nBundled plugins must use scoped plugin-sdk subpaths. External plugins may keep compat temporarily while migrating. Migration guide: https://docs.openclaw.ai/plugins/sdk-migration\n(Use `node --trace-warnings ...` to show where the warning was created)\n",
-        "stdoutPreview": "[plugins] [unified-memory-core] loaded (enabled=true, llmRerank=false, maxCandidates=18, governedExports=true, nightlySelfLearning=true@00:00, canaryTool=false)\n[plugins] style-engine: registered capture_xiaohongshu_note (root=/Users/redcre",
-        "stderrPreview": "(node:4933) [OPENCLAW_PLUGIN_SDK_COMPAT_DEPRECATED] Warning: openclaw/plugin-sdk/compat is deprecated for new plugins. Migrate to focused openclaw/plugin-sdk/<subpath> imports. See https://docs.openclaw.ai/plugins/sdk-migration\nBundled plug"
+        "status": "ok",
+        "durationMs": 7736,
+        "resultCount": 1,
+        "provider": "",
+        "mode": ""
       },
       {
         "id": "cross-source-travel-search-1",
         "category": "cross-source",
         "query": "Maya carry-on aisle seat",
         "status": "invalid_json",
-        "durationMs": 8063,
-        "error": "Command failed: openclaw memory search --agent umceval --query Maya carry-on aisle seat --max-results 5 --json\n(node:4946) [OPENCLAW_PLUGIN_SDK_COMPAT_DEPRECATED] Warning: openclaw/plugin-sdk/compat is deprecated for new plugins. Migrate to focused openclaw/plugin-sdk/<subpath> imports. See https://docs.openclaw.ai/plugins/sdk-migration\nBundled plugins must use scoped plugin-sdk subpaths. External plugins may keep compat temporarily while migrating. Migration guide: https://docs.openclaw.ai/plugins/sdk-migration\n(Use `node --trace-warnings ...` to show where the warning was created)\n",
+        "durationMs": 8109,
+        "error": "Command failed: openclaw memory search --agent umceval --query Maya carry-on aisle seat --max-results 5 --json\n(node:55285) [OPENCLAW_PLUGIN_SDK_COMPAT_DEPRECATED] Warning: openclaw/plugin-sdk/compat is deprecated for new plugins. Migrate to focused openclaw/plugin-sdk/<subpath> imports. See https://docs.openclaw.ai/plugins/sdk-migration\nBundled plugins must use scoped plugin-sdk subpaths. External plugins may keep compat temporarily while migrating. Migration guide: https://docs.openclaw.ai/plugins/sdk-migration\n(Use `node --trace-warnings ...` to show where the warning was created)\n",
         "stdoutPreview": "[plugins] [unified-memory-core] loaded (enabled=true, llmRerank=false, maxCandidates=18, governedExports=true, nightlySelfLearning=true@00:00, canaryTool=false)\n[plugins] style-engine: registered capture_xiaohongshu_note (root=/Users/redcre",
-        "stderrPreview": "(node:4946) [OPENCLAW_PLUGIN_SDK_COMPAT_DEPRECATED] Warning: openclaw/plugin-sdk/compat is deprecated for new plugins. Migrate to focused openclaw/plugin-sdk/<subpath> imports. See https://docs.openclaw.ai/plugins/sdk-migration\nBundled plug"
+        "stderrPreview": "(node:55285) [OPENCLAW_PLUGIN_SDK_COMPAT_DEPRECATED] Warning: openclaw/plugin-sdk/compat is deprecated for new plugins. Migrate to focused openclaw/plugin-sdk/<subpath> imports. See https://docs.openclaw.ai/plugins/sdk-migration\nBundled plu"
       },
       {
         "id": "supersede-editor-search-1",
         "category": "supersede",
         "query": "current editor and previous editor",
-        "status": "invalid_json",
-        "durationMs": 8141,
-        "error": "Command failed: openclaw memory search --agent umceval --query current editor and previous editor --max-results 5 --json\n(node:4981) [OPENCLAW_PLUGIN_SDK_COMPAT_DEPRECATED] Warning: openclaw/plugin-sdk/compat is deprecated for new plugins. Migrate to focused openclaw/plugin-sdk/<subpath> imports. See https://docs.openclaw.ai/plugins/sdk-migration\nBundled plugins must use scoped plugin-sdk subpaths. External plugins may keep compat temporarily while migrating. Migration guide: https://docs.openclaw.ai/plugins/sdk-migration\n(Use `node --trace-warnings ...` to show where the warning was created)\n",
-        "stdoutPreview": "[plugins] [unified-memory-core] loaded (enabled=true, llmRerank=false, maxCandidates=18, governedExports=true, nightlySelfLearning=true@00:00, canaryTool=false)\n[plugins] style-engine: registered capture_xiaohongshu_note (root=/Users/redcre",
-        "stderrPreview": "(node:4981) [OPENCLAW_PLUGIN_SDK_COMPAT_DEPRECATED] Warning: openclaw/plugin-sdk/compat is deprecated for new plugins. Migrate to focused openclaw/plugin-sdk/<subpath> imports. See https://docs.openclaw.ai/plugins/sdk-migration\nBundled plug"
+        "status": "empty_results",
+        "durationMs": 8077,
+        "resultCount": 0,
+        "provider": "",
+        "mode": ""
       },
       {
         "id": "current-editor-search-1",
         "category": "temporal-current",
         "query": "current main editor",
-        "status": "invalid_json",
-        "durationMs": 8686,
-        "error": "Command failed: openclaw memory search --agent umceval --query current main editor --max-results 5 --json\n(node:5041) [OPENCLAW_PLUGIN_SDK_COMPAT_DEPRECATED] Warning: openclaw/plugin-sdk/compat is deprecated for new plugins. Migrate to focused openclaw/plugin-sdk/<subpath> imports. See https://docs.openclaw.ai/plugins/sdk-migration\nBundled plugins must use scoped plugin-sdk subpaths. External plugins may keep compat temporarily while migrating. Migration guide: https://docs.openclaw.ai/plugins/sdk-migration\n(Use `node --trace-warnings ...` to show where the warning was created)\n",
-        "stdoutPreview": "[plugins] [unified-memory-core] loaded (enabled=true, llmRerank=false, maxCandidates=18, governedExports=true, nightlySelfLearning=true@00:00, canaryTool=false)\n[plugins] style-engine: registered capture_xiaohongshu_note (root=/Users/redcre",
-        "stderrPreview": "(node:5041) [OPENCLAW_PLUGIN_SDK_COMPAT_DEPRECATED] Warning: openclaw/plugin-sdk/compat is deprecated for new plugins. Migrate to focused openclaw/plugin-sdk/<subpath> imports. See https://docs.openclaw.ai/plugins/sdk-migration\nBundled plug"
+        "status": "ok",
+        "durationMs": 7817,
+        "resultCount": 1,
+        "provider": "",
+        "mode": ""
       },
       {
         "id": "history-editor-search-1",
         "category": "temporal-history",
         "query": "previous editor before Zed",
-        "status": "invalid_json",
-        "durationMs": 8066,
-        "error": "Command failed: openclaw memory search --agent umceval --query previous editor before Zed --max-results 5 --json\n(node:5119) [OPENCLAW_PLUGIN_SDK_COMPAT_DEPRECATED] Warning: openclaw/plugin-sdk/compat is deprecated for new plugins. Migrate to focused openclaw/plugin-sdk/<subpath> imports. See https://docs.openclaw.ai/plugins/sdk-migration\nBundled plugins must use scoped plugin-sdk subpaths. External plugins may keep compat temporarily while migrating. Migration guide: https://docs.openclaw.ai/plugins/sdk-migration\n(Use `node --trace-warnings ...` to show where the warning was created)\n",
-        "stdoutPreview": "[plugins] [unified-memory-core] loaded (enabled=true, llmRerank=false, maxCandidates=18, governedExports=true, nightlySelfLearning=true@00:00, canaryTool=false)\n[plugins] style-engine: registered capture_xiaohongshu_note (root=/Users/redcre",
-        "stderrPreview": "(node:5119) [OPENCLAW_PLUGIN_SDK_COMPAT_DEPRECATED] Warning: openclaw/plugin-sdk/compat is deprecated for new plugins. Migrate to focused openclaw/plugin-sdk/<subpath> imports. See https://docs.openclaw.ai/plugins/sdk-migration\nBundled plug"
+        "status": "empty_results",
+        "durationMs": 8015,
+        "resultCount": 0,
+        "provider": "",
+        "mode": ""
       }
     ]
   },
   "answerLevel": {
-    "agentId": "umceval65",
+    "agentId": "umceval",
     "results": [
       {
         "ok": true,
         "message": "仅根据你当前这个 agent 的记忆，你应该怎么称呼用户？如果记忆里没有，请直接回答：I don't know based on current memory.",
         "effectiveMessage": "仅根据你当前这个 agent 的记忆，你应该怎么称呼用户？如果记忆里没有，请直接回答：I don't know based on current memory.",
         "answer": "Maya Chen",
-        "durationMs": 21987,
-        "sessionId": "4bf07f6d-12e9-4434-9453-cc7ccbd4b478",
+        "durationMs": 8945,
+        "sessionId": "91436618-45a2-431d-b728-b6dc6a296df3",
         "provider": "openai-codex",
         "model": "gpt-5.4-mini",
         "error": null
@@ -316,9 +297,9 @@
         "ok": true,
         "message": "只根据当前记忆，Project Lantern 到底是什么项目？如果记忆里没有，请直接回答：I don't know based on current memory.",
         "effectiveMessage": "只根据当前记忆，Project Lantern 到底是什么项目？如果记忆里没有，请直接回答：I don't know based on current memory.",
-        "answer": "Project Lantern 是一个面向诊所管理者的 B2B 分析助手。",
-        "durationMs": 30990,
-        "sessionId": "55757d62-4abb-485c-934d-b487f12c9082",
+        "answer": "Project Lantern is a B2B analytics assistant for clinic managers.",
+        "durationMs": 15387,
+        "sessionId": "d68517c0-b14a-43f3-88c8-3237a793b7ef",
         "provider": "openai-codex",
         "model": "gpt-5.4-mini",
         "error": null
@@ -328,14 +309,14 @@
         "message": "只根据当前记忆，现在默认部署区域到底用哪个？如果记忆里没有，请直接回答：I don't know based on current memory.",
         "effectiveMessage": "只根据当前记忆，现在默认部署区域到底用哪个？如果记忆里没有，请直接回答：I don't know based on current memory.",
         "answer": "eu-west-1",
-        "durationMs": 20681,
-        "sessionId": "ba8211a8-668c-4512-8b08-bdda6eff20c7",
+        "durationMs": 9267,
+        "sessionId": "bafec845-ea25-4070-bd3f-d798b27e6bc3",
         "provider": "openai-codex",
         "model": "gpt-5.4-mini",
         "error": null
       }
     ],
     "passed": 3,
-    "averageDurationMs": 24553
+    "averageDurationMs": 11200
   }
 }
