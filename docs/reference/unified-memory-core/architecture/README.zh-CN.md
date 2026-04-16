@@ -23,9 +23,10 @@
 1. `Source System`
 2. `Memory Registry`
 3. `OpenClaw Adapter`
-4. `Codex Adapter`
-5. `Reflection System`
-6. `Standalone Mode`
-7. `Independent Execution`
-8. `Projection System`
-9. `Governance System`
+4. `Context Slimming And Budgeted Assembly`
+5. `Codex Adapter`
+6. `Reflection System`
+7. `Standalone Mode`
+8. `Independent Execution`
+9. `Projection System`
+10. `Governance System`

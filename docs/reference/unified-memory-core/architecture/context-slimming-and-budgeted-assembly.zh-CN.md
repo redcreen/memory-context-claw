@@ -15,6 +15,13 @@
 - **让每轮 context 尽量瘦**
 - **让真正进入模型的上下文只保留当轮高相关信息**
 
+相关文档：
+
+- [openclaw-adapter.zh-CN.md](openclaw-adapter.zh-CN.md)
+- [execution-modes.zh-CN.md](execution-modes.zh-CN.md)
+- [../testing/main-path-performance-plan.zh-CN.md](../testing/main-path-performance-plan.zh-CN.md)
+- [../../../../reports/generated/unified-memory-core-full-regression-and-memory-improvement-2026-04-15.md](../../../../reports/generated/unified-memory-core-full-regression-and-memory-improvement-2026-04-15.md)
+
 ## 背景判断
 
 当前已经确认的事实：
@@ -34,6 +41,25 @@
 还要问：
 
 > 即使能召回，最终到底该把多少东西放进这轮上下文？
+
+## 当前可量化现状
+
+这份设计不是凭体感提出的，它建立在当前已经拿到的证据上：
+
+- isolated local answer-level formal gate：`12 / 12`
+- deeper answer-level watch：`14 / 18`
+- retrieval-heavy benchmark：`262 / 262`
+- `100` 个 live A/B：`96` 个 shared wins、`1` 个 UMC-only、`1` 个 builtin-only、`2` 个 shared fails
+- main-path perf baseline：
+  - retrieval / assembly 平均 `16ms`
+  - raw transport 平均 `8061ms`
+  - answer-level 平均 `11200ms`
+
+这些数字说明：
+
+- 核心 retrieval 已经不是当前最大的瓶颈
+- 宿主 answer-level 与上下文厚度更值得优先处理
+- 继续只追求“检得更多”，边际收益会越来越低
 
 ## 最短结论
 
@@ -77,6 +103,16 @@
 转成：
 
 - `question-shape-first, budgeted assembly`
+
+## 非目标
+
+这条方案现在**不**试图做这些事：
+
+- 不删除 durable memory source，也不鼓励用户把长期知识“为了快而删掉”
+- 不把 raw transport 的 `missing_json_payload` / `empty_results` 归因成 assembly 可独自修复的问题
+- 不取代 retrieval / governance 这条主线，只是把“召回后如何少给”提到同等优先级
+- 不把 LLM classifier 作为主路径前提；第一版应该优先用规则型 question-shape classifier
+- 不要求用户今天就重写所有 `MEMORY.md` / `AGENTS.md`；应先通过 distill + default-off prompt policy 解决大部分问题
 
 ## 为什么这件事现在必须做
 
@@ -325,6 +361,18 @@ flowchart LR
 - `AGENTS.md` 未来应该更像 boot manifest
 - 而不是 full handbook
 
+### 对用户现有文档的迁移原则
+
+不建议一上来要求用户做大规模手工迁移。
+
+更现实的顺序是：
+
+1. 先承认已有 `MEMORY.md` / `AGENTS.md` / notes 继续作为 source 存在
+2. 先在产品层补 distill / boot-manifest / default-off raw doc policy
+3. 再根据新报告，指导用户把特别臃肿的文档拆成更适合长期维护的结构
+
+也就是说，**优先改消费层，再改存储习惯**。
+
 ## 方案二：预算化 context assembly
 
 ### 核心思想
@@ -522,6 +570,93 @@ adapter 需要从“尽量把有用信息都喂进去”转成：
 而不是：
 
 - **最大相关上下文**
+
+## 推荐 rollout 策略
+
+这条工作不适合一次性全量切换。
+
+建议按 4 步走：
+
+### Step 1: report-only / shadow mode
+
+先不改正式 assembly 结果，只新增报告：
+
+- 当前每轮 selected snippet 数
+- token estimate
+- raw doc injection rate
+- 各问题类型的 context 厚度
+
+先拿到真实分布，再决定哪类问题最值得优先瘦身。
+
+### Step 2: raw doc default-off for stable fact queries
+
+优先对这些问题默认关闭 raw doc 注入：
+
+- identity
+- preference
+- rule
+- negative / unknown
+
+这些场景最容易通过 stable cards 直接回答，也最不需要长背景。
+
+### Step 3: slot budgets for current/history/conflict
+
+再逐步把预算化扩到更复杂的问题：
+
+- current-state
+- history
+- conflict
+- cross-source
+
+这一步的重点不是“更少”，而是“更少但仍然够解释”。
+
+### Step 4: promote after gates stay green
+
+只有当下面几条都保持绿：
+
+- `12 / 12` formal gate
+- retrieval-heavy benchmark
+- context thickness baseline
+- 更深 watch / A/B 不明显回退
+
+才把新的 slim assembly 升成默认路径。
+
+## 回滚策略
+
+这条方案必须天然支持回滚。
+
+最低要求：
+
+- raw doc default-off 应该是可配置策略，而不是硬编码死
+- slot budget planner 应能按问题类型降级回旧 assembly
+- 任何 context 瘦身策略都要能快速切回“旧选择逻辑 + 原 token budget”
+
+否则一旦出现 harder case 漏答，维护者很难快速判断是 retrieval 回退还是 assembly 过瘦。
+
+## 验收标准
+
+这条专项不能只靠“感觉快了”来判定成功。
+
+建议至少同时满足：
+
+1. 正确性不退化
+   - isolated local answer-level formal gate 继续保持 `12 / 12`
+   - retrieval-heavy formal gate 不掉出当前全绿
+
+2. context 厚度明显下降
+   - pilot slice 的 average selected snippets 明显下降
+   - pilot slice 的 prompt token estimate 至少有可观察下降
+   - raw doc injection rate 显著下降
+
+3. 慢路径没有恶化
+   - answer-level 平均耗时不能因为“裁剪逻辑更复杂”反而系统性变慢
+   - raw transport watchlist 不得被错误解释成 assembly 回退
+
+4. harder case 不被偷偷伤害
+   - builtin-only regression 数不能增加
+   - shared-fail case 不能因为上下文更瘦而扩散
+
+如果只能换来“更短但更容易漏答”，这条方案就不算成功。
 
 ## 风险与取舍
 
