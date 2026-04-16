@@ -1,0 +1,1743 @@
+{
+  "generatedAt": "2026-04-16T10:50:41.725Z",
+  "model": "gpt-5.4",
+  "reasoningEffort": "low",
+  "summary": {
+    "checkpoints": 9,
+    "passed": 9,
+    "failed": 0,
+    "average_raw_reduction_ratio": 0.5722,
+    "average_shadow_package_reduction_ratio": 0.2275,
+    "relation_counts": {
+      "continue": 1,
+      "switch": 6,
+      "branch": 2
+    }
+  },
+  "caseReports": [
+    {
+      "id": "shadow-replay-project-switches",
+      "description": "One architecture topic continues, then switches to config, then switches again to testing.",
+      "checkpoints": [
+        {
+          "turnId": "t6",
+          "payload": {
+            "relation": "continue",
+            "confidence": 0.98,
+            "evict_turn_ids": [
+              "t1",
+              "t3"
+            ],
+            "pin_turn_ids": [
+              "t2"
+            ],
+            "archive_summary": "用户已设定长期偏好：默认中文、回复直接、结论优先。当前仍在同一架构话题下，已讨论 context slimming 的核心目标是“存储 rich、prompt sparse，只把当轮高相关信息送入模型”；最新问题继续追问 raw doc default-off 应优先落地的类别。",
+            "reasoning_summary": "当前话题从 t4 到 t6 连续推进，没有切换主题，应判定为 continue。t1 只是开场状态句，t3 只是对 t2 的确认，均可从下一轮原始工作集移出。t2 属于稳定用户偏好，需语义保留为 pin。"
+          },
+          "usage": {
+            "input_tokens": 11188,
+            "cached_input_tokens": 2432,
+            "output_tokens": 301
+          },
+          "elapsedMs": 22813,
+          "stderr": "2026-04-16T10:47:54.383016Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at \"/private/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-codex-home-c8MDRX/shell_snapshots/019d95e7-8ba4-76a2-a838-10f782280fcd.tmp-1776336472999694000\": Os { code: 2, kind: NotFound, message: \"No such file or directory\" }",
+          "passed": true,
+          "checks": [
+            {
+              "name": "relation",
+              "passed": true,
+              "expected": "continue",
+              "actual": "continue"
+            },
+            {
+              "name": "must_evict_turn_ids",
+              "passed": true,
+              "expected": [],
+              "actual": [
+                "t1",
+                "t3"
+              ]
+            },
+            {
+              "name": "must_not_evict_turn_ids",
+              "passed": true,
+              "expected": [],
+              "actual": [
+                "t1",
+                "t3"
+              ]
+            },
+            {
+              "name": "must_keep_turn_ids",
+              "passed": true,
+              "expected": [
+                "t4",
+                "t5"
+              ],
+              "actual": [
+                "t2",
+                "t4",
+                "t5",
+                "t6"
+              ]
+            },
+            {
+              "name": "must_pin_turn_ids",
+              "passed": true,
+              "expected": [],
+              "actual": [
+                "t2"
+              ]
+            },
+            {
+              "name": "must_not_pin_turn_ids",
+              "passed": true,
+              "expected": [],
+              "actual": [
+                "t2"
+              ]
+            },
+            {
+              "name": "latest_user_turn_guarded",
+              "passed": true,
+              "expected": "t6",
+              "actual": [
+                "t1",
+                "t3"
+              ]
+            },
+            {
+              "name": "min_reduction_ratio",
+              "passed": true,
+              "expected": 0,
+              "actual": 0.1538
+            }
+          ],
+          "snapshot": {
+            "applied": {
+              "relation": "continue",
+              "confidence": 0.98,
+              "archiveSummary": "用户已设定长期偏好：默认中文、回复直接、结论优先。当前仍在同一架构话题下，已讨论 context slimming 的核心目标是“存储 rich、prompt sparse，只把当轮高相关信息送入模型”；最新问题继续追问 raw doc default-off 应优先落地的类别。",
+              "reasoningSummary": "当前话题从 t4 到 t6 连续推进，没有切换主题，应判定为 continue。t1 只是开场状态句，t3 只是对 t2 的确认，均可从下一轮原始工作集移出。t2 属于稳定用户偏好，需语义保留为 pin。",
+              "latestUserTurnId": "t6",
+              "pinTurnIds": [
+                "t2"
+              ],
+              "pinnedOnlyTurnIds": [],
+              "requestedEvictTurnIds": [
+                "t1",
+                "t3"
+              ],
+              "blockedEvictTurnIds": [],
+              "appliedEvictTurnIds": [
+                "t1",
+                "t3"
+              ],
+              "keepTurnIds": [
+                "t2",
+                "t4",
+                "t5",
+                "t6"
+              ],
+              "baselineTokens": 39,
+              "keptTokens": 33,
+              "prunedTokens": 6,
+              "reductionRatio": 0.15384615384615385,
+              "keepTurns": [
+                {
+                  "id": "t2",
+                  "role": "user",
+                  "content": "以后默认给我中文，回复直接一点。",
+                  "tokenEstimate": 4
+                },
+                {
+                  "id": "t4",
+                  "role": "user",
+                  "content": "说一下 context slimming 的核心目标。",
+                  "tokenEstimate": 7
+                },
+                {
+                  "id": "t5",
+                  "role": "assistant",
+                  "content": "核心目标是存储 rich、prompt sparse，让真正进入模型的上下文只保留当轮高相关信息。",
+                  "tokenEstimate": 13
+                },
+                {
+                  "id": "t6",
+                  "role": "user",
+                  "content": "那 raw doc default-off 应该先落在哪几类问题上？",
+                  "tokenEstimate": 9
+                }
+              ],
+              "evictedTurns": [
+                {
+                  "id": "t1",
+                  "role": "assistant",
+                  "content": "今天继续哪条线？",
+                  "tokenEstimate": 2
+                },
+                {
+                  "id": "t3",
+                  "role": "assistant",
+                  "content": "记住了，后面默认中文，结论优先。",
+                  "tokenEstimate": 4
+                }
+              ]
+            },
+            "baselineRawTranscript": "t1 assistant: 今天继续哪条线？\nt2 user: 以后默认给我中文，回复直接一点。\nt3 assistant: 记住了，后面默认中文，结论优先。\nt4 user: 说一下 context slimming 的核心目标。\nt5 assistant: 核心目标是存储 rich、prompt sparse，让真正进入模型的上下文只保留当轮高相关信息。\nt6 user: 那 raw doc default-off 应该先落在哪几类问题上？",
+            "shadowRawTranscript": "t2 user: 以后默认给我中文，回复直接一点。\nt4 user: 说一下 context slimming 的核心目标。\nt5 assistant: 核心目标是存储 rich、prompt sparse，让真正进入模型的上下文只保留当轮高相关信息。\nt6 user: 那 raw doc default-off 应该先落在哪几类问题上？",
+            "semanticPinNotes": [
+              "user: 以后默认给我中文，回复直接一点。"
+            ],
+            "archiveSummary": "用户已设定长期偏好：默认中文、回复直接、结论优先。当前仍在同一架构话题下，已讨论 context slimming 的核心目标是“存储 rich、prompt sparse，只把当轮高相关信息送入模型”；最新问题继续追问 raw doc default-off 应优先落地的类别。",
+            "injectedArchiveSummary": "",
+            "baselinePromptEstimate": 56,
+            "shadowRawPromptEstimate": 43,
+            "shadowPackageEstimate": 57,
+            "shadowPackageText": "Active raw turns:\nt2 user: 以后默认给我中文，回复直接一点。\nt4 user: 说一下 context slimming 的核心目标。\nt5 assistant: 核心目标是存储 rich、prompt sparse，让真正进入模型的上下文只保留当轮高相关信息。\nt6 user: 那 raw doc default-off 应该先落在哪几类问题上？\n\nSemantic pins:\nuser: 以后默认给我中文，回复直接一点。"
+          },
+          "shadowPackageReductionRatio": -0.017857142857142856
+        },
+        {
+          "turnId": "t7",
+          "payload": {
+            "relation": "switch",
+            "confidence": 0.96,
+            "evict_turn_ids": [
+              "t1",
+              "t3",
+              "t4",
+              "t5",
+              "t6"
+            ],
+            "pin_turn_ids": [
+              "t2"
+            ],
+            "archive_summary": "用户已明确长期偏好：默认中文、回复直接、结论优先。先前话题讨论了 context slimming 的核心目标：追求“存储 rich、prompt sparse”，只让当轮高相关信息进入模型；随后追问 raw doc default-off 适合优先落地的题型，但该架构话题被中断，未继续展开。当前已切换到新主题：询问 unified-memory-core 的最小 contextEngine 配置写法。",
+            "reasoning_summary": "当前活跃主题已从架构原则切换到具体配置问题，属于明显 topic switch。旧的架构说明块对下一轮回答最小配置帮助不大，适合移出 raw prompt。用户语言与风格偏好是 durable 信息，应保留为语义 pin。最新用户 turn 由运行时保留，因此不列入 evict_turn_ids。"
+          },
+          "usage": {
+            "input_tokens": 11212,
+            "cached_input_tokens": 9600,
+            "output_tokens": 393
+          },
+          "elapsedMs": 22031,
+          "stderr": "2026-04-16T10:48:11.541957Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at \"/private/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-codex-home-c8MDRX/shell_snapshots/019d95e7-d117-7611-9b43-dabc542278e6.tmp-1776336490776569000\": Os { code: 2, kind: NotFound, message: \"No such file or directory\" }",
+          "passed": true,
+          "checks": [
+            {
+              "name": "relation",
+              "passed": true,
+              "expected": [
+                "switch",
+                "branch"
+              ],
+              "actual": "switch"
+            },
+            {
+              "name": "must_evict_turn_ids",
+              "passed": true,
+              "expected": [
+                "t4",
+                "t5"
+              ],
+              "actual": [
+                "t1",
+                "t3",
+                "t4",
+                "t5",
+                "t6"
+              ]
+            },
+            {
+              "name": "must_not_evict_turn_ids",
+              "passed": true,
+              "expected": [],
+              "actual": [
+                "t1",
+                "t3",
+                "t4",
+                "t5",
+                "t6"
+              ]
+            },
+            {
+              "name": "must_keep_turn_ids",
+              "passed": true,
+              "expected": [],
+              "actual": [
+                "t2",
+                "t7"
+              ]
+            },
+            {
+              "name": "must_pin_turn_ids",
+              "passed": true,
+              "expected": [
+                "t2"
+              ],
+              "actual": [
+                "t2"
+              ]
+            },
+            {
+              "name": "must_not_pin_turn_ids",
+              "passed": true,
+              "expected": [],
+              "actual": [
+                "t2"
+              ]
+            },
+            {
+              "name": "latest_user_turn_guarded",
+              "passed": true,
+              "expected": "t7",
+              "actual": [
+                "t1",
+                "t3",
+                "t4",
+                "t5",
+                "t6"
+              ]
+            },
+            {
+              "name": "min_reduction_ratio",
+              "passed": true,
+              "expected": 0.2,
+              "actual": 0.6731
+            }
+          ],
+          "snapshot": {
+            "applied": {
+              "relation": "switch",
+              "confidence": 0.96,
+              "archiveSummary": "用户已明确长期偏好：默认中文、回复直接、结论优先。先前话题讨论了 context slimming 的核心目标：追求“存储 rich、prompt sparse”，只让当轮高相关信息进入模型；随后追问 raw doc default-off 适合优先落地的题型，但该架构话题被中断，未继续展开。当前已切换到新主题：询问 unified-memory-core 的最小 contextEngine 配置写法。",
+              "reasoningSummary": "当前活跃主题已从架构原则切换到具体配置问题，属于明显 topic switch。旧的架构说明块对下一轮回答最小配置帮助不大，适合移出 raw prompt。用户语言与风格偏好是 durable 信息，应保留为语义 pin。最新用户 turn 由运行时保留，因此不列入 evict_turn_ids。",
+              "latestUserTurnId": "t7",
+              "pinTurnIds": [
+                "t2"
+              ],
+              "pinnedOnlyTurnIds": [],
+              "requestedEvictTurnIds": [
+                "t1",
+                "t3",
+                "t4",
+                "t5",
+                "t6"
+              ],
+              "blockedEvictTurnIds": [],
+              "appliedEvictTurnIds": [
+                "t1",
+                "t3",
+                "t4",
+                "t5",
+                "t6"
+              ],
+              "keepTurnIds": [
+                "t2",
+                "t7"
+              ],
+              "baselineTokens": 52,
+              "keptTokens": 17,
+              "prunedTokens": 35,
+              "reductionRatio": 0.6730769230769231,
+              "keepTurns": [
+                {
+                  "id": "t2",
+                  "role": "user",
+                  "content": "以后默认给我中文，回复直接一点。",
+                  "tokenEstimate": 4
+                },
+                {
+                  "id": "t7",
+                  "role": "user",
+                  "content": "现在切到配置：unified-memory-core 的最小 contextEngine 配置怎么写？",
+                  "tokenEstimate": 13
+                }
+              ],
+              "evictedTurns": [
+                {
+                  "id": "t1",
+                  "role": "assistant",
+                  "content": "今天继续哪条线？",
+                  "tokenEstimate": 2
+                },
+                {
+                  "id": "t3",
+                  "role": "assistant",
+                  "content": "记住了，后面默认中文，结论优先。",
+                  "tokenEstimate": 4
+                },
+                {
+                  "id": "t4",
+                  "role": "user",
+                  "content": "说一下 context slimming 的核心目标。",
+                  "tokenEstimate": 7
+                },
+                {
+                  "id": "t5",
+                  "role": "assistant",
+                  "content": "核心目标是存储 rich、prompt sparse，让真正进入模型的上下文只保留当轮高相关信息。",
+                  "tokenEstimate": 13
+                },
+                {
+                  "id": "t6",
+                  "role": "user",
+                  "content": "那 raw doc default-off 应该先落在哪几类问题上？",
+                  "tokenEstimate": 9
+                }
+              ]
+            },
+            "baselineRawTranscript": "t1 assistant: 今天继续哪条线？\nt2 user: 以后默认给我中文，回复直接一点。\nt3 assistant: 记住了，后面默认中文，结论优先。\nt4 user: 说一下 context slimming 的核心目标。\nt5 assistant: 核心目标是存储 rich、prompt sparse，让真正进入模型的上下文只保留当轮高相关信息。\nt6 user: 那 raw doc default-off 应该先落在哪几类问题上？\nt7 user: 现在切到配置：unified-memory-core 的最小 contextEngine 配置怎么写？",
+            "shadowRawTranscript": "t2 user: 以后默认给我中文，回复直接一点。\nt7 user: 现在切到配置：unified-memory-core 的最小 contextEngine 配置怎么写？",
+            "semanticPinNotes": [
+              "user: 以后默认给我中文，回复直接一点。"
+            ],
+            "archiveSummary": "用户已明确长期偏好：默认中文、回复直接、结论优先。先前话题讨论了 context slimming 的核心目标：追求“存储 rich、prompt sparse”，只让当轮高相关信息进入模型；随后追问 raw doc default-off 适合优先落地的题型，但该架构话题被中断，未继续展开。当前已切换到新主题：询问 unified-memory-core 的最小 contextEngine 配置写法。",
+            "injectedArchiveSummary": "",
+            "baselinePromptEstimate": 72,
+            "shadowRawPromptEstimate": 22,
+            "shadowPackageEstimate": 36,
+            "shadowPackageText": "Active raw turns:\nt2 user: 以后默认给我中文，回复直接一点。\nt7 user: 现在切到配置：unified-memory-core 的最小 contextEngine 配置怎么写？\n\nSemantic pins:\nuser: 以后默认给我中文，回复直接一点。"
+          },
+          "shadowPackageReductionRatio": 0.5
+        },
+        {
+          "turnId": "t9",
+          "payload": {
+            "relation": "switch",
+            "confidence": 0.94,
+            "evict_turn_ids": [
+              "t1",
+              "t3",
+              "t4",
+              "t5",
+              "t6",
+              "t7",
+              "t8"
+            ],
+            "pin_turn_ids": [
+              "t2"
+            ],
+            "archive_summary": "用户偏好：默认用中文，回答直接、结论优先。已讨论过两段已切换主题：1) context slimming 的核心目标是 rich storage、sparse prompt，只让当轮高相关信息进入模型；并提到 raw doc default-off 应优先落在若干问题类别上，但未展开答案。2) 之后切到配置，讨论 unified-memory-core 的最小 contextEngine 配置，结论是先只挂 contextEngine，不动写侧。当前最新主题已再次切换为 shadow mode 报告指标。",
+            "reasoning_summary": "当前话题从架构解释切到配置，又从配置切到 shadow mode 指标，属于明显项目内主题切换，适合用 switch。旧的架构与配置原始回合对回答当前指标问题不是必需，可从 next-turn 原始工作集中移出。用户的语言与风格偏好是 durable fact，应保留为语义 pin。"
+          },
+          "usage": {
+            "input_tokens": 11253,
+            "cached_input_tokens": 2432,
+            "output_tokens": 417
+          },
+          "elapsedMs": 17411,
+          "stderr": "2026-04-16T10:48:33.349543Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at \"/private/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-codex-home-c8MDRX/shell_snapshots/019d95e8-270d-7df0-a4ef-8b9830306fae.tmp-1776336512781885000\": Os { code: 2, kind: NotFound, message: \"No such file or directory\" }",
+          "passed": true,
+          "checks": [
+            {
+              "name": "relation",
+              "passed": true,
+              "expected": [
+                "switch",
+                "branch"
+              ],
+              "actual": "switch"
+            },
+            {
+              "name": "must_evict_turn_ids",
+              "passed": true,
+              "expected": [
+                "t4",
+                "t5",
+                "t6"
+              ],
+              "actual": [
+                "t1",
+                "t3",
+                "t4",
+                "t5",
+                "t6",
+                "t7",
+                "t8"
+              ]
+            },
+            {
+              "name": "must_not_evict_turn_ids",
+              "passed": true,
+              "expected": [],
+              "actual": [
+                "t1",
+                "t3",
+                "t4",
+                "t5",
+                "t6",
+                "t7",
+                "t8"
+              ]
+            },
+            {
+              "name": "must_keep_turn_ids",
+              "passed": true,
+              "expected": [],
+              "actual": [
+                "t2",
+                "t9"
+              ]
+            },
+            {
+              "name": "must_pin_turn_ids",
+              "passed": true,
+              "expected": [
+                "t2"
+              ],
+              "actual": [
+                "t2"
+              ]
+            },
+            {
+              "name": "must_not_pin_turn_ids",
+              "passed": true,
+              "expected": [],
+              "actual": [
+                "t2"
+              ]
+            },
+            {
+              "name": "latest_user_turn_guarded",
+              "passed": true,
+              "expected": "t9",
+              "actual": [
+                "t1",
+                "t3",
+                "t4",
+                "t5",
+                "t6",
+                "t7",
+                "t8"
+              ]
+            },
+            {
+              "name": "min_reduction_ratio",
+              "passed": true,
+              "expected": 0.25,
+              "actual": 0.8116
+            }
+          ],
+          "snapshot": {
+            "applied": {
+              "relation": "switch",
+              "confidence": 0.94,
+              "archiveSummary": "用户偏好：默认用中文，回答直接、结论优先。已讨论过两段已切换主题：1) context slimming 的核心目标是 rich storage、sparse prompt，只让当轮高相关信息进入模型；并提到 raw doc default-off 应优先落在若干问题类别上，但未展开答案。2) 之后切到配置，讨论 unified-memory-core 的最小 contextEngine 配置，结论是先只挂 contextEngine，不动写侧。当前最新主题已再次切换为 shadow mode 报告指标。",
+              "reasoningSummary": "当前话题从架构解释切到配置，又从配置切到 shadow mode 指标，属于明显项目内主题切换，适合用 switch。旧的架构与配置原始回合对回答当前指标问题不是必需，可从 next-turn 原始工作集中移出。用户的语言与风格偏好是 durable fact，应保留为语义 pin。",
+              "latestUserTurnId": "t9",
+              "pinTurnIds": [
+                "t2"
+              ],
+              "pinnedOnlyTurnIds": [],
+              "requestedEvictTurnIds": [
+                "t1",
+                "t3",
+                "t4",
+                "t5",
+                "t6",
+                "t7",
+                "t8"
+              ],
+              "blockedEvictTurnIds": [],
+              "appliedEvictTurnIds": [
+                "t1",
+                "t3",
+                "t4",
+                "t5",
+                "t6",
+                "t7",
+                "t8"
+              ],
+              "keepTurnIds": [
+                "t2",
+                "t9"
+              ],
+              "baselineTokens": 69,
+              "keptTokens": 13,
+              "prunedTokens": 56,
+              "reductionRatio": 0.8115942028985508,
+              "keepTurns": [
+                {
+                  "id": "t2",
+                  "role": "user",
+                  "content": "以后默认给我中文，回复直接一点。",
+                  "tokenEstimate": 4
+                },
+                {
+                  "id": "t9",
+                  "role": "user",
+                  "content": "再切一步：如果只做 shadow mode，报告里至少要看哪些指标？",
+                  "tokenEstimate": 9
+                }
+              ],
+              "evictedTurns": [
+                {
+                  "id": "t1",
+                  "role": "assistant",
+                  "content": "今天继续哪条线？",
+                  "tokenEstimate": 2
+                },
+                {
+                  "id": "t3",
+                  "role": "assistant",
+                  "content": "记住了，后面默认中文，结论优先。",
+                  "tokenEstimate": 4
+                },
+                {
+                  "id": "t4",
+                  "role": "user",
+                  "content": "说一下 context slimming 的核心目标。",
+                  "tokenEstimate": 7
+                },
+                {
+                  "id": "t5",
+                  "role": "assistant",
+                  "content": "核心目标是存储 rich、prompt sparse，让真正进入模型的上下文只保留当轮高相关信息。",
+                  "tokenEstimate": 13
+                },
+                {
+                  "id": "t6",
+                  "role": "user",
+                  "content": "那 raw doc default-off 应该先落在哪几类问题上？",
+                  "tokenEstimate": 9
+                },
+                {
+                  "id": "t7",
+                  "role": "user",
+                  "content": "现在切到配置：unified-memory-core 的最小 contextEngine 配置怎么写？",
+                  "tokenEstimate": 13
+                },
+                {
+                  "id": "t8",
+                  "role": "assistant",
+                  "content": "最小配置应该先只挂 contextEngine，不动写侧。",
+                  "tokenEstimate": 8
+                }
+              ]
+            },
+            "baselineRawTranscript": "t1 assistant: 今天继续哪条线？\nt2 user: 以后默认给我中文，回复直接一点。\nt3 assistant: 记住了，后面默认中文，结论优先。\nt4 user: 说一下 context slimming 的核心目标。\nt5 assistant: 核心目标是存储 rich、prompt sparse，让真正进入模型的上下文只保留当轮高相关信息。\nt6 user: 那 raw doc default-off 应该先落在哪几类问题上？\nt7 user: 现在切到配置：unified-memory-core 的最小 contextEngine 配置怎么写？\nt8 assistant: 最小配置应该先只挂 contextEngine，不动写侧。\nt9 user: 再切一步：如果只做 shadow mode，报告里至少要看哪些指标？",
+            "shadowRawTranscript": "t2 user: 以后默认给我中文，回复直接一点。\nt9 user: 再切一步：如果只做 shadow mode，报告里至少要看哪些指标？",
+            "semanticPinNotes": [
+              "user: 以后默认给我中文，回复直接一点。"
+            ],
+            "archiveSummary": "用户偏好：默认用中文，回答直接、结论优先。已讨论过两段已切换主题：1) context slimming 的核心目标是 rich storage、sparse prompt，只让当轮高相关信息进入模型；并提到 raw doc default-off 应优先落在若干问题类别上，但未展开答案。2) 之后切到配置，讨论 unified-memory-core 的最小 contextEngine 配置，结论是先只挂 contextEngine，不动写侧。当前最新主题已再次切换为 shadow mode 报告指标。",
+            "injectedArchiveSummary": "",
+            "baselinePromptEstimate": 94,
+            "shadowRawPromptEstimate": 18,
+            "shadowPackageEstimate": 32,
+            "shadowPackageText": "Active raw turns:\nt2 user: 以后默认给我中文，回复直接一点。\nt9 user: 再切一步：如果只做 shadow mode，报告里至少要看哪些指标？\n\nSemantic pins:\nuser: 以后默认给我中文，回复直接一点。"
+          },
+          "shadowPackageReductionRatio": 0.6595744680851063
+        }
+      ]
+    },
+    {
+      "id": "shadow-replay-open-loop-branch-return",
+      "description": "An unfinished planning task is interrupted by a side question and then resumed.",
+      "checkpoints": [
+        {
+          "turnId": "t3",
+          "payload": {
+            "relation": "branch",
+            "confidence": 0.98,
+            "evict_turn_ids": [],
+            "pin_turn_ids": [
+              "t1",
+              "t2"
+            ],
+            "archive_summary": "The user had an unfinished planning task about splitting Stage 6 acceptance into three parts: functional correctness, rollback safety, and host integration validation. That planning context remains open while the user asks a side question about `umc registry migrate`.",
+            "reasoning_summary": "The latest user turn is a side question that interrupts an still-open planning task from t1-t2. This is a branch, not a switch or resolve. Keep the earlier planning context semantically pinned so it can be resumed after answering the side question; do not evict anything yet."
+          },
+          "usage": {
+            "input_tokens": 11150,
+            "cached_input_tokens": 2432,
+            "output_tokens": 162
+          },
+          "elapsedMs": 17099,
+          "stderr": "2026-04-16T10:48:50.865359Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at \"/private/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-codex-home-c8MDRX/shell_snapshots/019d95e8-6b30-7d42-a3fd-f3f770bfaab1.tmp-1776336530224364000\": Os { code: 2, kind: NotFound, message: \"No such file or directory\" }",
+          "passed": true,
+          "checks": [
+            {
+              "name": "relation",
+              "passed": true,
+              "expected": "branch",
+              "actual": "branch"
+            },
+            {
+              "name": "must_evict_turn_ids",
+              "passed": true,
+              "expected": [],
+              "actual": []
+            },
+            {
+              "name": "must_not_evict_turn_ids",
+              "passed": true,
+              "expected": [],
+              "actual": []
+            },
+            {
+              "name": "must_keep_turn_ids",
+              "passed": true,
+              "expected": [
+                "t1",
+                "t2"
+              ],
+              "actual": [
+                "t1",
+                "t2",
+                "t3"
+              ]
+            },
+            {
+              "name": "must_pin_turn_ids",
+              "passed": true,
+              "expected": [],
+              "actual": [
+                "t1",
+                "t2"
+              ]
+            },
+            {
+              "name": "must_not_pin_turn_ids",
+              "passed": true,
+              "expected": [],
+              "actual": [
+                "t1",
+                "t2"
+              ]
+            },
+            {
+              "name": "latest_user_turn_guarded",
+              "passed": true,
+              "expected": "t3",
+              "actual": []
+            },
+            {
+              "name": "min_reduction_ratio",
+              "passed": true,
+              "expected": 0,
+              "actual": 0
+            }
+          ],
+          "snapshot": {
+            "applied": {
+              "relation": "branch",
+              "confidence": 0.98,
+              "archiveSummary": "The user had an unfinished planning task about splitting Stage 6 acceptance into three parts: functional correctness, rollback safety, and host integration validation. That planning context remains open while the user asks a side question about `umc registry migrate`.",
+              "reasoningSummary": "The latest user turn is a side question that interrupts an still-open planning task from t1-t2. This is a branch, not a switch or resolve. Keep the earlier planning context semantically pinned so it can be resumed after answering the side question; do not evict anything yet.",
+              "latestUserTurnId": "t3",
+              "pinTurnIds": [
+                "t1",
+                "t2"
+              ],
+              "pinnedOnlyTurnIds": [],
+              "requestedEvictTurnIds": [],
+              "blockedEvictTurnIds": [],
+              "appliedEvictTurnIds": [],
+              "keepTurnIds": [
+                "t1",
+                "t2",
+                "t3"
+              ],
+              "baselineTokens": 24,
+              "keptTokens": 24,
+              "prunedTokens": 0,
+              "reductionRatio": 0,
+              "keepTurns": [
+                {
+                  "id": "t1",
+                  "role": "user",
+                  "content": "把 Stage 6 的验收拆成 3 个部分。",
+                  "tokenEstimate": 6
+                },
+                {
+                  "id": "t2",
+                  "role": "assistant",
+                  "content": "可以，先拆成：功能正确性、回退安全、宿主集成验证。",
+                  "tokenEstimate": 7
+                },
+                {
+                  "id": "t3",
+                  "role": "user",
+                  "content": "先别展开，我插一句：umc registry migrate 这条命令是做什么的？",
+                  "tokenEstimate": 11
+                }
+              ],
+              "evictedTurns": []
+            },
+            "baselineRawTranscript": "t1 user: 把 Stage 6 的验收拆成 3 个部分。\nt2 assistant: 可以，先拆成：功能正确性、回退安全、宿主集成验证。\nt3 user: 先别展开，我插一句：umc registry migrate 这条命令是做什么的？",
+            "shadowRawTranscript": "t1 user: 把 Stage 6 的验收拆成 3 个部分。\nt2 assistant: 可以，先拆成：功能正确性、回退安全、宿主集成验证。\nt3 user: 先别展开，我插一句：umc registry migrate 这条命令是做什么的？",
+            "semanticPinNotes": [
+              "user: 把 Stage 6 的验收拆成 3 个部分。",
+              "assistant: 可以，先拆成：功能正确性、回退安全、宿主集成验证。"
+            ],
+            "archiveSummary": "The user had an unfinished planning task about splitting Stage 6 acceptance into three parts: functional correctness, rollback safety, and host integration validation. That planning context remains open while the user asks a side question about `umc registry migrate`.",
+            "injectedArchiveSummary": "",
+            "baselinePromptEstimate": 31,
+            "shadowRawPromptEstimate": 31,
+            "shadowPackageEstimate": 56,
+            "shadowPackageText": "Active raw turns:\nt1 user: 把 Stage 6 的验收拆成 3 个部分。\nt2 assistant: 可以，先拆成：功能正确性、回退安全、宿主集成验证。\nt3 user: 先别展开，我插一句：umc registry migrate 这条命令是做什么的？\n\nSemantic pins:\nuser: 把 Stage 6 的验收拆成 3 个部分。\nassistant: 可以，先拆成：功能正确性、回退安全、宿主集成验证。"
+          },
+          "shadowPackageReductionRatio": -0.8064516129032258
+        },
+        {
+          "turnId": "t5",
+          "payload": {
+            "relation": "branch",
+            "confidence": 0.98,
+            "evict_turn_ids": [
+              "t3",
+              "t4"
+            ],
+            "pin_turn_ids": [],
+            "archive_summary": "The conversation briefly detoured into a side question about `umc registry migrate`, answered as a migration for UMC's own registry root rather than a builtin memory switcher, then returned to the unfinished Stage 6 acceptance planning task.",
+            "reasoning_summary": "The active topic at t5 returns to the earlier unfinished Stage 6 planning thread, so this is a branch-return rather than a topic switch. The side Q&A in t3-t4 is resolved and not needed for the next turn, making it a good raw-prompt eviction candidate. The Stage 6 decomposition context in t1-t2 remains relevant and should stay in the working set; no semantic pin is needed for the side detour."
+          },
+          "usage": {
+            "input_tokens": 11194,
+            "cached_input_tokens": 2432,
+            "output_tokens": 193
+          },
+          "elapsedMs": 13718,
+          "stderr": "2026-04-16T10:49:07.858939Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at \"/private/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-codex-home-c8MDRX/shell_snapshots/019d95e8-ae0f-7b60-9ddb-571bdcc88062.tmp-1776336547343842000\": Os { code: 2, kind: NotFound, message: \"No such file or directory\" }",
+          "passed": true,
+          "checks": [
+            {
+              "name": "relation",
+              "passed": true,
+              "expected": [
+                "continue",
+                "branch"
+              ],
+              "actual": "branch"
+            },
+            {
+              "name": "must_evict_turn_ids",
+              "passed": true,
+              "expected": [
+                "t3",
+                "t4"
+              ],
+              "actual": [
+                "t3",
+                "t4"
+              ]
+            },
+            {
+              "name": "must_not_evict_turn_ids",
+              "passed": true,
+              "expected": [],
+              "actual": [
+                "t3",
+                "t4"
+              ]
+            },
+            {
+              "name": "must_keep_turn_ids",
+              "passed": true,
+              "expected": [
+                "t1",
+                "t2"
+              ],
+              "actual": [
+                "t1",
+                "t2",
+                "t5"
+              ]
+            },
+            {
+              "name": "must_pin_turn_ids",
+              "passed": true,
+              "expected": [],
+              "actual": []
+            },
+            {
+              "name": "must_not_pin_turn_ids",
+              "passed": true,
+              "expected": [],
+              "actual": []
+            },
+            {
+              "name": "latest_user_turn_guarded",
+              "passed": true,
+              "expected": "t5",
+              "actual": [
+                "t3",
+                "t4"
+              ]
+            },
+            {
+              "name": "min_reduction_ratio",
+              "passed": true,
+              "expected": 0.15,
+              "actual": 0.5581
+            }
+          ],
+          "snapshot": {
+            "applied": {
+              "relation": "branch",
+              "confidence": 0.98,
+              "archiveSummary": "The conversation briefly detoured into a side question about `umc registry migrate`, answered as a migration for UMC's own registry root rather than a builtin memory switcher, then returned to the unfinished Stage 6 acceptance planning task.",
+              "reasoningSummary": "The active topic at t5 returns to the earlier unfinished Stage 6 planning thread, so this is a branch-return rather than a topic switch. The side Q&A in t3-t4 is resolved and not needed for the next turn, making it a good raw-prompt eviction candidate. The Stage 6 decomposition context in t1-t2 remains relevant and should stay in the working set; no semantic pin is needed for the side detour.",
+              "latestUserTurnId": "t5",
+              "pinTurnIds": [],
+              "pinnedOnlyTurnIds": [],
+              "requestedEvictTurnIds": [
+                "t3",
+                "t4"
+              ],
+              "blockedEvictTurnIds": [],
+              "appliedEvictTurnIds": [
+                "t3",
+                "t4"
+              ],
+              "keepTurnIds": [
+                "t1",
+                "t2",
+                "t5"
+              ],
+              "baselineTokens": 43,
+              "keptTokens": 19,
+              "prunedTokens": 24,
+              "reductionRatio": 0.5581395348837209,
+              "keepTurns": [
+                {
+                  "id": "t1",
+                  "role": "user",
+                  "content": "把 Stage 6 的验收拆成 3 个部分。",
+                  "tokenEstimate": 6
+                },
+                {
+                  "id": "t2",
+                  "role": "assistant",
+                  "content": "可以，先拆成：功能正确性、回退安全、宿主集成验证。",
+                  "tokenEstimate": 7
+                },
+                {
+                  "id": "t5",
+                  "role": "user",
+                  "content": "好，回到刚才 Stage 6，那三个部分是什么？",
+                  "tokenEstimate": 6
+                }
+              ],
+              "evictedTurns": [
+                {
+                  "id": "t3",
+                  "role": "user",
+                  "content": "先别展开，我插一句：umc registry migrate 这条命令是做什么的？",
+                  "tokenEstimate": 11
+                },
+                {
+                  "id": "t4",
+                  "role": "assistant",
+                  "content": "它更像 UMC 自己 registry root 的迁移，不是 builtin memory 的切换器。",
+                  "tokenEstimate": 13
+                }
+              ]
+            },
+            "baselineRawTranscript": "t1 user: 把 Stage 6 的验收拆成 3 个部分。\nt2 assistant: 可以，先拆成：功能正确性、回退安全、宿主集成验证。\nt3 user: 先别展开，我插一句：umc registry migrate 这条命令是做什么的？\nt4 assistant: 它更像 UMC 自己 registry root 的迁移，不是 builtin memory 的切换器。\nt5 user: 好，回到刚才 Stage 6，那三个部分是什么？",
+            "shadowRawTranscript": "t1 user: 把 Stage 6 的验收拆成 3 个部分。\nt2 assistant: 可以，先拆成：功能正确性、回退安全、宿主集成验证。\nt5 user: 好，回到刚才 Stage 6，那三个部分是什么？",
+            "semanticPinNotes": [],
+            "archiveSummary": "The conversation briefly detoured into a side question about `umc registry migrate`, answered as a migration for UMC's own registry root rather than a builtin memory switcher, then returned to the unfinished Stage 6 acceptance planning task.",
+            "injectedArchiveSummary": "",
+            "baselinePromptEstimate": 56,
+            "shadowRawPromptEstimate": 27,
+            "shadowPackageEstimate": 31,
+            "shadowPackageText": "Active raw turns:\nt1 user: 把 Stage 6 的验收拆成 3 个部分。\nt2 assistant: 可以，先拆成：功能正确性、回退安全、宿主集成验证。\nt5 user: 好，回到刚才 Stage 6，那三个部分是什么？"
+          },
+          "shadowPackageReductionRatio": 0.44642857142857145
+        }
+      ]
+    },
+    {
+      "id": "shadow-replay-family-code-family",
+      "description": "Durable family facts are captured, the chat switches to code, then the user returns to the old family fact.",
+      "checkpoints": [
+        {
+          "turnId": "t5",
+          "payload": {
+            "relation": "switch",
+            "confidence": 0.97,
+            "evict_turn_ids": [
+              "t1",
+              "t2",
+              "t3",
+              "t4"
+            ],
+            "pin_turn_ids": [
+              "t1",
+              "t3",
+              "t5"
+            ],
+            "archive_summary": "Durable user facts captured: user likes steak and prefers aisle seats when flying. Topic then switched from family/personal facts to code work.",
+            "reasoning_summary": "The active topic changed at t5 from family facts to code instructions, so this is a topic switch. The earlier family-fact exchange is resolved as raw dialogue and can leave the next-turn working set, but its durable semantic content should be preserved as pins. The current code instruction at t5 is still active and should also be pinned for future coding turns."
+          },
+          "usage": {
+            "input_tokens": 11172,
+            "cached_input_tokens": 2432,
+            "output_tokens": 269
+          },
+          "elapsedMs": 27521,
+          "stderr": "2026-04-16T10:49:22.343178Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at \"/private/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-codex-home-c8MDRX/shell_snapshots/019d95e8-e47b-7632-9f82-becacd45fd8f.tmp-1776336561278726000\": Os { code: 2, kind: NotFound, message: \"No such file or directory\" }",
+          "passed": true,
+          "checks": [
+            {
+              "name": "relation",
+              "passed": true,
+              "expected": "switch",
+              "actual": "switch"
+            },
+            {
+              "name": "must_evict_turn_ids",
+              "passed": true,
+              "expected": [
+                "t1",
+                "t2",
+                "t3",
+                "t4"
+              ],
+              "actual": [
+                "t1",
+                "t2",
+                "t3",
+                "t4"
+              ]
+            },
+            {
+              "name": "must_not_evict_turn_ids",
+              "passed": true,
+              "expected": [],
+              "actual": [
+                "t1",
+                "t2",
+                "t3",
+                "t4"
+              ]
+            },
+            {
+              "name": "must_keep_turn_ids",
+              "passed": true,
+              "expected": [],
+              "actual": [
+                "t5"
+              ]
+            },
+            {
+              "name": "must_pin_turn_ids",
+              "passed": true,
+              "expected": [
+                "t1",
+                "t3"
+              ],
+              "actual": [
+                "t1",
+                "t3",
+                "t5"
+              ]
+            },
+            {
+              "name": "must_not_pin_turn_ids",
+              "passed": true,
+              "expected": [],
+              "actual": [
+                "t1",
+                "t3",
+                "t5"
+              ]
+            },
+            {
+              "name": "latest_user_turn_guarded",
+              "passed": true,
+              "expected": "t5",
+              "actual": [
+                "t1",
+                "t2",
+                "t3",
+                "t4"
+              ]
+            },
+            {
+              "name": "min_reduction_ratio",
+              "passed": true,
+              "expected": 0.35,
+              "actual": 0.6087
+            }
+          ],
+          "snapshot": {
+            "applied": {
+              "relation": "switch",
+              "confidence": 0.97,
+              "archiveSummary": "Durable user facts captured: user likes steak and prefers aisle seats when flying. Topic then switched from family/personal facts to code work.",
+              "reasoningSummary": "The active topic changed at t5 from family facts to code instructions, so this is a topic switch. The earlier family-fact exchange is resolved as raw dialogue and can leave the next-turn working set, but its durable semantic content should be preserved as pins. The current code instruction at t5 is still active and should also be pinned for future coding turns.",
+              "latestUserTurnId": "t5",
+              "pinTurnIds": [
+                "t1",
+                "t3",
+                "t5"
+              ],
+              "pinnedOnlyTurnIds": [
+                "t1",
+                "t3"
+              ],
+              "requestedEvictTurnIds": [
+                "t1",
+                "t2",
+                "t3",
+                "t4"
+              ],
+              "blockedEvictTurnIds": [],
+              "appliedEvictTurnIds": [
+                "t1",
+                "t2",
+                "t3",
+                "t4"
+              ],
+              "keepTurnIds": [
+                "t5"
+              ],
+              "baselineTokens": 23,
+              "keptTokens": 9,
+              "prunedTokens": 14,
+              "reductionRatio": 0.6086956521739131,
+              "keepTurns": [
+                {
+                  "id": "t5",
+                  "role": "user",
+                  "content": "家庭这块先这样。现在说代码：这轮先别改 builtin memory。",
+                  "tokenEstimate": 9
+                }
+              ],
+              "evictedTurns": [
+                {
+                  "id": "t1",
+                  "role": "user",
+                  "content": "记一下：我爱吃牛排。",
+                  "tokenEstimate": 3
+                },
+                {
+                  "id": "t2",
+                  "role": "assistant",
+                  "content": "记住了，你爱吃牛排。",
+                  "tokenEstimate": 3
+                },
+                {
+                  "id": "t3",
+                  "role": "user",
+                  "content": "再记一下：我坐飞机喜欢靠过道。",
+                  "tokenEstimate": 4
+                },
+                {
+                  "id": "t4",
+                  "role": "assistant",
+                  "content": "记住了，你坐飞机偏好靠过道。",
+                  "tokenEstimate": 4
+                }
+              ]
+            },
+            "baselineRawTranscript": "t1 user: 记一下：我爱吃牛排。\nt2 assistant: 记住了，你爱吃牛排。\nt3 user: 再记一下：我坐飞机喜欢靠过道。\nt4 assistant: 记住了，你坐飞机偏好靠过道。\nt5 user: 家庭这块先这样。现在说代码：这轮先别改 builtin memory。",
+            "shadowRawTranscript": "t5 user: 家庭这块先这样。现在说代码：这轮先别改 builtin memory。",
+            "semanticPinNotes": [
+              "user: 记一下：我爱吃牛排。",
+              "user: 再记一下：我坐飞机喜欢靠过道。",
+              "user: 家庭这块先这样。现在说代码：这轮先别改 builtin memory。"
+            ],
+            "archiveSummary": "Durable user facts captured: user likes steak and prefers aisle seats when flying. Topic then switched from family/personal facts to code work.",
+            "injectedArchiveSummary": "",
+            "baselinePromptEstimate": 36,
+            "shadowRawPromptEstimate": 11,
+            "shadowPackageEstimate": 40,
+            "shadowPackageText": "Active raw turns:\nt5 user: 家庭这块先这样。现在说代码：这轮先别改 builtin memory。\n\nSemantic pins:\nuser: 记一下：我爱吃牛排。\nuser: 再记一下：我坐飞机喜欢靠过道。\nuser: 家庭这块先这样。现在说代码：这轮先别改 builtin memory。"
+          },
+          "shadowPackageReductionRatio": -0.1111111111111111
+        },
+        {
+          "turnId": "t7",
+          "payload": {
+            "relation": "switch",
+            "confidence": 0.95,
+            "evict_turn_ids": [
+              "t1",
+              "t2",
+              "t3",
+              "t4",
+              "t5",
+              "t6"
+            ],
+            "pin_turn_ids": [
+              "t1",
+              "t3",
+              "t5"
+            ],
+            "archive_summary": "Captured durable user facts: user likes steak; on flights, user prefers an aisle seat. Captured still-relevant session rule from the code segment: for this round, do not modify builtin memory. The code discussion was paused, and the active topic switched back to recalling the flight-seat preference.",
+            "reasoning_summary": "The active topic switched from a paused code discussion back to an earlier family/personal fact, so raw turns from the older blocks can leave the next-turn prompt. The durable personal preferences and the still-relevant session-scoped code constraint should survive as compact pins. Assistant acknowledgements are redundant and good eviction candidates."
+          },
+          "usage": {
+            "input_tokens": 11212,
+            "cached_input_tokens": 2432,
+            "output_tokens": 334
+          },
+          "elapsedMs": 17528,
+          "stderr": "2026-04-16T10:49:49.161687Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at \"/private/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-codex-home-c8MDRX/shell_snapshots/019d95e9-4f21-7d00-bb59-f7bc908a2a38.tmp-1776336588577797000\": Os { code: 2, kind: NotFound, message: \"No such file or directory\" }",
+          "passed": true,
+          "checks": [
+            {
+              "name": "relation",
+              "passed": true,
+              "expected": "switch",
+              "actual": "switch"
+            },
+            {
+              "name": "must_evict_turn_ids",
+              "passed": true,
+              "expected": [
+                "t6"
+              ],
+              "actual": [
+                "t1",
+                "t2",
+                "t3",
+                "t4",
+                "t5",
+                "t6"
+              ]
+            },
+            {
+              "name": "must_not_evict_turn_ids",
+              "passed": true,
+              "expected": [],
+              "actual": [
+                "t1",
+                "t2",
+                "t3",
+                "t4",
+                "t5",
+                "t6"
+              ]
+            },
+            {
+              "name": "must_keep_turn_ids",
+              "passed": true,
+              "expected": [],
+              "actual": [
+                "t7"
+              ]
+            },
+            {
+              "name": "must_pin_turn_ids",
+              "passed": true,
+              "expected": [
+                "t3"
+              ],
+              "actual": [
+                "t1",
+                "t3",
+                "t5"
+              ]
+            },
+            {
+              "name": "must_not_pin_turn_ids",
+              "passed": true,
+              "expected": [],
+              "actual": [
+                "t1",
+                "t3",
+                "t5"
+              ]
+            },
+            {
+              "name": "latest_user_turn_guarded",
+              "passed": true,
+              "expected": "t7",
+              "actual": [
+                "t1",
+                "t2",
+                "t3",
+                "t4",
+                "t5",
+                "t6"
+              ]
+            },
+            {
+              "name": "min_reduction_ratio",
+              "passed": true,
+              "expected": 0.1,
+              "actual": 0.8333
+            }
+          ],
+          "snapshot": {
+            "applied": {
+              "relation": "switch",
+              "confidence": 0.95,
+              "archiveSummary": "Captured durable user facts: user likes steak; on flights, user prefers an aisle seat. Captured still-relevant session rule from the code segment: for this round, do not modify builtin memory. The code discussion was paused, and the active topic switched back to recalling the flight-seat preference.",
+              "reasoningSummary": "The active topic switched from a paused code discussion back to an earlier family/personal fact, so raw turns from the older blocks can leave the next-turn prompt. The durable personal preferences and the still-relevant session-scoped code constraint should survive as compact pins. Assistant acknowledgements are redundant and good eviction candidates.",
+              "latestUserTurnId": "t7",
+              "pinTurnIds": [
+                "t1",
+                "t3",
+                "t5"
+              ],
+              "pinnedOnlyTurnIds": [
+                "t1",
+                "t3",
+                "t5"
+              ],
+              "requestedEvictTurnIds": [
+                "t1",
+                "t2",
+                "t3",
+                "t4",
+                "t5",
+                "t6"
+              ],
+              "blockedEvictTurnIds": [],
+              "appliedEvictTurnIds": [
+                "t1",
+                "t2",
+                "t3",
+                "t4",
+                "t5",
+                "t6"
+              ],
+              "keepTurnIds": [
+                "t7"
+              ],
+              "baselineTokens": 36,
+              "keptTokens": 6,
+              "prunedTokens": 30,
+              "reductionRatio": 0.8333333333333334,
+              "keepTurns": [
+                {
+                  "id": "t7",
+                  "role": "user",
+                  "content": "代码先放一边。刚才说过，我坐飞机喜欢什么位置？",
+                  "tokenEstimate": 6
+                }
+              ],
+              "evictedTurns": [
+                {
+                  "id": "t1",
+                  "role": "user",
+                  "content": "记一下：我爱吃牛排。",
+                  "tokenEstimate": 3
+                },
+                {
+                  "id": "t2",
+                  "role": "assistant",
+                  "content": "记住了，你爱吃牛排。",
+                  "tokenEstimate": 3
+                },
+                {
+                  "id": "t3",
+                  "role": "user",
+                  "content": "再记一下：我坐飞机喜欢靠过道。",
+                  "tokenEstimate": 4
+                },
+                {
+                  "id": "t4",
+                  "role": "assistant",
+                  "content": "记住了，你坐飞机偏好靠过道。",
+                  "tokenEstimate": 4
+                },
+                {
+                  "id": "t5",
+                  "role": "user",
+                  "content": "家庭这块先这样。现在说代码：这轮先别改 builtin memory。",
+                  "tokenEstimate": 9
+                },
+                {
+                  "id": "t6",
+                  "role": "assistant",
+                  "content": "好，这轮先 shadow，再决定是否真正接管主路径。",
+                  "tokenEstimate": 7
+                }
+              ]
+            },
+            "baselineRawTranscript": "t1 user: 记一下：我爱吃牛排。\nt2 assistant: 记住了，你爱吃牛排。\nt3 user: 再记一下：我坐飞机喜欢靠过道。\nt4 assistant: 记住了，你坐飞机偏好靠过道。\nt5 user: 家庭这块先这样。现在说代码：这轮先别改 builtin memory。\nt6 assistant: 好，这轮先 shadow，再决定是否真正接管主路径。\nt7 user: 代码先放一边。刚才说过，我坐飞机喜欢什么位置？",
+            "shadowRawTranscript": "t7 user: 代码先放一边。刚才说过，我坐飞机喜欢什么位置？",
+            "semanticPinNotes": [
+              "user: 记一下：我爱吃牛排。",
+              "user: 再记一下：我坐飞机喜欢靠过道。",
+              "user: 家庭这块先这样。现在说代码：这轮先别改 builtin memory。"
+            ],
+            "archiveSummary": "Captured durable user facts: user likes steak; on flights, user prefers an aisle seat. Captured still-relevant session rule from the code segment: for this round, do not modify builtin memory. The code discussion was paused, and the active topic switched back to recalling the flight-seat preference.",
+            "injectedArchiveSummary": "",
+            "baselinePromptEstimate": 55,
+            "shadowRawPromptEstimate": 8,
+            "shadowPackageEstimate": 37,
+            "shadowPackageText": "Active raw turns:\nt7 user: 代码先放一边。刚才说过，我坐飞机喜欢什么位置？\n\nSemantic pins:\nuser: 记一下：我爱吃牛排。\nuser: 再记一下：我坐飞机喜欢靠过道。\nuser: 家庭这块先这样。现在说代码：这轮先别改 builtin memory。"
+          },
+          "shadowPackageReductionRatio": 0.32727272727272727
+        }
+      ]
+    },
+    {
+      "id": "shadow-replay-status-style-release",
+      "description": "Status noise and a style preference should yield to two successive task switches.",
+      "checkpoints": [
+        {
+          "turnId": "t4",
+          "payload": {
+            "relation": "switch",
+            "confidence": 0.95,
+            "evict_turn_ids": [
+              "t1",
+              "t2",
+              "t3"
+            ],
+            "pin_turn_ids": [
+              "t2"
+            ],
+            "archive_summary": "Evict the stale status snapshot and the resolved acknowledgement exchange. Preserve as a semantic pin that the user prefers answers to start with the conclusion first, then details. The active topic has switched to retrieval policy behavior for uncategorized queries.",
+            "reasoning_summary": "t1 is transient status noise and not relevant to the new task. t2 is a durable user preference, so its raw turn can leave the prompt if pinned. t3 is only an acknowledgement of that preference and is resolved. The current active topic begins at t4, so this is a task switch rather than a continuation."
+          },
+          "usage": {
+            "input_tokens": 11185,
+            "cached_input_tokens": 10624,
+            "output_tokens": 283
+          },
+          "elapsedMs": 17181,
+          "stderr": "2026-04-16T10:50:06.598682Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at \"/private/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-codex-home-c8MDRX/shell_snapshots/019d95e9-93e6-7142-b2de-adccc377e714.tmp-1776336606183324000\": Os { code: 2, kind: NotFound, message: \"No such file or directory\" }",
+          "passed": true,
+          "checks": [
+            {
+              "name": "relation",
+              "passed": true,
+              "expected": "switch",
+              "actual": "switch"
+            },
+            {
+              "name": "must_evict_turn_ids",
+              "passed": true,
+              "expected": [
+                "t1",
+                "t3"
+              ],
+              "actual": [
+                "t1",
+                "t2",
+                "t3"
+              ]
+            },
+            {
+              "name": "must_not_evict_turn_ids",
+              "passed": true,
+              "expected": [],
+              "actual": [
+                "t1",
+                "t2",
+                "t3"
+              ]
+            },
+            {
+              "name": "must_keep_turn_ids",
+              "passed": true,
+              "expected": [],
+              "actual": [
+                "t4"
+              ]
+            },
+            {
+              "name": "must_pin_turn_ids",
+              "passed": true,
+              "expected": [
+                "t2"
+              ],
+              "actual": [
+                "t2"
+              ]
+            },
+            {
+              "name": "must_not_pin_turn_ids",
+              "passed": true,
+              "expected": [],
+              "actual": [
+                "t2"
+              ]
+            },
+            {
+              "name": "latest_user_turn_guarded",
+              "passed": true,
+              "expected": "t4",
+              "actual": [
+                "t1",
+                "t2",
+                "t3"
+              ]
+            },
+            {
+              "name": "min_reduction_ratio",
+              "passed": true,
+              "expected": 0.25,
+              "actual": 0.7436
+            }
+          ],
+          "snapshot": {
+            "applied": {
+              "relation": "switch",
+              "confidence": 0.95,
+              "archiveSummary": "Evict the stale status snapshot and the resolved acknowledgement exchange. Preserve as a semantic pin that the user prefers answers to start with the conclusion first, then details. The active topic has switched to retrieval policy behavior for uncategorized queries.",
+              "reasoningSummary": "t1 is transient status noise and not relevant to the new task. t2 is a durable user preference, so its raw turn can leave the prompt if pinned. t3 is only an acknowledgement of that preference and is resolved. The current active topic begins at t4, so this is a task switch rather than a continuation.",
+              "latestUserTurnId": "t4",
+              "pinTurnIds": [
+                "t2"
+              ],
+              "pinnedOnlyTurnIds": [
+                "t2"
+              ],
+              "requestedEvictTurnIds": [
+                "t1",
+                "t2",
+                "t3"
+              ],
+              "blockedEvictTurnIds": [],
+              "appliedEvictTurnIds": [
+                "t1",
+                "t2",
+                "t3"
+              ],
+              "keepTurnIds": [
+                "t4"
+              ],
+              "baselineTokens": 39,
+              "keptTokens": 10,
+              "prunedTokens": 29,
+              "reductionRatio": 0.7435897435897436,
+              "keepTurns": [
+                {
+                  "id": "t4",
+                  "role": "user",
+                  "content": "现在说 retrieval policy：未分类 query 默认走哪条路径？",
+                  "tokenEstimate": 10
+                }
+              ],
+              "evictedTurns": [
+                {
+                  "id": "t1",
+                  "role": "assistant",
+                  "content": "当前状态：OpenClaw 版本 2026.3.31，当前模型 openai-codex/gpt-5.4，上下文占用 158k / 272k，缓存命中率 99%。",
+                  "tokenEstimate": 21
+                },
+                {
+                  "id": "t2",
+                  "role": "user",
+                  "content": "以后默认先给我结论，再展开细节。",
+                  "tokenEstimate": 4
+                },
+                {
+                  "id": "t3",
+                  "role": "assistant",
+                  "content": "记住了，以后默认先给结论。",
+                  "tokenEstimate": 4
+                }
+              ]
+            },
+            "baselineRawTranscript": "t1 assistant: 当前状态：OpenClaw 版本 2026.3.31，当前模型 openai-codex/gpt-5.4，上下文占用 158k / 272k，缓存命中率 99%。\nt2 user: 以后默认先给我结论，再展开细节。\nt3 assistant: 记住了，以后默认先给结论。\nt4 user: 现在说 retrieval policy：未分类 query 默认走哪条路径？",
+            "shadowRawTranscript": "t4 user: 现在说 retrieval policy：未分类 query 默认走哪条路径？",
+            "semanticPinNotes": [
+              "user: 以后默认先给我结论，再展开细节。"
+            ],
+            "archiveSummary": "Evict the stale status snapshot and the resolved acknowledgement exchange. Preserve as a semantic pin that the user prefers answers to start with the conclusion first, then details. The active topic has switched to retrieval policy behavior for uncategorized queries.",
+            "injectedArchiveSummary": "",
+            "baselinePromptEstimate": 50,
+            "shadowRawPromptEstimate": 12,
+            "shadowPackageEstimate": 26,
+            "shadowPackageText": "Active raw turns:\nt4 user: 现在说 retrieval policy：未分类 query 默认走哪条路径？\n\nSemantic pins:\nuser: 以后默认先给我结论，再展开细节。"
+          },
+          "shadowPackageReductionRatio": 0.48
+        },
+        {
+          "turnId": "t6",
+          "payload": {
+            "relation": "switch",
+            "confidence": 0.96,
+            "evict_turn_ids": [
+              "t1",
+              "t3",
+              "t4",
+              "t5"
+            ],
+            "pin_turn_ids": [
+              "t2"
+            ],
+            "archive_summary": "Resolved and now-irrelevant blocks: a transient status snapshot about model/context usage, then a solved retrieval-policy Q&A ('unclassified query defaults to fast path, then formal memory if needed'). Preserve the user's durable response-style preference as a semantic pin: default to giving the conclusion first, then details.",
+            "reasoning_summary": "The active topic has switched from status, to retrieval policy, to a new writing question about release notes. The status snapshot is pure noise, and the retrieval exchange appears answered and not needed for the next turn. The only durable instruction that should survive is the user's style preference, so keep it as a pin while allowing the older raw turns to leave the working set."
+          },
+          "usage": {
+            "input_tokens": 11223,
+            "cached_input_tokens": 10624,
+            "output_tokens": 309
+          },
+          "elapsedMs": 18491,
+          "stderr": "2026-04-16T10:50:23.745273Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at \"/private/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-codex-home-c8MDRX/shell_snapshots/019d95e9-d6cc-7cc3-a11a-e96cebd910c9.tmp-1776336623309039000\": Os { code: 2, kind: NotFound, message: \"No such file or directory\" }",
+          "passed": true,
+          "checks": [
+            {
+              "name": "relation",
+              "passed": true,
+              "expected": "switch",
+              "actual": "switch"
+            },
+            {
+              "name": "must_evict_turn_ids",
+              "passed": true,
+              "expected": [
+                "t1",
+                "t4",
+                "t5"
+              ],
+              "actual": [
+                "t1",
+                "t3",
+                "t4",
+                "t5"
+              ]
+            },
+            {
+              "name": "must_not_evict_turn_ids",
+              "passed": true,
+              "expected": [],
+              "actual": [
+                "t1",
+                "t3",
+                "t4",
+                "t5"
+              ]
+            },
+            {
+              "name": "must_keep_turn_ids",
+              "passed": true,
+              "expected": [],
+              "actual": [
+                "t2",
+                "t6"
+              ]
+            },
+            {
+              "name": "must_pin_turn_ids",
+              "passed": true,
+              "expected": [
+                "t2"
+              ],
+              "actual": [
+                "t2"
+              ]
+            },
+            {
+              "name": "must_not_pin_turn_ids",
+              "passed": true,
+              "expected": [],
+              "actual": [
+                "t2"
+              ]
+            },
+            {
+              "name": "latest_user_turn_guarded",
+              "passed": true,
+              "expected": "t6",
+              "actual": [
+                "t1",
+                "t3",
+                "t4",
+                "t5"
+              ]
+            },
+            {
+              "name": "min_reduction_ratio",
+              "passed": true,
+              "expected": 0.2,
+              "actual": 0.7679
+            }
+          ],
+          "snapshot": {
+            "applied": {
+              "relation": "switch",
+              "confidence": 0.96,
+              "archiveSummary": "Resolved and now-irrelevant blocks: a transient status snapshot about model/context usage, then a solved retrieval-policy Q&A ('unclassified query defaults to fast path, then formal memory if needed'). Preserve the user's durable response-style preference as a semantic pin: default to giving the conclusion first, then details.",
+              "reasoningSummary": "The active topic has switched from status, to retrieval policy, to a new writing question about release notes. The status snapshot is pure noise, and the retrieval exchange appears answered and not needed for the next turn. The only durable instruction that should survive is the user's style preference, so keep it as a pin while allowing the older raw turns to leave the working set.",
+              "latestUserTurnId": "t6",
+              "pinTurnIds": [
+                "t2"
+              ],
+              "pinnedOnlyTurnIds": [],
+              "requestedEvictTurnIds": [
+                "t1",
+                "t3",
+                "t4",
+                "t5"
+              ],
+              "blockedEvictTurnIds": [],
+              "appliedEvictTurnIds": [
+                "t1",
+                "t3",
+                "t4",
+                "t5"
+              ],
+              "keepTurnIds": [
+                "t2",
+                "t6"
+              ],
+              "baselineTokens": 56,
+              "keptTokens": 13,
+              "prunedTokens": 43,
+              "reductionRatio": 0.7678571428571429,
+              "keepTurns": [
+                {
+                  "id": "t2",
+                  "role": "user",
+                  "content": "以后默认先给我结论，再展开细节。",
+                  "tokenEstimate": 4
+                },
+                {
+                  "id": "t6",
+                  "role": "user",
+                  "content": "再切一步：如果要写 release note，第一段应该先说什么？",
+                  "tokenEstimate": 9
+                }
+              ],
+              "evictedTurns": [
+                {
+                  "id": "t1",
+                  "role": "assistant",
+                  "content": "当前状态：OpenClaw 版本 2026.3.31，当前模型 openai-codex/gpt-5.4，上下文占用 158k / 272k，缓存命中率 99%。",
+                  "tokenEstimate": 21
+                },
+                {
+                  "id": "t3",
+                  "role": "assistant",
+                  "content": "记住了，以后默认先给结论。",
+                  "tokenEstimate": 4
+                },
+                {
+                  "id": "t4",
+                  "role": "user",
+                  "content": "现在说 retrieval policy：未分类 query 默认走哪条路径？",
+                  "tokenEstimate": 10
+                },
+                {
+                  "id": "t5",
+                  "role": "assistant",
+                  "content": "先走 fast path，不够再补 formal memory。",
+                  "tokenEstimate": 8
+                }
+              ]
+            },
+            "baselineRawTranscript": "t1 assistant: 当前状态：OpenClaw 版本 2026.3.31，当前模型 openai-codex/gpt-5.4，上下文占用 158k / 272k，缓存命中率 99%。\nt2 user: 以后默认先给我结论，再展开细节。\nt3 assistant: 记住了，以后默认先给结论。\nt4 user: 现在说 retrieval policy：未分类 query 默认走哪条路径？\nt5 assistant: 先走 fast path，不够再补 formal memory。\nt6 user: 再切一步：如果要写 release note，第一段应该先说什么？",
+            "shadowRawTranscript": "t2 user: 以后默认先给我结论，再展开细节。\nt6 user: 再切一步：如果要写 release note，第一段应该先说什么？",
+            "semanticPinNotes": [
+              "user: 以后默认先给我结论，再展开细节。"
+            ],
+            "archiveSummary": "Resolved and now-irrelevant blocks: a transient status snapshot about model/context usage, then a solved retrieval-policy Q&A ('unclassified query defaults to fast path, then formal memory if needed'). Preserve the user's durable response-style preference as a semantic pin: default to giving the conclusion first, then details.",
+            "injectedArchiveSummary": "",
+            "baselinePromptEstimate": 72,
+            "shadowRawPromptEstimate": 17,
+            "shadowPackageEstimate": 31,
+            "shadowPackageText": "Active raw turns:\nt2 user: 以后默认先给我结论，再展开细节。\nt6 user: 再切一步：如果要写 release note，第一段应该先说什么？\n\nSemantic pins:\nuser: 以后默认先给我结论，再展开细节。"
+          },
+          "shadowPackageReductionRatio": 0.5694444444444444
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,964 @@
+{
+  "generatedAt": "2026-04-16T10:47:06.604Z",
+  "model": "gpt-5.4",
+  "reasoningEffort": "low",
+  "summary": {
+    "total": 5,
+    "baselinePassed": 5,
+    "shadowPassed": 5,
+    "bothPass": 5,
+    "shadowOnly": 0,
+    "baselineOnly": 0,
+    "bothFail": 0,
+    "averagePromptReductionRatio": 0.0636,
+    "averageBaselineElapsedMs": 11674.4,
+    "averageShadowElapsedMs": 12676
+  },
+  "results": [
+    {
+      "id": "answer-ab-return-family-seat",
+      "description": "A durable seat preference should still answer correctly after a code detour.",
+      "decision": {
+        "payload": {
+          "relation": "switch",
+          "confidence": 0.96,
+          "evict_turn_ids": [
+            "t2",
+            "t4",
+            "t5",
+            "t6"
+          ],
+          "pin_turn_ids": [
+            "t1",
+            "t3"
+          ],
+          "archive_summary": "User prefers replies in Chinese with conclusions first, and has a durable preference for aisle seats on flights. A brief code-planning detour established 'do not modify the existing memory system this round; shadow first, then decide whether to take over the main path,' but that detour is no longer the active topic.",
+          "reasoning_summary": "The active topic switched back from a temporary code detour to recalling a durable personal preference. The code block in t5-t6 is currently irrelevant to answering the latest user question and can leave the next-turn raw prompt. The user preference turns t1 and t3 should be preserved as semantic pins so the system can still answer in Chinese, conclusion-first, and remember the aisle-seat preference even if the raw turns are evicted later. Assistant acknowledgment turns are redundant and safe to evict."
+        },
+        "usage": {
+          "input_tokens": 11209,
+          "cached_input_tokens": 2432,
+          "output_tokens": 326
+        },
+        "stdout": "{\"type\":\"thread.started\",\"thread_id\":\"019d95e3-90a1-7af2-93af-83df3e45c82c\"}\n{\"type\":\"turn.started\"}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_0\",\"type\":\"agent_message\",\"text\":\"{\\\"relation\\\":\\\"switch\\\",\\\"confidence\\\":0.96,\\\"evict_turn_ids\\\":[\\\"t2\\\",\\\"t4\\\",\\\"t5\\\",\\\"t6\\\"],\\\"pin_turn_ids\\\":[\\\"t1\\\",\\\"t3\\\"],\\\"archive_summary\\\":\\\"User prefers replies in Chinese with conclusions first, and has a durable preference for aisle seats on flights. A brief code-planning detour established 'do not modify the existing memory system this round; shadow first, then decide whether to take over the main path,' but that detour is no longer the active topic.\\\",\\\"reasoning_summary\\\":\\\"The active topic switched back from a temporary code detour to recalling a durable personal preference. The code block in t5-t6 is currently irrelevant to answering the latest user question and can leave the next-turn raw prompt. The user preference turns t1 and t3 should be preserved as semantic pins so the system can still answer in Chinese, conclusion-first, and remember the aisle-seat preference even if the raw turns are evicted later. Assistant acknowledgment turns are redundant and safe to evict.\\\"}\"}}\n{\"type\":\"turn.completed\",\"usage\":{\"input_tokens\":11209,\"cached_input_tokens\":2432,\"output_tokens\":326}}\n",
+        "stderr": "2026-04-16T10:43:33.187726Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at \"/private/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-codex-home-3y2T1S/shell_snapshots/019d95e3-90a1-7af2-93af-83df3e45c82c.tmp-1776336212160696000\": Os { code: 2, kind: NotFound, message: \"No such file or directory\" }",
+        "elapsedMs": 22010
+      },
+      "snapshot": {
+        "applied": {
+          "relation": "switch",
+          "confidence": 0.96,
+          "archiveSummary": "User prefers replies in Chinese with conclusions first, and has a durable preference for aisle seats on flights. A brief code-planning detour established 'do not modify the existing memory system this round; shadow first, then decide whether to take over the main path,' but that detour is no longer the active topic.",
+          "reasoningSummary": "The active topic switched back from a temporary code detour to recalling a durable personal preference. The code block in t5-t6 is currently irrelevant to answering the latest user question and can leave the next-turn raw prompt. The user preference turns t1 and t3 should be preserved as semantic pins so the system can still answer in Chinese, conclusion-first, and remember the aisle-seat preference even if the raw turns are evicted later. Assistant acknowledgment turns are redundant and safe to evict.",
+          "latestUserTurnId": "t7",
+          "pinTurnIds": [
+            "t1",
+            "t3"
+          ],
+          "pinnedOnlyTurnIds": [],
+          "requestedEvictTurnIds": [
+            "t2",
+            "t4",
+            "t5",
+            "t6"
+          ],
+          "blockedEvictTurnIds": [],
+          "appliedEvictTurnIds": [
+            "t2",
+            "t4",
+            "t5",
+            "t6"
+          ],
+          "keepTurnIds": [
+            "t1",
+            "t3",
+            "t7"
+          ],
+          "baselineTokens": 32,
+          "keptTokens": 14,
+          "prunedTokens": 18,
+          "reductionRatio": 0.5625,
+          "keepTurns": [
+            {
+              "id": "t1",
+              "role": "user",
+              "content": "以后默认给我中文，结论优先。",
+              "tokenEstimate": 4
+            },
+            {
+              "id": "t3",
+              "role": "user",
+              "content": "再记一下：我坐飞机喜欢靠过道。",
+              "tokenEstimate": 4
+            },
+            {
+              "id": "t7",
+              "role": "user",
+              "content": "代码先放一边。刚才说过，我坐飞机喜欢什么位置？",
+              "tokenEstimate": 6
+            }
+          ],
+          "evictedTurns": [
+            {
+              "id": "t2",
+              "role": "assistant",
+              "content": "记住了。",
+              "tokenEstimate": 1
+            },
+            {
+              "id": "t4",
+              "role": "assistant",
+              "content": "记住了，你坐飞机偏好靠过道。",
+              "tokenEstimate": 4
+            },
+            {
+              "id": "t5",
+              "role": "user",
+              "content": "家庭偏好先到这。现在说代码：我们这轮先不改现有记忆系统。",
+              "tokenEstimate": 7
+            },
+            {
+              "id": "t6",
+              "role": "assistant",
+              "content": "好，先 shadow，再决定是否接管主路径。",
+              "tokenEstimate": 6
+            }
+          ]
+        },
+        "baselineRawTranscript": "t1 user: 以后默认给我中文，结论优先。\nt2 assistant: 记住了。\nt3 user: 再记一下：我坐飞机喜欢靠过道。\nt4 assistant: 记住了，你坐飞机偏好靠过道。\nt5 user: 家庭偏好先到这。现在说代码：我们这轮先不改现有记忆系统。\nt6 assistant: 好，先 shadow，再决定是否接管主路径。\nt7 user: 代码先放一边。刚才说过，我坐飞机喜欢什么位置？",
+        "shadowRawTranscript": "t1 user: 以后默认给我中文，结论优先。\nt3 user: 再记一下：我坐飞机喜欢靠过道。\nt7 user: 代码先放一边。刚才说过，我坐飞机喜欢什么位置？",
+        "semanticPinNotes": [
+          "user: 以后默认给我中文，结论优先。",
+          "user: 再记一下：我坐飞机喜欢靠过道。"
+        ],
+        "archiveSummary": "User prefers replies in Chinese with conclusions first, and has a durable preference for aisle seats on flights. A brief code-planning detour established 'do not modify the existing memory system this round; shadow first, then decide whether to take over the main path,' but that detour is no longer the active topic.",
+        "injectedArchiveSummary": "",
+        "baselinePromptEstimate": 51,
+        "shadowRawPromptEstimate": 21,
+        "shadowPackageEstimate": 40,
+        "shadowPackageText": "Active raw turns:\nt1 user: 以后默认给我中文，结论优先。\nt3 user: 再记一下：我坐飞机喜欢靠过道。\nt7 user: 代码先放一边。刚才说过，我坐飞机喜欢什么位置？\n\nSemantic pins:\nuser: 以后默认给我中文，结论优先。\nuser: 再记一下：我坐飞机喜欢靠过道。"
+      },
+      "baseline": {
+        "answer": "靠过道。",
+        "usage": {
+          "input_tokens": 10951,
+          "cached_input_tokens": 2432,
+          "output_tokens": 37
+        },
+        "elapsedMs": 12927,
+        "stderr": "2026-04-16T10:43:52.842014Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at \"/private/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-codex-home-3y2T1S/shell_snapshots/019d95e3-db7f-7c73-9a02-ec1c18127274.tmp-1776336231308869000\": Os { code: 2, kind: NotFound, message: \"No such file or directory\" }",
+        "promptEstimate": 140,
+        "passed": true,
+        "checks": [
+          {
+            "name": "expected_any",
+            "passed": true,
+            "expected": [],
+            "actual": "靠过道。"
+          },
+          {
+            "name": "expected_all",
+            "passed": true,
+            "expected": [
+              "靠过道"
+            ],
+            "actual": "靠过道。"
+          },
+          {
+            "name": "forbidden_any",
+            "passed": true,
+            "expected": [
+              "不知道"
+            ],
+            "actual": "靠过道。"
+          }
+        ]
+      },
+      "shadow": {
+        "answer": "结论：你坐飞机喜欢靠过道。",
+        "usage": {
+          "input_tokens": 10917,
+          "cached_input_tokens": 2432,
+          "output_tokens": 44
+        },
+        "elapsedMs": 12963,
+        "stderr": "2026-04-16T10:44:03.185523Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at \"/private/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-codex-home-3y2T1S/shell_snapshots/019d95e4-063f-7242-be80-5ea48e959989.tmp-1776336242239515000\": Os { code: 2, kind: NotFound, message: \"No such file or directory\" }",
+        "promptEstimate": 128,
+        "passed": true,
+        "checks": [
+          {
+            "name": "expected_any",
+            "passed": true,
+            "expected": [],
+            "actual": "结论：你坐飞机喜欢靠过道。"
+          },
+          {
+            "name": "expected_all",
+            "passed": true,
+            "expected": [
+              "靠过道"
+            ],
+            "actual": "结论：你坐飞机喜欢靠过道。"
+          },
+          {
+            "name": "forbidden_any",
+            "passed": true,
+            "expected": [
+              "不知道"
+            ],
+            "actual": "结论：你坐飞机喜欢靠过道。"
+          }
+        ]
+      },
+      "promptReductionRatio": 0.08571428571428572
+    },
+    {
+      "id": "answer-ab-branch-return-stage6",
+      "description": "A side fact should not break recall of an unfinished three-part rollout split.",
+      "decision": {
+        "payload": {
+          "relation": "continue",
+          "confidence": 0.95,
+          "evict_turn_ids": [
+            "t3",
+            "t4"
+          ],
+          "pin_turn_ids": [
+            "t3"
+          ],
+          "archive_summary": "The user is working on a three-part release acceptance rollout split into version correctness, installation validation, and rollback safety. A side note established the durable user fact that their timezone is Asia/Shanghai. The latest turn returns to the release acceptance topic and asks to restate the three parts.",
+          "reasoning_summary": "The active topic is still the release acceptance split, so this is a continue, not a switch. The timezone exchange is a resolved side fact and good raw-prompt eviction material, but its semantic content should be preserved as a durable pin. The earlier rollout split remains directly relevant to the next answer, so it should stay in raw context rather than be evicted."
+        },
+        "usage": {
+          "input_tokens": 11181,
+          "cached_input_tokens": 2432,
+          "output_tokens": 385
+        },
+        "stdout": "{\"type\":\"thread.started\",\"thread_id\":\"019d95e4-3a94-7683-97a4-767f1c4d9c1f\"}\n{\"type\":\"turn.started\"}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_0\",\"type\":\"agent_message\",\"text\":\"{\\\"relation\\\":\\\"continue\\\",\\\"confidence\\\":0.95,\\\"evict_turn_ids\\\":[\\\"t3\\\",\\\"t4\\\"],\\\"pin_turn_ids\\\":[\\\"t3\\\"],\\\"archive_summary\\\":\\\"The user is working on a three-part release acceptance rollout split into version correctness, installation validation, and rollback safety. A side note established the durable user fact that their timezone is Asia/Shanghai. The latest turn returns to the release acceptance topic and asks to restate the three parts.\\\",\\\"reasoning_summary\\\":\\\"The active topic is still the release acceptance split, so this is a continue, not a switch. The timezone exchange is a resolved side fact and good raw-prompt eviction material, but its semantic content should be preserved as a durable pin. The earlier rollout split remains directly relevant to the next answer, so it should stay in raw context rather than be evicted.\\\"}\"}}\n{\"type\":\"turn.completed\",\"usage\":{\"input_tokens\":11181,\"cached_input_tokens\":2432,\"output_tokens\":385}}\n",
+        "stderr": "2026-04-16T10:44:16.577944Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at \"/private/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-codex-home-3y2T1S/shell_snapshots/019d95e4-3a94-7683-97a4-767f1c4d9c1f.tmp-1776336255636763000\": Os { code: 2, kind: NotFound, message: \"No such file or directory\" }",
+        "elapsedMs": 19259
+      },
+      "snapshot": {
+        "applied": {
+          "relation": "continue",
+          "confidence": 0.95,
+          "archiveSummary": "The user is working on a three-part release acceptance rollout split into version correctness, installation validation, and rollback safety. A side note established the durable user fact that their timezone is Asia/Shanghai. The latest turn returns to the release acceptance topic and asks to restate the three parts.",
+          "reasoningSummary": "The active topic is still the release acceptance split, so this is a continue, not a switch. The timezone exchange is a resolved side fact and good raw-prompt eviction material, but its semantic content should be preserved as a durable pin. The earlier rollout split remains directly relevant to the next answer, so it should stay in raw context rather than be evicted.",
+          "latestUserTurnId": "t5",
+          "pinTurnIds": [
+            "t3"
+          ],
+          "pinnedOnlyTurnIds": [
+            "t3"
+          ],
+          "requestedEvictTurnIds": [
+            "t3",
+            "t4"
+          ],
+          "blockedEvictTurnIds": [],
+          "appliedEvictTurnIds": [
+            "t3",
+            "t4"
+          ],
+          "keepTurnIds": [
+            "t1",
+            "t2",
+            "t5"
+          ],
+          "baselineTokens": 29,
+          "keptTokens": 16,
+          "prunedTokens": 13,
+          "reductionRatio": 0.4482758620689655,
+          "keepTurns": [
+            {
+              "id": "t1",
+              "role": "user",
+              "content": "把发布验收拆成版本、安装、回滚三部分。",
+              "tokenEstimate": 5
+            },
+            {
+              "id": "t2",
+              "role": "assistant",
+              "content": "可以，先拆成版本正确性、安装验证、回滚安全。",
+              "tokenEstimate": 6
+            },
+            {
+              "id": "t5",
+              "role": "user",
+              "content": "先回到刚才的发布验收，那三部分是什么？",
+              "tokenEstimate": 5
+            }
+          ],
+          "evictedTurns": [
+            {
+              "id": "t3",
+              "role": "user",
+              "content": "插一句，我的时区是 Asia/Shanghai，记住。",
+              "tokenEstimate": 7
+            },
+            {
+              "id": "t4",
+              "role": "assistant",
+              "content": "记住了，你的时区是 Asia/Shanghai。",
+              "tokenEstimate": 6
+            }
+          ]
+        },
+        "baselineRawTranscript": "t1 user: 把发布验收拆成版本、安装、回滚三部分。\nt2 assistant: 可以，先拆成版本正确性、安装验证、回滚安全。\nt3 user: 插一句，我的时区是 Asia/Shanghai，记住。\nt4 assistant: 记住了，你的时区是 Asia/Shanghai。\nt5 user: 先回到刚才的发布验收，那三部分是什么？",
+        "shadowRawTranscript": "t1 user: 把发布验收拆成版本、安装、回滚三部分。\nt2 assistant: 可以，先拆成版本正确性、安装验证、回滚安全。\nt5 user: 先回到刚才的发布验收，那三部分是什么？",
+        "semanticPinNotes": [
+          "user: 插一句，我的时区是 Asia/Shanghai，记住。"
+        ],
+        "archiveSummary": "The user is working on a three-part release acceptance rollout split into version correctness, installation validation, and rollback safety. A side note established the durable user fact that their timezone is Asia/Shanghai. The latest turn returns to the release acceptance topic and asks to restate the three parts.",
+        "injectedArchiveSummary": "",
+        "baselinePromptEstimate": 43,
+        "shadowRawPromptEstimate": 24,
+        "shadowPackageEstimate": 41,
+        "shadowPackageText": "Active raw turns:\nt1 user: 把发布验收拆成版本、安装、回滚三部分。\nt2 assistant: 可以，先拆成版本正确性、安装验证、回滚安全。\nt5 user: 先回到刚才的发布验收，那三部分是什么？\n\nSemantic pins:\nuser: 插一句，我的时区是 Asia/Shanghai，记住。"
+      },
+      "baseline": {
+        "answer": "版本正确性、安装验证、回滚安全。",
+        "usage": {
+          "input_tokens": 10923,
+          "cached_input_tokens": 2432,
+          "output_tokens": 38
+        },
+        "elapsedMs": 10723,
+        "stderr": "2026-04-16T10:44:35.137395Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at \"/private/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-codex-home-3y2T1S/shell_snapshots/019d95e4-8413-73d0-b5a7-01f99acc8efe.tmp-1776336274451598000\": Os { code: 2, kind: NotFound, message: \"No such file or directory\" }",
+        "promptEstimate": 133,
+        "passed": true,
+        "checks": [
+          {
+            "name": "expected_any",
+            "passed": true,
+            "expected": [],
+            "actual": "版本正确性、安装验证、回滚安全。"
+          },
+          {
+            "name": "expected_all",
+            "passed": true,
+            "expected": [
+              "版本",
+              "安装",
+              "回滚"
+            ],
+            "actual": "版本正确性、安装验证、回滚安全。"
+          },
+          {
+            "name": "forbidden_any",
+            "passed": true,
+            "expected": [
+              "不知道"
+            ],
+            "actual": "版本正确性、安装验证、回滚安全。"
+          }
+        ]
+      },
+      "shadow": {
+        "answer": "版本正确性、安装验证、回滚安全。",
+        "usage": {
+          "input_tokens": 10911,
+          "cached_input_tokens": 2432,
+          "output_tokens": 56
+        },
+        "elapsedMs": 13428,
+        "stderr": "2026-04-16T10:44:45.792485Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at \"/private/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-codex-home-3y2T1S/shell_snapshots/019d95e4-ae12-72d3-a610-d09d13b5395c.tmp-1776336285203296000\": Os { code: 2, kind: NotFound, message: \"No such file or directory\" }",
+        "promptEstimate": 130,
+        "passed": true,
+        "checks": [
+          {
+            "name": "expected_any",
+            "passed": true,
+            "expected": [],
+            "actual": "版本正确性、安装验证、回滚安全。"
+          },
+          {
+            "name": "expected_all",
+            "passed": true,
+            "expected": [
+              "版本",
+              "安装",
+              "回滚"
+            ],
+            "actual": "版本正确性、安装验证、回滚安全。"
+          },
+          {
+            "name": "forbidden_any",
+            "passed": true,
+            "expected": [
+              "不知道"
+            ],
+            "actual": "版本正确性、安装验证、回滚安全。"
+          }
+        ]
+      },
+      "promptReductionRatio": 0.022556390977443608
+    },
+    {
+      "id": "answer-ab-session-negative",
+      "description": "A one-off codename must not become a permanent default after the topic switches.",
+      "decision": {
+        "payload": {
+          "relation": "switch",
+          "confidence": 0.96,
+          "evict_turn_ids": [
+            "t1",
+            "t2"
+          ],
+          "pin_turn_ids": [
+            "t1"
+          ],
+          "archive_summary": "User specified that '琥珀梯' is a one-off codename for that round only and explicitly should not be remembered as a long-term default; assistant acknowledged it as temporary.",
+          "reasoning_summary": "The active topic shifted from a temporary naming instruction to the current question about the default long-term name. The temporary codename block is resolved and should leave the raw next-turn prompt, but its semantic constraint still matters to answer correctly: there is no durable default implied by that one-off label. Pin the user instruction, not the acknowledgment."
+        },
+        "usage": {
+          "input_tokens": 11154,
+          "cached_input_tokens": 2432,
+          "output_tokens": 326
+        },
+        "stdout": "{\"type\":\"thread.started\",\"thread_id\":\"019d95e4-e274-7770-86cd-07cd25cd20ea\"}\n{\"type\":\"turn.started\"}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_0\",\"type\":\"agent_message\",\"text\":\"{\\\"relation\\\":\\\"switch\\\",\\\"confidence\\\":0.96,\\\"evict_turn_ids\\\":[\\\"t1\\\",\\\"t2\\\"],\\\"pin_turn_ids\\\":[\\\"t1\\\"],\\\"archive_summary\\\":\\\"User specified that '琥珀梯' is a one-off codename for that round only and explicitly should not be remembered as a long-term default; assistant acknowledged it as temporary.\\\",\\\"reasoning_summary\\\":\\\"The active topic shifted from a temporary naming instruction to the current question about the default long-term name. The temporary codename block is resolved and should leave the raw next-turn prompt, but its semantic constraint still matters to answer correctly: there is no durable default implied by that one-off label. Pin the user instruction, not the acknowledgment.\\\"}\"}}\n{\"type\":\"turn.completed\",\"usage\":{\"input_tokens\":11154,\"cached_input_tokens\":2432,\"output_tokens\":326}}\n",
+        "stderr": "2026-04-16T10:44:59.382736Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at \"/private/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-codex-home-3y2T1S/shell_snapshots/019d95e4-e274-7770-86cd-07cd25cd20ea.tmp-1776336298612666000\": Os { code: 2, kind: NotFound, message: \"No such file or directory\" }",
+        "elapsedMs": 16231
+      },
+      "snapshot": {
+        "applied": {
+          "relation": "switch",
+          "confidence": 0.96,
+          "archiveSummary": "User specified that '琥珀梯' is a one-off codename for that round only and explicitly should not be remembered as a long-term default; assistant acknowledged it as temporary.",
+          "reasoningSummary": "The active topic shifted from a temporary naming instruction to the current question about the default long-term name. The temporary codename block is resolved and should leave the raw next-turn prompt, but its semantic constraint still matters to answer correctly: there is no durable default implied by that one-off label. Pin the user instruction, not the acknowledgment.",
+          "latestUserTurnId": "t3",
+          "pinTurnIds": [
+            "t1"
+          ],
+          "pinnedOnlyTurnIds": [
+            "t1"
+          ],
+          "requestedEvictTurnIds": [
+            "t1",
+            "t2"
+          ],
+          "blockedEvictTurnIds": [],
+          "appliedEvictTurnIds": [
+            "t1",
+            "t2"
+          ],
+          "keepTurnIds": [
+            "t3"
+          ],
+          "baselineTokens": 18,
+          "keptTokens": 10,
+          "prunedTokens": 8,
+          "reductionRatio": 0.4444444444444444,
+          "keepTurns": [
+            {
+              "id": "t3",
+              "role": "user",
+              "content": "现在切到文档。以后默认这个方案应该怎么称呼？如果没有长期默认，就直说没有。",
+              "tokenEstimate": 10
+            }
+          ],
+          "evictedTurns": [
+            {
+              "id": "t1",
+              "role": "user",
+              "content": "只这一次把这轮方案叫琥珀梯，不用长期记。",
+              "tokenEstimate": 5
+            },
+            {
+              "id": "t2",
+              "role": "assistant",
+              "content": "明白，这次临时叫琥珀梯。",
+              "tokenEstimate": 3
+            }
+          ]
+        },
+        "baselineRawTranscript": "t1 user: 只这一次把这轮方案叫琥珀梯，不用长期记。\nt2 assistant: 明白，这次临时叫琥珀梯。\nt3 user: 现在切到文档。以后默认这个方案应该怎么称呼？如果没有长期默认，就直说没有。",
+        "shadowRawTranscript": "t3 user: 现在切到文档。以后默认这个方案应该怎么称呼？如果没有长期默认，就直说没有。",
+        "semanticPinNotes": [
+          "user: 只这一次把这轮方案叫琥珀梯，不用长期记。"
+        ],
+        "archiveSummary": "User specified that '琥珀梯' is a one-off codename for that round only and explicitly should not be remembered as a long-term default; assistant acknowledged it as temporary.",
+        "injectedArchiveSummary": "",
+        "baselinePromptEstimate": 26,
+        "shadowRawPromptEstimate": 12,
+        "shadowPackageEstimate": 27,
+        "shadowPackageText": "Active raw turns:\nt3 user: 现在切到文档。以后默认这个方案应该怎么称呼？如果没有长期默认，就直说没有。\n\nSemantic pins:\nuser: 只这一次把这轮方案叫琥珀梯，不用长期记。"
+      },
+      "baseline": {
+        "answer": "没有长期默认称呼。`琥珀梯`只限那一轮临时使用。",
+        "usage": {
+          "input_tokens": 10896,
+          "cached_input_tokens": 2432,
+          "output_tokens": 72
+        },
+        "elapsedMs": 12252,
+        "stderr": "2026-04-16T10:45:15.439949Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at \"/private/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-codex-home-3y2T1S/shell_snapshots/019d95e5-21e8-73e3-bced-4964d2831aa7.tmp-1776336314856327000\": Os { code: 2, kind: NotFound, message: \"No such file or directory\" }",
+        "promptEstimate": 115,
+        "passed": true,
+        "checks": [
+          {
+            "name": "expected_any",
+            "passed": true,
+            "expected": [
+              "没有长期默认",
+              "没有默认称呼",
+              "当前没有默认称呼",
+              "I don't know based on current context"
+            ],
+            "actual": "没有长期默认称呼。`琥珀梯`只限那一轮临时使用。"
+          },
+          {
+            "name": "expected_all",
+            "passed": true,
+            "expected": [],
+            "actual": "没有长期默认称呼。`琥珀梯`只限那一轮临时使用。"
+          },
+          {
+            "name": "forbidden_any",
+            "passed": true,
+            "expected": [],
+            "actual": "没有长期默认称呼。`琥珀梯`只限那一轮临时使用。"
+          }
+        ]
+      },
+      "shadow": {
+        "answer": "没有长期默认称呼。`琥珀梯`只用于这一轮，不作为以后默认名称。",
+        "usage": {
+          "input_tokens": 10884,
+          "cached_input_tokens": 2432,
+          "output_tokens": 112
+        },
+        "elapsedMs": 12660,
+        "stderr": "2026-04-16T10:45:27.975220Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at \"/private/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-codex-home-3y2T1S/shell_snapshots/019d95e5-51db-7a12-b854-8e21d79aab0e.tmp-1776336327131944000\": Os { code: 2, kind: NotFound, message: \"No such file or directory\" }",
+        "promptEstimate": 116,
+        "passed": true,
+        "checks": [
+          {
+            "name": "expected_any",
+            "passed": true,
+            "expected": [
+              "没有长期默认",
+              "没有默认称呼",
+              "当前没有默认称呼",
+              "I don't know based on current context"
+            ],
+            "actual": "没有长期默认称呼。`琥珀梯`只用于这一轮，不作为以后默认名称。"
+          },
+          {
+            "name": "expected_all",
+            "passed": true,
+            "expected": [],
+            "actual": "没有长期默认称呼。`琥珀梯`只用于这一轮，不作为以后默认名称。"
+          },
+          {
+            "name": "forbidden_any",
+            "passed": true,
+            "expected": [],
+            "actual": "没有长期默认称呼。`琥珀梯`只用于这一轮，不作为以后默认名称。"
+          }
+        ]
+      },
+      "promptReductionRatio": -0.008695652173913044
+    },
+    {
+      "id": "answer-ab-current-task-after-switch",
+      "description": "After an older topic is closed, the current task should still answer correctly from the pruned working set.",
+      "decision": {
+        "payload": {
+          "relation": "switch",
+          "confidence": 0.96,
+          "evict_turn_ids": [
+            "t1",
+            "t2",
+            "t3",
+            "t4",
+            "t5",
+            "t6"
+          ],
+          "pin_turn_ids": [
+            "t1",
+            "t3",
+            "t5"
+          ],
+          "archive_summary": "用户偏好默认中文。项目背景：Project Lantern 是做真实场景 AI 记忆治理的。旧话题已结束；当前任务已切换为“写 shadow mode 报告”。",
+          "reasoning_summary": "t5 明确表示前一话题结束并切换到新任务，因此属于 topic switch。为缩小下一轮原始提示词，可移除已确认/已解决的原始回合；但需要把中文偏好、项目背景和当前任务以语义 pin 保留，这样即使原始 t5 被裁剪，仍能正确回答 t7“我们当前新任务是什么？”。"
+        },
+        "usage": {
+          "input_tokens": 11185,
+          "cached_input_tokens": 9600,
+          "output_tokens": 491
+        },
+        "stdout": "{\"type\":\"thread.started\",\"thread_id\":\"019d95e5-83ac-7ab1-a401-ddc651cc7280\"}\n{\"type\":\"turn.started\"}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_0\",\"type\":\"agent_message\",\"text\":\"{\\\"relation\\\":\\\"switch\\\",\\\"confidence\\\":0.96,\\\"evict_turn_ids\\\":[\\\"t1\\\",\\\"t2\\\",\\\"t3\\\",\\\"t4\\\",\\\"t5\\\",\\\"t6\\\"],\\\"pin_turn_ids\\\":[\\\"t1\\\",\\\"t3\\\",\\\"t5\\\"],\\\"archive_summary\\\":\\\"用户偏好默认中文。项目背景：Project Lantern 是做真实场景 AI 记忆治理的。旧话题已结束；当前任务已切换为“写 shadow mode 报告”。\\\",\\\"reasoning_summary\\\":\\\"t5 明确表示前一话题结束并切换到新任务，因此属于 topic switch。为缩小下一轮原始提示词，可移除已确认/已解决的原始回合；但需要把中文偏好、项目背景和当前任务以语义 pin 保留，这样即使原始 t5 被裁剪，仍能正确回答 t7“我们当前新任务是什么？”。\\\"}\"}}\n{\"type\":\"turn.completed\",\"usage\":{\"input_tokens\":11185,\"cached_input_tokens\":9600,\"output_tokens\":491}}\n",
+        "stderr": "2026-04-16T10:45:40.591834Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at \"/private/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-codex-home-3y2T1S/shell_snapshots/019d95e5-83ac-7ab1-a401-ddc651cc7280.tmp-1776336339885440000\": Os { code: 2, kind: NotFound, message: \"No such file or directory\" }",
+        "elapsedMs": 21325
+      },
+      "snapshot": {
+        "applied": {
+          "relation": "switch",
+          "confidence": 0.96,
+          "archiveSummary": "用户偏好默认中文。项目背景：Project Lantern 是做真实场景 AI 记忆治理的。旧话题已结束；当前任务已切换为“写 shadow mode 报告”。",
+          "reasoningSummary": "t5 明确表示前一话题结束并切换到新任务，因此属于 topic switch。为缩小下一轮原始提示词，可移除已确认/已解决的原始回合；但需要把中文偏好、项目背景和当前任务以语义 pin 保留，这样即使原始 t5 被裁剪，仍能正确回答 t7“我们当前新任务是什么？”。",
+          "latestUserTurnId": "t7",
+          "pinTurnIds": [
+            "t1",
+            "t3",
+            "t5"
+          ],
+          "pinnedOnlyTurnIds": [
+            "t1",
+            "t3",
+            "t5"
+          ],
+          "requestedEvictTurnIds": [
+            "t1",
+            "t2",
+            "t3",
+            "t4",
+            "t5",
+            "t6"
+          ],
+          "blockedEvictTurnIds": [],
+          "appliedEvictTurnIds": [
+            "t1",
+            "t2",
+            "t3",
+            "t4",
+            "t5",
+            "t6"
+          ],
+          "keepTurnIds": [
+            "t7"
+          ],
+          "baselineTokens": 30,
+          "keptTokens": 3,
+          "prunedTokens": 27,
+          "reductionRatio": 0.9,
+          "keepTurns": [
+            {
+              "id": "t7",
+              "role": "user",
+              "content": "我们当前新任务是什么？",
+              "tokenEstimate": 3
+            }
+          ],
+          "evictedTurns": [
+            {
+              "id": "t1",
+              "role": "user",
+              "content": "默认中文。",
+              "tokenEstimate": 2
+            },
+            {
+              "id": "t2",
+              "role": "assistant",
+              "content": "记住了。",
+              "tokenEstimate": 1
+            },
+            {
+              "id": "t3",
+              "role": "user",
+              "content": "Project Lantern 是做真实场景 AI 记忆治理的。",
+              "tokenEstimate": 8
+            },
+            {
+              "id": "t4",
+              "role": "assistant",
+              "content": "明白了。",
+              "tokenEstimate": 1
+            },
+            {
+              "id": "t5",
+              "role": "user",
+              "content": "这块先到这。当前新任务是写 shadow mode 报告。",
+              "tokenEstimate": 8
+            },
+            {
+              "id": "t6",
+              "role": "assistant",
+              "content": "收到，当前新任务是写 shadow mode 报告。",
+              "tokenEstimate": 7
+            }
+          ]
+        },
+        "baselineRawTranscript": "t1 user: 默认中文。\nt2 assistant: 记住了。\nt3 user: Project Lantern 是做真实场景 AI 记忆治理的。\nt4 assistant: 明白了。\nt5 user: 这块先到这。当前新任务是写 shadow mode 报告。\nt6 assistant: 收到，当前新任务是写 shadow mode 报告。\nt7 user: 我们当前新任务是什么？",
+        "shadowRawTranscript": "t7 user: 我们当前新任务是什么？",
+        "semanticPinNotes": [
+          "user: 默认中文。",
+          "user: Project Lantern 是做真实场景 AI 记忆治理的。",
+          "user: 这块先到这。当前新任务是写 shadow mode 报告。"
+        ],
+        "archiveSummary": "用户偏好默认中文。项目背景：Project Lantern 是做真实场景 AI 记忆治理的。旧话题已结束；当前任务已切换为“写 shadow mode 报告”。",
+        "injectedArchiveSummary": "",
+        "baselinePromptEstimate": 49,
+        "shadowRawPromptEstimate": 5,
+        "shadowPackageEstimate": 35,
+        "shadowPackageText": "Active raw turns:\nt7 user: 我们当前新任务是什么？\n\nSemantic pins:\nuser: 默认中文。\nuser: Project Lantern 是做真实场景 AI 记忆治理的。\nuser: 这块先到这。当前新任务是写 shadow mode 报告。"
+      },
+      "baseline": {
+        "answer": "当前新任务是写 shadow mode 报告。",
+        "usage": {
+          "input_tokens": 10927,
+          "cached_input_tokens": 2432,
+          "output_tokens": 42
+        },
+        "elapsedMs": 10903,
+        "stderr": "2026-04-16T10:46:01.605511Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at \"/private/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-codex-home-3y2T1S/shell_snapshots/019d95e5-d6a8-7bb2-9c9c-db6a8a8978ba.tmp-1776336361131165000\": Os { code: 2, kind: NotFound, message: \"No such file or directory\" }",
+        "promptEstimate": 147,
+        "passed": true,
+        "checks": [
+          {
+            "name": "expected_any",
+            "passed": true,
+            "expected": [],
+            "actual": "当前新任务是写 shadow mode 报告。"
+          },
+          {
+            "name": "expected_all",
+            "passed": true,
+            "expected": [
+              "shadow",
+              "报告"
+            ],
+            "actual": "当前新任务是写 shadow mode 报告。"
+          },
+          {
+            "name": "forbidden_any",
+            "passed": true,
+            "expected": [
+              "不知道"
+            ],
+            "actual": "当前新任务是写 shadow mode 报告。"
+          }
+        ]
+      },
+      "shadow": {
+        "answer": "当前新任务是写 shadow mode 报告。",
+        "usage": {
+          "input_tokens": 10893,
+          "cached_input_tokens": 2432,
+          "output_tokens": 39
+        },
+        "elapsedMs": 12717,
+        "stderr": "2026-04-16T10:46:12.642336Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at \"/private/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-codex-home-3y2T1S/shell_snapshots/019d95e6-013b-7533-8a28-20da995cbf27.tmp-1776336372029002000\": Os { code: 2, kind: NotFound, message: \"No such file or directory\" }",
+        "promptEstimate": 134,
+        "passed": true,
+        "checks": [
+          {
+            "name": "expected_any",
+            "passed": true,
+            "expected": [],
+            "actual": "当前新任务是写 shadow mode 报告。"
+          },
+          {
+            "name": "expected_all",
+            "passed": true,
+            "expected": [
+              "shadow",
+              "报告"
+            ],
+            "actual": "当前新任务是写 shadow mode 报告。"
+          },
+          {
+            "name": "forbidden_any",
+            "passed": true,
+            "expected": [
+              "不知道"
+            ],
+            "actual": "当前新任务是写 shadow mode 报告。"
+          }
+        ]
+      },
+      "promptReductionRatio": 0.08843537414965986
+    },
+    {
+      "id": "answer-ab-style-pin-survives",
+      "description": "A style preference should still answer correctly after an unrelated retrieval-policy detour.",
+      "decision": {
+        "payload": {
+          "relation": "switch",
+          "confidence": 0.93,
+          "evict_turn_ids": [
+            "t1",
+            "t4",
+            "t5"
+          ],
+          "pin_turn_ids": [
+            "t2",
+            "t3"
+          ],
+          "archive_summary": "Pin the user's response-format preference: default to giving the conclusion first, then details. The OpenClaw/model/context status snapshot and the temporary retrieval-policy note ('default fast path') are resolved/irrelevant for the next turn.",
+          "reasoning_summary": "The active topic switched back to recalling the user's answer style preference. Keep that preference as a semantic pin so the assistant can answer correctly even if the earlier raw turns leave the working set. Evict the status snapshot and the resolved retrieval-policy detour; do not list the latest user turn."
+        },
+        "usage": {
+          "input_tokens": 11221,
+          "cached_input_tokens": 2432,
+          "output_tokens": 366
+        },
+        "stdout": "{\"type\":\"thread.started\",\"thread_id\":\"019d95e6-3303-7bf0-8103-9f2ef34769da\"}\n{\"type\":\"turn.started\"}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_0\",\"type\":\"agent_message\",\"text\":\"{\\\"relation\\\":\\\"switch\\\",\\\"confidence\\\":0.93,\\\"evict_turn_ids\\\":[\\\"t1\\\",\\\"t4\\\",\\\"t5\\\"],\\\"pin_turn_ids\\\":[\\\"t2\\\",\\\"t3\\\"],\\\"archive_summary\\\":\\\"Pin the user's response-format preference: default to giving the conclusion first, then details. The OpenClaw/model/context status snapshot and the temporary retrieval-policy note ('default fast path') are resolved/irrelevant for the next turn.\\\",\\\"reasoning_summary\\\":\\\"The active topic switched back to recalling the user's answer style preference. Keep that preference as a semantic pin so the assistant can answer correctly even if the earlier raw turns leave the working set. Evict the status snapshot and the resolved retrieval-policy detour; do not list the latest user turn.\\\"}\"}}\n{\"type\":\"turn.completed\",\"usage\":{\"input_tokens\":11221,\"cached_input_tokens\":2432,\"output_tokens\":366}}\n",
+        "stderr": "2026-04-16T10:46:25.520483Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at \"/private/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-codex-home-3y2T1S/shell_snapshots/019d95e6-3303-7bf0-8103-9f2ef34769da.tmp-1776336384772156000\": Os { code: 2, kind: NotFound, message: \"No such file or directory\" }",
+        "elapsedMs": 18726
+      },
+      "snapshot": {
+        "applied": {
+          "relation": "switch",
+          "confidence": 0.93,
+          "archiveSummary": "Pin the user's response-format preference: default to giving the conclusion first, then details. The OpenClaw/model/context status snapshot and the temporary retrieval-policy note ('default fast path') are resolved/irrelevant for the next turn.",
+          "reasoningSummary": "The active topic switched back to recalling the user's answer style preference. Keep that preference as a semantic pin so the assistant can answer correctly even if the earlier raw turns leave the working set. Evict the status snapshot and the resolved retrieval-policy detour; do not list the latest user turn.",
+          "latestUserTurnId": "t6",
+          "pinTurnIds": [
+            "t2",
+            "t3"
+          ],
+          "pinnedOnlyTurnIds": [],
+          "requestedEvictTurnIds": [
+            "t1",
+            "t4",
+            "t5"
+          ],
+          "blockedEvictTurnIds": [],
+          "appliedEvictTurnIds": [
+            "t1",
+            "t4",
+            "t5"
+          ],
+          "keepTurnIds": [
+            "t2",
+            "t3",
+            "t6"
+          ],
+          "baselineTokens": 45,
+          "keptTokens": 13,
+          "prunedTokens": 32,
+          "reductionRatio": 0.7111111111111111,
+          "keepTurns": [
+            {
+              "id": "t2",
+              "role": "user",
+              "content": "以后默认先给我结论，再展开细节。",
+              "tokenEstimate": 4
+            },
+            {
+              "id": "t3",
+              "role": "assistant",
+              "content": "记住了，以后默认先给结论。",
+              "tokenEstimate": 4
+            },
+            {
+              "id": "t6",
+              "role": "user",
+              "content": "我刚才要求你回复时默认怎么组织结构？",
+              "tokenEstimate": 5
+            }
+          ],
+          "evictedTurns": [
+            {
+              "id": "t1",
+              "role": "assistant",
+              "content": "当前状态：OpenClaw 版本 2026.3.31，当前模型 openai-codex/gpt-5.4，上下文占用 158k / 272k，缓存命中率 99%。",
+              "tokenEstimate": 21
+            },
+            {
+              "id": "t4",
+              "role": "user",
+              "content": "先说检索策略，当前默认先走 fast path。",
+              "tokenEstimate": 6
+            },
+            {
+              "id": "t5",
+              "role": "assistant",
+              "content": "好，当前默认先走 fast path。",
+              "tokenEstimate": 5
+            }
+          ]
+        },
+        "baselineRawTranscript": "t1 assistant: 当前状态：OpenClaw 版本 2026.3.31，当前模型 openai-codex/gpt-5.4，上下文占用 158k / 272k，缓存命中率 99%。\nt2 user: 以后默认先给我结论，再展开细节。\nt3 assistant: 记住了，以后默认先给结论。\nt4 user: 先说检索策略，当前默认先走 fast path。\nt5 assistant: 好，当前默认先走 fast path。\nt6 user: 我刚才要求你回复时默认怎么组织结构？",
+        "shadowRawTranscript": "t2 user: 以后默认先给我结论，再展开细节。\nt3 assistant: 记住了，以后默认先给结论。\nt6 user: 我刚才要求你回复时默认怎么组织结构？",
+        "semanticPinNotes": [
+          "user: 以后默认先给我结论，再展开细节。",
+          "assistant: 记住了，以后默认先给结论。"
+        ],
+        "archiveSummary": "Pin the user's response-format preference: default to giving the conclusion first, then details. The OpenClaw/model/context status snapshot and the temporary retrieval-policy note ('default fast path') are resolved/irrelevant for the next turn.",
+        "injectedArchiveSummary": "",
+        "baselinePromptEstimate": 62,
+        "shadowRawPromptEstimate": 21,
+        "shadowPackageEstimate": 41,
+        "shadowPackageText": "Active raw turns:\nt2 user: 以后默认先给我结论，再展开细节。\nt3 assistant: 记住了，以后默认先给结论。\nt6 user: 我刚才要求你回复时默认怎么组织结构？\n\nSemantic pins:\nuser: 以后默认先给我结论，再展开细节。\nassistant: 记住了，以后默认先给结论。"
+      },
+      "baseline": {
+        "answer": "结论：你刚才要求我回复时默认“先给结论，再展开细节”。",
+        "usage": {
+          "input_tokens": 10963,
+          "cached_input_tokens": 2432,
+          "output_tokens": 87
+        },
+        "elapsedMs": 11567,
+        "stderr": "2026-04-16T10:46:43.955569Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at \"/private/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-codex-home-3y2T1S/shell_snapshots/019d95e6-7c11-70c0-aefa-b9f0137895c2.tmp-1776336403473899000\": Os { code: 2, kind: NotFound, message: \"No such file or directory\" }",
+        "promptEstimate": 154,
+        "passed": true,
+        "checks": [
+          {
+            "name": "expected_any",
+            "passed": true,
+            "expected": [],
+            "actual": "结论：你刚才要求我回复时默认“先给结论，再展开细节”。"
+          },
+          {
+            "name": "expected_all",
+            "passed": true,
+            "expected": [
+              "先给",
+              "再展开"
+            ],
+            "actual": "结论：你刚才要求我回复时默认“先给结论，再展开细节”。"
+          },
+          {
+            "name": "forbidden_any",
+            "passed": true,
+            "expected": [
+              "不知道"
+            ],
+            "actual": "结论：你刚才要求我回复时默认“先给结论，再展开细节”。"
+          }
+        ]
+      },
+      "shadow": {
+        "answer": "先给结论，再展开细节。",
+        "usage": {
+          "input_tokens": 10914,
+          "cached_input_tokens": 2432,
+          "output_tokens": 43
+        },
+        "elapsedMs": 11612,
+        "stderr": "2026-04-16T10:46:55.909213Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at \"/private/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-codex-home-3y2T1S/shell_snapshots/019d95e6-a98d-7423-8810-c35b18517196.tmp-1776336415119033000\": Os { code: 2, kind: NotFound, message: \"No such file or directory\" }",
+        "promptEstimate": 134,
+        "passed": true,
+        "checks": [
+          {
+            "name": "expected_any",
+            "passed": true,
+            "expected": [],
+            "actual": "先给结论，再展开细节。"
+          },
+          {
+            "name": "expected_all",
+            "passed": true,
+            "expected": [
+              "先给",
+              "再展开"
+            ],
+            "actual": "先给结论，再展开细节。"
+          },
+          {
+            "name": "forbidden_any",
+            "passed": true,
+            "expected": [
+              "不知道"
+            ],
+            "actual": "先给结论，再展开细节。"
+          }
+        ]
+      },
+      "promptReductionRatio": 0.12987012987012986
+    }
+  ]
+}

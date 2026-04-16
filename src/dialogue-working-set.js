@@ -104,6 +104,17 @@ function subsetCheck(name, expectedList, actualList) {
   };
 }
 
+function exclusionCheck(name, excludedList, actualList) {
+  const excluded = normalizeIdList(excludedList);
+  const actual = new Set(normalizeIdList(actualList));
+  return {
+    name,
+    passed: excluded.every((item) => !actual.has(item)),
+    expected: excluded,
+    actual: [...actual]
+  };
+}
+
 export function evaluateWorkingSetDecision(caseDef, decision, options = {}) {
   const applied = applySoftEvictionPlan({
     turns: caseDef?.transcript || [],
@@ -111,14 +122,19 @@ export function evaluateWorkingSetDecision(caseDef, decision, options = {}) {
     ...options
   });
   const expected = caseDef?.expected || {};
+  const allowedRelations = normalizeIdList(expected.allowed_relations);
+  const expectedRelation = normalizeString(expected.relation);
   const checks = [
     {
       name: "relation",
-      passed: normalizeString(applied.relation) === normalizeString(expected.relation),
-      expected: normalizeString(expected.relation),
+      passed: allowedRelations.length > 0
+        ? allowedRelations.includes(normalizeString(applied.relation))
+        : normalizeString(applied.relation) === expectedRelation,
+      expected: allowedRelations.length > 0 ? allowedRelations : expectedRelation,
       actual: normalizeString(applied.relation)
     },
     subsetCheck("must_evict_turn_ids", expected.must_evict_turn_ids, applied.appliedEvictTurnIds),
+    exclusionCheck("must_not_evict_turn_ids", expected.must_not_evict_turn_ids, applied.appliedEvictTurnIds),
     {
       name: "must_keep_turn_ids",
       passed: normalizeIdList(expected.must_keep_turn_ids)
@@ -127,6 +143,7 @@ export function evaluateWorkingSetDecision(caseDef, decision, options = {}) {
       actual: applied.keepTurnIds
     },
     subsetCheck("must_pin_turn_ids", expected.must_pin_turn_ids, applied.pinTurnIds),
+    exclusionCheck("must_not_pin_turn_ids", expected.must_not_pin_turn_ids, applied.pinTurnIds),
     {
       name: "latest_user_turn_guarded",
       passed: Boolean(applied.latestUserTurnId) && !applied.appliedEvictTurnIds.includes(applied.latestUserTurnId),

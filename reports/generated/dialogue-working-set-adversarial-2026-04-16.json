@@ -1,0 +1,1002 @@
+{
+  "generatedAt": "2026-04-16T10:40:49.435Z",
+  "model": "gpt-5.4",
+  "reasoningEffort": "low",
+  "summary": {
+    "cases": 7,
+    "passed": 7,
+    "failed": 0,
+    "total_baseline_tokens": 136,
+    "total_kept_tokens": 94,
+    "aggregate_reduction_ratio": 0.3088,
+    "switch_case_average_reduction_ratio": 0.5982
+  },
+  "results": [
+    {
+      "id": "adversarial-false-switch-same-topic",
+      "description": "The user rephrases the same topic; this should stay continue, not switch.",
+      "model": "gpt-5.4",
+      "passed": true,
+      "payload": {
+        "relation": "continue",
+        "confidence": 0.99,
+        "evict_turn_ids": [],
+        "pin_turn_ids": [],
+        "archive_summary": "Same topic continues: context slimming rationale. Prior turns explain the core goal: keep stored memory rich while keeping the prompt sparse and only sending highly relevant current-turn context.",
+        "reasoning_summary": "The latest user turn is a rephrasing of the same active topic, not a topic change. No earlier turn is resolved-and-irrelevant enough to evict yet, and no separate durable fact/preference pin is needed."
+      },
+      "checks": [
+        {
+          "name": "relation",
+          "passed": true,
+          "expected": "continue",
+          "actual": "continue"
+        },
+        {
+          "name": "must_evict_turn_ids",
+          "passed": true,
+          "expected": [],
+          "actual": []
+        },
+        {
+          "name": "must_not_evict_turn_ids",
+          "passed": true,
+          "expected": [
+            "t1",
+            "t2"
+          ],
+          "actual": []
+        },
+        {
+          "name": "must_keep_turn_ids",
+          "passed": true,
+          "expected": [
+            "t1",
+            "t2"
+          ],
+          "actual": [
+            "t1",
+            "t2",
+            "t3"
+          ]
+        },
+        {
+          "name": "must_pin_turn_ids",
+          "passed": true,
+          "expected": [],
+          "actual": []
+        },
+        {
+          "name": "must_not_pin_turn_ids",
+          "passed": true,
+          "expected": [],
+          "actual": []
+        },
+        {
+          "name": "latest_user_turn_guarded",
+          "passed": true,
+          "expected": "t3",
+          "actual": []
+        },
+        {
+          "name": "min_reduction_ratio",
+          "passed": true,
+          "expected": 0,
+          "actual": 0
+        }
+      ],
+      "applied": {
+        "relation": "continue",
+        "confidence": 0.99,
+        "archiveSummary": "Same topic continues: context slimming rationale. Prior turns explain the core goal: keep stored memory rich while keeping the prompt sparse and only sending highly relevant current-turn context.",
+        "reasoningSummary": "The latest user turn is a rephrasing of the same active topic, not a topic change. No earlier turn is resolved-and-irrelevant enough to evict yet, and no separate durable fact/preference pin is needed.",
+        "latestUserTurnId": "t3",
+        "pinTurnIds": [],
+        "pinnedOnlyTurnIds": [],
+        "requestedEvictTurnIds": [],
+        "blockedEvictTurnIds": [],
+        "appliedEvictTurnIds": [],
+        "keepTurnIds": [
+          "t1",
+          "t2",
+          "t3"
+        ],
+        "baselineTokens": 28,
+        "keptTokens": 28,
+        "prunedTokens": 0,
+        "reductionRatio": 0,
+        "keepTurns": [
+          {
+            "id": "t1",
+            "role": "user",
+            "content": "把 context slimming 的核心目标说一下。",
+            "tokenEstimate": 7
+          },
+          {
+            "id": "t2",
+            "role": "assistant",
+            "content": "核心目标是存储 rich、prompt sparse，只把当轮高相关信息送进模型。",
+            "tokenEstimate": 11
+          },
+          {
+            "id": "t3",
+            "role": "user",
+            "content": "换个角度讲：为什么说存储可以 rich，但 prompt 必须 sparse？",
+            "tokenEstimate": 10
+          }
+        ],
+        "evictedTurns": []
+      },
+      "stderr": "2026-04-16T10:39:00.826382Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at \"/private/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-codex-home-nznsd7/shell_snapshots/019d95df-697b-7e23-9b0a-5b3fffc6866b.tmp-1776335939966148000\": Os { code: 2, kind: NotFound, message: \"No such file or directory\" }",
+      "usage": {
+        "input_tokens": 11145,
+        "cached_input_tokens": 2432,
+        "output_tokens": 129
+      },
+      "elapsedMs": 17458
+    },
+    {
+      "id": "adversarial-branch-unfinished-with-side-fact",
+      "description": "A durable side fact appears while the main task is still open; the main task must stay.",
+      "model": "gpt-5.4",
+      "passed": true,
+      "payload": {
+        "relation": "branch",
+        "confidence": 0.96,
+        "evict_turn_ids": [],
+        "pin_turn_ids": [
+          "t3"
+        ],
+        "archive_summary": "Main thread is Stage 6 acceptance split into three parts: functionality correctness, rollback safety, and host integration validation. Side fact from the user: they are in the Shanghai timezone.",
+        "reasoning_summary": "The newest turn introduces a durable side fact while the earlier Stage 6 task remains the active thread. Keep the main-task raw turns in the working set, and preserve the timezone as a semantic pin for future use."
+      },
+      "checks": [
+        {
+          "name": "relation",
+          "passed": true,
+          "expected": "branch",
+          "actual": "branch"
+        },
+        {
+          "name": "must_evict_turn_ids",
+          "passed": true,
+          "expected": [],
+          "actual": []
+        },
+        {
+          "name": "must_not_evict_turn_ids",
+          "passed": true,
+          "expected": [
+            "t1",
+            "t2"
+          ],
+          "actual": []
+        },
+        {
+          "name": "must_keep_turn_ids",
+          "passed": true,
+          "expected": [
+            "t1",
+            "t2"
+          ],
+          "actual": [
+            "t1",
+            "t2",
+            "t3"
+          ]
+        },
+        {
+          "name": "must_pin_turn_ids",
+          "passed": true,
+          "expected": [],
+          "actual": [
+            "t3"
+          ]
+        },
+        {
+          "name": "must_not_pin_turn_ids",
+          "passed": true,
+          "expected": [],
+          "actual": [
+            "t3"
+          ]
+        },
+        {
+          "name": "latest_user_turn_guarded",
+          "passed": true,
+          "expected": "t3",
+          "actual": []
+        },
+        {
+          "name": "min_reduction_ratio",
+          "passed": true,
+          "expected": 0,
+          "actual": 0
+        }
+      ],
+      "applied": {
+        "relation": "branch",
+        "confidence": 0.96,
+        "archiveSummary": "Main thread is Stage 6 acceptance split into three parts: functionality correctness, rollback safety, and host integration validation. Side fact from the user: they are in the Shanghai timezone.",
+        "reasoningSummary": "The newest turn introduces a durable side fact while the earlier Stage 6 task remains the active thread. Keep the main-task raw turns in the working set, and preserve the timezone as a semantic pin for future use.",
+        "latestUserTurnId": "t3",
+        "pinTurnIds": [
+          "t3"
+        ],
+        "pinnedOnlyTurnIds": [],
+        "requestedEvictTurnIds": [],
+        "blockedEvictTurnIds": [],
+        "appliedEvictTurnIds": [],
+        "keepTurnIds": [
+          "t1",
+          "t2",
+          "t3"
+        ],
+        "baselineTokens": 17,
+        "keptTokens": 17,
+        "prunedTokens": 0,
+        "reductionRatio": 0,
+        "keepTurns": [
+          {
+            "id": "t1",
+            "role": "user",
+            "content": "帮我把 Stage 6 验收拆成 3 个部分。",
+            "tokenEstimate": 6
+          },
+          {
+            "id": "t2",
+            "role": "assistant",
+            "content": "可以，先拆成：功能正确性、回退安全、宿主集成验证。",
+            "tokenEstimate": 7
+          },
+          {
+            "id": "t3",
+            "role": "user",
+            "content": "插一句，记一下：我在上海时区。",
+            "tokenEstimate": 4
+          }
+        ],
+        "evictedTurns": []
+      },
+      "stderr": "2026-04-16T10:39:13.086213Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at \"/private/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-codex-home-nznsd7/shell_snapshots/019d95df-9a2a-7913-b87b-8a5165366c8d.tmp-1776335952427152000\": Os { code: 2, kind: NotFound, message: \"No such file or directory\" }",
+      "usage": {
+        "input_tokens": 11147,
+        "cached_input_tokens": 2432,
+        "output_tokens": 323
+      },
+      "elapsedMs": 16590
+    },
+    {
+      "id": "adversarial-return-old-topic-after-code-switch",
+      "description": "The chat switched to code, then explicitly jumps back to an old durable preference.",
+      "model": "gpt-5.4",
+      "passed": true,
+      "payload": {
+        "relation": "switch",
+        "confidence": 0.97,
+        "evict_turn_ids": [
+          "t2",
+          "t3",
+          "t4"
+        ],
+        "pin_turn_ids": [
+          "t1"
+        ],
+        "archive_summary": "User has a durable preference: when flying, they prefer an aisle seat. A later temporary coding instruction said not to modify builtin memory in that code-focused turn, but the active topic then switched back to recalling the flight-seat preference.",
+        "reasoning_summary": "The latest user turn returns to an older durable preference after a code-topic detour. Keep the durable preference as a semantic pin from t1. Evict the assistant acknowledgments and the temporary code-side instruction block from the next-turn raw prompt, since that coding context is not relevant to answering the current question."
+      },
+      "checks": [
+        {
+          "name": "relation",
+          "passed": true,
+          "expected": "switch",
+          "actual": "switch"
+        },
+        {
+          "name": "must_evict_turn_ids",
+          "passed": true,
+          "expected": [
+            "t3",
+            "t4"
+          ],
+          "actual": [
+            "t2",
+            "t3",
+            "t4"
+          ]
+        },
+        {
+          "name": "must_not_evict_turn_ids",
+          "passed": true,
+          "expected": [],
+          "actual": [
+            "t2",
+            "t3",
+            "t4"
+          ]
+        },
+        {
+          "name": "must_keep_turn_ids",
+          "passed": true,
+          "expected": [],
+          "actual": [
+            "t1",
+            "t5"
+          ]
+        },
+        {
+          "name": "must_pin_turn_ids",
+          "passed": true,
+          "expected": [
+            "t1"
+          ],
+          "actual": [
+            "t1"
+          ]
+        },
+        {
+          "name": "must_not_pin_turn_ids",
+          "passed": true,
+          "expected": [],
+          "actual": [
+            "t1"
+          ]
+        },
+        {
+          "name": "latest_user_turn_guarded",
+          "passed": true,
+          "expected": "t5",
+          "actual": [
+            "t2",
+            "t3",
+            "t4"
+          ]
+        },
+        {
+          "name": "min_reduction_ratio",
+          "passed": true,
+          "expected": 0.15,
+          "actual": 0.6296
+        }
+      ],
+      "applied": {
+        "relation": "switch",
+        "confidence": 0.97,
+        "archiveSummary": "User has a durable preference: when flying, they prefer an aisle seat. A later temporary coding instruction said not to modify builtin memory in that code-focused turn, but the active topic then switched back to recalling the flight-seat preference.",
+        "reasoningSummary": "The latest user turn returns to an older durable preference after a code-topic detour. Keep the durable preference as a semantic pin from t1. Evict the assistant acknowledgments and the temporary code-side instruction block from the next-turn raw prompt, since that coding context is not relevant to answering the current question.",
+        "latestUserTurnId": "t5",
+        "pinTurnIds": [
+          "t1"
+        ],
+        "pinnedOnlyTurnIds": [],
+        "requestedEvictTurnIds": [
+          "t2",
+          "t3",
+          "t4"
+        ],
+        "blockedEvictTurnIds": [],
+        "appliedEvictTurnIds": [
+          "t2",
+          "t3",
+          "t4"
+        ],
+        "keepTurnIds": [
+          "t1",
+          "t5"
+        ],
+        "baselineTokens": 27,
+        "keptTokens": 10,
+        "prunedTokens": 17,
+        "reductionRatio": 0.6296296296296297,
+        "keepTurns": [
+          {
+            "id": "t1",
+            "role": "user",
+            "content": "记一下：我坐飞机喜欢靠过道。",
+            "tokenEstimate": 4
+          },
+          {
+            "id": "t5",
+            "role": "user",
+            "content": "代码先放一边。刚才说过，我坐飞机喜欢什么位置？",
+            "tokenEstimate": 6
+          }
+        ],
+        "evictedTurns": [
+          {
+            "id": "t2",
+            "role": "assistant",
+            "content": "记住了，你坐飞机偏好靠过道。",
+            "tokenEstimate": 4
+          },
+          {
+            "id": "t3",
+            "role": "user",
+            "content": "现在说代码，这轮先别改 builtin memory。",
+            "tokenEstimate": 7
+          },
+          {
+            "id": "t4",
+            "role": "assistant",
+            "content": "好，这轮先不改 builtin memory。",
+            "tokenEstimate": 6
+          }
+        ]
+      },
+      "stderr": "2026-04-16T10:39:29.703272Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at \"/private/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-codex-home-nznsd7/shell_snapshots/019d95df-db17-72d1-92c2-53dcc4659180.tmp-1776335969048396000\": Os { code: 2, kind: NotFound, message: \"No such file or directory\" }",
+      "usage": {
+        "input_tokens": 11165,
+        "cached_input_tokens": 2432,
+        "output_tokens": 170
+      },
+      "elapsedMs": 14478
+    },
+    {
+      "id": "adversarial-assistant-claim-not-durable",
+      "description": "The assistant guessed wrong first; only the user's correction may survive as a durable pin.",
+      "model": "gpt-5.4",
+      "passed": true,
+      "payload": {
+        "relation": "switch",
+        "confidence": 0.98,
+        "evict_turn_ids": [
+          "t1",
+          "t2",
+          "t3"
+        ],
+        "pin_turn_ids": [
+          "t2"
+        ],
+        "archive_summary": "User corrected an incorrect assistant guess: they prefer asynchronous text updates, not voice calls. That preference should be preserved as a durable semantic pin. The conversation then switched to a new topic: rollout order.",
+        "reasoning_summary": "The active topic changed at t4, so this is a switch. The earlier block is resolved and can leave the next-turn raw prompt. Only the user's correction is durable; the assistant's mistaken claim and acknowledgment are not worth keeping as raw context."
+      },
+      "checks": [
+        {
+          "name": "relation",
+          "passed": true,
+          "expected": "switch",
+          "actual": "switch"
+        },
+        {
+          "name": "must_evict_turn_ids",
+          "passed": true,
+          "expected": [
+            "t1",
+            "t3"
+          ],
+          "actual": [
+            "t1",
+            "t2",
+            "t3"
+          ]
+        },
+        {
+          "name": "must_not_evict_turn_ids",
+          "passed": true,
+          "expected": [],
+          "actual": [
+            "t1",
+            "t2",
+            "t3"
+          ]
+        },
+        {
+          "name": "must_keep_turn_ids",
+          "passed": true,
+          "expected": [],
+          "actual": [
+            "t4"
+          ]
+        },
+        {
+          "name": "must_pin_turn_ids",
+          "passed": true,
+          "expected": [
+            "t2"
+          ],
+          "actual": [
+            "t2"
+          ]
+        },
+        {
+          "name": "must_not_pin_turn_ids",
+          "passed": true,
+          "expected": [
+            "t1"
+          ],
+          "actual": [
+            "t2"
+          ]
+        },
+        {
+          "name": "latest_user_turn_guarded",
+          "passed": true,
+          "expected": "t4",
+          "actual": [
+            "t1",
+            "t2",
+            "t3"
+          ]
+        },
+        {
+          "name": "min_reduction_ratio",
+          "passed": true,
+          "expected": 0.2,
+          "actual": 0.6316
+        }
+      ],
+      "applied": {
+        "relation": "switch",
+        "confidence": 0.98,
+        "archiveSummary": "User corrected an incorrect assistant guess: they prefer asynchronous text updates, not voice calls. That preference should be preserved as a durable semantic pin. The conversation then switched to a new topic: rollout order.",
+        "reasoningSummary": "The active topic changed at t4, so this is a switch. The earlier block is resolved and can leave the next-turn raw prompt. Only the user's correction is durable; the assistant's mistaken claim and acknowledgment are not worth keeping as raw context.",
+        "latestUserTurnId": "t4",
+        "pinTurnIds": [
+          "t2"
+        ],
+        "pinnedOnlyTurnIds": [
+          "t2"
+        ],
+        "requestedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3"
+        ],
+        "blockedEvictTurnIds": [],
+        "appliedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3"
+        ],
+        "keepTurnIds": [
+          "t4"
+        ],
+        "baselineTokens": 19,
+        "keptTokens": 7,
+        "prunedTokens": 12,
+        "reductionRatio": 0.631578947368421,
+        "keepTurns": [
+          {
+            "id": "t4",
+            "role": "user",
+            "content": "现在切到别的话题：帮我说一下 rollout 顺序。",
+            "tokenEstimate": 7
+          }
+        ],
+        "evictedTurns": [
+          {
+            "id": "t1",
+            "role": "assistant",
+            "content": "我猜你可能更喜欢语音电话。",
+            "tokenEstimate": 4
+          },
+          {
+            "id": "t2",
+            "role": "user",
+            "content": "不是，我更喜欢异步文字更新。",
+            "tokenEstimate": 4
+          },
+          {
+            "id": "t3",
+            "role": "assistant",
+            "content": "记住了，你更喜欢异步文字更新。",
+            "tokenEstimate": 4
+          }
+        ]
+      },
+      "stderr": "2026-04-16T10:39:44.346272Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at \"/private/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-codex-home-nznsd7/shell_snapshots/019d95e0-13ab-7b42-bf51-47c51cdc6d0f.tmp-1776335983532753000\": Os { code: 2, kind: NotFound, message: \"No such file or directory\" }",
+      "usage": {
+        "input_tokens": 11146,
+        "cached_input_tokens": 2432,
+        "output_tokens": 233
+      },
+      "elapsedMs": 15199
+    },
+    {
+      "id": "adversarial-session-negative-no-pin",
+      "description": "A one-off codename must not be promoted into a long-lived pin after the topic switches.",
+      "model": "gpt-5.4",
+      "passed": true,
+      "payload": {
+        "relation": "switch",
+        "confidence": 0.98,
+        "evict_turn_ids": [
+          "t1",
+          "t2"
+        ],
+        "pin_turn_ids": [],
+        "archive_summary": "A temporary codename '琥珀梯' was agreed for one use only and explicitly should not be kept long-term. The active topic has switched to retrieval strategy, specifically the default path for uncategorized queries.",
+        "reasoning_summary": "The codename exchange is resolved, explicitly non-durable, and irrelevant to the new retrieval-strategy question. Evict the old raw turns and do not create a pin for the one-off codename."
+      },
+      "checks": [
+        {
+          "name": "relation",
+          "passed": true,
+          "expected": "switch",
+          "actual": "switch"
+        },
+        {
+          "name": "must_evict_turn_ids",
+          "passed": true,
+          "expected": [
+            "t1",
+            "t2"
+          ],
+          "actual": [
+            "t1",
+            "t2"
+          ]
+        },
+        {
+          "name": "must_not_evict_turn_ids",
+          "passed": true,
+          "expected": [],
+          "actual": [
+            "t1",
+            "t2"
+          ]
+        },
+        {
+          "name": "must_keep_turn_ids",
+          "passed": true,
+          "expected": [],
+          "actual": [
+            "t3"
+          ]
+        },
+        {
+          "name": "must_pin_turn_ids",
+          "passed": true,
+          "expected": [],
+          "actual": []
+        },
+        {
+          "name": "must_not_pin_turn_ids",
+          "passed": true,
+          "expected": [
+            "t1"
+          ],
+          "actual": []
+        },
+        {
+          "name": "latest_user_turn_guarded",
+          "passed": true,
+          "expected": "t3",
+          "actual": [
+            "t1",
+            "t2"
+          ]
+        },
+        {
+          "name": "min_reduction_ratio",
+          "passed": true,
+          "expected": 0.2,
+          "actual": 0.5333
+        }
+      ],
+      "applied": {
+        "relation": "switch",
+        "confidence": 0.98,
+        "archiveSummary": "A temporary codename '琥珀梯' was agreed for one use only and explicitly should not be kept long-term. The active topic has switched to retrieval strategy, specifically the default path for uncategorized queries.",
+        "reasoningSummary": "The codename exchange is resolved, explicitly non-durable, and irrelevant to the new retrieval-strategy question. Evict the old raw turns and do not create a pin for the one-off codename.",
+        "latestUserTurnId": "t3",
+        "pinTurnIds": [],
+        "pinnedOnlyTurnIds": [],
+        "requestedEvictTurnIds": [
+          "t1",
+          "t2"
+        ],
+        "blockedEvictTurnIds": [],
+        "appliedEvictTurnIds": [
+          "t1",
+          "t2"
+        ],
+        "keepTurnIds": [
+          "t3"
+        ],
+        "baselineTokens": 15,
+        "keptTokens": 7,
+        "prunedTokens": 8,
+        "reductionRatio": 0.5333333333333333,
+        "keepTurns": [
+          {
+            "id": "t3",
+            "role": "user",
+            "content": "现在切到检索策略：未分类 query 默认走哪条路径？",
+            "tokenEstimate": 7
+          }
+        ],
+        "evictedTurns": [
+          {
+            "id": "t1",
+            "role": "user",
+            "content": "只这一次把方案叫琥珀梯，不用长期记。",
+            "tokenEstimate": 5
+          },
+          {
+            "id": "t2",
+            "role": "assistant",
+            "content": "好，这次临时叫琥珀梯。",
+            "tokenEstimate": 3
+          }
+        ]
+      },
+      "stderr": "2026-04-16T10:39:59.410341Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at \"/private/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-codex-home-nznsd7/shell_snapshots/019d95e0-4f37-7373-9d19-d104a17cf798.tmp-1776335998778623000\": Os { code: 2, kind: NotFound, message: \"No such file or directory\" }",
+      "usage": {
+        "input_tokens": 11140,
+        "cached_input_tokens": 2432,
+        "output_tokens": 217
+      },
+      "elapsedMs": 15756
+    },
+    {
+      "id": "adversarial-implicit-continuation",
+      "description": "A follow-up that refers to a numbered phase implicitly should still count as continuing the same topic.",
+      "model": "gpt-5.4",
+      "passed": true,
+      "payload": {
+        "relation": "continue",
+        "confidence": 0.99,
+        "evict_turn_ids": [],
+        "pin_turn_ids": [],
+        "archive_summary": "The user asked about a three-phase rollout. The assistant summarized it as: 1) shadow, 2) gated active, 3) default active. The latest user turn asks for clarification of phase two ('第二阶段具体是什么意思？'), which implicitly continues the same rollout topic.",
+        "reasoning_summary": "The follow-up explicitly references '第二阶段', which is an implicit continuation of the earlier numbered rollout explanation. The active topic has not changed, nothing is resolved, and no earlier turns should be evicted yet."
+      },
+      "checks": [
+        {
+          "name": "relation",
+          "passed": true,
+          "expected": "continue",
+          "actual": "continue"
+        },
+        {
+          "name": "must_evict_turn_ids",
+          "passed": true,
+          "expected": [],
+          "actual": []
+        },
+        {
+          "name": "must_not_evict_turn_ids",
+          "passed": true,
+          "expected": [
+            "t1",
+            "t2"
+          ],
+          "actual": []
+        },
+        {
+          "name": "must_keep_turn_ids",
+          "passed": true,
+          "expected": [
+            "t1",
+            "t2"
+          ],
+          "actual": [
+            "t1",
+            "t2",
+            "t3"
+          ]
+        },
+        {
+          "name": "must_pin_turn_ids",
+          "passed": true,
+          "expected": [],
+          "actual": []
+        },
+        {
+          "name": "must_not_pin_turn_ids",
+          "passed": true,
+          "expected": [],
+          "actual": []
+        },
+        {
+          "name": "latest_user_turn_guarded",
+          "passed": true,
+          "expected": "t3",
+          "actual": []
+        },
+        {
+          "name": "min_reduction_ratio",
+          "passed": true,
+          "expected": 0,
+          "actual": 0
+        }
+      ],
+      "applied": {
+        "relation": "continue",
+        "confidence": 0.99,
+        "archiveSummary": "The user asked about a three-phase rollout. The assistant summarized it as: 1) shadow, 2) gated active, 3) default active. The latest user turn asks for clarification of phase two ('第二阶段具体是什么意思？'), which implicitly continues the same rollout topic.",
+        "reasoningSummary": "The follow-up explicitly references '第二阶段', which is an implicit continuation of the earlier numbered rollout explanation. The active topic has not changed, nothing is resolved, and no earlier turns should be evicted yet.",
+        "latestUserTurnId": "t3",
+        "pinTurnIds": [],
+        "pinnedOnlyTurnIds": [],
+        "requestedEvictTurnIds": [],
+        "blockedEvictTurnIds": [],
+        "appliedEvictTurnIds": [],
+        "keepTurnIds": [
+          "t1",
+          "t2",
+          "t3"
+        ],
+        "baselineTokens": 19,
+        "keptTokens": 19,
+        "prunedTokens": 0,
+        "reductionRatio": 0,
+        "keepTurns": [
+          {
+            "id": "t1",
+            "role": "user",
+            "content": "把三阶段 rollout 说一下。",
+            "tokenEstimate": 5
+          },
+          {
+            "id": "t2",
+            "role": "assistant",
+            "content": "先 shadow，后 gated active，最后再 default active。",
+            "tokenEstimate": 11
+          },
+          {
+            "id": "t3",
+            "role": "user",
+            "content": "第二阶段具体是什么意思？",
+            "tokenEstimate": 3
+          }
+        ],
+        "evictedTurns": []
+      },
+      "stderr": "2026-04-16T10:40:15.218457Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at \"/private/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-codex-home-nznsd7/shell_snapshots/019d95e0-8cb4-77f1-ab1d-6ec299e97a9e.tmp-1776336014516369000\": Os { code: 2, kind: NotFound, message: \"No such file or directory\" }\n2026-04-16T10:40:24.577849Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577868Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577872Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577874Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577875Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577876Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577878Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577879Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577880Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577881Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577883Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577884Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577885Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577886Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577887Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577889Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577892Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577892Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577893Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577894Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577895Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577896Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577897Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577897Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577898Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577899Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577900Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577901Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577902Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577903Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577904Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577905Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577905Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577906Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577907Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577908Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577909Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577910Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577911Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577912Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577913Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577914Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577916Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577917Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577918Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577919Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577921Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577922Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577923Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577925Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577926Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577927Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577928Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577929Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577929Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577931Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577931Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577932Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577933Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577934Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577935Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577936Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577937Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577938Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577954Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577955Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577956Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577957Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577958Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577959Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.577960Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578001Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578003Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578004Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578010Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578011Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578013Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578014Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578015Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578016Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578017Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578018Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578018Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578019Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578020Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578021Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578021Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578022Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578023Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578024Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578024Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578025Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578026Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578027Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578028Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578029Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578030Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578031Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578032Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578033Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578034Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578035Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578037Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578038Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578039Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578040Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578041Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578042Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578042Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578043Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578044Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578045Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578046Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578046Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578047Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578048Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578049Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578050Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578051Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578051Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578052Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578053Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.578054Z  WARN codex_app_server_client: dropping in-process app-server event because consumer queue is full\n2026-04-16T10:40:24.680647Z  WARN codex_exec: in-process app-server event stream lagged; dropped 123 events",
+      "usage": {
+        "input_tokens": 11122,
+        "cached_input_tokens": 2432,
+        "output_tokens": 150
+      },
+      "elapsedMs": 19399
+    },
+    {
+      "id": "adversarial-resolve-close-conversation",
+      "description": "The conversation closes and only the durable preference plus latest user turn should remain.",
+      "model": "gpt-5.4",
+      "passed": true,
+      "payload": {
+        "relation": "resolve",
+        "confidence": 0.99,
+        "evict_turn_ids": [
+          "t1",
+          "t2"
+        ],
+        "pin_turn_ids": [
+          "t1"
+        ],
+        "archive_summary": "Conversation is closed for now. Preserve the durable user preference that replies should default to Chinese in future turns; the assistant acknowledgment can be dropped.",
+        "reasoning_summary": "The user explicitly ends the conversation and asks only that the earlier preference be remembered. The only durable context worth carrying forward is the preference from t1. The raw earlier turns are no longer needed in the next-turn working set, while the latest user turn remains automatically."
+      },
+      "checks": [
+        {
+          "name": "relation",
+          "passed": true,
+          "expected": "resolve",
+          "actual": "resolve"
+        },
+        {
+          "name": "must_evict_turn_ids",
+          "passed": true,
+          "expected": [
+            "t2"
+          ],
+          "actual": [
+            "t1",
+            "t2"
+          ]
+        },
+        {
+          "name": "must_not_evict_turn_ids",
+          "passed": true,
+          "expected": [],
+          "actual": [
+            "t1",
+            "t2"
+          ]
+        },
+        {
+          "name": "must_keep_turn_ids",
+          "passed": true,
+          "expected": [],
+          "actual": [
+            "t3"
+          ]
+        },
+        {
+          "name": "must_pin_turn_ids",
+          "passed": true,
+          "expected": [
+            "t1"
+          ],
+          "actual": [
+            "t1"
+          ]
+        },
+        {
+          "name": "must_not_pin_turn_ids",
+          "passed": true,
+          "expected": [],
+          "actual": [
+            "t1"
+          ]
+        },
+        {
+          "name": "latest_user_turn_guarded",
+          "passed": true,
+          "expected": "t3",
+          "actual": [
+            "t1",
+            "t2"
+          ]
+        },
+        {
+          "name": "min_reduction_ratio",
+          "passed": true,
+          "expected": 0.1,
+          "actual": 0.4545
+        }
+      ],
+      "applied": {
+        "relation": "resolve",
+        "confidence": 0.99,
+        "archiveSummary": "Conversation is closed for now. Preserve the durable user preference that replies should default to Chinese in future turns; the assistant acknowledgment can be dropped.",
+        "reasoningSummary": "The user explicitly ends the conversation and asks only that the earlier preference be remembered. The only durable context worth carrying forward is the preference from t1. The raw earlier turns are no longer needed in the next-turn working set, while the latest user turn remains automatically.",
+        "latestUserTurnId": "t3",
+        "pinTurnIds": [
+          "t1"
+        ],
+        "pinnedOnlyTurnIds": [
+          "t1"
+        ],
+        "requestedEvictTurnIds": [
+          "t1",
+          "t2"
+        ],
+        "blockedEvictTurnIds": [],
+        "appliedEvictTurnIds": [
+          "t1",
+          "t2"
+        ],
+        "keepTurnIds": [
+          "t3"
+        ],
+        "baselineTokens": 11,
+        "keptTokens": 6,
+        "prunedTokens": 5,
+        "reductionRatio": 0.45454545454545453,
+        "keepTurns": [
+          {
+            "id": "t3",
+            "role": "user",
+            "content": "今天先这样，记住上面的偏好就行。下次再继续。",
+            "tokenEstimate": 6
+          }
+        ],
+        "evictedTurns": [
+          {
+            "id": "t1",
+            "role": "user",
+            "content": "以后默认中文。",
+            "tokenEstimate": 2
+          },
+          {
+            "id": "t2",
+            "role": "assistant",
+            "content": "记住了，以后默认中文。",
+            "tokenEstimate": 3
+          }
+        ]
+      },
+      "stderr": "2026-04-16T10:40:34.503992Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at \"/private/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-codex-home-nznsd7/shell_snapshots/019d95e0-d860-7760-8936-e5be9daa76db.tmp-1776336033888674000\": Os { code: 2, kind: NotFound, message: \"No such file or directory\" }",
+      "usage": {
+        "input_tokens": 11123,
+        "cached_input_tokens": 2432,
+        "output_tokens": 246
+      },
+      "elapsedMs": 15607
+    }
+  ]
+}
