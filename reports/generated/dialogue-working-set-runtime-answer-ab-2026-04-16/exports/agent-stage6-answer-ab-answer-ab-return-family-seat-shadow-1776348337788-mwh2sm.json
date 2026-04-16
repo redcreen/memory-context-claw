@@ -1,0 +1,162 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776348337788-mwh2sm",
+  "generated_at": "2026-04-16T14:05:37.788Z",
+  "session_key": "agent:stage6-answer-ab:answer-ab-return-family-seat",
+  "agent_id": "stage6-answer-ab",
+  "query": "代码先放一边。刚才说过，我坐飞机喜欢什么位置？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "以后默认给我中文，结论优先。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "记住了。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "再记一下：我坐飞机喜欢靠过道。"
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "记住了，你坐飞机偏好靠过道。"
+    },
+    {
+      "id": "t5",
+      "role": "user",
+      "content": "家庭偏好先到这。现在说代码：我们这轮先不改现有记忆系统。"
+    },
+    {
+      "id": "t6",
+      "role": "assistant",
+      "content": "好，先 shadow，再决定是否接管主路径。"
+    },
+    {
+      "id": "t7",
+      "role": "user",
+      "content": "代码先放一边。刚才说过，我坐飞机喜欢什么位置？"
+    }
+  ],
+  "decision": {
+    "relation": "switch",
+    "confidence": 0.99,
+    "evict_turn_ids": [
+      "t5",
+      "t6"
+    ],
+    "pin_turn_ids": [
+      "t1",
+      "t3"
+    ],
+    "archive_summary": "User prefers Chinese by default with conclusion first, and prefers aisle seats on airplanes. A brief coding subtopic was introduced and answered: for this round, do not modify the existing memory system; use a shadow approach first and decide later whether to take over the main path.",
+    "reasoning_summary": "The active topic switched back from a short coding aside to a prior personal-preference question. The latest user turn depends on the durable preference stated earlier in t3, and t1 is also a stable user preference worth preserving as a pin. The coding exchange in t5-t6 is currently paused and not needed to answer the next turn, so those raw turns are good eviction candidates while their gist is retained in the archive summary."
+  },
+  "snapshot": {
+    "applied": {
+      "relation": "switch",
+      "confidence": 0.99,
+      "archiveSummary": "User prefers Chinese by default with conclusion first, and prefers aisle seats on airplanes. A brief coding subtopic was introduced and answered: for this round, do not modify the existing memory system; use a shadow approach first and decide later whether to take over the main path.",
+      "reasoningSummary": "The active topic switched back from a short coding aside to a prior personal-preference question. The latest user turn depends on the durable preference stated earlier in t3, and t1 is also a stable user preference worth preserving as a pin. The coding exchange in t5-t6 is currently paused and not needed to answer the next turn, so those raw turns are good eviction candidates while their gist is retained in the archive summary.",
+      "latestUserTurnId": "t7",
+      "pinTurnIds": [
+        "t1",
+        "t3"
+      ],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t5",
+        "t6"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t5",
+        "t6"
+      ],
+      "keepTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t7"
+      ],
+      "baselineTokens": 32,
+      "keptTokens": 19,
+      "prunedTokens": 13,
+      "reductionRatio": 0.40625,
+      "keepTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "以后默认给我中文，结论优先。",
+          "tokenEstimate": 4
+        },
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "记住了。",
+          "tokenEstimate": 1
+        },
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "再记一下：我坐飞机喜欢靠过道。",
+          "tokenEstimate": 4
+        },
+        {
+          "id": "t4",
+          "role": "assistant",
+          "content": "记住了，你坐飞机偏好靠过道。",
+          "tokenEstimate": 4
+        },
+        {
+          "id": "t7",
+          "role": "user",
+          "content": "代码先放一边。刚才说过，我坐飞机喜欢什么位置？",
+          "tokenEstimate": 6
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t5",
+          "role": "user",
+          "content": "家庭偏好先到这。现在说代码：我们这轮先不改现有记忆系统。",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t6",
+          "role": "assistant",
+          "content": "好，先 shadow，再决定是否接管主路径。",
+          "tokenEstimate": 6
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 以后默认给我中文，结论优先。\nt2 assistant: 记住了。\nt3 user: 再记一下：我坐飞机喜欢靠过道。\nt4 assistant: 记住了，你坐飞机偏好靠过道。\nt5 user: 家庭偏好先到这。现在说代码：我们这轮先不改现有记忆系统。\nt6 assistant: 好，先 shadow，再决定是否接管主路径。\nt7 user: 代码先放一边。刚才说过，我坐飞机喜欢什么位置？",
+    "shadowRawTranscript": "t1 user: 以后默认给我中文，结论优先。\nt2 assistant: 记住了。\nt3 user: 再记一下：我坐飞机喜欢靠过道。\nt4 assistant: 记住了，你坐飞机偏好靠过道。\nt7 user: 代码先放一边。刚才说过，我坐飞机喜欢什么位置？",
+    "semanticPinNotes": [
+      "user: 以后默认给我中文，结论优先。",
+      "user: 再记一下：我坐飞机喜欢靠过道。"
+    ],
+    "archiveSummary": "User prefers Chinese by default with conclusion first, and prefers aisle seats on airplanes. A brief coding subtopic was introduced and answered: for this round, do not modify the existing memory system; use a shadow approach first and decide later whether to take over the main path.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 51,
+    "shadowRawPromptEstimate": 33,
+    "shadowPackageEstimate": 52,
+    "shadowPackageText": "Active raw turns:\nt1 user: 以后默认给我中文，结论优先。\nt2 assistant: 记住了。\nt3 user: 再记一下：我坐飞机喜欢靠过道。\nt4 assistant: 记住了，你坐飞机偏好靠过道。\nt7 user: 代码先放一边。刚才说过，我坐飞机喜欢什么位置？\n\nSemantic pins:\nuser: 以后默认给我中文，结论优先。\nuser: 再记一下：我坐飞机喜欢靠过道。"
+  },
+  "timings": {
+    "totalElapsedMs": 19977,
+    "decisionElapsedMs": 19975
+  }
+}

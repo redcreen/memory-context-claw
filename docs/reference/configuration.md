@@ -257,6 +257,44 @@ Recommended rule:
 
 - keep this off unless first-stage behavior is already understandable
 
+#### `dialogueWorkingSetShadow`
+
+Controls the Stage 6 runtime shadow instrumentation for multi-topic dialogue working-set pruning.
+
+Default:
+
+```json5
+{
+  enabled: false,
+  model: "gpt-5.4",
+  provider: "",
+  timeoutMs: 20000,
+  maxTurns: 12,
+  minTurns: 3,
+  maxCharsPerTurn: 900,
+  outputDir: "",
+  cleanupSession: true
+}
+```
+
+Meaning:
+
+- `enabled`: turn the runtime shadow path on or off; keep this `false` unless you are explicitly auditing Stage 6 telemetry
+- `model`: which model the shadow decision uses
+- `provider`: optional provider override for the shadow subagent
+- `timeoutMs`: maximum shadow decision wait time
+- `maxTurns`: how many recent `user` / `assistant` turns are projected into the shadow transcript
+- `minTurns`: minimum projected turns required before the shadow path runs
+- `maxCharsPerTurn`: transcript truncation guard per turn
+- `outputDir`: optional output directory for telemetry JSONL and replayable export artifacts
+- `cleanupSession`: whether to delete the temporary shadow subagent session after capture
+
+Recommended rule:
+
+- keep this `default-off` and `shadow-only`
+- do not treat it as an active prompt-mutation feature
+- use it to collect `relation / evict / pins / reduction ratio` sidecar evidence while the main prompt path stays unchanged
+
 #### `openclawAdapter`
 
 Controls the OpenClaw-side governed export loading boundary.

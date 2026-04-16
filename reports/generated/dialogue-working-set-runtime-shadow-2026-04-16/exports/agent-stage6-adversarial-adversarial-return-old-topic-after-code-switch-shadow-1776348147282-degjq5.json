@@ -1,0 +1,145 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776348147282-degjq5",
+  "generated_at": "2026-04-16T14:02:27.282Z",
+  "session_key": "agent:stage6-adversarial:adversarial-return-old-topic-after-code-switch",
+  "agent_id": "stage6-adversarial",
+  "query": "代码先放一边。刚才说过，我坐飞机喜欢什么位置？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "记一下：我坐飞机喜欢靠过道。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "记住了，你坐飞机偏好靠过道。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "现在说代码，这轮先别改 builtin memory。"
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "好，这轮先不改 builtin memory。"
+    },
+    {
+      "id": "t5",
+      "role": "user",
+      "content": "代码先放一边。刚才说过，我坐飞机喜欢什么位置？"
+    }
+  ],
+  "decision": {
+    "relation": "switch",
+    "confidence": 0.97,
+    "evict_turn_ids": [
+      "t1",
+      "t2",
+      "t3",
+      "t4"
+    ],
+    "pin_turn_ids": [
+      "t1",
+      "t3"
+    ],
+    "archive_summary": "User fact: when flying, the user prefers an aisle seat. Temporary session instruction from an earlier coding thread: do not modify builtin memory in this round. The code topic was explicitly set aside before the latest turn returned to the flight-seat preference.",
+    "reasoning_summary": "The latest turn switches away from the interim code topic and returns to an older remembered preference. The needed dependency is the durable user fact in t1, which can be preserved as a semantic pin instead of keeping the raw turns. The code block in t3-t4 is not needed to answer the current question; its instruction may still matter later, so pinning t3 preserves it compactly while shrinking the raw prompt. Assistant acknowledgments are resolved and good eviction candidates."
+  },
+  "snapshot": {
+    "applied": {
+      "relation": "switch",
+      "confidence": 0.97,
+      "archiveSummary": "User fact: when flying, the user prefers an aisle seat. Temporary session instruction from an earlier coding thread: do not modify builtin memory in this round. The code topic was explicitly set aside before the latest turn returned to the flight-seat preference.",
+      "reasoningSummary": "The latest turn switches away from the interim code topic and returns to an older remembered preference. The needed dependency is the durable user fact in t1, which can be preserved as a semantic pin instead of keeping the raw turns. The code block in t3-t4 is not needed to answer the current question; its instruction may still matter later, so pinning t3 preserves it compactly while shrinking the raw prompt. Assistant acknowledgments are resolved and good eviction candidates.",
+      "latestUserTurnId": "t5",
+      "pinTurnIds": [
+        "t1",
+        "t3"
+      ],
+      "pinnedOnlyTurnIds": [
+        "t1",
+        "t3"
+      ],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ],
+      "keepTurnIds": [
+        "t5"
+      ],
+      "baselineTokens": 27,
+      "keptTokens": 6,
+      "prunedTokens": 21,
+      "reductionRatio": 0.7777777777777778,
+      "keepTurns": [
+        {
+          "id": "t5",
+          "role": "user",
+          "content": "代码先放一边。刚才说过，我坐飞机喜欢什么位置？",
+          "tokenEstimate": 6
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "记一下：我坐飞机喜欢靠过道。",
+          "tokenEstimate": 4
+        },
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "记住了，你坐飞机偏好靠过道。",
+          "tokenEstimate": 4
+        },
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "现在说代码，这轮先别改 builtin memory。",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t4",
+          "role": "assistant",
+          "content": "好，这轮先不改 builtin memory。",
+          "tokenEstimate": 6
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 记一下：我坐飞机喜欢靠过道。\nt2 assistant: 记住了，你坐飞机偏好靠过道。\nt3 user: 现在说代码，这轮先别改 builtin memory。\nt4 assistant: 好，这轮先不改 builtin memory。\nt5 user: 代码先放一边。刚才说过，我坐飞机喜欢什么位置？",
+    "shadowRawTranscript": "t5 user: 代码先放一边。刚才说过，我坐飞机喜欢什么位置？",
+    "semanticPinNotes": [
+      "user: 记一下：我坐飞机喜欢靠过道。",
+      "user: 现在说代码，这轮先别改 builtin memory。"
+    ],
+    "archiveSummary": "User fact: when flying, the user prefers an aisle seat. Temporary session instruction from an earlier coding thread: do not modify builtin memory in this round. The code topic was explicitly set aside before the latest turn returned to the flight-seat preference.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 40,
+    "shadowRawPromptEstimate": 8,
+    "shadowPackageEstimate": 30,
+    "shadowPackageText": "Active raw turns:\nt5 user: 代码先放一边。刚才说过，我坐飞机喜欢什么位置？\n\nSemantic pins:\nuser: 记一下：我坐飞机喜欢靠过道。\nuser: 现在说代码，这轮先别改 builtin memory。"
+  },
+  "timings": {
+    "totalElapsedMs": 23571,
+    "decisionElapsedMs": 23570
+  }
+}

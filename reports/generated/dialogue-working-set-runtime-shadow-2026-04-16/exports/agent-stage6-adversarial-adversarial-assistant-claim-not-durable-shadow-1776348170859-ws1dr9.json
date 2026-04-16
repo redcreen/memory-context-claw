@@ -1,0 +1,127 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776348170859-ws1dr9",
+  "generated_at": "2026-04-16T14:02:50.859Z",
+  "session_key": "agent:stage6-adversarial:adversarial-assistant-claim-not-durable",
+  "agent_id": "stage6-adversarial",
+  "query": "现在切到别的话题：帮我说一下 rollout 顺序。",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "assistant",
+      "content": "我猜你可能更喜欢语音电话。"
+    },
+    {
+      "id": "t2",
+      "role": "user",
+      "content": "不是，我更喜欢异步文字更新。"
+    },
+    {
+      "id": "t3",
+      "role": "assistant",
+      "content": "记住了，你更喜欢异步文字更新。"
+    },
+    {
+      "id": "t4",
+      "role": "user",
+      "content": "现在切到别的话题：帮我说一下 rollout 顺序。"
+    }
+  ],
+  "decision": {
+    "relation": "switch",
+    "confidence": 0.97,
+    "evict_turn_ids": [
+      "t1",
+      "t2",
+      "t3"
+    ],
+    "pin_turn_ids": [
+      "t2"
+    ],
+    "archive_summary": "Earlier side topic resolved: the assistant's guess about preferring voice calls was corrected. Durable user preference to preserve as a semantic pin: the user prefers asynchronous text updates, not voice calls.",
+    "reasoning_summary": "The latest user turn explicitly switches topics to ask about rollout order, so this is a topic change rather than a continuation. The earlier preference exchange is resolved and no longer needed as raw prompt context, but the corrected user preference is durable and should be retained as a compact pin. The assistant's mistaken claim is not durable and should not be pinned."
+  },
+  "snapshot": {
+    "applied": {
+      "relation": "switch",
+      "confidence": 0.97,
+      "archiveSummary": "Earlier side topic resolved: the assistant's guess about preferring voice calls was corrected. Durable user preference to preserve as a semantic pin: the user prefers asynchronous text updates, not voice calls.",
+      "reasoningSummary": "The latest user turn explicitly switches topics to ask about rollout order, so this is a topic change rather than a continuation. The earlier preference exchange is resolved and no longer needed as raw prompt context, but the corrected user preference is durable and should be retained as a compact pin. The assistant's mistaken claim is not durable and should not be pinned.",
+      "latestUserTurnId": "t4",
+      "pinTurnIds": [
+        "t2"
+      ],
+      "pinnedOnlyTurnIds": [
+        "t2"
+      ],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3"
+      ],
+      "keepTurnIds": [
+        "t4"
+      ],
+      "baselineTokens": 19,
+      "keptTokens": 7,
+      "prunedTokens": 12,
+      "reductionRatio": 0.631578947368421,
+      "keepTurns": [
+        {
+          "id": "t4",
+          "role": "user",
+          "content": "现在切到别的话题：帮我说一下 rollout 顺序。",
+          "tokenEstimate": 7
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "assistant",
+          "content": "我猜你可能更喜欢语音电话。",
+          "tokenEstimate": 4
+        },
+        {
+          "id": "t2",
+          "role": "user",
+          "content": "不是，我更喜欢异步文字更新。",
+          "tokenEstimate": 4
+        },
+        {
+          "id": "t3",
+          "role": "assistant",
+          "content": "记住了，你更喜欢异步文字更新。",
+          "tokenEstimate": 4
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 assistant: 我猜你可能更喜欢语音电话。\nt2 user: 不是，我更喜欢异步文字更新。\nt3 assistant: 记住了，你更喜欢异步文字更新。\nt4 user: 现在切到别的话题：帮我说一下 rollout 顺序。",
+    "shadowRawTranscript": "t4 user: 现在切到别的话题：帮我说一下 rollout 顺序。",
+    "semanticPinNotes": [
+      "user: 不是，我更喜欢异步文字更新。"
+    ],
+    "archiveSummary": "Earlier side topic resolved: the assistant's guess about preferring voice calls was corrected. Durable user preference to preserve as a semantic pin: the user prefers asynchronous text updates, not voice calls.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 30,
+    "shadowRawPromptEstimate": 9,
+    "shadowPackageEstimate": 23,
+    "shadowPackageText": "Active raw turns:\nt4 user: 现在切到别的话题：帮我说一下 rollout 顺序。\n\nSemantic pins:\nuser: 不是，我更喜欢异步文字更新。"
+  },
+  "timings": {
+    "totalElapsedMs": 18633,
+    "decisionElapsedMs": 18633
+  }
+}

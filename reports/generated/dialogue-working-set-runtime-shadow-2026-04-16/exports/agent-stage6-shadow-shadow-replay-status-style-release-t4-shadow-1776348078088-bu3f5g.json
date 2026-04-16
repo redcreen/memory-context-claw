@@ -1,0 +1,123 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776348078088-bu3f5g",
+  "generated_at": "2026-04-16T14:01:18.088Z",
+  "session_key": "agent:stage6-shadow:shadow-replay-status-style-release:t4",
+  "agent_id": "stage6-shadow",
+  "query": "现在说 retrieval policy：未分类 query 默认走哪条路径？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "assistant",
+      "content": "当前状态：OpenClaw 版本 2026.3.31，当前模型 openai-codex/gpt-5.4，上下文占用 158k / 272k，缓存命中率 99%。"
+    },
+    {
+      "id": "t2",
+      "role": "user",
+      "content": "以后默认先给我结论，再展开细节。"
+    },
+    {
+      "id": "t3",
+      "role": "assistant",
+      "content": "记住了，以后默认先给结论。"
+    },
+    {
+      "id": "t4",
+      "role": "user",
+      "content": "现在说 retrieval policy：未分类 query 默认走哪条路径？"
+    }
+  ],
+  "decision": {
+    "relation": "continue",
+    "confidence": 0.95,
+    "evict_turn_ids": [
+      "t1",
+      "t3"
+    ],
+    "pin_turn_ids": [
+      "t2"
+    ],
+    "archive_summary": "Evict the stale runtime status snapshot and the assistant acknowledgment. Preserve the user's response-style preference as a semantic pin: default to giving the conclusion first, then details. Keep the current retrieval-policy question active in raw context.",
+    "reasoning_summary": "The latest turn starts the active task, so this is a continue. t1 is an off-topic status snapshot and not needed for answering retrieval policy. t2 is a durable user preference worth pinning. t3 only repeats that preference and can leave the raw prompt."
+  },
+  "snapshot": {
+    "applied": {
+      "relation": "continue",
+      "confidence": 0.95,
+      "archiveSummary": "Evict the stale runtime status snapshot and the assistant acknowledgment. Preserve the user's response-style preference as a semantic pin: default to giving the conclusion first, then details. Keep the current retrieval-policy question active in raw context.",
+      "reasoningSummary": "The latest turn starts the active task, so this is a continue. t1 is an off-topic status snapshot and not needed for answering retrieval policy. t2 is a durable user preference worth pinning. t3 only repeats that preference and can leave the raw prompt.",
+      "latestUserTurnId": "t4",
+      "pinTurnIds": [
+        "t2"
+      ],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t3"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t3"
+      ],
+      "keepTurnIds": [
+        "t2",
+        "t4"
+      ],
+      "baselineTokens": 39,
+      "keptTokens": 14,
+      "prunedTokens": 25,
+      "reductionRatio": 0.6410256410256411,
+      "keepTurns": [
+        {
+          "id": "t2",
+          "role": "user",
+          "content": "以后默认先给我结论，再展开细节。",
+          "tokenEstimate": 4
+        },
+        {
+          "id": "t4",
+          "role": "user",
+          "content": "现在说 retrieval policy：未分类 query 默认走哪条路径？",
+          "tokenEstimate": 10
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "assistant",
+          "content": "当前状态：OpenClaw 版本 2026.3.31，当前模型 openai-codex/gpt-5.4，上下文占用 158k / 272k，缓存命中率 99%。",
+          "tokenEstimate": 21
+        },
+        {
+          "id": "t3",
+          "role": "assistant",
+          "content": "记住了，以后默认先给结论。",
+          "tokenEstimate": 4
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 assistant: 当前状态：OpenClaw 版本 2026.3.31，当前模型 openai-codex/gpt-5.4，上下文占用 158k / 272k，缓存命中率 99%。\nt2 user: 以后默认先给我结论，再展开细节。\nt3 assistant: 记住了，以后默认先给结论。\nt4 user: 现在说 retrieval policy：未分类 query 默认走哪条路径？",
+    "shadowRawTranscript": "t2 user: 以后默认先给我结论，再展开细节。\nt4 user: 现在说 retrieval policy：未分类 query 默认走哪条路径？",
+    "semanticPinNotes": [
+      "user: 以后默认先给我结论，再展开细节。"
+    ],
+    "archiveSummary": "Evict the stale runtime status snapshot and the assistant acknowledgment. Preserve the user's response-style preference as a semantic pin: default to giving the conclusion first, then details. Keep the current retrieval-policy question active in raw context.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 50,
+    "shadowRawPromptEstimate": 19,
+    "shadowPackageEstimate": 33,
+    "shadowPackageText": "Active raw turns:\nt2 user: 以后默认先给我结论，再展开细节。\nt4 user: 现在说 retrieval policy：未分类 query 默认走哪条路径？\n\nSemantic pins:\nuser: 以后默认先给我结论，再展开细节。"
+  },
+  "timings": {
+    "totalElapsedMs": 16854,
+    "decisionElapsedMs": 16854
+  }
+}

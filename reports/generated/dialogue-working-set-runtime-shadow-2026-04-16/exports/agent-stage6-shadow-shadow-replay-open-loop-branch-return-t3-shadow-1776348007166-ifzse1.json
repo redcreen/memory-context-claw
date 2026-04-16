@@ -1,0 +1,97 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776348007166-ifzse1",
+  "generated_at": "2026-04-16T14:00:07.166Z",
+  "session_key": "agent:stage6-shadow:shadow-replay-open-loop-branch-return:t3",
+  "agent_id": "stage6-shadow",
+  "query": "先别展开，我插一句：umc registry migrate 这条命令是做什么的？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "把 Stage 6 的验收拆成 3 个部分。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "可以，先拆成：功能正确性、回退安全、宿主集成验证。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "先别展开，我插一句：umc registry migrate 这条命令是做什么的？"
+    }
+  ],
+  "decision": {
+    "relation": "branch",
+    "confidence": 0.97,
+    "evict_turn_ids": [],
+    "pin_turn_ids": [],
+    "archive_summary": "Main task remains open: decompose Stage 6 acceptance into three parts. Current turn is a side question asking what `umc registry migrate` does before returning to that decomposition.",
+    "reasoning_summary": "The latest user turn is an explicit side question ('插一句'), while the earlier Stage 6 acceptance task is still unfinished. That makes this a branch, not a switch or resolve. Keep the earlier raw turns in the next-turn working set because the main task is unresolved, and do not evict or pin anything yet."
+  },
+  "snapshot": {
+    "applied": {
+      "relation": "branch",
+      "confidence": 0.97,
+      "archiveSummary": "Main task remains open: decompose Stage 6 acceptance into three parts. Current turn is a side question asking what `umc registry migrate` does before returning to that decomposition.",
+      "reasoningSummary": "The latest user turn is an explicit side question ('插一句'), while the earlier Stage 6 acceptance task is still unfinished. That makes this a branch, not a switch or resolve. Keep the earlier raw turns in the next-turn working set because the main task is unresolved, and do not evict or pin anything yet.",
+      "latestUserTurnId": "t3",
+      "pinTurnIds": [],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [],
+      "keepTurnIds": [
+        "t1",
+        "t2",
+        "t3"
+      ],
+      "baselineTokens": 24,
+      "keptTokens": 24,
+      "prunedTokens": 0,
+      "reductionRatio": 0,
+      "keepTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "把 Stage 6 的验收拆成 3 个部分。",
+          "tokenEstimate": 6
+        },
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "可以，先拆成：功能正确性、回退安全、宿主集成验证。",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "先别展开，我插一句：umc registry migrate 这条命令是做什么的？",
+          "tokenEstimate": 11
+        }
+      ],
+      "evictedTurns": []
+    },
+    "baselineRawTranscript": "t1 user: 把 Stage 6 的验收拆成 3 个部分。\nt2 assistant: 可以，先拆成：功能正确性、回退安全、宿主集成验证。\nt3 user: 先别展开，我插一句：umc registry migrate 这条命令是做什么的？",
+    "shadowRawTranscript": "t1 user: 把 Stage 6 的验收拆成 3 个部分。\nt2 assistant: 可以，先拆成：功能正确性、回退安全、宿主集成验证。\nt3 user: 先别展开，我插一句：umc registry migrate 这条命令是做什么的？",
+    "semanticPinNotes": [],
+    "archiveSummary": "Main task remains open: decompose Stage 6 acceptance into three parts. Current turn is a side question asking what `umc registry migrate` does before returning to that decomposition.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 31,
+    "shadowRawPromptEstimate": 31,
+    "shadowPackageEstimate": 35,
+    "shadowPackageText": "Active raw turns:\nt1 user: 把 Stage 6 的验收拆成 3 个部分。\nt2 assistant: 可以，先拆成：功能正确性、回退安全、宿主集成验证。\nt3 user: 先别展开，我插一句：umc registry migrate 这条命令是做什么的？"
+  },
+  "timings": {
+    "totalElapsedMs": 15213,
+    "decisionElapsedMs": 15213
+  }
+}

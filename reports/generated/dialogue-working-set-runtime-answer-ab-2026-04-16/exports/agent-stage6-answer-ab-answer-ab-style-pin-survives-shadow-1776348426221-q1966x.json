@@ -1,0 +1,154 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776348426221-q1966x",
+  "generated_at": "2026-04-16T14:07:06.221Z",
+  "session_key": "agent:stage6-answer-ab:answer-ab-style-pin-survives",
+  "agent_id": "stage6-answer-ab",
+  "query": "我刚才要求你回复时默认怎么组织结构？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "assistant",
+      "content": "当前状态：OpenClaw 版本 2026.3.31，当前模型 openai-codex/gpt-5.4，上下文占用 158k / 272k，缓存命中率 99%。"
+    },
+    {
+      "id": "t2",
+      "role": "user",
+      "content": "以后默认先给我结论，再展开细节。"
+    },
+    {
+      "id": "t3",
+      "role": "assistant",
+      "content": "记住了，以后默认先给结论。"
+    },
+    {
+      "id": "t4",
+      "role": "user",
+      "content": "先说检索策略，当前默认先走 fast path。"
+    },
+    {
+      "id": "t5",
+      "role": "assistant",
+      "content": "好，当前默认先走 fast path。"
+    },
+    {
+      "id": "t6",
+      "role": "user",
+      "content": "我刚才要求你回复时默认怎么组织结构？"
+    }
+  ],
+  "decision": {
+    "relation": "continue",
+    "confidence": 0.95,
+    "evict_turn_ids": [
+      "t1",
+      "t4",
+      "t5"
+    ],
+    "pin_turn_ids": [
+      "t2",
+      "t4"
+    ],
+    "archive_summary": "User set two durable defaults: responses should default to conclusion-first, then details; retrieval should default to fast path. Assistant acknowledged both. The current question refers back to the earlier response-structure preference.",
+    "reasoning_summary": "The latest user turn depends directly on the earlier structure-preference exchange, so this stays a continue. Keep the raw evidence for t2 in working memory; evict the irrelevant status snapshot and the solved retrieval-default block from raw prompt, while preserving its semantic content as a pin. Assistant acknowledgment turns are redundant once the user preferences are pinned."
+  },
+  "snapshot": {
+    "applied": {
+      "relation": "continue",
+      "confidence": 0.95,
+      "archiveSummary": "User set two durable defaults: responses should default to conclusion-first, then details; retrieval should default to fast path. Assistant acknowledged both. The current question refers back to the earlier response-structure preference.",
+      "reasoningSummary": "The latest user turn depends directly on the earlier structure-preference exchange, so this stays a continue. Keep the raw evidence for t2 in working memory; evict the irrelevant status snapshot and the solved retrieval-default block from raw prompt, while preserving its semantic content as a pin. Assistant acknowledgment turns are redundant once the user preferences are pinned.",
+      "latestUserTurnId": "t6",
+      "pinTurnIds": [
+        "t2",
+        "t4"
+      ],
+      "pinnedOnlyTurnIds": [
+        "t4"
+      ],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t4",
+        "t5"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t4",
+        "t5"
+      ],
+      "keepTurnIds": [
+        "t2",
+        "t3",
+        "t6"
+      ],
+      "baselineTokens": 45,
+      "keptTokens": 13,
+      "prunedTokens": 32,
+      "reductionRatio": 0.7111111111111111,
+      "keepTurns": [
+        {
+          "id": "t2",
+          "role": "user",
+          "content": "以后默认先给我结论，再展开细节。",
+          "tokenEstimate": 4
+        },
+        {
+          "id": "t3",
+          "role": "assistant",
+          "content": "记住了，以后默认先给结论。",
+          "tokenEstimate": 4
+        },
+        {
+          "id": "t6",
+          "role": "user",
+          "content": "我刚才要求你回复时默认怎么组织结构？",
+          "tokenEstimate": 5
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "assistant",
+          "content": "当前状态：OpenClaw 版本 2026.3.31，当前模型 openai-codex/gpt-5.4，上下文占用 158k / 272k，缓存命中率 99%。",
+          "tokenEstimate": 21
+        },
+        {
+          "id": "t4",
+          "role": "user",
+          "content": "先说检索策略，当前默认先走 fast path。",
+          "tokenEstimate": 6
+        },
+        {
+          "id": "t5",
+          "role": "assistant",
+          "content": "好，当前默认先走 fast path。",
+          "tokenEstimate": 5
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 assistant: 当前状态：OpenClaw 版本 2026.3.31，当前模型 openai-codex/gpt-5.4，上下文占用 158k / 272k，缓存命中率 99%。\nt2 user: 以后默认先给我结论，再展开细节。\nt3 assistant: 记住了，以后默认先给结论。\nt4 user: 先说检索策略，当前默认先走 fast path。\nt5 assistant: 好，当前默认先走 fast path。\nt6 user: 我刚才要求你回复时默认怎么组织结构？",
+    "shadowRawTranscript": "t2 user: 以后默认先给我结论，再展开细节。\nt3 assistant: 记住了，以后默认先给结论。\nt6 user: 我刚才要求你回复时默认怎么组织结构？",
+    "semanticPinNotes": [
+      "user: 以后默认先给我结论，再展开细节。",
+      "user: 先说检索策略，当前默认先走 fast path。"
+    ],
+    "archiveSummary": "User set two durable defaults: responses should default to conclusion-first, then details; retrieval should default to fast path. Assistant acknowledged both. The current question refers back to the earlier response-structure preference.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 62,
+    "shadowRawPromptEstimate": 21,
+    "shadowPackageEstimate": 42,
+    "shadowPackageText": "Active raw turns:\nt2 user: 以后默认先给我结论，再展开细节。\nt3 assistant: 记住了，以后默认先给结论。\nt6 user: 我刚才要求你回复时默认怎么组织结构？\n\nSemantic pins:\nuser: 以后默认先给我结论，再展开细节。\nuser: 先说检索策略，当前默认先走 fast path。"
+  },
+  "timings": {
+    "totalElapsedMs": 20640,
+    "decisionElapsedMs": 20639
+  }
+}

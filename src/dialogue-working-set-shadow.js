@@ -54,7 +54,7 @@ export function buildShadowContextSnapshot({
   const shadowRawTranscript = renderDialogueTurns(applied.keepTurns);
   const semanticPinNotes = buildSemanticPinNotes({
     turns,
-    pinTurnIds: applied.pinTurnIds
+    pinTurnIds: applied.pinnedOnlyTurnIds
   });
   const archiveSummary = normalizeString(applied.archiveSummary);
   const compactArchiveSummary = normalizeWhitespace(archiveSummary)

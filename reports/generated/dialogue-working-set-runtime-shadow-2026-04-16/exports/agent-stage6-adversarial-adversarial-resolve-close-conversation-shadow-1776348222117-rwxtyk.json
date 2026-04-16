@@ -1,0 +1,113 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776348222117-rwxtyk",
+  "generated_at": "2026-04-16T14:03:42.117Z",
+  "session_key": "agent:stage6-adversarial:adversarial-resolve-close-conversation",
+  "agent_id": "stage6-adversarial",
+  "query": "今天先这样，记住上面的偏好就行。下次再继续。",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "以后默认中文。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "记住了，以后默认中文。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "今天先这样，记住上面的偏好就行。下次再继续。"
+    }
+  ],
+  "decision": {
+    "relation": "resolve",
+    "confidence": 0.99,
+    "evict_turn_ids": [
+      "t1",
+      "t2"
+    ],
+    "pin_turn_ids": [
+      "t1"
+    ],
+    "archive_summary": "User preference established: default language should be Chinese in future conversations. Conversation is closing for now; user plans to continue next time.",
+    "reasoning_summary": "The latest turn closes the session and asks only that prior preferences be remembered. No unresolved task remains active. The durable preference from t1 should be preserved as a semantic pin, while the raw confirmation turns can leave the next-turn working set."
+  },
+  "snapshot": {
+    "applied": {
+      "relation": "resolve",
+      "confidence": 0.99,
+      "archiveSummary": "User preference established: default language should be Chinese in future conversations. Conversation is closing for now; user plans to continue next time.",
+      "reasoningSummary": "The latest turn closes the session and asks only that prior preferences be remembered. No unresolved task remains active. The durable preference from t1 should be preserved as a semantic pin, while the raw confirmation turns can leave the next-turn working set.",
+      "latestUserTurnId": "t3",
+      "pinTurnIds": [
+        "t1"
+      ],
+      "pinnedOnlyTurnIds": [
+        "t1"
+      ],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t2"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t2"
+      ],
+      "keepTurnIds": [
+        "t3"
+      ],
+      "baselineTokens": 11,
+      "keptTokens": 6,
+      "prunedTokens": 5,
+      "reductionRatio": 0.45454545454545453,
+      "keepTurns": [
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "今天先这样，记住上面的偏好就行。下次再继续。",
+          "tokenEstimate": 6
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "以后默认中文。",
+          "tokenEstimate": 2
+        },
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "记住了，以后默认中文。",
+          "tokenEstimate": 3
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 以后默认中文。\nt2 assistant: 记住了，以后默认中文。\nt3 user: 今天先这样，记住上面的偏好就行。下次再继续。",
+    "shadowRawTranscript": "t3 user: 今天先这样，记住上面的偏好就行。下次再继续。",
+    "semanticPinNotes": [
+      "user: 以后默认中文。"
+    ],
+    "archiveSummary": "User preference established: default language should be Chinese in future conversations. Conversation is closing for now; user plans to continue next time.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 19,
+    "shadowRawPromptEstimate": 8,
+    "shadowPackageEstimate": 20,
+    "shadowPackageText": "Active raw turns:\nt3 user: 今天先这样，记住上面的偏好就行。下次再继续。\n\nSemantic pins:\nuser: 以后默认中文。"
+  },
+  "timings": {
+    "totalElapsedMs": 14606,
+    "decisionElapsedMs": 14606
+  }
+}

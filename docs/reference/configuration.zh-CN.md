@@ -259,6 +259,44 @@ openclaw memory search "我爱吃什么"
 
 - 只有在第一阶段行为已经足够可理解时，才考虑打开它
 
+#### `dialogueWorkingSetShadow`
+
+控制 Stage 6 的 runtime shadow instrumentation，也就是多话题对话 working-set pruning 的影子测量面。
+
+默认值：
+
+```json5
+{
+  enabled: false,
+  model: "gpt-5.4",
+  provider: "",
+  timeoutMs: 20000,
+  maxTurns: 12,
+  minTurns: 3,
+  maxCharsPerTurn: 900,
+  outputDir: "",
+  cleanupSession: true
+}
+```
+
+含义：
+
+- `enabled`：是否开启 runtime shadow 路径；除非你就是在做 Stage 6 telemetry 审计，否则保持 `false`
+- `model`：shadow decision 使用哪个模型
+- `provider`：shadow subagent 的可选 provider override
+- `timeoutMs`：等待 shadow decision 的最长时间
+- `maxTurns`：投进 shadow transcript 的最近 `user` / `assistant` 轮次数
+- `minTurns`：达到多少投影轮次后才运行 shadow path
+- `maxCharsPerTurn`：每轮 transcript 的截断保护
+- `outputDir`：telemetry JSONL 和 replayable export artifacts 的可选输出目录
+- `cleanupSession`：capture 完后是否删除临时 shadow subagent session
+
+推荐原则：
+
+- 保持 `default-off` 且继续只做 `shadow-only`
+- 不要把它当成 active prompt mutation feature
+- 它的作用是在正式 prompt path 不变的前提下，收集 `relation / evict / pins / reduction ratio` 这些 sidecar 证据
+
 #### `openclawAdapter`
 
 控制 OpenClaw 侧的 governed export 加载边界。

@@ -42,19 +42,18 @@
 - [generated/openclaw-natural-chinese-watch-and-perf-2026-04-15.md](../reports/generated/openclaw-natural-chinese-watch-and-perf-2026-04-15.md)
 - [generated/openclaw-answer-level-gate-expansion-2026-04-15.md](../reports/generated/openclaw-answer-level-gate-expansion-2026-04-15.md)
 
-## Dialogue Working-Set 验证快照
+## Dialogue Working-Set Runtime 快照
 
-这块把下一条 review-gated slice 直接写进主 roadmap，避免只在 report 里看见结论、却看不见后续规划。
+这块现在记录的是已经完成的 Stage 6 runtime shadow integration。
 
-- 专项名称：`dialogue-working-set-shadow-validation`
-- 当前状态：`validated / review-gated`
-- shadow replay：`9 / 9` checkpoints 通过
-- shadow replay average raw reduction ratio：`0.5722`
-- shadow replay average shadow-package reduction ratio：`0.2275`
-- answer A/B：baseline `5 / 5`，shadow `5 / 5`，`0` 回归
-- answer A/B average estimated prompt reduction ratio：`0.0636`
-- adversarial replay：`7 / 7`
-- 当前解释：方向已经足够强，可以进入 runtime shadow integration；但还不够支持直接切 active prompt path
+- 专项名称：`dialogue-working-set-shadow-runtime`
+- 当前状态：`completed / shadow-only`
+- runtime shadow replay：`16 / 16`
+- runtime shadow replay average reduction ratio：`0.4368`
+- runtime answer A/B：baseline `5 / 5`，shadow `5 / 5`
+- runtime answer A/B shadow-only wins：`0`
+- runtime answer A/B average prompt reduction ratio：`0.0114`
+- 当前解释：runtime shadow integration 已经成为新的测量面，但 active prompt mutation 继续显式延后
 
 对应证据：
 
@@ -63,27 +62,31 @@
 - [generated/dialogue-working-set-answer-ab-2026-04-16.md](../reports/generated/dialogue-working-set-answer-ab-2026-04-16.md)
 - [generated/dialogue-working-set-adversarial-2026-04-16.md](../reports/generated/dialogue-working-set-adversarial-2026-04-16.md)
 - [generated/dialogue-working-set-validation-2026-04-16.md](../reports/generated/dialogue-working-set-validation-2026-04-16.md)
+- [generated/dialogue-working-set-runtime-shadow-2026-04-16.md](../reports/generated/dialogue-working-set-runtime-shadow-2026-04-16.md)
+- [generated/dialogue-working-set-runtime-answer-ab-2026-04-16.md](../reports/generated/dialogue-working-set-runtime-answer-ab-2026-04-16.md)
+- [generated/dialogue-working-set-runtime-shadow-summary-2026-04-16.md](../reports/generated/dialogue-working-set-runtime-shadow-summary-2026-04-16.md)
+- [generated/dialogue-working-set-stage6-2026-04-16.md](../reports/generated/dialogue-working-set-stage6-2026-04-16.md)
 
 ## 当前 / 下一步 / 更后面
 
 | 时间层级 | 重点 | 退出信号 |
 | --- | --- | --- |
-| 当前 | 把下一条 slice 保持成 docs-first、review-gated：先把 `dialogue working-set pruning` 的 Stage 6 规划写入 roadmap 和 development plan，再等 GitHub review | Stage 6 规划被 review 并批准为新的实现指针 |
-| 下一步 | 只落最小 runtime shadow integration，记录 `relation / evict / pins / reduction ratio`，不改正式 prompt | 真实 session 的 shadow telemetry 保持绿色，且附带 answer-level replay 没有新回归 |
-| 更后面 | 再决定是否让 working-set pruning 进入 active prompt assembly，并把之前延后的 history / harder A/B 工作接到 telemetry 上 | shadow telemetry 长期为绿，足以支撑带 rollback gate 的 active-path experiment |
+| 当前 | 把 Stage 6 runtime shadow integration 当成已完成能力，继续保持 `default-off` 和 shadow-only，并恢复之前延后的 shared-fail history cleanup | deferred history / harder A/B 队列已经重新带着 Stage 6 telemetry surface 跑起来 |
+| 下一步 | 带着新的 shadow telemetry surface 继续扩 harder live A/B 和 history cases | 更难的 answer-level case 开始在不打开 active prompt mutation 的情况下变成更稳定的 UMC 胜场 |
+| 更后面 | 只有在更长时间的 real-session soak 后，才讨论是否值得开 active prompt experiment | shadow telemetry 长期为绿，足以支撑显式的 promotion decision 和 rollback gate |
 
 ## 当前执行重点
 
 主 roadmap 里的“当前”不只是方向，也对应接下来要执行的具体工作：
 
-1. 先把 `dialogue working-set pruning` 正式收进 roadmap / development plan，形成 docs-first 的 Stage 6。
-2. 在 GitHub review 明确通过前，不开始任何 runtime 改动。
-3. review 通过后，只开启最小 shadow instrumentation，不碰正式 prompt path。
-4. 之前的 history shared-fail cleanup 与 harder A/B 扩面先顺延，等 shadow telemetry 路径存在后再接上，避免后续 answer-level 工作失去新的测量面。
+1. 继续保持 Stage 6 runtime shadow integration 为 `default-off` 和 shadow-only。
+2. 恢复之前延后的 `ab100-zh-history-editor-*` cleanup 与 harder live A/B 扩面，并把 shadow telemetry 一起挂上。
+3. 继续把 active prompt mutation 明确排除在当前范围外，直到新的 measurement surface 再 soak 更久。
+4. 把 runtime export artifacts 当成新的 replayable operator evidence surface。
 
 恢复执行时：
 
-- 主顺序看 [reference/unified-memory-core/development-plan.zh-CN.md](reference/unified-memory-core/development-plan.zh-CN.md) 的 `93`
+- 主顺序看 [reference/unified-memory-core/development-plan.zh-CN.md](reference/unified-memory-core/development-plan.zh-CN.md) 的 `91`
 - 实时执行状态看 [../.codex/plan.md](../.codex/plan.md) 和 [../.codex/status.md](../.codex/status.md)
 
 ## 里程碑
@@ -95,7 +98,7 @@
 | [Stage 3：self-learning lifecycle 基线](reference/unified-memory-core/development-plan.zh-CN.md#stage-3-self-learning-生命周期基线) | completed | 把已经实现的 reflection baseline 收成一条显式生命周期，并补齐 promotion / decay / 学习专项治理 | Stage 2 | promotion / decay、learning governance、OpenClaw validation 和本地 governed loop 都已落地并有回归保护 |
 | [Stage 4：policy adaptation](reference/unified-memory-core/development-plan.zh-CN.md#stage-4-policy-adaptation-与多消费者使用) | completed | 让治理后的学习产物影响消费者行为 | Stage 3 | 一条可回退的 policy-adaptation 闭环被证明 |
 | [Stage 5：product hardening](reference/unified-memory-core/development-plan.zh-CN.md#stage-5-产品加固与独立运行) | completed | 验证独立产品运行和 split-ready 边界 | Stage 4 | release boundary、可复现性、维护工作流和 split rehearsal 都已经 CLI 可验证 |
-| [Stage 6：dialogue working-set shadow integration](reference/unified-memory-core/development-plan.zh-CN.md#stage-6-dialogue-working-set-shadow-integration) | planned | 在任何 active prompt cutover 之前，先用 runtime shadow mode 验证热会话 working-set pruning | Stage 5 | docs-first review 通过、default-off shadow telemetry 落地，并且附带 answer-level replay 继续绿色 |
+| [Stage 6：dialogue working-set shadow integration](reference/unified-memory-core/development-plan.zh-CN.md#stage-6-dialogue-working-set-shadow-integration) | completed | 在任何 active prompt cutover 之前，先用 runtime shadow mode 验证热会话 working-set pruning | Stage 5 | runtime shadow telemetry 已经 default-off 落地、replayable exports 已存在，且 answer-level replay 继续足够绿色，支持保持 shadow-only |
 
 ## 里程碑流转
 

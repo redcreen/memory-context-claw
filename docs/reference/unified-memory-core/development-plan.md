@@ -50,9 +50,9 @@ Current status:
 - `Stage 3`: completed
 - `Stage 4`: completed
 - `Stage 5`: completed
-- `Stage 6`: planned
-- current pointer: `Stage 6 docs-first review gate`
-- current recommendation: finish the Stage 6 roadmap / development-plan review on GitHub before starting any runtime shadow integration work
+- `Stage 6`: completed
+- current pointer: `Post-Stage-6 deferred history cleanup resume`
+- current recommendation: keep `dialogueWorkingSetShadow` default-off and shadow-only, then resume the deferred history cleanup and harder A/B expansion with the new telemetry surface attached
 
 Already implemented in the current baseline:
 
@@ -85,7 +85,7 @@ Execution constraints that still apply:
 | Stage 3 | `21-30` | complete the self-learning lifecycle baseline | `completed` |
 | Stage 4 | `31-38` | connect governed learning outputs into adapter policy use | `completed` |
 | Stage 5 | `39-46` | harden product operations and split-ready execution | `completed` |
-| Stage 6 | `93-100` | validate dialogue working-set pruning in runtime shadow mode before any active prompt cutover | `planned` |
+| Stage 6 | `93-100` | validate dialogue working-set pruning in runtime shadow mode before any active prompt cutover | `completed` |
 
 ## Sequential Build Plan
 
@@ -187,32 +187,37 @@ Stage complete when:
 - the runtime records `relation / evict / pins / reduction ratio` without mutating the final prompt
 - real-session shadow telemetry is green enough to decide whether an active-path experiment should even be allowed
 
-93. `next` Keep this slice docs-first and review-gated.
-   - Sync the roadmap, development plan, and architecture references so the next work starts from a reviewed Stage 6 queue instead of report-only evidence.
-   - Do not begin runtime code changes for this slice until the GitHub review on the docs-first plan is approved.
-94. `todo` Define the Stage 6 runtime shadow contract before implementation.
-   - At minimum define the emitted fields, log/report shape, sampling boundary, `default-off` config surface, and where shadow artifacts are written.
-95. `todo` Implement the minimum runtime shadow instrumentation path.
-   - Record `relation / evict / pins / reduction ratio` on real sessions.
-   - Do not alter the final prompt or builtin memory behavior in this step.
-96. `todo` Add real-session shadow reports and replayable exports.
-   - The operator should be able to inspect which raw turns would have left the prompt, which pins would have survived, and how much prompt thickness would have changed.
-97. `todo` Attach answer-level regression measurement to the shadow path.
-   - Reuse the baseline-vs-shadow replay harness so real-session shadow telemetry can be compared against answer correctness instead of token reduction alone.
-98. `todo` Define the active-path promotion gate and rollback boundary.
-   - Promotion must require explicit thresholds for shadow telemetry, regression budget, rollback switch, and prompt-thinning benefit.
-99. `todo` Decide whether to open any active prompt experiment only after the Stage 6 shadow gate stays green.
-   - `working-set pruning` should remain shadow-only until the promotion gate is satisfied.
-100. `todo` Resume the deferred history cleanup and harder live A/B expansion with Stage 6 telemetry attached.
-   - Reopen `ab100-zh-history-editor-2`, `ab100-zh-history-editor-4`, and the next harder A/B round only after the shadow path is available as a measurement surface.
+Stage 6 evidence:
+
+- runtime replay report: [../../../reports/generated/dialogue-working-set-runtime-shadow-2026-04-16.md](../../../reports/generated/dialogue-working-set-runtime-shadow-2026-04-16.md)
+- runtime answer A/B report: [../../../reports/generated/dialogue-working-set-runtime-answer-ab-2026-04-16.md](../../../reports/generated/dialogue-working-set-runtime-answer-ab-2026-04-16.md)
+- runtime shadow summary: [../../../reports/generated/dialogue-working-set-runtime-shadow-summary-2026-04-16.md](../../../reports/generated/dialogue-working-set-runtime-shadow-summary-2026-04-16.md)
+- Stage 6 closeout report: [../../../reports/generated/dialogue-working-set-stage6-2026-04-16.md](../../../reports/generated/dialogue-working-set-stage6-2026-04-16.md)
+
+93. `completed` Keep this slice docs-first and review-gated before runtime work.
+   - The roadmap, development plan, and architecture references were aligned first so Stage 6 started from a reviewed queue instead of report-only evidence.
+94. `completed` Define the Stage 6 runtime shadow contract before implementation.
+   - The runtime surface now emits `relation / evict / pins / reduction ratio`, writes replayable export artifacts, and keeps the feature `default-off`.
+95. `completed` Implement the minimum runtime shadow instrumentation path.
+   - `ContextAssemblyEngine.assemble()` now records runtime shadow decisions on real assembled sessions without mutating the final prompt or builtin memory behavior.
+96. `completed` Add real-session shadow reports and replayable exports.
+   - Sidecar exports now capture the transcript prefix, decision payload, snapshot, token estimates, and operator-facing summary lines.
+97. `completed` Attach answer-level regression measurement to the shadow path.
+   - Runtime answer A/B now reuses the real shadow exports instead of isolated helper snapshots only.
+98. `completed` Define the active-path promotion gate and rollback boundary.
+   - Rollback is configuration-only via `dialogueWorkingSetShadow.enabled=false`, and promotion remains gated behind longer real-session soak plus explicit regression thresholds.
+99. `completed` Decide whether to open any active prompt experiment only after the Stage 6 shadow gate stays green.
+   - Current decision: do not open active prompt mutation yet; keep the feature shadow-only.
+100. `completed` Resume the deferred history cleanup and harder live A/B expansion with Stage 6 telemetry attached.
+   - The next execution pointer now returns to the deferred `ab100-zh-history-editor-*` cleanup and the harder A/B expansion, with the new shadow telemetry available as the measurement surface.
 
 ## Current Next Build
 
 Resume exactly from here:
 
-1. finish the docs-first Stage 6 review gate in the roadmap and development plan
-2. wait for GitHub review before starting runtime shadow instrumentation
-3. keep the earlier history shared-fail cleanup deferred until the Stage 6 shadow path exists
+1. resume the deferred shared-fail history cleanup, starting with `91`
+2. keep `dialogueWorkingSetShadow` `default-off` and shadow-only while the new telemetry surface soaks
+3. use Stage 6 telemetry when reopening the harder live A/B expansion and any later active-path discussion
 
 Do not start with:
 
@@ -333,10 +338,10 @@ The goal is not to reopen baseline contract work. The goal is to:
    - The birthday prompt is no longer counted as a plain negative because it behaves more like an identity-conflict / birthday-guardrail probe.
    - After replacing it with a true unknown-fact abstention prompt, `ab100-zh-negative-4` is now a shared abstention pass and the `100`-case live A/B no longer has a builtin-only win.
    - The same round also closed `ordinary-ab-en-rule-releases-1`, so the focused ordinary-conversation realtime-write suite is now `10 / 10` on the current path.
-91. `todo` Remove the two shared-fail Chinese history cases in the `100`-case live A/B: `ab100-zh-history-editor-2` and `ab100-zh-history-editor-4`.
+91. `next` Remove the two shared-fail Chinese history cases in the `100`-case live A/B: `ab100-zh-history-editor-2` and `ab100-zh-history-editor-4`.
    - The goal is to stop the history / supersede surface from sitting at “both engines miss” and pull UMC to stable correctness first.
 92. `todo` After the shared-fail history cases close, design the next live A/B round around `cross-source`, `conflict`, `multi-step history`, and denser natural-Chinese prompts so UMC can win on more harder cases.
-   - This queue is now intentionally deferred behind the Stage 6 docs-first review and shadow-integration work.
+   - This queue now resumes with Stage 6 shadow telemetry attached as a new measurement surface.
 
 ## Deferred Enhancement Queue
 

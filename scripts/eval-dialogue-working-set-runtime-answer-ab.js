@@ -16,17 +16,14 @@ import {
   classifyAnswerAbOutcome,
   evaluateAnswer
 } from "../src/dialogue-working-set-answer-ab.js";
-import { estimateTokenCountFromText } from "../src/utils.js";
 import { buildShadowContextSnapshot } from "../src/dialogue-working-set-shadow.js";
-import {
-  buildWorkingSetDecisionPrompt,
-  buildWorkingSetDecisionSchema
-} from "../src/dialogue-working-set-llm.js";
+import { ContextAssemblyEngine } from "../src/engine.js";
+import { buildWorkingSetDecisionSchema } from "../src/dialogue-working-set-llm.js";
+import { estimateTokenCountFromText } from "../src/utils.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const repoRoot = path.resolve(__dirname, "..");
-const defaultCasesPath = path.resolve(repoRoot, "evals/dialogue-working-set-answer-ab-cases.js");
 
 function readFlag(name, fallback = "") {
   const index = process.argv.indexOf(name);
@@ -48,6 +45,89 @@ async function importCases(casesPath) {
     throw new Error(`Case module did not export an array: ${casesPath}`);
   }
   return cases;
+}
+
+function createCodexSubagentRuntime({
+  model,
+  reasoningEffort,
+  codexHome
+}) {
+  const sessions = new Map();
+  const runs = new Map();
+
+  return {
+    subagent: {
+      async run({ sessionKey, message, model: overrideModel }) {
+        const runId = `runtime-answer-ab-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+        const result = await runStructuredCodexPrompt({
+          prompt: message,
+          schema: buildWorkingSetDecisionSchema(),
+          model: normalizeString(overrideModel, model),
+          reasoningEffort,
+          cwd: repoRoot,
+          codexHome
+        });
+        sessions.set(sessionKey, {
+          messages: [
+            {
+              role: "assistant",
+              content: JSON.stringify(result.payload)
+            }
+          ],
+          result
+        });
+        runs.set(runId, { sessionKey, result });
+        return { runId };
+      },
+      async waitForRun({ runId }) {
+        if (!runs.has(runId)) {
+          return { status: "error", error: `missing run: ${runId}` };
+        }
+        return { status: "ok" };
+      },
+      async getSessionMessages({ sessionKey }) {
+        return sessions.get(sessionKey) || { messages: [] };
+      },
+      async deleteSession({ sessionKey }) {
+        sessions.delete(sessionKey);
+      }
+    }
+  };
+}
+
+async function listExportEvents(outputDir) {
+  const exportsDir = path.join(outputDir, "exports");
+  let files = [];
+  try {
+    files = await fs.readdir(exportsDir);
+  } catch (error) {
+    if (error?.code === "ENOENT") {
+      return [];
+    }
+    throw error;
+  }
+
+  const events = [];
+  for (const fileName of files.filter((item) => item.endsWith(".json")).sort()) {
+    const fullPath = path.join(exportsDir, fileName);
+    const payload = JSON.parse(await fs.readFile(fullPath, "utf8"));
+    events.push({
+      ...payload,
+      exportPath: fullPath
+    });
+  }
+  return events;
+}
+
+function findEventBySessionKey(events, sessionKey) {
+  return events.find((item) => item.session_key === sessionKey) || null;
+}
+
+function buildMessages(transcript = []) {
+  return transcript.map((turn) => ({
+    role: turn.role,
+    content: turn.content
+  }));
 }
 
 async function runAnswerPrompt({
@@ -76,10 +156,11 @@ async function runAnswerPrompt({
 
 function renderMarkdown(report) {
   const lines = [];
-  lines.push("# Dialogue Working-Set Answer A/B");
+  lines.push("# Dialogue Working-Set Runtime Answer A/B");
   lines.push("");
   lines.push(`- model: \`${report.model}\``);
   lines.push(`- reasoning effort: \`${report.reasoningEffort}\``);
+  lines.push(`- output dir: \`${report.outputDir}\``);
   lines.push(`- cases: \`${report.summary.total}\``);
   lines.push(`- baselinePassed: \`${report.summary.baselinePassed}\``);
   lines.push(`- shadowPassed: \`${report.summary.shadowPassed}\``);
@@ -87,22 +168,16 @@ function renderMarkdown(report) {
   lines.push(`- shadowOnly: \`${report.summary.shadowOnly}\``);
   lines.push(`- baselineOnly: \`${report.summary.baselineOnly}\``);
   lines.push(`- bothFail: \`${report.summary.bothFail}\``);
-  lines.push(`- average estimated prompt reduction ratio: \`${report.summary.averagePromptReductionRatio}\``);
-  lines.push(`- average baseline elapsed ms: \`${report.summary.averageBaselineElapsedMs}\``);
-  lines.push(`- average shadow elapsed ms: \`${report.summary.averageShadowElapsedMs}\``);
+  lines.push(`- average prompt reduction ratio: \`${report.summary.averagePromptReductionRatio}\``);
   lines.push("");
 
   for (const result of report.results) {
     lines.push(`## ${result.id}`);
     lines.push(`- description: ${result.description}`);
-    lines.push(`- decision relation: \`${result.decision.payload.relation}\``);
-    lines.push(`- decision raw reduction ratio: \`${result.snapshot.applied.reductionRatio.toFixed(4)}\``);
+    lines.push(`- captured: \`${result.captured}\``);
+    lines.push(`- relation: \`${result.event?.decision?.relation || ""}\``);
     lines.push(`- outcome: \`${classifyAnswerAbOutcome(result)}\``);
-    lines.push(`- baseline prompt estimate: \`${result.baseline.promptEstimate}\``);
-    lines.push(`- shadow prompt estimate: \`${result.shadow.promptEstimate}\``);
-    lines.push(`- prompt reduction ratio: \`${result.promptReductionRatio.toFixed(4)}\``);
-    lines.push(`- baseline elapsed ms: \`${result.baseline.elapsedMs}\``);
-    lines.push(`- shadow elapsed ms: \`${result.shadow.elapsedMs}\``);
+    lines.push(`- export: \`${result.event?.exportPath || ""}\``);
     lines.push(`- baseline answer: ${result.baseline.answer}`);
     lines.push(`- shadow answer: ${result.shadow.answer}`);
     lines.push("");
@@ -111,38 +186,68 @@ function renderMarkdown(report) {
   return `${lines.join("\n")}\n`;
 }
 
-const only = normalizeString(readFlag("--only", ""));
 const format = normalizeString(readFlag("--format", "json"));
 const model = normalizeString(readFlag("--model", "gpt-5.4"));
 const reasoningEffort = normalizeString(readFlag("--reasoning-effort", "low"), "low");
-const casesPath = path.resolve(repoRoot, readFlag("--cases", defaultCasesPath));
+const reuseExports = hasFlag("--reuse-exports");
+const casesPath = path.resolve(
+  repoRoot,
+  readFlag("--cases", "evals/dialogue-working-set-answer-ab-cases.js")
+);
+const outputDir = path.resolve(
+  repoRoot,
+  readFlag("--output-dir", "reports/generated/dialogue-working-set-runtime-answer-ab-2026-04-16")
+);
 
-const allCases = await importCases(casesPath);
-const selectedCases = allCases.filter((item) => !only || normalizeString(item.id) === only);
-if (!selectedCases.length) {
-  throw new Error("No dialogue answer A/B cases selected.");
+const cases = await importCases(casesPath);
+if (!reuseExports) {
+  await fs.rm(outputDir, { recursive: true, force: true });
 }
 
 const codexHome = await createTemporaryCodexHome(reasoningEffort);
 
 try {
-  const results = [];
-
-  for (const caseDef of selectedCases) {
-    console.error(`[dialogue-answer-ab] running ${caseDef.id}`);
-    const decision = await runStructuredCodexPrompt({
-      prompt: buildWorkingSetDecisionPrompt(caseDef),
-      schema: buildWorkingSetDecisionSchema(),
+  if (!reuseExports) {
+    const runtime = createCodexSubagentRuntime({
       model,
       reasoningEffort,
-      cwd: repoRoot,
       codexHome
     });
-    const snapshot = buildShadowContextSnapshot({
-      turns: caseDef.transcript,
-      decision: decision.payload
+    const engine = new ContextAssemblyEngine({
+      runtime,
+      logger: { warn() {}, info() {} },
+      pluginConfig: {
+        enabled: true,
+        dialogueWorkingSetShadow: {
+          enabled: true,
+          model,
+          timeoutMs: 120000,
+          outputDir
+        }
+      },
+      retrievalFn: async () => []
     });
 
+    for (const caseDef of cases) {
+      console.error(`[runtime-answer-ab] capturing ${caseDef.id}`);
+      await engine.assemble({
+        messages: buildMessages(caseDef.transcript),
+        tokenBudget: 4096,
+        sessionKey: `agent:stage6-answer-ab:${caseDef.id}`
+      });
+    }
+  }
+
+  const exportEvents = await listExportEvents(outputDir);
+  const results = [];
+
+  for (const caseDef of cases) {
+    const sessionKey = `agent:stage6-answer-ab:${caseDef.id}`;
+    const event = findEventBySessionKey(exportEvents, sessionKey);
+    const snapshot = buildShadowContextSnapshot({
+      turns: event?.transcript || caseDef.transcript,
+      decision: event?.decision || {}
+    });
     const baselinePrompt = buildBaselineAnswerPrompt(caseDef);
     const shadowPrompt = buildShadowAnswerPrompt(caseDef, snapshot);
     const baselineRun = await runAnswerPrompt({
@@ -157,7 +262,6 @@ try {
       reasoningEffort,
       codexHome
     });
-
     const baselineEval = evaluateAnswer(caseDef, baselineRun.answer);
     const shadowEval = evaluateAnswer(caseDef, shadowRun.answer);
     const promptReductionRatio = baselineRun.promptEstimate > 0
@@ -167,8 +271,8 @@ try {
     results.push({
       id: caseDef.id,
       description: caseDef.description,
-      decision,
-      snapshot,
+      captured: event?.status === "captured",
+      event: event ? { ...event, snapshot } : null,
       baseline: {
         ...baselineRun,
         ...baselineEval
@@ -185,6 +289,7 @@ try {
     generatedAt: new Date().toISOString(),
     model,
     reasoningEffort,
+    outputDir,
     summary: {
       total: results.length,
       baselinePassed: results.filter((item) => item.baseline.passed).length,
@@ -195,12 +300,6 @@ try {
       bothFail: results.filter((item) => !item.baseline.passed && !item.shadow.passed).length,
       averagePromptReductionRatio: results.length
         ? Number((results.reduce((sum, item) => sum + item.promptReductionRatio, 0) / results.length).toFixed(4))
-        : 0,
-      averageBaselineElapsedMs: results.length
-        ? Number((results.reduce((sum, item) => sum + item.baseline.elapsedMs, 0) / results.length).toFixed(1))
-        : 0,
-      averageShadowElapsedMs: results.length
-        ? Number((results.reduce((sum, item) => sum + item.shadow.elapsedMs, 0) / results.length).toFixed(1))
         : 0
     },
     results
@@ -224,7 +323,7 @@ try {
     process.stdout.write(`${JSON.stringify(report, null, 2)}\n`);
   }
 
-  if (report.summary.shadowPassed < report.summary.total) {
+  if (report.summary.baselineOnly > 0 || report.summary.bothFail > 0) {
     process.exitCode = 1;
   }
 } finally {

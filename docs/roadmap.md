@@ -42,19 +42,18 @@ Supporting evidence:
 - [generated/openclaw-natural-chinese-watch-and-perf-2026-04-15.md](../reports/generated/openclaw-natural-chinese-watch-and-perf-2026-04-15.md)
 - [generated/openclaw-answer-level-gate-expansion-2026-04-15.md](../reports/generated/openclaw-answer-level-gate-expansion-2026-04-15.md)
 
-## Dialogue Working-Set Validation Snapshot
+## Dialogue Working-Set Runtime Snapshot
 
-This block is the docs-first handoff into the next review-gated slice.
+This block tracks the completed Stage 6 runtime shadow integration.
 
-- Program: `dialogue-working-set-shadow-validation`
-- Status: `validated / review-gated`
-- Shadow replay: `9 / 9` checkpoints passed
-- Shadow replay average raw reduction ratio: `0.5722`
-- Shadow replay average shadow-package reduction ratio: `0.2275`
-- Answer A/B: baseline `5 / 5`, shadow `5 / 5`, `0` regressions
-- Answer A/B average estimated prompt reduction ratio: `0.0636`
-- Adversarial replay: `7 / 7`
-- Interpretation: the direction is now strong enough for runtime shadow integration, but not for active prompt cutover
+- Program: `dialogue-working-set-shadow-runtime`
+- Status: `completed / shadow-only`
+- Runtime shadow replay: `16 / 16`
+- Runtime shadow replay average reduction ratio: `0.4368`
+- Runtime answer A/B: baseline `5 / 5`, shadow `5 / 5`
+- Runtime answer A/B shadow-only wins: `0`
+- Runtime answer A/B average prompt reduction ratio: `0.0114`
+- Interpretation: runtime shadow integration is now the durable measurement surface, but active prompt mutation remains deferred
 
 Supporting evidence:
 
@@ -63,27 +62,31 @@ Supporting evidence:
 - [generated/dialogue-working-set-answer-ab-2026-04-16.md](../reports/generated/dialogue-working-set-answer-ab-2026-04-16.md)
 - [generated/dialogue-working-set-adversarial-2026-04-16.md](../reports/generated/dialogue-working-set-adversarial-2026-04-16.md)
 - [generated/dialogue-working-set-validation-2026-04-16.md](../reports/generated/dialogue-working-set-validation-2026-04-16.md)
+- [generated/dialogue-working-set-runtime-shadow-2026-04-16.md](../reports/generated/dialogue-working-set-runtime-shadow-2026-04-16.md)
+- [generated/dialogue-working-set-runtime-answer-ab-2026-04-16.md](../reports/generated/dialogue-working-set-runtime-answer-ab-2026-04-16.md)
+- [generated/dialogue-working-set-runtime-shadow-summary-2026-04-16.md](../reports/generated/dialogue-working-set-runtime-shadow-summary-2026-04-16.md)
+- [generated/dialogue-working-set-stage6-2026-04-16.md](../reports/generated/dialogue-working-set-stage6-2026-04-16.md)
 
 ## Now / Next / Later
 
 | Horizon | Focus | Exit Signal |
 | --- | --- | --- |
-| Now | keep the next slice docs-first and review-gated: sync roadmap, development plan, and architecture around `dialogue working-set pruning`, then wait for GitHub review before touching runtime code | the Stage 6 plan is reviewed and approved as the new implementation pointer |
-| Next | land a minimal runtime shadow integration that records `relation / evict / pins / reduction ratio` without mutating the final prompt | real-session shadow telemetry stays green and answer-level regressions remain at `0` on the attached replay surface |
-| Later | decide whether to promote working-set pruning into active prompt assembly, then reopen the deferred harder A/B and history cleanup work with telemetry attached | shadow telemetry stays green long enough to justify an active-path experiment with an explicit rollback gate |
+| Now | treat Stage 6 runtime shadow integration as completed, keep it `default-off` and shadow-only, and resume the deferred shared-fail history cleanup using the new telemetry surface | the deferred history / harder A/B queue is running again with Stage 6 telemetry attached |
+| Next | expand harder live A/B and history cases while keeping working-set pruning shadow-only | harder answer-level cases start turning into cleaner UMC wins without active prompt mutation |
+| Later | discuss whether an active prompt experiment is justified only after a longer real-session soak | shadow telemetry stays green long enough to justify an explicit promotion decision and rollback gate |
 
 ## Current Execution Focus
 
 The current roadmap horizon also maps to the concrete next execution work:
 
-1. keep the next slice docs-first: make `dialogue working-set pruning` a planned Stage 6 workstream in the roadmap and development plan
-2. hold runtime changes until the GitHub review explicitly approves the Stage 6 shadow-integration queue
-3. once approved, start only the minimal shadow instrumentation path and keep the final prompt untouched
-4. keep the existing history shared-fail cleanup and harder A/B expansion deferred until the shadow telemetry path exists, so later answer-level work can reuse the new measurements
+1. keep Stage 6 runtime shadow integration `default-off` and shadow-only
+2. resume the deferred `ab100-zh-history-editor-*` cleanup and the harder live A/B expansion with shadow telemetry attached
+3. continue treating active prompt mutation as explicitly out of scope until the new measurement surface soaks longer
+4. use the runtime export artifacts as the new replayable operator evidence surface
 
 When resuming work:
 
-- use `93` in [reference/unified-memory-core/development-plan.md](reference/unified-memory-core/development-plan.md) for the current execution order
+- use `91` in [reference/unified-memory-core/development-plan.md](reference/unified-memory-core/development-plan.md) for the current execution order
 - use [../.codex/plan.md](../.codex/plan.md) and [../.codex/status.md](../.codex/status.md) for the live state
 
 ## Milestones
@@ -95,7 +98,7 @@ When resuming work:
 | [Stage 3: self-learning lifecycle baseline](reference/unified-memory-core/development-plan.md#stage-3-self-learning-lifecycle-baseline) | completed | turn the already-implemented reflection baseline into an explicit lifecycle with promotion, decay, and learning-specific governance | Stage 2 | promotion / decay expectations, learning governance, OpenClaw validation, and local governed loop are all implemented and regression-protected |
 | [Stage 4: policy adaptation](reference/unified-memory-core/development-plan.md#stage-4-policy-adaptation-and-multi-consumer-use) | completed | let governed learning outputs influence consumer behavior | Stage 3 | one reversible policy-adaptation loop is proven |
 | [Stage 5: product hardening](reference/unified-memory-core/development-plan.md#stage-5-product-hardening-and-independent-operation) | completed | validate split-ready and independent-product operation | Stage 4 | release boundary, reproducibility, maintenance workflows, and split rehearsal are all CLI-verifiable |
-| [Stage 6: dialogue working-set shadow integration](reference/unified-memory-core/development-plan.md#stage-6-dialogue-working-set-shadow-integration) | planned | validate and instrument hot-session working-set pruning in runtime shadow mode before any active prompt cutover | Stage 5 | docs-first review passes, runtime shadow telemetry lands default-off, and answer-level regression remains green on the attached replay surface |
+| [Stage 6: dialogue working-set shadow integration](reference/unified-memory-core/development-plan.md#stage-6-dialogue-working-set-shadow-integration) | completed | validate and instrument hot-session working-set pruning in runtime shadow mode before any active prompt cutover | Stage 5 | runtime shadow telemetry is now landed default-off, replayable exports exist, and answer-level replay stays green enough to keep the feature shadow-only |
 
 ## Milestone Flow
 

@@ -1,0 +1,1150 @@
+{
+  "generatedAt": "2026-04-16T14:24:52.524Z",
+  "model": "gpt-5.4",
+  "reasoningEffort": "low",
+  "outputDir": "/Users/redcreen/Project/unified-memory-core/reports/generated/dialogue-working-set-runtime-answer-ab-2026-04-16",
+  "summary": {
+    "total": 5,
+    "baselinePassed": 5,
+    "shadowPassed": 5,
+    "bothPass": 5,
+    "shadowOnly": 0,
+    "baselineOnly": 0,
+    "bothFail": 0,
+    "averagePromptReductionRatio": 0.0114
+  },
+  "results": [
+    {
+      "id": "answer-ab-return-family-seat",
+      "description": "A durable seat preference should still answer correctly after a code detour.",
+      "captured": true,
+      "event": {
+        "schema_version": "umc.dialogue-working-set-shadow.v1",
+        "event_id": "shadow-1776348337788-mwh2sm",
+        "generated_at": "2026-04-16T14:05:37.788Z",
+        "session_key": "agent:stage6-answer-ab:answer-ab-return-family-seat",
+        "agent_id": "stage6-answer-ab",
+        "query": "代码先放一边。刚才说过，我坐飞机喜欢什么位置？",
+        "status": "captured",
+        "reason": "",
+        "sampling": {
+          "max_turns": 12,
+          "min_turns": 3,
+          "max_chars_per_turn": 900
+        },
+        "transcript": [
+          {
+            "id": "t1",
+            "role": "user",
+            "content": "以后默认给我中文，结论优先。"
+          },
+          {
+            "id": "t2",
+            "role": "assistant",
+            "content": "记住了。"
+          },
+          {
+            "id": "t3",
+            "role": "user",
+            "content": "再记一下：我坐飞机喜欢靠过道。"
+          },
+          {
+            "id": "t4",
+            "role": "assistant",
+            "content": "记住了，你坐飞机偏好靠过道。"
+          },
+          {
+            "id": "t5",
+            "role": "user",
+            "content": "家庭偏好先到这。现在说代码：我们这轮先不改现有记忆系统。"
+          },
+          {
+            "id": "t6",
+            "role": "assistant",
+            "content": "好，先 shadow，再决定是否接管主路径。"
+          },
+          {
+            "id": "t7",
+            "role": "user",
+            "content": "代码先放一边。刚才说过，我坐飞机喜欢什么位置？"
+          }
+        ],
+        "decision": {
+          "relation": "switch",
+          "confidence": 0.99,
+          "evict_turn_ids": [
+            "t5",
+            "t6"
+          ],
+          "pin_turn_ids": [
+            "t1",
+            "t3"
+          ],
+          "archive_summary": "User prefers Chinese by default with conclusion first, and prefers aisle seats on airplanes. A brief coding subtopic was introduced and answered: for this round, do not modify the existing memory system; use a shadow approach first and decide later whether to take over the main path.",
+          "reasoning_summary": "The active topic switched back from a short coding aside to a prior personal-preference question. The latest user turn depends on the durable preference stated earlier in t3, and t1 is also a stable user preference worth preserving as a pin. The coding exchange in t5-t6 is currently paused and not needed to answer the next turn, so those raw turns are good eviction candidates while their gist is retained in the archive summary."
+        },
+        "snapshot": {
+          "applied": {
+            "relation": "switch",
+            "confidence": 0.99,
+            "archiveSummary": "User prefers Chinese by default with conclusion first, and prefers aisle seats on airplanes. A brief coding subtopic was introduced and answered: for this round, do not modify the existing memory system; use a shadow approach first and decide later whether to take over the main path.",
+            "reasoningSummary": "The active topic switched back from a short coding aside to a prior personal-preference question. The latest user turn depends on the durable preference stated earlier in t3, and t1 is also a stable user preference worth preserving as a pin. The coding exchange in t5-t6 is currently paused and not needed to answer the next turn, so those raw turns are good eviction candidates while their gist is retained in the archive summary.",
+            "latestUserTurnId": "t7",
+            "pinTurnIds": [
+              "t1",
+              "t3"
+            ],
+            "pinnedOnlyTurnIds": [],
+            "requestedEvictTurnIds": [
+              "t5",
+              "t6"
+            ],
+            "blockedEvictTurnIds": [],
+            "appliedEvictTurnIds": [
+              "t5",
+              "t6"
+            ],
+            "keepTurnIds": [
+              "t1",
+              "t2",
+              "t3",
+              "t4",
+              "t7"
+            ],
+            "baselineTokens": 32,
+            "keptTokens": 19,
+            "prunedTokens": 13,
+            "reductionRatio": 0.40625,
+            "keepTurns": [
+              {
+                "id": "t1",
+                "role": "user",
+                "content": "以后默认给我中文，结论优先。",
+                "tokenEstimate": 4
+              },
+              {
+                "id": "t2",
+                "role": "assistant",
+                "content": "记住了。",
+                "tokenEstimate": 1
+              },
+              {
+                "id": "t3",
+                "role": "user",
+                "content": "再记一下：我坐飞机喜欢靠过道。",
+                "tokenEstimate": 4
+              },
+              {
+                "id": "t4",
+                "role": "assistant",
+                "content": "记住了，你坐飞机偏好靠过道。",
+                "tokenEstimate": 4
+              },
+              {
+                "id": "t7",
+                "role": "user",
+                "content": "代码先放一边。刚才说过，我坐飞机喜欢什么位置？",
+                "tokenEstimate": 6
+              }
+            ],
+            "evictedTurns": [
+              {
+                "id": "t5",
+                "role": "user",
+                "content": "家庭偏好先到这。现在说代码：我们这轮先不改现有记忆系统。",
+                "tokenEstimate": 7
+              },
+              {
+                "id": "t6",
+                "role": "assistant",
+                "content": "好，先 shadow，再决定是否接管主路径。",
+                "tokenEstimate": 6
+              }
+            ]
+          },
+          "baselineRawTranscript": "t1 user: 以后默认给我中文，结论优先。\nt2 assistant: 记住了。\nt3 user: 再记一下：我坐飞机喜欢靠过道。\nt4 assistant: 记住了，你坐飞机偏好靠过道。\nt5 user: 家庭偏好先到这。现在说代码：我们这轮先不改现有记忆系统。\nt6 assistant: 好，先 shadow，再决定是否接管主路径。\nt7 user: 代码先放一边。刚才说过，我坐飞机喜欢什么位置？",
+          "shadowRawTranscript": "t1 user: 以后默认给我中文，结论优先。\nt2 assistant: 记住了。\nt3 user: 再记一下：我坐飞机喜欢靠过道。\nt4 assistant: 记住了，你坐飞机偏好靠过道。\nt7 user: 代码先放一边。刚才说过，我坐飞机喜欢什么位置？",
+          "semanticPinNotes": [],
+          "archiveSummary": "User prefers Chinese by default with conclusion first, and prefers aisle seats on airplanes. A brief coding subtopic was introduced and answered: for this round, do not modify the existing memory system; use a shadow approach first and decide later whether to take over the main path.",
+          "injectedArchiveSummary": "",
+          "baselinePromptEstimate": 51,
+          "shadowRawPromptEstimate": 33,
+          "shadowPackageEstimate": 37,
+          "shadowPackageText": "Active raw turns:\nt1 user: 以后默认给我中文，结论优先。\nt2 assistant: 记住了。\nt3 user: 再记一下：我坐飞机喜欢靠过道。\nt4 assistant: 记住了，你坐飞机偏好靠过道。\nt7 user: 代码先放一边。刚才说过，我坐飞机喜欢什么位置？"
+        },
+        "timings": {
+          "totalElapsedMs": 19977,
+          "decisionElapsedMs": 19975
+        },
+        "exportPath": "/Users/redcreen/Project/unified-memory-core/reports/generated/dialogue-working-set-runtime-answer-ab-2026-04-16/exports/agent-stage6-answer-ab-answer-ab-return-family-seat-shadow-1776348337788-mwh2sm.json"
+      },
+      "baseline": {
+        "answer": "靠过道。",
+        "usage": {
+          "input_tokens": 10939,
+          "cached_input_tokens": 2432,
+          "output_tokens": 42
+        },
+        "elapsedMs": 18709,
+        "stderr": "2026-04-16T14:22:36.735235Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at \"/private/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-codex-home-fIZjoC/shell_snapshots/019d96ac-1ff2-7cf0-b368-72f0e0b9e83b.tmp-1776349356021665000\": Os { code: 2, kind: NotFound, message: \"No such file or directory\" }",
+        "promptEstimate": 140,
+        "passed": true,
+        "checks": [
+          {
+            "name": "expected_any",
+            "passed": true,
+            "expected": [],
+            "actual": "靠过道。"
+          },
+          {
+            "name": "expected_all",
+            "passed": true,
+            "expected": [
+              "靠过道"
+            ],
+            "actual": "靠过道。"
+          },
+          {
+            "name": "forbidden_any",
+            "passed": true,
+            "expected": [
+              "不知道"
+            ],
+            "actual": "靠过道。"
+          }
+        ]
+      },
+      "shadow": {
+        "answer": "靠过道。",
+        "usage": {
+          "input_tokens": 10899,
+          "cached_input_tokens": 2432,
+          "output_tokens": 35
+        },
+        "elapsedMs": 16810,
+        "stderr": "2026-04-16T14:22:50.248775Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at \"/private/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-codex-home-fIZjoC/shell_snapshots/019d96ac-54c7-77b0-b3b7-0d47da42520b.tmp-1776349369545373000\": Os { code: 2, kind: NotFound, message: \"No such file or directory\" }",
+        "promptEstimate": 126,
+        "passed": true,
+        "checks": [
+          {
+            "name": "expected_any",
+            "passed": true,
+            "expected": [],
+            "actual": "靠过道。"
+          },
+          {
+            "name": "expected_all",
+            "passed": true,
+            "expected": [
+              "靠过道"
+            ],
+            "actual": "靠过道。"
+          },
+          {
+            "name": "forbidden_any",
+            "passed": true,
+            "expected": [
+              "不知道"
+            ],
+            "actual": "靠过道。"
+          }
+        ]
+      },
+      "promptReductionRatio": 0.1
+    },
+    {
+      "id": "answer-ab-branch-return-stage6",
+      "description": "A side fact should not break recall of an unfinished three-part rollout split.",
+      "captured": true,
+      "event": {
+        "schema_version": "umc.dialogue-working-set-shadow.v1",
+        "event_id": "shadow-1776348357842-iesrdu",
+        "generated_at": "2026-04-16T14:05:57.842Z",
+        "session_key": "agent:stage6-answer-ab:answer-ab-branch-return-stage6",
+        "agent_id": "stage6-answer-ab",
+        "query": "先回到刚才的发布验收，那三部分是什么？",
+        "status": "captured",
+        "reason": "",
+        "sampling": {
+          "max_turns": 12,
+          "min_turns": 3,
+          "max_chars_per_turn": 900
+        },
+        "transcript": [
+          {
+            "id": "t1",
+            "role": "user",
+            "content": "把发布验收拆成版本、安装、回滚三部分。"
+          },
+          {
+            "id": "t2",
+            "role": "assistant",
+            "content": "可以，先拆成版本正确性、安装验证、回滚安全。"
+          },
+          {
+            "id": "t3",
+            "role": "user",
+            "content": "插一句，我的时区是 Asia/Shanghai，记住。"
+          },
+          {
+            "id": "t4",
+            "role": "assistant",
+            "content": "记住了，你的时区是 Asia/Shanghai。"
+          },
+          {
+            "id": "t5",
+            "role": "user",
+            "content": "先回到刚才的发布验收，那三部分是什么？"
+          }
+        ],
+        "decision": {
+          "relation": "branch",
+          "confidence": 0.98,
+          "evict_turn_ids": [
+            "t3",
+            "t4"
+          ],
+          "pin_turn_ids": [
+            "t3",
+            "t4"
+          ],
+          "archive_summary": "Earlier main topic defined the release acceptance split as three parts: version correctness, installation validation, and rollback safety. Separate durable user fact captured: user's timezone is Asia/Shanghai.",
+          "reasoning_summary": "The latest user turn explicitly returns to the earlier release-acceptance topic, so this is a branch back to an older unfinished/main thread rather than a topic switch. Keep the raw turns for that active topic (`t1`,`t2`) because the next answer depends directly on them. The timezone exchange (`t3`,`t4`) is a resolved side note and can leave the raw prompt, but its semantic content should be preserved as a durable pin."
+        },
+        "snapshot": {
+          "applied": {
+            "relation": "branch",
+            "confidence": 0.98,
+            "archiveSummary": "Earlier main topic defined the release acceptance split as three parts: version correctness, installation validation, and rollback safety. Separate durable user fact captured: user's timezone is Asia/Shanghai.",
+            "reasoningSummary": "The latest user turn explicitly returns to the earlier release-acceptance topic, so this is a branch back to an older unfinished/main thread rather than a topic switch. Keep the raw turns for that active topic (`t1`,`t2`) because the next answer depends directly on them. The timezone exchange (`t3`,`t4`) is a resolved side note and can leave the raw prompt, but its semantic content should be preserved as a durable pin.",
+            "latestUserTurnId": "t5",
+            "pinTurnIds": [
+              "t3",
+              "t4"
+            ],
+            "pinnedOnlyTurnIds": [
+              "t3",
+              "t4"
+            ],
+            "requestedEvictTurnIds": [
+              "t3",
+              "t4"
+            ],
+            "blockedEvictTurnIds": [],
+            "appliedEvictTurnIds": [
+              "t3",
+              "t4"
+            ],
+            "keepTurnIds": [
+              "t1",
+              "t2",
+              "t5"
+            ],
+            "baselineTokens": 29,
+            "keptTokens": 16,
+            "prunedTokens": 13,
+            "reductionRatio": 0.4482758620689655,
+            "keepTurns": [
+              {
+                "id": "t1",
+                "role": "user",
+                "content": "把发布验收拆成版本、安装、回滚三部分。",
+                "tokenEstimate": 5
+              },
+              {
+                "id": "t2",
+                "role": "assistant",
+                "content": "可以，先拆成版本正确性、安装验证、回滚安全。",
+                "tokenEstimate": 6
+              },
+              {
+                "id": "t5",
+                "role": "user",
+                "content": "先回到刚才的发布验收，那三部分是什么？",
+                "tokenEstimate": 5
+              }
+            ],
+            "evictedTurns": [
+              {
+                "id": "t3",
+                "role": "user",
+                "content": "插一句，我的时区是 Asia/Shanghai，记住。",
+                "tokenEstimate": 7
+              },
+              {
+                "id": "t4",
+                "role": "assistant",
+                "content": "记住了，你的时区是 Asia/Shanghai。",
+                "tokenEstimate": 6
+              }
+            ]
+          },
+          "baselineRawTranscript": "t1 user: 把发布验收拆成版本、安装、回滚三部分。\nt2 assistant: 可以，先拆成版本正确性、安装验证、回滚安全。\nt3 user: 插一句，我的时区是 Asia/Shanghai，记住。\nt4 assistant: 记住了，你的时区是 Asia/Shanghai。\nt5 user: 先回到刚才的发布验收，那三部分是什么？",
+          "shadowRawTranscript": "t1 user: 把发布验收拆成版本、安装、回滚三部分。\nt2 assistant: 可以，先拆成版本正确性、安装验证、回滚安全。\nt5 user: 先回到刚才的发布验收，那三部分是什么？",
+          "semanticPinNotes": [
+            "user: 插一句，我的时区是 Asia/Shanghai，记住。",
+            "assistant: 记住了，你的时区是 Asia/Shanghai。"
+          ],
+          "archiveSummary": "Earlier main topic defined the release acceptance split as three parts: version correctness, installation validation, and rollback safety. Separate durable user fact captured: user's timezone is Asia/Shanghai.",
+          "injectedArchiveSummary": "",
+          "baselinePromptEstimate": 43,
+          "shadowRawPromptEstimate": 24,
+          "shadowPackageEstimate": 50,
+          "shadowPackageText": "Active raw turns:\nt1 user: 把发布验收拆成版本、安装、回滚三部分。\nt2 assistant: 可以，先拆成版本正确性、安装验证、回滚安全。\nt5 user: 先回到刚才的发布验收，那三部分是什么？\n\nSemantic pins:\nuser: 插一句，我的时区是 Asia/Shanghai，记住。\nassistant: 记住了，你的时区是 Asia/Shanghai。"
+        },
+        "timings": {
+          "totalElapsedMs": 23406,
+          "decisionElapsedMs": 23405
+        },
+        "exportPath": "/Users/redcreen/Project/unified-memory-core/reports/generated/dialogue-working-set-runtime-answer-ab-2026-04-16/exports/agent-stage6-answer-ab-answer-ab-branch-return-stage6-shadow-1776348357842-iesrdu.json"
+      },
+      "baseline": {
+        "answer": "版本正确性、安装验证、回滚安全。",
+        "usage": {
+          "input_tokens": 10911,
+          "cached_input_tokens": 2432,
+          "output_tokens": 48
+        },
+        "elapsedMs": 12418,
+        "stderr": "2026-04-16T14:23:07.061175Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at \"/private/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-codex-home-fIZjoC/shell_snapshots/019d96ac-95f0-7a50-9588-2922777dce24.tmp-1776349386224934000\": Os { code: 2, kind: NotFound, message: \"No such file or directory\" }",
+        "promptEstimate": 133,
+        "passed": true,
+        "checks": [
+          {
+            "name": "expected_any",
+            "passed": true,
+            "expected": [],
+            "actual": "版本正确性、安装验证、回滚安全。"
+          },
+          {
+            "name": "expected_all",
+            "passed": true,
+            "expected": [
+              "版本",
+              "安装",
+              "回滚"
+            ],
+            "actual": "版本正确性、安装验证、回滚安全。"
+          },
+          {
+            "name": "forbidden_any",
+            "passed": true,
+            "expected": [
+              "不知道"
+            ],
+            "actual": "版本正确性、安装验证、回滚安全。"
+          }
+        ]
+      },
+      "shadow": {
+        "answer": "版本正确性、安装验证、回滚安全。",
+        "usage": {
+          "input_tokens": 10914,
+          "cached_input_tokens": 2432,
+          "output_tokens": 42
+        },
+        "elapsedMs": 13042,
+        "stderr": "2026-04-16T14:23:19.406082Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at \"/private/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-codex-home-fIZjoC/shell_snapshots/019d96ac-c690-7360-8e8b-255c020de96a.tmp-1776349398672984000\": Os { code: 2, kind: NotFound, message: \"No such file or directory\" }",
+        "promptEstimate": 139,
+        "passed": true,
+        "checks": [
+          {
+            "name": "expected_any",
+            "passed": true,
+            "expected": [],
+            "actual": "版本正确性、安装验证、回滚安全。"
+          },
+          {
+            "name": "expected_all",
+            "passed": true,
+            "expected": [
+              "版本",
+              "安装",
+              "回滚"
+            ],
+            "actual": "版本正确性、安装验证、回滚安全。"
+          },
+          {
+            "name": "forbidden_any",
+            "passed": true,
+            "expected": [
+              "不知道"
+            ],
+            "actual": "版本正确性、安装验证、回滚安全。"
+          }
+        ]
+      },
+      "promptReductionRatio": -0.045112781954887216
+    },
+    {
+      "id": "answer-ab-session-negative",
+      "description": "A one-off codename must not become a permanent default after the topic switches.",
+      "captured": true,
+      "event": {
+        "schema_version": "umc.dialogue-working-set-shadow.v1",
+        "event_id": "shadow-1776348381254-vmshlg",
+        "generated_at": "2026-04-16T14:06:21.254Z",
+        "session_key": "agent:stage6-answer-ab:answer-ab-session-negative",
+        "agent_id": "stage6-answer-ab",
+        "query": "现在切到文档。以后默认这个方案应该怎么称呼？如果没有长期默认，就直说没有。",
+        "status": "captured",
+        "reason": "",
+        "sampling": {
+          "max_turns": 12,
+          "min_turns": 3,
+          "max_chars_per_turn": 900
+        },
+        "transcript": [
+          {
+            "id": "t1",
+            "role": "user",
+            "content": "只这一次把这轮方案叫琥珀梯，不用长期记。"
+          },
+          {
+            "id": "t2",
+            "role": "assistant",
+            "content": "明白，这次临时叫琥珀梯。"
+          },
+          {
+            "id": "t3",
+            "role": "user",
+            "content": "现在切到文档。以后默认这个方案应该怎么称呼？如果没有长期默认，就直说没有。"
+          }
+        ],
+        "decision": {
+          "relation": "switch",
+          "confidence": 0.97,
+          "evict_turn_ids": [
+            "t1",
+            "t2"
+          ],
+          "pin_turn_ids": [],
+          "archive_summary": "The user set a one-time temporary label for the current round's方案: “琥珀梯”, explicitly saying it should not be remembered long-term. That temporary naming exchange is resolved and should not carry forward as default documentation terminology.",
+          "reasoning_summary": "The active topic switched from a one-off session label to the default documentation name. The earlier turns are resolved and explicitly non-durable, so they are good eviction candidates. No semantic pin is needed because the user said not to remember it long-term. The latest user turn stays raw automatically."
+        },
+        "snapshot": {
+          "applied": {
+            "relation": "switch",
+            "confidence": 0.97,
+            "archiveSummary": "The user set a one-time temporary label for the current round's方案: “琥珀梯”, explicitly saying it should not be remembered long-term. That temporary naming exchange is resolved and should not carry forward as default documentation terminology.",
+            "reasoningSummary": "The active topic switched from a one-off session label to the default documentation name. The earlier turns are resolved and explicitly non-durable, so they are good eviction candidates. No semantic pin is needed because the user said not to remember it long-term. The latest user turn stays raw automatically.",
+            "latestUserTurnId": "t3",
+            "pinTurnIds": [],
+            "pinnedOnlyTurnIds": [],
+            "requestedEvictTurnIds": [
+              "t1",
+              "t2"
+            ],
+            "blockedEvictTurnIds": [],
+            "appliedEvictTurnIds": [
+              "t1",
+              "t2"
+            ],
+            "keepTurnIds": [
+              "t3"
+            ],
+            "baselineTokens": 18,
+            "keptTokens": 10,
+            "prunedTokens": 8,
+            "reductionRatio": 0.4444444444444444,
+            "keepTurns": [
+              {
+                "id": "t3",
+                "role": "user",
+                "content": "现在切到文档。以后默认这个方案应该怎么称呼？如果没有长期默认，就直说没有。",
+                "tokenEstimate": 10
+              }
+            ],
+            "evictedTurns": [
+              {
+                "id": "t1",
+                "role": "user",
+                "content": "只这一次把这轮方案叫琥珀梯，不用长期记。",
+                "tokenEstimate": 5
+              },
+              {
+                "id": "t2",
+                "role": "assistant",
+                "content": "明白，这次临时叫琥珀梯。",
+                "tokenEstimate": 3
+              }
+            ]
+          },
+          "baselineRawTranscript": "t1 user: 只这一次把这轮方案叫琥珀梯，不用长期记。\nt2 assistant: 明白，这次临时叫琥珀梯。\nt3 user: 现在切到文档。以后默认这个方案应该怎么称呼？如果没有长期默认，就直说没有。",
+          "shadowRawTranscript": "t3 user: 现在切到文档。以后默认这个方案应该怎么称呼？如果没有长期默认，就直说没有。",
+          "semanticPinNotes": [],
+          "archiveSummary": "The user set a one-time temporary label for the current round's方案: “琥珀梯”, explicitly saying it should not be remembered long-term. That temporary naming exchange is resolved and should not carry forward as default documentation terminology.",
+          "injectedArchiveSummary": "The user set a one-time temporary label for the current round's方案: “琥珀梯”, explicitly saying it s...",
+          "baselinePromptEstimate": 26,
+          "shadowRawPromptEstimate": 12,
+          "shadowPackageEstimate": 46,
+          "shadowPackageText": "Active raw turns:\nt3 user: 现在切到文档。以后默认这个方案应该怎么称呼？如果没有长期默认，就直说没有。\n\nArchived summary:\nThe user set a one-time temporary label for the current round's方案: “琥珀梯”, explicitly saying it s..."
+        },
+        "timings": {
+          "totalElapsedMs": 20549,
+          "decisionElapsedMs": 20548
+        },
+        "exportPath": "/Users/redcreen/Project/unified-memory-core/reports/generated/dialogue-working-set-runtime-answer-ab-2026-04-16/exports/agent-stage6-answer-ab-answer-ab-session-negative-shadow-1776348381254-vmshlg.json"
+      },
+      "baseline": {
+        "answer": "没有长期默认。\"琥珀梯\"只是这一次临时叫法。",
+        "usage": {
+          "input_tokens": 10884,
+          "cached_input_tokens": 2432,
+          "output_tokens": 61
+        },
+        "elapsedMs": 13436,
+        "stderr": "2026-04-16T14:23:32.148976Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at \"/private/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-codex-home-fIZjoC/shell_snapshots/019d96ac-f959-74c1-9fb2-f40c857074fa.tmp-1776349411673500000\": Os { code: 2, kind: NotFound, message: \"No such file or directory\" }",
+        "promptEstimate": 115,
+        "passed": true,
+        "checks": [
+          {
+            "name": "expected_any",
+            "passed": true,
+            "expected": [
+              "没有长期默认",
+              "没有默认称呼",
+              "当前没有默认称呼",
+              "I don't know based on current context"
+            ],
+            "actual": "没有长期默认。\"琥珀梯\"只是这一次临时叫法。"
+          },
+          {
+            "name": "expected_all",
+            "passed": true,
+            "expected": [],
+            "actual": "没有长期默认。\"琥珀梯\"只是这一次临时叫法。"
+          },
+          {
+            "name": "forbidden_any",
+            "passed": true,
+            "expected": [],
+            "actual": "没有长期默认。\"琥珀梯\"只是这一次临时叫法。"
+          }
+        ]
+      },
+      "shadow": {
+        "answer": "没有长期默认称呼。\"琥珀梯\"只是这一轮的临时叫法，不应作为以后默认名称。",
+        "usage": {
+          "input_tokens": 10878,
+          "cached_input_tokens": 2432,
+          "output_tokens": 150
+        },
+        "elapsedMs": 14136,
+        "stderr": "2026-04-16T14:23:45.918454Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at \"/private/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-codex-home-fIZjoC/shell_snapshots/019d96ad-2e71-7142-bcc1-59f8322aa7ea.tmp-1776349425266229000\": Os { code: 2, kind: NotFound, message: \"No such file or directory\" }",
+        "promptEstimate": 135,
+        "passed": true,
+        "checks": [
+          {
+            "name": "expected_any",
+            "passed": true,
+            "expected": [
+              "没有长期默认",
+              "没有默认称呼",
+              "当前没有默认称呼",
+              "I don't know based on current context"
+            ],
+            "actual": "没有长期默认称呼。\"琥珀梯\"只是这一轮的临时叫法，不应作为以后默认名称。"
+          },
+          {
+            "name": "expected_all",
+            "passed": true,
+            "expected": [],
+            "actual": "没有长期默认称呼。\"琥珀梯\"只是这一轮的临时叫法，不应作为以后默认名称。"
+          },
+          {
+            "name": "forbidden_any",
+            "passed": true,
+            "expected": [],
+            "actual": "没有长期默认称呼。\"琥珀梯\"只是这一轮的临时叫法，不应作为以后默认名称。"
+          }
+        ]
+      },
+      "promptReductionRatio": -0.17391304347826086
+    },
+    {
+      "id": "answer-ab-current-task-after-switch",
+      "description": "After an older topic is closed, the current task should still answer correctly from the pruned working set.",
+      "captured": true,
+      "event": {
+        "schema_version": "umc.dialogue-working-set-shadow.v1",
+        "event_id": "shadow-1776348401814-2dn176",
+        "generated_at": "2026-04-16T14:06:41.814Z",
+        "session_key": "agent:stage6-answer-ab:answer-ab-current-task-after-switch",
+        "agent_id": "stage6-answer-ab",
+        "query": "我们当前新任务是什么？",
+        "status": "captured",
+        "reason": "",
+        "sampling": {
+          "max_turns": 12,
+          "min_turns": 3,
+          "max_chars_per_turn": 900
+        },
+        "transcript": [
+          {
+            "id": "t1",
+            "role": "user",
+            "content": "默认中文。"
+          },
+          {
+            "id": "t2",
+            "role": "assistant",
+            "content": "记住了。"
+          },
+          {
+            "id": "t3",
+            "role": "user",
+            "content": "Project Lantern 是做真实场景 AI 记忆治理的。"
+          },
+          {
+            "id": "t4",
+            "role": "assistant",
+            "content": "明白了。"
+          },
+          {
+            "id": "t5",
+            "role": "user",
+            "content": "这块先到这。当前新任务是写 shadow mode 报告。"
+          },
+          {
+            "id": "t6",
+            "role": "assistant",
+            "content": "收到，当前新任务是写 shadow mode 报告。"
+          },
+          {
+            "id": "t7",
+            "role": "user",
+            "content": "我们当前新任务是什么？"
+          }
+        ],
+        "decision": {
+          "relation": "switch",
+          "confidence": 0.97,
+          "evict_turn_ids": [
+            "t1",
+            "t2",
+            "t3",
+            "t4"
+          ],
+          "pin_turn_ids": [
+            "t1",
+            "t3"
+          ],
+          "archive_summary": "用户偏好默认中文。Project Lantern 是做真实场景 AI 记忆治理的。此前话题已结束；随后已切换到新任务：写 shadow mode 报告。",
+          "reasoning_summary": "最新问题是在确认已切换后的当前任务，直接依赖 t5-t6；更早的 t1-t4 不需要继续以原始对话留在下一轮工作集中。t1 和 t3 属于可长期复用的偏好/项目背景，适合语义 pin；t5-t6 仍是当前活跃任务依据，应保留为原始上下文。"
+        },
+        "snapshot": {
+          "applied": {
+            "relation": "switch",
+            "confidence": 0.97,
+            "archiveSummary": "用户偏好默认中文。Project Lantern 是做真实场景 AI 记忆治理的。此前话题已结束；随后已切换到新任务：写 shadow mode 报告。",
+            "reasoningSummary": "最新问题是在确认已切换后的当前任务，直接依赖 t5-t6；更早的 t1-t4 不需要继续以原始对话留在下一轮工作集中。t1 和 t3 属于可长期复用的偏好/项目背景，适合语义 pin；t5-t6 仍是当前活跃任务依据，应保留为原始上下文。",
+            "latestUserTurnId": "t7",
+            "pinTurnIds": [
+              "t1",
+              "t3"
+            ],
+            "pinnedOnlyTurnIds": [
+              "t1",
+              "t3"
+            ],
+            "requestedEvictTurnIds": [
+              "t1",
+              "t2",
+              "t3",
+              "t4"
+            ],
+            "blockedEvictTurnIds": [],
+            "appliedEvictTurnIds": [
+              "t1",
+              "t2",
+              "t3",
+              "t4"
+            ],
+            "keepTurnIds": [
+              "t5",
+              "t6",
+              "t7"
+            ],
+            "baselineTokens": 30,
+            "keptTokens": 18,
+            "prunedTokens": 12,
+            "reductionRatio": 0.4,
+            "keepTurns": [
+              {
+                "id": "t5",
+                "role": "user",
+                "content": "这块先到这。当前新任务是写 shadow mode 报告。",
+                "tokenEstimate": 8
+              },
+              {
+                "id": "t6",
+                "role": "assistant",
+                "content": "收到，当前新任务是写 shadow mode 报告。",
+                "tokenEstimate": 7
+              },
+              {
+                "id": "t7",
+                "role": "user",
+                "content": "我们当前新任务是什么？",
+                "tokenEstimate": 3
+              }
+            ],
+            "evictedTurns": [
+              {
+                "id": "t1",
+                "role": "user",
+                "content": "默认中文。",
+                "tokenEstimate": 2
+              },
+              {
+                "id": "t2",
+                "role": "assistant",
+                "content": "记住了。",
+                "tokenEstimate": 1
+              },
+              {
+                "id": "t3",
+                "role": "user",
+                "content": "Project Lantern 是做真实场景 AI 记忆治理的。",
+                "tokenEstimate": 8
+              },
+              {
+                "id": "t4",
+                "role": "assistant",
+                "content": "明白了。",
+                "tokenEstimate": 1
+              }
+            ]
+          },
+          "baselineRawTranscript": "t1 user: 默认中文。\nt2 assistant: 记住了。\nt3 user: Project Lantern 是做真实场景 AI 记忆治理的。\nt4 assistant: 明白了。\nt5 user: 这块先到这。当前新任务是写 shadow mode 报告。\nt6 assistant: 收到，当前新任务是写 shadow mode 报告。\nt7 user: 我们当前新任务是什么？",
+          "shadowRawTranscript": "t5 user: 这块先到这。当前新任务是写 shadow mode 报告。\nt6 assistant: 收到，当前新任务是写 shadow mode 报告。\nt7 user: 我们当前新任务是什么？",
+          "semanticPinNotes": [
+            "user: 默认中文。",
+            "user: Project Lantern 是做真实场景 AI 记忆治理的。"
+          ],
+          "archiveSummary": "用户偏好默认中文。Project Lantern 是做真实场景 AI 记忆治理的。此前话题已结束；随后已切换到新任务：写 shadow mode 报告。",
+          "injectedArchiveSummary": "",
+          "baselinePromptEstimate": 49,
+          "shadowRawPromptEstimate": 25,
+          "shadowPackageEstimate": 46,
+          "shadowPackageText": "Active raw turns:\nt5 user: 这块先到这。当前新任务是写 shadow mode 报告。\nt6 assistant: 收到，当前新任务是写 shadow mode 报告。\nt7 user: 我们当前新任务是什么？\n\nSemantic pins:\nuser: 默认中文。\nuser: Project Lantern 是做真实场景 AI 记忆治理的。"
+        },
+        "timings": {
+          "totalElapsedMs": 24397,
+          "decisionElapsedMs": 24397
+        },
+        "exportPath": "/Users/redcreen/Project/unified-memory-core/reports/generated/dialogue-working-set-runtime-answer-ab-2026-04-16/exports/agent-stage6-answer-ab-answer-ab-current-task-after-switch-shadow-1776348401814-2dn176.json"
+      },
+      "baseline": {
+        "answer": "当前新任务是写 shadow mode 报告。",
+        "usage": {
+          "input_tokens": 10915,
+          "cached_input_tokens": 2432,
+          "output_tokens": 43
+        },
+        "elapsedMs": 13176,
+        "stderr": "2026-04-16T14:24:00.029107Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at \"/private/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-codex-home-fIZjoC/shell_snapshots/019d96ad-654d-73f0-bd9b-fc5397899011.tmp-1776349439310365000\": Os { code: 2, kind: NotFound, message: \"No such file or directory\" }",
+        "promptEstimate": 147,
+        "passed": true,
+        "checks": [
+          {
+            "name": "expected_any",
+            "passed": true,
+            "expected": [],
+            "actual": "当前新任务是写 shadow mode 报告。"
+          },
+          {
+            "name": "expected_all",
+            "passed": true,
+            "expected": [
+              "shadow",
+              "报告"
+            ],
+            "actual": "当前新任务是写 shadow mode 报告。"
+          },
+          {
+            "name": "forbidden_any",
+            "passed": true,
+            "expected": [
+              "不知道"
+            ],
+            "actual": "当前新任务是写 shadow mode 报告。"
+          }
+        ]
+      },
+      "shadow": {
+        "answer": "当前新任务是写 shadow mode 报告。",
+        "usage": {
+          "input_tokens": 10901,
+          "cached_input_tokens": 2432,
+          "output_tokens": 36
+        },
+        "elapsedMs": 11249,
+        "stderr": "2026-04-16T14:24:12.888526Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at \"/private/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-codex-home-fIZjoC/shell_snapshots/019d96ad-98b9-76b3-aa34-28ba6cdff16e.tmp-1776349452473417000\": Os { code: 2, kind: NotFound, message: \"No such file or directory\" }",
+        "promptEstimate": 145,
+        "passed": true,
+        "checks": [
+          {
+            "name": "expected_any",
+            "passed": true,
+            "expected": [],
+            "actual": "当前新任务是写 shadow mode 报告。"
+          },
+          {
+            "name": "expected_all",
+            "passed": true,
+            "expected": [
+              "shadow",
+              "报告"
+            ],
+            "actual": "当前新任务是写 shadow mode 报告。"
+          },
+          {
+            "name": "forbidden_any",
+            "passed": true,
+            "expected": [
+              "不知道"
+            ],
+            "actual": "当前新任务是写 shadow mode 报告。"
+          }
+        ]
+      },
+      "promptReductionRatio": 0.013605442176870748
+    },
+    {
+      "id": "answer-ab-style-pin-survives",
+      "description": "A style preference should still answer correctly after an unrelated retrieval-policy detour.",
+      "captured": true,
+      "event": {
+        "schema_version": "umc.dialogue-working-set-shadow.v1",
+        "event_id": "shadow-1776348426221-q1966x",
+        "generated_at": "2026-04-16T14:07:06.221Z",
+        "session_key": "agent:stage6-answer-ab:answer-ab-style-pin-survives",
+        "agent_id": "stage6-answer-ab",
+        "query": "我刚才要求你回复时默认怎么组织结构？",
+        "status": "captured",
+        "reason": "",
+        "sampling": {
+          "max_turns": 12,
+          "min_turns": 3,
+          "max_chars_per_turn": 900
+        },
+        "transcript": [
+          {
+            "id": "t1",
+            "role": "assistant",
+            "content": "当前状态：OpenClaw 版本 2026.3.31，当前模型 openai-codex/gpt-5.4，上下文占用 158k / 272k，缓存命中率 99%。"
+          },
+          {
+            "id": "t2",
+            "role": "user",
+            "content": "以后默认先给我结论，再展开细节。"
+          },
+          {
+            "id": "t3",
+            "role": "assistant",
+            "content": "记住了，以后默认先给结论。"
+          },
+          {
+            "id": "t4",
+            "role": "user",
+            "content": "先说检索策略，当前默认先走 fast path。"
+          },
+          {
+            "id": "t5",
+            "role": "assistant",
+            "content": "好，当前默认先走 fast path。"
+          },
+          {
+            "id": "t6",
+            "role": "user",
+            "content": "我刚才要求你回复时默认怎么组织结构？"
+          }
+        ],
+        "decision": {
+          "relation": "continue",
+          "confidence": 0.95,
+          "evict_turn_ids": [
+            "t1",
+            "t4",
+            "t5"
+          ],
+          "pin_turn_ids": [
+            "t2",
+            "t4"
+          ],
+          "archive_summary": "User set two durable defaults: responses should default to conclusion-first, then details; retrieval should default to fast path. Assistant acknowledged both. The current question refers back to the earlier response-structure preference.",
+          "reasoning_summary": "The latest user turn depends directly on the earlier structure-preference exchange, so this stays a continue. Keep the raw evidence for t2 in working memory; evict the irrelevant status snapshot and the solved retrieval-default block from raw prompt, while preserving its semantic content as a pin. Assistant acknowledgment turns are redundant once the user preferences are pinned."
+        },
+        "snapshot": {
+          "applied": {
+            "relation": "continue",
+            "confidence": 0.95,
+            "archiveSummary": "User set two durable defaults: responses should default to conclusion-first, then details; retrieval should default to fast path. Assistant acknowledged both. The current question refers back to the earlier response-structure preference.",
+            "reasoningSummary": "The latest user turn depends directly on the earlier structure-preference exchange, so this stays a continue. Keep the raw evidence for t2 in working memory; evict the irrelevant status snapshot and the solved retrieval-default block from raw prompt, while preserving its semantic content as a pin. Assistant acknowledgment turns are redundant once the user preferences are pinned.",
+            "latestUserTurnId": "t6",
+            "pinTurnIds": [
+              "t2",
+              "t4"
+            ],
+            "pinnedOnlyTurnIds": [
+              "t4"
+            ],
+            "requestedEvictTurnIds": [
+              "t1",
+              "t4",
+              "t5"
+            ],
+            "blockedEvictTurnIds": [],
+            "appliedEvictTurnIds": [
+              "t1",
+              "t4",
+              "t5"
+            ],
+            "keepTurnIds": [
+              "t2",
+              "t3",
+              "t6"
+            ],
+            "baselineTokens": 45,
+            "keptTokens": 13,
+            "prunedTokens": 32,
+            "reductionRatio": 0.7111111111111111,
+            "keepTurns": [
+              {
+                "id": "t2",
+                "role": "user",
+                "content": "以后默认先给我结论，再展开细节。",
+                "tokenEstimate": 4
+              },
+              {
+                "id": "t3",
+                "role": "assistant",
+                "content": "记住了，以后默认先给结论。",
+                "tokenEstimate": 4
+              },
+              {
+                "id": "t6",
+                "role": "user",
+                "content": "我刚才要求你回复时默认怎么组织结构？",
+                "tokenEstimate": 5
+              }
+            ],
+            "evictedTurns": [
+              {
+                "id": "t1",
+                "role": "assistant",
+                "content": "当前状态：OpenClaw 版本 2026.3.31，当前模型 openai-codex/gpt-5.4，上下文占用 158k / 272k，缓存命中率 99%。",
+                "tokenEstimate": 21
+              },
+              {
+                "id": "t4",
+                "role": "user",
+                "content": "先说检索策略，当前默认先走 fast path。",
+                "tokenEstimate": 6
+              },
+              {
+                "id": "t5",
+                "role": "assistant",
+                "content": "好，当前默认先走 fast path。",
+                "tokenEstimate": 5
+              }
+            ]
+          },
+          "baselineRawTranscript": "t1 assistant: 当前状态：OpenClaw 版本 2026.3.31，当前模型 openai-codex/gpt-5.4，上下文占用 158k / 272k，缓存命中率 99%。\nt2 user: 以后默认先给我结论，再展开细节。\nt3 assistant: 记住了，以后默认先给结论。\nt4 user: 先说检索策略，当前默认先走 fast path。\nt5 assistant: 好，当前默认先走 fast path。\nt6 user: 我刚才要求你回复时默认怎么组织结构？",
+          "shadowRawTranscript": "t2 user: 以后默认先给我结论，再展开细节。\nt3 assistant: 记住了，以后默认先给结论。\nt6 user: 我刚才要求你回复时默认怎么组织结构？",
+          "semanticPinNotes": [
+            "user: 先说检索策略，当前默认先走 fast path。"
+          ],
+          "archiveSummary": "User set two durable defaults: responses should default to conclusion-first, then details; retrieval should default to fast path. Assistant acknowledged both. The current question refers back to the earlier response-structure preference.",
+          "injectedArchiveSummary": "",
+          "baselinePromptEstimate": 62,
+          "shadowRawPromptEstimate": 21,
+          "shadowPackageEstimate": 37,
+          "shadowPackageText": "Active raw turns:\nt2 user: 以后默认先给我结论，再展开细节。\nt3 assistant: 记住了，以后默认先给结论。\nt6 user: 我刚才要求你回复时默认怎么组织结构？\n\nSemantic pins:\nuser: 先说检索策略，当前默认先走 fast path。"
+        },
+        "timings": {
+          "totalElapsedMs": 20640,
+          "decisionElapsedMs": 20639
+        },
+        "exportPath": "/Users/redcreen/Project/unified-memory-core/reports/generated/dialogue-working-set-runtime-answer-ab-2026-04-16/exports/agent-stage6-answer-ab-answer-ab-style-pin-survives-shadow-1776348426221-q1966x.json"
+      },
+      "baseline": {
+        "answer": "结论：你刚才要求我回复时默认先给结论，再展开细节。",
+        "usage": {
+          "input_tokens": 10951,
+          "cached_input_tokens": 2432,
+          "output_tokens": 57
+        },
+        "elapsedMs": 13077,
+        "stderr": "2026-04-16T14:24:24.459093Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at \"/private/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-codex-home-fIZjoC/shell_snapshots/019d96ad-c4f6-7fa2-8f14-d130b70163b9.tmp-1776349463800970000\": Os { code: 2, kind: NotFound, message: \"No such file or directory\" }",
+        "promptEstimate": 154,
+        "passed": true,
+        "checks": [
+          {
+            "name": "expected_any",
+            "passed": true,
+            "expected": [],
+            "actual": "结论：你刚才要求我回复时默认先给结论，再展开细节。"
+          },
+          {
+            "name": "expected_all",
+            "passed": true,
+            "expected": [
+              "先给",
+              "再展开"
+            ],
+            "actual": "结论：你刚才要求我回复时默认先给结论，再展开细节。"
+          },
+          {
+            "name": "forbidden_any",
+            "passed": true,
+            "expected": [
+              "不知道"
+            ],
+            "actual": "结论：你刚才要求我回复时默认先给结论，再展开细节。"
+          }
+        ]
+      },
+      "shadow": {
+        "answer": "结论：你刚才要求我以后默认“先给结论，再展开细节”。\n\n细节：你之前说的是“以后默认先给我结论，再展开细节。”",
+        "usage": {
+          "input_tokens": 10889,
+          "cached_input_tokens": 2432,
+          "output_tokens": 118
+        },
+        "elapsedMs": 15772,
+        "stderr": "2026-04-16T14:24:37.729797Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at \"/private/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-codex-home-fIZjoC/shell_snapshots/019d96ad-f7e1-70c2-97e8-aa9cd89ec46e.tmp-1776349476834246000\": Os { code: 2, kind: NotFound, message: \"No such file or directory\" }",
+        "promptEstimate": 129,
+        "passed": true,
+        "checks": [
+          {
+            "name": "expected_any",
+            "passed": true,
+            "expected": [],
+            "actual": "结论：你刚才要求我以后默认“先给结论，再展开细节”。\n\n细节：你之前说的是“以后默认先给我结论，再展开细节。”"
+          },
+          {
+            "name": "expected_all",
+            "passed": true,
+            "expected": [
+              "先给",
+              "再展开"
+            ],
+            "actual": "结论：你刚才要求我以后默认“先给结论，再展开细节”。\n\n细节：你之前说的是“以后默认先给我结论，再展开细节。”"
+          },
+          {
+            "name": "forbidden_any",
+            "passed": true,
+            "expected": [
+              "不知道"
+            ],
+            "actual": "结论：你刚才要求我以后默认“先给结论，再展开细节”。\n\n细节：你之前说的是“以后默认先给我结论，再展开细节。”"
+          }
+        ]
+      },
+      "promptReductionRatio": 0.16233766233766234
+    }
+  ]
+}
