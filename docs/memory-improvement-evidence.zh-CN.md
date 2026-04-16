@@ -74,25 +74,33 @@
 
 - [openclaw-ordinary-conversation-memory-intent-ab-2026-04-16.md](../reports/generated/openclaw-ordinary-conversation-memory-intent-ab-2026-04-16.md)
 
-这组一共 `10` 条：
+这组现在已经扩到 `40` 条，而且明确按“先完整跑 builtin，再清空，再跑 Memory Core”的方法执行：
 
-- current（OpenClaw + Unified Memory Core ordinary-conversation governed ingest）：`10`
-- legacy（OpenClaw 默认 legacy path）：`5`
-- 两边都通过：`5`
-- 只有 Memory Core 通过：`5`
-- 只有 legacy 通过：`0`
-- 两边都失败：`0`
+- current（OpenClaw + Unified Memory Core ordinary-conversation governed ingest）：`38`
+- legacy（OpenClaw 默认 legacy path）：`21`
+- 两边都通过：`20`
+- 只有 Memory Core 通过：`18`
+- 只有 legacy 通过：`1`
+- 两边都失败：`1`
 
 按语言拆开看：
 
-- 英文：`5` 条，current `5`，legacy `3`，`UMC-only=2`，`legacy-only=0`
-- 中文：`5` 条，current `5`，legacy `2`，`UMC-only=3`，`legacy-only=0`
+- 英文：`20` 条，current `18`，legacy `11`，`UMC-only=8`，`legacy-only=1`，`both-fail=1`
+- 中文：`20` 条，current `20`，legacy `10`，`UMC-only=10`，`legacy-only=0`，`both-fail=0`
+
+按类别拆开看：
+
+- durable_rule：current `8 / 8`，legacy `3 / 8`
+- tool_routing_preference：current `8 / 8`，legacy `1 / 8`
+- user_profile_fact：current `7 / 8`，legacy `1 / 8`
+- session_constraint：current `7 / 8`，legacy `8 / 8`
+- one_off_instruction：current `8 / 8`，legacy `8 / 8`
 
 这组结果的意义，比旧的 `100` 条更接近“普通用户实际会感受到的聪明”：
 
-1. `tool_routing_preference` 这类 structured ordinary memory，UMC 已经能稳定拉开。
-2. 中文普通对话写记忆这条线上，UMC 现在比 legacy 更明显。
-3. 之前那条英文 durable-rule 代号题 `saffron-releases` 已经被 current 收掉，现在 focused ordinary-conversation write suite 已经做到 `10 / 10`。
+1. `tool_routing_preference` 和 `durable_rule` 这两类普通对话写记忆，UMC 已经明显拉开。
+2. 中文普通对话写记忆这条线上，UMC 现在是 `20 / 20`，明显强于 legacy 的 `10 / 20`。
+3. 这组 `40` 条不再是“小样本全绿”，而是更真实地暴露出 current 还没收口的点：`ordinary-ab-en-session-negative-3` 仍会把项目内临时城市 `Hangzhou` 带进后续 recall，`ordinary-ab-en-timezone-1` 则是 current / legacy 都没守住的 shared-fail。
 
 ## 这轮新增修复带来了什么
 
@@ -129,15 +137,15 @@
 也就是说，现在最诚实的判断变成了：
 
 - 在“既有记忆消费”上，Memory Core 的增益依然偏小。
-- 在“普通对话实时写入长期记忆”上，Memory Core 已经开始明显更强。
-- current ordinary-conversation path 这一轮已经收口到 focused suite `10 / 10`；剩下更值得优先看的，是 `100` case 里仍未关闭的 `2` 条 shared-fail 中文 history case。
+- 在“普通对话实时写入长期记忆”上，Memory Core 已经开始明显更强，而且这个结论现在来自 `40` 条更有代表性的 live A/B，不是 `10` 条小样本。
+- current ordinary-conversation path 这一轮已经扩大到 focused suite `38 / 40`；剩下更值得优先看的，是 `1` 条 current 仍会误记的 session case、`1` 条 current / legacy 都没守住的 profile case，以及 `100` case 里仍未关闭的 `2` 条 shared-fail 中文 history case。
 
 为了让这个结论更容易把握，你可以把两组 A/B 分开记：
 
 - `100` 条既有记忆消费题：
   `97` shared、`1` UMC-only、`0` legacy-only、`2` both-fail
-- `10` 条普通对话实时写记忆题：
-  `5` shared、`5` UMC-only、`0` legacy-only、`0` both-fail
+- `40` 条普通对话实时写记忆题：
+  `20` shared、`18` UMC-only、`1` legacy-only、`1` both-fail
 
 之前我用来说明增益的中文案例，现在仍然是一个有效的“Memory Core 可以赢”的例子：
 

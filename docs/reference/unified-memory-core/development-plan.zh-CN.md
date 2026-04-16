@@ -354,7 +354,7 @@ Stage 6 证据：
 90. `completed` 收掉 `100` case live A/B 里之前被当成 builtin-only regression 的 `ab100-zh-negative-4`。
    - 生日题不再继续被当成 plain negative；这类问题更接近 identity-conflict / birthday-guardrail。
    - 替换成真正的未知事实负例后，`ab100-zh-negative-4` 现在是 current / legacy 都稳定拒答，`100` case live A/B 已经没有 builtin-only 胜场。
-   - 同一轮还顺手收掉了 focused ordinary-conversation suite 里的 `ordinary-ab-en-rule-releases-1`；当前 focused realtime-write suite 已提升到 `10 / 10`。
+   - 后续 ordinary-conversation realtime-write suite 已从 `10` 条扩到 `40` 条，并按“先 builtin、清空、再 current”的顺序重跑；当前结果是 current `38 / 40`、legacy `21 / 40`、`UMC-only = 18`、`legacy-only = 1`、`both-fail = 1`。
 91. `next` 再收掉 `100` case live A/B 里两条 shared-fail 的中文 history case：`ab100-zh-history-editor-2`、`ab100-zh-history-editor-4`。
    - 目标是让 history / supersede 场景不再停留在“两边都不会”，而是至少先把 UMC 拉到可稳定答对。
 92. `todo` 在 shared-fail history cases 收口后，重新设计下一轮更偏 `cross-source`、`conflict`、`multi-step history` 与高信息密度自然中文的 live A/B，争取让 UMC 在更多 harder cases 上形成清晰净增益。

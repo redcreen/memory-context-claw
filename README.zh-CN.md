@@ -15,7 +15,7 @@
 - 更深的 answer-level watch：`14 / 18`
 - 仓库当前维护的 runnable matrix：`392` 个 case，其中中文相关占比 `53.83%`
 - 既有记忆消费型 live A/B：`100` 个真实 answer-level 案例里，`97` 个两边都能答对，`1` 个只有 Memory Core 能答对，`0` 个只有默认内置能答对，`2` 个两边都失败
-- 普通对话实时写记忆专项 A/B：`10` 个 live 案例里，`current=10`、`legacy=5`、`UMC-only=5`、`legacy-only=0`
+- 普通对话实时写记忆专项 A/B：`40` 个 live 案例里，`current=38`、`legacy=21`、`UMC-only=18`、`legacy-only=1`、`both-fail=1`
 
 建议先看这两份：
 
@@ -23,7 +23,7 @@
 - [完整回归与记忆提升报告](reports/generated/unified-memory-core-full-regression-and-memory-improvement-2026-04-15.md)
 - [普通对话实时写记忆专项对比](reports/generated/openclaw-ordinary-conversation-memory-intent-ab-2026-04-16.md)
 
-最诚实的结论是：OpenClaw 内置记忆在很多“已有记忆消费”的简单题上本来就不差，所以旧的 `100` 条 A/B 差异不大；但一旦把测试改成“普通对话里实时写入，再跨会话召回”，Unified Memory Core 的优势就开始明显出现。UMC 当前最值得看的，已经不是“同一份旧记忆谁答得更像”，而是“谁更会把新的长期规则/偏好/事实写对、写稳、写得可治理”。
+最诚实的结论是：OpenClaw 内置记忆在很多“已有记忆消费”的简单题上本来就不差，所以旧的 `100` 条 A/B 差异不大；但一旦把测试改成“普通对话里实时写入，再跨会话召回”，而且把样本扩到 `40` 条，Unified Memory Core 的优势就开始明显出现。UMC 当前最值得看的，已经不是“同一份旧记忆谁答得更像”，而是“谁更会把新的长期规则/偏好/事实写对、写稳、写得可治理”。
 
 ## 适用对象
 
