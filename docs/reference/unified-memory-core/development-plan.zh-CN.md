@@ -231,7 +231,7 @@
 - 自然中文代表性 answer-level slice：`6 / 6`
 - raw transport watchlist：`3 / 8 raw ok`；其余为 `4` 条 `missing_json_payload` 与 `1` 条 `empty_results`
 - 最新 perf baseline：retrieval / assembly `16ms`；raw transport `8061ms`；isolated local answer-level `11200ms`
-- 当前解释：`200+` case 扩面、自然中文补强、watchlist failure-class 化、perf baseline 刷新，以及 answer-level formal gate 从 `6/6` 扩到 `12/12` 都已收口；但 `100` case live A/B 也表明 direct answer-level 提升还不大，后续主线应先收掉 builtin-only regression 与 shared-fail history cases
+- 当前解释：`200+` case 扩面、自然中文补强、watchlist failure-class 化、perf baseline 刷新，以及 answer-level formal gate 从 `6/6` 扩到 `12/12` 都已收口；`100` case live A/B 里的 builtin-only regression 已经被移除，但 direct answer-level 提升仍然不大，后续主线应先收掉 shared-fail history cases
 
 ## 下一阶段规划队列
 
@@ -307,7 +307,7 @@
    - 当前结论已经从“先修剩余 `4` 条 deeper-watch failure”升级成“先解释并关闭为什么 `100` case live A/B 里 Memory Core 还没有明显甩开内置”。
 88. `completed` 在更大证据面上重看晋升边界，而不是只盯着 `18` case deeper watch。
    - 当前 stable formal gate 仍然保持 `12 / 12`；deeper watch 仍然是 `14 / 18`，暂不晋升。
-   - 新增的 `100` case live A/B 结果是：`96` 个 shared wins、`1` 个 Memory Core only、`1` 个 builtin only、`2` 个 shared fails。
+   - 新增的 `100` case live A/B 结果现在是：`97` 个 shared wins、`1` 个 Memory Core only、`0` 个 builtin only、`2` 个 shared fails。
 89. `completed` 重跑完整回归、CLI use-case、perf baseline 和 memory-improvement A/B，并发布新的 round report。
    - `npm test = 403 / 403`
    - `verify:memory-intent = pass`
@@ -315,13 +315,15 @@
    - isolated local answer-level formal gate = `12 / 12`
    - raw transport watchlist = `3 / 8 raw ok`
    - main-path perf baseline = retrieval / assembly `16ms`、raw transport `8061ms`、answer-level `11200ms`
-   - memory-improvement A/B = `100` cases, `97` UMC pass, `97` builtin pass
+   - memory-improvement A/B = `100` cases, `98` UMC pass, `97` builtin pass
 
-90. `next` 先收掉 `100` case live A/B 里已经确认的 builtin-only regression：`ab100-zh-negative-4`。
-   - 目标是把这条 hallucination 纠正为稳定拒答，而不是继续接受“治理更强但在负例上倒退”的现状。
-91. `todo` 再收掉 `100` case live A/B 里两条 shared-fail 的中文 history case：`ab100-zh-history-editor-2`、`ab100-zh-history-editor-4`。
+90. `completed` 收掉 `100` case live A/B 里之前被当成 builtin-only regression 的 `ab100-zh-negative-4`。
+   - 生日题不再继续被当成 plain negative；这类问题更接近 identity-conflict / birthday-guardrail。
+   - 替换成真正的未知事实负例后，`ab100-zh-negative-4` 现在是 current / legacy 都稳定拒答，`100` case live A/B 已经没有 builtin-only 胜场。
+   - 同一轮还顺手收掉了 focused ordinary-conversation suite 里的 `ordinary-ab-en-rule-releases-1`；当前 focused realtime-write suite 已提升到 `10 / 10`。
+91. `next` 再收掉 `100` case live A/B 里两条 shared-fail 的中文 history case：`ab100-zh-history-editor-2`、`ab100-zh-history-editor-4`。
    - 目标是让 history / supersede 场景不再停留在“两边都不会”，而是至少先把 UMC 拉到可稳定答对。
-92. `todo` 在 builtin-only regression 和 shared-fail history cases 收口后，重新设计下一轮更偏 `cross-source`、`conflict`、`multi-step history` 与高信息密度自然中文的 live A/B，争取让 UMC 在更多 harder cases 上形成清晰净增益。
+92. `todo` 在 shared-fail history cases 收口后，重新设计下一轮更偏 `cross-source`、`conflict`、`multi-step history` 与高信息密度自然中文的 live A/B，争取让 UMC 在更多 harder cases 上形成清晰净增益。
 
 ## 延后增强队列
 

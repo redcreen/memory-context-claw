@@ -14,8 +14,8 @@ If you want the shortest practical answer before reading the whole repo:
 - isolated local answer-level gate: `12 / 12`, with `6 / 12` zh-bearing cases inside the formal gate
 - deeper answer-level watch: `14 / 18`
 - maintained runnable matrix: `392` cases with `53.83%` Chinese-bearing coverage
-- live A/B on existing-memory consumption: `100` real answer-level cases, `96` shared wins, `1` Memory Core-only win, `1` builtin-only win, and `2` shared failures
-- focused ordinary-conversation write-time A/B: `10` real live cases, `current=9`, `legacy=5`, `UMC-only=5`, `legacy-only=1`
+- live A/B on existing-memory consumption: `100` real answer-level cases, `97` shared wins, `1` Memory Core-only win, `0` builtin-only wins, and `2` shared failures
+- focused ordinary-conversation write-time A/B: `10` real live cases, `current=10`, `legacy=5`, `UMC-only=5`, `legacy-only=0`
 
 Read these first:
 

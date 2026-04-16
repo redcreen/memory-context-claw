@@ -27,12 +27,12 @@
 - 自然中文案例：`24`（`12` retrieval + `12` answer-level）
 - retrieval-heavy formal gate：`250 / 250`
 - isolated local answer-level formal gate：`12 / 12`（formal gate 内中文样本 `6 / 12`）
-- live answer-level A/B：`100` 个真实案例，`96` 个两边都能答对，`1` 个只有 Memory Core 能答对，`1` 个只有内置能答对，`2` 个两边都失败
+- live answer-level A/B：`100` 个真实案例，`97` 个两边都能答对，`1` 个只有 Memory Core 能答对，`0` 个只有内置能答对，`2` 个两边都失败
 - 自然中文代表性 retrieval slice：`5 / 5`
 - 自然中文代表性 answer-level slice：`6 / 6`
 - raw transport watchlist：`3 / 8 raw ok`；其余为 `4` 条 `missing_json_payload` 和 `1` 条 `empty_results`
 - main-path perf baseline：retrieval / assembly `16ms`；raw transport `8061ms`；isolated local answer-level `11200ms`
-- 当前结论：`200+` case 建设、自然中文补强、transport watchlist failure-class 化、perf baseline 刷新，以及 answer-level formal gate 从 `6/6` 扩到 `12/12` 都已收口；但 `100` 个真实 A/B 案例也说明 direct answer-level 提升还不大，下一步要优先把内置独占通过和共享失败收掉，再争取把更多 harder cases 变成 Memory Core 独占胜场
+- 当前结论：`200+` case 建设、自然中文补强、transport watchlist failure-class 化、perf baseline 刷新，以及 answer-level formal gate 从 `6/6` 扩到 `12/12` 都已收口；`100` 个真实 A/B 里的内置独占通过已经被移除，下一步要优先把剩余共享失败收掉，再争取把更多 harder cases 变成 Memory Core 独占胜场
 
 对应证据：
 
@@ -46,7 +46,7 @@
 
 | 时间层级 | 重点 | 退出信号 |
 | --- | --- | --- |
-| 当前 | 在新的 `12/12` isolated local answer-level formal gate、`392` case matrix、`100` case live A/B 和 failure-class watchlist 基线上，优先把“为什么 Memory Core 还没有明显甩开内置”这件事拆清楚 | `100` case A/B 里的 `1` 个内置独占通过和 `2` 个共享失败被收掉，并且更多 harder cases 开始变成 Memory Core 独占胜场 |
+| 当前 | 在新的 `12/12` isolated local answer-level formal gate、`392` case matrix、`100` case live A/B 和 failure-class watchlist 基线上，优先把“为什么 Memory Core 还没有明显甩开内置”这件事拆清楚 | `100` case A/B 里剩余的 `2` 个共享失败被收掉，并且更多 harder cases 开始变成 Memory Core 独占胜场 |
 | 下一步 | 把更深的 answer-level gate 继续扩到 cross-source、conflict、multi-step history，再讨论是否真的打开 runtime API / service-mode | 更深的 isolated local answer-level gate 可以稳定复跑，且在更大 A/B 集里显示出比内置更清晰的领先 |
 | 更后面 | 只在 operator baseline 稳定后，再讨论 runtime API / split-ready 演进 | Stage 5 收口后的独立产品证据继续保持绿色 |
 
@@ -54,14 +54,14 @@
 
 主 roadmap 里的“当前”不只是方向，也对应接下来要执行的具体工作：
 
-1. 先把 `100` case live A/B 里 `1` 个内置独占通过和 `2` 个两边都失败的 case 收掉，避免继续出现“治理更强但直观效果不明显”的结论。
+1. 先把 `100` case live A/B 里剩余 `2` 个两边都失败的 case 收掉，避免继续出现“治理更强但直观效果不明显”的结论。
 2. 继续把 deeper-watch harder failures 与更大 A/B case 合并看，优先在 cross-source、conflict、history、自然中文这些本该体现差异的场景里拉开胜场。
 3. 继续保持 formal gate 内部 `6 / 12` 的自然中文占比，不退回“全局过半、正式门禁里却很少中文”的状态。
 4. 持续把 gateway/session-lock 与 raw transport 维持在 `missing_json_payload` / `empty_results` watchlist，不让宿主噪声重新污染算法判断。
 
 恢复执行时：
 
-- 主顺序看 [reference/unified-memory-core/development-plan.zh-CN.md](reference/unified-memory-core/development-plan.zh-CN.md) 的 `90`
+- 主顺序看 [reference/unified-memory-core/development-plan.zh-CN.md](reference/unified-memory-core/development-plan.zh-CN.md) 的 `91`
 - 实时执行状态看 [../.codex/plan.md](../.codex/plan.md) 和 [../.codex/status.md](../.codex/status.md)
 
 ## 里程碑

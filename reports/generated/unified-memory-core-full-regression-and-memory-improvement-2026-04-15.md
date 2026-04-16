@@ -167,11 +167,11 @@ Interpretation:
 ### Topline Counts
 
 - compared real live cases: `100`
-- `unified-memory-core` passed: `97`
+- `unified-memory-core` passed: `98`
 - legacy builtin passed: `97`
-- both passed: `96`
+- both passed: `97`
 - Memory Core only: `1`
-- legacy only: `1`
+- legacy only: `0`
 - both failed: `2`
 
 ### English Versus Chinese
@@ -189,11 +189,11 @@ Interpretation:
 #### Chinese
 
 - compared real live cases: `50`
-- `unified-memory-core` passed: `47`
+- `unified-memory-core` passed: `48`
 - legacy builtin passed: `48`
-- both passed: `47`
+- both passed: `48`
 - Memory Core only: `0`
-- legacy only: `1`
+- legacy only: `0`
 - both failed: `2`
 
 ### What The 100-Case A/B Actually Means
@@ -203,7 +203,7 @@ The honest reading is:
 - OpenClaw builtin memory is already good enough to answer many simple stable-fact and current-state prompts on the current test agent
 - `unified-memory-core` does not currently create a large visible uplift on every easy prompt
 - after `100` real live cases, the direct answer-level gap is still small enough that it would be misleading to market this as a broad built-in replacement win
-- the visible current uplift is concentrated in a narrow slice of harder retrieval / phrasing situations, while one Chinese negative case currently regresses and two harder Chinese history cases still miss on both engines
+- the visible current uplift is concentrated in a narrow slice of harder retrieval / phrasing situations, while two harder Chinese history cases still miss on both engines
 
 The single clear current `unified-memory-core`-only win in this live set is:
 
@@ -214,13 +214,11 @@ The single clear current `unified-memory-core`-only win in this live set is:
   - builtin legacy: fail
 - attribution: `unified-retrieval-gain`
 
-The clear current builtin-only win is:
+A benchmark cleanup worth making explicit is:
 
-- case: `ab100-zh-negative-4`
-- question: `只根据当前记忆，我的生日是哪一天？如果没有这条记忆，就只回答：I don't know based on current memory.`
-- result:
-  - `unified-memory-core`: fail, hallucinated `1983-02-06`
-  - builtin legacy: correct abstention
+- the earlier Chinese birthday prompt is no longer counted as a plain negative case
+- it behaved more like an identity-conflict / birthday-guardrail probe than a clean abstention probe
+- after replacing it with a true unknown-fact negative, the `100`-case live A/B no longer contains a builtin-only win
 
 So if the question is “does Memory Core help today?”, the honest answer is:
 
@@ -239,16 +237,16 @@ This round also adds a second live A/B that is much closer to the user-facing in
 Topline:
 
 - compared live cases: `10`
-- `unified-memory-core` current path passed: `9`
+- `unified-memory-core` current path passed: `10`
 - legacy builtin path passed: `5`
-- both passed: `4`
+- both passed: `5`
 - Memory Core only: `5`
-- legacy only: `1`
+- legacy only: `0`
 - both failed: `0`
 
 Language split:
 
-- English: current `4 / 5`, legacy `3 / 5`, `UMC-only=2`, `legacy-only=1`
+- English: current `5 / 5`, legacy `3 / 5`, `UMC-only=2`, `legacy-only=0`
 - Chinese: current `5 / 5`, legacy `2 / 5`, `UMC-only=3`, `legacy-only=0`
 
 Interpretation:
@@ -265,9 +263,9 @@ The clearest current UMC-only wins in this focused suite are:
 - Chinese async-update preference recall
 - Chinese notebook fact recall
 
-The one clear current legacy-only result is:
+The previous focused-suite legacy-only miss has now been closed:
 
-- English durable-rule keyword recall for `saffron-releases`
+- English durable-rule keyword recall for `saffron-releases` now passes on both `current` and `legacy`
 
 ## Where Memory Core Is Already Significantly Better
 
@@ -296,12 +294,12 @@ Even when many simple prompts are shared wins, Memory Core is already materially
 According to the GitHub development plan:
 
 - current completed baseline: the repo has already closed the `12 / 12` isolated answer-level gate, the broader benchmark program, and this round’s full rerun / A-B refresh
-- current next step: [development-plan.zh-CN.md](../../docs/reference/unified-memory-core/development-plan.zh-CN.md) item `90`
+- current next step: [development-plan.zh-CN.md](../../docs/reference/unified-memory-core/development-plan.zh-CN.md) item `91`
 
 Current `next` in the development plan:
 
-- remove the one confirmed builtin-only regression plus the two shared Chinese history misses from the `100`-case A/B suite
-- remove the one confirmed `legacy-only` durable-rule miss from the new `10`-case ordinary-conversation write-time suite
+- remove the two shared Chinese history misses from the `100`-case A/B suite
+- redesign the next live A/B around harder `cross-source`, `conflict`, `multi-step history`, and denser natural-Chinese gains instead of spending another round on already-closed negative / ordinary-write regressions
 - target future answer-level gains in `cross-source`, `conflict`, `multi-step history`, and denser natural Chinese prompts where `unified-memory-core` should earn more differentiated wins
 
 That means this round has finished the broad regression and evidence pass, and the next phase is no longer “prove basic health”, but “turn the improved `14 / 18` deeper watch into a promotable next formal-gate layer where Memory Core beats the builtin baseline more often”.

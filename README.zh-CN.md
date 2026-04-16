@@ -14,8 +14,8 @@
 - isolated local answer-level gate：`12 / 12`，其中中文样本 `6 / 12`
 - 更深的 answer-level watch：`14 / 18`
 - 仓库当前维护的 runnable matrix：`392` 个 case，其中中文相关占比 `53.83%`
-- 既有记忆消费型 live A/B：`100` 个真实 answer-level 案例里，`96` 个两边都能答对，`1` 个只有 Memory Core 能答对，`1` 个只有默认内置能答对，`2` 个两边都失败
-- 普通对话实时写记忆专项 A/B：`10` 个 live 案例里，`current=9`、`legacy=5`、`UMC-only=5`、`legacy-only=1`
+- 既有记忆消费型 live A/B：`100` 个真实 answer-level 案例里，`97` 个两边都能答对，`1` 个只有 Memory Core 能答对，`0` 个只有默认内置能答对，`2` 个两边都失败
+- 普通对话实时写记忆专项 A/B：`10` 个 live 案例里，`current=10`、`legacy=5`、`UMC-only=5`、`legacy-only=0`
 
 建议先看这两份：
 

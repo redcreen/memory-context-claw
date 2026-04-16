@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-04-15T17:44:27.482Z",
+  "generatedAt": "2026-04-16T10:50:07.581Z",
   "agentId": "umceval65",
   "shardCount": 2,
   "casesPath": "/Users/redcreen/Project/unified-memory-core/evals/openclaw-memory-improvement-ab-cases.js",
   "summary": {
     "total": 100,
-    "passed": 97,
-    "failed": 3,
+    "passed": 98,
+    "failed": 2,
     "comparedLegacy": 100,
     "legacyPassed": 97,
     "byLanguage": {
@@ -21,11 +21,11 @@
       },
       "zh": {
         "total": 50,
-        "unifiedPassed": 47,
+        "unifiedPassed": 48,
         "legacyPassed": 48,
-        "bothPass": 47,
+        "bothPass": 48,
         "umcOnly": 0,
-        "legacyOnly": 1,
+        "legacyOnly": 0,
         "bothFail": 2
       }
     },
@@ -80,16 +80,16 @@
       },
       "ab-zh-negative": {
         "total": 5,
-        "unifiedPassed": 4,
+        "unifiedPassed": 5,
         "legacyPassed": 5,
         "umcOnly": 0
       }
     },
     "byAttribution": {
-      "shared-capability": 57,
+      "shared-capability": 58,
       "shared-baseline-retrieval": 39,
       "unified-retrieval-gain": 1,
-      "unified-failed": 3
+      "unified-failed": 2
     }
   },
   "results": [
@@ -6487,13 +6487,13 @@
       "category": "ab-zh-negative",
       "entrypoint": "agent",
       "query": "",
-      "message": "只根据当前记忆，我的生日是哪一天？如果没有这条记忆，就只回答：I don't know based on current memory.",
+      "message": "只根据当前记忆，我最常订哪家航空公司？如果没有这条记忆，就只回答：I don't know based on current memory.",
       "compareLegacy": true,
       "attributionKind": "negative",
       "current": {
         "ok": true,
         "transport": "agent_local",
-        "answer": "1983-02-06",
+        "answer": "I don't know based on current memory.",
         "injectedWorkspaceFiles": [
           "AGENTS.md",
           "SOUL.md",
@@ -6505,14 +6505,14 @@
           "MEMORY.md"
         ],
         "observedSessionKey": "agent:umceval65:main",
-        "observedSessionId": "umc-bench-ab100-en-name-1-34a04d06",
+        "observedSessionId": "umc-bench-ab100-zh-negative-4-3f10eed1",
         "warning": "",
-        "passed": false,
-        "expectedAnyOk": false,
+        "passed": true,
+        "expectedAnyOk": true,
         "expectedAllOk": true,
         "forbiddenOk": true,
         "sourcesOk": true,
-        "reason": "expectation mismatch"
+        "reason": "matched"
       },
       "legacy": {
         "ok": true,
@@ -6529,7 +6529,7 @@
           "MEMORY.md"
         ],
         "observedSessionKey": "agent:umceval65:main",
-        "observedSessionId": "umc-bench-ab100-en-name-1-cb85d768",
+        "observedSessionId": "umc-bench-ab100-zh-negative-4-78941053",
         "warning": "",
         "passed": true,
         "expectedAnyOk": true,
@@ -6538,12 +6538,7 @@
         "sourcesOk": true,
         "reason": "matched"
       },
-      "attribution": "unified-failed",
-      "expectedAny": [
-        "I don't know based on current memory."
-      ],
-      "expectedAll": [],
-      "forbiddenAny": []
+      "attribution": "shared-capability"
     },
     {
       "id": "ab100-zh-negative-5",

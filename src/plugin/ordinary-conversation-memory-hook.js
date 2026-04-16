@@ -34,6 +34,10 @@ function normalizeText(value, fallback = "") {
   return normalizeString(value, fallback).replace(/\s+/g, " ").trim();
 }
 
+function hasChineseText(value = "") {
+  return /[\u4e00-\u9fff]/u.test(String(value || ""));
+}
+
 function resolveWorkspaceIdForAgent(governedExports = {}, agentId = "") {
   const overrides = normalizeStringMap(governedExports.agentWorkspaceIds);
   const normalizedAgentId = normalizeString(agentId);
@@ -163,7 +167,7 @@ const DURABLE_FUTURE_MARKERS = [
 ];
 
 const TOOL_ROUTING_MARKERS = [
-  /\buse\s+[a-z0-9_]+\b/i,
+  /\buse\s+(?:the\s+)?[a-z0-9]+_[a-z0-9_]+\b/i,
   /\bcapture_[a-z0-9_]+\b/i,
   /\btool\b/i,
   /工具/u
@@ -226,6 +230,84 @@ function inferStructuredRule(text) {
   };
 }
 
+function extractNamedMemoryCue(text = "") {
+  const normalized = normalizeText(text);
+  if (!normalized) {
+    return null;
+  }
+
+  const patterns = [
+    { kind: "keyword", match: normalized.match(/\bkeyword\s+[`'"]?([a-z0-9_-]+)[`'"]?/i) },
+    { kind: "tag", match: normalized.match(/\btag(?:\s+the\s+result)?(?:\s+with)?\s+[`'"]?([a-z0-9_-]+)[`'"]?/i) },
+    { kind: "codename", match: normalized.match(/\bcodename(?:d)?(?:\s+(?:called|is))?\s+[`'"]?([a-z0-9_-]+)[`'"]?/i) },
+    { kind: "代号", match: normalized.match(/代号(?:叫做|是)?\s*([^\s，。；;、]+)/u) },
+    { kind: "关键词", match: normalized.match(/关键词(?:叫做|是)?\s*([^\s，。；;、]+)/u) },
+    { kind: "标签", match: normalized.match(/打\s*([a-z0-9_-]+)\s*标签/i) },
+    { kind: "标签", match: normalized.match(/标签(?:叫做|是)?\s*([a-z0-9_-]+)/i) }
+  ];
+
+  for (const item of patterns) {
+    const value = normalizeString(item.match?.[1]);
+    if (value) {
+      return {
+        kind: item.kind,
+        value
+      };
+    }
+  }
+
+  return null;
+}
+
+function buildOrdinaryConversationSummary({
+  userMessage = "",
+  category = "",
+  structuredRule = null,
+  namedCue = null
+} = {}) {
+  const userText = normalizeText(userMessage);
+  if (!userText) {
+    return "";
+  }
+
+  const isChinese = hasChineseText(userText);
+  const trigger = structuredRule?.trigger || {};
+  const action = structuredRule?.action || {};
+  const contentKind = normalizeString(trigger.content_kind);
+  const domains = Array.isArray(trigger.domains) ? trigger.domains : [];
+  const actionTool = normalizeString(action.tool);
+  const cueValue = normalizeString(namedCue?.value);
+  const mentionsReleases = /\breleases\b/i.test(userText);
+  const isGitHubRule = contentKind === "github_repo_link" || domains.includes("github.com") || /github/i.test(userText);
+  const isXiaohongshuRule = contentKind === "xiaohongshu_link" || /小红书|xiaohongshu|xhslink/i.test(userText);
+
+  if ((category === "durable_rule" || category === "tool_routing_preference") && isGitHubRule && mentionsReleases) {
+    if (cueValue) {
+      return isChinese
+        ? `只要用户发 GitHub 仓库链接，默认规则代号是 ${cueValue}，并先看 Releases 页面。`
+        : `When the user sends a GitHub repository link, use keyword ${cueValue} and check the Releases tab first.`;
+    }
+    return isChinese
+      ? "只要用户发 GitHub 仓库链接，先看 Releases 页面。"
+      : "When the user sends a GitHub repository link, check the Releases tab first.";
+  }
+
+  if (category === "tool_routing_preference" && isXiaohongshuRule) {
+    if (actionTool && cueValue) {
+      return isChinese
+        ? `只要用户发小红书链接，先用 ${actionTool}，并打 ${cueValue} 标签。`
+        : `When the user sends a Xiaohongshu link, use ${actionTool} first and tag the result ${cueValue}.`;
+    }
+    if (actionTool) {
+      return isChinese
+        ? `只要用户发小红书链接，先用 ${actionTool}。`
+        : `When the user sends a Xiaohongshu link, use ${actionTool} first.`;
+    }
+  }
+
+  return userText;
+}
+
 export function classifyOrdinaryConversationMemoryIntent({ userMessage = "", assistantReply = "" } = {}) {
   const userText = normalizeText(userMessage);
   const assistantText = normalizeText(assistantReply);
@@ -251,16 +333,24 @@ export function classifyOrdinaryConversationMemoryIntent({ userMessage = "", ass
     return null;
   }
 
+  const structuredRule = inferStructuredRule(userText);
+  const namedCue = extractNamedMemoryCue(userText);
+
   if (sessionScoped || replyStyle) {
     return {
       should_write_memory: true,
       category: "session_constraint",
       durability: "session",
       confidence: 0.91,
-      summary: userText,
+      summary: buildOrdinaryConversationSummary({
+        userMessage: userText,
+        category: "session_constraint",
+        structuredRule,
+        namedCue
+      }),
       user_message: userText,
       assistant_reply: assistantText,
-      structured_rule: inferStructuredRule(userText)
+      structured_rule: structuredRule
     };
   }
 
@@ -270,10 +360,15 @@ export function classifyOrdinaryConversationMemoryIntent({ userMessage = "", ass
       category: "tool_routing_preference",
       durability: "durable",
       confidence: 0.96,
-      summary: userText,
+      summary: buildOrdinaryConversationSummary({
+        userMessage: userText,
+        category: "tool_routing_preference",
+        structuredRule,
+        namedCue
+      }),
       user_message: userText,
       assistant_reply: assistantText,
-      structured_rule: inferStructuredRule(userText)
+      structured_rule: structuredRule
     };
   }
 
@@ -283,7 +378,12 @@ export function classifyOrdinaryConversationMemoryIntent({ userMessage = "", ass
       category: "user_profile_fact",
       durability: "durable",
       confidence: 0.9,
-      summary: userText,
+      summary: buildOrdinaryConversationSummary({
+        userMessage: userText,
+        category: "user_profile_fact",
+        structuredRule,
+        namedCue
+      }),
       user_message: userText,
       assistant_reply: assistantText,
       structured_rule: null
@@ -296,10 +396,15 @@ export function classifyOrdinaryConversationMemoryIntent({ userMessage = "", ass
       category: "durable_rule",
       durability: "durable",
       confidence: lowercase.includes("github") ? 0.93 : 0.84,
-      summary: userText,
+      summary: buildOrdinaryConversationSummary({
+        userMessage: userText,
+        category: "durable_rule",
+        structuredRule,
+        namedCue
+      }),
       user_message: userText,
       assistant_reply: assistantText,
-      structured_rule: inferStructuredRule(userText)
+      structured_rule: structuredRule
     };
   }
 

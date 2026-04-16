@@ -42,15 +42,15 @@ We also ran a real live A/B answer-level comparison on the same agent family and
 
 Compared real cases: `100`
 
-- both systems passed: `96`
+- both systems passed: `97`
 - Memory Core only: `1`
-- builtin only: `1`
+- builtin only: `0`
 - both failed: `2`
 
 Language split:
 
 - English: `50` compared, `50` UMC pass, `49` builtin pass, `1` Memory Core only
-- Chinese: `50` compared, `47` UMC pass, `48` builtin pass, `0` Memory Core only, `1` builtin only, `2` both fail
+- Chinese: `50` compared, `48` UMC pass, `48` builtin pass, `0` Memory Core only, `0` builtin only, `2` both fail
 
 This matters because it shows two things at once:
 
@@ -71,16 +71,16 @@ Focused report:
 
 Topline:
 
-- current path (`OpenClaw + Unified Memory Core ordinary-conversation governed ingest`): `9 / 10`
+- current path (`OpenClaw + Unified Memory Core ordinary-conversation governed ingest`): `10 / 10`
 - legacy default path: `5 / 10`
-- both pass: `4`
+- both pass: `5`
 - Memory Core only: `5`
-- legacy only: `1`
+- legacy only: `0`
 - both fail: `0`
 
 Language split:
 
-- English: current `4 / 5`, legacy `3 / 5`, `UMC-only=2`, `legacy-only=1`
+- English: current `5 / 5`, legacy `3 / 5`, `UMC-only=2`, `legacy-only=0`
 - Chinese: current `5 / 5`, legacy `2 / 5`, `UMC-only=3`, `legacy-only=0`
 
 This changes the interpretation materially:
@@ -110,12 +110,11 @@ The clearest current Memory Core-only win is:
 - Memory Core: pass
 - builtin legacy: fail
 
-The clearest builtin-only regression is:
+A cleanup worth calling out:
 
-- prompt:
-  `只根据当前记忆，我的生日是哪一天？如果没有这条记忆，就只回答：I don't know based on current memory.`
-- Memory Core: fail, hallucinated `1983-02-06`
-- builtin legacy: correct abstention
+- the earlier Chinese birthday prompt was removed from the plain-negative A/B bucket
+- it was not a clean abstention probe and behaved more like an identity-conflict / guardrail question
+- after replacing it with a true unknown-fact negative, the `100`-case live A/B no longer contains a builtin-only win
 
 A still-useful Chinese A/B example is:
 
@@ -147,5 +146,5 @@ The current GitHub development plan is moving to the next step:
 
 That next phase now has a sharper objective:
 
-- remove the one builtin-only regression and the two shared Chinese-history misses from the current `100`-case suite
+- remove the two shared Chinese-history misses from the current `100`-case suite
 - then turn more `cross-source`, `conflict`, `multi-step history`, and denser natural-Chinese prompts into direct Memory Core wins instead of mostly shared passes

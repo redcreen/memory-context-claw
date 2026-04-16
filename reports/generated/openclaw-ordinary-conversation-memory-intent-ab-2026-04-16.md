@@ -1,12 +1,12 @@
 # OpenClaw Ordinary-Conversation Memory-Intent A/B
 
-- generatedAt: `2026-04-16T03:39:30.514Z`
+- generatedAt: `2026-04-16T10:48:22.473Z`
 - comparedCases: `10`
-- currentPassed: `9`
+- currentPassed: `10`
 - legacyPassed: `5`
-- bothPass: `4`
+- bothPass: `5`
 - umcOnly: `5`
-- legacyOnly: `1`
+- legacyOnly: `0`
 - bothFail: `0`
 - currentCaptureObserved: `9`
 
@@ -23,11 +23,11 @@
 ### English
 
 - total: `5`
-- currentPassed: `4`
+- currentPassed: `5`
 - legacyPassed: `3`
-- bothPass: `2`
+- bothPass: `3`
 - umcOnly: `2`
-- legacyOnly: `1`
+- legacyOnly: `0`
 - bothFail: `0`
 
 ### Chinese
@@ -46,11 +46,11 @@
 
 - language: `en`
 - category: `durable_rule`
-- outcome: `legacy_only`
+- outcome: `both_pass`
 - captureObserved: `true`
 - captureMessage: From now on, whenever I send a GitHub repository link, use the keyword saffron-releases to remind yourself to check the Releases tab first. Remember this as my default workflow.
 - recallMessage: Based only on your memory for this agent, what keyword should you use when I send a GitHub repository link? If memory is missing, reply exactly: I don't know based on current memory.
-- current: I don't know based on current memory.
+- current: saffron-releases
 - legacy: saffron-releases
 
 ### ordinary-ab-en-tool-tag-1
@@ -154,6 +154,6 @@
 
 ## Focused Conclusion
 
-- On this focused realtime-write surface, Unified Memory Core wins more cases than the legacy default path: `5` UMC-only vs `1` legacy-only.
+- On this focused realtime-write surface, Unified Memory Core wins more cases than the legacy default path: `5` UMC-only vs `0` legacy-only.
 - This suite is intentionally different from the earlier 100-case A/B: it tests live ordinary-conversation writing and then removes session transcripts before recall.
 - That makes it the first direct probe of whether ordinary conversation itself can create durable recallable memory rather than merely improving consumption of an existing fixture.

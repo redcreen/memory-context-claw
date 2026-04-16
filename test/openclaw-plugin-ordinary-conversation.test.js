@@ -6,6 +6,19 @@ import path from "node:path";
 
 import plugin from "../src/plugin/index.js";
 import { createMemoryRegistry } from "../src/unified-memory-core/memory-registry.js";
+import { classifyOrdinaryConversationMemoryIntent } from "../src/plugin/ordinary-conversation-memory-hook.js";
+
+test("ordinary GitHub keyword rules stay durable_rule and produce answer-friendly summaries", () => {
+  const classified = classifyOrdinaryConversationMemoryIntent({
+    userMessage: "From now on, whenever I send a GitHub repository link, use the keyword saffron-releases to remind yourself to check the Releases tab first. Remember this as my default workflow.",
+    assistantReply: "Understood."
+  });
+
+  assert.ok(classified);
+  assert.equal(classified.category, "durable_rule");
+  assert.match(classified.summary, /keyword saffron-releases/i);
+  assert.match(classified.summary, /releases tab/i);
+});
 
 test("openclaw plugin registers an agent_end hook that captures ordinary durable rules into memory_intent", async () => {
   const registryRoot = await fs.mkdtemp(path.join(os.tmpdir(), "umc-openclaw-plugin-ordinary-"));
@@ -65,6 +78,7 @@ test("openclaw plugin registers an agent_end hook that captures ordinary durable
     1
   );
   assert.equal(stableRecords.length, 1);
+  assert.match(stableRecords[0].payload.summary, /先看 readme/i);
   assert.equal(stableRecords[0].payload.attributes.memory_intent_admission_route, "candidate_rule");
 });
 

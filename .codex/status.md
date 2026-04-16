@@ -150,9 +150,9 @@
 
 ## Next 3 Actions
 
-1. 收掉 `100` case live A/B 里已确认的 builtin-only regression：`ab100-zh-negative-4`。
-2. 收掉 `100` case live A/B 里两条 shared-fail 中文 history case：`ab100-zh-history-editor-2`、`ab100-zh-history-editor-4`。
-3. 在 regression 清掉后，重新设计下一轮更偏 `cross-source`、`conflict`、`multi-step history` 和高信息密度自然中文的 live A/B，让 Memory Core 在更多 harder cases 上形成清晰净增益。
+1. 收掉 `100` case live A/B 里两条 shared-fail 中文 history case：`ab100-zh-history-editor-2`、`ab100-zh-history-editor-4`。
+2. 在 shared-fail history cases 清掉后，重新设计下一轮更偏 `cross-source`、`conflict`、`multi-step history` 和高信息密度自然中文的 live A/B，让 Memory Core 在更多 harder cases 上形成清晰净增益。
+3. 在下一轮 A/B 设计完成后，再决定是否把更深 watch surface 继续晋升成新的 formal gate 层。
 
 ## Architecture Supervision
 - Signal: `yellow`
@@ -169,10 +169,10 @@
 
 ## Current Execution Line
 
-- Objective: 先把 `100` case live A/B 里暴露的 builtin-only regression 与 shared-fail history cases 收掉，再推动更多 harder cases 形成 Memory Core 独占胜场
+- Objective: 先把 `100` case live A/B 里剩余的 shared-fail history cases 收掉，再推动更多 harder cases 形成 Memory Core 独占胜场
 - Plan Link: `convert-100-case-ab-from-mostly-shared-wins-into-clearer-umc-gains`
 - Runway: builtin-only regression fix、shared-fail history closure、cross-source/conflict/history/natural-Chinese A/B redesign、gateway/raw transport watch；并行守住 release-preflight 和 canonical-root policy
-- Progress: `0 / 3` tasks complete
+- Progress: `1 / 3` tasks complete
 - Stop Conditions:
   - deeper-watch harder failures get promoted without root-cause attribution
   - answer-level host-path regression gets misclassified as raw transport or retrieval quality
@@ -180,7 +180,7 @@
 
 ## Execution Tasks
 
-- [ ] EL-1 close the builtin-only regression in the `100` case live A/B: `ab100-zh-negative-4`
+- [x] EL-1 close the builtin-only regression in the `100` case live A/B: `ab100-zh-negative-4`
 - [ ] EL-2 close the shared-fail Chinese history cases in the `100` case live A/B: `ab100-zh-history-editor-2` and `ab100-zh-history-editor-4`
 - [ ] EL-3 redesign the next live A/B around `cross-source`, `conflict`, `multi-step history`, and denser natural-Chinese prompts so Memory Core can win on more harder cases
 

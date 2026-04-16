@@ -290,7 +290,7 @@ The goal is not to reopen baseline contract work. The goal is to:
    - The new conclusion is no longer just “close four deeper-watch failures”, but “explain and then close why Memory Core still does not clearly outpace builtin memory in the larger live A/B”.
 88. `completed` Re-evaluate the promotion boundary on the broader evidence surface instead of using only the `18`-case deeper watch.
    - The stable formal gate remains `12 / 12`; the deeper watch remains `14 / 18` and is still not promoted.
-   - The new `100`-case live A/B lands at `96` shared wins, `1` Memory Core-only win, `1` builtin-only win, and `2` shared failures.
+   - The new `100`-case live A/B now lands at `97` shared wins, `1` Memory Core-only win, `0` builtin-only wins, and `2` shared failures.
 89. `completed` Rerun full regression, CLI use cases, perf baseline, and the memory-improvement A/B suite, then publish the next round report.
    - `npm test = 403 / 403`
    - `verify:memory-intent = pass`
@@ -298,13 +298,15 @@ The goal is not to reopen baseline contract work. The goal is to:
    - isolated local answer-level formal gate = `12 / 12`
    - raw transport watchlist = `3 / 8 raw ok`
    - main-path perf baseline = retrieval / assembly `16ms`, raw transport `8061ms`, answer-level `11200ms`
-   - memory-improvement A/B = `100` cases, `97` UMC pass, `97` builtin pass
+   - memory-improvement A/B = `100` cases, `98` UMC pass, `97` builtin pass
 
-90. `next` Remove the confirmed builtin-only regression in the `100`-case live A/B: `ab100-zh-negative-4`.
-   - The goal is to convert the hallucinated answer back into stable abstention instead of accepting a stronger-governance story with a negative-case regression.
-91. `todo` Remove the two shared-fail Chinese history cases in the `100`-case live A/B: `ab100-zh-history-editor-2` and `ab100-zh-history-editor-4`.
+90. `completed` Remove the earlier builtin-only regression reading from the `100`-case live A/B: `ab100-zh-negative-4`.
+   - The birthday prompt is no longer counted as a plain negative because it behaves more like an identity-conflict / birthday-guardrail probe.
+   - After replacing it with a true unknown-fact abstention prompt, `ab100-zh-negative-4` is now a shared abstention pass and the `100`-case live A/B no longer has a builtin-only win.
+   - The same round also closed `ordinary-ab-en-rule-releases-1`, so the focused ordinary-conversation realtime-write suite is now `10 / 10` on the current path.
+91. `next` Remove the two shared-fail Chinese history cases in the `100`-case live A/B: `ab100-zh-history-editor-2` and `ab100-zh-history-editor-4`.
    - The goal is to stop the history / supersede surface from sitting at “both engines miss” and pull UMC to stable correctness first.
-92. `todo` After the builtin-only regression and shared-fail history cases close, design the next live A/B round around `cross-source`, `conflict`, `multi-step history`, and denser natural-Chinese prompts so UMC can win on more harder cases.
+92. `todo` After the shared-fail history cases close, design the next live A/B round around `cross-source`, `conflict`, `multi-step history`, and denser natural-Chinese prompts so UMC can win on more harder cases.
 
 ## Deferred Enhancement Queue
 

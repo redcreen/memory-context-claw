@@ -1,14 +1,14 @@
 # OpenClaw Memory Improvement A/B
 
-- generatedAt: `2026-04-15T17:44:27.482Z`
+- generatedAt: `2026-04-16T10:50:07.581Z`
 - agent: `umceval65`
 - shardCount: `2`
 - totalCases: `100`
-- unifiedPassed: `97`
+- unifiedPassed: `98`
 - legacyPassed: `97`
-- bothPass: `96`
+- bothPass: `97`
 - umcOnly: `1`
-- legacyOnly: `1`
+- legacyOnly: `0`
 - bothFail: `2`
 
 ## Language Split
@@ -26,11 +26,11 @@
 ### Chinese
 
 - total: `50`
-- unifiedPassed: `47`
+- unifiedPassed: `48`
 - legacyPassed: `48`
-- bothPass: `47`
+- bothPass: `48`
 - umcOnly: `0`
-- legacyOnly: `1`
+- legacyOnly: `0`
 - bothFail: `2`
 
 ## Category Summary
@@ -43,14 +43,14 @@
 - ab-zh-retrieval: unified=`20/20` legacy=`20/20` umcOnly=`0`
 - ab-zh-temporal: unified=`10/10` legacy=`10/10` umcOnly=`0`
 - ab-zh-history: unified=`3/5` legacy=`3/5` umcOnly=`0`
-- ab-zh-negative: unified=`4/5` legacy=`5/5` umcOnly=`0`
+- ab-zh-negative: unified=`5/5` legacy=`5/5` umcOnly=`0`
 
 ## Attribution Summary
 
-- shared-capability: `57`
+- shared-capability: `58`
 - shared-baseline-retrieval: `39`
 - unified-retrieval-gain: `1`
-- unified-failed: `3`
+- unified-failed: `2`
 
 ## UMC-only Samples
 
@@ -61,10 +61,7 @@
 
 ## Legacy-only Samples
 
-- ab100-zh-negative-4 [ab-zh-negative] attribution=`unified-failed`
-  prompt: 只根据当前记忆，我的生日是哪一天？如果没有这条记忆，就只回答：I don't know based on current memory.
-  unified: 1983-02-06
-  legacy: I don't know based on current memory.
+- none
 
 ## Both-fail Samples
 
@@ -117,8 +114,3 @@
 - This suite runs `100` distinct live answer-level questions as real single-question `openclaw agent --local` calls.
 - Each shard uses its own clean OpenClaw state directory so task-system and unrelated host plugins do not pollute the prompt or timing.
 - Both Unified Memory Core and the legacy builtin baseline are evaluated against the same question set, same agent fixture, and same host path.
-- This suite measures **consumption** on the same prebuilt memory fixture. It does **not** by itself answer how well ordinary conversation writes new durable memory during a live session.
-- That complementary question is now covered by [openclaw-ordinary-conversation-memory-intent-ab-2026-04-16.md](openclaw-ordinary-conversation-memory-intent-ab-2026-04-16.md).
-- Read the two reports together:
-  - this `100`-case report answers “who consumes the same existing memory better?”
-  - the focused `10`-case report answers “who preserves new ordinary-conversation memory better after session transcripts are pruned?”

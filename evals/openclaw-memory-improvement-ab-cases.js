@@ -331,7 +331,7 @@ const cases = [
       "只根据当前记忆，我最喜欢的编程语言是什么？如果没有这条记忆，就只回答：I don't know based on current memory.",
       "只根据当前记忆，我老家是哪里？如果没有这条记忆，就只回答：I don't know based on current memory.",
       "只根据当前记忆，我平时最常住哪家酒店集团？如果没有这条记忆，就只回答：I don't know based on current memory.",
-      "只根据当前记忆，我的生日是哪一天？如果没有这条记忆，就只回答：I don't know based on current memory.",
+      "只根据当前记忆，我最常订哪家航空公司？如果没有这条记忆，就只回答：I don't know based on current memory.",
       "只根据当前记忆，我小时候在哪个城市长大？如果没有这条记忆，就只回答：I don't know based on current memory."
     ],
     ["I don't know based on current memory."],

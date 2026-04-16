@@ -1,12 +1,12 @@
 # OpenClaw Memory Improvement Summary
 
-- generatedAt: `2026-04-15T17:46:06.350Z`
+- generatedAt: `2026-04-16T10:53:01.338Z`
 - comparedCases: `100`
-- unifiedPassed: `97`
+- unifiedPassed: `98`
 - legacyPassed: `97`
-- bothPass: `96`
+- bothPass: `97`
 - umcOnly: `1`
-- legacyOnly: `1`
+- legacyOnly: `0`
 - bothFail: `2`
 
 ## Language Split
@@ -24,23 +24,23 @@
 ### Chinese
 
 - comparedCases: `50`
-- unifiedPassed: `47`
+- unifiedPassed: `48`
 - legacyPassed: `48`
-- bothPass: `47`
+- bothPass: `48`
 - umcOnly: `0`
-- legacyOnly: `1`
+- legacyOnly: `0`
 - bothFail: `2`
 
 ## Attribution Summary
 
-- shared-capability: `57`
+- shared-capability: `58`
 - shared-baseline-retrieval: `39`
 - unified-retrieval-gain: `1`
-- unified-failed: `3`
+- unified-failed: `2`
 
 ## Significant Takeaways
 
-- Shared baseline memory capability: `96` / `100` real cases passed in both systems.
+- Shared baseline memory capability: `97` / `100` real cases passed in both systems.
 - Memory Core-only gains: `1` / `100` real cases passed only with `unified-memory-core`.
 - Chinese Memory Core-only gains: `0` / `50`.
 - English Memory Core-only gains: `1` / `50`.
@@ -54,10 +54,7 @@
 
 ## Legacy-only Samples
 
-- ab100-zh-negative-4 [ab-zh-negative] (zh) attribution=`unified-failed`
-  prompt: 只根据当前记忆，我的生日是哪一天？如果没有这条记忆，就只回答：I don't know based on current memory.
-  unified: 1983-02-06
-  legacy: I don't know based on current memory.
+- none
 
 ## Both-fail Samples
 

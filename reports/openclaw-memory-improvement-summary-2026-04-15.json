@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-04-15T17:46:06.350Z",
+  "generatedAt": "2026-04-16T10:53:01.338Z",
   "sourceReport": "/Users/redcreen/Project/unified-memory-core/reports/openclaw-memory-improvement-ab-2026-04-15.json",
   "totals": {
     "comparedCases": 100,
-    "unifiedPassed": 97,
+    "unifiedPassed": 98,
     "legacyPassed": 97,
-    "bothPass": 96,
+    "bothPass": 97,
     "umcOnly": 1,
-    "legacyOnly": 1,
+    "legacyOnly": 0,
     "bothFail": 2
   },
   "byLanguage": {
@@ -22,19 +22,19 @@
     },
     "zh": {
       "comparedCases": 50,
-      "unifiedPassed": 47,
+      "unifiedPassed": 48,
       "legacyPassed": 48,
-      "bothPass": 47,
+      "bothPass": 48,
       "umcOnly": 0,
-      "legacyOnly": 1,
+      "legacyOnly": 0,
       "bothFail": 2
     }
   },
   "byAttribution": {
-    "shared-capability": 57,
+    "shared-capability": 58,
     "shared-baseline-retrieval": 39,
     "unified-retrieval-gain": 1,
-    "unified-failed": 3
+    "unified-failed": 2
   },
   "samples": {
     "umcOnly": [
@@ -48,17 +48,7 @@
         "legacyAnswer": "I don't know based on current memory."
       }
     ],
-    "legacyOnly": [
-      {
-        "id": "ab100-zh-negative-4",
-        "category": "ab-zh-negative",
-        "language": "zh",
-        "attribution": "unified-failed",
-        "prompt": "只根据当前记忆，我的生日是哪一天？如果没有这条记忆，就只回答：I don't know based on current memory.",
-        "unifiedAnswer": "1983-02-06",
-        "legacyAnswer": "I don't know based on current memory."
-      }
-    ],
+    "legacyOnly": [],
     "bothFail": [
       {
         "id": "ab100-zh-history-editor-2",

@@ -47,15 +47,15 @@
 
 真实对比案例数：`100`
 
-- 两边都答对：`96`
+- 两边都答对：`97`
 - 只有 Memory Core 答对：`1`
-- 只有内置答对：`1`
+- 只有内置答对：`0`
 - 两边都没答对：`2`
 
 按语言拆开看：
 
 - 英文：`50` 个，Memory Core `50` 个通过，内置 `49` 个通过，`1` 个只有 Memory Core 能答对
-- 中文：`50` 个，Memory Core `47` 个通过，内置 `48` 个通过，没有 Memory Core 独占增益，反而有 `1` 个是内置独占通过，另外 `2` 个两边都失败
+- 中文：`50` 个，Memory Core `48` 个通过，内置 `48` 个通过，没有 Memory Core 独占增益，也没有内置独占通过，另外 `2` 个两边都失败
 
 这组结果说明两件事：
 
@@ -76,23 +76,23 @@
 
 这组一共 `10` 条：
 
-- current（OpenClaw + Unified Memory Core ordinary-conversation governed ingest）：`9`
+- current（OpenClaw + Unified Memory Core ordinary-conversation governed ingest）：`10`
 - legacy（OpenClaw 默认 legacy path）：`5`
-- 两边都通过：`4`
+- 两边都通过：`5`
 - 只有 Memory Core 通过：`5`
-- 只有 legacy 通过：`1`
+- 只有 legacy 通过：`0`
 - 两边都失败：`0`
 
 按语言拆开看：
 
-- 英文：`5` 条，current `4`，legacy `3`，`UMC-only=2`，`legacy-only=1`
+- 英文：`5` 条，current `5`，legacy `3`，`UMC-only=2`，`legacy-only=0`
 - 中文：`5` 条，current `5`，legacy `2`，`UMC-only=3`，`legacy-only=0`
 
 这组结果的意义，比旧的 `100` 条更接近“普通用户实际会感受到的聪明”：
 
 1. `tool_routing_preference` 这类 structured ordinary memory，UMC 已经能稳定拉开。
 2. 中文普通对话写记忆这条线上，UMC 现在比 legacy 更明显。
-3. 这次唯一的 `legacy-only` 不是 session/one-off 这类治理题，而是一条英文 durable-rule 代号题，说明 current ordinary-conversation path 还存在 recall 盲点，不是已经完美。
+3. 之前那条英文 durable-rule 代号题 `saffron-releases` 已经被 current 收掉，现在 focused ordinary-conversation write suite 已经做到 `10 / 10`。
 
 ## 这轮新增修复带来了什么
 
@@ -120,25 +120,24 @@
 - Memory Core：通过
 - OpenClaw 内置：失败
 
-同时，这轮也明确暴露了一个不能回避的问题：
+还有一个评测口径修正：
 
-- 提问：
-  `只根据当前记忆，我的生日是哪一天？如果没有这条记忆，就只回答：I don't know based on current memory.`
-- Memory Core：失败，出现了幻觉答案 `1983-02-06`
-- OpenClaw 内置：通过，正确拒答
+- 之前那条“生日”中文负例，不再继续算 plain negative
+- 它更像 identity-conflict / birthday-guardrail，而不是干净的“不知道就拒答”探针
+- 换成真正的未知事实负例后，`100` case live A/B 里已经没有 builtin-only 胜场
 
 也就是说，现在最诚实的判断变成了：
 
 - 在“既有记忆消费”上，Memory Core 的增益依然偏小。
 - 在“普通对话实时写入长期记忆”上，Memory Core 已经开始明显更强。
-- 但 current ordinary-conversation path 还没有完全收口，至少还存在一条 `legacy-only` durable-rule 回归点。
+- current ordinary-conversation path 这一轮已经收口到 focused suite `10 / 10`；剩下更值得优先看的，是 `100` case 里仍未关闭的 `2` 条 shared-fail 中文 history case。
 
 为了让这个结论更容易把握，你可以把两组 A/B 分开记：
 
 - `100` 条既有记忆消费题：
-  `96` shared、`1` UMC-only、`1` legacy-only、`2` both-fail
+  `97` shared、`1` UMC-only、`0` legacy-only、`2` both-fail
 - `10` 条普通对话实时写记忆题：
-  `4` shared、`5` UMC-only、`1` legacy-only、`0` both-fail
+  `5` shared、`5` UMC-only、`0` legacy-only、`0` both-fail
 
 之前我用来说明增益的中文案例，现在仍然是一个有效的“Memory Core 可以赢”的例子：
 
@@ -170,5 +169,5 @@ GitHub development plan 现在已经进入下一步：
 
 下一阶段的目标，已经不是“证明它能工作”，而是更严肃的一步：
 
-- 把这轮 `100` 个 A/B 里暴露出来的 `1` 个内置独占通过和 `2` 个两边都失败先收掉
+- 把这轮 `100` 个 A/B 里剩下的 `2` 个两边都失败先收掉
 - 然后再把 Memory Core 的直接胜场，从现在的 `1` 个，推向更大规模、尤其是 cross-source / conflict / multi-step history / 更深自然中文场景里的稳定领先

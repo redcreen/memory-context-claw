@@ -1,24 +1,24 @@
 {
-  "generatedAt": "2026-04-16T03:39:30.514Z",
+  "generatedAt": "2026-04-16T10:48:22.473Z",
   "casesPath": "/Users/redcreen/Project/unified-memory-core/evals/openclaw-ordinary-conversation-memory-intent-ab-cases.js",
   "agentId": "rtab",
   "sourceAgentId": "main",
   "summary": {
     "total": 10,
-    "currentPassed": 9,
+    "currentPassed": 10,
     "legacyPassed": 5,
-    "bothPass": 4,
+    "bothPass": 5,
     "umcOnly": 5,
-    "legacyOnly": 1,
+    "legacyOnly": 0,
     "bothFail": 0,
     "byLanguage": {
       "en": {
         "total": 5,
-        "currentPassed": 4,
+        "currentPassed": 5,
         "legacyPassed": 3,
-        "bothPass": 2,
+        "bothPass": 3,
         "umcOnly": 2,
-        "legacyOnly": 1,
+        "legacyOnly": 0,
         "bothFail": 0
       },
       "zh": {
@@ -47,14 +47,14 @@
         "i don't know based on current memory"
       ],
       "current": {
-        "passed": false,
+        "passed": true,
         "expectedAnyOk": true,
-        "expectedAllOk": false,
-        "forbiddenOk": false,
-        "reason": "expectation mismatch",
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "reason": "matched",
         "captureObserved": true,
-        "captureAnswer": "Understood — `saffron-releases` is now my default cue to check the Releases tab first for any GitHub repo link.",
-        "answer": "I don't know based on current memory.",
+        "captureAnswer": "Understood — **saffron-releases** is now your default reminder for GitHub repo links, and I’ll check the **Releases** tab first.",
+        "answer": "saffron-releases",
         "error": ""
       },
       "legacy": {
@@ -63,7 +63,7 @@
         "expectedAllOk": true,
         "forbiddenOk": true,
         "reason": "matched",
-        "captureAnswer": "Locked in — `saffron-releases` is the cue, and I’ll check the Releases tab first for GitHub repo links.",
+        "captureAnswer": "Got it — I’ll treat `saffron-releases` as the cue to check the Releases tab first whenever you send a GitHub repository link.\n\nI’ve saved that as a default workflow in your user notes.",
         "answer": "saffron-releases",
         "error": ""
       }
