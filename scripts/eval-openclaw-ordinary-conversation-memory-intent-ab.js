@@ -23,7 +23,7 @@ function parseArgs(argv) {
     casesPath: defaultCasesPath,
     maxCases: 0,
     only: [],
-    timeoutMs: 45_000,
+    timeoutMs: 90_000,
     capturePollMs: 12_000,
     format: "markdown",
     writeJson: path.resolve(repoRoot, `reports/openclaw-ordinary-conversation-memory-intent-ab-${date}.json`),
@@ -112,6 +112,30 @@ function classifyOutcome(item) {
   return "both_fail";
 }
 
+function createOutcomeBucket() {
+  return {
+    total: 0,
+    currentPassed: 0,
+    legacyPassed: 0,
+    bothPass: 0,
+    umcOnly: 0,
+    legacyOnly: 0,
+    bothFail: 0
+  };
+}
+
+function applyOutcome(bucket, item) {
+  bucket.total += 1;
+  if (item.current?.passed) bucket.currentPassed += 1;
+  if (item.legacy?.passed) bucket.legacyPassed += 1;
+
+  const outcome = classifyOutcome(item);
+  if (outcome === "both_pass") bucket.bothPass += 1;
+  else if (outcome === "umc_only") bucket.umcOnly += 1;
+  else if (outcome === "legacy_only") bucket.legacyOnly += 1;
+  else bucket.bothFail += 1;
+}
+
 function evaluateCase(caseDef, run) {
   if (!run || run.ok !== true) {
     return {
@@ -139,8 +163,15 @@ function evaluateCase(caseDef, run) {
 
 function summarizeResults(results) {
   const byLanguage = {
-    en: { total: 0, currentPassed: 0, legacyPassed: 0, bothPass: 0, umcOnly: 0, legacyOnly: 0, bothFail: 0 },
-    zh: { total: 0, currentPassed: 0, legacyPassed: 0, bothPass: 0, umcOnly: 0, legacyOnly: 0, bothFail: 0 }
+    en: createOutcomeBucket(),
+    zh: createOutcomeBucket()
+  };
+  const byCategory = {
+    durable_rule: createOutcomeBucket(),
+    tool_routing_preference: createOutcomeBucket(),
+    user_profile_fact: createOutcomeBucket(),
+    session_constraint: createOutcomeBucket(),
+    one_off_instruction: createOutcomeBucket()
   };
 
   const summary = {
@@ -152,32 +183,40 @@ function summarizeResults(results) {
     legacyOnly: 0,
     bothFail: 0,
     byLanguage,
+    byCategory,
     captureObserved: results.filter((item) => item.current?.captureObserved === true).length
   };
 
   for (const item of results) {
-    const bucket = byLanguage[item.language || "en"];
-    bucket.total += 1;
-    if (item.current?.passed) bucket.currentPassed += 1;
-    if (item.legacy?.passed) bucket.legacyPassed += 1;
+    applyOutcome(byLanguage[item.language || "en"], item);
+    applyOutcome(byCategory[item.category], item);
 
     const outcome = classifyOutcome(item);
-    if (outcome === "both_pass") {
-      summary.bothPass += 1;
-      bucket.bothPass += 1;
-    } else if (outcome === "umc_only") {
-      summary.umcOnly += 1;
-      bucket.umcOnly += 1;
-    } else if (outcome === "legacy_only") {
-      summary.legacyOnly += 1;
-      bucket.legacyOnly += 1;
-    } else {
-      summary.bothFail += 1;
-      bucket.bothFail += 1;
-    }
+    if (outcome === "both_pass") summary.bothPass += 1;
+    else if (outcome === "umc_only") summary.umcOnly += 1;
+    else if (outcome === "legacy_only") summary.legacyOnly += 1;
+    else summary.bothFail += 1;
   }
 
   return summary;
+}
+
+function normalizeSingleLine(value) {
+  const text = String(value || "").replace(/\s+/g, " ").trim();
+  return text || "(empty)";
+}
+
+function renderBucket(lines, title, item) {
+  lines.push(`### ${title}`);
+  lines.push("");
+  lines.push(`- total: \`${item.total}\``);
+  lines.push(`- currentPassed: \`${item.currentPassed}\``);
+  lines.push(`- legacyPassed: \`${item.legacyPassed}\``);
+  lines.push(`- bothPass: \`${item.bothPass}\``);
+  lines.push(`- umcOnly: \`${item.umcOnly}\``);
+  lines.push(`- legacyOnly: \`${item.legacyOnly}\``);
+  lines.push(`- bothFail: \`${item.bothFail}\``);
+  lines.push("");
 }
 
 function renderMarkdown(report) {
@@ -193,10 +232,13 @@ function renderMarkdown(report) {
   lines.push(`- legacyOnly: \`${report.summary.legacyOnly}\``);
   lines.push(`- bothFail: \`${report.summary.bothFail}\``);
   lines.push(`- currentCaptureObserved: \`${report.summary.captureObserved}\``);
+  lines.push(`- phaseOrder: \`legacy first -> delete isolated legacy state -> current second\``);
   lines.push("");
   lines.push("## Method");
   lines.push("");
   lines.push("- Each case runs a real `openclaw agent --local` capture turn, then prunes session transcripts before the recall turn.");
+  lines.push("- The benchmark does not interleave systems case-by-case. It runs all `legacy builtin` cases first in isolated temp state roots, deletes those state roots, and only then runs all `current` Unified Memory Core cases in fresh isolated temp state roots.");
+  lines.push("- Each case still gets its own isolated state root so earlier cases cannot leak durable memory into later cases.");
   lines.push("- This isolates explicit long-memory behavior from short-lived session/bootstrap carry-over.");
   lines.push("- `current` means the repo checkout loaded as the OpenClaw `unified-memory-core` context engine, with ordinary-conversation governed `memory_intent` enabled.");
   lines.push("- `legacy` means the default `legacy` context engine with no `unified-memory-core` plugin loaded.");
@@ -204,20 +246,15 @@ function renderMarkdown(report) {
   lines.push("");
   lines.push("## Language Split");
   lines.push("");
-  for (const lang of ["en", "zh"]) {
-    const item = report.summary.byLanguage[lang];
-    lines.push(`### ${lang === "zh" ? "Chinese" : "English"}`);
-    lines.push("");
-    lines.push(`- total: \`${item.total}\``);
-    lines.push(`- currentPassed: \`${item.currentPassed}\``);
-    lines.push(`- legacyPassed: \`${item.legacyPassed}\``);
-    lines.push(`- bothPass: \`${item.bothPass}\``);
-    lines.push(`- umcOnly: \`${item.umcOnly}\``);
-    lines.push(`- legacyOnly: \`${item.legacyOnly}\``);
-    lines.push(`- bothFail: \`${item.bothFail}\``);
-    lines.push("");
-  }
-
+  renderBucket(lines, "English", report.summary.byLanguage.en);
+  renderBucket(lines, "Chinese", report.summary.byLanguage.zh);
+  lines.push("## Category Split");
+  lines.push("");
+  renderBucket(lines, "Durable Rule", report.summary.byCategory.durable_rule);
+  renderBucket(lines, "Tool Routing Preference", report.summary.byCategory.tool_routing_preference);
+  renderBucket(lines, "User Profile Fact", report.summary.byCategory.user_profile_fact);
+  renderBucket(lines, "Session Constraint", report.summary.byCategory.session_constraint);
+  renderBucket(lines, "One-Off Instruction", report.summary.byCategory.one_off_instruction);
   lines.push("## Per-Case Results");
   lines.push("");
   for (const item of report.results) {
@@ -226,14 +263,15 @@ function renderMarkdown(report) {
     lines.push(`- language: \`${item.language}\``);
     lines.push(`- category: \`${item.category}\``);
     lines.push(`- outcome: \`${classifyOutcome(item)}\``);
-    lines.push(`- captureObserved: \`${item.current?.captureObserved === true}\``);
-    lines.push(`- captureMessage: ${item.captureMessage}`);
-    lines.push(`- recallMessage: ${item.recallMessage}`);
-    lines.push(`- current: ${String(item.current?.answer || item.current?.error || "").replace(/\n/g, " ")}`);
-    lines.push(`- legacy: ${String(item.legacy?.answer || item.legacy?.error || "").replace(/\n/g, " ")}`);
+    lines.push(`- currentCaptureObserved: \`${item.current?.captureObserved === true}\``);
+    lines.push(`- 设计的问题 -> ${item.designQuestion}`);
+    lines.push(`- 预期的结果 -> ${item.expectedResult}`);
+    lines.push(`- captureMessage -> ${item.captureMessage}`);
+    lines.push(`- recallMessage -> ${item.recallMessage}`);
+    lines.push(`- builtin 实际结果 -> ${normalizeSingleLine(item.legacy?.answer || item.legacy?.error)} ${item.legacy?.passed === true ? "(`pass`)" : "(`fail`)"} `);
+    lines.push(`- memory core 实际结果 -> ${normalizeSingleLine(item.current?.answer || item.current?.error)} ${item.current?.passed === true ? "(`pass`)" : "(`fail`)"} `);
     lines.push("");
   }
-
   lines.push("## Focused Conclusion");
   lines.push("");
   if (report.summary.umcOnly > report.summary.legacyOnly) {
@@ -362,6 +400,14 @@ async function clearSessionArtifacts(stateDir, agentId) {
   }
 }
 
+async function removeStateDir(stateDir) {
+  try {
+    await fs.rm(stateDir, { recursive: true, force: true });
+  } catch {
+    // best effort
+  }
+}
+
 async function fileSizeOrZero(filePath) {
   try {
     const stat = await fs.stat(filePath);
@@ -447,73 +493,46 @@ async function runAgentTurn({ stateDir, agentId, sessionId, message, timeoutMs }
   };
 }
 
-async function runCase(caseDef, args) {
-  const currentState = await createEvalStateDir({
-    includeUMC: true,
-    agentId: args.agentId,
-    sourceAgentId: args.sourceAgentId
-  });
-  const legacyState = await createEvalStateDir({
-    includeUMC: false,
+async function runCaseForMode(caseDef, args, includeUMC) {
+  const state = await createEvalStateDir({
+    includeUMC,
     agentId: args.agentId,
     sourceAgentId: args.sourceAgentId
   });
 
-  const currentRecordsSizeBefore = await fileSizeOrZero(path.join(currentState.registryDir, "records.jsonl"));
-  const currentCapture = await runAgentTurn({
-    stateDir: currentState.stateDir,
-    agentId: args.agentId,
-    sessionId: `${caseDef.id}-capture`,
-    message: caseDef.captureMessage,
-    timeoutMs: args.timeoutMs
-  });
-  const captureObserved = caseDef.category !== "one_off_instruction"
-    ? await waitForRegistryWrite(currentState.registryDir, currentRecordsSizeBefore, args.capturePollMs)
-    : false;
-  await clearSessionArtifacts(currentState.stateDir, args.agentId);
-  const currentRecall = await runAgentTurn({
-    stateDir: currentState.stateDir,
-    agentId: args.agentId,
-    sessionId: `${caseDef.id}-recall`,
-    message: caseDef.recallMessage,
-    timeoutMs: args.timeoutMs
-  });
-
-  const legacyCapture = await runAgentTurn({
-    stateDir: legacyState.stateDir,
-    agentId: args.agentId,
-    sessionId: `${caseDef.id}-capture`,
-    message: caseDef.captureMessage,
-    timeoutMs: args.timeoutMs
-  });
-  await clearSessionArtifacts(legacyState.stateDir, args.agentId);
-  const legacyRecall = await runAgentTurn({
-    stateDir: legacyState.stateDir,
-    agentId: args.agentId,
-    sessionId: `${caseDef.id}-recall`,
-    message: caseDef.recallMessage,
-    timeoutMs: args.timeoutMs
-  });
-
-  const currentEval = evaluateCase(caseDef, currentRecall);
-  const legacyEval = evaluateCase(caseDef, legacyRecall);
-
-  return {
-    ...caseDef,
-    current: {
-      ...currentEval,
+  try {
+    const recordsSizeBefore = includeUMC
+      ? await fileSizeOrZero(path.join(state.registryDir, "records.jsonl"))
+      : 0;
+    const capture = await runAgentTurn({
+      stateDir: state.stateDir,
+      agentId: args.agentId,
+      sessionId: `${caseDef.id}-capture`,
+      message: caseDef.captureMessage,
+      timeoutMs: args.timeoutMs
+    });
+    const captureObserved = includeUMC && caseDef.category !== "one_off_instruction"
+      ? await waitForRegistryWrite(state.registryDir, recordsSizeBefore, args.capturePollMs)
+      : false;
+    await clearSessionArtifacts(state.stateDir, args.agentId);
+    const recall = await runAgentTurn({
+      stateDir: state.stateDir,
+      agentId: args.agentId,
+      sessionId: `${caseDef.id}-recall`,
+      message: caseDef.recallMessage,
+      timeoutMs: args.timeoutMs
+    });
+    const evaluation = evaluateCase(caseDef, recall);
+    return {
+      ...evaluation,
       captureObserved,
-      captureAnswer: currentCapture.answer || "",
-      answer: currentRecall.answer || "",
-      error: currentRecall.error || ""
-    },
-    legacy: {
-      ...legacyEval,
-      captureAnswer: legacyCapture.answer || "",
-      answer: legacyRecall.answer || "",
-      error: legacyRecall.error || ""
-    }
-  };
+      captureAnswer: capture.answer || "",
+      answer: recall.answer || "",
+      error: recall.error || ""
+    };
+  } finally {
+    await removeStateDir(state.stateDir);
+  }
 }
 
 async function main() {
@@ -523,16 +542,25 @@ async function main() {
     ? importedCases.filter((item) => args.only.includes(item.id))
     : importedCases;
   const selectedCases = args.maxCases > 0 ? filteredCases.slice(0, args.maxCases) : filteredCases;
-  const results = [];
+  const results = selectedCases.map((item) => ({ ...item }));
 
   for (let index = 0; index < selectedCases.length; index += 1) {
     const caseDef = selectedCases[index];
-    process.stderr.write(`[ordinary-ab] ${index + 1}/${selectedCases.length} start ${caseDef.id}\n`);
+    process.stderr.write(`[ordinary-ab][legacy] ${index + 1}/${selectedCases.length} start ${caseDef.id}\n`);
     // eslint-disable-next-line no-await-in-loop
-    const result = await runCase(caseDef, args);
-    results.push(result);
+    const legacy = await runCaseForMode(caseDef, args, false);
+    results[index].legacy = legacy;
+    process.stderr.write(`[ordinary-ab][legacy] ${index + 1}/${selectedCases.length} done ${caseDef.id} passed=${legacy.passed === true}\n`);
+  }
+
+  for (let index = 0; index < selectedCases.length; index += 1) {
+    const caseDef = selectedCases[index];
+    process.stderr.write(`[ordinary-ab][current] ${index + 1}/${selectedCases.length} start ${caseDef.id}\n`);
+    // eslint-disable-next-line no-await-in-loop
+    const current = await runCaseForMode(caseDef, args, true);
+    results[index].current = current;
     process.stderr.write(
-      `[ordinary-ab] ${index + 1}/${selectedCases.length} done ${caseDef.id} outcome=${classifyOutcome(result)} current=${result.current?.passed === true} legacy=${result.legacy?.passed === true}\n`
+      `[ordinary-ab][current] ${index + 1}/${selectedCases.length} done ${caseDef.id} outcome=${classifyOutcome(results[index])} current=${current.passed === true} legacy=${results[index].legacy?.passed === true}\n`
     );
   }
 

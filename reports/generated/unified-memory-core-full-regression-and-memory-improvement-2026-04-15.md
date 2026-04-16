@@ -228,7 +228,7 @@ So if the question is “does Memory Core help today?”, the honest answer is:
 
 ## Focused Ordinary-Conversation Realtime Write Results
 
-This round also adds a second live A/B that is much closer to the user-facing intuition behind `should_write_memory`:
+This round also adds and expands a second live A/B that is much closer to the user-facing intuition behind `should_write_memory`:
 
 - one ordinary conversation introduces a new durable rule, tool-routing preference, or user profile fact
 - session transcripts are then pruned
@@ -236,36 +236,45 @@ This round also adds a second live A/B that is much closer to the user-facing in
 
 Topline:
 
-- compared live cases: `10`
-- `unified-memory-core` current path passed: `10`
-- legacy builtin path passed: `5`
-- both passed: `5`
-- Memory Core only: `5`
-- legacy only: `0`
-- both failed: `0`
+- compared live cases: `40`
+- `unified-memory-core` current path passed: `38`
+- legacy builtin path passed: `21`
+- both passed: `20`
+- Memory Core only: `18`
+- legacy only: `1`
+- both failed: `1`
 
 Language split:
 
-- English: current `5 / 5`, legacy `3 / 5`, `UMC-only=2`, `legacy-only=0`
-- Chinese: current `5 / 5`, legacy `2 / 5`, `UMC-only=3`, `legacy-only=0`
+- English: current `18 / 20`, legacy `11 / 20`, `UMC-only=8`, `legacy-only=1`, `both-fail=1`
+- Chinese: current `20 / 20`, legacy `10 / 20`, `UMC-only=10`, `legacy-only=0`, `both-fail=0`
+
+Category split:
+
+- durable rules: current `8 / 8`, legacy `3 / 8`
+- tool routing preferences: current `8 / 8`, legacy `1 / 8`
+- user profile facts: current `7 / 8`, legacy `1 / 8`
+- session constraints: current `7 / 8`, legacy `8 / 8`
+- one-off instructions: current `8 / 8`, legacy `8 / 8`
 
 Interpretation:
 
 - the earlier `100`-case suite said “existing-memory consumption uplift is modest”
-- this new focused suite says “ordinary-conversation realtime write behavior is already meaningfully better with Unified Memory Core than with the current default legacy path”
+- this expanded focused suite says “ordinary-conversation realtime write behavior is already meaningfully better with Unified Memory Core than with the current default legacy path”
 - the write-time advantage the user expected was real, but the earlier `100`-case fixture-consumption A/B was the wrong tool to reveal it
+- the expanded suite also makes the remaining weaknesses explicit instead of hiding them behind perfect small-sample scores
 
 The clearest current UMC-only wins in this focused suite are:
 
-- English tool-routing tag recall
-- English timezone recall
-- Chinese durable-rule codename recall
-- Chinese async-update preference recall
-- Chinese notebook fact recall
+- durable-rule codename recall
+- tool-routing tag / tool-name recall
+- Chinese user-profile fact recall
+- travel preference recall
 
-The previous focused-suite legacy-only miss has now been closed:
+The current path is not perfect on this surface yet:
 
-- English durable-rule keyword recall for `saffron-releases` now passes on both `current` and `legacy`
+- `ordinary-ab-en-session-negative-3` is still a real `legacy-only` miss: current incorrectly carries forward the project-local placeholder city `Hangzhou`
+- `ordinary-ab-en-timezone-1` is still `both_fail`: neither path reliably preserves the English timezone fact
 
 ## Where Memory Core Is Already Significantly Better
 
@@ -275,7 +284,7 @@ Even when many simple prompts are shared wins, Memory Core is already materially
    Memory Core has formal handling for conflict, supersede, current-state questions, and stable-fact prioritization instead of relying on a flatter baseline retrieval path.
 
 2. Larger verified memory benchmark surface
-   The project now maintains a runnable matrix of `392` cases with `53.83%` Chinese-bearing coverage, a `262 / 262` retrieval-heavy formal gate, a `100`-case existing-memory live A/B, and a focused `10`-case ordinary-conversation write-time live A/B.
+   The project now maintains a runnable matrix of `392` cases with `53.83%` Chinese-bearing coverage, a `262 / 262` retrieval-heavy formal gate, a `100`-case existing-memory live A/B, and a focused `40`-case ordinary-conversation write-time live A/B.
 
 3. Stable answer-level gate
    The isolated local answer-level gate is now `12 / 12`, and the formal gate itself now carries `6 / 12` zh-bearing cases instead of only a token Chinese slice.

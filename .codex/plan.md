@@ -20,6 +20,9 @@
 - Deeper watch interpretation: useful as a triage surface, not yet promotable into the repo-default formal gate because the remaining `4` failures are now a smaller harder set that still needs targeted fixing
 - Raw transport watchlist: `3 / 8 raw ok`; the rest are `4` `missing_json_payload` failures and `1` `empty_results`
 - Main-path perf baseline: retrieval / assembly avg `16ms`; raw transport avg `8061ms`; isolated local answer-level avg `11200ms`
+- Focused ordinary-conversation realtime-write A/B: `40` cases, builtin-first then clean-state current
+- Focused ordinary-conversation result: current `38 / 40`, legacy `21 / 40`, `20` both-pass, `18` UMC-only, `1` legacy-only, `1` both-fail
+- Focused ordinary-conversation interpretation: durable rules, tool routing, and Chinese profile facts now show clear current-path gains; remaining gaps are `ordinary-ab-en-session-negative-3` (current over-retains `Hangzhou`) and `ordinary-ab-en-timezone-1` (shared fail)
 - Interpretation: the `200+` case buildout, natural-Chinese / watchlist / perf hardening, and the first answer-level gate expansion are complete; the builtin-only regression is now gone from the `100`-case live A/B, so the next phase is to close the remaining shared-fail history cases first
 
 ## Slices

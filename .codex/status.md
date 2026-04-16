@@ -88,6 +88,14 @@
   - CLI 已支持 `memory_intent` declared source intake，contract / source / reflection / runtime / CLI 回归已补齐
   - `npm run verify:memory-intent` 已成为这条 slice 的正式 gate
   - architecture / self-learning / development-plan / control-surface 文档已补上 realtime memory-intent ingestion 设计基线并收口
+- ordinary-conversation realtime-write A/B 已扩到更有代表性的 `40` 条 live case，并按“先 builtin、清空状态、再 current”的方法重跑：
+  - current `38 / 40`
+  - legacy `21 / 40`
+  - both-pass `20`
+  - UMC-only `18`
+  - legacy-only `1`
+  - both-fail `1`
+  - 分类上 durable-rule `8 / 8 vs 3 / 8`、tool-routing `8 / 8 vs 1 / 8`、profile `7 / 8 vs 1 / 8`；负例面 one-off `8 / 8` 两边都守住，但 session-constraint 仍有 `1` 条 current 误记
 - control-surface 与 host-neutral workstream docs 已再次对齐：
   - 不再把 canonical-root cutover 描述成“仍待决定的窗口”
   - 当前维护重点是防止 policy drift，而不是重新定义 hard gate

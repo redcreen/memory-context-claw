@@ -332,8 +332,8 @@ The goal is not to reopen baseline contract work. The goal is to:
 90. `completed` Remove the earlier builtin-only regression reading from the `100`-case live A/B: `ab100-zh-negative-4`.
    - The birthday prompt is no longer counted as a plain negative because it behaves more like an identity-conflict / birthday-guardrail probe.
    - After replacing it with a true unknown-fact abstention prompt, `ab100-zh-negative-4` is now a shared abstention pass and the `100`-case live A/B no longer has a builtin-only win.
-   - The same round also closed `ordinary-ab-en-rule-releases-1`, so the focused ordinary-conversation realtime-write suite is now `10 / 10` on the current path.
-91. `todo` Remove the two shared-fail Chinese history cases in the `100`-case live A/B: `ab100-zh-history-editor-2` and `ab100-zh-history-editor-4`.
+   - The follow-up round expanded the focused ordinary-conversation realtime-write suite from `10` to `40` cases and reran it in builtin-first, clean-state, then current order; the current result is `38 / 40` for Unified Memory Core versus `21 / 40` for legacy, with `18` UMC-only wins, `1` legacy-only win, and `1` shared fail.
+91. `next` Remove the two shared-fail Chinese history cases in the `100`-case live A/B: `ab100-zh-history-editor-2` and `ab100-zh-history-editor-4`.
    - The goal is to stop the history / supersede surface from sitting at “both engines miss” and pull UMC to stable correctness first.
 92. `todo` After the shared-fail history cases close, design the next live A/B round around `cross-source`, `conflict`, `multi-step history`, and denser natural-Chinese prompts so UMC can win on more harder cases.
    - This queue is now intentionally deferred behind the Stage 6 docs-first review and shadow-integration work.
