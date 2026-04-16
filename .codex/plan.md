@@ -23,7 +23,7 @@
 - Focused ordinary-conversation realtime-write A/B: `40` cases, builtin-first then clean-state current
 - Focused ordinary-conversation result: current `38 / 40`, legacy `21 / 40`, `20` both-pass, `18` UMC-only, `1` legacy-only, `1` both-fail
 - Focused ordinary-conversation interpretation: durable rules, tool routing, and Chinese profile facts now show clear current-path gains; remaining gaps are `ordinary-ab-en-session-negative-3` (current over-retains `Hangzhou`) and `ordinary-ab-en-timezone-1` (shared fail)
-- Interpretation: the `200+` case buildout, natural-Chinese / watchlist / perf hardening, and the first answer-level gate expansion are complete; the builtin-only regression is now gone from the `100`-case live A/B, so the next phase is to close the remaining shared-fail history cases first
+- Interpretation: the `200+` case buildout, natural-Chinese / watchlist / perf hardening, and the first answer-level gate expansion are complete; the builtin-only regression and the remaining shared-fail history cases in the `100`-case live A/B are now both closed, so the next phase is to push clearer UMC-only wins into harder `cross-source / conflict / multi-step history / natural-Chinese` cases
 
 ## Slices
 
@@ -68,9 +68,9 @@
   - Status: `completed`
 
 - Slice: `convert-100-case-ab-from-mostly-shared-wins-into-clearer-umc-gains`
-- Objective: 先收掉 `100` case live A/B 里剩余的 shared-fail history cases，再把更多 harder cases 推成 Memory Core 独占胜场
+- Objective: shared-fail history cleanup 已完成；下一步把更多 harder cases 推成 Memory Core 独占胜场
   - Dependencies: `2026-04-15` memory-improvement A/B report、isolated local formal gate `12 / 12`、deeper watch `14 / 18`、raw transport watchlist、main-path perf baseline
-- Risks: 如果继续停留在 `97` shared wins、`1` UMC-only、`0` builtin-only、`2` shared fails，产品仍然很难证明“在真实问题上明显比默认内置更强”
+- Risks: 如果继续停留在“多数题共享通过、只有少量 clear UMC-only wins”，产品仍然很难证明“在真实 harder cases 上明显比默认内置更强”
   - Validation: builtin-only regression fix、shared-fail history closure、下一轮 live A/B 设计、full regression / perf / A/B rerun
   - Exit Condition: 当前 regression 被关闭，且下一轮 live A/B 已明确瞄准 cross-source / conflict / history / 自然中文的净增益
   - Status: `ongoing`
@@ -181,9 +181,9 @@
 
 ## Execution Order
 
-1. 先收掉 `100` case live A/B 里两条 shared-fail 中文 history case：`ab100-zh-history-editor-2`、`ab100-zh-history-editor-4`
+1. 重设计下一轮 live A/B，让更多 `cross-source`、`conflict`、`multi-step history` 与高信息密度自然中文场景变成 Memory Core 独占胜场
 2. 继续保持 `24` 条自然中文案例、当前 raw transport watchlist 和 `2026-04-15` perf baseline 在下一轮修复中持续稳定
-3. 在 shared-fail history cases 收口后，重设计下一轮 live A/B，让更多 `cross-source`、`conflict`、`multi-step history` 与高信息密度自然中文场景变成 Memory Core 独占胜场
+3. 把更难 harder-case surface 逐步从 watch 推向更强的正式门禁候选
 4. 把 gateway/shared-session 与 raw transport 继续保持在独立 watchlist，不与算法判断混淆
 5. 在 regression 清掉后，重设计下一轮 live A/B，让更多 `cross-source`、`conflict`、`multi-step history` 与高信息密度自然中文场景变成 Memory Core 独占胜场
 6. 并行保持 release-preflight / bundle install / host smoke / Stage 5 evidence 稳定
@@ -195,7 +195,7 @@
 - Signal: `yellow`
 - Signal Basis: open blockers or architectural risks are still recorded
 - Problem Class: shared-fail history closure and turning mostly-shared A/B wins into clearer UMC gains
-- Root Cause Hypothesis: 如果 `100` case live A/B 继续停留在 `97` shared wins、`1` UMC-only、`0` builtin-only、`2` shared fails，产品仍然很难证明“Memory Core 在真实问题上明显比默认内置更强”
+- Root Cause Hypothesis: shared-fail history cleanup 已完成，但如果下一轮 harder live A/B 仍然停留在“多数题共享通过、只有极少 clear UMC-only wins”，产品仍然很难证明“Memory Core 在真实 harder cases 上明显比默认内置更强”
 - Correct Layer: live A/B case design, retrieval / assembly behavior, negative-case abstention, history/supersede handling, transport watchlist, main-path performance baseline, control surface
 - Rejected Shortcut: 跳过 Stage 5 证据面和当前 operator baseline，直接讨论 runtime API / service mode
 - Automatic Review Trigger: no automatic trigger is currently active
@@ -203,10 +203,10 @@
 
 ## Current Execution Line
 
-- Objective: 先把 `100` case live A/B 里剩余的 shared-fail history cases 收掉，再推动更多 harder cases 形成 Memory Core 独占胜场
+- Objective: shared-fail history cleanup 已完成；接下来推动更多 harder cases 形成 Memory Core 独占胜场
 - Plan Link: `convert-100-case-ab-from-mostly-shared-wins-into-clearer-umc-gains`
-- Runway: shared-fail history closure、cross-source/conflict/history/natural-Chinese A/B redesign、gateway/raw transport watch
-- Progress: `0 / 3` tasks complete
+- Runway: cross-source/conflict/history/natural-Chinese A/B redesign、gateway/raw transport watch
+- Progress: `2 / 3` tasks complete
 - Stop Conditions:
   - remaining harder failures get promoted without root-cause attribution
   - answer-level regression gets misdiagnosed as raw transport noise
@@ -217,7 +217,7 @@
 ## Execution Tasks
 
 - [x] EL-1 close the builtin-only regression in the `100` case live A/B: `ab100-zh-negative-4`
-- [ ] EL-2 close the shared-fail Chinese history cases in the `100` case live A/B: `ab100-zh-history-editor-2` and `ab100-zh-history-editor-4`
+- [x] EL-2 close the shared-fail Chinese history cases in the `100` case live A/B: `ab100-zh-history-editor-2` and `ab100-zh-history-editor-4`
 - [ ] EL-3 redesign the next live A/B around `cross-source`, `conflict`, `multi-step history`, and denser natural-Chinese prompts so Memory Core can win on more harder cases
 
 ## Development Log Capture

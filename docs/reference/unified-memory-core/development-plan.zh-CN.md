@@ -215,9 +215,9 @@ Stage 6 证据：
 
 从这里恢复：
 
-1. 先恢复之前延后的 shared-fail history cleanup，从 `91` 开始
+1. 从 `92` 开始，重设计更偏 `cross-source / conflict / multi-step history / 高信息密度自然中文` 的 harder live A/B
 2. 继续保持 `dialogueWorkingSetShadow` 为 `default-off` 且 shadow-only，让这条 telemetry surface 继续 soak
-3. 再把 harder live A/B 扩面接到新的 Stage 6 telemetry surface 上
+3. 用新的 Stage 6 telemetry surface 承接更深 harder-case A/B，并在必要时决定是否晋升 formal gate
 
 当前不要开始：
 
@@ -265,7 +265,7 @@ Stage 6 证据：
 - 自然中文代表性 answer-level slice：`6 / 6`
 - raw transport watchlist：`3 / 8 raw ok`；其余为 `4` 条 `missing_json_payload` 与 `1` 条 `empty_results`
 - 最新 perf baseline：retrieval / assembly `16ms`；raw transport `8061ms`；isolated local answer-level `11200ms`
-- 当前解释：`200+` case 扩面、自然中文补强、watchlist failure-class 化、perf baseline 刷新，以及 answer-level formal gate 从 `6/6` 扩到 `12/12` 都已收口；`100` case live A/B 里的 builtin-only regression 已经被移除，但 direct answer-level 提升仍然不大，后续主线应先收掉 shared-fail history cases
+- 当前解释：`200+` case 扩面、自然中文补强、watchlist failure-class 化、perf baseline 刷新，以及 answer-level formal gate 从 `6/6` 扩到 `12/12` 都已收口；`100` case live A/B 里的 builtin-only regression 与 shared-fail history cases 都已被移除，后续主线应把 harder live A/B 继续推到 `cross-source / conflict / multi-step history / 自然中文` 上形成更清晰的 UMC-only 净增益
 
 ## 下一阶段规划队列
 
@@ -355,9 +355,12 @@ Stage 6 证据：
    - 生日题不再继续被当成 plain negative；这类问题更接近 identity-conflict / birthday-guardrail。
    - 替换成真正的未知事实负例后，`ab100-zh-negative-4` 现在是 current / legacy 都稳定拒答，`100` case live A/B 已经没有 builtin-only 胜场。
    - 后续 ordinary-conversation realtime-write suite 已从 `10` 条扩到 `40` 条，并按“先 builtin、清空、再 current”的顺序重跑；当前结果是 current `38 / 40`、legacy `21 / 40`、`UMC-only = 18`、`legacy-only = 1`、`both-fail = 1`。
-91. `next` 再收掉 `100` case live A/B 里两条 shared-fail 的中文 history case：`ab100-zh-history-editor-2`、`ab100-zh-history-editor-4`。
-   - 目标是让 history / supersede 场景不再停留在“两边都不会”，而是至少先把 UMC 拉到可稳定答对。
-92. `todo` 在 shared-fail history cases 收口后，重新设计下一轮更偏 `cross-source`、`conflict`、`multi-step history` 与高信息密度自然中文的 live A/B，争取让 UMC 在更多 harder cases 上形成清晰净增益。
+91. `completed` 收掉 `100` case live A/B 里两条 shared-fail 的中文 history case：`ab100-zh-history-editor-2`、`ab100-zh-history-editor-4`。
+   - 修复点不是“再喂更多数据”，而是 history / current-state intent 边界：中文 `history` 问法不再误触发 current-state assembly 和 query rewrite。
+   - focused hermetic cleanup rerun 结果：[openclaw-memory-improvement-history-cleanup-2026-04-17.md](../../../reports/generated/openclaw-memory-improvement-history-cleanup-2026-04-17.md)
+   - 当前结果：`ab100-zh-history-editor-2 = shared-capability`，`ab100-zh-history-editor-4 = shared-capability`
+   - 这意味着 `100` case live A/B 当前已经没有 shared-fail 残留；有效当前状态可读作 current `100 / 100`、legacy `99 / 100`、`UMC-only = 1`、`both-fail = 0`
+92. `next` 在 shared-fail history cases 收口后，重新设计下一轮更偏 `cross-source`、`conflict`、`multi-step history` 与高信息密度自然中文的 live A/B，争取让 UMC 在更多 harder cases 上形成清晰净增益。
    - 这组队列现在恢复时应把 Stage 6 shadow telemetry 一起挂上。
 
 ## 延后增强队列

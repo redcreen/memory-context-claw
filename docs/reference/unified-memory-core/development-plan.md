@@ -215,9 +215,9 @@ Stage 6 evidence:
 
 Resume exactly from here:
 
-1. resume the deferred shared-fail history cleanup, starting with `91`
+1. start from `92`, redesigning the next harder live A/B around `cross-source / conflict / multi-step history / denser natural-Chinese` prompts
 2. keep `dialogueWorkingSetShadow` `default-off` and shadow-only while the new telemetry surface soaks
-3. use Stage 6 telemetry when reopening the harder live A/B expansion and any later active-path discussion
+3. use Stage 6 telemetry when expanding the harder live A/B surface and deciding whether any part should later graduate toward a stronger formal gate
 
 Do not start with:
 
@@ -338,9 +338,12 @@ The goal is not to reopen baseline contract work. The goal is to:
    - The birthday prompt is no longer counted as a plain negative because it behaves more like an identity-conflict / birthday-guardrail probe.
    - After replacing it with a true unknown-fact abstention prompt, `ab100-zh-negative-4` is now a shared abstention pass and the `100`-case live A/B no longer has a builtin-only win.
    - The follow-up round expanded the focused ordinary-conversation realtime-write suite from `10` to `40` cases and reran it in builtin-first, clean-state, then current order; the current result is `38 / 40` for Unified Memory Core versus `21 / 40` for legacy, with `18` UMC-only wins, `1` legacy-only win, and `1` shared fail.
-91. `next` Remove the two shared-fail Chinese history cases in the `100`-case live A/B: `ab100-zh-history-editor-2` and `ab100-zh-history-editor-4`.
-   - The goal is to stop the history / supersede surface from sitting at “both engines miss” and pull UMC to stable correctness first.
-92. `todo` After the shared-fail history cases close, design the next live A/B round around `cross-source`, `conflict`, `multi-step history`, and denser natural-Chinese prompts so UMC can win on more harder cases.
+91. `completed` Remove the two shared-fail Chinese history cases in the `100`-case live A/B: `ab100-zh-history-editor-2` and `ab100-zh-history-editor-4`.
+   - The fix was not “add more memory”, but repair the history-versus-current-state boundary so Chinese history prompts stop triggering current-state assembly and query rewrites.
+   - Focused hermetic cleanup rerun report: [openclaw-memory-improvement-history-cleanup-2026-04-17.md](../../../reports/generated/openclaw-memory-improvement-history-cleanup-2026-04-17.md)
+   - Current outcome: `ab100-zh-history-editor-2 = shared-capability`, `ab100-zh-history-editor-4 = shared-capability`
+   - The effective current state of the `100`-case live A/B is now current `100 / 100`, legacy `99 / 100`, `UMC-only = 1`, `both-fail = 0`
+92. `next` After the shared-fail history cases close, design the next live A/B round around `cross-source`, `conflict`, `multi-step history`, and denser natural-Chinese prompts so UMC can win on more harder cases.
    - This queue now resumes with Stage 6 shadow telemetry attached as a new measurement surface.
 
 ## Deferred Enhancement Queue

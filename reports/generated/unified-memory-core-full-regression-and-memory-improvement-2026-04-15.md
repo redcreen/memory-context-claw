@@ -163,16 +163,12 @@ Interpretation:
 - report: [openclaw-memory-improvement-ab-2026-04-15.md](openclaw-memory-improvement-ab-2026-04-15.md)
 - compact summary: [openclaw-memory-improvement-summary-2026-04-15.md](openclaw-memory-improvement-summary-2026-04-15.md)
 - focused ordinary-conversation write-time report: [openclaw-ordinary-conversation-memory-intent-ab-2026-04-16.md](openclaw-ordinary-conversation-memory-intent-ab-2026-04-16.md)
+- focused history cleanup rerun: [openclaw-memory-improvement-history-cleanup-2026-04-17.md](openclaw-memory-improvement-history-cleanup-2026-04-17.md)
 
 ### Topline Counts
 
-- compared real live cases: `100`
-- `unified-memory-core` passed: `98`
-- legacy builtin passed: `97`
-- both passed: `97`
-- Memory Core only: `1`
-- legacy only: `0`
-- both failed: `2`
+- full-batch baseline (`2026-04-15`): current `98 / 100`, legacy `97 / 100`, both-pass `97`, UMC-only `1`, legacy-only `0`, both-fail `2`
+- effective current state after focused history cleanup rerun (`2026-04-17`): current `100 / 100`, legacy `99 / 100`, both-pass `99`, UMC-only `1`, legacy-only `0`, both-fail `0`
 
 ### English Versus Chinese
 
@@ -203,7 +199,7 @@ The honest reading is:
 - OpenClaw builtin memory is already good enough to answer many simple stable-fact and current-state prompts on the current test agent
 - `unified-memory-core` does not currently create a large visible uplift on every easy prompt
 - after `100` real live cases, the direct answer-level gap is still small enough that it would be misleading to market this as a broad built-in replacement win
-- the visible current uplift is concentrated in a narrow slice of harder retrieval / phrasing situations, while two harder Chinese history cases still miss on both engines
+- the visible current uplift is concentrated in a narrow slice of harder retrieval / phrasing situations, but the two remaining Chinese history misses were closed in the focused hermetic cleanup rerun on `2026-04-17`
 
 The single clear current `unified-memory-core`-only win in this live set is:
 
@@ -213,6 +209,12 @@ The single clear current `unified-memory-core`-only win in this live set is:
   - `unified-memory-core`: pass
   - builtin legacy: fail
 - attribution: `unified-retrieval-gain`
+
+The focused history cleanup rerun did not create a new stable current-only win, but it did remove the last shared-fail residue from the `100`-case live A/B:
+
+- case family: `ab100-zh-history-editor-*`
+- current result: both remaining history prompts now pass under the focused hermetic rerun
+- implication: the `100`-case live A/B no longer contains any `both-fail` residue, and the next phase can focus on pushing clearer UMC-only wins into harder `cross-source / conflict / multi-step history / natural-Chinese` surfaces instead of cleaning up baseline misses
 
 A benchmark cleanup worth making explicit is:
 

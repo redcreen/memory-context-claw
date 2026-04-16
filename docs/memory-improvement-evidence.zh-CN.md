@@ -138,12 +138,13 @@
 
 - 在“既有记忆消费”上，Memory Core 的增益依然偏小。
 - 在“普通对话实时写入长期记忆”上，Memory Core 已经开始明显更强，而且这个结论现在来自 `40` 条更有代表性的 live A/B，不是 `10` 条小样本。
-- current ordinary-conversation path 这一轮已经扩大到 focused suite `38 / 40`；剩下更值得优先看的，是 `1` 条 current 仍会误记的 session case、`1` 条 current / legacy 都没守住的 profile case，以及 `100` case 里仍未关闭的 `2` 条 shared-fail 中文 history case。
+- current ordinary-conversation path 这一轮已经扩大到 focused suite `38 / 40`；剩下更值得优先看的，是 `1` 条 current 仍会误记的 session case、`1` 条 current / legacy 都没守住的 profile case，以及更深 `cross-source / conflict / multi-step history / 自然中文` 面上的 harder cases。
 
 为了让这个结论更容易把握，你可以把两组 A/B 分开记：
 
 - `100` 条既有记忆消费题：
-  `97` shared、`1` UMC-only、`0` legacy-only、`2` both-fail
+  - `2026-04-15` 全量基线：`97` shared、`1` UMC-only、`0` legacy-only、`2` both-fail
+  - `2026-04-17` focused history cleanup 后的当前有效状态：`99` shared、`1` UMC-only、`0` legacy-only、`0` both-fail
 - `40` 条普通对话实时写记忆题：
   `20` shared、`18` UMC-only、`1` legacy-only、`1` both-fail
 
@@ -169,6 +170,17 @@
 
 所以真正的价值不只是“多答对了几道题”，更是“这套记忆系统终于变得可测、可解释、可维护”。
 
+另外，之前那两条一直卡着的中文 history case 现在已经收掉了，专项复测报告在：
+
+- [openclaw-memory-improvement-history-cleanup-2026-04-17.md](../reports/generated/openclaw-memory-improvement-history-cleanup-2026-04-17.md)
+
+这次 focused hermetic 复测的结果是：
+
+- `ab100-zh-history-editor-2`：`shared-capability`
+- `ab100-zh-history-editor-4`：`shared-capability`
+
+也就是说，这一轮之后 `100` case live A/B 里已经没有 shared-fail 残留。
+
 ## 下一步会继续做什么
 
 GitHub development plan 现在已经进入下一步：
@@ -177,5 +189,5 @@ GitHub development plan 现在已经进入下一步：
 
 下一阶段的目标，已经不是“证明它能工作”，而是更严肃的一步：
 
-- 把这轮 `100` 个 A/B 里剩下的 `2` 个两边都失败先收掉
+- 把 Memory Core 的直接胜场，从现在的少量明确案例，推到更多更难的问题上
 - 然后再把 Memory Core 的直接胜场，从现在的 `1` 个，推向更大规模、尤其是 cross-source / conflict / multi-step history / 更深自然中文场景里的稳定领先
