@@ -53,6 +53,30 @@ npm run eval:openclaw:docker -- \
 5. 用 scenario 定义的脚本、cases、fixture、preset 启动容器
 6. 把报告写回 repo 的 `reports/` 与 `reports/generated/`
 
+## 普通对话实时写记忆专项
+
+如果要重跑当前最敏感的 ordinary-conversation `40` case A/B，推荐直接跑：
+
+```bash
+UMC_EVAL_TIMEOUT_MS=30000 npm run eval:openclaw:docker -- \
+  --scenario ordinary-conversation-memory-intent-ab \
+  --embed-model-path ~/.openclaw/models/embeddinggemma-300m-qat-Q8_0.gguf \
+  --auth-profiles-path ~/.openclaw/agents/main/agent/auth-profiles.json
+```
+
+这条命令的关键约束是：
+
+- 先完整跑 `legacy builtin`
+- 删除那一整轮 legacy 的隔离状态
+- 再完整跑 `unified-memory-core current`
+- 每个 case 仍然使用独立 temp state root
+- 每个 capture / recall turn 都带显式 `30s` timeout budget
+
+这让结果同时回答两件事：
+
+- 记忆到底有没有跨 case 串写
+- 在固定 answer-level 时延预算下，两边谁还能保住 recall
+
 ## Scenario 真相位置
 
 - [evals/openclaw-docker-scenarios.js](../../../../evals/openclaw-docker-scenarios.js)
@@ -69,6 +93,14 @@ npm run eval:openclaw:docker -- \
 - `writeMarkdown`
 
 这样你就可以给不同的容器指定不同的测试案例和配置，而不需要再改 runner 代码。
+
+当前 ordinary-conversation scenario 还会显式固定：
+
+- `fixtureRoot = evals/openclaw-ordinary-conversation-fixture`
+- `agentModel = openai-codex/gpt-5.4-mini`
+- `preset = safe-local`
+
+这样做的目的，是把 host 漂移因素压到最低。
 
 ## Compose 与入口
 
@@ -97,6 +129,57 @@ npm run eval:openclaw:docker -- \
 2. 再跑完整的 `memory-improvement-ab`
 
 3. 如果后面真的需要在线路径确认，再单独补一个 gateway smoke 容器
+
+4. 对 ordinary-conversation 写侧问题，优先跑 `ordinary-conversation-memory-intent-ab`
+
+## 如何判断 Docker 隔离是否仍然互相污染
+
+这是这条路径的根基。如果这一层不稳，所有 A/B 结论都不能信。
+
+当前 ordinary-conversation Docker runner 用这几条硬约束来判定 contamination：
+
+- `duplicateStateRoots = 0`
+  说明每个 legacy/current run 都用了新的 temp OpenClaw state root
+- `duplicateRegistryRoots = 0`
+  说明 current-mode 的 governed registry 没有跨 case 复用
+- `cleanupFailed = 0`
+  说明每个 case 结束后 temp state root 都被删掉了
+- `sessionClearFailed = 0`
+  说明 recall 前 session transcript 已经清干净
+
+另外需要注意一个容易误判的点：
+
+- OpenClaw 会在每个 fresh state root 里自动生成 `AGENTS.md`、`MEMORY.md`、daily memory 等 bootstrap 文件
+- 这些文件是“每个新状态都会重新生成”的 runtime bootstrap
+- 它们不是宿主 `~/.openclaw` 被挂进来了，也不是前一个 case 泄漏进后一个 case
+
+因此，判定污染时要区分：
+
+- `deterministic bootstrap`
+- `host-seeded memory contamination`
+
+前者允许存在，后者必须为零。
+
+## 当前 ordinary-conversation Docker 结论
+
+最新 hermetic Docker rerun 的 focused `40` case 结果是：
+
+- current: `3 / 40`
+- legacy: `0 / 40`
+- `UMC-only = 3`
+- `both-fail = 37`
+
+这个结果不能简单读成“Memory Core 只提升了 3 条”。更准确的解释是：
+
+- hermetic 隔离层本身是干净的
+- 但在 Docker 下、`30s` turn budget 内，answer-level latency 已经变成主瓶颈
+- legacy `40 / 40` 都超时
+- current `36 / 40` 也超时，只剩 `3` 条 current 还能在预算内稳定答对
+
+所以这条报告现在承担的是两个职责：
+
+1. 证明 Docker 路径已经足够干净，可当作可复现 A/B 基线
+2. 证明 host 结果与 Docker 结果的分叉，当前主要来自 answer-level latency / timeout budget，而不是串记忆
 
 ## 相关文件
 

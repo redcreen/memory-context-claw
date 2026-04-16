@@ -46,6 +46,8 @@ async function main() {
     ...optionalFlag("--format", normalizeString(process.env.UMC_EVAL_FORMAT, "markdown")),
     ...optionalFlag("--only", normalizeString(process.env.UMC_EVAL_ONLY)),
     ...numericFlag("--max-cases", process.env.UMC_EVAL_MAX_CASES),
+    ...numericFlag("--timeout-ms", process.env.UMC_EVAL_TIMEOUT_MS),
+    ...numericFlag("--capture-poll-ms", process.env.UMC_EVAL_CAPTURE_POLL_MS),
     ...numericFlag("--shard-size", process.env.UMC_EVAL_SHARD_SIZE),
     ...numericFlag("--shard-count", process.env.UMC_EVAL_SHARD_COUNT),
     ...numericFlag("--agent-timeout-ms", process.env.UMC_EVAL_AGENT_TIMEOUT_MS),

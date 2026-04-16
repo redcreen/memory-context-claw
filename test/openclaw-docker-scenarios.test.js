@@ -21,3 +21,11 @@ test("openclaw docker scenarios have unique ids and existing repo paths", async 
     assert.equal((await fs.stat(casesPath)).isFile(), true, `missing cases: ${scenario.cases}`);
   }
 });
+
+test("openclaw docker scenarios include the focused ordinary-conversation A/B path", () => {
+  const ordinary = scenarios.find((item) => item.id === "ordinary-conversation-memory-intent-ab");
+  assert.ok(ordinary);
+  assert.equal(ordinary.script, "scripts/eval-openclaw-ordinary-conversation-memory-intent-ab.js");
+  assert.equal(ordinary.cases, "evals/openclaw-ordinary-conversation-memory-intent-ab-cases.js");
+  assert.equal(ordinary.fixtureRoot, "evals/openclaw-ordinary-conversation-fixture");
+});

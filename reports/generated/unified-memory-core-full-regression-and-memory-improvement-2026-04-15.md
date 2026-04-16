@@ -18,7 +18,7 @@ The current answers are:
 - raw host `openclaw memory search` transport: still unstable, but now isolated into a watchlist instead of contaminating algorithm conclusions
 - direct live `unified-memory-core` vs builtin improvement is now split into two clearer surfaces:
   - existing-memory consumption: real but modest on the current agent/index baseline
-  - ordinary-conversation realtime writing: materially clearer in favor of Unified Memory Core
+  - ordinary-conversation realtime writing: host-live evidence is materially in favor of Unified Memory Core, while hermetic Docker evidence shows answer-level timeout is now the dominant limiter
 
 ## What Was Tested
 
@@ -163,6 +163,7 @@ Interpretation:
 - report: [openclaw-memory-improvement-ab-2026-04-15.md](openclaw-memory-improvement-ab-2026-04-15.md)
 - compact summary: [openclaw-memory-improvement-summary-2026-04-15.md](openclaw-memory-improvement-summary-2026-04-15.md)
 - focused ordinary-conversation write-time report: [openclaw-ordinary-conversation-memory-intent-ab-2026-04-16.md](openclaw-ordinary-conversation-memory-intent-ab-2026-04-16.md)
+- focused ordinary-conversation Docker rerun summary: [openclaw-ordinary-conversation-memory-intent-docker-rerun-2026-04-17.md](openclaw-ordinary-conversation-memory-intent-docker-rerun-2026-04-17.md)
 - focused history cleanup rerun: [openclaw-memory-improvement-history-cleanup-2026-04-17.md](openclaw-memory-improvement-history-cleanup-2026-04-17.md)
 
 ### Topline Counts
@@ -236,7 +237,7 @@ This round also adds and expands a second live A/B that is much closer to the us
 - session transcripts are then pruned
 - a later recall question checks whether the memory survived as durable recall rather than just short-lived session carry-over
 
-Topline:
+Host-live topline:
 
 - compared live cases: `40`
 - `unified-memory-core` current path passed: `38`
@@ -259,12 +260,30 @@ Category split:
 - session constraints: current `7 / 8`, legacy `8 / 8`
 - one-off instructions: current `8 / 8`, legacy `8 / 8`
 
+Hermetic Docker rerun topline:
+
+- compared live cases: `40`
+- `unified-memory-core` current path passed: `3`
+- legacy builtin path passed: `0`
+- both passed: `0`
+- Memory Core only: `3`
+- legacy only: `0`
+- both failed: `37`
+
+Hermetic Docker interpretation:
+
+- the Docker rerun does not seed host `~/.openclaw` state, uses one fresh temp state root per case, uses one unique temp registry root per current-mode case, prunes session transcripts before recall, and removes temp state roots after each case
+- OpenClaw still generates bootstrap workspace files inside each fresh temp state, but those are deterministic runtime bootstrap, not host-memory contamination
+- under the explicit Docker `30s` turn budget, legacy timed out on `40 / 40` cases and current timed out on `36 / 40` cases
+- so the hermetic rerun proves the isolation root is now trustworthy, but it also shows that answer-level latency has become the dominant limiter on this surface
+
 Interpretation:
 
 - the earlier `100`-case suite said “existing-memory consumption uplift is modest”
-- this expanded focused suite says “ordinary-conversation realtime write behavior is already meaningfully better with Unified Memory Core than with the current default legacy path”
+- the host-live focused suite says “ordinary-conversation realtime write behavior is already meaningfully better with Unified Memory Core than with the current default legacy path”
 - the write-time advantage the user expected was real, but the earlier `100`-case fixture-consumption A/B was the wrong tool to reveal it
-- the expanded suite also makes the remaining weaknesses explicit instead of hiding them behind perfect small-sample scores
+- the hermetic Docker rerun shows the next bottleneck clearly: not contamination, but bounded answer-level latency under a reproducible isolated budget
+- taken together, the two runs mean the host delta should no longer be treated as a fully clean attribution claim; it should now be treated as an optimistic live upper bound that must be read together with the stricter Docker result
 
 The clearest current UMC-only wins in this focused suite are:
 

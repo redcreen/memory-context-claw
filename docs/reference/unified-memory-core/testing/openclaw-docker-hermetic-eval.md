@@ -55,6 +55,27 @@ This command:
 5. starts the container with the scenario's script, cases, fixture, and preset
 6. writes reports back into the repo `reports/` paths
 
+## Ordinary-Conversation Realtime-Write Scenario
+
+To rerun the focused ordinary-conversation `40`-case suite in Docker, use:
+
+```bash
+UMC_EVAL_TIMEOUT_MS=30000 npm run eval:openclaw:docker -- \
+  --scenario ordinary-conversation-memory-intent-ab \
+  --embed-model-path ~/.openclaw/models/embeddinggemma-300m-qat-Q8_0.gguf \
+  --auth-profiles-path ~/.openclaw/agents/main/agent/auth-profiles.json
+```
+
+This scenario is intentionally strict:
+
+- run the full `legacy builtin` phase first
+- delete the isolated legacy state roots
+- run the full `unified-memory-core current` phase second
+- keep one fresh temp state root per case
+- apply an explicit `30s` budget to every capture / recall turn
+
+That makes the result suitable both for contamination checks and for bounded-latency answer-level comparison.
+
 ## Scenario Source Of Truth
 
 - [evals/openclaw-docker-scenarios.js](../../../../evals/openclaw-docker-scenarios.js)
@@ -71,6 +92,12 @@ Each scenario should define at least:
 - `writeMarkdown`
 
 That lets you run different case sets and host configs in different containers without changing the runner logic.
+
+The ordinary-conversation scenario also pins:
+
+- `fixtureRoot = evals/openclaw-ordinary-conversation-fixture`
+- `agentModel = openai-codex/gpt-5.4-mini`
+- `preset = safe-local`
 
 ## Compose And Entry Points
 
@@ -100,6 +127,48 @@ npm run eval:openclaw:docker -- \
 2. Then run the full `memory-improvement-ab` scenario
 
 3. Only if you still need online-path confirmation, add a separate gateway smoke container
+
+4. For ordinary-conversation write-time behavior, prefer `ordinary-conversation-memory-intent-ab`
+
+## How To Decide Whether Docker Isolation Is Still Contaminated
+
+This is the foundation. If this part is unstable, the benchmark conclusions are not trustworthy.
+
+The ordinary-conversation Docker runner treats these as hard contamination checks:
+
+- `duplicateStateRoots = 0`
+- `duplicateRegistryRoots = 0`
+- `cleanupFailed = 0`
+- `sessionClearFailed = 0`
+
+One subtlety matters:
+
+- OpenClaw will still generate bootstrap files like `AGENTS.md`, `MEMORY.md`, and daily notes inside each fresh temp workspace
+- those files are regenerated inside each isolated state root
+- they are runtime bootstrap, not evidence that host memory or previous cases leaked in
+
+So contamination analysis must distinguish:
+
+- deterministic bootstrap
+- host-seeded memory contamination
+
+The former is expected. The latter must stay at zero.
+
+## Current Ordinary-Conversation Docker Conclusion
+
+The latest hermetic Docker rerun for the focused `40`-case suite is:
+
+- current: `3 / 40`
+- legacy: `0 / 40`
+- `UMC-only = 3`
+- `both-fail = 37`
+
+This should not be read as “Memory Core only improved 3 cases”. The more accurate reading is:
+
+- the hermetic isolation layer is now clean
+- under a `30s` Docker answer-level budget, latency becomes the dominant bottleneck
+- legacy timed out on `40 / 40`
+- current timed out on `36 / 40`, leaving `3` reproducible current-only wins
 
 ## Related Files
 

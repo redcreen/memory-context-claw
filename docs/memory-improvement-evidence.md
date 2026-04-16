@@ -68,25 +68,33 @@ We also added a second live A/B that is much closer to the user intuition behind
 Focused report:
 
 - [openclaw-ordinary-conversation-memory-intent-ab-2026-04-16.md](../reports/generated/openclaw-ordinary-conversation-memory-intent-ab-2026-04-16.md)
+- [openclaw-ordinary-conversation-memory-intent-docker-rerun-2026-04-17.md](../reports/generated/openclaw-ordinary-conversation-memory-intent-docker-rerun-2026-04-17.md)
 
-Topline:
+This surface now has two readings:
 
-- current path (`OpenClaw + Unified Memory Core ordinary-conversation governed ingest`): `10 / 10`
-- legacy default path: `5 / 10`
-- both pass: `5`
-- Memory Core only: `5`
+Host-live rerun:
+
+- current path: `38 / 40`
+- legacy default path: `21 / 40`
+- both pass: `20`
+- Memory Core only: `18`
+- legacy only: `1`
+- both fail: `1`
+
+Hermetic Docker rerun:
+
+- current path: `3 / 40`
+- legacy default path: `0 / 40`
+- both pass: `0`
+- Memory Core only: `3`
 - legacy only: `0`
-- both fail: `0`
+- both fail: `37`
 
-Language split:
+The interpretation is now stricter:
 
-- English: current `5 / 5`, legacy `3 / 5`, `UMC-only=2`, `legacy-only=0`
-- Chinese: current `5 / 5`, legacy `2 / 5`, `UMC-only=3`, `legacy-only=0`
-
-This changes the interpretation materially:
-
-- the older `100`-case A/B says “existing-memory consumption uplift is modest”
-- the newer focused `10`-case A/B says “ordinary-conversation realtime write behavior is already meaningfully better with Unified Memory Core than with the current legacy default path”
+- the older `100`-case A/B still says “existing-memory consumption uplift is modest”
+- the host-live focused `40`-case suite says “ordinary-conversation realtime write behavior is materially better with Unified Memory Core”
+- the hermetic Docker rerun says “the isolation root is now trustworthy, but answer-level timeout pressure dominates under a `30s` turn budget”
 
 ## What This Round Improved
 

@@ -38,15 +38,24 @@ Hermetic answer-level findings:
   - legacy answer: `之前那段时间主力是 Vim。`
 - two-case hermetic benchmark run passed `2/2`, but both were `shared-capability`
 - exact A/B wrapper initially failed because it still used a `20s` agent timeout; after aligning to `120s`, the wrapper succeeded but showed `1/2` due answer-level variance on `ab100-zh-history-editor-4`
+- ordinary-conversation hermetic Docker rerun now also completed for the full focused `40`-case suite:
+  - current: `3 / 40`
+  - legacy: `0 / 40`
+  - `UMC-only = 3`
+  - `both-fail = 37`
+  - dominant failure class: bounded `30s` answer-level timeouts rather than state contamination
+  - detailed report: [openclaw-ordinary-conversation-memory-intent-ab-2026-04-16.md](openclaw-ordinary-conversation-memory-intent-ab-2026-04-16.md)
 
 ## Interpretation
 
 - clean isolation is now real: the runner can be made independent of `~/.openclaw`
 - the old live-state evidence was not clean enough for final attribution
-- after isolation, the remaining instability is primarily answer-level LLM variance, not memory-state contamination
+- after isolation, the remaining instability is primarily answer-level latency / timeout pressure, not memory-state contamination
+- the Docker rerun also confirms that fresh containers still generate bootstrap workspace files such as `AGENTS.md`, `MEMORY.md`, and daily memory notes, but those are regenerated inside each isolated temp state and do not indicate cross-case leakage
 - for the most defensible comparisons, high-variance answer-level cases should prefer:
   - one case per hermetic container
   - explicit `agentModel`
+  - explicit turn timeout budgets
   - optional repeated runs before claiming a durable gain
 
 ## Docker Status
@@ -60,10 +69,16 @@ Hermetic answer-level findings:
   - image: `ghcr.io/openclaw/openclaw:2026.4.2`
   - result: `2/2` passed, `shared-capability: 2`
   - report: [openclaw-memory-improvement-history-cleanup-2026-04-16.md](openclaw-memory-improvement-history-cleanup-2026-04-16.md)
+- real runner execution also succeeded with the official image for the focused `40`-case ordinary-conversation suite:
+  - scenario: `ordinary-conversation-memory-intent-ab`
+  - image: `ghcr.io/openclaw/openclaw:2026.4.2`
+  - result: current `3 / 40`, legacy `0 / 40`
+  - isolation: `80 / 80` distinct state roots, `40 / 40` distinct current registry roots, `80 / 80` cleanup success, `80 / 80` session-clear success
+  - interpretation: the hermetic root is now trustworthy, but the Docker answer path is substantially slower than the host path under a `30s` turn budget
 - the Docker path is now usable as a real hermetic eval workflow, not just a dry-run scaffold
 
 ## Next Recommendation
 
 1. Treat Docker hermetic eval as the new preferred OpenClaw comparison path
-2. Pin `agentModel` in scenario config for answer-level runs
-3. For sensitive A/B cases, add repeat-based aggregation instead of trusting one run
+2. Pin `agentModel` and explicit turn-timeout budgets in scenario config for answer-level runs
+3. Treat host-vs-Docker deltas as a performance/latency investigation, not as proof of contamination

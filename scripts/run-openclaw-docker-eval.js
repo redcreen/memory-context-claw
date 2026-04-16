@@ -148,10 +148,12 @@ function buildComposeEnvFlags(env) {
 }
 
 function buildScenarioEnv(scenario, options) {
-  return {
+  const env = {
     OPENCLAW_EVAL_IMAGE: options.image,
     UMC_DOCKER_EMBED_MODEL_PATH: options.embedModelPath,
     UMC_DOCKER_AUTH_PROFILES_PATH: options.authProfilesPath,
+    UMC_EVAL_EXECUTION_ENV: "docker",
+    UMC_EVAL_DOCKER_IMAGE: options.image,
     UMC_EVAL_REPO_ROOT: "/workspace",
     UMC_EVAL_SCRIPT: normalizeString(scenario.script),
     UMC_EVAL_CASES: normalizeString(scenario.cases),
@@ -165,6 +167,22 @@ function buildScenarioEnv(scenario, options) {
     UMC_EVAL_WRITE_MARKDOWN: normalizeString(scenario.writeMarkdown),
     UMC_EVAL_FORMAT: normalizeString(scenario.format, "markdown")
   };
+
+  for (const key of [
+    "UMC_EVAL_ONLY",
+    "UMC_EVAL_MAX_CASES",
+    "UMC_EVAL_TIMEOUT_MS",
+    "UMC_EVAL_CAPTURE_POLL_MS",
+    "UMC_EVAL_EXTRA_ARGS",
+    "UMC_EVAL_KEEP_STATE"
+  ]) {
+    const value = normalizeString(process.env[key]);
+    if (value) {
+      env[key] = value;
+    }
+  }
+
+  return env;
 }
 
 function applyScenarioArgs(env, scenario) {
