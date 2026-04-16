@@ -50,8 +50,9 @@ Current status:
 - `Stage 3`: completed
 - `Stage 4`: completed
 - `Stage 5`: completed
-- current pointer: `Stage 5 closeout`
-- current recommendation: keep release-preflight, deployment verification, and Stage 5 evidence stable before opening any later phase
+- `Stage 6`: planned
+- current pointer: `Stage 6 docs-first review gate`
+- current recommendation: finish the Stage 6 roadmap / development-plan review on GitHub before starting any runtime shadow integration work
 
 Already implemented in the current baseline:
 
@@ -84,6 +85,7 @@ Execution constraints that still apply:
 | Stage 3 | `21-30` | complete the self-learning lifecycle baseline | `completed` |
 | Stage 4 | `31-38` | connect governed learning outputs into adapter policy use | `completed` |
 | Stage 5 | `39-46` | harden product operations and split-ready execution | `completed` |
+| Stage 6 | `93-100` | validate dialogue working-set pruning in runtime shadow mode before any active prompt cutover | `planned` |
 
 ## Sequential Build Plan
 
@@ -177,13 +179,40 @@ Stage complete when:
 45. `completed` Review prerequisites for runtime API or network service mode.
 46. `completed` Close the stage with an independent-product readiness review.
 
+### Stage 6. Dialogue Working-Set Shadow Integration
+
+Stage complete when:
+
+- runtime shadow instrumentation exists and stays `default-off`
+- the runtime records `relation / evict / pins / reduction ratio` without mutating the final prompt
+- real-session shadow telemetry is green enough to decide whether an active-path experiment should even be allowed
+
+93. `next` Keep this slice docs-first and review-gated.
+   - Sync the roadmap, development plan, and architecture references so the next work starts from a reviewed Stage 6 queue instead of report-only evidence.
+   - Do not begin runtime code changes for this slice until the GitHub review on the docs-first plan is approved.
+94. `todo` Define the Stage 6 runtime shadow contract before implementation.
+   - At minimum define the emitted fields, log/report shape, sampling boundary, `default-off` config surface, and where shadow artifacts are written.
+95. `todo` Implement the minimum runtime shadow instrumentation path.
+   - Record `relation / evict / pins / reduction ratio` on real sessions.
+   - Do not alter the final prompt or builtin memory behavior in this step.
+96. `todo` Add real-session shadow reports and replayable exports.
+   - The operator should be able to inspect which raw turns would have left the prompt, which pins would have survived, and how much prompt thickness would have changed.
+97. `todo` Attach answer-level regression measurement to the shadow path.
+   - Reuse the baseline-vs-shadow replay harness so real-session shadow telemetry can be compared against answer correctness instead of token reduction alone.
+98. `todo` Define the active-path promotion gate and rollback boundary.
+   - Promotion must require explicit thresholds for shadow telemetry, regression budget, rollback switch, and prompt-thinning benefit.
+99. `todo` Decide whether to open any active prompt experiment only after the Stage 6 shadow gate stays green.
+   - `working-set pruning` should remain shadow-only until the promotion gate is satisfied.
+100. `todo` Resume the deferred history cleanup and harder live A/B expansion with Stage 6 telemetry attached.
+   - Reopen `ab100-zh-history-editor-2`, `ab100-zh-history-editor-4`, and the next harder A/B round only after the shadow path is available as a measurement surface.
+
 ## Current Next Build
 
 Resume exactly from here:
 
-1. hold release-preflight, deployment verification, and `Stage 5` evidence stable
-2. do not open runtime API or service-mode work until the documented prerequisites stay green
-3. treat registry-root cutover as explicit operator policy work, not hidden phase drift
+1. finish the docs-first Stage 6 review gate in the roadmap and development plan
+2. wait for GitHub review before starting runtime shadow instrumentation
+3. keep the earlier history shared-fail cleanup deferred until the Stage 6 shadow path exists
 
 Do not start with:
 
@@ -304,9 +333,10 @@ The goal is not to reopen baseline contract work. The goal is to:
    - The birthday prompt is no longer counted as a plain negative because it behaves more like an identity-conflict / birthday-guardrail probe.
    - After replacing it with a true unknown-fact abstention prompt, `ab100-zh-negative-4` is now a shared abstention pass and the `100`-case live A/B no longer has a builtin-only win.
    - The same round also closed `ordinary-ab-en-rule-releases-1`, so the focused ordinary-conversation realtime-write suite is now `10 / 10` on the current path.
-91. `next` Remove the two shared-fail Chinese history cases in the `100`-case live A/B: `ab100-zh-history-editor-2` and `ab100-zh-history-editor-4`.
+91. `todo` Remove the two shared-fail Chinese history cases in the `100`-case live A/B: `ab100-zh-history-editor-2` and `ab100-zh-history-editor-4`.
    - The goal is to stop the history / supersede surface from sitting at “both engines miss” and pull UMC to stable correctness first.
 92. `todo` After the shared-fail history cases close, design the next live A/B round around `cross-source`, `conflict`, `multi-step history`, and denser natural-Chinese prompts so UMC can win on more harder cases.
+   - This queue is now intentionally deferred behind the Stage 6 docs-first review and shadow-integration work.
 
 ## Deferred Enhancement Queue
 
