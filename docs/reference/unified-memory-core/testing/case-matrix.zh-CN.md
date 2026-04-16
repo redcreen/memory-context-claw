@@ -21,6 +21,8 @@
 - evidence scoring cases
 - promotion / decay cases
 - conflict / superseded cases
+- dialogue working-set pruning mock cases
+- dialogue working-set pruning real-LLM replay cases
 - self-learning daily reflection cases
 - standalone command-routing cases
 - split-readiness checklist cases

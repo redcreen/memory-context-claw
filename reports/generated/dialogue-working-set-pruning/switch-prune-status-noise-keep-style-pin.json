@@ -1,0 +1,151 @@
+{
+  "generatedAt": "2026-04-16T02:32:20.105Z",
+  "model": "gpt-5.4",
+  "reasoningEffort": "low",
+  "summary": {
+    "cases": 1,
+    "passed": 1,
+    "failed": 0,
+    "total_baseline_tokens": 42,
+    "total_kept_tokens": 13,
+    "aggregate_reduction_ratio": 0.6905,
+    "switch_case_average_reduction_ratio": 0.6905
+  },
+  "results": [
+    {
+      "id": "switch-prune-status-noise-keep-style-pin",
+      "description": "A status snapshot and a temporary meta exchange should be dropped once the user switches to retrieval policy, while the durable reply-style rule stays pinned.",
+      "model": "gpt-5.4",
+      "passed": true,
+      "payload": {
+        "relation": "switch",
+        "confidence": 0.97,
+        "evict_turn_ids": [
+          "t1",
+          "t2",
+          "t3"
+        ],
+        "pin_turn_ids": [
+          "t2"
+        ],
+        "archive_summary": "Drop the earlier status snapshot and the temporary acknowledgement. Preserve the durable user preference as a semantic pin: default to giving the conclusion first, then details. Active topic has switched to retrieval policy, specifically which path an uncategorized query should take by default.",
+        "reasoning_summary": "The status report is transient noise, and the meta exchange about remembering a style preference is resolved. The user has switched to a new task about retrieval policy, so the old raw block can leave the next-turn prompt while the reply-style rule survives as a compact pin."
+      },
+      "checks": [
+        {
+          "name": "relation",
+          "passed": true,
+          "expected": "switch",
+          "actual": "switch"
+        },
+        {
+          "name": "must_evict_turn_ids",
+          "passed": true,
+          "expected": [
+            "t1",
+            "t3"
+          ],
+          "actual": [
+            "t1",
+            "t2",
+            "t3"
+          ]
+        },
+        {
+          "name": "must_keep_turn_ids",
+          "passed": true,
+          "expected": [],
+          "actual": [
+            "t4"
+          ]
+        },
+        {
+          "name": "must_pin_turn_ids",
+          "passed": true,
+          "expected": [
+            "t2"
+          ],
+          "actual": [
+            "t2"
+          ]
+        },
+        {
+          "name": "latest_user_turn_guarded",
+          "passed": true,
+          "expected": "t4",
+          "actual": [
+            "t1",
+            "t2",
+            "t3"
+          ]
+        },
+        {
+          "name": "min_reduction_ratio",
+          "passed": true,
+          "expected": 0.25,
+          "actual": 0.6905
+        }
+      ],
+      "applied": {
+        "relation": "switch",
+        "confidence": 0.97,
+        "archiveSummary": "Drop the earlier status snapshot and the temporary acknowledgement. Preserve the durable user preference as a semantic pin: default to giving the conclusion first, then details. Active topic has switched to retrieval policy, specifically which path an uncategorized query should take by default.",
+        "reasoningSummary": "The status report is transient noise, and the meta exchange about remembering a style preference is resolved. The user has switched to a new task about retrieval policy, so the old raw block can leave the next-turn prompt while the reply-style rule survives as a compact pin.",
+        "latestUserTurnId": "t4",
+        "pinTurnIds": [
+          "t2"
+        ],
+        "pinnedOnlyTurnIds": [
+          "t2"
+        ],
+        "requestedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3"
+        ],
+        "blockedEvictTurnIds": [],
+        "appliedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3"
+        ],
+        "keepTurnIds": [
+          "t4"
+        ],
+        "baselineTokens": 42,
+        "keptTokens": 13,
+        "prunedTokens": 29,
+        "reductionRatio": 0.6904761904761905,
+        "keepTurns": [
+          {
+            "id": "t4",
+            "role": "user",
+            "content": "刚才那个先记住就行。现在说 retrieval policy：未分类 query 默认走哪条路径？",
+            "tokenEstimate": 13
+          }
+        ],
+        "evictedTurns": [
+          {
+            "id": "t1",
+            "role": "assistant",
+            "content": "当前状态：OpenClaw 版本 2026.3.31，当前模型 openai-codex/gpt-5.4，上下文占用 158k / 272k，缓存命中率 99%。",
+            "tokenEstimate": 21
+          },
+          {
+            "id": "t2",
+            "role": "user",
+            "content": "以后默认先给我结论，再展开细节。",
+            "tokenEstimate": 4
+          },
+          {
+            "id": "t3",
+            "role": "assistant",
+            "content": "记住了，以后默认先给结论。",
+            "tokenEstimate": 4
+          }
+        ]
+      },
+      "stderr": "2026-04-16T02:32:00.516361Z ERROR codex_core::models_manager::manager: failed to refresh available models: timeout waiting for child process to exit\n2026-04-16T02:32:01.461808Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at \"/private/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-codex-home-zm63EV/shell_snapshots/019d9421-8f04-7202-97f0-fee422b6be88.tmp-1776306720519760000\": Os { code: 2, kind: NotFound, message: \"No such file or directory\" }\n2026-04-16T02:32:11.159133Z ERROR codex_core::models_manager::manager: failed to refresh available models: timeout waiting for child process to exit"
+    }
+  ]
+}

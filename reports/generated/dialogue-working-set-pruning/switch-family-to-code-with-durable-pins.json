@@ -1,0 +1,169 @@
+{
+  "generatedAt": "2026-04-16T02:32:15.902Z",
+  "model": "gpt-5.4",
+  "reasoningEffort": "low",
+  "summary": {
+    "cases": 1,
+    "passed": 1,
+    "failed": 0,
+    "total_baseline_tokens": 29,
+    "total_kept_tokens": 15,
+    "aggregate_reduction_ratio": 0.4828,
+    "switch_case_average_reduction_ratio": 0.4828
+  },
+  "results": [
+    {
+      "id": "switch-family-to-code-with-durable-pins",
+      "description": "Family facts are captured, then the user explicitly switches to code architecture; old family turns should leave the raw working set but stay pinned semantically.",
+      "model": "gpt-5.4",
+      "passed": true,
+      "payload": {
+        "relation": "switch",
+        "confidence": 0.98,
+        "evict_turn_ids": [
+          "t1",
+          "t2",
+          "t3",
+          "t4"
+        ],
+        "pin_turn_ids": [
+          "t1",
+          "t3"
+        ],
+        "archive_summary": "User shared durable family facts: they like steak, and their daughter is currently in fifth grade. That family-memory block is complete. The active topic then explicitly switched to a code architecture question about the OpenClaw adapter's read order for governed exports.",
+        "reasoning_summary": "The user explicitly closed the family-memory topic and switched to a new code topic. The earlier family turns are no longer needed in the next-turn raw working set, but the factual user memories should be preserved as semantic pins. Assistant acknowledgment turns do not need pinning."
+      },
+      "checks": [
+        {
+          "name": "relation",
+          "passed": true,
+          "expected": "switch",
+          "actual": "switch"
+        },
+        {
+          "name": "must_evict_turn_ids",
+          "passed": true,
+          "expected": [
+            "t1",
+            "t2",
+            "t3",
+            "t4"
+          ],
+          "actual": [
+            "t1",
+            "t2",
+            "t3",
+            "t4"
+          ]
+        },
+        {
+          "name": "must_keep_turn_ids",
+          "passed": true,
+          "expected": [],
+          "actual": [
+            "t5"
+          ]
+        },
+        {
+          "name": "must_pin_turn_ids",
+          "passed": true,
+          "expected": [
+            "t1",
+            "t3"
+          ],
+          "actual": [
+            "t1",
+            "t3"
+          ]
+        },
+        {
+          "name": "latest_user_turn_guarded",
+          "passed": true,
+          "expected": "t5",
+          "actual": [
+            "t1",
+            "t2",
+            "t3",
+            "t4"
+          ]
+        },
+        {
+          "name": "min_reduction_ratio",
+          "passed": true,
+          "expected": 0.45,
+          "actual": 0.4828
+        }
+      ],
+      "applied": {
+        "relation": "switch",
+        "confidence": 0.98,
+        "archiveSummary": "User shared durable family facts: they like steak, and their daughter is currently in fifth grade. That family-memory block is complete. The active topic then explicitly switched to a code architecture question about the OpenClaw adapter's read order for governed exports.",
+        "reasoningSummary": "The user explicitly closed the family-memory topic and switched to a new code topic. The earlier family turns are no longer needed in the next-turn raw working set, but the factual user memories should be preserved as semantic pins. Assistant acknowledgment turns do not need pinning.",
+        "latestUserTurnId": "t5",
+        "pinTurnIds": [
+          "t1",
+          "t3"
+        ],
+        "pinnedOnlyTurnIds": [
+          "t1",
+          "t3"
+        ],
+        "requestedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3",
+          "t4"
+        ],
+        "blockedEvictTurnIds": [],
+        "appliedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3",
+          "t4"
+        ],
+        "keepTurnIds": [
+          "t5"
+        ],
+        "baselineTokens": 29,
+        "keptTokens": 15,
+        "prunedTokens": 14,
+        "reductionRatio": 0.4827586206896552,
+        "keepTurns": [
+          {
+            "id": "t5",
+            "role": "user",
+            "content": "家庭这块先这样。现在说代码：OpenClaw adapter 读取 governed exports 的顺序是什么？",
+            "tokenEstimate": 15
+          }
+        ],
+        "evictedTurns": [
+          {
+            "id": "t1",
+            "role": "user",
+            "content": "记一下：我爱吃牛排。",
+            "tokenEstimate": 3
+          },
+          {
+            "id": "t2",
+            "role": "assistant",
+            "content": "记住了，你爱吃牛排。",
+            "tokenEstimate": 3
+          },
+          {
+            "id": "t3",
+            "role": "user",
+            "content": "再记一下：我女儿现在五年级。",
+            "tokenEstimate": 4
+          },
+          {
+            "id": "t4",
+            "role": "assistant",
+            "content": "记住了，你女儿现在五年级。",
+            "tokenEstimate": 4
+          }
+        ]
+      },
+      "stderr": "2026-04-16T02:32:01.931490Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at \"/private/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-codex-home-vNOPBa/shell_snapshots/019d9421-8ed2-77f1-b258-e2cd6be12de3.tmp-1776306720470595000\": Os { code: 2, kind: NotFound, message: \"No such file or directory\" }"
+    }
+  ]
+}

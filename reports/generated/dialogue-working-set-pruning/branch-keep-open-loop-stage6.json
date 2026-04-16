@@ -1,0 +1,127 @@
+{
+  "generatedAt": "2026-04-16T02:32:15.361Z",
+  "model": "gpt-5.4",
+  "reasoningEffort": "low",
+  "summary": {
+    "cases": 1,
+    "passed": 1,
+    "failed": 0,
+    "total_baseline_tokens": 24,
+    "total_kept_tokens": 24,
+    "aggregate_reduction_ratio": 0,
+    "switch_case_average_reduction_ratio": 0
+  },
+  "results": [
+    {
+      "id": "branch-keep-open-loop-stage6",
+      "description": "A side question interrupts an unfinished planning task; the original task turns must remain available.",
+      "model": "gpt-5.4",
+      "passed": true,
+      "payload": {
+        "relation": "branch",
+        "confidence": 0.98,
+        "evict_turn_ids": [],
+        "pin_turn_ids": [
+          "t1",
+          "t2"
+        ],
+        "archive_summary": "Open planning task: Stage 6 acceptance should be split into three parts. Current proposed buckets are functional correctness, rollback safety, and host integration verification. Latest user turn asks a side question about what `umc registry migrate` does.",
+        "reasoning_summary": "The active topic is a side question while the original Stage 6 planning task remains unfinished, so this is a branch. Do not evict the earlier planning turns because that loop is still open. Pin the Stage 6 split so it survives compactly if needed later."
+      },
+      "checks": [
+        {
+          "name": "relation",
+          "passed": true,
+          "expected": "branch",
+          "actual": "branch"
+        },
+        {
+          "name": "must_evict_turn_ids",
+          "passed": true,
+          "expected": [],
+          "actual": []
+        },
+        {
+          "name": "must_keep_turn_ids",
+          "passed": true,
+          "expected": [
+            "t1",
+            "t2"
+          ],
+          "actual": [
+            "t1",
+            "t2",
+            "t3"
+          ]
+        },
+        {
+          "name": "must_pin_turn_ids",
+          "passed": true,
+          "expected": [],
+          "actual": [
+            "t1",
+            "t2"
+          ]
+        },
+        {
+          "name": "latest_user_turn_guarded",
+          "passed": true,
+          "expected": "t3",
+          "actual": []
+        },
+        {
+          "name": "min_reduction_ratio",
+          "passed": true,
+          "expected": 0,
+          "actual": 0
+        }
+      ],
+      "applied": {
+        "relation": "branch",
+        "confidence": 0.98,
+        "archiveSummary": "Open planning task: Stage 6 acceptance should be split into three parts. Current proposed buckets are functional correctness, rollback safety, and host integration verification. Latest user turn asks a side question about what `umc registry migrate` does.",
+        "reasoningSummary": "The active topic is a side question while the original Stage 6 planning task remains unfinished, so this is a branch. Do not evict the earlier planning turns because that loop is still open. Pin the Stage 6 split so it survives compactly if needed later.",
+        "latestUserTurnId": "t3",
+        "pinTurnIds": [
+          "t1",
+          "t2"
+        ],
+        "pinnedOnlyTurnIds": [],
+        "requestedEvictTurnIds": [],
+        "blockedEvictTurnIds": [],
+        "appliedEvictTurnIds": [],
+        "keepTurnIds": [
+          "t1",
+          "t2",
+          "t3"
+        ],
+        "baselineTokens": 24,
+        "keptTokens": 24,
+        "prunedTokens": 0,
+        "reductionRatio": 0,
+        "keepTurns": [
+          {
+            "id": "t1",
+            "role": "user",
+            "content": "把 Stage 6 的验收拆成 3 个部分。",
+            "tokenEstimate": 6
+          },
+          {
+            "id": "t2",
+            "role": "assistant",
+            "content": "可以，先拆成：功能正确性、回退安全、宿主集成验证。",
+            "tokenEstimate": 7
+          },
+          {
+            "id": "t3",
+            "role": "user",
+            "content": "先别展开，我插一句：umc registry migrate 这条命令是做什么的？",
+            "tokenEstimate": 11
+          }
+        ],
+        "evictedTurns": []
+      },
+      "stderr": "2026-04-16T02:32:01.302601Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at \"/private/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-codex-home-meN0IC/shell_snapshots/019d9421-8e8e-70f0-b050-d115ebf4a7d5.tmp-1776306720399287000\": Os { code: 2, kind: NotFound, message: \"No such file or directory\" }"
+    }
+  ]
+}

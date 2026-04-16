@@ -1,0 +1,191 @@
+{
+  "generatedAt": "2026-04-16T02:32:18.701Z",
+  "model": "gpt-5.4",
+  "reasoningEffort": "low",
+  "summary": {
+    "cases": 1,
+    "passed": 1,
+    "failed": 0,
+    "total_baseline_tokens": 48,
+    "total_kept_tokens": 13,
+    "aggregate_reduction_ratio": 0.7292,
+    "switch_case_average_reduction_ratio": 0.7292
+  },
+  "results": [
+    {
+      "id": "switch-project-to-config-with-pins",
+      "description": "The project-summary topic is closed, a durable travel preference is added, and the conversation then switches to plugin config.",
+      "model": "gpt-5.4",
+      "passed": true,
+      "payload": {
+        "relation": "switch",
+        "confidence": 0.97,
+        "evict_turn_ids": [
+          "t1",
+          "t2",
+          "t3",
+          "t4",
+          "t5",
+          "t6"
+        ],
+        "pin_turn_ids": [
+          "t1",
+          "t5"
+        ],
+        "archive_summary": "Earlier project-summary exchange is closed. Keep durable user preferences as semantic pins: default replies in Chinese and be direct; air travel seat preference is aisle. Active topic has switched to asking for the minimal contextEngine configuration for unified-memory-core.",
+        "reasoning_summary": "The prior Project Lantern summary task was explicitly closed at t5, so that solved block is a strong eviction candidate. The conversation then moved to a new technical topic at t7, making this a topic switch rather than continuation. t1 contains a durable response-language/style preference and t5 contains a durable travel preference, so both should be preserved as pins even if their raw turns leave the next-turn prompt. Assistant acknowledgements are not needed in the working set."
+      },
+      "checks": [
+        {
+          "name": "relation",
+          "passed": true,
+          "expected": "switch",
+          "actual": "switch"
+        },
+        {
+          "name": "must_evict_turn_ids",
+          "passed": true,
+          "expected": [
+            "t3",
+            "t4",
+            "t5",
+            "t6"
+          ],
+          "actual": [
+            "t1",
+            "t2",
+            "t3",
+            "t4",
+            "t5",
+            "t6"
+          ]
+        },
+        {
+          "name": "must_keep_turn_ids",
+          "passed": true,
+          "expected": [],
+          "actual": [
+            "t7"
+          ]
+        },
+        {
+          "name": "must_pin_turn_ids",
+          "passed": true,
+          "expected": [
+            "t1",
+            "t5"
+          ],
+          "actual": [
+            "t1",
+            "t5"
+          ]
+        },
+        {
+          "name": "latest_user_turn_guarded",
+          "passed": true,
+          "expected": "t7",
+          "actual": [
+            "t1",
+            "t2",
+            "t3",
+            "t4",
+            "t5",
+            "t6"
+          ]
+        },
+        {
+          "name": "min_reduction_ratio",
+          "passed": true,
+          "expected": 0.3,
+          "actual": 0.7292
+        }
+      ],
+      "applied": {
+        "relation": "switch",
+        "confidence": 0.97,
+        "archiveSummary": "Earlier project-summary exchange is closed. Keep durable user preferences as semantic pins: default replies in Chinese and be direct; air travel seat preference is aisle. Active topic has switched to asking for the minimal contextEngine configuration for unified-memory-core.",
+        "reasoningSummary": "The prior Project Lantern summary task was explicitly closed at t5, so that solved block is a strong eviction candidate. The conversation then moved to a new technical topic at t7, making this a topic switch rather than continuation. t1 contains a durable response-language/style preference and t5 contains a durable travel preference, so both should be preserved as pins even if their raw turns leave the next-turn prompt. Assistant acknowledgements are not needed in the working set.",
+        "latestUserTurnId": "t7",
+        "pinTurnIds": [
+          "t1",
+          "t5"
+        ],
+        "pinnedOnlyTurnIds": [
+          "t1",
+          "t5"
+        ],
+        "requestedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3",
+          "t4",
+          "t5",
+          "t6"
+        ],
+        "blockedEvictTurnIds": [],
+        "appliedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3",
+          "t4",
+          "t5",
+          "t6"
+        ],
+        "keepTurnIds": [
+          "t7"
+        ],
+        "baselineTokens": 48,
+        "keptTokens": 13,
+        "prunedTokens": 35,
+        "reductionRatio": 0.7291666666666666,
+        "keepTurns": [
+          {
+            "id": "t7",
+            "role": "user",
+            "content": "现在切到配置：unified-memory-core 的最小 contextEngine 配置怎么写？",
+            "tokenEstimate": 13
+          }
+        ],
+        "evictedTurns": [
+          {
+            "id": "t1",
+            "role": "user",
+            "content": "以后默认给我中文，回复直接一点。",
+            "tokenEstimate": 4
+          },
+          {
+            "id": "t2",
+            "role": "assistant",
+            "content": "记住了。",
+            "tokenEstimate": 1
+          },
+          {
+            "id": "t3",
+            "role": "user",
+            "content": "帮我概括一下 Project Lantern 是做什么的。",
+            "tokenEstimate": 8
+          },
+          {
+            "id": "t4",
+            "role": "assistant",
+            "content": "Project Lantern 主要是在做面向真实场景的 AI 记忆与上下文治理。",
+            "tokenEstimate": 11
+          },
+          {
+            "id": "t5",
+            "role": "user",
+            "content": "这块先到这。另一个长期偏好记一下：我坐飞机喜欢靠过道。",
+            "tokenEstimate": 7
+          },
+          {
+            "id": "t6",
+            "role": "assistant",
+            "content": "记住了，你坐飞机偏好靠过道。",
+            "tokenEstimate": 4
+          }
+        ]
+      },
+      "stderr": "2026-04-16T02:32:00.542646Z ERROR codex_core::models_manager::manager: failed to refresh available models: timeout waiting for child process to exit\n2026-04-16T02:32:01.613567Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at \"/private/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-codex-home-j8J07J/shell_snapshots/019d9421-8f1e-7380-8289-3b3750cc5de7.tmp-1776306720543434000\": Os { code: 2, kind: NotFound, message: \"No such file or directory\" }"
+    }
+  ]
+}

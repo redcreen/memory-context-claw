@@ -18,6 +18,7 @@ The goal here is not to argue that recall is already “good enough”. The goal
 Related documents:
 
 - [openclaw-adapter.md](openclaw-adapter.md)
+- [dialogue-working-set-pruning.md](dialogue-working-set-pruning.md)
 - [execution-modes.md](execution-modes.md)
 - [../testing/main-path-performance-plan.md](../testing/main-path-performance-plan.md)
 - [../../../../reports/generated/unified-memory-core-full-regression-and-memory-improvement-2026-04-15.md](../../../../reports/generated/unified-memory-core-full-regression-and-memory-improvement-2026-04-15.md)
@@ -96,6 +97,23 @@ This proposal does **not** currently try to:
 - replace the retrieval / governance workstream; it raises “send less after retrieval” to the same priority
 - depend on an LLM-only classifier on the main path; the first version should prefer rule-based question-shape classification
 - require users to immediately rewrite every `MEMORY.md` or `AGENTS.md`; distill + default-off raw-doc policy should solve most of the problem first
+
+## Boundary With Dialogue Working-Set Pruning
+
+This document is about slimming durable-source consumption and budgeting assembly.
+
+It is not the whole answer to long multi-topic chats.
+
+When the same session changes topic multiple times, even a good durable-memory assembly may still carry too many old raw turns. That narrower problem is handled by:
+
+- [dialogue-working-set-pruning.md](dialogue-working-set-pruning.md)
+
+Use the split this way:
+
+- `context slimming and budgeted assembly`
+  - decides which durable artifacts enter the final package
+- `dialogue working-set pruning`
+  - decides which raw recent turns can leave the next-turn prompt without deleting the log
 
 ## Core Principles
 
@@ -315,6 +333,12 @@ If thickness is not measured, it will not stay down.
 - add question-shape-driven slot budgets
 - add source quotas
 - add raw-doc opt-in
+
+### Phase 2.5: dialogue working-set shadowing
+
+- add multi-topic shadow evaluation for `continue / branch / switch / resolve`
+- prove guarded soft eviction before touching production prompt assembly
+- keep this isolated from durable-memory governance until the shadow report is stable
 
 ### Phase 3: new baselines
 

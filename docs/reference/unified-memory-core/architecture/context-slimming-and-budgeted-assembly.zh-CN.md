@@ -18,6 +18,7 @@
 相关文档：
 
 - [openclaw-adapter.zh-CN.md](openclaw-adapter.zh-CN.md)
+- [dialogue-working-set-pruning.zh-CN.md](dialogue-working-set-pruning.zh-CN.md)
 - [execution-modes.zh-CN.md](execution-modes.zh-CN.md)
 - [../testing/main-path-performance-plan.zh-CN.md](../testing/main-path-performance-plan.zh-CN.md)
 - [../../../../reports/generated/unified-memory-core-full-regression-and-memory-improvement-2026-04-15.md](../../../../reports/generated/unified-memory-core-full-regression-and-memory-improvement-2026-04-15.md)
@@ -113,6 +114,23 @@
 - 不取代 retrieval / governance 这条主线，只是把“召回后如何少给”提到同等优先级
 - 不把 LLM classifier 作为主路径前提；第一版应该优先用规则型 question-shape classifier
 - 不要求用户今天就重写所有 `MEMORY.md` / `AGENTS.md`；应先通过 distill + default-off prompt policy 解决大部分问题
+
+## 与 Dialogue Working-Set Pruning 的边界
+
+这份文档处理的是 durable source 的消费瘦身，以及 assembly 的预算控制。
+
+但它并不能单独解决“同一段长对话里已经换题很多次，旧 raw turns 仍一直占 prompt”的问题。
+
+那部分更窄的问题，单独放在这里：
+
+- [dialogue-working-set-pruning.zh-CN.md](dialogue-working-set-pruning.zh-CN.md)
+
+两者的分工建议明确成：
+
+- `context slimming and budgeted assembly`
+  - 决定哪些 durable artifacts 进入 final package
+- `dialogue working-set pruning`
+  - 决定哪些近期 raw turns 可以离开下一轮 prompt，但不删除日志
 
 ## 为什么这件事现在必须做
 
@@ -694,6 +712,12 @@ adapter 需要从“尽量把有用信息都喂进去”转成：
 - 加 slot budget planner
 - 按 query type 分配 budget
 - 加 raw doc opt-in
+
+### Phase 2.5: dialogue working-set shadowing
+
+- 新增多话题 `continue / branch / switch / resolve` shadow 评估
+- 在真正改生产 prompt assembly 之前先证明 guarded soft eviction 可行
+- 这一层先与 durable-memory governance 隔离，等 shadow report 稳定后再讨论并线
 
 ### Phase 3: 新基线测试
 
