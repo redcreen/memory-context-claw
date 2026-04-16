@@ -57,6 +57,14 @@
       "label": "Canary Tool",
       "help": "Register the internal accepted-action canary tool for end-to-end host verification only."
     },
+    "openclawAdapter.ordinaryConversationMemory.enabled": {
+      "label": "Ordinary Conversation Memory",
+      "help": "Turn ordinary agent_end conversations into governed memory_intent ingestion without waiting for nightly learning."
+    },
+    "openclawAdapter.ordinaryConversationMemory.maxUserChars": {
+      "label": "Conversation Capture Max Chars",
+      "help": "Ignore very long user turns for ordinary-conversation governed memory capture."
+    },
     "openclawAdapter.governedExports.agentWorkspaceIds": {
       "label": "Agent Workspace Overrides",
       "help": "Optional map from agent id to workspace id. Use this when one agent, such as code, should read and learn in a different workspace namespace without moving every agent."
@@ -166,6 +174,23 @@
             "properties": {
               "canaryTool": {
                 "type": "boolean"
+              }
+            }
+          },
+          "ordinaryConversationMemory": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "enabled": {
+                "type": "boolean"
+              },
+              "visibility": {
+                "type": "string"
+              },
+              "maxUserChars": {
+                "type": "integer",
+                "minimum": 32,
+                "maximum": 4000
               }
             }
           },

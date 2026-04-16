@@ -22,6 +22,7 @@
 - OpenClaw export consumption
 - OpenClaw-specific retrieval / assembly hooks
 - OpenClaw accepted-action runtime hook
+- OpenClaw ordinary-conversation memory-intent runtime hook
 - adapter-side compatibility rules
 - OpenClaw 多 agent 运行时协调规则
 
@@ -37,8 +38,9 @@
 2. 消费相关产品 exports
 3. 在需要时把 adapter 逻辑和宿主 retrieval 路径结合起来
 4. 当结构化 tool result 出现时，通过异步 OpenClaw runtime hook 发出 governed accepted-action 证据
-5. 保持行为有 regression 保护
-6. 同时兼容 local-first 与后续 shared-service 演进
+5. 当普通对话结束时，把 durable ordinary-conversation signals 接成 governed `memory_intent`
+6. 保持行为有 regression 保护
+7. 同时兼容 local-first 与后续 shared-service 演进
 
 ## 主流程
 
@@ -119,6 +121,28 @@ OpenClaw adapter 现在拥有一条写侧接缝：
 
 - 不把同步 `tool_result_persist` 当作 registry 写入口
 - 不对任意“成功工具结果”做隐式推断
+
+## Ordinary-Conversation Hook 边界
+
+OpenClaw adapter 现在也拥有一条普通对话写侧接缝：
+
+- 异步 `agent_end`
+- 只消费当前轮最后的 user / assistant turn
+- 通过受限分类面把 ordinary conversation 归并成 governed `memory_intent`
+- durable rule / tool routing / user profile fact 进入正常 reflection / promotion
+- session-only constraint 继续留在 observation
+- one-off instruction 直接跳过，不进入长期记忆
+
+当前这条接缝的实现方式有意保持保守：
+
+- 不是再多调一次 LLM
+- 也不是要求 OpenClaw 主回复必须输出隐藏 JSON
+- 而是先用 adapter-side deterministic classification 把普通对话接入正式 `memory_intent` contract
+
+这意味着：
+
+- OpenClaw 普通对话现在已经有了 governed realtime ingest
+- 但“主回复同一次推理里顺带返回结构化 `should_write_memory`”这条更强设计，仍然主要保留在 Codex 路径和后续 OpenClaw 演进里
 
 ## Host Canary 设计
 

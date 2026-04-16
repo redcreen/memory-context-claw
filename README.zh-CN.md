@@ -8,20 +8,22 @@
 
 如果你想先看一句最实在的话：
 
-- 最新完整回归：`403 / 403`
+- 最新完整回归：`414 / 414`
 - latest available release-preflight：`8 / 8` 通过
 - retrieval-heavy CLI benchmark：`262 / 262`
 - isolated local answer-level gate：`12 / 12`，其中中文样本 `6 / 12`
 - 更深的 answer-level watch：`14 / 18`
 - 仓库当前维护的 runnable matrix：`392` 个 case，其中中文相关占比 `53.83%`
-- 当前 live A/B 对比 OpenClaw 默认内置：`100` 个真实 answer-level 案例里，`96` 个两边都能答对，`1` 个只有 Memory Core 能答对，`1` 个只有默认内置能答对，`2` 个两边都失败
+- 既有记忆消费型 live A/B：`100` 个真实 answer-level 案例里，`96` 个两边都能答对，`1` 个只有 Memory Core 能答对，`1` 个只有默认内置能答对，`2` 个两边都失败
+- 普通对话实时写记忆专项 A/B：`10` 个 live 案例里，`current=9`、`legacy=5`、`UMC-only=5`、`legacy-only=1`
 
 建议先看这两份：
 
 - [为什么 Unified Memory Core 用起来更顺手](docs/memory-improvement-evidence.zh-CN.md)
 - [完整回归与记忆提升报告](reports/generated/unified-memory-core-full-regression-and-memory-improvement-2026-04-15.md)
+- [普通对话实时写记忆专项对比](reports/generated/openclaw-ordinary-conversation-memory-intent-ab-2026-04-16.md)
 
-最诚实的结论是：OpenClaw 内置记忆在很多简单题上本来就不差。跑完 `100` 个真实 A/B 之后，当前直接 answer-level 提升还不算大；但 Unified Memory Core 已经把记忆系统变得更可治理、更可测试、更可维护，并且开始在更难的真实问法上出现可验证的净增益。
+最诚实的结论是：OpenClaw 内置记忆在很多“已有记忆消费”的简单题上本来就不差，所以旧的 `100` 条 A/B 差异不大；但一旦把测试改成“普通对话里实时写入，再跨会话召回”，Unified Memory Core 的优势就开始明显出现。UMC 当前最值得看的，已经不是“同一份旧记忆谁答得更像”，而是“谁更会把新的长期规则/偏好/事实写对、写稳、写得可治理”。
 
 ## 适用对象
 

@@ -55,6 +55,11 @@ const DEFAULT_CONFIG = {
     debug: {
       canaryTool: false
     },
+    ordinaryConversationMemory: {
+      enabled: true,
+      visibility: "workspace",
+      maxUserChars: 800
+    },
     acceptedActions: {
       enabled: true,
       visibility: "workspace"
@@ -162,6 +167,10 @@ export function resolvePluginConfig(raw) {
   const acceptedActions = mergeObject(
     DEFAULT_CONFIG.openclawAdapter.acceptedActions,
     openclawAdapter.acceptedActions
+  );
+  const ordinaryConversationMemory = mergeObject(
+    DEFAULT_CONFIG.openclawAdapter.ordinaryConversationMemory,
+    openclawAdapter.ordinaryConversationMemory
   );
   const debug = mergeObject(
     DEFAULT_CONFIG.openclawAdapter.debug,
@@ -307,6 +316,19 @@ export function resolvePluginConfig(raw) {
       enabled: openclawAdapter.enabled !== false,
       debug: {
         canaryTool: debug.canaryTool === true
+      },
+      ordinaryConversationMemory: {
+        enabled: ordinaryConversationMemory.enabled !== false,
+        visibility:
+          typeof ordinaryConversationMemory.visibility === "string" && ordinaryConversationMemory.visibility.trim()
+            ? ordinaryConversationMemory.visibility.trim()
+            : DEFAULT_CONFIG.openclawAdapter.ordinaryConversationMemory.visibility,
+        maxUserChars: clampNumber(
+          ordinaryConversationMemory.maxUserChars,
+          32,
+          4000,
+          DEFAULT_CONFIG.openclawAdapter.ordinaryConversationMemory.maxUserChars
+        )
       },
       acceptedActions: {
         enabled: acceptedActions.enabled !== false,

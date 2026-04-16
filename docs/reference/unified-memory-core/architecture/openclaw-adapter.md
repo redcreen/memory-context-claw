@@ -22,6 +22,7 @@ Related documents:
 - OpenClaw export consumption
 - OpenClaw-specific retrieval / assembly hooks
 - OpenClaw accepted-action runtime hook
+- OpenClaw ordinary-conversation memory-intent runtime hook
 - adapter-side compatibility rules
 - OpenClaw multi-agent runtime coordination rules
 
@@ -37,8 +38,9 @@ Related documents:
 2. consume relevant product exports
 3. merge adapter logic with host retrieval paths when needed
 4. emit governed accepted-action evidence from async OpenClaw runtime hooks when structured tool results are present
-5. keep behavior regression-protected
-6. stay compatible with local-first and future shared-service deployments
+5. connect durable ordinary-conversation signals into governed `memory_intent`
+6. keep behavior regression-protected
+7. stay compatible with local-first and future shared-service deployments
 
 ## Core Flow
 
@@ -117,6 +119,28 @@ It intentionally does not use:
 
 - sync `tool_result_persist` for registry writes
 - implicit inference from arbitrary successful tool results
+
+## Ordinary-Conversation Hook Boundary
+
+The OpenClaw adapter now also owns one ordinary-conversation write seam:
+
+- async `agent_end`
+- only the latest user / assistant turn is consumed
+- a bounded classifier maps ordinary conversation into governed `memory_intent`
+- durable rule / tool routing / user profile fact flow into normal reflection / promotion
+- session-only constraints stay in observation
+- one-off instructions are skipped instead of being turned into long-term memory
+
+This path is intentionally conservative:
+
+- it does not add another LLM call
+- it does not require OpenClaw replies to emit hidden JSON today
+- instead it uses adapter-side deterministic classification to connect ordinary conversation to the formal `memory_intent` contract
+
+That means:
+
+- OpenClaw ordinary conversation now has a governed realtime ingest path
+- but the stronger “same inference returns structured `should_write_memory`” design remains primarily on the Codex path and as a future OpenClaw evolution
 
 ## Host Canary Design
 

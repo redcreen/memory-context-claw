@@ -2,7 +2,10 @@
 
 如果只说一句话：
 
-`unified-memory-core` 不是把 OpenClaw 内置记忆“完全替掉”的魔法插件。跑完 `100` 个真实 live A/B 案例后，更准确的结论是：它已经把记忆系统变得更可治理、更可测试、更容易维护，但在直接 answer-level 对比上，目前只表现出小幅领先，而不是大幅碾压。
+`unified-memory-core` 不是把 OpenClaw 内置记忆“完全替掉”的魔法插件。但现在更准确的说法已经不再是“它只小幅领先”。跑完两组不同性质的 live A/B 后，结论变成了：
+
+- 如果测的是“同一份既有记忆，谁消费得更好”，差异确实不大。
+- 如果测的是“普通对话里刚说了一条长期规则/偏好/事实，下一轮新会话谁更会记住”，`Unified Memory Core` 已经开始明显领先。
 
 ## 用户现在立刻能得到什么
 
@@ -25,7 +28,7 @@
 
 这一轮关键结果：
 
-- 仓库回归：`403 / 403`
+- 仓库回归：`414 / 414`
 - latest available release-preflight 证据：`8 / 8` 通过
 - retrieval-heavy CLI benchmark：`262 / 262`
 - isolated local answer-level gate：`12 / 12`，其中中文样本 `6 / 12`
@@ -58,6 +61,38 @@
 
 1. OpenClaw 内置记忆在很多简单事实题上本来就不差。
 2. Memory Core 的当前净增益已经出现，但幅度不大。如果你的预期是“做了这么多工作后，answer-level 会明显甩开默认内置”，那现在还不能这么说。
+
+## 新专项 A/B：普通对话实时写记忆
+
+这轮我又补了一组更贴近真实使用方式的 live A/B：
+
+- capture：先在普通对话里告诉系统一条新规则/新偏好/新事实
+- prune：然后把 session transcript 清掉，避免只是吃到“刚才那轮上下文残留”
+- recall：最后在新会话里追问，看它到底有没有形成可召回的长期记忆
+
+专项报告：
+
+- [openclaw-ordinary-conversation-memory-intent-ab-2026-04-16.md](../reports/generated/openclaw-ordinary-conversation-memory-intent-ab-2026-04-16.md)
+
+这组一共 `10` 条：
+
+- current（OpenClaw + Unified Memory Core ordinary-conversation governed ingest）：`9`
+- legacy（OpenClaw 默认 legacy path）：`5`
+- 两边都通过：`4`
+- 只有 Memory Core 通过：`5`
+- 只有 legacy 通过：`1`
+- 两边都失败：`0`
+
+按语言拆开看：
+
+- 英文：`5` 条，current `4`，legacy `3`，`UMC-only=2`，`legacy-only=1`
+- 中文：`5` 条，current `5`，legacy `2`，`UMC-only=3`，`legacy-only=0`
+
+这组结果的意义，比旧的 `100` 条更接近“普通用户实际会感受到的聪明”：
+
+1. `tool_routing_preference` 这类 structured ordinary memory，UMC 已经能稳定拉开。
+2. 中文普通对话写记忆这条线上，UMC 现在比 legacy 更明显。
+3. 这次唯一的 `legacy-only` 不是 session/one-off 这类治理题，而是一条英文 durable-rule 代号题，说明 current ordinary-conversation path 还存在 recall 盲点，不是已经完美。
 
 ## 这轮新增修复带来了什么
 
@@ -92,17 +127,18 @@
 - Memory Core：失败，出现了幻觉答案 `1983-02-06`
 - OpenClaw 内置：通过，正确拒答
 
-也就是说，现在最诚实的判断是：
+也就是说，现在最诚实的判断变成了：
 
-- Memory Core 已经不是“没有增益”
-- 但它也还没有进入“在大量真实问题上明显比默认内置更强”的阶段
+- 在“既有记忆消费”上，Memory Core 的增益依然偏小。
+- 在“普通对话实时写入长期记忆”上，Memory Core 已经开始明显更强。
+- 但 current ordinary-conversation path 还没有完全收口，至少还存在一条 `legacy-only` durable-rule 回归点。
 
-为了让这个结论更容易把握，你可以直接把 `100` 个 live A/B 的结论记成：
+为了让这个结论更容易把握，你可以把两组 A/B 分开记：
 
-- `96` 个：两边都能答对
-- `1` 个：只有 Memory Core 能答对
-- `1` 个：只有默认内置能答对
-- `2` 个：两边都没答对
+- `100` 条既有记忆消费题：
+  `96` shared、`1` UMC-only、`1` legacy-only、`2` both-fail
+- `10` 条普通对话实时写记忆题：
+  `4` shared、`5` UMC-only、`1` legacy-only、`0` both-fail
 
 之前我用来说明增益的中文案例，现在仍然是一个有效的“Memory Core 可以赢”的例子：
 

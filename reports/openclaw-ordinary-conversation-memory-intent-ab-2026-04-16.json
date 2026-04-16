@@ -1,0 +1,386 @@
+{
+  "generatedAt": "2026-04-16T03:39:30.514Z",
+  "casesPath": "/Users/redcreen/Project/unified-memory-core/evals/openclaw-ordinary-conversation-memory-intent-ab-cases.js",
+  "agentId": "rtab",
+  "sourceAgentId": "main",
+  "summary": {
+    "total": 10,
+    "currentPassed": 9,
+    "legacyPassed": 5,
+    "bothPass": 4,
+    "umcOnly": 5,
+    "legacyOnly": 1,
+    "bothFail": 0,
+    "byLanguage": {
+      "en": {
+        "total": 5,
+        "currentPassed": 4,
+        "legacyPassed": 3,
+        "bothPass": 2,
+        "umcOnly": 2,
+        "legacyOnly": 1,
+        "bothFail": 0
+      },
+      "zh": {
+        "total": 5,
+        "currentPassed": 5,
+        "legacyPassed": 2,
+        "bothPass": 2,
+        "umcOnly": 3,
+        "legacyOnly": 0,
+        "bothFail": 0
+      }
+    },
+    "captureObserved": 9
+  },
+  "results": [
+    {
+      "id": "ordinary-ab-en-rule-releases-1",
+      "language": "en",
+      "category": "durable_rule",
+      "captureMessage": "From now on, whenever I send a GitHub repository link, use the keyword saffron-releases to remind yourself to check the Releases tab first. Remember this as my default workflow.",
+      "recallMessage": "Based only on your memory for this agent, what keyword should you use when I send a GitHub repository link? If memory is missing, reply exactly: I don't know based on current memory.",
+      "expectedAll": [
+        "saffron-releases"
+      ],
+      "forbiddenAny": [
+        "i don't know based on current memory"
+      ],
+      "current": {
+        "passed": false,
+        "expectedAnyOk": true,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "expectation mismatch",
+        "captureObserved": true,
+        "captureAnswer": "Understood — `saffron-releases` is now my default cue to check the Releases tab first for any GitHub repo link.",
+        "answer": "I don't know based on current memory.",
+        "error": ""
+      },
+      "legacy": {
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "reason": "matched",
+        "captureAnswer": "Locked in — `saffron-releases` is the cue, and I’ll check the Releases tab first for GitHub repo links.",
+        "answer": "saffron-releases",
+        "error": ""
+      }
+    },
+    {
+      "id": "ordinary-ab-en-tool-tag-1",
+      "language": "en",
+      "category": "tool_routing_preference",
+      "captureMessage": "From now on, whenever I send a Xiaohongshu link, use capture_xiaohongshu_note first and tag the result with amber-card. Remember this.",
+      "recallMessage": "Based only on your memory for this agent, what tag should you use after handling one of my Xiaohongshu links? If memory is missing, reply exactly: I don't know based on current memory.",
+      "expectedAll": [
+        "amber-card"
+      ],
+      "forbiddenAny": [
+        "i don't know based on current memory"
+      ],
+      "current": {
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "reason": "matched",
+        "captureObserved": true,
+        "captureAnswer": "记住了。以后你发 Xiaohongshu 链接时，我会先用 `capture_xiaohongshu_note`，然后给结果加上 `amber-card`。",
+        "answer": "amber-card",
+        "error": ""
+      },
+      "legacy": {
+        "passed": false,
+        "expectedAnyOk": true,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "expectation mismatch",
+        "captureAnswer": "Done. I’ll remember that workflow for Xiaohongshu links.",
+        "answer": "I don't know based on current memory.",
+        "error": ""
+      }
+    },
+    {
+      "id": "ordinary-ab-en-timezone-1",
+      "language": "en",
+      "category": "user_profile_fact",
+      "captureMessage": "My timezone is Asia/Shanghai. Remember this for future scheduling.",
+      "recallMessage": "Based only on your memory for this agent, what is the user's timezone? If memory is missing, reply exactly: I don't know based on current memory.",
+      "expectedAll": [
+        "asia/shanghai"
+      ],
+      "forbiddenAny": [
+        "i don't know based on current memory"
+      ],
+      "current": {
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "reason": "matched",
+        "captureObserved": true,
+        "captureAnswer": "Got it — I’ll use Asia/Shanghai (GMT+8) for future scheduling.",
+        "answer": "Asia/Shanghai (GMT+8)",
+        "error": ""
+      },
+      "legacy": {
+        "passed": false,
+        "expectedAnyOk": true,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "expectation mismatch",
+        "captureAnswer": "Noted — I’ll use Asia/Shanghai for future scheduling.",
+        "answer": "I don't know based on current memory.",
+        "error": ""
+      }
+    },
+    {
+      "id": "ordinary-ab-en-coffee-1",
+      "language": "en",
+      "category": "user_profile_fact",
+      "captureMessage": "I usually order an oat-milk flat white with no sugar. Remember this.",
+      "recallMessage": "Based only on your memory for this agent, what coffee order should you assume for the user? If memory is missing, reply exactly: I don't know based on current memory.",
+      "expectedAll": [
+        "flat white",
+        "no sugar"
+      ],
+      "expectedAny": [
+        "oat",
+        "oat-milk",
+        "oat milk"
+      ],
+      "forbiddenAny": [
+        "i don't know based on current memory"
+      ],
+      "current": {
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "reason": "matched",
+        "captureObserved": true,
+        "captureAnswer": "Remembered.",
+        "answer": "Oat-milk flat white, no sugar.",
+        "error": ""
+      },
+      "legacy": {
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "reason": "matched",
+        "captureAnswer": "Got it — I’ll remember that you usually order an oat-milk flat white with no sugar.",
+        "answer": "Oat-milk flat white with no sugar.",
+        "error": ""
+      }
+    },
+    {
+      "id": "ordinary-ab-en-session-negative-1",
+      "language": "en",
+      "category": "session_constraint",
+      "captureMessage": "For this session only, call the current plan cobalt-ladder and keep replies short.",
+      "recallMessage": "Based only on your memory for this agent, what codename should you permanently use for my current plan? If memory is missing, reply exactly: I don't know based on current memory.",
+      "expectedAll": [
+        "i don't know based on current memory"
+      ],
+      "forbiddenAny": [
+        "cobalt-ladder"
+      ],
+      "current": {
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "reason": "matched",
+        "captureObserved": true,
+        "captureAnswer": "Got it — cobalt-ladder for this session.",
+        "answer": "I don't know based on current memory.",
+        "error": ""
+      },
+      "legacy": {
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "reason": "matched",
+        "captureAnswer": "Got it — cobalt-ladder for this session. Replies will stay short.",
+        "answer": "I don't know based on current memory.",
+        "error": ""
+      }
+    },
+    {
+      "id": "ordinary-ab-zh-rule-releases-1",
+      "language": "zh",
+      "category": "durable_rule",
+      "captureMessage": "以后只要我发 GitHub 仓库链接，你先看 Releases 页面；我把这个默认规则的代号叫做琥珀Releases。记住这个默认规则。",
+      "recallMessage": "只根据当前记忆，只要我发 GitHub 仓库链接，这个默认规则的代号是什么？如果没有这条记忆，就只回答：I don't know based on current memory.",
+      "expectedAll": [
+        "琥珀releases"
+      ],
+      "forbiddenAny": [
+        "i don't know based on current memory"
+      ],
+      "current": {
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "reason": "matched",
+        "captureObserved": true,
+        "captureAnswer": "记住了：以后你发 GitHub 仓库链接，我会先看 Releases 页面。 \n这个默认规则的代号是「琥珀Releases」。",
+        "answer": "琥珀Releases",
+        "error": ""
+      },
+      "legacy": {
+        "passed": false,
+        "expectedAnyOk": true,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "expectation mismatch",
+        "captureAnswer": "记住了：**琥珀Releases**。\n\n以后你发 GitHub 仓库链接，我会先看 **Releases** 页面。",
+        "answer": "I don't know based on current memory.",
+        "error": ""
+      }
+    },
+    {
+      "id": "ordinary-ab-zh-tool-tag-1",
+      "language": "zh",
+      "category": "tool_routing_preference",
+      "captureMessage": "以后只要我发小红书链接，你都先用 capture_xiaohongshu_note，并且在结果里打 amber-card 标签。记住这个。",
+      "recallMessage": "只根据当前记忆，处理我的小红书链接后，你应该打什么标签？如果没有这条记忆，就只回答：I don't know based on current memory.",
+      "expectedAll": [
+        "amber-card"
+      ],
+      "forbiddenAny": [
+        "i don't know based on current memory"
+      ],
+      "current": {
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "reason": "matched",
+        "captureObserved": true,
+        "captureAnswer": "记住了。以后你发小红书链接，我会先用 `capture_xiaohongshu_note`，并在结果里带上 `amber-card` 标签。",
+        "answer": "amber-card",
+        "error": ""
+      },
+      "legacy": {
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "reason": "matched",
+        "captureAnswer": "记住了。以后你发小红书链接时，我会先用 `capture_xiaohongshu_note`，并在结果里带上 `amber-card` 标签。",
+        "answer": "amber-card",
+        "error": ""
+      }
+    },
+    {
+      "id": "ordinary-ab-zh-updates-1",
+      "language": "zh",
+      "category": "user_profile_fact",
+      "captureMessage": "我平时更喜欢异步文字更新，不喜欢临时语音电话。记住这个偏好。",
+      "recallMessage": "只根据当前记忆，我更喜欢什么更新方式？如果没有这条记忆，就只回答：I don't know based on current memory.",
+      "expectedAll": [
+        "异步",
+        "文字"
+      ],
+      "forbiddenAny": [
+        "i don't know based on current memory"
+      ],
+      "current": {
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "reason": "matched",
+        "captureObserved": true,
+        "captureAnswer": "记住了：以后我默认用异步文字更新，不主动安排临时语音电话。",
+        "answer": "你更喜欢异步文字更新，不喜欢临时语音电话。",
+        "error": ""
+      },
+      "legacy": {
+        "passed": false,
+        "expectedAnyOk": true,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "expectation mismatch",
+        "captureAnswer": "记住了：我以后优先用异步文字更新，不主动安排临时语音电话。",
+        "answer": "I don't know based on current memory.",
+        "error": ""
+      }
+    },
+    {
+      "id": "ordinary-ab-zh-notebook-1",
+      "language": "zh",
+      "category": "user_profile_fact",
+      "captureMessage": "我平时开会都记在炭灰色 A5 笔记本里。记住这个。",
+      "recallMessage": "只根据当前记忆，我平时开会用什么笔记本？如果没有这条记忆，就只回答：I don't know based on current memory.",
+      "expectedAll": [
+        "炭灰色",
+        "a5"
+      ],
+      "forbiddenAny": [
+        "i don't know based on current memory"
+      ],
+      "current": {
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "reason": "matched",
+        "captureObserved": true,
+        "captureAnswer": "记住了：你平时开会都记在炭灰色 A5 笔记本里。",
+        "answer": "炭灰色 A5 笔记本。",
+        "error": ""
+      },
+      "legacy": {
+        "passed": false,
+        "expectedAnyOk": true,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "expectation mismatch",
+        "captureAnswer": "记住了：你平时开会记在炭灰色 A5 笔记本里。",
+        "answer": "I don't know based on current memory.",
+        "error": ""
+      }
+    },
+    {
+      "id": "ordinary-ab-zh-oneoff-negative-1",
+      "language": "zh",
+      "category": "one_off_instruction",
+      "captureMessage": "只这一次把这轮方案叫做琥珀梯，不用记住，也别默认以后都这么叫。",
+      "recallMessage": "只根据当前记忆，以后默认应该怎么称呼这轮方案？如果没有这条记忆，就只回答：I don't know based on current memory.",
+      "expectedAll": [
+        "i don't know based on current memory"
+      ],
+      "forbiddenAny": [
+        "琥珀梯"
+      ],
+      "current": {
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "reason": "matched",
+        "captureObserved": false,
+        "captureAnswer": "可以，这轮我就叫它“琥珀梯”。 \n我不会记住，也不会默认以后都这么叫。",
+        "answer": "I don't know based on current memory.",
+        "error": ""
+      },
+      "legacy": {
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "reason": "matched",
+        "captureAnswer": "可以，这一轮我就叫它“琥珀梯”。 \n我不会记住，也不会默认以后都这么叫。",
+        "answer": "I don't know based on current memory.",
+        "error": ""
+      }
+    }
+  ]
+}

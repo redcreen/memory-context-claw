@@ -1,6 +1,7 @@
 import { ContextAssemblyEngine } from "../engine.js";
 import { resolvePluginConfig } from "../config.js";
 import { createOpenClawAcceptedActionHookRuntime } from "./accepted-action-hook.js";
+import { createOpenClawOrdinaryConversationHookRuntime } from "./ordinary-conversation-memory-hook.js";
 import { createOpenClawSelfLearningService } from "./self-learning-service.js";
 
 function normalizeCanaryString(value, fallback = "") {
@@ -88,6 +89,10 @@ export default {
       logger: api.logger,
       pluginConfig
     });
+    const ordinaryConversationHookRuntime = createOpenClawOrdinaryConversationHookRuntime({
+      logger: api.logger,
+      pluginConfig
+    });
 
     api.registerContextEngine("unified-memory-core", () => engine);
 
@@ -120,6 +125,9 @@ export default {
     if (typeof api.on === "function" && acceptedActionHookRuntime.enabled) {
       api.on("after_tool_call", async (event, ctx) => acceptedActionHookRuntime.captureAfterToolCall(event, ctx));
     }
+    if (typeof api.on === "function" && ordinaryConversationHookRuntime.enabled) {
+      api.on("agent_end", async (event, ctx) => ordinaryConversationHookRuntime.captureAgentEnd(event, ctx));
+    }
 
     if (typeof api.registerService === "function") {
       api.registerService(createOpenClawSelfLearningService({
@@ -131,7 +139,7 @@ export default {
     }
 
     api.logger.info(
-      `[unified-memory-core] loaded (enabled=${pluginConfig.enabled}, llmRerank=${pluginConfig.llmRerank.enabled}, maxCandidates=${pluginConfig.maxCandidates}, governedExports=${pluginConfig.openclawAdapter?.governedExports?.enabled !== false}, nightlySelfLearning=${pluginConfig.selfLearning.enabled}@${pluginConfig.selfLearning.localTime}, canaryTool=${pluginConfig.openclawAdapter?.debug?.canaryTool === true})`
+      `[unified-memory-core] loaded (enabled=${pluginConfig.enabled}, llmRerank=${pluginConfig.llmRerank.enabled}, maxCandidates=${pluginConfig.maxCandidates}, governedExports=${pluginConfig.openclawAdapter?.governedExports?.enabled !== false}, nightlySelfLearning=${pluginConfig.selfLearning.enabled}@${pluginConfig.selfLearning.localTime}, ordinaryConversationMemory=${pluginConfig.openclawAdapter?.ordinaryConversationMemory?.enabled !== false}, canaryTool=${pluginConfig.openclawAdapter?.debug?.canaryTool === true})`
     );
   }
 };

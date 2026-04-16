@@ -117,3 +117,8 @@
 - This suite runs `100` distinct live answer-level questions as real single-question `openclaw agent --local` calls.
 - Each shard uses its own clean OpenClaw state directory so task-system and unrelated host plugins do not pollute the prompt or timing.
 - Both Unified Memory Core and the legacy builtin baseline are evaluated against the same question set, same agent fixture, and same host path.
+- This suite measures **consumption** on the same prebuilt memory fixture. It does **not** by itself answer how well ordinary conversation writes new durable memory during a live session.
+- That complementary question is now covered by [openclaw-ordinary-conversation-memory-intent-ab-2026-04-16.md](openclaw-ordinary-conversation-memory-intent-ab-2026-04-16.md).
+- Read the two reports together:
+  - this `100`-case report answers “who consumes the same existing memory better?”
+  - the focused `10`-case report answers “who preserves new ordinary-conversation memory better after session transcripts are pruned?”

@@ -1,6 +1,6 @@
 # Unified Memory Core Full Regression And Memory Improvement Report
 
-- generatedAt: `2026-04-15`
+- generatedAt: `2026-04-16`
 - scope: full regression, CLI benchmark, live answer-level gate, transport watchlist, performance baseline, and live `unified-memory-core` vs OpenClaw builtin A/B memory comparison
 
 ## Executive Summary
@@ -16,7 +16,9 @@ The current answers are:
 - retrieval-heavy CLI memory coverage: strong
 - isolated answer-level formal gate: green
 - raw host `openclaw memory search` transport: still unstable, but now isolated into a watchlist instead of contaminating algorithm conclusions
-- direct live `unified-memory-core` vs builtin answer-level improvement: real but modest on the current agent/index baseline, not a dramatic across-the-board uplift
+- direct live `unified-memory-core` vs builtin improvement is now split into two clearer surfaces:
+  - existing-memory consumption: real but modest on the current agent/index baseline
+  - ordinary-conversation realtime writing: materially clearer in favor of Unified Memory Core
 
 ## What Was Tested
 
@@ -49,6 +51,12 @@ The current live A/B set contains `100` distinct answer-level cases:
 
 This set was intentionally expanded to make the comparison harder to hand-wave: same agent family, same memory fixture, two engines, and enough volume to show whether the product really pulls away or merely feels better anecdotally.
 
+Important boundary:
+
+- this A/B compares **consumption quality on the same existing memory fixture**
+- it does **not** by itself compare which runtime is better at emitting new governed long-term memory during a live conversation
+- that second question is now covered by the focused ordinary-conversation suite described below
+
 The broader runnable matrix currently maintained in the repo is:
 
 - total runnable cases: `392`
@@ -60,7 +68,7 @@ The broader runnable matrix currently maintained in the repo is:
 
 ### Regression And Release Gates
 
-- `npm test`: `403 / 403` pass
+- `npm test`: `414 / 414` pass
 - `npm run verify:memory-intent`: pass
 - latest available `release-preflight` evidence in this round: `8 / 8` pass
 - note: an immediate post-fix rerun of `release-preflight` was attempted, but it did not complete within this session budget, so the final conclusions below rely on the directly rerun sub-gates instead
@@ -154,6 +162,7 @@ Interpretation:
 
 - report: [openclaw-memory-improvement-ab-2026-04-15.md](openclaw-memory-improvement-ab-2026-04-15.md)
 - compact summary: [openclaw-memory-improvement-summary-2026-04-15.md](openclaw-memory-improvement-summary-2026-04-15.md)
+- focused ordinary-conversation write-time report: [openclaw-ordinary-conversation-memory-intent-ab-2026-04-16.md](openclaw-ordinary-conversation-memory-intent-ab-2026-04-16.md)
 
 ### Topline Counts
 
@@ -187,7 +196,7 @@ Interpretation:
 - legacy only: `1`
 - both failed: `2`
 
-### What The A/B Result Actually Means
+### What The 100-Case A/B Actually Means
 
 The honest reading is:
 
@@ -217,7 +226,48 @@ So if the question is “does Memory Core help today?”, the honest answer is:
 
 - yes, but the direct live answer-level improvement is modest on this current baseline
 - the bigger immediate value is governed retrieval, cleaner assembly, broader benchmark coverage, nightly self-learning, maintainability, CLI-verifiable gates, and explicit isolation of host transport failures
-- if the goal is “Memory Core should obviously beat builtin in many more real questions”, that goal is not closed yet
+- if the goal is “Memory Core should obviously beat builtin in many more real questions”, that goal is not closed yet on the existing-memory-consumption surface
+
+## Focused Ordinary-Conversation Realtime Write Results
+
+This round also adds a second live A/B that is much closer to the user-facing intuition behind `should_write_memory`:
+
+- one ordinary conversation introduces a new durable rule, tool-routing preference, or user profile fact
+- session transcripts are then pruned
+- a later recall question checks whether the memory survived as durable recall rather than just short-lived session carry-over
+
+Topline:
+
+- compared live cases: `10`
+- `unified-memory-core` current path passed: `9`
+- legacy builtin path passed: `5`
+- both passed: `4`
+- Memory Core only: `5`
+- legacy only: `1`
+- both failed: `0`
+
+Language split:
+
+- English: current `4 / 5`, legacy `3 / 5`, `UMC-only=2`, `legacy-only=1`
+- Chinese: current `5 / 5`, legacy `2 / 5`, `UMC-only=3`, `legacy-only=0`
+
+Interpretation:
+
+- the earlier `100`-case suite said “existing-memory consumption uplift is modest”
+- this new focused suite says “ordinary-conversation realtime write behavior is already meaningfully better with Unified Memory Core than with the current default legacy path”
+- the write-time advantage the user expected was real, but the earlier `100`-case fixture-consumption A/B was the wrong tool to reveal it
+
+The clearest current UMC-only wins in this focused suite are:
+
+- English tool-routing tag recall
+- English timezone recall
+- Chinese durable-rule codename recall
+- Chinese async-update preference recall
+- Chinese notebook fact recall
+
+The one clear current legacy-only result is:
+
+- English durable-rule keyword recall for `saffron-releases`
 
 ## Where Memory Core Is Already Significantly Better
 
@@ -227,7 +277,7 @@ Even when many simple prompts are shared wins, Memory Core is already materially
    Memory Core has formal handling for conflict, supersede, current-state questions, and stable-fact prioritization instead of relying on a flatter baseline retrieval path.
 
 2. Larger verified memory benchmark surface
-   The project now maintains a runnable matrix of `392` cases with `53.83%` Chinese-bearing coverage, a `262 / 262` retrieval-heavy formal gate, and a `100`-case live A/B answer-level comparison against the builtin baseline.
+   The project now maintains a runnable matrix of `392` cases with `53.83%` Chinese-bearing coverage, a `262 / 262` retrieval-heavy formal gate, a `100`-case existing-memory live A/B, and a focused `10`-case ordinary-conversation write-time live A/B.
 
 3. Stable answer-level gate
    The isolated local answer-level gate is now `12 / 12`, and the formal gate itself now carries `6 / 12` zh-bearing cases instead of only a token Chinese slice.
@@ -251,6 +301,7 @@ According to the GitHub development plan:
 Current `next` in the development plan:
 
 - remove the one confirmed builtin-only regression plus the two shared Chinese history misses from the `100`-case A/B suite
+- remove the one confirmed `legacy-only` durable-rule miss from the new `10`-case ordinary-conversation write-time suite
 - target future answer-level gains in `cross-source`, `conflict`, `multi-step history`, and denser natural Chinese prompts where `unified-memory-core` should earn more differentiated wins
 
 That means this round has finished the broad regression and evidence pass, and the next phase is no longer “prove basic health”, but “turn the improved `14 / 18` deeper watch into a promotable next formal-gate layer where Memory Core beats the builtin baseline more often”.

@@ -19,6 +19,11 @@ import { createSourceSystem } from "../src/unified-memory-core/source-system.js"
 test("resolvePluginConfig keeps openclaw adapter governed export settings", () => {
   const config = resolvePluginConfig({
     openclawAdapter: {
+      ordinaryConversationMemory: {
+        enabled: true,
+        visibility: "shared",
+        maxUserChars: 1024
+      },
       acceptedActions: {
         enabled: true,
         visibility: "shared"
@@ -43,6 +48,9 @@ test("resolvePluginConfig keeps openclaw adapter governed export settings", () =
 
   assert.equal(config.openclawAdapter.governedExports.workspaceId, "demo-workspace");
   assert.equal(config.openclawAdapter.governedExports.registryDir, "/tmp/registry");
+  assert.equal(config.openclawAdapter.ordinaryConversationMemory.enabled, true);
+  assert.equal(config.openclawAdapter.ordinaryConversationMemory.visibility, "shared");
+  assert.equal(config.openclawAdapter.ordinaryConversationMemory.maxUserChars, 1024);
   assert.equal(config.openclawAdapter.acceptedActions.enabled, true);
   assert.equal(config.openclawAdapter.acceptedActions.visibility, "shared");
   assert.deepEqual(config.openclawAdapter.governedExports.agentWorkspaceIds, {

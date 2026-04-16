@@ -2,7 +2,10 @@
 
 If you only want one practical answer, it is this:
 
-`unified-memory-core` is not a magic replacement for every OpenClaw builtin memory success. After `100` live A/B cases, the honest conclusion is narrower: it gives you a much more governable, testable, and maintainable memory system, while the direct answer-level lead over builtin memory is still modest rather than dramatic.
+`unified-memory-core` is not a magic replacement for every OpenClaw builtin memory success. But the more accurate statement is no longer just “the lead is modest.” After two different live A/B surfaces, the real conclusion is:
+
+- when the comparison is “who consumes the same existing memory fixture better?”, the gap is still modest
+- when the comparison is “who writes a new durable memory better during ordinary conversation, then recalls it in a later session?”, Unified Memory Core is already clearly ahead
 
 ## What Users Get Immediately
 
@@ -25,7 +28,7 @@ Latest full evidence:
 
 Current test highlights:
 
-- repo regression: `403 / 403`
+- repo regression: `414 / 414`
 - latest available release-preflight evidence: `8 / 8` pass
 - retrieval-heavy CLI benchmark: `262 / 262`
 - isolated local answer-level gate: `12 / 12`, with `6 / 12` zh-bearing cases inside the formal gate itself
@@ -53,6 +56,37 @@ This matters because it shows two things at once:
 
 1. OpenClaw builtin memory is already decent on many simple fact prompts.
 2. Memory Core does show a real net gain, but the gap is still small enough that it would be misleading to describe the current answer-level difference as large.
+
+## Focused A/B: Ordinary-Conversation Realtime Write
+
+We also added a second live A/B that is much closer to the user intuition behind `should_write_memory`:
+
+- capture one new rule, preference, or fact during ordinary conversation
+- prune session transcripts so the next turn cannot simply lean on immediate carry-over
+- ask a later recall question and see whether the new memory actually survived as durable recall
+
+Focused report:
+
+- [openclaw-ordinary-conversation-memory-intent-ab-2026-04-16.md](../reports/generated/openclaw-ordinary-conversation-memory-intent-ab-2026-04-16.md)
+
+Topline:
+
+- current path (`OpenClaw + Unified Memory Core ordinary-conversation governed ingest`): `9 / 10`
+- legacy default path: `5 / 10`
+- both pass: `4`
+- Memory Core only: `5`
+- legacy only: `1`
+- both fail: `0`
+
+Language split:
+
+- English: current `4 / 5`, legacy `3 / 5`, `UMC-only=2`, `legacy-only=1`
+- Chinese: current `5 / 5`, legacy `2 / 5`, `UMC-only=3`, `legacy-only=0`
+
+This changes the interpretation materially:
+
+- the older `100`-case A/B says “existing-memory consumption uplift is modest”
+- the newer focused `10`-case A/B says “ordinary-conversation realtime write behavior is already meaningfully better with Unified Memory Core than with the current legacy default path”
 
 ## What This Round Improved
 
@@ -103,7 +137,7 @@ Even when a prompt is a shared win, Memory Core still gives you something the bu
 - transport watchlists
 - explicit performance baselines
 
-That is why the direct answer-level A/B gain is only part of the story. The bigger product gain is that memory behavior becomes measurable and maintainable.
+That is why the direct answer-level A/B gain is only part of the story. The bigger product gain is that memory behavior becomes measurable and maintainable, and now also shows clearer wins on the specific write-time memory surface that the earlier `100`-case benchmark did not capture.
 
 ## What Is Next
 

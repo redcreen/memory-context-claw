@@ -14,10 +14,11 @@ This design closes three gaps:
 
 ## Problem Statement
 
-Current live behavior already proves two separate things:
+Current live behavior now proves three separate things:
 
 - the agent can remember a rule inside the current session and immediately act on it
-- but an ordinary conversation turn still does not enter the UMC registry in real time unless it uses an explicit structured path such as `accepted_action`
+- the Codex path can already write governed realtime memory through structured `memory_extraction`
+- OpenClaw ordinary conversation now also has a governed realtime path, but the current landing seam is deterministic `agent_end` classification rather than “hidden JSON from the same reply inference”
 
 That leads to:
 
@@ -117,10 +118,16 @@ flowchart TB
 
 ## Current Minimal Runtime Seam
 
-The current formal seam is `src/codex-adapter.js` -> `writeAfterTask(...)` together with the shared `memory_intent` contract:
+The current formal runtime seam now has two concrete landings:
 
-- accept `memoryExtraction` / `memory_extraction`
-- when `should_write_memory=true`, emit a governed `memory_intent` source immediately
+1. `src/codex-adapter.js` -> `writeAfterTask(...)`
+2. `src/plugin/ordinary-conversation-memory-hook.js` -> OpenClaw `agent_end`
+
+They share one `memory_intent` contract:
+
+- the Codex path accepts `memoryExtraction` / `memory_extraction`
+- the OpenClaw ordinary-conversation path maps bounded categories into the same `memory_intent` source shape
+- when the decision is equivalent to `should_write_memory=true`, emit a governed `memory_intent` source immediately
 - the `memory_intent` contract now explicitly carries category, durability, confidence, admission_route, and structured_rule
 - reflection routes durable rule/profile cases into promotable candidates while session/task-local cases stay in observation
 - promotion still flows through reflection and lifecycle governance instead of adapter-local stable writes
@@ -188,12 +195,18 @@ Relevant files:
 
 ## Current Status
 
-The repo has already completed four foundational pieces:
+The repo has already completed five foundational pieces:
 
 - the replay regression surface exists
 - `memory_intent` is now a formal source type and shared contract
 - the Codex adapter `writeAfterTask(...)` path can already consume structured `memory_extraction` and write governed `source + reflection + promotion` records in real time
+- the OpenClaw adapter ordinary-conversation `agent_end` hook can already route durable ordinary signals into the same governed lifecycle
 - `npm run verify:memory-intent` now acts as the formal gate for this slice
+
+Important boundary:
+
+- the Codex path already implements “same inference returns structured memory_extraction”
+- the OpenClaw path does not yet expose that stronger shape; today it lands first through deterministic hook classification into the same governed contract
 
 The next step is no longer to debate the contract itself.
 

@@ -14,10 +14,11 @@
 
 ## 问题定义
 
-当前 live 行为已经证明两件事：
+当前 live 行为已经证明三件事：
 
 - agent 可以在当前会话中记住一条规则，并马上按它执行。
-- 但普通对话如果没有显式 `accepted_action` 之类的结构化入口，就不会实时进入 UMC registry。
+- Codex 路径已经可以通过同轮结构化 `memory_extraction` 直接实时进入 UMC registry。
+- OpenClaw 普通对话现在也已经接上了实时 governed intake，但当前落点是 `agent_end` 上的 deterministic classification，不是“主回复同轮隐藏 JSON”。
 
 这带来的问题是：
 
@@ -115,10 +116,16 @@ flowchart TB
 
 ## 当前最小 runtime 落点
 
-当前正式落点是 `src/codex-adapter.js` 的 `writeAfterTask(...)`，以及共享模块里的 `memory_intent` contract：
+当前正式 runtime 落点已经有两条：
 
-- 输入新增 `memoryExtraction` / `memory_extraction`
-- 当 `should_write_memory=true` 时，立即发出一条 `memory_intent` source ingest
+1. `src/codex-adapter.js` 的 `writeAfterTask(...)`
+2. `src/plugin/ordinary-conversation-memory-hook.js` 的 OpenClaw `agent_end` hook
+
+它们共享同一份 `memory_intent` contract：
+
+- Codex 输入新增 `memoryExtraction` / `memory_extraction`
+- OpenClaw ordinary conversation 则在 `agent_end` 上把 bounded categories 映射成 `memory_intent`
+- 当判断结果等价于 `should_write_memory=true` 时，立即发出一条 `memory_intent` source ingest
 - `memory_intent` contract 现在显式包含 category、durability、confidence、admission_route、structured_rule
 - reflection 会根据 admission route 把 durable rule/profile 走 candidate，session / task-local 走 observation
 - promotion 继续通过 reflection + lifecycle 治理，而不是 adapter-local 直写 stable
@@ -184,12 +191,18 @@ flowchart TB
 
 ## 当前状态
 
-当前仓库已经完成四件基础工作：
+当前仓库已经完成五件基础工作：
 
 - replay 回归面已经建立
 - `memory_intent` 已成为正式 source type 和共享 contract
 - Codex adapter 的 `writeAfterTask(...)` 已能消费结构化 `memory_extraction` 并实时写入 governed `source + reflection + promotion`
+- OpenClaw adapter 的 ordinary-conversation `agent_end` hook 已能把 durable ordinary signals 接入同一条 governed lifecycle
 - `npm run verify:memory-intent` 已成为这条 slice 的正式 gate
+
+同时也要清楚边界：
+
+- Codex 路径已经实现了“主回复同一次推理顺带返回结构化 memory_extraction”
+- OpenClaw 当前普通对话路径还没有走到这一步，而是先通过 deterministic hook 落到同一份 `memory_intent` contract
 
 下一步不再是补 contract 本身，而是回到更上层的主线：
 
