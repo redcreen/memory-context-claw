@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 import fs from "node:fs/promises";
-import os from "node:os";
 import path from "node:path";
 import { execFile } from "node:child_process";
 import { randomUUID } from "node:crypto";
@@ -11,6 +10,13 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import { extractJsonPayload, searchLocalMemoryIndex } from "../src/retrieval.js";
 import { buildAgentEvalPrompt } from "../src/openclaw-agent-eval-prompt.js";
 import { rewriteRetrievalQueries } from "../src/query-rewrite.js";
+import {
+  cleanupHermeticOpenClawState,
+  cloneHermeticOpenClawState,
+  createHermeticOpenClawState,
+  resolveHermeticFixtureRoot,
+  resolveHermeticPluginPath
+} from "./openclaw-hermetic-state.js";
 
 const execFileAsync = promisify(execFile);
 const __filename = fileURLToPath(import.meta.url);
@@ -43,7 +49,14 @@ function parseArgs(argv) {
     skipLegacy: false,
     rawSearchCli: false,
     agentToolHint: true,
-    agentLocal: false
+    agentLocal: false,
+    fixtureRoot: resolveHermeticFixtureRoot(),
+    pluginPath: resolveHermeticPluginPath(),
+    embedModelPath: "",
+    authProfilesPath: "",
+    preset: "safe-local",
+    agentModel: "",
+    keepState: false
   };
 
   for (let index = 0; index < argv.length; index += 1) {
@@ -80,6 +93,13 @@ function parseArgs(argv) {
     else if (arg === "--raw-search-cli") args.rawSearchCli = true;
     else if (arg === "--no-agent-tool-hint") args.agentToolHint = false;
     else if (arg === "--agent-local") args.agentLocal = true;
+    else if (arg === "--fixture-root") args.fixtureRoot = path.resolve(process.cwd(), argv[++index]);
+    else if (arg === "--plugin-path") args.pluginPath = path.resolve(process.cwd(), argv[++index]);
+    else if (arg === "--embed-model-path") args.embedModelPath = path.resolve(process.cwd(), argv[++index]);
+    else if (arg === "--auth-profiles-path") args.authProfilesPath = path.resolve(process.cwd(), argv[++index]);
+    else if (arg === "--preset") args.preset = argv[++index];
+    else if (arg === "--agent-model") args.agentModel = argv[++index];
+    else if (arg === "--keep-state") args.keepState = true;
     else if (arg === "--help" || arg === "-h") {
       console.log(
         [
@@ -101,7 +121,14 @@ function parseArgs(argv) {
           "  --skip-legacy               Skip legacy A/B runs",
           "  --raw-search-cli            Force raw `openclaw memory search` before sqlite fallback",
           "  --no-agent-tool-hint        Do not prepend the explicit memory_search tool hint for agent cases",
-          "  --agent-local               Run answer-level cases via `openclaw agent --local`"
+          "  --agent-local               Run answer-level cases via `openclaw agent --local`",
+          "  --fixture-root <path>       Fixture workspace used to build hermetic OpenClaw state",
+          "  --plugin-path <path>        unified-memory-core repo path injected into the host config",
+          "  --embed-model-path <path>   Local embedding GGUF used for memory index/search",
+          "  --auth-profiles-path <path> OpenClaw auth-profiles.json copied into each hermetic agentDir",
+          "  --preset <name>             Plugin preset for hermetic state creation",
+          "  --agent-model <name>        Optional explicit OpenClaw agent model id",
+          "  --keep-state                Keep generated hermetic states for debugging"
         ].join("\n")
       );
       process.exit(0);
@@ -219,92 +246,6 @@ async function importCases(casesPath) {
     throw new Error(`Case module did not export an array: ${casesPath}`);
   }
   return cases;
-}
-
-async function copyRecursive(sourcePath, targetPath) {
-  const stat = await fs.stat(sourcePath);
-  if (stat.isDirectory()) {
-    await fs.mkdir(targetPath, { recursive: true });
-    const entries = await fs.readdir(sourcePath);
-    for (const entry of entries) {
-      await copyRecursive(path.join(sourcePath, entry), path.join(targetPath, entry));
-    }
-    return;
-  }
-  await fs.mkdir(path.dirname(targetPath), { recursive: true });
-  await fs.copyFile(sourcePath, targetPath);
-}
-
-async function resetAgentSessionState(agentId) {
-  const sessionsDir = path.join(os.homedir(), ".openclaw", "agents", agentId, "sessions");
-  try {
-    await fs.mkdir(sessionsDir, { recursive: true });
-    const entries = await fs.readdir(sessionsDir);
-    for (const entry of entries) {
-      await fs.rm(path.join(sessionsDir, entry), { force: true, recursive: true });
-    }
-    await fs.writeFile(path.join(sessionsDir, "sessions.json"), "{}\n", "utf8");
-  } catch {
-    // best effort; local answer-level eval should not fail just because cleanup was partial
-  }
-}
-
-async function clearAgentSessionLocks(agentId) {
-  const sessionsDir = path.join(os.homedir(), ".openclaw", "agents", agentId, "sessions");
-  try {
-    await fs.mkdir(sessionsDir, { recursive: true });
-    const entries = await fs.readdir(sessionsDir);
-    for (const entry of entries) {
-      if (!entry.endsWith(".lock")) {
-        continue;
-      }
-      await fs.rm(path.join(sessionsDir, entry), { force: true });
-    }
-  } catch {
-    // best effort for isolated eval agents
-  }
-}
-
-async function prepareLegacyStateDir(agentId) {
-  const sourceRoot = path.join(os.homedir(), ".openclaw");
-  const tempRoot = await fs.mkdtemp(path.join(os.tmpdir(), "umc-bench-legacy-"));
-  const sourceConfigPath = path.join(sourceRoot, "openclaw.json");
-  const targetConfigPath = path.join(tempRoot, "openclaw.json");
-  const raw = await fs.readFile(sourceConfigPath, "utf8");
-  const config = JSON.parse(raw);
-  config.plugins = config.plugins || {};
-  config.plugins.slots = config.plugins.slots || {};
-  config.plugins.slots.contextEngine = "legacy";
-  config.plugins.allow = Array.isArray(config.plugins.allow)
-    ? config.plugins.allow.filter((item) => item !== "unified-memory-core")
-    : config.plugins.allow;
-  if (config.plugins.load && Array.isArray(config.plugins.load.paths)) {
-    config.plugins.load.paths = config.plugins.load.paths.filter(
-      (item) => !String(item || "").includes("unified-memory-core")
-    );
-  }
-  if (config.plugins.entries && typeof config.plugins.entries === "object") {
-    delete config.plugins.entries["unified-memory-core"];
-  }
-  if (config.plugins.installs && typeof config.plugins.installs === "object") {
-    delete config.plugins.installs["unified-memory-core"];
-  }
-  await fs.writeFile(targetConfigPath, `${JSON.stringify(config, null, 2)}\n`, "utf8");
-
-  const maybePaths = [
-    [path.join(sourceRoot, "agents", agentId, "agent"), path.join(tempRoot, "agents", agentId, "agent")],
-    [path.join(sourceRoot, "memory", `${agentId}.sqlite`), path.join(tempRoot, "memory", `${agentId}.sqlite`)]
-  ];
-
-  for (const [sourcePath, targetPath] of maybePaths) {
-    try {
-      await copyRecursive(sourcePath, targetPath);
-    } catch {
-      // optional
-    }
-  }
-
-  return tempRoot;
 }
 
 function extractAgentText(payload) {
@@ -545,44 +486,60 @@ async function runAgentCase(caseDef, args, env) {
   };
 }
 
-async function runOne(caseDef, args, legacyStateDir) {
-  const currentRun =
-    caseDef.entrypoint === "memory_search"
-      ? await runSearchCase(caseDef, args)
-      : await runAgentCase(caseDef, args);
-  const currentEval = evaluateCase(caseDef, currentRun);
+async function runOne(caseDef, args, stateRoots) {
+  const currentStateDir = await cloneHermeticOpenClawState(
+    stateRoots.current.stateDir,
+    "umc-bench-current-case-"
+  );
+  const legacyStateDir =
+    caseDef.compareLegacy === true && !args.skipLegacy && stateRoots.legacy
+      ? await cloneHermeticOpenClawState(stateRoots.legacy.stateDir, "umc-bench-legacy-case-")
+      : null;
 
-  let legacyRun = null;
-  let legacyEval = null;
-  if (caseDef.compareLegacy === true && !args.skipLegacy && legacyStateDir) {
-    legacyRun =
+  try {
+    const currentRun =
       caseDef.entrypoint === "memory_search"
-        ? await runSearchCase(caseDef, args, { OPENCLAW_STATE_DIR: legacyStateDir })
-        : await runAgentCase(caseDef, args, { OPENCLAW_STATE_DIR: legacyStateDir });
-    legacyEval = evaluateCase(caseDef, legacyRun);
-  }
+        ? await runSearchCase(caseDef, args, { OPENCLAW_STATE_DIR: currentStateDir })
+        : await runAgentCase(caseDef, args, { OPENCLAW_STATE_DIR: currentStateDir });
+    const currentEval = evaluateCase(caseDef, currentRun);
 
-  const attribution = classifyAttribution(caseDef, currentEval, legacyEval, currentRun);
-  return {
-    id: caseDef.id,
-    category: caseDef.category,
-    entrypoint: caseDef.entrypoint,
-    query: caseDef.query || "",
-    message: caseDef.message || "",
-    compareLegacy: caseDef.compareLegacy === true,
-    attributionKind: caseDef.attributionKind || "",
-    attribution,
-    current: {
-      ...currentRun,
-      ...currentEval
-    },
-    legacy: legacyRun
-      ? {
-          ...legacyRun,
-          ...legacyEval
-        }
-      : null
-  };
+    let legacyRun = null;
+    let legacyEval = null;
+    if (legacyStateDir) {
+      legacyRun =
+        caseDef.entrypoint === "memory_search"
+          ? await runSearchCase(caseDef, args, { OPENCLAW_STATE_DIR: legacyStateDir })
+          : await runAgentCase(caseDef, args, { OPENCLAW_STATE_DIR: legacyStateDir });
+      legacyEval = evaluateCase(caseDef, legacyRun);
+    }
+
+    const attribution = classifyAttribution(caseDef, currentEval, legacyEval, currentRun);
+    return {
+      id: caseDef.id,
+      category: caseDef.category,
+      entrypoint: caseDef.entrypoint,
+      query: caseDef.query || "",
+      message: caseDef.message || "",
+      compareLegacy: caseDef.compareLegacy === true,
+      attributionKind: caseDef.attributionKind || "",
+      attribution,
+      current: {
+        ...currentRun,
+        ...currentEval
+      },
+      legacy: legacyRun
+        ? {
+            ...legacyRun,
+            ...legacyEval
+          }
+        : null
+    };
+  } finally {
+    if (!args.keepState) {
+      await cleanupHermeticOpenClawState(currentStateDir);
+      await cleanupHermeticOpenClawState(legacyStateDir);
+    }
+  }
 }
 
 function summarizeResults(results) {
@@ -645,6 +602,7 @@ function renderMarkdown(report) {
   lines.push(`- currentFailed: \`${report.summary.failed}\``);
   lines.push(`- legacyCompared: \`${report.summary.comparedLegacy}\``);
   lines.push(`- legacyPassed: \`${report.summary.legacyPassed}\``);
+  lines.push(`- hermeticState: \`${report.hermeticState === true}\``);
   lines.push(`- abstained: \`${report.summary.abstained}\``);
   lines.push(`- abstentionRate: \`${report.summary.abstentionRate}\``);
   lines.push(
@@ -700,10 +658,17 @@ function renderMarkdown(report) {
   lines.push("");
   lines.push("## Notes");
   lines.push("- This script supports both retrieval-level and answer-level cases; the entrypoint summary above shows which ones were selected in this run.");
-  lines.push("- Search-heavy cases default to the same OpenClaw agent sqlite index because raw `openclaw memory search` is currently unstable on this host.");
+  lines.push("- Every case runs inside a fresh cloned OpenClaw state built from the repo fixture, so current and legacy runs do not share session or sqlite state across cases.");
+  lines.push(`- Base hermetic fixture root: \`${report.fixtureRoot}\`.`);
+  lines.push(`- Hermetic plugin path: \`${report.pluginPath}\`.`);
+  lines.push(`- Hermetic embedding model: \`${report.embedModelPath}\`.`);
+  if (report.authProfilesPath) {
+    lines.push(`- Hermetic auth profiles: \`${report.authProfilesPath}\`.`);
+  }
+  lines.push(`- Hermetic preset: \`${report.preset}\`${report.agentModel ? `; agent model: \`${report.agentModel}\`` : ""}.`);
+  lines.push("- Search-heavy cases still prefer local sqlite fallback because raw `openclaw memory search` transport is unstable on this host.");
   lines.push("- Use `--raw-search-cli` only when you explicitly want to probe that unstable transport and accept fallback noise.");
   lines.push("- Legacy comparison is only enabled for benchmark-critical attribution cases, not the full matrix.");
-  lines.push("- The current fixture mirror lives under `evals/openclaw-cli-memory-fixture/`.");
   lines.push(`- Agent cases ${report.agentToolHint === false ? "do not use" : "use"} an explicit memory_search tool hint before answering.`);
   lines.push(`- Agent cases ${report.agentLocal === true ? "run via `openclaw agent --local` to avoid gateway/session-lock noise" : "run via the default gateway path"}.`);
   lines.push("");
@@ -732,48 +697,85 @@ async function main() {
     throw new Error("No benchmark cases selected.");
   }
 
-  if (args.agentLocal) {
-    await clearAgentSessionLocks(args.agentId);
-  }
-
-  const legacyStateDir = args.skipLegacy ? null : await prepareLegacyStateDir(args.agentId);
-  const results = [];
-  for (const caseDef of cases) {
-    console.error(`[benchmark] running ${caseDef.id} entrypoint=${caseDef.entrypoint}`);
-    const result = await runOne(caseDef, args, legacyStateDir);
-    results.push(result);
-    console.error(
-      `[benchmark] finished ${caseDef.id} pass=${result.current?.passed} attribution=${result.attribution}`
-    );
-  }
-
-  const report = {
-    generatedAt: new Date().toISOString(),
-    agentId: args.agentId,
-    agentToolHint: args.agentToolHint,
-    agentLocal: args.agentLocal,
-    casesPath: args.casesPath,
-    summary: summarizeResults(results),
-    results
+  const stateRoots = {
+    current: await createHermeticOpenClawState({
+      openclawBin: args.openclawBin,
+      agentId: args.agentId,
+      includeUMC: true,
+      fixtureRoot: args.fixtureRoot,
+      pluginPath: args.pluginPath,
+      embedModelPath: args.embedModelPath,
+      authProfilesPath: args.authProfilesPath,
+      preset: args.preset,
+      agentModel: args.agentModel
+    }),
+    legacy: args.skipLegacy
+      ? null
+      : await createHermeticOpenClawState({
+          openclawBin: args.openclawBin,
+          agentId: args.agentId,
+          includeUMC: false,
+          fixtureRoot: args.fixtureRoot,
+          pluginPath: args.pluginPath,
+          embedModelPath: args.embedModelPath,
+          authProfilesPath: args.authProfilesPath,
+          preset: args.preset,
+          agentModel: args.agentModel
+        })
   };
 
-  if (args.writeJson) {
-    await fs.mkdir(path.dirname(args.writeJson), { recursive: true });
-    await fs.writeFile(args.writeJson, `${JSON.stringify(report, null, 2)}\n`, "utf8");
-  }
-  if (args.writeMarkdown) {
-    await fs.mkdir(path.dirname(args.writeMarkdown), { recursive: true });
-    await fs.writeFile(args.writeMarkdown, renderMarkdown(report), "utf8");
-  }
+  try {
+    const results = [];
+    for (const caseDef of cases) {
+      console.error(`[benchmark] running ${caseDef.id} entrypoint=${caseDef.entrypoint}`);
+      const result = await runOne(caseDef, args, stateRoots);
+      results.push(result);
+      console.error(
+        `[benchmark] finished ${caseDef.id} pass=${result.current?.passed} attribution=${result.attribution}`
+      );
+    }
 
-  if (args.format === "json") {
-    console.log(JSON.stringify(report, null, 2));
-  } else {
-    console.log(renderMarkdown(report));
-  }
+    const report = {
+      generatedAt: new Date().toISOString(),
+      agentId: args.agentId,
+      agentToolHint: args.agentToolHint,
+      agentLocal: args.agentLocal,
+      casesPath: args.casesPath,
+      fixtureRoot: stateRoots.current.fixtureRoot,
+      pluginPath: stateRoots.current.pluginPath,
+      embedModelPath: stateRoots.current.embedModelPath,
+      authProfilesPath: stateRoots.current.authProfilesPath,
+      agentModel: stateRoots.current.agentModel,
+      preset: args.preset,
+      hermeticState: true,
+      skipLegacy: args.skipLegacy,
+      summary: summarizeResults(results),
+      results
+    };
 
-  if (report.summary.failed > 0) {
-    process.exitCode = 1;
+    if (args.writeJson) {
+      await fs.mkdir(path.dirname(args.writeJson), { recursive: true });
+      await fs.writeFile(args.writeJson, `${JSON.stringify(report, null, 2)}\n`, "utf8");
+    }
+    if (args.writeMarkdown) {
+      await fs.mkdir(path.dirname(args.writeMarkdown), { recursive: true });
+      await fs.writeFile(args.writeMarkdown, renderMarkdown(report), "utf8");
+    }
+
+    if (args.format === "json") {
+      console.log(JSON.stringify(report, null, 2));
+    } else {
+      console.log(renderMarkdown(report));
+    }
+
+    if (report.summary.failed > 0) {
+      process.exitCode = 1;
+    }
+  } finally {
+    if (!args.keepState) {
+      await cleanupHermeticOpenClawState(stateRoots.current?.stateDir);
+      await cleanupHermeticOpenClawState(stateRoots.legacy?.stateDir);
+    }
   }
 }
 

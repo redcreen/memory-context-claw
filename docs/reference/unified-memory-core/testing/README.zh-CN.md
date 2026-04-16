@@ -8,6 +8,7 @@
 - [stage3-stage4-acceptance.zh-CN.md](stage3-stage4-acceptance.zh-CN.md)
 - [stage5-acceptance.zh-CN.md](stage5-acceptance.zh-CN.md)
 - [openclaw-cli-integration.zh-CN.md](openclaw-cli-integration.zh-CN.md)
+- [openclaw-docker-hermetic-eval.zh-CN.md](openclaw-docker-hermetic-eval.zh-CN.md)
 - [openclaw-bundle-install.zh-CN.md](openclaw-bundle-install.zh-CN.md)
 - [release-preflight.zh-CN.md](release-preflight.zh-CN.md)
 - [main-path-performance-plan.zh-CN.md](main-path-performance-plan.zh-CN.md)
@@ -17,6 +18,7 @@
 - 先跑 `npm run umc:acceptance -- --format markdown`
 - 如果要拿 product hardening 和 split-readiness 证据，再跑 `npm run umc:stage5 -- --format markdown`
 - 如果要确认宿主级 OpenClaw 集成，再跑 `npm run umc:openclaw-itest -- --format markdown`
+- 如果要拿到最干净的 OpenClaw hermetic benchmark 路径，再跑 `npm run eval:openclaw:docker -- --scenario memory-improvement-ab --embed-model-path <gguf>`
 - 如果要把“真实安装 + 完整 CLI 验证”一次收口，再跑 `npm run umc:release-preflight -- --format markdown`
 - 只有 acceptance 报告失败时，再退回更窄的 lifecycle / maintenance / reproducibility / review CLI 命令定位问题
 

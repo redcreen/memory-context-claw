@@ -1,0 +1,19 @@
+services:
+  openclaw-eval:
+    image: ${OPENCLAW_EVAL_IMAGE:-ghcr.io/openclaw/openclaw:latest}
+    entrypoint: ["node", "scripts/run-openclaw-docker-entry.js"]
+    working_dir: /workspace
+    volumes:
+      - .:/workspace
+      - ${UMC_DOCKER_EMBED_MODEL_PATH:?set UMC_DOCKER_EMBED_MODEL_PATH to a local GGUF file}:/opt/openclaw/models/embedding.gguf:ro
+      - ${UMC_DOCKER_AUTH_PROFILES_PATH:?set UMC_DOCKER_AUTH_PROFILES_PATH to an auth-profiles.json file}:/opt/openclaw/auth/auth-profiles.json:ro
+    environment:
+      OPENCLAW_EMBED_MODEL_PATH: /opt/openclaw/models/embedding.gguf
+      UMC_EVAL_AUTH_PROFILES_PATH: /opt/openclaw/auth/auth-profiles.json
+      UMC_EVAL_REPO_ROOT: /workspace
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-}
+      DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY:-}
+      MOONSHOT_API_KEY: ${MOONSHOT_API_KEY:-}
+    tty: true
+    stdin_open: true
