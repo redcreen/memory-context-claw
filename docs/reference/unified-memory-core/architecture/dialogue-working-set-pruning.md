@@ -170,6 +170,45 @@ The mock phase should prove three things before any production integration:
 2. old raw blocks can be evicted while durable facts survive as pins
 3. token reduction is real without losing unresolved tasks or the latest user turn
 
+## Current Validation Snapshot
+
+This design is now past pure mock feasibility and has enough evidence to enter a docs-first Stage 6 review gate.
+
+- roadmap pointer: [../../../roadmap.md](../../../roadmap.md)
+- development-plan pointer: [../development-plan.md](../development-plan.md)
+- overall validation summary: [../../../../reports/generated/dialogue-working-set-validation-2026-04-16.md](../../../../reports/generated/dialogue-working-set-validation-2026-04-16.md)
+
+Current evidence:
+
+- shadow replay: `9 / 9`
+- shadow replay average raw reduction ratio: `0.5722`
+- shadow replay average shadow-package reduction ratio: `0.2275`
+- answer A/B: baseline `5 / 5`, shadow `5 / 5`, `0` regressions
+- answer A/B average estimated prompt reduction ratio: `0.0636`
+- adversarial replay: `7 / 7`
+
+Supporting reports:
+
+- [../../../../reports/generated/dialogue-working-set-pruning-feasibility-2026-04-16.md](../../../../reports/generated/dialogue-working-set-pruning-feasibility-2026-04-16.md)
+- [../../../../reports/generated/dialogue-working-set-shadow-replay-2026-04-16.md](../../../../reports/generated/dialogue-working-set-shadow-replay-2026-04-16.md)
+- [../../../../reports/generated/dialogue-working-set-answer-ab-2026-04-16.md](../../../../reports/generated/dialogue-working-set-answer-ab-2026-04-16.md)
+- [../../../../reports/generated/dialogue-working-set-adversarial-2026-04-16.md](../../../../reports/generated/dialogue-working-set-adversarial-2026-04-16.md)
+
+Interpretation:
+
+- the direction is strong enough for runtime shadow instrumentation
+- the evidence is still not strong enough for active prompt cutover
+
+## Current Runtime Gate
+
+The next implementation slice is intentionally narrow:
+
+- keep the feature `default-off`
+- record `relation / evict / pins / reduction ratio`
+- do not mutate the final prompt in this stage
+- do not change builtin memory behavior in this stage
+- discuss any guarded active-path experiment only after real-session shadow telemetry stays green
+
 ## Acceptance Criteria
 
 At minimum the feasibility phase should show:
@@ -197,3 +236,9 @@ The short-term target is:
 - guarded soft eviction
 - semantic pins for durable facts
 - proof that multi-topic prompt working sets can shrink safely before the main system is modified
+
+The current program decision is therefore:
+
+- review and approve the Stage 6 docs-first plan first
+- then land minimal runtime shadow instrumentation
+- defer active prompt mutation until the promotion gate is explicitly satisfied

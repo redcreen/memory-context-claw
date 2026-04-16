@@ -170,6 +170,45 @@ mock 阶段至少要先证明 3 件事：
 2. 旧 raw blocks 可以被移出 prompt，同时 durable facts 还能通过 pin 继续存在
 3. token 降幅是真实的，而且不会误删 unresolved tasks 或 latest user turn
 
+## 当前验证快照
+
+这条设计现在已经不只是纯 mock feasibility，而是有足够证据进入 Stage 6 的 docs-first review gate。
+
+- roadmap 指针：[../../../roadmap.zh-CN.md](../../../roadmap.zh-CN.md)
+- development plan 指针：[../development-plan.zh-CN.md](../development-plan.zh-CN.md)
+- 总验证汇总：[../../../../reports/generated/dialogue-working-set-validation-2026-04-16.md](../../../../reports/generated/dialogue-working-set-validation-2026-04-16.md)
+
+当前证据：
+
+- shadow replay：`9 / 9`
+- shadow replay average raw reduction ratio：`0.5722`
+- shadow replay average shadow-package reduction ratio：`0.2275`
+- answer A/B：baseline `5 / 5`，shadow `5 / 5`，`0` 回归
+- answer A/B average estimated prompt reduction ratio：`0.0636`
+- adversarial replay：`7 / 7`
+
+支撑报告：
+
+- [../../../../reports/generated/dialogue-working-set-pruning-feasibility-2026-04-16.md](../../../../reports/generated/dialogue-working-set-pruning-feasibility-2026-04-16.md)
+- [../../../../reports/generated/dialogue-working-set-shadow-replay-2026-04-16.md](../../../../reports/generated/dialogue-working-set-shadow-replay-2026-04-16.md)
+- [../../../../reports/generated/dialogue-working-set-answer-ab-2026-04-16.md](../../../../reports/generated/dialogue-working-set-answer-ab-2026-04-16.md)
+- [../../../../reports/generated/dialogue-working-set-adversarial-2026-04-16.md](../../../../reports/generated/dialogue-working-set-adversarial-2026-04-16.md)
+
+当前解释：
+
+- 方向已经足够强，可以进入 runtime shadow instrumentation
+- 但证据还不够支撑直接切 active prompt path
+
+## 当前 Runtime Gate
+
+下一条实现 slice 现在刻意收窄成：
+
+- 保持 `default-off`
+- 记录 `relation / evict / pins / reduction ratio`
+- 这一阶段不改正式 prompt
+- 这一阶段不改 builtin memory 行为
+- 只有当真实 session 的 shadow telemetry 长期为绿后，才讨论任何 guarded active-path experiment
+
 ## 验收标准
 
 可行性阶段至少应证明：
@@ -197,3 +236,9 @@ mock 阶段至少要先证明 3 件事：
 - guarded soft eviction
 - durable facts 的 semantic pin
 - 在真正改主系统前，先证明多话题 prompt working set 可以安全变小
+
+所以当前项目层面的决策是：
+
+- 先 review 并通过 Stage 6 的 docs-first 规划
+- 再落最小 runtime shadow instrumentation
+- active prompt mutation 继续等 promotion gate 满足后再讨论

@@ -62,6 +62,26 @@
 - 宿主 answer-level 与上下文厚度更值得优先处理
 - 继续只追求“检得更多”，边际收益会越来越低
 
+## 当前规划状态
+
+这条架构已经不只是 report 里的结论，而是正式进入了 Stage 6 规划：
+
+- roadmap 指针：[../../../roadmap.zh-CN.md](../../../roadmap.zh-CN.md)
+- development plan 指针：[../development-plan.zh-CN.md](../development-plan.zh-CN.md)
+- working-set validation 汇总：[../../../../reports/generated/dialogue-working-set-validation-2026-04-16.md](../../../../reports/generated/dialogue-working-set-validation-2026-04-16.md)
+
+当前明确的决策是：
+
+- 先走 docs-first、review-gated 的 Stage 6
+- 第一条 runtime slice 只落 `default-off` 的 shadow instrumentation
+- 正式 prompt mutation 继续显式延后
+- 在讨论 active-path cutover 之前，先用 shadow path 证明真实 session 上的 `relation / evict / pins / reduction ratio`
+
+也就是说：
+
+- 这份文档仍然负责 durable-source slimming 和 budgeted assembly 的总体边界
+- 但眼前真正先动的 runtime slice，是 `dialogue working-set pruning` 的 shadow mode，而不是直接切 assembly 主路径
+
 ## 最短结论
 
 ### 1. 应该瘦身 `MEMORY.md` / `AGENTS.md`，但不是简单删内容
@@ -603,8 +623,15 @@ adapter 需要从“尽量把有用信息都喂进去”转成：
 - token estimate
 - raw doc injection rate
 - 各问题类型的 context 厚度
+- working-set shadow 字段：`relation / evict / pins / reduction ratio`
 
 先拿到真实分布，再决定哪类问题最值得优先瘦身。
+
+这一阶段还必须保持：
+
+- `default-off`
+- 易回滚
+- 不改正式 prompt path
 
 ### Step 2: raw doc default-off for stable fact queries
 
@@ -636,6 +663,7 @@ adapter 需要从“尽量把有用信息都喂进去”转成：
 - retrieval-heavy benchmark
 - context thickness baseline
 - 更深 watch / A/B 不明显回退
+- 真实 session 上的 runtime shadow telemetry 长期为绿，足以支撑 active-path experiment
 
 才把新的 slim assembly 升成默认路径。
 
@@ -715,7 +743,9 @@ adapter 需要从“尽量把有用信息都喂进去”转成：
 
 ### Phase 2.5: dialogue working-set shadowing
 
+- 把它当作 Stage 6 在 docs-first review 通过后的第一条 runtime slice
 - 新增多话题 `continue / branch / switch / resolve` shadow 评估
+- 先定义最小 shadow contract：`relation / evict / pins / reduction ratio`
 - 在真正改生产 prompt assembly 之前先证明 guarded soft eviction 可行
 - 这一层先与 durable-memory governance 隔离，等 shadow report 稳定后再讨论并线
 
@@ -754,15 +784,8 @@ adapter 需要从“尽量把有用信息都喂进去”转成：
 - 只继续提升召回，而不处理 context 臃肿，收益会越来越低
 - `Unified Memory Core` 下一阶段的真正价值，不该只是“更会找”，还应该是“更会少给”
 
-## 下一步建议
+当前真正的执行边界比完整架构更窄：
 
-下一轮可以正式开一条新 slice：
-
-- `context-slimming-and-budgeted-assembly`
-
-建议目标：
-
-1. 把 `MEMORY.md` / `AGENTS.md` / notes 从 raw prompt sources 改成 default-off distilled sources
-2. 给 assembly 加入 question-shape-driven slot budgets
-3. 新增 context thickness baseline 与回归测试
-4. 用新的 A/B 验证“更少的 context 是否更快、更稳”
+- 先 review Stage 6 的 docs-first 规划
+- 下一步只实现 runtime shadow instrumentation
+- active prompt mutation 必须等 shadow gate 在真实 session 上证明成立后再谈

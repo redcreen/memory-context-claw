@@ -88,6 +88,26 @@ These numbers imply:
 - host answer-level execution and context thickness deserve higher priority
 - “retrieve more” alone will have diminishing returns
 
+## Current Planning State
+
+This architecture is no longer only a report conclusion. It is now the planned Stage 6 entry point:
+
+- roadmap pointer: [../../../roadmap.md](../../../roadmap.md)
+- development-plan pointer: [../development-plan.md](../development-plan.md)
+- working-set validation package: [../../../../reports/generated/dialogue-working-set-validation-2026-04-16.md](../../../../reports/generated/dialogue-working-set-validation-2026-04-16.md)
+
+The current decision is:
+
+- start with a docs-first, review-gated Stage 6
+- land only `default-off` runtime shadow instrumentation first
+- keep final prompt mutation explicitly deferred
+- use the shadow path to prove real-session `relation / evict / pins / reduction ratio` before any active-path cutover is discussed
+
+In other words:
+
+- this document still owns durable-source slimming and budgeted assembly
+- but the immediate runtime slice starts with `dialogue working-set pruning` in shadow mode, not with a direct assembly cutover
+
 ## Non-Goals
 
 This proposal does **not** currently try to:
@@ -336,7 +356,9 @@ If thickness is not measured, it will not stay down.
 
 ### Phase 2.5: dialogue working-set shadowing
 
+- treat this as the first Stage 6 runtime slice after the docs-first review gate passes
 - add multi-topic shadow evaluation for `continue / branch / switch / resolve`
+- define the minimum shadow contract: `relation / evict / pins / reduction ratio`
 - prove guarded soft eviction before touching production prompt assembly
 - keep this isolated from durable-memory governance until the shadow report is stable
 
@@ -375,8 +397,15 @@ Do not change final assembly yet. First add reporting for:
 - token estimate
 - raw-doc injection rate
 - context thickness by question type
+- working-set shadow fields: `relation / evict / pins / reduction ratio`
 
 Measure the real current distribution before changing policy.
+
+This stage should remain:
+
+- `default-off`
+- rollback-friendly
+- non-mutating for the final prompt path
 
 ### Step 2: raw-doc default-off for stable fact queries
 
@@ -408,6 +437,7 @@ Only promote the slim path to default after these stay green:
 - retrieval-heavy benchmark
 - context-thickness baseline
 - deeper watch / A-B do not materially regress
+- runtime shadow telemetry on real sessions remains green long enough to justify an active-path experiment
 
 ## Rollback Strategy
 
@@ -460,3 +490,9 @@ The next product value should not be only:
 It should also be:
 
 - better refusal to over-send context
+
+The immediate execution boundary is now narrower than the full architecture:
+
+- review the Stage 6 docs-first plan first
+- implement only runtime shadow instrumentation next
+- postpone any active prompt mutation until the shadow gate proves out on real sessions
