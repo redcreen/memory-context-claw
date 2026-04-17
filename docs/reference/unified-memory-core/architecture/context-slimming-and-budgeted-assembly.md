@@ -90,16 +90,18 @@ These numbers imply:
 
 ## Current Planning State
 
-This architecture is no longer only a report conclusion. It is now the planned Stage 6 entry point:
+This architecture is no longer only a report conclusion. Its Stage 6 runtime shadow instrumentation is now landed as a `default-off`, shadow-only path:
 
 - roadmap pointer: [../../../roadmap.md](../../../roadmap.md)
 - development-plan pointer: [../development-plan.md](../development-plan.md)
 - working-set validation package: [../../../../reports/generated/dialogue-working-set-validation-2026-04-16.md](../../../../reports/generated/dialogue-working-set-validation-2026-04-16.md)
+- runtime shadow replay: [../../../../reports/generated/dialogue-working-set-runtime-shadow-2026-04-16.md](../../../../reports/generated/dialogue-working-set-runtime-shadow-2026-04-16.md)
+- Stage 6 closeout report: [../../../../reports/generated/dialogue-working-set-stage6-2026-04-16.md](../../../../reports/generated/dialogue-working-set-stage6-2026-04-16.md)
 
 The current decision is:
 
 - start with a docs-first, review-gated Stage 6
-- land only `default-off` runtime shadow instrumentation first
+- the first runtime slice is now landed as `default-off` shadow instrumentation
 - keep final prompt mutation explicitly deferred
 - use the shadow path to prove real-session `relation / evict / pins / reduction ratio` before any active-path cutover is discussed
 
@@ -493,6 +495,6 @@ It should also be:
 
 The immediate execution boundary is now narrower than the full architecture:
 
-- review the Stage 6 docs-first plan first
-- implement only runtime shadow instrumentation next
+- keep the landed runtime shadow instrumentation `default-off` and shadow-only
+- use that telemetry surface while resuming deferred history cleanup and harder A/B work
 - postpone any active prompt mutation until the shadow gate proves out on real sessions

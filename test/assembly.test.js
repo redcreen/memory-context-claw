@@ -783,6 +783,37 @@ test("buildAssemblyResult trims superseded notebook tails for current-state prom
   assert.doesNotMatch(result.systemPromptAddition, /blue pocket notebook/);
 });
 
+test("buildAssemblyResult preserves history phrasing for switched-editor questions", () => {
+  const result = buildAssemblyResult({
+    messages: [{ role: "user", content: "只根据当前记忆，现在虽然已经换了编辑器，但之前那段时间主力到底是什么？", timestamp: 1 }],
+    tokenBudget: 2048,
+    memoryBudgetRatio: 0.35,
+    recentMessageCount: 8,
+    maxSelectedChunks: 4,
+    maxChunksPerPath: 1,
+    candidates: [
+      {
+        path: "memory/2026-04-12.md",
+        pathKind: "dailyMemory",
+        startLine: 1,
+        endLine: 8,
+        weightedScore: 1.14,
+        finalScore: 1.14,
+        snippet: "Confirmed update: Maya switched the main editor from Vim to Zed last week."
+      }
+    ]
+  });
+
+  assert.match(result.systemPromptAddition, /before\/prior\/history/i);
+  assert.doesNotMatch(result.systemPromptAddition, /answer with only the current value/i);
+  assert.match(result.systemPromptAddition, /Previous main editor before the switch: Vim\./);
+  assert.match(result.systemPromptAddition, /Current main editor after the switch: Zed\./);
+  assert.equal(
+    result.selectedCandidates[0].snippet,
+    "Previous main editor before the switch: Vim. Current main editor after the switch: Zed."
+  );
+});
+
 test("buildAssemblyResult keeps only identity-supporting cards for identity queries", () => {
   const result = buildAssemblyResult({
     messages: [{ role: "user", content: "你怎么称呼我", timestamp: 1 }],

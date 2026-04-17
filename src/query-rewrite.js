@@ -70,6 +70,8 @@ function buildChineseNaturalRewrite(query) {
   if (!/[\u4e00-\u9fff]/.test(q)) {
     return "";
   }
+  const hasHistoryIntent =
+    /(之前|原来|先前|早前|旧阶段|历史|切换前|切换发生之前|最新切换发生之前|改用.+之前|切到现在.+之前|换了.+但之前|旧的主力)/.test(q);
   if (/怎么称呼我|怎么叫我|称呼我/.test(q)) {
     return "preferred name 用户 preferred name 怎么称呼用户";
   }
@@ -78,6 +80,9 @@ function buildChineseNaturalRewrite(query) {
   }
   if (/(记忆不完整|记忆.*打架|拿不准.*记忆|应该猜吗|别猜|不要猜)/.test(q)) {
     return "missing or conflicting memory do not guess guessing policy";
+  }
+  if (/编辑器/.test(q) && hasHistoryIntent) {
+    return "previous main editor before switch Vim before Zed old editor history";
   }
   if (/编辑器/.test(q) && /现在|主力|哪个/.test(q)) {
     return "current main editor now Zed replaced Vim";

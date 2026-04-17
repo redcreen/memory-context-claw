@@ -1,0 +1,129 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776348022386-1daby9",
+  "generated_at": "2026-04-16T14:00:22.386Z",
+  "session_key": "agent:stage6-shadow:shadow-replay-open-loop-branch-return:t5",
+  "agent_id": "stage6-shadow",
+  "query": "好，回到刚才 Stage 6，那三个部分是什么？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "把 Stage 6 的验收拆成 3 个部分。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "可以，先拆成：功能正确性、回退安全、宿主集成验证。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "先别展开，我插一句：umc registry migrate 这条命令是做什么的？"
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "它更像 UMC 自己 registry root 的迁移，不是 builtin memory 的切换器。"
+    },
+    {
+      "id": "t5",
+      "role": "user",
+      "content": "好，回到刚才 Stage 6，那三个部分是什么？"
+    }
+  ],
+  "decision": {
+    "relation": "branch",
+    "confidence": 0.98,
+    "evict_turn_ids": [
+      "t3",
+      "t4"
+    ],
+    "pin_turn_ids": [],
+    "archive_summary": "Main task remains Stage 6 acceptance split into three parts: 功能正确性、回退安全、宿主集成验证. A side question about `umc registry migrate` was answered and is not needed for the next turn.",
+    "reasoning_summary": "The latest user turn returns to the older unresolved Stage 6 task after a brief side question, so this is a branch-return pattern. Keep the Stage 6 turns raw (`t1`,`t2`) because the next answer depends on them. Evict the side-question turns (`t3`,`t4`) since that mini-topic was answered and is irrelevant to the resumed task."
+  },
+  "snapshot": {
+    "applied": {
+      "relation": "branch",
+      "confidence": 0.98,
+      "archiveSummary": "Main task remains Stage 6 acceptance split into three parts: 功能正确性、回退安全、宿主集成验证. A side question about `umc registry migrate` was answered and is not needed for the next turn.",
+      "reasoningSummary": "The latest user turn returns to the older unresolved Stage 6 task after a brief side question, so this is a branch-return pattern. Keep the Stage 6 turns raw (`t1`,`t2`) because the next answer depends on them. Evict the side-question turns (`t3`,`t4`) since that mini-topic was answered and is irrelevant to the resumed task.",
+      "latestUserTurnId": "t5",
+      "pinTurnIds": [],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t3",
+        "t4"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t3",
+        "t4"
+      ],
+      "keepTurnIds": [
+        "t1",
+        "t2",
+        "t5"
+      ],
+      "baselineTokens": 43,
+      "keptTokens": 19,
+      "prunedTokens": 24,
+      "reductionRatio": 0.5581395348837209,
+      "keepTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "把 Stage 6 的验收拆成 3 个部分。",
+          "tokenEstimate": 6
+        },
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "可以，先拆成：功能正确性、回退安全、宿主集成验证。",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t5",
+          "role": "user",
+          "content": "好，回到刚才 Stage 6，那三个部分是什么？",
+          "tokenEstimate": 6
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "先别展开，我插一句：umc registry migrate 这条命令是做什么的？",
+          "tokenEstimate": 11
+        },
+        {
+          "id": "t4",
+          "role": "assistant",
+          "content": "它更像 UMC 自己 registry root 的迁移，不是 builtin memory 的切换器。",
+          "tokenEstimate": 13
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 把 Stage 6 的验收拆成 3 个部分。\nt2 assistant: 可以，先拆成：功能正确性、回退安全、宿主集成验证。\nt3 user: 先别展开，我插一句：umc registry migrate 这条命令是做什么的？\nt4 assistant: 它更像 UMC 自己 registry root 的迁移，不是 builtin memory 的切换器。\nt5 user: 好，回到刚才 Stage 6，那三个部分是什么？",
+    "shadowRawTranscript": "t1 user: 把 Stage 6 的验收拆成 3 个部分。\nt2 assistant: 可以，先拆成：功能正确性、回退安全、宿主集成验证。\nt5 user: 好，回到刚才 Stage 6，那三个部分是什么？",
+    "semanticPinNotes": [],
+    "archiveSummary": "Main task remains Stage 6 acceptance split into three parts: 功能正确性、回退安全、宿主集成验证. A side question about `umc registry migrate` was answered and is not needed for the next turn.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 56,
+    "shadowRawPromptEstimate": 27,
+    "shadowPackageEstimate": 31,
+    "shadowPackageText": "Active raw turns:\nt1 user: 把 Stage 6 的验收拆成 3 个部分。\nt2 assistant: 可以，先拆成：功能正确性、回退安全、宿主集成验证。\nt5 user: 好，回到刚才 Stage 6，那三个部分是什么？"
+  },
+  "timings": {
+    "totalElapsedMs": 18366,
+    "decisionElapsedMs": 18366
+  }
+}

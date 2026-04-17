@@ -64,16 +64,18 @@
 
 ## 当前规划状态
 
-这条架构已经不只是 report 里的结论，而是正式进入了 Stage 6 规划：
+这条架构已经不只是 report 里的结论，相关的 Stage 6 runtime shadow instrumentation 也已经作为 `default-off` 的 shadow-only 路径落地：
 
 - roadmap 指针：[../../../roadmap.zh-CN.md](../../../roadmap.zh-CN.md)
 - development plan 指针：[../development-plan.zh-CN.md](../development-plan.zh-CN.md)
 - working-set validation 汇总：[../../../../reports/generated/dialogue-working-set-validation-2026-04-16.md](../../../../reports/generated/dialogue-working-set-validation-2026-04-16.md)
+- runtime shadow replay：[../../../../reports/generated/dialogue-working-set-runtime-shadow-2026-04-16.md](../../../../reports/generated/dialogue-working-set-runtime-shadow-2026-04-16.md)
+- Stage 6 收口报告：[../../../../reports/generated/dialogue-working-set-stage6-2026-04-16.md](../../../../reports/generated/dialogue-working-set-stage6-2026-04-16.md)
 
 当前明确的决策是：
 
 - 先走 docs-first、review-gated 的 Stage 6
-- 第一条 runtime slice 只落 `default-off` 的 shadow instrumentation
+- 第一条 runtime slice 已落成 `default-off` 的 shadow instrumentation
 - 正式 prompt mutation 继续显式延后
 - 在讨论 active-path cutover 之前，先用 shadow path 证明真实 session 上的 `relation / evict / pins / reduction ratio`
 
@@ -743,11 +745,11 @@ adapter 需要从“尽量把有用信息都喂进去”转成：
 
 ### Phase 2.5: dialogue working-set shadowing
 
-- 把它当作 Stage 6 在 docs-first review 通过后的第一条 runtime slice
-- 新增多话题 `continue / branch / switch / resolve` shadow 评估
-- 先定义最小 shadow contract：`relation / evict / pins / reduction ratio`
-- 在真正改生产 prompt assembly 之前先证明 guarded soft eviction 可行
-- 这一层先与 durable-memory governance 隔离，等 shadow report 稳定后再讨论并线
+- 这条 slice 已经作为 Stage 6 的第一条 runtime 路径落地
+- 多话题 `continue / branch / switch / resolve` shadow 评估已经接入真实 assembled session
+- 当前最小 shadow contract 固定为：`relation / evict / pins / reduction ratio`
+- 在真正改生产 prompt assembly 之前，继续用它证明 guarded soft eviction 可行
+- 这一层继续与 durable-memory governance 隔离，等更长时间的 real-session telemetry 稳定后再讨论并线
 
 ### Phase 3: 新基线测试
 
@@ -786,6 +788,6 @@ adapter 需要从“尽量把有用信息都喂进去”转成：
 
 当前真正的执行边界比完整架构更窄：
 
-- 先 review Stage 6 的 docs-first 规划
-- 下一步只实现 runtime shadow instrumentation
+- 继续保持已落地的 runtime shadow instrumentation 为 `default-off` 和 shadow-only
+- 用这条 telemetry surface 恢复 deferred history cleanup 与 harder A/B
 - active prompt mutation 必须等 shadow gate 在真实 session 上证明成立后再谈

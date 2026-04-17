@@ -73,34 +73,64 @@
 专项报告：
 
 - [openclaw-ordinary-conversation-memory-intent-ab-2026-04-16.md](../reports/generated/openclaw-ordinary-conversation-memory-intent-ab-2026-04-16.md)
+- [openclaw-ordinary-conversation-memory-intent-docker-rerun-2026-04-17.md](../reports/generated/openclaw-ordinary-conversation-memory-intent-docker-rerun-2026-04-17.md)
 
-这组现在已经扩到 `40` 条，而且明确按“先完整跑 builtin，再清空，再跑 Memory Core”的方法执行：
+这组 `40` 条现在要分成两层看：
 
-- current（OpenClaw + Unified Memory Core ordinary-conversation governed ingest）：`38`
-- legacy（OpenClaw 默认 legacy path）：`21`
-- 两边都通过：`20`
-- 只有 Memory Core 通过：`18`
-- 只有 legacy 通过：`1`
-- 两边都失败：`1`
+### 宿主 live 结果
 
-按语言拆开看：
+先前非 hermetic 的宿主重跑结果是：
 
-- 英文：`20` 条，current `18`，legacy `11`，`UMC-only=8`，`legacy-only=1`，`both-fail=1`
-- 中文：`20` 条，current `20`，legacy `10`，`UMC-only=10`，`legacy-only=0`，`both-fail=0`
+- current：`38 / 40`
+- legacy：`21 / 40`
+- `UMC-only = 18`
+- `legacy-only = 1`
+- `both-fail = 1`
 
-按类别拆开看：
+这说明 ordinary-conversation 写侧在宿主环境里，UMC 的确表现出明显优势。
 
-- durable_rule：current `8 / 8`，legacy `3 / 8`
-- tool_routing_preference：current `8 / 8`，legacy `1 / 8`
-- user_profile_fact：current `7 / 8`，legacy `1 / 8`
-- session_constraint：current `7 / 8`，legacy `8 / 8`
-- one_off_instruction：current `8 / 8`，legacy `8 / 8`
+### Docker hermetic 结果
 
-这组结果的意义，比旧的 `100` 条更接近“普通用户实际会感受到的聪明”：
+后来我又把同一组 `40` 条搬到 Docker hermetic 路径，并且显式固定：
 
-1. `tool_routing_preference` 和 `durable_rule` 这两类普通对话写记忆，UMC 已经明显拉开。
-2. 中文普通对话写记忆这条线上，UMC 现在是 `20 / 20`，明显强于 legacy 的 `10 / 20`。
-3. 这组 `40` 条不再是“小样本全绿”，而是更真实地暴露出 current 还没收口的点：`ordinary-ab-en-session-negative-3` 仍会把项目内临时城市 `Hangzhou` 带进后续 recall，`ordinary-ab-en-timezone-1` 则是 current / legacy 都没守住的 shared-fail。
+- 空 fixture 起步
+- 不 seed 宿主 `~/.openclaw`
+- 先完整跑 legacy，再删隔离状态，再完整跑 current
+- 每个 case 独立 temp state / 独立 registry
+- 每个 capture / recall turn 固定 `30s` timeout budget
+
+这次的 hermetic Docker 结果是：
+
+- current：`3 / 40`
+- legacy：`0 / 40`
+- `UMC-only = 3`
+- `legacy-only = 0`
+- `both-fail = 37`
+
+按语言拆开：
+
+- 英文：current `1 / 20`，legacy `0 / 20`
+- 中文：current `2 / 20`，legacy `0 / 20`
+
+按类别拆开：
+
+- durable_rule：current `2 / 8`，legacy `0 / 8`
+- tool_routing_preference：current `0 / 8`，legacy `0 / 8`
+- user_profile_fact：current `1 / 8`，legacy `0 / 8`
+- session_constraint：current `0 / 8`，legacy `0 / 8`
+- one_off_instruction：current `0 / 8`，legacy `0 / 8`
+
+这里最关键的解释不是“Memory Core 只剩 3 条胜场”，而是：
+
+1. Docker hermetic 现在已经足够干净，可以当作真正的可复现基线。
+2. 在这个基线里，主瓶颈已经变成 answer-level latency，而不是串记忆。
+3. legacy `40 / 40` 都是 `30s` timeout，current `36 / 40` 也是 timeout；也就是说，这一轮 Docker 更像是在测“固定时延预算下谁还能活下来”。
+
+所以这组结果真正说明的是：
+
+- 宿主结果 `38 / 40 vs 21 / 40` 不能再被当成完全无污染的最终归因
+- 但它也没有被 Docker 证明成“纯假象”
+- 更准确的判断是：host 环境下 UMC 写侧优势是存在的；而 Docker hermetic 把环境污染压下去以后，新的主问题变成了 answer-level timeout budget
 
 ## 这轮新增修复带来了什么
 
@@ -137,15 +167,17 @@
 也就是说，现在最诚实的判断变成了：
 
 - 在“既有记忆消费”上，Memory Core 的增益依然偏小。
-- 在“普通对话实时写入长期记忆”上，Memory Core 已经开始明显更强，而且这个结论现在来自 `40` 条更有代表性的 live A/B，不是 `10` 条小样本。
-- current ordinary-conversation path 这一轮已经扩大到 focused suite `38 / 40`；剩下更值得优先看的，是 `1` 条 current 仍会误记的 session case、`1` 条 current / legacy 都没守住的 profile case，以及 `100` case 里仍未关闭的 `2` 条 shared-fail 中文 history case。
+- 在“普通对话实时写入长期记忆”上，宿主 live 结果显示出明显优势，但 hermetic Docker 结果说明这条优势目前还会被 answer-level latency 严重吞掉。
+- 所以这条线现在不能只继续堆案例；还必须同时优化 ordinary-conversation answer path 的时延和 budget 使用。
 
 为了让这个结论更容易把握，你可以把两组 A/B 分开记：
 
 - `100` 条既有记忆消费题：
-  `97` shared、`1` UMC-only、`0` legacy-only、`2` both-fail
+  - `2026-04-15` 全量基线：`97` shared、`1` UMC-only、`0` legacy-only、`2` both-fail
+  - `2026-04-17` focused history cleanup 后的当前有效状态：`99` shared、`1` UMC-only、`0` legacy-only、`0` both-fail
 - `40` 条普通对话实时写记忆题：
-  `20` shared、`18` UMC-only、`1` legacy-only、`1` both-fail
+  - 宿主 live：`20` shared、`18` UMC-only、`1` legacy-only、`1` both-fail
+  - Docker hermetic：`0` shared、`3` UMC-only、`0` legacy-only、`37` both-fail
 
 之前我用来说明增益的中文案例，现在仍然是一个有效的“Memory Core 可以赢”的例子：
 
@@ -169,6 +201,17 @@
 
 所以真正的价值不只是“多答对了几道题”，更是“这套记忆系统终于变得可测、可解释、可维护”。
 
+另外，之前那两条一直卡着的中文 history case 现在已经收掉了，专项复测报告在：
+
+- [openclaw-memory-improvement-history-cleanup-2026-04-17.md](../reports/generated/openclaw-memory-improvement-history-cleanup-2026-04-17.md)
+
+这次 focused hermetic 复测的结果是：
+
+- `ab100-zh-history-editor-2`：`shared-capability`
+- `ab100-zh-history-editor-4`：`shared-capability`
+
+也就是说，这一轮之后 `100` case live A/B 里已经没有 shared-fail 残留。
+
 ## 下一步会继续做什么
 
 GitHub development plan 现在已经进入下一步：
@@ -177,5 +220,5 @@ GitHub development plan 现在已经进入下一步：
 
 下一阶段的目标，已经不是“证明它能工作”，而是更严肃的一步：
 
-- 把这轮 `100` 个 A/B 里剩下的 `2` 个两边都失败先收掉
+- 把 Memory Core 的直接胜场，从现在的少量明确案例，推到更多更难的问题上
 - 然后再把 Memory Core 的直接胜场，从现在的 `1` 个，推向更大规模、尤其是 cross-source / conflict / multi-step history / 更深自然中文场景里的稳定领先

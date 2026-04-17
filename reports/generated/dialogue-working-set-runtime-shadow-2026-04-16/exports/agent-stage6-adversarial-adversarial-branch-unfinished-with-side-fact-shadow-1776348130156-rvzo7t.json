@@ -1,0 +1,103 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776348130156-rvzo7t",
+  "generated_at": "2026-04-16T14:02:10.156Z",
+  "session_key": "agent:stage6-adversarial:adversarial-branch-unfinished-with-side-fact",
+  "agent_id": "stage6-adversarial",
+  "query": "插一句，记一下：我在上海时区。",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "帮我把 Stage 6 验收拆成 3 个部分。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "可以，先拆成：功能正确性、回退安全、宿主集成验证。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "插一句，记一下：我在上海时区。"
+    }
+  ],
+  "decision": {
+    "relation": "branch",
+    "confidence": 0.98,
+    "evict_turn_ids": [],
+    "pin_turn_ids": [
+      "t3"
+    ],
+    "archive_summary": "Main task remains open: decompose Stage 6 acceptance into 3 parts, with current breakdown: functional correctness, rollback safety, and host integration validation. Durable user fact: user is in the Asia/Shanghai timezone.",
+    "reasoning_summary": "The latest turn is a side insertion adding a durable user fact, while the earlier Stage 6 task is still active and unresolved. This is a branch, so the older main-task raw turns should remain in working context. The timezone fact should be preserved as a semantic pin."
+  },
+  "snapshot": {
+    "applied": {
+      "relation": "branch",
+      "confidence": 0.98,
+      "archiveSummary": "Main task remains open: decompose Stage 6 acceptance into 3 parts, with current breakdown: functional correctness, rollback safety, and host integration validation. Durable user fact: user is in the Asia/Shanghai timezone.",
+      "reasoningSummary": "The latest turn is a side insertion adding a durable user fact, while the earlier Stage 6 task is still active and unresolved. This is a branch, so the older main-task raw turns should remain in working context. The timezone fact should be preserved as a semantic pin.",
+      "latestUserTurnId": "t3",
+      "pinTurnIds": [
+        "t3"
+      ],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [],
+      "keepTurnIds": [
+        "t1",
+        "t2",
+        "t3"
+      ],
+      "baselineTokens": 17,
+      "keptTokens": 17,
+      "prunedTokens": 0,
+      "reductionRatio": 0,
+      "keepTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "帮我把 Stage 6 验收拆成 3 个部分。",
+          "tokenEstimate": 6
+        },
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "可以，先拆成：功能正确性、回退安全、宿主集成验证。",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "插一句，记一下：我在上海时区。",
+          "tokenEstimate": 4
+        }
+      ],
+      "evictedTurns": []
+    },
+    "baselineRawTranscript": "t1 user: 帮我把 Stage 6 验收拆成 3 个部分。\nt2 assistant: 可以，先拆成：功能正确性、回退安全、宿主集成验证。\nt3 user: 插一句，记一下：我在上海时区。",
+    "shadowRawTranscript": "t1 user: 帮我把 Stage 6 验收拆成 3 个部分。\nt2 assistant: 可以，先拆成：功能正确性、回退安全、宿主集成验证。\nt3 user: 插一句，记一下：我在上海时区。",
+    "semanticPinNotes": [
+      "user: 插一句，记一下：我在上海时区。"
+    ],
+    "archiveSummary": "Main task remains open: decompose Stage 6 acceptance into 3 parts, with current breakdown: functional correctness, rollback safety, and host integration validation. Durable user fact: user is in the Asia/Shanghai timezone.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 25,
+    "shadowRawPromptEstimate": 25,
+    "shadowPackageEstimate": 38,
+    "shadowPackageText": "Active raw turns:\nt1 user: 帮我把 Stage 6 验收拆成 3 个部分。\nt2 assistant: 可以，先拆成：功能正确性、回退安全、宿主集成验证。\nt3 user: 插一句，记一下：我在上海时区。\n\nSemantic pins:\nuser: 插一句，记一下：我在上海时区。"
+  },
+  "timings": {
+    "totalElapsedMs": 17121,
+    "decisionElapsedMs": 17121
+  }
+}

@@ -50,6 +50,17 @@ const DEFAULT_CONFIG = {
     maxSnippetChars: 900,
     minScoreDeltaToSkip: 0.18
   },
+  dialogueWorkingSetShadow: {
+    enabled: false,
+    model: "gpt-5.4",
+    provider: "",
+    timeoutMs: 20000,
+    maxTurns: 12,
+    minTurns: 3,
+    maxCharsPerTurn: 900,
+    outputDir: "",
+    cleanupSession: true
+  },
   openclawAdapter: {
     enabled: true,
     debug: {
@@ -160,6 +171,10 @@ export function resolvePluginConfig(raw) {
   const selfLearning = mergeObject(DEFAULT_CONFIG.selfLearning, cfg.selfLearning);
   const cardArtifacts = mergeObject(DEFAULT_CONFIG.cardArtifacts, cfg.cardArtifacts);
   const llmRerank = mergeObject(DEFAULT_CONFIG.llmRerank, cfg.llmRerank);
+  const dialogueWorkingSetShadow = mergeObject(
+    DEFAULT_CONFIG.dialogueWorkingSetShadow,
+    cfg.dialogueWorkingSetShadow
+  );
   const queryRewrite = mergeObject(DEFAULT_CONFIG.queryRewrite, cfg.queryRewrite);
   const memoryDistillation = mergeObject(DEFAULT_CONFIG.memoryDistillation, cfg.memoryDistillation);
   const weights = mergeObject(DEFAULT_CONFIG.weights, cfg.weights);
@@ -311,6 +326,46 @@ export function resolvePluginConfig(raw) {
         1,
         DEFAULT_CONFIG.llmRerank.minScoreDeltaToSkip
       )
+    },
+    dialogueWorkingSetShadow: {
+      enabled: dialogueWorkingSetShadow.enabled === true,
+      model:
+        typeof dialogueWorkingSetShadow.model === "string" && dialogueWorkingSetShadow.model.trim()
+          ? dialogueWorkingSetShadow.model.trim()
+          : DEFAULT_CONFIG.dialogueWorkingSetShadow.model,
+      provider:
+        typeof dialogueWorkingSetShadow.provider === "string"
+          ? dialogueWorkingSetShadow.provider.trim()
+          : "",
+      timeoutMs: clampNumber(
+        dialogueWorkingSetShadow.timeoutMs,
+        1000,
+        120000,
+        DEFAULT_CONFIG.dialogueWorkingSetShadow.timeoutMs
+      ),
+      maxTurns: clampNumber(
+        dialogueWorkingSetShadow.maxTurns,
+        1,
+        100,
+        DEFAULT_CONFIG.dialogueWorkingSetShadow.maxTurns
+      ),
+      minTurns: clampNumber(
+        dialogueWorkingSetShadow.minTurns,
+        1,
+        50,
+        DEFAULT_CONFIG.dialogueWorkingSetShadow.minTurns
+      ),
+      maxCharsPerTurn: clampNumber(
+        dialogueWorkingSetShadow.maxCharsPerTurn,
+        80,
+        8000,
+        DEFAULT_CONFIG.dialogueWorkingSetShadow.maxCharsPerTurn
+      ),
+      outputDir:
+        typeof dialogueWorkingSetShadow.outputDir === "string"
+          ? dialogueWorkingSetShadow.outputDir.trim()
+          : "",
+      cleanupSession: dialogueWorkingSetShadow.cleanupSession !== false
     },
     openclawAdapter: {
       enabled: openclawAdapter.enabled !== false,

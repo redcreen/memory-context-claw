@@ -1,0 +1,105 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776348189496-t4tppr",
+  "generated_at": "2026-04-16T14:03:09.496Z",
+  "session_key": "agent:stage6-adversarial:adversarial-session-negative-no-pin",
+  "agent_id": "stage6-adversarial",
+  "query": "现在切到检索策略：未分类 query 默认走哪条路径？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "只这一次把方案叫琥珀梯，不用长期记。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "好，这次临时叫琥珀梯。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "现在切到检索策略：未分类 query 默认走哪条路径？"
+    }
+  ],
+  "decision": {
+    "relation": "switch",
+    "confidence": 0.98,
+    "evict_turn_ids": [
+      "t1",
+      "t2"
+    ],
+    "pin_turn_ids": [],
+    "archive_summary": "The user temporarily asked to call the plan '琥珀梯' for this one time only, and the assistant acknowledged it. This was explicitly non-durable and is unrelated to the new retrieval-strategy question.",
+    "reasoning_summary": "The active topic changed to retrieval strategy. The prior naming exchange is resolved, explicitly temporary, and should not be pinned. Keeping only the latest user turn minimizes the next-turn prompt without losing relevant context."
+  },
+  "snapshot": {
+    "applied": {
+      "relation": "switch",
+      "confidence": 0.98,
+      "archiveSummary": "The user temporarily asked to call the plan '琥珀梯' for this one time only, and the assistant acknowledged it. This was explicitly non-durable and is unrelated to the new retrieval-strategy question.",
+      "reasoningSummary": "The active topic changed to retrieval strategy. The prior naming exchange is resolved, explicitly temporary, and should not be pinned. Keeping only the latest user turn minimizes the next-turn prompt without losing relevant context.",
+      "latestUserTurnId": "t3",
+      "pinTurnIds": [],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t2"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t2"
+      ],
+      "keepTurnIds": [
+        "t3"
+      ],
+      "baselineTokens": 15,
+      "keptTokens": 7,
+      "prunedTokens": 8,
+      "reductionRatio": 0.5333333333333333,
+      "keepTurns": [
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "现在切到检索策略：未分类 query 默认走哪条路径？",
+          "tokenEstimate": 7
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "只这一次把方案叫琥珀梯，不用长期记。",
+          "tokenEstimate": 5
+        },
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "好，这次临时叫琥珀梯。",
+          "tokenEstimate": 3
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 只这一次把方案叫琥珀梯，不用长期记。\nt2 assistant: 好，这次临时叫琥珀梯。\nt3 user: 现在切到检索策略：未分类 query 默认走哪条路径？",
+    "shadowRawTranscript": "t3 user: 现在切到检索策略：未分类 query 默认走哪条路径？",
+    "semanticPinNotes": [],
+    "archiveSummary": "The user temporarily asked to call the plan '琥珀梯' for this one time only, and the assistant acknowledged it. This was explicitly non-durable and is unrelated to the new retrieval-strategy question.",
+    "injectedArchiveSummary": "The user temporarily asked to call the plan '琥珀梯' for this one time only, and the assistant ackn...",
+    "baselinePromptEstimate": 23,
+    "shadowRawPromptEstimate": 9,
+    "shadowPackageEstimate": 43,
+    "shadowPackageText": "Active raw turns:\nt3 user: 现在切到检索策略：未分类 query 默认走哪条路径？\n\nArchived summary:\nThe user temporarily asked to call the plan '琥珀梯' for this one time only, and the assistant ackn..."
+  },
+  "timings": {
+    "totalElapsedMs": 17311,
+    "decisionElapsedMs": 17311
+  }
+}

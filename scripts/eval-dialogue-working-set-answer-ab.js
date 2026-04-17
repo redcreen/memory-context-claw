@@ -9,6 +9,13 @@ import {
   normalizeString,
   runStructuredCodexPrompt
 } from "../src/codex-structured-runner.js";
+import {
+  buildAnswerSchema,
+  buildBaselineAnswerPrompt,
+  buildShadowAnswerPrompt,
+  classifyAnswerAbOutcome,
+  evaluateAnswer
+} from "../src/dialogue-working-set-answer-ab.js";
 import { estimateTokenCountFromText } from "../src/utils.js";
 import { buildShadowContextSnapshot } from "../src/dialogue-working-set-shadow.js";
 import {
@@ -43,100 +50,6 @@ async function importCases(casesPath) {
   return cases;
 }
 
-function includesAny(text, patterns = []) {
-  if (!patterns.length) {
-    return true;
-  }
-  const haystack = String(text || "").toLowerCase();
-  return patterns.some((pattern) => haystack.includes(String(pattern || "").toLowerCase()));
-}
-
-function includesAll(text, patterns = []) {
-  if (!patterns.length) {
-    return true;
-  }
-  const haystack = String(text || "").toLowerCase();
-  return patterns.every((pattern) => haystack.includes(String(pattern || "").toLowerCase()));
-}
-
-function excludesAll(text, patterns = []) {
-  if (!patterns.length) {
-    return true;
-  }
-  const haystack = String(text || "").toLowerCase();
-  return patterns.every((pattern) => !haystack.includes(String(pattern || "").toLowerCase()));
-}
-
-function evaluateAnswer(caseDef, answerText) {
-  const checks = [
-    {
-      name: "expected_any",
-      passed: includesAny(answerText, caseDef.expectedAny || []),
-      expected: caseDef.expectedAny || [],
-      actual: answerText
-    },
-    {
-      name: "expected_all",
-      passed: includesAll(answerText, caseDef.expectedAll || []),
-      expected: caseDef.expectedAll || [],
-      actual: answerText
-    },
-    {
-      name: "forbidden_any",
-      passed: excludesAll(answerText, caseDef.forbiddenAny || []),
-      expected: caseDef.forbiddenAny || [],
-      actual: answerText
-    }
-  ];
-
-  return {
-    passed: checks.every((item) => item.passed),
-    checks
-  };
-}
-
-function buildAnswerSchema() {
-  return {
-    $schema: "https://json-schema.org/draft/2020-12/schema",
-    type: "object",
-    additionalProperties: false,
-    required: ["answer"],
-    properties: {
-      answer: {
-        type: "string"
-      }
-    }
-  };
-}
-
-function buildAnswerPrompt(caseDef, contextText) {
-  return [
-    "Answer the latest user message using only the context below.",
-    "Do not use tools, shell commands, or repository inspection.",
-    "If the conversation context is insufficient, answer exactly: I don't know based on current context.",
-    "",
-    `Case: ${caseDef.id}`,
-    `Description: ${caseDef.description}`,
-    "",
-    "Context:",
-    contextText
-  ].join("\n");
-}
-
-function buildBaselineAnswerPrompt(caseDef) {
-  const transcript = caseDef.transcript
-    .map((turn) => `${turn.id} ${turn.role}: ${turn.content}`)
-    .join("\n");
-  return buildAnswerPrompt(caseDef, transcript);
-}
-
-function buildShadowAnswerPrompt(caseDef, snapshot) {
-  return buildAnswerPrompt(
-    caseDef,
-    snapshot.shadowPackageText || snapshot.shadowRawTranscript || "(none)"
-  );
-}
-
 async function runAnswerPrompt({
   prompt,
   model,
@@ -159,15 +72,6 @@ async function runAnswerPrompt({
     stderr: result.stderr,
     promptEstimate: estimateTokenCountFromText(prompt)
   };
-}
-
-function classifyOutcome(item) {
-  const baseline = item.baseline?.passed === true;
-  const shadow = item.shadow?.passed === true;
-  if (baseline && shadow) return "both_pass";
-  if (!baseline && shadow) return "shadow_only";
-  if (baseline && !shadow) return "baseline_only";
-  return "both_fail";
 }
 
 function renderMarkdown(report) {
@@ -193,7 +97,7 @@ function renderMarkdown(report) {
     lines.push(`- description: ${result.description}`);
     lines.push(`- decision relation: \`${result.decision.payload.relation}\``);
     lines.push(`- decision raw reduction ratio: \`${result.snapshot.applied.reductionRatio.toFixed(4)}\``);
-    lines.push(`- outcome: \`${classifyOutcome(result)}\``);
+    lines.push(`- outcome: \`${classifyAnswerAbOutcome(result)}\``);
     lines.push(`- baseline prompt estimate: \`${result.baseline.promptEstimate}\``);
     lines.push(`- shadow prompt estimate: \`${result.shadow.promptEstimate}\``);
     lines.push(`- prompt reduction ratio: \`${result.promptReductionRatio.toFixed(4)}\``);

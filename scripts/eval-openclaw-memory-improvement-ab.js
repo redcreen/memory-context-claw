@@ -7,12 +7,13 @@ import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
+import { resolveHermeticFixtureRoot, resolveHermeticPluginPath } from "./openclaw-hermetic-state.js";
+
 const execFileAsync = promisify(execFile);
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const date = new Date().toISOString().slice(0, 10);
 const defaultCasesPath = path.resolve(__dirname, "../evals/openclaw-memory-improvement-ab-cases.js");
-const dropPlugins = ["openclaw-task-system", "openclaw-lark", "style-engine"];
 
 function parseArgs(argv) {
   const args = {
@@ -22,7 +23,14 @@ function parseArgs(argv) {
     maxCases: 0,
     shardSize: 25,
     shardCount: 4,
-    agentTimeoutMs: 20_000,
+    agentTimeoutMs: 120_000,
+    fixtureRoot: resolveHermeticFixtureRoot(),
+    pluginPath: resolveHermeticPluginPath(),
+    embedModelPath: "",
+    authProfilesPath: "",
+    preset: "safe-local",
+    agentModel: "",
+    keepState: false,
     writeJson: path.resolve(process.cwd(), `reports/openclaw-memory-improvement-ab-${date}.json`),
     writeMarkdown: path.resolve(process.cwd(), `reports/generated/openclaw-memory-improvement-ab-${date}.md`)
   };
@@ -35,7 +43,14 @@ function parseArgs(argv) {
     else if (arg === "--max-cases") args.maxCases = Number(argv[++index] || 0);
     else if (arg === "--shard-size") args.shardSize = Number(argv[++index] || 25);
     else if (arg === "--shard-count") args.shardCount = Number(argv[++index] || 4);
-    else if (arg === "--agent-timeout-ms") args.agentTimeoutMs = Number(argv[++index] || 20_000);
+    else if (arg === "--agent-timeout-ms") args.agentTimeoutMs = Number(argv[++index] || 120_000);
+    else if (arg === "--fixture-root") args.fixtureRoot = path.resolve(process.cwd(), argv[++index]);
+    else if (arg === "--plugin-path") args.pluginPath = path.resolve(process.cwd(), argv[++index]);
+    else if (arg === "--embed-model-path") args.embedModelPath = path.resolve(process.cwd(), argv[++index]);
+    else if (arg === "--auth-profiles-path") args.authProfilesPath = path.resolve(process.cwd(), argv[++index]);
+    else if (arg === "--preset") args.preset = argv[++index];
+    else if (arg === "--agent-model") args.agentModel = argv[++index];
+    else if (arg === "--keep-state") args.keepState = true;
     else if (arg === "--write-json") args.writeJson = path.resolve(process.cwd(), argv[++index]);
     else if (arg === "--write-markdown") args.writeMarkdown = path.resolve(process.cwd(), argv[++index]);
   }
@@ -51,61 +66,6 @@ async function importCases(casesPath) {
     throw new Error(`Case module did not export an array: ${casesPath}`);
   }
   return cases;
-}
-
-async function copyRecursive(sourcePath, targetPath) {
-  const stat = await fs.stat(sourcePath);
-  if (stat.isDirectory()) {
-    await fs.mkdir(targetPath, { recursive: true });
-    const entries = await fs.readdir(sourcePath);
-    for (const entry of entries) {
-      await copyRecursive(path.join(sourcePath, entry), path.join(targetPath, entry));
-    }
-    return;
-  }
-  await fs.mkdir(path.dirname(targetPath), { recursive: true });
-  await fs.copyFile(sourcePath, targetPath);
-}
-
-async function createEvalStateDir({ agentId, includeUMC }) {
-  const root = path.join(os.homedir(), ".openclaw");
-  const dir = await fs.mkdtemp(path.join(os.tmpdir(), includeUMC ? "umc-ab-current-" : "umc-ab-legacy-"));
-  const config = JSON.parse(await fs.readFile(path.join(root, "openclaw.json"), "utf8"));
-  config.plugins = config.plugins || {};
-  config.plugins.slots = config.plugins.slots || {};
-  if (!includeUMC) {
-    config.plugins.slots.contextEngine = "legacy";
-  }
-  if (Array.isArray(config.plugins.allow)) {
-    config.plugins.allow = config.plugins.allow.filter(
-      (item) => !dropPlugins.includes(item) && (includeUMC || item !== "unified-memory-core")
-    );
-  }
-  if (config.plugins.entries && typeof config.plugins.entries === "object") {
-    for (const key of [...dropPlugins, ...(includeUMC ? [] : ["unified-memory-core"])]) {
-      delete config.plugins.entries[key];
-    }
-  }
-  if (config.plugins.installs && typeof config.plugins.installs === "object") {
-    for (const key of [...dropPlugins, ...(includeUMC ? [] : ["unified-memory-core"])]) {
-      delete config.plugins.installs[key];
-    }
-  }
-  if (config.plugins.load && Array.isArray(config.plugins.load.paths)) {
-    config.plugins.load.paths = config.plugins.load.paths.filter((item) => {
-      const text = String(item || "");
-      if (dropPlugins.some((name) => text.includes(name))) return false;
-      if (!includeUMC && text.includes("unified-memory-core")) return false;
-      return true;
-    });
-  }
-
-  await fs.writeFile(path.join(dir, "openclaw.json"), `${JSON.stringify(config, null, 2)}\n`, "utf8");
-  await copyRecursive(path.join(root, "memory", `${agentId}.sqlite`), path.join(dir, "memory", `${agentId}.sqlite`));
-  await copyRecursive(path.join(root, "agents", agentId, "agent"), path.join(dir, "agents", agentId, "agent"));
-  await fs.mkdir(path.join(dir, "agents", agentId, "sessions"), { recursive: true });
-  await fs.writeFile(path.join(dir, "agents", agentId, "sessions", "sessions.json"), "{}\n", "utf8");
-  return dir;
 }
 
 function detectLanguage(item) {
@@ -184,6 +144,7 @@ function renderMarkdown(report) {
   lines.push(`- generatedAt: \`${report.generatedAt}\``);
   lines.push(`- agent: \`${report.agentId}\``);
   lines.push(`- shardCount: \`${report.shardCount}\``);
+  lines.push(`- hermeticState: \`${report.hermeticState === true}\``);
   lines.push(`- totalCases: \`${report.summary.total}\``);
   lines.push(`- unifiedPassed: \`${report.summary.passed}\``);
   lines.push(`- legacyPassed: \`${report.summary.legacyPassed}\``);
@@ -248,9 +209,14 @@ function renderMarkdown(report) {
 
   lines.push("## Notes");
   lines.push("");
-  lines.push("- This suite runs `100` distinct live answer-level questions as real single-question `openclaw agent --local` calls.");
-  lines.push("- Each shard uses its own clean OpenClaw state directory so task-system and unrelated host plugins do not pollute the prompt or timing.");
-  lines.push("- Both Unified Memory Core and the legacy builtin baseline are evaluated against the same question set, same agent fixture, and same host path.");
+  lines.push(`- This suite runs \`${report.summary.total}\` live answer-level question${report.summary.total === 1 ? "" : "s"} as real single-question \`openclaw agent --local\` calls.`);
+  lines.push("- Each shard delegates to the hermetic benchmark runner, which rebuilds current and legacy base states from the repo fixture and clones a fresh state for every case.");
+  lines.push(`- Fixture root: \`${report.fixtureRoot}\`; plugin path: \`${report.pluginPath}\`.`);
+  if (report.authProfilesPath) {
+    lines.push(`- Auth profiles: \`${report.authProfilesPath}\`.`);
+  }
+  lines.push(`- Embedding model: \`${report.embedModelPath}\`; preset: \`${report.preset}\`${report.agentModel ? `; agent model: \`${report.agentModel}\`` : ""}.`);
+  lines.push("- Both Unified Memory Core and the legacy builtin baseline are evaluated against the same question set and the same hermetic fixture, without seeding from `~/.openclaw`.");
   return `${lines.join("\n")}\n`;
 }
 
@@ -262,7 +228,21 @@ function shardCases(cases, count) {
   return shards.filter((items) => items.length > 0);
 }
 
-async function runBench({ casesPath, ids, agentId, agentTimeoutMs, stateDir, outputDir, suffix }) {
+async function runBench({
+  casesPath,
+  ids,
+  agentId,
+  agentTimeoutMs,
+  outputDir,
+  suffix,
+  fixtureRoot,
+  pluginPath,
+  embedModelPath,
+  authProfilesPath,
+  preset,
+  agentModel,
+  keepState
+}) {
   const jsonPath = path.join(outputDir, `${suffix}.json`);
   const markdownPath = path.join(outputDir, `${suffix}.md`);
   try {
@@ -277,9 +257,15 @@ async function runBench({ casesPath, ids, agentId, agentTimeoutMs, stateDir, out
         "--agent",
         agentId,
         "--agent-local",
-        "--skip-legacy",
         "--agent-timeout-ms",
         String(agentTimeoutMs),
+        "--fixture-root",
+        fixtureRoot,
+        "--plugin-path",
+        pluginPath,
+        "--preset",
+        preset,
+        ...(authProfilesPath ? ["--auth-profiles-path", authProfilesPath] : []),
         "--write-json",
         jsonPath,
         "--write-markdown",
@@ -287,14 +273,13 @@ async function runBench({ casesPath, ids, agentId, agentTimeoutMs, stateDir, out
         "--format",
         "markdown",
         "--only",
-        ids.join(",")
+        ids.join(","),
+        ...(embedModelPath ? ["--embed-model-path", embedModelPath] : []),
+        ...(agentModel ? ["--agent-model", agentModel] : []),
+        ...(keepState ? ["--keep-state"] : [])
       ],
       {
         cwd: path.resolve(__dirname, ".."),
-        env: {
-          ...process.env,
-          OPENCLAW_STATE_DIR: stateDir
-        },
         maxBuffer: 16 * 1024 * 1024
       }
     );
@@ -317,44 +302,36 @@ async function main() {
   const workDir = await fs.mkdtemp(path.join(os.tmpdir(), "umc-ab-clean-"));
 
   const shardTasks = shards.map(async (items, index) => {
-    const currentStateDir = await createEvalStateDir({ agentId: args.agentId, includeUMC: true });
-    const legacyStateDir = await createEvalStateDir({ agentId: args.agentId, includeUMC: false });
     const ids = items.map((item) => item.id);
     console.error(`[ab100] shard ${index + 1}/${shards.length} cases=${ids.length}`);
-    const [current, legacy] = await Promise.all([
-      runBench({
-        casesPath: args.casesPath,
-        ids,
-        agentId: args.agentId,
-        agentTimeoutMs: args.agentTimeoutMs,
-        stateDir: currentStateDir,
-        outputDir: workDir,
-        suffix: `current-${index + 1}`
-      }),
-      runBench({
-        casesPath: args.casesPath,
-        ids,
-        agentId: args.agentId,
-        agentTimeoutMs: args.agentTimeoutMs,
-        stateDir: legacyStateDir,
-        outputDir: workDir,
-        suffix: `legacy-${index + 1}`
-      })
-    ]);
-    return { current, legacy };
+    return runBench({
+      casesPath: args.casesPath,
+      ids,
+      agentId: args.agentId,
+      agentTimeoutMs: args.agentTimeoutMs,
+      outputDir: workDir,
+      suffix: `shard-${index + 1}`,
+      fixtureRoot: args.fixtureRoot,
+      pluginPath: args.pluginPath,
+      embedModelPath: args.embedModelPath,
+      authProfilesPath: args.authProfilesPath,
+      preset: args.preset,
+      agentModel: args.agentModel,
+      keepState: args.keepState
+    });
   });
 
   const shardOutputs = await Promise.all(shardTasks);
-  const currentResults = new Map();
-  const legacyResults = new Map();
+  const resultMap = new Map();
   for (const shard of shardOutputs) {
-    for (const item of shard.current.results || []) currentResults.set(item.id, item);
-    for (const item of shard.legacy.results || []) legacyResults.set(item.id, item);
+    for (const item of shard.results || []) resultMap.set(item.id, item);
   }
 
   const results = cases.map((caseDef) => {
-    const currentItem = currentResults.get(caseDef.id);
-    const legacyItem = legacyResults.get(caseDef.id);
+    const item = resultMap.get(caseDef.id);
+    if (item) {
+      return item;
+    }
     const merged = {
       id: caseDef.id,
       category: caseDef.category,
@@ -363,8 +340,8 @@ async function main() {
       message: caseDef.message || "",
       compareLegacy: true,
       attributionKind: caseDef.attributionKind,
-      current: currentItem?.current || { passed: false, answer: "", reason: "missing current result" },
-      legacy: legacyItem?.current || { passed: false, answer: "", reason: "missing legacy result" }
+      current: { passed: false, answer: "", reason: "missing current result" },
+      legacy: { passed: false, answer: "", reason: "missing legacy result" }
     };
     merged.attribution = classifyAttribution(merged);
     return merged;
@@ -375,6 +352,13 @@ async function main() {
     agentId: args.agentId,
     shardCount: shards.length,
     casesPath: args.casesPath,
+    fixtureRoot: args.fixtureRoot,
+    pluginPath: args.pluginPath,
+    authProfilesPath: args.authProfilesPath,
+    embedModelPath: args.embedModelPath || "(auto-resolved in shard)",
+    agentModel: args.agentModel,
+    preset: args.preset,
+    hermeticState: true,
     summary: summarizeResults(results),
     results
   };

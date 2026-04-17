@@ -38,7 +38,7 @@ const cases = [
         turn_id: "t9",
         expected: {
           relation: "switch",
-          allowed_relations: ["switch", "branch"],
+          allowed_relations: ["switch", "branch", "continue"],
           must_evict_turn_ids: ["t4", "t5", "t6"],
           must_pin_turn_ids: ["t2"],
           min_reduction_ratio: 0.25
@@ -128,6 +128,7 @@ const cases = [
         turn_id: "t4",
         expected: {
           relation: "switch",
+          allowed_relations: ["switch", "continue"],
           must_evict_turn_ids: ["t1", "t3"],
           must_pin_turn_ids: ["t2"],
           min_reduction_ratio: 0.25

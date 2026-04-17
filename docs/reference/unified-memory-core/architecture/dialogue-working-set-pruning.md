@@ -172,11 +172,14 @@ The mock phase should prove three things before any production integration:
 
 ## Current Validation Snapshot
 
-This design is now past pure mock feasibility and has enough evidence to enter a docs-first Stage 6 review gate.
+This design is now past mock feasibility and past the Stage 6 entry gate; the `default-off` runtime shadow instrumentation is already landed.
 
 - roadmap pointer: [../../../roadmap.md](../../../roadmap.md)
 - development-plan pointer: [../development-plan.md](../development-plan.md)
 - overall validation summary: [../../../../reports/generated/dialogue-working-set-validation-2026-04-16.md](../../../../reports/generated/dialogue-working-set-validation-2026-04-16.md)
+- runtime shadow replay: [../../../../reports/generated/dialogue-working-set-runtime-shadow-2026-04-16.md](../../../../reports/generated/dialogue-working-set-runtime-shadow-2026-04-16.md)
+- runtime answer A/B: [../../../../reports/generated/dialogue-working-set-runtime-answer-ab-2026-04-16.md](../../../../reports/generated/dialogue-working-set-runtime-answer-ab-2026-04-16.md)
+- Stage 6 closeout report: [../../../../reports/generated/dialogue-working-set-stage6-2026-04-16.md](../../../../reports/generated/dialogue-working-set-stage6-2026-04-16.md)
 
 Current evidence:
 
@@ -186,6 +189,10 @@ Current evidence:
 - answer A/B: baseline `5 / 5`, shadow `5 / 5`, `0` regressions
 - answer A/B average estimated prompt reduction ratio: `0.0636`
 - adversarial replay: `7 / 7`
+- runtime shadow replay: `16 / 16`
+- runtime shadow replay average reduction ratio: `0.4368`
+- runtime shadow replay average elapsed ms: `18728.3`
+- runtime answer A/B: baseline `5 / 5`, shadow `5 / 5`, shadow-only wins `0`
 
 Supporting reports:
 
@@ -193,15 +200,16 @@ Supporting reports:
 - [../../../../reports/generated/dialogue-working-set-shadow-replay-2026-04-16.md](../../../../reports/generated/dialogue-working-set-shadow-replay-2026-04-16.md)
 - [../../../../reports/generated/dialogue-working-set-answer-ab-2026-04-16.md](../../../../reports/generated/dialogue-working-set-answer-ab-2026-04-16.md)
 - [../../../../reports/generated/dialogue-working-set-adversarial-2026-04-16.md](../../../../reports/generated/dialogue-working-set-adversarial-2026-04-16.md)
+- [../../../../reports/generated/dialogue-working-set-runtime-shadow-summary-2026-04-16.md](../../../../reports/generated/dialogue-working-set-runtime-shadow-summary-2026-04-16.md)
 
 Interpretation:
 
-- the direction is strong enough for runtime shadow instrumentation
+- the direction is now strong enough to act as the runtime shadow measurement surface
 - the evidence is still not strong enough for active prompt cutover
 
 ## Current Runtime Gate
 
-The next implementation slice is intentionally narrow:
+The current runtime boundary stays intentionally narrow:
 
 - keep the feature `default-off`
 - record `relation / evict / pins / reduction ratio`
@@ -227,7 +235,7 @@ At minimum the feasibility phase should show:
 
 ## Recommendation
 
-This should move forward as a separate shadow-first workstream.
+This should keep moving as a separate shadow-first workstream, but the minimum Stage 6 runtime wiring is already done.
 
 The short-term target is not “smart deletion”.
 
@@ -239,6 +247,6 @@ The short-term target is:
 
 The current program decision is therefore:
 
-- review and approve the Stage 6 docs-first plan first
-- then land minimal runtime shadow instrumentation
+- keep `dialogueWorkingSetShadow` `default-off` and shadow-only
+- use runtime shadow telemetry as the new measurement surface for harder A/B and deferred history cleanup
 - defer active prompt mutation until the promotion gate is explicitly satisfied

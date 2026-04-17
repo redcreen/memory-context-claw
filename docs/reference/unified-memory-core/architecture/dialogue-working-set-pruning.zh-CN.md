@@ -172,11 +172,14 @@ mock 阶段至少要先证明 3 件事：
 
 ## 当前验证快照
 
-这条设计现在已经不只是纯 mock feasibility，而是有足够证据进入 Stage 6 的 docs-first review gate。
+这条设计现在已经不只是 mock feasibility，也不只是 Stage 6 入口规划；`default-off` 的 runtime shadow instrumentation 已经落地。
 
 - roadmap 指针：[../../../roadmap.zh-CN.md](../../../roadmap.zh-CN.md)
 - development plan 指针：[../development-plan.zh-CN.md](../development-plan.zh-CN.md)
 - 总验证汇总：[../../../../reports/generated/dialogue-working-set-validation-2026-04-16.md](../../../../reports/generated/dialogue-working-set-validation-2026-04-16.md)
+- runtime shadow replay：[../../../../reports/generated/dialogue-working-set-runtime-shadow-2026-04-16.md](../../../../reports/generated/dialogue-working-set-runtime-shadow-2026-04-16.md)
+- runtime answer A/B：[../../../../reports/generated/dialogue-working-set-runtime-answer-ab-2026-04-16.md](../../../../reports/generated/dialogue-working-set-runtime-answer-ab-2026-04-16.md)
+- Stage 6 收口报告：[../../../../reports/generated/dialogue-working-set-stage6-2026-04-16.md](../../../../reports/generated/dialogue-working-set-stage6-2026-04-16.md)
 
 当前证据：
 
@@ -186,6 +189,10 @@ mock 阶段至少要先证明 3 件事：
 - answer A/B：baseline `5 / 5`，shadow `5 / 5`，`0` 回归
 - answer A/B average estimated prompt reduction ratio：`0.0636`
 - adversarial replay：`7 / 7`
+- runtime shadow replay：`16 / 16`
+- runtime shadow replay average reduction ratio：`0.4368`
+- runtime shadow replay average elapsed ms：`18728.3`
+- runtime answer A/B：baseline `5 / 5`，shadow `5 / 5`，shadow-only wins `0`
 
 支撑报告：
 
@@ -193,15 +200,16 @@ mock 阶段至少要先证明 3 件事：
 - [../../../../reports/generated/dialogue-working-set-shadow-replay-2026-04-16.md](../../../../reports/generated/dialogue-working-set-shadow-replay-2026-04-16.md)
 - [../../../../reports/generated/dialogue-working-set-answer-ab-2026-04-16.md](../../../../reports/generated/dialogue-working-set-answer-ab-2026-04-16.md)
 - [../../../../reports/generated/dialogue-working-set-adversarial-2026-04-16.md](../../../../reports/generated/dialogue-working-set-adversarial-2026-04-16.md)
+- [../../../../reports/generated/dialogue-working-set-runtime-shadow-summary-2026-04-16.md](../../../../reports/generated/dialogue-working-set-runtime-shadow-summary-2026-04-16.md)
 
 当前解释：
 
-- 方向已经足够强，可以进入 runtime shadow instrumentation
-- 但证据还不够支撑直接切 active prompt path
+- 方向已经强到足以成为正式 runtime shadow measurement surface
+- 但证据仍然不够支撑直接切 active prompt path
 
 ## 当前 Runtime Gate
 
-下一条实现 slice 现在刻意收窄成：
+当前运行边界现在刻意收窄成：
 
 - 保持 `default-off`
 - 记录 `relation / evict / pins / reduction ratio`
@@ -227,7 +235,7 @@ mock 阶段至少要先证明 3 件事：
 
 ## 当前建议
 
-这条工作应该作为一个独立的 shadow-first workstream 往前推。
+这条工作仍然应该作为独立的 shadow-first workstream 往前推，但 Stage 6 的最小 runtime 接线已经完成。
 
 短期目标不是“智能删上下文”。
 
@@ -239,6 +247,6 @@ mock 阶段至少要先证明 3 件事：
 
 所以当前项目层面的决策是：
 
-- 先 review 并通过 Stage 6 的 docs-first 规划
-- 再落最小 runtime shadow instrumentation
+- 保持 `dialogueWorkingSetShadow` 为 `default-off` 且 shadow-only
+- 把 runtime shadow telemetry 作为后续 harder A/B 和 history cleanup 的新测量面
 - active prompt mutation 继续等 promotion gate 满足后再讨论

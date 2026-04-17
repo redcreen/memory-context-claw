@@ -1,0 +1,166 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776348055952-9wymi2",
+  "generated_at": "2026-04-16T14:00:55.952Z",
+  "session_key": "agent:stage6-shadow:shadow-replay-family-code-family:t7",
+  "agent_id": "stage6-shadow",
+  "query": "代码先放一边。刚才说过，我坐飞机喜欢什么位置？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "记一下：我爱吃牛排。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "记住了，你爱吃牛排。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "再记一下：我坐飞机喜欢靠过道。"
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "记住了，你坐飞机偏好靠过道。"
+    },
+    {
+      "id": "t5",
+      "role": "user",
+      "content": "家庭这块先这样。现在说代码：这轮先别改 builtin memory。"
+    },
+    {
+      "id": "t6",
+      "role": "assistant",
+      "content": "好，这轮先 shadow，再决定是否真正接管主路径。"
+    },
+    {
+      "id": "t7",
+      "role": "user",
+      "content": "代码先放一边。刚才说过，我坐飞机喜欢什么位置？"
+    }
+  ],
+  "decision": {
+    "relation": "switch",
+    "confidence": 0.95,
+    "evict_turn_ids": [
+      "t2",
+      "t4",
+      "t5",
+      "t6"
+    ],
+    "pin_turn_ids": [
+      "t1",
+      "t3"
+    ],
+    "archive_summary": "User facts captured earlier: likes steak; prefers aisle seats on flights. A brief code-topic detour established that builtin memory should not be changed this round and shadow should be handled first, but that topic is now set aside.",
+    "reasoning_summary": "The active topic switched from a temporary code-planning thread back to recalling a durable user preference. The code block is not needed for the next turn and can leave the raw working set. The flight-seat preference is still relevant, but it is a durable fact that can survive as a semantic pin rather than requiring the older raw confirmations."
+  },
+  "snapshot": {
+    "applied": {
+      "relation": "switch",
+      "confidence": 0.95,
+      "archiveSummary": "User facts captured earlier: likes steak; prefers aisle seats on flights. A brief code-topic detour established that builtin memory should not be changed this round and shadow should be handled first, but that topic is now set aside.",
+      "reasoningSummary": "The active topic switched from a temporary code-planning thread back to recalling a durable user preference. The code block is not needed for the next turn and can leave the raw working set. The flight-seat preference is still relevant, but it is a durable fact that can survive as a semantic pin rather than requiring the older raw confirmations.",
+      "latestUserTurnId": "t7",
+      "pinTurnIds": [
+        "t1",
+        "t3"
+      ],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t2",
+        "t4",
+        "t5",
+        "t6"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t2",
+        "t4",
+        "t5",
+        "t6"
+      ],
+      "keepTurnIds": [
+        "t1",
+        "t3",
+        "t7"
+      ],
+      "baselineTokens": 36,
+      "keptTokens": 13,
+      "prunedTokens": 23,
+      "reductionRatio": 0.6388888888888888,
+      "keepTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "记一下：我爱吃牛排。",
+          "tokenEstimate": 3
+        },
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "再记一下：我坐飞机喜欢靠过道。",
+          "tokenEstimate": 4
+        },
+        {
+          "id": "t7",
+          "role": "user",
+          "content": "代码先放一边。刚才说过，我坐飞机喜欢什么位置？",
+          "tokenEstimate": 6
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "记住了，你爱吃牛排。",
+          "tokenEstimate": 3
+        },
+        {
+          "id": "t4",
+          "role": "assistant",
+          "content": "记住了，你坐飞机偏好靠过道。",
+          "tokenEstimate": 4
+        },
+        {
+          "id": "t5",
+          "role": "user",
+          "content": "家庭这块先这样。现在说代码：这轮先别改 builtin memory。",
+          "tokenEstimate": 9
+        },
+        {
+          "id": "t6",
+          "role": "assistant",
+          "content": "好，这轮先 shadow，再决定是否真正接管主路径。",
+          "tokenEstimate": 7
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 记一下：我爱吃牛排。\nt2 assistant: 记住了，你爱吃牛排。\nt3 user: 再记一下：我坐飞机喜欢靠过道。\nt4 assistant: 记住了，你坐飞机偏好靠过道。\nt5 user: 家庭这块先这样。现在说代码：这轮先别改 builtin memory。\nt6 assistant: 好，这轮先 shadow，再决定是否真正接管主路径。\nt7 user: 代码先放一边。刚才说过，我坐飞机喜欢什么位置？",
+    "shadowRawTranscript": "t1 user: 记一下：我爱吃牛排。\nt3 user: 再记一下：我坐飞机喜欢靠过道。\nt7 user: 代码先放一边。刚才说过，我坐飞机喜欢什么位置？",
+    "semanticPinNotes": [
+      "user: 记一下：我爱吃牛排。",
+      "user: 再记一下：我坐飞机喜欢靠过道。"
+    ],
+    "archiveSummary": "User facts captured earlier: likes steak; prefers aisle seats on flights. A brief code-topic detour established that builtin memory should not be changed this round and shadow should be handled first, but that topic is now set aside.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 55,
+    "shadowRawPromptEstimate": 20,
+    "shadowPackageEstimate": 38,
+    "shadowPackageText": "Active raw turns:\nt1 user: 记一下：我爱吃牛排。\nt3 user: 再记一下：我坐飞机喜欢靠过道。\nt7 user: 代码先放一边。刚才说过，我坐飞机喜欢什么位置？\n\nSemantic pins:\nuser: 记一下：我爱吃牛排。\nuser: 再记一下：我坐飞机喜欢靠过道。"
+  },
+  "timings": {
+    "totalElapsedMs": 22132,
+    "decisionElapsedMs": 22132
+  }
+}

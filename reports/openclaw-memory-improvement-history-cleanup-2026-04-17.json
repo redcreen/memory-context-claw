@@ -1,0 +1,169 @@
+{
+  "generatedAt": "2026-04-16T16:44:15.487Z",
+  "agentId": "umceval65",
+  "shardCount": 1,
+  "casesPath": "/Users/redcreen/Project/unified-memory-core/evals/openclaw-memory-improvement-history-cleanup-cases.js",
+  "fixtureRoot": "/Users/redcreen/Project/unified-memory-core/evals/openclaw-cli-memory-fixture",
+  "pluginPath": "/Users/redcreen/Project/unified-memory-core",
+  "authProfilesPath": "",
+  "embedModelPath": "/Users/redcreen/.openclaw/models/embeddinggemma-300m-qat-Q8_0.gguf",
+  "agentModel": "openai-codex/gpt-5.4-mini",
+  "preset": "safe-local",
+  "hermeticState": true,
+  "summary": {
+    "total": 2,
+    "passed": 2,
+    "failed": 0,
+    "comparedLegacy": 2,
+    "legacyPassed": 2,
+    "byLanguage": {
+      "en": {
+        "total": 0,
+        "unifiedPassed": 0,
+        "legacyPassed": 0,
+        "bothPass": 0,
+        "umcOnly": 0,
+        "legacyOnly": 0,
+        "bothFail": 0
+      },
+      "zh": {
+        "total": 2,
+        "unifiedPassed": 2,
+        "legacyPassed": 2,
+        "bothPass": 2,
+        "umcOnly": 0,
+        "legacyOnly": 0,
+        "bothFail": 0
+      }
+    },
+    "byCategory": {
+      "ab-zh-history": {
+        "total": 2,
+        "unifiedPassed": 2,
+        "legacyPassed": 2,
+        "umcOnly": 0
+      }
+    },
+    "byAttribution": {
+      "shared-capability": 2
+    }
+  },
+  "results": [
+    {
+      "id": "ab100-zh-history-editor-2",
+      "category": "ab-zh-history",
+      "entrypoint": "agent",
+      "query": "",
+      "message": "只根据当前记忆，切到现在这个编辑器之前，我原来主力是哪个编辑器？如果没有这条记忆，就只回答：I don't know based on current memory.",
+      "compareLegacy": true,
+      "attributionKind": "history",
+      "attribution": "shared-capability",
+      "current": {
+        "ok": true,
+        "transport": "agent_local",
+        "answer": "Vim",
+        "injectedWorkspaceFiles": [
+          "AGENTS.md",
+          "SOUL.md",
+          "TOOLS.md",
+          "IDENTITY.md",
+          "USER.md",
+          "HEARTBEAT.md",
+          "BOOTSTRAP.md",
+          "MEMORY.md"
+        ],
+        "observedSessionKey": "agent:umceval65:main",
+        "observedSessionId": "umc-bench-ab100-zh-history-editor-2-1136cd34",
+        "warning": "",
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "sourcesOk": true,
+        "reason": "matched"
+      },
+      "legacy": {
+        "ok": true,
+        "transport": "agent_local",
+        "answer": "Vim.",
+        "injectedWorkspaceFiles": [
+          "AGENTS.md",
+          "SOUL.md",
+          "TOOLS.md",
+          "IDENTITY.md",
+          "USER.md",
+          "HEARTBEAT.md",
+          "BOOTSTRAP.md",
+          "MEMORY.md"
+        ],
+        "observedSessionKey": "agent:umceval65:main",
+        "observedSessionId": "umc-bench-ab100-zh-history-editor-2-85620bdd",
+        "warning": "",
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "sourcesOk": true,
+        "reason": "matched"
+      }
+    },
+    {
+      "id": "ab100-zh-history-editor-4",
+      "category": "ab-zh-history",
+      "entrypoint": "agent",
+      "query": "",
+      "message": "只根据当前记忆，现在虽然已经换了编辑器，但之前那段时间主力到底是什么？如果没有这条记忆，就只回答：I don't know based on current memory.",
+      "compareLegacy": true,
+      "attributionKind": "history",
+      "attribution": "shared-capability",
+      "current": {
+        "ok": true,
+        "transport": "agent_local",
+        "answer": "Vim。Source: `memory/2026-04-10.md#L1-L6`",
+        "injectedWorkspaceFiles": [
+          "AGENTS.md",
+          "SOUL.md",
+          "TOOLS.md",
+          "IDENTITY.md",
+          "USER.md",
+          "HEARTBEAT.md",
+          "BOOTSTRAP.md",
+          "MEMORY.md"
+        ],
+        "observedSessionKey": "agent:umceval65:main",
+        "observedSessionId": "umc-bench-ab100-zh-history-editor-4-a37b5477",
+        "warning": "",
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "sourcesOk": true,
+        "reason": "matched"
+      },
+      "legacy": {
+        "ok": true,
+        "transport": "agent_local",
+        "answer": "Vim。",
+        "injectedWorkspaceFiles": [
+          "AGENTS.md",
+          "SOUL.md",
+          "TOOLS.md",
+          "IDENTITY.md",
+          "USER.md",
+          "HEARTBEAT.md",
+          "BOOTSTRAP.md",
+          "MEMORY.md"
+        ],
+        "observedSessionKey": "agent:umceval65:main",
+        "observedSessionId": "umc-bench-ab100-zh-history-editor-4-8d3140fb",
+        "warning": "",
+        "passed": true,
+        "expectedAnyOk": true,
+        "expectedAllOk": true,
+        "forbiddenOk": true,
+        "sourcesOk": true,
+        "reason": "matched"
+      }
+    }
+  ]
+}

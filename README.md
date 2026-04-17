@@ -15,15 +15,18 @@ If you want the shortest practical answer before reading the whole repo:
 - deeper answer-level watch: `14 / 18`
 - maintained runnable matrix: `392` cases with `53.83%` Chinese-bearing coverage
 - live A/B on existing-memory consumption: `100` real answer-level cases, `97` shared wins, `1` Memory Core-only win, `0` builtin-only wins, and `2` shared failures
-- focused ordinary-conversation write-time A/B: `10` real live cases, `current=10`, `legacy=5`, `UMC-only=5`, `legacy-only=0`
+- focused ordinary-conversation write-time A/B:
+  - host live: `current=38`, `legacy=21`, `UMC-only=18`
+  - Docker hermetic (`30s` turn budget): `current=3`, `legacy=0`, `UMC-only=3`, `both-fail=37`
 
 Read these first:
 
 - [Why Unified Memory Core Feels Better](docs/memory-improvement-evidence.md)
 - [Full Regression And Memory Improvement Report](reports/generated/unified-memory-core-full-regression-and-memory-improvement-2026-04-15.md)
 - [Focused Ordinary-Conversation Realtime Write A/B](reports/generated/openclaw-ordinary-conversation-memory-intent-ab-2026-04-16.md)
+- [Docker Hermetic Ordinary-Conversation Rerun](reports/generated/openclaw-ordinary-conversation-memory-intent-docker-rerun-2026-04-17.md)
 
-The honest takeaway is simple: OpenClaw builtin memory is already decent on many “existing memory consumption” prompts, so the older `100`-case A/B only shows a modest gap. But once the comparison is changed to “write a new durable memory during ordinary conversation, then recall it in a later session,” Unified Memory Core starts showing a clearer advantage. The strongest current gain is not “answer every old question better,” but “write new durable memory more deliberately, more governably, and more verifiably.”
+The honest takeaway is now split in two: OpenClaw builtin memory is already decent on many “existing memory consumption” prompts, so the older `100`-case A/B only shows a modest gap. On the ordinary-conversation write surface, the host-live run shows a much clearer Unified Memory Core advantage, but the hermetic Docker rerun shows that the same surface is now heavily constrained by answer-level timeout pressure. In other words, UMC is not just about “remembering better” anymore; it also has to become faster and more reproducible under bounded evaluation budgets.
 
 ## Who This Is For
 

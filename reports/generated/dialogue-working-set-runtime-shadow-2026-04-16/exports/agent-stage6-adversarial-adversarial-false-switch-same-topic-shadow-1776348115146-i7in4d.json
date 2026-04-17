@@ -1,0 +1,97 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776348115146-i7in4d",
+  "generated_at": "2026-04-16T14:01:55.146Z",
+  "session_key": "agent:stage6-adversarial:adversarial-false-switch-same-topic",
+  "agent_id": "stage6-adversarial",
+  "query": "换个角度讲：为什么说存储可以 rich，但 prompt 必须 sparse？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "把 context slimming 的核心目标说一下。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "核心目标是存储 rich、prompt sparse，只把当轮高相关信息送进模型。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "换个角度讲：为什么说存储可以 rich，但 prompt 必须 sparse？"
+    }
+  ],
+  "decision": {
+    "relation": "continue",
+    "confidence": 0.98,
+    "evict_turn_ids": [],
+    "pin_turn_ids": [],
+    "archive_summary": "Ongoing topic: context slimming. Prior turns define the framing: the core goal is 'storage rich, prompt sparse' so only highly relevant information is sent to the model each turn.",
+    "reasoning_summary": "The latest user turn is a rephrasing request on the same active topic, not a topic change. It depends directly on the prior explanation, so the earlier raw turns should remain in the next-turn working set. Nothing is resolved or off-topic enough to evict."
+  },
+  "snapshot": {
+    "applied": {
+      "relation": "continue",
+      "confidence": 0.98,
+      "archiveSummary": "Ongoing topic: context slimming. Prior turns define the framing: the core goal is 'storage rich, prompt sparse' so only highly relevant information is sent to the model each turn.",
+      "reasoningSummary": "The latest user turn is a rephrasing request on the same active topic, not a topic change. It depends directly on the prior explanation, so the earlier raw turns should remain in the next-turn working set. Nothing is resolved or off-topic enough to evict.",
+      "latestUserTurnId": "t3",
+      "pinTurnIds": [],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [],
+      "keepTurnIds": [
+        "t1",
+        "t2",
+        "t3"
+      ],
+      "baselineTokens": 28,
+      "keptTokens": 28,
+      "prunedTokens": 0,
+      "reductionRatio": 0,
+      "keepTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "把 context slimming 的核心目标说一下。",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "核心目标是存储 rich、prompt sparse，只把当轮高相关信息送进模型。",
+          "tokenEstimate": 11
+        },
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "换个角度讲：为什么说存储可以 rich，但 prompt 必须 sparse？",
+          "tokenEstimate": 10
+        }
+      ],
+      "evictedTurns": []
+    },
+    "baselineRawTranscript": "t1 user: 把 context slimming 的核心目标说一下。\nt2 assistant: 核心目标是存储 rich、prompt sparse，只把当轮高相关信息送进模型。\nt3 user: 换个角度讲：为什么说存储可以 rich，但 prompt 必须 sparse？",
+    "shadowRawTranscript": "t1 user: 把 context slimming 的核心目标说一下。\nt2 assistant: 核心目标是存储 rich、prompt sparse，只把当轮高相关信息送进模型。\nt3 user: 换个角度讲：为什么说存储可以 rich，但 prompt 必须 sparse？",
+    "semanticPinNotes": [],
+    "archiveSummary": "Ongoing topic: context slimming. Prior turns define the framing: the core goal is 'storage rich, prompt sparse' so only highly relevant information is sent to the model each turn.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 36,
+    "shadowRawPromptEstimate": 36,
+    "shadowPackageEstimate": 40,
+    "shadowPackageText": "Active raw turns:\nt1 user: 把 context slimming 的核心目标说一下。\nt2 assistant: 核心目标是存储 rich、prompt sparse，只把当轮高相关信息送进模型。\nt3 user: 换个角度讲：为什么说存储可以 rich，但 prompt 必须 sparse？"
+  },
+  "timings": {
+    "totalElapsedMs": 15008,
+    "decisionElapsedMs": 15007
+  }
+}

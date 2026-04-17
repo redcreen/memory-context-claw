@@ -330,8 +330,37 @@ function filterSessionNoiseForStableDocIntents(query, candidates) {
   return filtered.length > 0 ? filtered : candidates;
 }
 
+function classifyHistoryOrComparisonIntent(query = "") {
+  const text = String(query || "").toLowerCase();
+  if (!text) {
+    return "";
+  }
+
+  const hasHistorySignal =
+    /(before|previously|prior|earlier|history|historical|old|former|switched from|before switching|before the switch|comparison|compare|之前|原来|先前|早前|旧阶段|历史|对比|比较|切换前|切换发生之前|最新切换发生之前|改用.+之前|切到现在.+之前|换了.+但之前|旧的主力)/.test(text);
+
+  if (!hasHistorySignal) {
+    return "";
+  }
+
+  if (/editor|编辑器/.test(text)) {
+    return "editor";
+  }
+  if (/deploy region|deployment region|default region|region|部署区域|部署地区/.test(text)) {
+    return "deployRegion";
+  }
+  if (/notebook|meeting notebook|会议本|笔记本/.test(text)) {
+    return "notebook";
+  }
+
+  return "generic";
+}
+
 function classifyCurrentStateIntent(query = "") {
   const text = String(query || "").toLowerCase();
+  if (classifyHistoryOrComparisonIntent(text)) {
+    return "";
+  }
   if (!/(current|currently|now|latest|confirmed|现在|当前|目前|最新|已确认)/.test(text)) {
     return "";
   }
@@ -407,10 +436,48 @@ function rewriteSnippetForCurrentState(intent, snippet) {
   return text;
 }
 
-function sanitizeCandidatesForCurrentState(query, candidates) {
+function rewriteSnippetForHistoryState(intent, snippet) {
+  const text = String(snippet || "").trim();
+  if (!text) {
+    return text;
+  }
+
+  if (intent === "editor") {
+    const match = text.match(/main editor from\s+(.+?)\s+to\s+(.+?)(?:\s+last week)?[.\n]/i);
+    if (match) {
+      return `Previous main editor before the switch: ${match[1].trim()}. Current main editor after the switch: ${match[2].trim()}.`;
+    }
+  }
+
+  if (intent === "deployRegion") {
+    const match = text.match(/deploy region decision is now\s+`?([^`;.\n]+)`?(?:;|\.)\s*the older\s+`?([^`;.\n]+)`?/i);
+    if (match) {
+      return `Previous deploy region before the update: ${match[2].trim()}. Current deploy region after the update: ${match[1].trim()}.`;
+    }
+  }
+
+  if (intent === "notebook") {
+    const match = text.match(/Current notebook for meetings:\s+(.+?),\s*not the old\s+(.+?)[.\n]/i);
+    if (match) {
+      return `Previous notebook for meetings: ${match[2].trim()}. Current notebook for meetings: ${match[1].trim()}.`;
+    }
+  }
+
+  return text;
+}
+
+function sanitizeCandidatesForIntent(query, candidates) {
   if (!Array.isArray(candidates) || candidates.length === 0) {
     return [];
   }
+  const historyIntent = classifyHistoryOrComparisonIntent(query);
+  if (historyIntent) {
+    return candidates.map((candidate) => ({
+      ...candidate,
+      snippet: rewriteSnippetForHistoryState(historyIntent, candidate?.snippet)
+    }));
+  }
+
   const intent = classifyCurrentStateIntent(query);
   if (!intent) {
     return candidates;
@@ -558,6 +625,7 @@ export function buildSystemPromptAddition({ query, selectedCandidates, policyCon
         String(candidate?.snippet || "")
       )
     );
+  const historyIntent = Boolean(classifyHistoryOrComparisonIntent(query));
   const hasCurrentStateIntent = Boolean(classifyCurrentStateIntent(query));
 
   const sections = [
@@ -597,6 +665,14 @@ export function buildSystemPromptAddition({ query, selectedCandidates, policyCon
       2,
       0,
       "If a recalled snippet describes a current or confirmed update, answer with only the current value. Do not repeat superseded values unless the user explicitly asks for history or comparison."
+    );
+  }
+
+  if (historyIntent) {
+    sections.splice(
+      2,
+      0,
+      "If a recalled snippet describes a switch or update from an older value to a newer value and the user asks about before/prior/history, answer with the earlier superseded value, or explicitly contrast earlier versus current when that helps."
     );
   }
 
@@ -662,7 +738,7 @@ export function buildAssemblyResult({
       ? Math.min(maxSelectedChunks || diversifiedCandidates.length, Number(policyContext.recommended_max_selected_chunks))
       : (maxSelectedChunks || diversifiedCandidates.length)
   );
-  const sanitizedSelectedCandidates = sanitizeCandidatesForCurrentState(query, selectedCandidates);
+  const sanitizedSelectedCandidates = sanitizeCandidatesForIntent(query, selectedCandidates);
   const systemPromptAddition = buildSystemPromptAddition({
     query,
     selectedCandidates: sanitizedSelectedCandidates,

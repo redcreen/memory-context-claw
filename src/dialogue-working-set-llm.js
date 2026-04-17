@@ -1,5 +1,29 @@
 import { renderDialogueTurns } from "./dialogue-working-set-shadow.js";
 
+function normalizeString(value, fallback = "") {
+  if (typeof value !== "string") {
+    return fallback;
+  }
+  const normalized = value.trim();
+  return normalized || fallback;
+}
+
+function normalizeIdList(values) {
+  return Array.isArray(values)
+    ? [...new Set(values.map((item) => normalizeString(item)).filter(Boolean))]
+    : [];
+}
+
+function extractJson(text) {
+  const trimmed = String(text || "").trim();
+  const direct = trimmed.match(/\{[\s\S]*\}$/);
+  if (direct) {
+    return direct[0];
+  }
+  const fenced = trimmed.match(/```json\s*([\s\S]*?)```/i);
+  return fenced ? fenced[1] : trimmed;
+}
+
 export function buildWorkingSetDecisionPrompt(caseDef) {
   const transcript = renderDialogueTurns(caseDef.transcript);
 
@@ -21,6 +45,10 @@ export function buildWorkingSetDecisionPrompt(caseDef) {
     "- use relation=branch for a side question while an older task is still open",
     "- use relation=switch when the active topic changed and the old raw block can leave the next-turn prompt",
     "- use relation=resolve when the conversation mostly closes and only pins + the latest user turn should remain",
+    "- for continue: keep the raw turns that the latest user question still depends on; do not demote active-topic evidence into pin-only form",
+    "- for branch: the older unfinished main task should stay as raw turns, not only as pins",
+    "- unresolved tasks should remain raw until resolved; pins are for durable facts or archived older topics",
+    "- on switch: durable user facts, preferences, and style rules may move from raw turns into pins so the new topic can travel lighter",
     "- be strict: off-topic status snapshots and solved blocks are good eviction candidates",
     "",
     `Case: ${caseDef.id}`,
@@ -68,4 +96,23 @@ export function buildWorkingSetDecisionSchema() {
       }
     }
   };
+}
+
+export function normalizeWorkingSetDecisionPayload(payload = {}) {
+  const relation = normalizeString(payload?.relation, "continue");
+
+  return {
+    relation: ["continue", "branch", "switch", "resolve"].includes(relation)
+      ? relation
+      : "continue",
+    confidence: Number(payload?.confidence || 0),
+    evict_turn_ids: normalizeIdList(payload?.evict_turn_ids),
+    pin_turn_ids: normalizeIdList(payload?.pin_turn_ids),
+    archive_summary: normalizeString(payload?.archive_summary),
+    reasoning_summary: normalizeString(payload?.reasoning_summary)
+  };
+}
+
+export function parseWorkingSetDecisionResponse(text = "") {
+  return normalizeWorkingSetDecisionPayload(JSON.parse(extractJson(text)));
 }

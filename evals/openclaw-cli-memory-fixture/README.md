@@ -1,15 +1,18 @@
 # OpenClaw CLI Memory Benchmark Fixture
 
-This fixture mirrors the `umceval` memory set used by the OpenClaw CLI benchmark.
+This fixture is the source-of-truth workspace used by the hermetic OpenClaw CLI benchmark.
 
-It exists for three reasons:
+It exists for four reasons:
 
 1. keep the benchmark facts reviewable in-repo
 2. make the benchmark matrix readable without digging through session logs
 3. document which facts are meant to exercise bootstrap, ordinary retrieval, temporal override, and abstention
+4. provide a stable workspace snapshot that can be copied into isolated host temp states or Docker containers
 
-The current benchmark still runs against the live `umceval` OpenClaw agent because that is the path the product actually uses.  
-These files are the durable mirror of the indexed content that benchmark cases target.
+The hermetic benchmark no longer seeds from `~/.openclaw`.
+Instead, the runner copies this fixture into a fresh OpenClaw state, indexes it there, and then clones a clean state per case.
+
+That same fixture is also the intended input for the Docker-based OpenClaw eval harness.
 
 Files:
 

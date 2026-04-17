@@ -1,0 +1,187 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776347986605-3suwfc",
+  "generated_at": "2026-04-16T13:59:46.605Z",
+  "session_key": "agent:stage6-shadow:shadow-replay-project-switches:t9",
+  "agent_id": "stage6-shadow",
+  "query": "再切一步：如果只做 shadow mode，报告里至少要看哪些指标？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "assistant",
+      "content": "今天继续哪条线？"
+    },
+    {
+      "id": "t2",
+      "role": "user",
+      "content": "以后默认给我中文，回复直接一点。"
+    },
+    {
+      "id": "t3",
+      "role": "assistant",
+      "content": "记住了，后面默认中文，结论优先。"
+    },
+    {
+      "id": "t4",
+      "role": "user",
+      "content": "说一下 context slimming 的核心目标。"
+    },
+    {
+      "id": "t5",
+      "role": "assistant",
+      "content": "核心目标是存储 rich、prompt sparse，让真正进入模型的上下文只保留当轮高相关信息。"
+    },
+    {
+      "id": "t6",
+      "role": "user",
+      "content": "那 raw doc default-off 应该先落在哪几类问题上？"
+    },
+    {
+      "id": "t7",
+      "role": "user",
+      "content": "现在切到配置：unified-memory-core 的最小 contextEngine 配置怎么写？"
+    },
+    {
+      "id": "t8",
+      "role": "assistant",
+      "content": "最小配置应该先只挂 contextEngine，不动写侧。"
+    },
+    {
+      "id": "t9",
+      "role": "user",
+      "content": "再切一步：如果只做 shadow mode，报告里至少要看哪些指标？"
+    }
+  ],
+  "decision": {
+    "relation": "continue",
+    "confidence": 0.95,
+    "evict_turn_ids": [
+      "t3",
+      "t4",
+      "t5",
+      "t6"
+    ],
+    "pin_turn_ids": [
+      "t2"
+    ],
+    "archive_summary": "用户已设定长期偏好：默认中文、回复直接、结论优先。更早的话题里，已简要解释 context slimming 的目标是“存储 rich、prompt sparse，只把当轮高相关信息送入模型”；随后讨论过 raw doc default-off 应优先落地的类别，但该块未展开到当前 shadow mode 指标问题所必需的细节。当前仍在 unified-memory-core 的配置线：先做最小 contextEngine 配置，并进一步只做 shadow mode。",
+    "reasoning_summary": "最新问题直接承接 t7-t8 的配置主题，并进一步聚焦 shadow mode 报告指标，属于同一活跃任务链，所以用 continue。为回答当前问题，t7-t8 的原始上下文应保留；较早的概念说明和已结束的旁支问题可退出下一轮原始提示。用户语言与风格偏好是 durable 规则，应保留为语义 pin；其余已解决或当前不必依赖的原始回合可收缩。"
+  },
+  "snapshot": {
+    "applied": {
+      "relation": "continue",
+      "confidence": 0.95,
+      "archiveSummary": "用户已设定长期偏好：默认中文、回复直接、结论优先。更早的话题里，已简要解释 context slimming 的目标是“存储 rich、prompt sparse，只把当轮高相关信息送入模型”；随后讨论过 raw doc default-off 应优先落地的类别，但该块未展开到当前 shadow mode 指标问题所必需的细节。当前仍在 unified-memory-core 的配置线：先做最小 contextEngine 配置，并进一步只做 shadow mode。",
+      "reasoningSummary": "最新问题直接承接 t7-t8 的配置主题，并进一步聚焦 shadow mode 报告指标，属于同一活跃任务链，所以用 continue。为回答当前问题，t7-t8 的原始上下文应保留；较早的概念说明和已结束的旁支问题可退出下一轮原始提示。用户语言与风格偏好是 durable 规则，应保留为语义 pin；其余已解决或当前不必依赖的原始回合可收缩。",
+      "latestUserTurnId": "t9",
+      "pinTurnIds": [
+        "t2"
+      ],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t3",
+        "t4",
+        "t5",
+        "t6"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t3",
+        "t4",
+        "t5",
+        "t6"
+      ],
+      "keepTurnIds": [
+        "t1",
+        "t2",
+        "t7",
+        "t8",
+        "t9"
+      ],
+      "baselineTokens": 69,
+      "keptTokens": 36,
+      "prunedTokens": 33,
+      "reductionRatio": 0.4782608695652174,
+      "keepTurns": [
+        {
+          "id": "t1",
+          "role": "assistant",
+          "content": "今天继续哪条线？",
+          "tokenEstimate": 2
+        },
+        {
+          "id": "t2",
+          "role": "user",
+          "content": "以后默认给我中文，回复直接一点。",
+          "tokenEstimate": 4
+        },
+        {
+          "id": "t7",
+          "role": "user",
+          "content": "现在切到配置：unified-memory-core 的最小 contextEngine 配置怎么写？",
+          "tokenEstimate": 13
+        },
+        {
+          "id": "t8",
+          "role": "assistant",
+          "content": "最小配置应该先只挂 contextEngine，不动写侧。",
+          "tokenEstimate": 8
+        },
+        {
+          "id": "t9",
+          "role": "user",
+          "content": "再切一步：如果只做 shadow mode，报告里至少要看哪些指标？",
+          "tokenEstimate": 9
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t3",
+          "role": "assistant",
+          "content": "记住了，后面默认中文，结论优先。",
+          "tokenEstimate": 4
+        },
+        {
+          "id": "t4",
+          "role": "user",
+          "content": "说一下 context slimming 的核心目标。",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t5",
+          "role": "assistant",
+          "content": "核心目标是存储 rich、prompt sparse，让真正进入模型的上下文只保留当轮高相关信息。",
+          "tokenEstimate": 13
+        },
+        {
+          "id": "t6",
+          "role": "user",
+          "content": "那 raw doc default-off 应该先落在哪几类问题上？",
+          "tokenEstimate": 9
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 assistant: 今天继续哪条线？\nt2 user: 以后默认给我中文，回复直接一点。\nt3 assistant: 记住了，后面默认中文，结论优先。\nt4 user: 说一下 context slimming 的核心目标。\nt5 assistant: 核心目标是存储 rich、prompt sparse，让真正进入模型的上下文只保留当轮高相关信息。\nt6 user: 那 raw doc default-off 应该先落在哪几类问题上？\nt7 user: 现在切到配置：unified-memory-core 的最小 contextEngine 配置怎么写？\nt8 assistant: 最小配置应该先只挂 contextEngine，不动写侧。\nt9 user: 再切一步：如果只做 shadow mode，报告里至少要看哪些指标？",
+    "shadowRawTranscript": "t1 assistant: 今天继续哪条线？\nt2 user: 以后默认给我中文，回复直接一点。\nt7 user: 现在切到配置：unified-memory-core 的最小 contextEngine 配置怎么写？\nt8 assistant: 最小配置应该先只挂 contextEngine，不动写侧。\nt9 user: 再切一步：如果只做 shadow mode，报告里至少要看哪些指标？",
+    "semanticPinNotes": [
+      "user: 以后默认给我中文，回复直接一点。"
+    ],
+    "archiveSummary": "用户已设定长期偏好：默认中文、回复直接、结论优先。更早的话题里，已简要解释 context slimming 的目标是“存储 rich、prompt sparse，只把当轮高相关信息送入模型”；随后讨论过 raw doc default-off 应优先落地的类别，但该块未展开到当前 shadow mode 指标问题所必需的细节。当前仍在 unified-memory-core 的配置线：先做最小 contextEngine 配置，并进一步只做 shadow mode。",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 94,
+    "shadowRawPromptEstimate": 50,
+    "shadowPackageEstimate": 64,
+    "shadowPackageText": "Active raw turns:\nt1 assistant: 今天继续哪条线？\nt2 user: 以后默认给我中文，回复直接一点。\nt7 user: 现在切到配置：unified-memory-core 的最小 contextEngine 配置怎么写？\nt8 assistant: 最小配置应该先只挂 contextEngine，不动写侧。\nt9 user: 再切一步：如果只做 shadow mode，报告里至少要看哪些指标？\n\nSemantic pins:\nuser: 以后默认给我中文，回复直接一点。"
+  },
+  "timings": {
+    "totalElapsedMs": 20556,
+    "decisionElapsedMs": 20555
+  }
+}

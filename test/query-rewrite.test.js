@@ -76,3 +76,12 @@ test("rewriteRetrievalQueries expands natural Chinese notebook wording", () => {
 
   assert.ok(queries.some((item) => item.includes("current notebook for meetings")));
 });
+
+test("rewriteRetrievalQueries keeps Chinese editor-history wording out of current-state rewrite", () => {
+  const queries = rewriteRetrievalQueries("现在虽然已经换了编辑器，但之前那段时间主力到底是什么", {
+    maxQueries: 5
+  });
+
+  assert.ok(queries.some((item) => item.includes("previous main editor before switch")));
+  assert.ok(!queries.some((item) => item.includes("current main editor now Zed replaced Vim")));
+});

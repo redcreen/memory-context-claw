@@ -9,6 +9,14 @@
 - legacyOnly: `0`
 - bothFail: `2`
 
+> Update `2026-04-17`: the focused hermetic cleanup rerun for the two remaining Chinese history cases is now green. See [openclaw-memory-improvement-history-cleanup-2026-04-17.md](openclaw-memory-improvement-history-cleanup-2026-04-17.md). Effective current state after applying that focused rerun:
+> - unifiedPassed: `100`
+> - legacyPassed: `99`
+> - bothPass: `99`
+> - umcOnly: `1`
+> - legacyOnly: `0`
+> - bothFail: `0`
+
 ## Language Split
 
 ### English
@@ -56,7 +64,7 @@
 
 - none
 
-## Both-fail Samples
+## Both-fail Samples (`2026-04-15` full-batch baseline only)
 
 - ab100-zh-history-editor-2 [ab-zh-history] (zh) attribution=`unified-failed`
   prompt: 只根据当前记忆，切到现在这个编辑器之前，我原来主力是哪个编辑器？如果没有这条记忆，就只回答：I don't know based on current memory.
@@ -66,6 +74,8 @@
   prompt: 只根据当前记忆，现在虽然已经换了编辑器，但之前那段时间主力到底是什么？如果没有这条记忆，就只回答：I don't know based on current memory.
   unified: I don't know based on current memory.
   legacy: I don't know based on current memory.
+
+Focused rerun status on `2026-04-17`: these two history cases are now closed under the hermetic cleanup suite; see [openclaw-memory-improvement-history-cleanup-2026-04-17.md](openclaw-memory-improvement-history-cleanup-2026-04-17.md).
 
 ## Shared-baseline Samples
 
@@ -91,3 +101,4 @@
 - This summary counts only cases that were actually run against both Unified Memory Core and the legacy builtin context engine.
 - `umcOnly` means Unified Memory Core passed while legacy failed.
 - `bothPass` means the builtin baseline was already sufficient for that case.
+- The `2026-04-15` counts remain the last full-batch `100`-case baseline; the two Chinese history misses were re-run separately under the focused hermetic cleanup suite on `2026-04-17` and are now closed.

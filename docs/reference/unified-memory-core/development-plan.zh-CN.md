@@ -50,9 +50,9 @@
 - `Stage 3`：已完成
 - `Stage 4`：已完成
 - `Stage 5`：已完成
-- `Stage 6`：planned
-- 当前指针：`Stage 6 docs-first review gate`
-- 当前建议：先把 Stage 6 的 roadmap / development plan 评审走完，再开始任何 runtime shadow integration 实现
+- `Stage 6`：已完成
+- 当前指针：`Post-Stage-6 deferred history cleanup resume`
+- 当前建议：继续保持 `dialogueWorkingSetShadow` 为 `default-off` 且 shadow-only，然后带着新的 telemetry surface 恢复之前延后的 history cleanup 与 harder A/B 扩面
 
 当前 baseline 已经落地：
 
@@ -85,7 +85,7 @@
 | Stage 3 | `21-30` | 完成 self-learning 生命周期基线 | `completed` |
 | Stage 4 | `31-38` | 把受治理学习结果接到 adapter 策略使用 | `completed` |
 | Stage 5 | `39-46` | 补齐产品运维与 split-ready 执行 | `completed` |
-| Stage 6 | `93-100` | 在任何 active prompt cutover 前，用 runtime shadow mode 验证 dialogue working-set pruning | `planned` |
+| Stage 6 | `93-100` | 在任何 active prompt cutover 前，用 runtime shadow mode 验证 dialogue working-set pruning | `completed` |
 
 ## 顺序开发计划
 
@@ -187,32 +187,37 @@
 - runtime 能记录 `relation / evict / pins / reduction ratio`，但不改正式 prompt
 - 真实 session 的 shadow telemetry 足够稳定，能够支持是否打开 active-path experiment 的决策
 
-93. `next` 先把这条 slice 保持成 docs-first、review-gated。
-   - 先把 roadmap、development plan 和 architecture 引用对齐成一条正式的 Stage 6 队列，不再只让这条工作停留在 report 里。
-   - 这条 slice 的 runtime 代码实现必须等 GitHub 上的 docs-first 规划 review 通过后再开始。
-94. `todo` 在动代码前先定义 Stage 6 的 runtime shadow contract。
-   - 至少明确 emitted fields、日志/报告结构、采样边界、`default-off` 配置面，以及 shadow artifacts 落在哪里。
-95. `todo` 实现最小 runtime shadow instrumentation 路径。
-   - 在真实 session 上记录 `relation / evict / pins / reduction ratio`。
-   - 这一层不允许改正式 prompt，也不允许改 builtin memory 行为。
-96. `todo` 为真实 session 增加 shadow reports 和 replayable exports。
-   - operator 必须能看见：哪些 raw turns 原本会离开 prompt、哪些 pins 会保留、prompt thickness 会怎么变化。
-97. `todo` 把 answer-level regression measurement 接到 shadow path 上。
-   - 复用 baseline-vs-shadow replay harness，不再只用 token 降幅判断 shadow path 成败。
-98. `todo` 先定义 active-path promotion gate 与 rollback boundary，再讨论是否放行。
-   - promotion 必须显式要求 shadow telemetry 阈值、regression budget、rollback switch 和 prompt-thinning 收益。
-99. `todo` 只有当 Stage 6 shadow gate 长期为绿后，才决定是否打开 active prompt experiment。
-   - 在 promotion gate 满足前，`working-set pruning` 继续只允许 shadow-only。
-100. `todo` 等 Stage 6 telemetry 路径存在后，再恢复之前延后的 history cleanup 与 harder live A/B 扩面。
-   - `ab100-zh-history-editor-2`、`ab100-zh-history-editor-4` 和下一轮 harder A/B 都应接在新的 shadow measurement surface 上继续推进。
+Stage 6 证据：
+
+- runtime replay 报告：[../../../reports/generated/dialogue-working-set-runtime-shadow-2026-04-16.md](../../../reports/generated/dialogue-working-set-runtime-shadow-2026-04-16.md)
+- runtime answer A/B 报告：[../../../reports/generated/dialogue-working-set-runtime-answer-ab-2026-04-16.md](../../../reports/generated/dialogue-working-set-runtime-answer-ab-2026-04-16.md)
+- runtime shadow summary：[../../../reports/generated/dialogue-working-set-runtime-shadow-summary-2026-04-16.md](../../../reports/generated/dialogue-working-set-runtime-shadow-summary-2026-04-16.md)
+- Stage 6 收口报告：[../../../reports/generated/dialogue-working-set-stage6-2026-04-16.md](../../../reports/generated/dialogue-working-set-stage6-2026-04-16.md)
+
+93. `completed` 先把这条 slice 保持成 docs-first、review-gated，再开始 runtime 工作。
+   - roadmap、development plan 和 architecture 引用已经先对齐成正式 Stage 6 队列，不再只是 report 结论。
+94. `completed` 在动代码前先定义 Stage 6 的 runtime shadow contract。
+   - 当前 runtime 面已经固定成 `relation / evict / pins / reduction ratio`，并带 replayable exports 和 `default-off` 配置面。
+95. `completed` 实现最小 runtime shadow instrumentation 路径。
+   - `ContextAssemblyEngine.assemble()` 已能在真实 assembled session 上记录 shadow decision，且不改正式 prompt，也不改 builtin memory 行为。
+96. `completed` 为真实 session 增加 shadow reports 和 replayable exports。
+   - sidecar exports 现在保存 transcript prefix、decision payload、snapshot、token estimates，以及 operator summary。
+97. `completed` 把 answer-level regression measurement 接到 shadow path 上。
+   - runtime answer A/B 已复用真实 shadow exports，而不再只看 isolated helper snapshot。
+98. `completed` 先定义 active-path promotion gate 与 rollback boundary，再讨论是否放行。
+   - rollback 现在是纯配置回退：`dialogueWorkingSetShadow.enabled=false`；promotion 继续要求更长时间的 real-session soak 与显式 regression threshold。
+99. `completed` 只有当 Stage 6 shadow gate 长期为绿后，才决定是否打开 active prompt experiment。
+   - 当前决策：不打开 active prompt mutation，继续保持 shadow-only。
+100. `completed` 等 Stage 6 telemetry 路径存在后，再恢复之前延后的 history cleanup 与 harder live A/B 扩面。
+   - 下一条执行指针现在已经回到 `ab100-zh-history-editor-*` 清理和 harder A/B 扩面，并且可以直接挂上新的 shadow telemetry surface。
 
 ## 当前下一步
 
 从这里恢复：
 
-1. 先完成 Stage 6 的 docs-first review gate，把 roadmap 和 development plan 定成正式恢复点
-2. 等 GitHub review 后，再开始 runtime shadow instrumentation
-3. 之前的 history shared-fail cleanup 先顺延，等 Stage 6 shadow 路径存在后再恢复
+1. 从 `92` 开始，重设计更偏 `cross-source / conflict / multi-step history / 高信息密度自然中文` 的 harder live A/B
+2. 继续保持 `dialogueWorkingSetShadow` 为 `default-off` 且 shadow-only，让这条 telemetry surface 继续 soak
+3. 用新的 Stage 6 telemetry surface 承接更深 harder-case A/B，并在必要时决定是否晋升 formal gate
 
 当前不要开始：
 
@@ -260,7 +265,7 @@
 - 自然中文代表性 answer-level slice：`6 / 6`
 - raw transport watchlist：`3 / 8 raw ok`；其余为 `4` 条 `missing_json_payload` 与 `1` 条 `empty_results`
 - 最新 perf baseline：retrieval / assembly `16ms`；raw transport `8061ms`；isolated local answer-level `11200ms`
-- 当前解释：`200+` case 扩面、自然中文补强、watchlist failure-class 化、perf baseline 刷新，以及 answer-level formal gate 从 `6/6` 扩到 `12/12` 都已收口；`100` case live A/B 里的 builtin-only regression 已经被移除，但 direct answer-level 提升仍然不大，后续主线应先收掉 shared-fail history cases
+- 当前解释：`200+` case 扩面、自然中文补强、watchlist failure-class 化、perf baseline 刷新，以及 answer-level formal gate 从 `6/6` 扩到 `12/12` 都已收口；`100` case live A/B 里的 builtin-only regression 与 shared-fail history cases 都已被移除，后续主线应把 harder live A/B 继续推到 `cross-source / conflict / multi-step history / 自然中文` 上形成更清晰的 UMC-only 净增益
 
 ## 下一阶段规划队列
 
@@ -350,10 +355,13 @@
    - 生日题不再继续被当成 plain negative；这类问题更接近 identity-conflict / birthday-guardrail。
    - 替换成真正的未知事实负例后，`ab100-zh-negative-4` 现在是 current / legacy 都稳定拒答，`100` case live A/B 已经没有 builtin-only 胜场。
    - 后续 ordinary-conversation realtime-write suite 已从 `10` 条扩到 `40` 条，并按“先 builtin、清空、再 current”的顺序重跑；当前结果是 current `38 / 40`、legacy `21 / 40`、`UMC-only = 18`、`legacy-only = 1`、`both-fail = 1`。
-91. `next` 再收掉 `100` case live A/B 里两条 shared-fail 的中文 history case：`ab100-zh-history-editor-2`、`ab100-zh-history-editor-4`。
-   - 目标是让 history / supersede 场景不再停留在“两边都不会”，而是至少先把 UMC 拉到可稳定答对。
-92. `todo` 在 shared-fail history cases 收口后，重新设计下一轮更偏 `cross-source`、`conflict`、`multi-step history` 与高信息密度自然中文的 live A/B，争取让 UMC 在更多 harder cases 上形成清晰净增益。
-   - 这组队列现在明确顺延到 Stage 6 docs-first review 和 shadow instrumentation 之后。
+91. `completed` 收掉 `100` case live A/B 里两条 shared-fail 的中文 history case：`ab100-zh-history-editor-2`、`ab100-zh-history-editor-4`。
+   - 修复点不是“再喂更多数据”，而是 history / current-state intent 边界：中文 `history` 问法不再误触发 current-state assembly 和 query rewrite。
+   - focused hermetic cleanup rerun 结果：[openclaw-memory-improvement-history-cleanup-2026-04-17.md](../../../reports/generated/openclaw-memory-improvement-history-cleanup-2026-04-17.md)
+   - 当前结果：`ab100-zh-history-editor-2 = shared-capability`，`ab100-zh-history-editor-4 = shared-capability`
+   - 这意味着 `100` case live A/B 当前已经没有 shared-fail 残留；有效当前状态可读作 current `100 / 100`、legacy `99 / 100`、`UMC-only = 1`、`both-fail = 0`
+92. `next` 在 shared-fail history cases 收口后，重新设计下一轮更偏 `cross-source`、`conflict`、`multi-step history` 与高信息密度自然中文的 live A/B，争取让 UMC 在更多 harder cases 上形成清晰净增益。
+   - 这组队列现在恢复时应把 Stage 6 shadow telemetry 一起挂上。
 
 ## 延后增强队列
 
