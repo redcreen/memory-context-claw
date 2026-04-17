@@ -16,6 +16,8 @@ If you want the shortest practical answer before reading the whole repo:
 - maintained runnable matrix: `392` cases with `53.83%` Chinese-bearing coverage
 - live A/B on existing-memory consumption: `100` real answer-level cases, `100 / 100` current pass, `99 / 100` legacy pass, `1` Memory Core-only win, `0` builtin-only wins, and `0` shared failures
 - dialogue working-set runtime shadow: replay `16 / 16`, answer A/B baseline `5 / 5`, shadow `5 / 5`, average reduction ratio `0.4368`
+- Stage 7 context-optimization scorecard: captured `16 / 16`, average raw reduction ratio `0.4191`, average package reduction ratio `0.1151`
+- Stage 9 guarded opt-in A/B: baseline `5 / 5`, shadow `5 / 5`, guarded `5 / 5`, guarded applied `2 / 5`, average guarded prompt reduction ratio `0.0424`
 - focused ordinary-conversation write-time A/B:
   - host live: `current=38`, `legacy=21`, `UMC-only=18`
   - Docker hermetic (`30s` turn budget): `current=3`, `legacy=0`, `UMC-only=3`, `both-fail=37`
@@ -26,6 +28,7 @@ Read these first:
 - [Full Regression And Memory Improvement Report](reports/generated/unified-memory-core-full-regression-and-memory-improvement-2026-04-15.md)
 - [Context Slimming And Budgeted Assembly](docs/reference/unified-memory-core/architecture/context-slimming-and-budgeted-assembly.md)
 - [Dialogue Working-Set Pruning](docs/reference/unified-memory-core/architecture/dialogue-working-set-pruning.md)
+- [Stage 7 / Stage 9 Summary](reports/generated/dialogue-working-set-stage7-stage9-2026-04-17.md)
 - [Focused Ordinary-Conversation Realtime Write A/B](reports/generated/openclaw-ordinary-conversation-memory-intent-ab-2026-04-16.md)
 - [Docker Hermetic Ordinary-Conversation Rerun](reports/generated/openclaw-ordinary-conversation-memory-intent-docker-rerun-2026-04-17.md)
 
@@ -38,7 +41,7 @@ From a user perspective, this product should collapse to three promises:
 1. `Light and fast`
    - simple to install, low-friction to adopt, small in footprint, and fast enough on the main path
    - already landed: fact-first assembly, runtime working-set shadow instrumentation, release-preflight, and reproducible Docker hermetic eval
-   - biggest current gap: per-turn context loading optimization is not yet a formal mainline and formal gate; in parallel, ordinary-conversation realtime write is still too timeout-heavy in hermetic runs
+   - biggest current gap: per-turn context loading optimization is not yet a formal mainline and formal gate; in parallel, ordinary-conversation realtime write is still too timeout-heavy in hermetic runs. The daily-use target is also now explicit: normal sessions should stay usable through lighter per-turn context management instead of depending on compat / compact to survive, while compat / compact remains a nightly or background safety net
 2. `Smart`
    - remember what matters, avoid writing noise, send only the right context, and stay conservative when uncertain
    - already landed: realtime `memory_intent` ingestion, nightly self-learning, durable-source slimming direction, and the working-set pruning shadow path
@@ -58,6 +61,7 @@ In technical and engineering terms, that means:
 
 - `light and fast`
   - install command, default configuration, first verification, package size, startup cost, prompt thickness, answer latency, and runtime cost all belong to the same target
+  - the hot path should remain usable without depending on compat / compact as a normal habit; per-turn context management should keep prompt thickness under control, while compat / compact remains a nightly or background safety net
 - `smart`
   - self-learning, working-set pruning, budgeted assembly, abstention / guardrails, and bounded decision contracts must improve judgment quality together
 - `reassuring`
@@ -86,6 +90,7 @@ Areas that are still comparatively weak:
 So the next focus order should stay explicit:
 
 1. finish the `light and fast` context-loading problem first by making context thickness, working-set reduction, budgeted assembly, and answer-level latency one formal mainline
+   - the stage goal is not just “lower average tokens”; it is “keep daily long-running use alive without requiring compat / compact as the normal escape hatch”
 2. continue `light and fast` by pushing down ordinary-conversation realtime-write timeout / latency in hermetic runs
 3. then shorten install / bootstrap / verify
 4. move `smart` from a shadow measurement surface into a very narrow guarded opt-in user path

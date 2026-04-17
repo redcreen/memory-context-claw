@@ -135,6 +135,7 @@ function renderMarkdown(report) {
   lines.push(`- failed: \`${report.summary.failed}\``);
   lines.push(`- average reduction ratio: \`${report.summary.averageReductionRatio}\``);
   lines.push(`- average shadow elapsed ms: \`${report.summary.averageShadowElapsedMs}\``);
+  lines.push(`- guarded applied: \`${report.summary.guardedApplied}\``);
   lines.push(`- relation counts: \`${JSON.stringify(report.summary.relationCounts)}\``);
   lines.push("");
 
@@ -158,6 +159,7 @@ const format = normalizeString(readFlag("--format", "json"));
 const model = normalizeString(readFlag("--model", "gpt-5.4"));
 const reasoningEffort = normalizeString(readFlag("--reasoning-effort", "low"), "low");
 const reuseExports = hasFlag("--reuse-exports");
+const guarded = hasFlag("--guarded");
 const casesPath = path.resolve(
   repoRoot,
   readFlag("--cases", "evals/dialogue-working-set-shadow-cases.js")
@@ -217,11 +219,20 @@ try {
       logger: { warn() {}, info() {} },
       pluginConfig: {
         enabled: true,
+        openclawAdapter: {
+          enabled: false,
+          governedExports: {
+            enabled: false
+          }
+        },
         dialogueWorkingSetShadow: {
           enabled: true,
           model,
           timeoutMs: 120000,
           outputDir
+        },
+        dialogueWorkingSetGuarded: {
+          enabled: guarded
         }
       },
       retrievalFn: async () => []
@@ -256,6 +267,7 @@ try {
       sessionKey: runDef.sessionKey,
       captured: event?.status === "captured",
       passed: event?.status === "captured" && evaluation.passed,
+      guardedApplied: event?.guarded?.applied === true,
       checks: evaluation.checks,
       decision: event?.decision || null,
       snapshot: event?.snapshot || null,
@@ -296,6 +308,7 @@ try {
             ).toFixed(1)
           )
         : 0,
+      guardedApplied: results.filter((item) => item.guardedApplied).length,
       relationCounts
     },
     results

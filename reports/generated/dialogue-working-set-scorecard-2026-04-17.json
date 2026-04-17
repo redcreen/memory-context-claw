@@ -1,0 +1,23 @@
+{
+  "generatedAt": "2026-04-17T07:26:20.269Z",
+  "outputDir": "/Users/redcreen/Project/unified-memory-core/reports/generated/dialogue-working-set-stage7-shadow-2026-04-17",
+  "summary": {
+    "total": 16,
+    "captured": 16,
+    "skipped": 0,
+    "errors": 0,
+    "guardedApplied": 0,
+    "averageRawReductionRatio": 0.4191,
+    "averagePackageReductionRatio": 0.1151,
+    "averageCandidateLoadElapsedMs": 0.0625,
+    "averageAssemblyBuildElapsedMs": 0,
+    "averageDecisionElapsedMs": 15969.875,
+    "averageGuardedCarryForwardEstimate": 0,
+    "relationCounts": {
+      "switch": 7,
+      "branch": 5,
+      "continue": 3,
+      "resolve": 1
+    }
+  }
+}

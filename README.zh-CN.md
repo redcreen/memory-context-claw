@@ -16,6 +16,8 @@
 - 仓库当前维护的 runnable matrix：`392` 个 case，其中中文相关占比 `53.83%`
 - 既有记忆消费型 live A/B：`100` 个真实 answer-level 案例里，current `100 / 100`、legacy `99 / 100`、`1` 个只有 Memory Core 能答对、`0` 个只有默认内置能答对、`0` 个两边都失败
 - dialogue working-set runtime shadow：replay `16 / 16`，answer A/B baseline `5 / 5`、shadow `5 / 5`，average reduction ratio `0.4368`
+- Stage 7 context-optimization scorecard：captured `16 / 16`，average raw reduction ratio `0.4191`，average package reduction ratio `0.1151`
+- Stage 9 guarded opt-in A/B：baseline `5 / 5`、shadow `5 / 5`、guarded `5 / 5`，guarded applied `2 / 5`，average guarded prompt reduction ratio `0.0424`
 - 普通对话实时写记忆专项 A/B：
   - 宿主 live：`current=38`、`legacy=21`、`UMC-only=18`
   - Docker hermetic（`30s` turn budget）：`current=3`、`legacy=0`、`UMC-only=3`、`both-fail=37`
@@ -26,6 +28,7 @@
 - [完整回归与记忆提升报告](reports/generated/unified-memory-core-full-regression-and-memory-improvement-2026-04-15.md)
 - [Context 瘦身与预算化组装](docs/reference/unified-memory-core/architecture/context-slimming-and-budgeted-assembly.zh-CN.md)
 - [对话 Working-Set 裁剪](docs/reference/unified-memory-core/architecture/dialogue-working-set-pruning.zh-CN.md)
+- [Stage 7 / Stage 9 汇总报告](reports/generated/dialogue-working-set-stage7-stage9-2026-04-17.md)
 - [普通对话实时写记忆专项对比](reports/generated/openclaw-ordinary-conversation-memory-intent-ab-2026-04-16.md)
 - [普通对话 Docker 隔离复测总结](reports/generated/openclaw-ordinary-conversation-memory-intent-docker-rerun-2026-04-17.md)
 
@@ -38,7 +41,7 @@
 1. `轻快`
    - 装得简单，接入轻，包体和运行负担尽量小，主路径尽量快
    - 当前已落地：fact-first assembly、runtime working-set shadow instrumentation、release-preflight、独立 Docker hermetic eval
-   - 当前最大缺口：每轮 context 加载优化还没有收成正式主线和正式门禁；与此同时，普通对话实时写记忆在 hermetic 环境下仍然明显受 timeout 压力影响
+   - 当前最大缺口：每轮 context 加载优化还没有收成正式主线和正式门禁；与此同时，普通对话实时写记忆在 hermetic 环境下仍然明显受 timeout 压力影响。日常目标也已经明确成“尽量不靠 compat / compact 才能继续对话”，而是靠更轻的逐轮 context 管理维持热路径可持续；compat / compact 只保留为夜间或后台 safety net
 2. `聪明`
    - 该记的记住，不该记的不乱记；该给的 context 才给，不确定时尽量收敛
    - 当前已落地：realtime `memory_intent` ingestion、nightly self-learning、durable-source slimming 方向、working-set pruning shadow 路径
@@ -58,6 +61,7 @@
 
 - `轻快`
   - 安装命令、默认配置、首次验证、包体、启动成本、prompt thickness、answer latency、runtime cost 都属于同一个目标面
+  - 日常热路径的目标是不依赖 compat / compact 才能继续，而是用逐轮 context 管理把 prompt 厚度持续压在可用范围内；compat / compact 只保留为夜间或后台 safety net
 - `聪明`
   - self-learning、working-set pruning、budgeted assembly、abstention / guardrail、bounded decision contract 要协同提升“判断质量”
 - `省心`
@@ -86,6 +90,7 @@
 所以接下来的重点顺序应该很明确：
 
 1. 先把 `轻快` 里的 `context 加载优化` 做完：把 context thickness、working-set reduction、budgeted assembly 和 answer-level latency 收成一条正式主线。
+   - 这条线的阶段目标不只是“让平均 token 更低”，而是让日常使用尽量不再需要 compat / compact 才能继续长对话。
 2. 再继续收 `轻快`：把 ordinary-conversation realtime-write 的 hermetic timeout / latency 压下去。
 3. 然后再回到 install / bootstrap / verify 的接入体验。
 4. 再把 `聪明` 从 shadow measurement surface 推进到极窄的 guarded opt-in 用户路径。

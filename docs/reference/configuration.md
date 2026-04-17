@@ -295,6 +295,36 @@ Recommended rule:
 - do not treat it as an active prompt-mutation feature
 - use it to collect `relation / evict / pins / reduction ratio` sidecar evidence while the main prompt path stays unchanged
 
+#### `dialogueWorkingSetGuarded`
+
+Controls the very narrow guarded working-set active path for Stage 9.
+
+Default:
+
+```json5
+{
+  enabled: false,
+  allowedRelations: ["switch", "resolve"],
+  minReductionRatio: 0.18,
+  minEvictedTurns: 1,
+  prependCarryForward: true
+}
+```
+
+Meaning:
+
+- `enabled`: whether to enable the guarded opt-in path; keep this `false` by default
+- `allowedRelations`: which `relation` values are allowed to activate the guarded path
+- `minReductionRatio`: the minimum raw reduction ratio required before a guarded candidate can apply
+- `minEvictedTurns`: the minimum number of projected turns that must be evicted
+- `prependCarryForward`: whether semantic pins / archive summaries should be merged into system additions as carry-forward text
+
+Recommended rule:
+
+- keep this `default-off`
+- treat it as a Stage 9 narrow experiment seam, not as a default prompt-mutation feature
+- the purpose of this path is to make daily use rely less on compat / compact, not to move compat / compact into a more frequent main-path habit
+
 #### `openclawAdapter`
 
 Controls the OpenClaw-side governed export loading boundary.

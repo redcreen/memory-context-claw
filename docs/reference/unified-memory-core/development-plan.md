@@ -95,9 +95,11 @@ Current status:
 - `Stage 4`: completed
 - `Stage 5`: completed
 - `Stage 6`: completed
-- `Stage 7`: next
-- current pointer: `101`
-- current recommendation: the docs-first review is complete; next finish context loading optimization first, then close ordinary-conversation realtime-write latency, and only then move to install simplification and the guarded smart path
+- `Stage 7`: in progress
+- `Stage 8`: next
+- `Stage 9`: in progress (`default-off` / opt-in only)
+- current pointer: `108`
+- current recommendation: the Stage 7 scorecard and the Stage 9 guarded seam are both landed; next make the Stage 7 closeout call and run Stage 8 ordinary-conversation realtime-write latency before widening any smart path
 
 Already implemented in the current baseline:
 
@@ -141,9 +143,9 @@ These constraints keep the next per-turn context optimization slice measurable a
 | Stage 4 | `31-38` | connect governed learning outputs into adapter policy use | `completed` |
 | Stage 5 | `39-46` | harden product operations and split-ready execution | `completed` |
 | Stage 6 | `93-100` | validate dialogue working-set pruning in runtime shadow mode before any active prompt cutover | `completed` |
-| Stage 7 | `101-108` | turn context loading optimization into a formal mainline and formal gate | `next` |
-| Stage 8 | `109-114` | push down hermetic timeout / latency on ordinary-conversation realtime write | `planned` |
-| Stage 9 | `115-120` | start turning context optimization into user-visible value through a bounded guarded path | `planned` |
+| Stage 7 | `101-108` | turn context loading optimization into a formal mainline and formal gate | `in_progress` |
+| Stage 8 | `109-114` | push down hermetic timeout / latency on ordinary-conversation realtime write | `next` |
+| Stage 9 | `115-120` | start turning context optimization into user-visible value through a bounded guarded path | `in_progress` |
 | Stage 10 | `121-126` | shorten install / bootstrap / verify and strengthen shared-foundation product proof | `planned` |
 
 ## Sequential Build Plan
@@ -272,27 +274,34 @@ Stage 6 evidence:
 
 ### Stage 7. Context Loading Optimization Closure
 
+Current evidence:
+
+- Stage 7 shadow replay: [../../../reports/generated/dialogue-working-set-stage7-shadow-2026-04-17.md](../../../reports/generated/dialogue-working-set-stage7-shadow-2026-04-17.md)
+- Stage 7 scorecard: [../../../reports/generated/dialogue-working-set-scorecard-2026-04-17.md](../../../reports/generated/dialogue-working-set-scorecard-2026-04-17.md)
+- Stage 7 / Stage 9 summary: [../../../reports/generated/dialogue-working-set-stage7-stage9-2026-04-17.md](../../../reports/generated/dialogue-working-set-stage7-stage9-2026-04-17.md)
+
 Stage complete when:
 
 - context optimization is no longer just “some shadow reports” and becomes one formal mainline with one scorecard
 - durable-source slimming, budgeted assembly, working-set pruning, and harder replay / Docker / local evidence can be judged on one surface
 - rollout / rollback boundaries, operator metrics, and harder-case coverage are strong enough to support the next phase
+- daily long conversations usually no longer need compat / compact as the normal way to keep going; compat / compact remains a nightly or background safety net
 
-101. `next` Define one unified context-optimization scorecard.
+101. `completed` Define one unified context-optimization scorecard.
    - It must include at least `prompt thickness`, `reduction ratio`, `retrieval / assembly latency`, `answer latency`, `rollback boundary`, and `case class`.
-102. `todo` Map the existing evidence surfaces onto that scorecard.
+102. `completed` Map the existing evidence surfaces onto that scorecard.
    - At minimum, durable-source slimming, Stage 6 shadow exports, history cleanup, and the ordinary-conversation Docker rerun should report through one aggregation view.
-103. `todo` Define the `context loading package` contract.
+103. `completed` Define the `context loading package` contract.
    - Make raw turns, pins, capsules, durable context, and budget slots explicit layers instead of leaving them spread across separate reports.
 104. `todo` Design and add the next harder eval matrix.
    - Prioritize `cross-source`, `conflict`, `multi-step history`, `open-loop return`, and denser natural-Chinese multi-topic switches.
-105. `todo` Add a formal gate and operator summary for context optimization.
+105. `completed` Add a formal gate and operator summary for context optimization.
    - Docker / local / replay paths should all emit comparable thickness / latency / reduction metrics.
-106. `todo` Collapse shadow exports, sidecar artifacts, and answer-level regression into one operator view.
+106. `completed` Collapse shadow exports, sidecar artifacts, and answer-level regression into one operator view.
    - The system should be able to answer “is the lighter context package actually better?” directly.
-107. `todo` Define one very narrow guarded experiment seam without turning it on by default.
+107. `completed` Define one very narrow guarded experiment seam without turning it on by default.
    - Rollback must stay configuration-only, and builtin memory behavior must stay unchanged.
-108. `todo` Use harder replay / Docker / local evidence to make the Stage 7 closeout decision.
+108. `in_progress` Use harder replay / Docker / local evidence to make the Stage 7 closeout decision.
    - The decision is not “ship now”; it is “is Stage 8 now safe to continue on a cleaner realtime-write path?”
 
 ### Stage 8. Ordinary-Conversation Realtime-Write Latency Closure
@@ -313,18 +322,24 @@ Stage complete when:
 
 ### Stage 9. Guarded Smart-Path Promotion
 
+Current evidence:
+
+- Stage 9 guarded answer A/B: [../../../reports/generated/dialogue-working-set-guarded-answer-ab-2026-04-17.md](../../../reports/generated/dialogue-working-set-guarded-answer-ab-2026-04-17.md)
+- Stage 7 / Stage 9 summary: [../../../reports/generated/dialogue-working-set-stage7-stage9-2026-04-17.md](../../../reports/generated/dialogue-working-set-stage7-stage9-2026-04-17.md)
+
 Stage complete when:
 
 - context optimization starts becoming a real user gain instead of shadow telemetry only
 - the bounded guarded experiment seam has a clear rollout / rollback contract
 - the active-path experiment stays narrow and does not drift into a default-path switch
+- the guarded smart path still serves the goal of “daily use should avoid depending on compat / compact”, rather than making compat / compact a more frequent main-path habit
 
-115. `todo` define the promotion contract for the bounded smart path.
-116. `todo` choose one very narrow opt-in active-path experiment surface.
-117. `todo` bind operator metrics, rollback boundaries, and regression gates to that surface.
-118. `todo` run guarded opt-in A/B on fixed case classes.
-119. `todo` decide whether to keep opt-in only, stay shadow-only, or allow slightly wider testing.
-120. `todo` close the stage when users can feel the gain and operators still stay in control.
+115. `completed` define the promotion contract for the bounded smart path.
+116. `completed` choose one very narrow opt-in active-path experiment surface.
+117. `completed` bind operator metrics, rollback boundaries, and regression gates to that surface.
+118. `completed` run guarded opt-in A/B on fixed case classes.
+119. `completed` decide to keep the feature opt-in only for now.
+120. `in_progress` close the stage when users can feel the gain and operators still stay in control.
 
 ### Stage 10. Adoption Simplification And Shared-Foundation Proof
 

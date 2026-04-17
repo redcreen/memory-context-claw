@@ -159,6 +159,22 @@ Long-lived memory can keep growing.
 
 Final prompts should not grow proportionally with it.
 
+## Daily Runtime Goal
+
+This track is not trying to make `compact / compat` more frequent.
+
+The better target is:
+
+- keep normal sessions sustainable through per-turn context slimming, budgeted assembly, and working-set management
+- keep `compact / compat` only as a nightly or background safety net
+
+If you want an engineering analogy, it is closer to:
+
+- incremental reclamation during normal use
+- a lower-frequency full sweep later
+
+But the “reclamation” here only affects the prompt working set and context package. It does not delete durable memory sources.
+
 ### 2. Documents are memory sources, not default prompt payloads
 
 `MEMORY.md`, `AGENTS.md`, and notes should remain:

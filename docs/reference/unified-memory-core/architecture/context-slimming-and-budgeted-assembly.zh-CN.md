@@ -141,6 +141,22 @@
 
 - `question-shape-first, budgeted assembly`
 
+## 日常运行目标
+
+这条线的目标不是把 `compact / compat` 做得更频繁。
+
+更合理的目标是：
+
+- 日常对话靠逐轮的 context slimming、budgeted assembly、working-set 管理维持可持续
+- `compact / compat` 只保留为夜间或后台 safety net
+
+如果要借一个工程类比，它更像：
+
+- 平时做增量回收
+- 低频再做一次 full sweep
+
+但这里的“回收”只作用于 prompt working set 和 context package，不是删除 durable memory source。
+
 ## 非目标
 
 这条方案现在**不**试图做这些事：

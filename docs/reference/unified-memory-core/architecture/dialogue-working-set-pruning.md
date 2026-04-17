@@ -146,6 +146,22 @@ Preferred implementation order:
 3. guarded activation on a small slice
 4. only then real integration into assembly
 
+## Daily-Path Goal
+
+The long-term goal of this runtime layer is not to make users depend on `compact / compat` to keep long conversations alive.
+
+The better target is:
+
+- do lightweight working-set management each turn
+- move only expired raw turns out of the next prompt
+- let long-running conversations continue on the normal hot path without needing compact in most daily use
+
+`compact / compat` can still exist, but it fits better as:
+
+- nightly cleanup
+- a background safety net
+- a low-frequency fallback under extreme token pressure
+
 ## Interaction With Existing Designs
 
 ### With Context Slimming

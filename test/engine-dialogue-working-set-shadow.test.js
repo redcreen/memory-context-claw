@@ -81,8 +81,8 @@ test("assemble records runtime shadow telemetry even when retrieval returns no c
       relation: "switch",
       confidence: 0.94,
       evict_turn_ids: ["t1", "t2"],
-      pin_turn_ids: ["t1"],
-      archive_summary: "Keep the user preference as a pin.",
+      pin_turn_ids: [],
+      archive_summary: "",
       reasoning_summary: "The active topic switched."
     }),
     logger: { warn() {}, info() {} },
@@ -156,4 +156,105 @@ test("assemble keeps prompt path stable and writes a skipped shadow event when s
   assert.equal(events.length, 1);
   assert.equal(events[0].status, "skipped");
   assert.equal(events[0].reason, "subagent_unavailable");
+});
+
+test("assemble applies guarded working-set pruning only on opt-in switch cases", async () => {
+  const outputDir = await fs.mkdtemp(path.join(os.tmpdir(), "umc-guarded-"));
+  const engine = new ContextAssemblyEngine({
+    runtime: createRuntimeWithShadowDecision({
+      relation: "switch",
+      confidence: 0.95,
+      evict_turn_ids: ["t1", "t2"],
+      pin_turn_ids: [],
+      archive_summary: "",
+      reasoning_summary: "The active topic switched."
+    }),
+    logger: { warn() {}, info() {} },
+    pluginConfig: {
+      enabled: true,
+      openclawAdapter: {
+        enabled: false,
+        governedExports: {
+          enabled: false
+        }
+      },
+      dialogueWorkingSetShadow: {
+        enabled: true,
+        outputDir
+      },
+      dialogueWorkingSetGuarded: {
+        enabled: true
+      }
+    },
+    retrievalFn: async () => []
+  });
+
+  const result = await engine.assemble({
+    messages: [
+      { role: "user", content: "旧话题先放这里。" },
+      { role: "assistant", content: "收到。" },
+      { role: "user", content: "现在切到新任务：写 shadow 报告。" }
+    ],
+    tokenBudget: 4096,
+    sessionKey: "agent:main:test-guarded"
+  });
+
+  assert.equal(result.messages.length, 1);
+  assert.equal(result.systemPromptAddition, "");
+
+  const events = await listExportEvents(outputDir);
+  assert.equal(events.length, 1);
+  assert.equal(events[0].guarded.applied, true);
+  assert.equal(events[0].guarded.reason, "guarded_candidate");
+  assert.equal(events[0].scorecard.guardedApplied, true);
+});
+
+test("assemble does not apply guarded pruning for continue relations", async () => {
+  const outputDir = await fs.mkdtemp(path.join(os.tmpdir(), "umc-guarded-continue-"));
+  const engine = new ContextAssemblyEngine({
+    runtime: createRuntimeWithShadowDecision({
+      relation: "continue",
+      confidence: 0.91,
+      evict_turn_ids: [],
+      pin_turn_ids: [],
+      archive_summary: "",
+      reasoning_summary: "The active topic continues."
+    }),
+    logger: { warn() {}, info() {} },
+    pluginConfig: {
+      enabled: true,
+      openclawAdapter: {
+        enabled: false,
+        governedExports: {
+          enabled: false
+        }
+      },
+      dialogueWorkingSetShadow: {
+        enabled: true,
+        outputDir
+      },
+      dialogueWorkingSetGuarded: {
+        enabled: true
+      }
+    },
+    retrievalFn: async () => []
+  });
+
+  const result = await engine.assemble({
+    messages: [
+      { role: "user", content: "继续帮我整理发布说明。" },
+      { role: "assistant", content: "好，我继续整理。" },
+      { role: "user", content: "把风险和回滚一并写上。" }
+    ],
+    tokenBudget: 4096,
+    sessionKey: "agent:main:test-guarded-continue"
+  });
+
+  assert.equal(result.messages.length, 3);
+  assert.equal(result.systemPromptAddition, "");
+
+  const events = await listExportEvents(outputDir);
+  assert.equal(events.length, 1);
+  assert.equal(events[0].guarded.applied, false);
+  assert.equal(events[0].guarded.reason, "relation_not_allowed");
 });

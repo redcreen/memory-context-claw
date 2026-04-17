@@ -297,6 +297,36 @@ openclaw memory search "我爱吃什么"
 - 不要把它当成 active prompt mutation feature
 - 它的作用是在正式 prompt path 不变的前提下，收集 `relation / evict / pins / reduction ratio` 这些 sidecar 证据
 
+#### `dialogueWorkingSetGuarded`
+
+控制 Stage 9 的极窄 guarded working-set active path。
+
+默认值：
+
+```json5
+{
+  enabled: false,
+  allowedRelations: ["switch", "resolve"],
+  minReductionRatio: 0.18,
+  minEvictedTurns: 1,
+  prependCarryForward: true
+}
+```
+
+含义：
+
+- `enabled`：是否打开 guarded opt-in 路径；默认保持 `false`
+- `allowedRelations`：只允许哪些 `relation` 进入 guarded path
+- `minReductionRatio`：至少达到多少 raw reduction ratio 才允许 guarded candidate 生效
+- `minEvictedTurns`：至少需要 evict 多少个 projected turns
+- `prependCarryForward`：是否把语义 pin / archive summary 以前置 carry-forward 的方式并入 system additions
+
+推荐原则：
+
+- 保持 `default-off`
+- 把它当成 Stage 9 的窄实验面，而不是默认 prompt mutation
+- 这条路径服务的目标是“日常尽量不靠 compat / compact”，而不是把 compat / compact 搬进更频繁的主路径
+
 #### `openclawAdapter`
 
 控制 OpenClaw 侧的 governed export 加载边界。

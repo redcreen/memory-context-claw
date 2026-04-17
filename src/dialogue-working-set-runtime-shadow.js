@@ -6,6 +6,8 @@ import {
   buildWorkingSetDecisionPrompt,
   parseWorkingSetDecisionResponse
 } from "./dialogue-working-set-llm.js";
+import { applyGuardedWorkingSetToMessages } from "./dialogue-working-set-guarded.js";
+import { buildContextOptimizationScorecard } from "./dialogue-working-set-scorecard.js";
 import { buildShadowContextSnapshot } from "./dialogue-working-set-shadow.js";
 import {
   messageContentToText,
@@ -68,10 +70,14 @@ export function resolveDialogueWorkingSetShadowOutputDir(outputDir = "") {
 }
 
 export function projectRuntimeMessagesToDialogueTurns(messages = [], options = {}) {
+  return projectRuntimeMessagesToDialogueProjection(messages, options).turns;
+}
+
+export function projectRuntimeMessagesToDialogueProjection(messages = [], options = {}) {
   const maxTurns = Number(options.maxTurns || 12);
   const maxCharsPerTurn = Number(options.maxCharsPerTurn || 900);
   const dialogueMessages = (Array.isArray(messages) ? messages : [])
-    .flatMap((message) => {
+    .flatMap((message, sourceIndex) => {
       const role = normalizeString(message?.role);
       if (!["user", "assistant"].includes(role)) {
         return [];
@@ -80,15 +86,25 @@ export function projectRuntimeMessagesToDialogueTurns(messages = [], options = {
       if (!content) {
         return [];
       }
-      return [{ role, content }];
+      return [{ role, content, sourceIndex }];
     });
 
   const sliced = maxTurns > 0 ? dialogueMessages.slice(-maxTurns) : dialogueMessages;
-  return sliced.map((turn, index) => ({
+  const turns = sliced.map((turn, index) => ({
     id: `t${index + 1}`,
     role: turn.role,
     content: turn.content
   }));
+  const projection = sliced.map((turn, index) => ({
+    id: `t${index + 1}`,
+    role: turn.role,
+    content: turn.content,
+    sourceIndex: turn.sourceIndex
+  }));
+  return {
+    turns,
+    projection
+  };
 }
 
 export function evaluateDialogueWorkingSetShadowSampling({
@@ -103,17 +119,18 @@ export function evaluateDialogueWorkingSetShadowSampling({
   if (!normalizeString(query)) {
     return { eligible: false, reason: "missing_query" };
   }
-  const turns = projectRuntimeMessagesToDialogueTurns(messages, config);
+  const projected = projectRuntimeMessagesToDialogueProjection(messages, config);
+  const turns = projected.turns;
   if (turns.length < Number(config.minTurns || 3)) {
-    return { eligible: false, reason: "not_enough_turns", turns };
+    return { eligible: false, reason: "not_enough_turns", turns, projection: projected.projection };
   }
   if (!turns.some((turn) => turn.role === "user")) {
-    return { eligible: false, reason: "missing_user_turn", turns };
+    return { eligible: false, reason: "missing_user_turn", turns, projection: projected.projection };
   }
   if (!hasSubagentRuntime(runtime)) {
-    return { eligible: false, reason: "subagent_unavailable", turns };
+    return { eligible: false, reason: "subagent_unavailable", turns, projection: projected.projection };
   }
-  return { eligible: true, turns };
+  return { eligible: true, turns, projection: projected.projection };
 }
 
 async function runWorkingSetShadowDecision({
@@ -185,6 +202,7 @@ async function runWorkingSetShadowDecision({
 function buildShadowSummaryEvent(event, exportRelativePath = "") {
   const snapshot = event.snapshot || {};
   const applied = snapshot.applied || {};
+  const scorecard = event.scorecard || {};
 
   return {
     schema_version: event.schema_version,
@@ -199,9 +217,14 @@ function buildShadowSummaryEvent(event, exportRelativePath = "") {
     pin_turn_ids: applied.pinTurnIds || [],
     evict_turn_ids: applied.appliedEvictTurnIds || [],
     reduction_ratio: Number(applied.reductionRatio || 0),
+    package_reduction_ratio: Number(scorecard.packageReductionRatio || 0),
     baseline_prompt_estimate: Number(snapshot.baselinePromptEstimate || 0),
     shadow_raw_prompt_estimate: Number(snapshot.shadowRawPromptEstimate || 0),
     shadow_package_estimate: Number(snapshot.shadowPackageEstimate || 0),
+    candidate_load_elapsed_ms: Number(scorecard.candidateLoadElapsedMs || 0),
+    assembly_build_elapsed_ms: Number(scorecard.assemblyBuildElapsedMs || 0),
+    guarded_applied: event.guarded?.applied === true,
+    guarded_reason: String(event.guarded?.reason || ""),
     elapsed_ms: Number(event.timings?.totalElapsedMs || 0),
     export_path: exportRelativePath
   };
@@ -238,9 +261,11 @@ export async function captureDialogueWorkingSetShadow({
   runtime,
   logger,
   config,
+  guardedConfig = {},
   sessionKey,
   query,
-  messages
+  messages,
+  assemblyMetrics = {}
 }) {
   const startedAt = Date.now();
   const normalizedSessionKey = normalizeSessionKey(sessionKey);
@@ -269,6 +294,16 @@ export async function captureDialogueWorkingSetShadow({
     transcript: sampling.turns || projectRuntimeMessagesToDialogueTurns(messages, config),
     decision: null,
     snapshot: null,
+    scorecard: null,
+    guarded: {
+      enabled: guardedConfig?.enabled === true,
+      applied: false,
+      reason: guardedConfig?.enabled === true ? "not_evaluated" : "feature_disabled",
+      filteredMessageCount: Array.isArray(messages) ? messages.length : 0,
+      filteredMessageTokenEstimate: 0,
+      carryForwardEstimate: 0,
+      evictedSourceIndices: []
+    },
     timings: {
       totalElapsedMs: 0,
       decisionElapsedMs: 0
@@ -277,6 +312,16 @@ export async function captureDialogueWorkingSetShadow({
 
   if (!sampling.eligible) {
     baseEvent.timings.totalElapsedMs = Date.now() - startedAt;
+    baseEvent.scorecard = buildContextOptimizationScorecard({
+      projectionTurns: baseEvent.transcript,
+      snapshot: baseEvent.snapshot,
+      assemblyMetrics: {
+        ...assemblyMetrics,
+        totalElapsedMs: baseEvent.timings.totalElapsedMs,
+        decisionElapsedMs: 0
+      },
+      guarded: baseEvent.guarded
+    });
     return writeShadowArtifacts(config.outputDir, baseEvent);
   }
 
@@ -293,11 +338,28 @@ export async function captureDialogueWorkingSetShadow({
       turns: sampling.turns,
       decision: decision.payload
     });
+    const guarded = applyGuardedWorkingSetToMessages({
+      messages,
+      projection: sampling.projection,
+      snapshot,
+      config: guardedConfig
+    });
 
     return writeShadowArtifacts(config.outputDir, {
       ...baseEvent,
       decision: decision.payload,
       snapshot,
+      scorecard: buildContextOptimizationScorecard({
+        projectionTurns: sampling.turns,
+        snapshot,
+        assemblyMetrics: {
+          ...assemblyMetrics,
+          totalElapsedMs: Date.now() - startedAt,
+          decisionElapsedMs: decision.elapsedMs
+        },
+        guarded
+      }),
+      guarded,
       timings: {
         totalElapsedMs: Date.now() - startedAt,
         decisionElapsedMs: decision.elapsedMs
@@ -312,6 +374,16 @@ export async function captureDialogueWorkingSetShadow({
       ...baseEvent,
       status: "error",
       reason: normalizeString(String(error), "shadow_capture_failed"),
+      scorecard: buildContextOptimizationScorecard({
+        projectionTurns: baseEvent.transcript,
+        snapshot: baseEvent.snapshot,
+        assemblyMetrics: {
+          ...assemblyMetrics,
+          totalElapsedMs: Date.now() - startedAt,
+          decisionElapsedMs: 0
+        },
+        guarded: baseEvent.guarded
+      }),
       timings: {
         totalElapsedMs: Date.now() - startedAt,
         decisionElapsedMs: 0

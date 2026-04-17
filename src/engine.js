@@ -1,6 +1,7 @@
 import { delegateCompactionToRuntime } from "openclaw/plugin-sdk";
 import { buildAssemblyResult } from "./assembly.js";
 import { resolvePluginConfig } from "./config.js";
+import { mergeSystemPromptAdditions } from "./dialogue-working-set-guarded.js";
 import { captureDialogueWorkingSetShadow } from "./dialogue-working-set-runtime-shadow.js";
 import { DistillationManager, estimateUsageRatio } from "./distillation-manager.js";
 import { createOpenClawAdapterRuntime } from "./openclaw-adapter.js";
@@ -12,7 +13,13 @@ import {
   shouldSkipLlmRerank
 } from "./rerank.js";
 import { scoreCandidates } from "./scoring.js";
-import { extractLatestUserPrompt, isInternalRerankSession, parseAgentId } from "./utils.js";
+import {
+  estimateMessageTokens,
+  estimateTokenCountFromText,
+  extractLatestUserPrompt,
+  isInternalRerankSession,
+  parseAgentId
+} from "./utils.js";
 
 export class ContextAssemblyEngine {
   constructor({
@@ -64,8 +71,17 @@ export class ContextAssemblyEngine {
   }
 
   async assemble(params) {
+    const assembleStartedAt = Date.now();
     const query = params.prompt || extractLatestUserPrompt(params.messages);
     const internalRerankSession = isInternalRerankSession(params.sessionKey);
+    const shouldRunDialogueWorkingSet = (
+      (this.config.dialogueWorkingSetShadow?.enabled || this.config.dialogueWorkingSetGuarded?.enabled)
+      && this.config.enabled
+      && query
+      && !internalRerankSession
+    );
+    let dialogueWorkingSetEventPromise = null;
+    let dialogueWorkingSetEvent = null;
     const usageRatio = estimateUsageRatio(params.messages, params.tokenBudget);
     if (this.config.memoryDistillation.enabled &&
       this.config.memoryDistillation.triggerBeforeCompaction &&
@@ -78,8 +94,11 @@ export class ContextAssemblyEngine {
       });
     }
     let result = null;
+    let candidateLoadElapsedMs = 0;
+    let assemblyBuildElapsedMs = 0;
 
     if (!this.config.enabled || !query || internalRerankSession) {
+      const assemblyBuildStartedAt = Date.now();
       result = buildAssemblyResult({
         messages: params.messages,
         tokenBudget: params.tokenBudget,
@@ -87,8 +106,10 @@ export class ContextAssemblyEngine {
         recentMessageCount: this.config.recentMessageCount,
         candidates: []
       });
+      assemblyBuildElapsedMs = Date.now() - assemblyBuildStartedAt;
     } else {
       const agentId = parseAgentId(params.sessionKey, this.config.forceAgentId);
+      const candidateLoadStartedAt = Date.now();
       const [governedContext, retrievalCandidates] = await Promise.all([
         this.openclawAdapterRuntime.loadGovernedContext({
           query,
@@ -106,19 +127,46 @@ export class ContextAssemblyEngine {
           logger: this.logger
         })
       ]);
+      candidateLoadElapsedMs = Date.now() - candidateLoadStartedAt;
       const governedCandidates = Array.isArray(governedContext?.candidates)
         ? governedContext.candidates
         : [];
       const rawCandidates = [...governedCandidates, ...retrievalCandidates];
 
       if (rawCandidates.length === 0) {
+        if (shouldRunDialogueWorkingSet && !dialogueWorkingSetEventPromise) {
+          dialogueWorkingSetEventPromise = captureDialogueWorkingSetShadow({
+            runtime: this.runtime,
+            logger: this.logger,
+            config: {
+              ...this.config.dialogueWorkingSetShadow,
+              enabled: true
+            },
+            guardedConfig: this.config.dialogueWorkingSetGuarded,
+            sessionKey: params.sessionKey,
+            query,
+            messages: params.messages,
+            assemblyMetrics: {
+              candidateLoadElapsedMs
+            }
+          });
+        }
+        const assemblyBuildStartedAt = Date.now();
+        let assemblyMessages = params.messages;
+        if (this.config.dialogueWorkingSetGuarded?.enabled && dialogueWorkingSetEventPromise) {
+          dialogueWorkingSetEvent = await dialogueWorkingSetEventPromise;
+          if (dialogueWorkingSetEvent?.guarded?.applied) {
+            assemblyMessages = dialogueWorkingSetEvent.guarded.filteredMessages;
+          }
+        }
         result = buildAssemblyResult({
-          messages: params.messages,
+          messages: assemblyMessages,
           tokenBudget: params.tokenBudget,
           memoryBudgetRatio: 0,
           recentMessageCount: this.config.recentMessageCount,
           candidates: []
         });
+        assemblyBuildElapsedMs = Date.now() - assemblyBuildStartedAt;
       } else {
         const heuristicCandidates = this.scoreFn(
           rawCandidates,
@@ -157,8 +205,33 @@ export class ContextAssemblyEngine {
         });
         rankedCandidates = policyAdjusted.candidates;
 
+        if (shouldRunDialogueWorkingSet && !dialogueWorkingSetEventPromise) {
+          dialogueWorkingSetEventPromise = captureDialogueWorkingSetShadow({
+            runtime: this.runtime,
+            logger: this.logger,
+            config: {
+              ...this.config.dialogueWorkingSetShadow,
+              enabled: true
+            },
+            guardedConfig: this.config.dialogueWorkingSetGuarded,
+            sessionKey: params.sessionKey,
+            query,
+            messages: params.messages,
+            assemblyMetrics: {
+              candidateLoadElapsedMs
+            }
+          });
+        }
+        const assemblyBuildStartedAt = Date.now();
+        let assemblyMessages = params.messages;
+        if (this.config.dialogueWorkingSetGuarded?.enabled && dialogueWorkingSetEventPromise) {
+          dialogueWorkingSetEvent = await dialogueWorkingSetEventPromise;
+          if (dialogueWorkingSetEvent?.guarded?.applied) {
+            assemblyMessages = dialogueWorkingSetEvent.guarded.filteredMessages;
+          }
+        }
         result = buildAssemblyResult({
-          messages: params.messages,
+          messages: assemblyMessages,
           tokenBudget: params.tokenBudget,
           memoryBudgetRatio: this.config.memoryBudgetRatio,
           recentMessageCount: this.config.recentMessageCount,
@@ -167,18 +240,27 @@ export class ContextAssemblyEngine {
           candidates: rankedCandidates,
           policyContext: governedContext?.policyContext
         });
+        assemblyBuildElapsedMs = Date.now() - assemblyBuildStartedAt;
       }
     }
 
-    if (this.config.dialogueWorkingSetShadow?.enabled && this.config.enabled && query && !internalRerankSession) {
-      await captureDialogueWorkingSetShadow({
-        runtime: this.runtime,
-        logger: this.logger,
-        config: this.config.dialogueWorkingSetShadow,
-        sessionKey: params.sessionKey,
-        query,
-        messages: params.messages
-      });
+    if (dialogueWorkingSetEventPromise && !dialogueWorkingSetEvent) {
+      dialogueWorkingSetEvent = await dialogueWorkingSetEventPromise;
+    }
+
+    if (dialogueWorkingSetEvent?.guarded?.applied) {
+      const mergedAddition = mergeSystemPromptAdditions(
+        dialogueWorkingSetEvent.guarded.carryForwardText,
+        result.systemPromptAddition
+      );
+      const estimatedTokens =
+        result.messages.reduce((sum, message) => sum + estimateMessageTokens(message), 0) +
+        estimateTokenCountFromText(mergedAddition);
+      result = {
+        ...result,
+        systemPromptAddition: mergedAddition,
+        estimatedTokens
+      };
     }
 
     return result;

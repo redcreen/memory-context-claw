@@ -67,6 +67,22 @@ Supporting evidence:
 - [generated/dialogue-working-set-runtime-shadow-summary-2026-04-16.md](../reports/generated/dialogue-working-set-runtime-shadow-summary-2026-04-16.md)
 - [generated/dialogue-working-set-stage6-2026-04-16.md](../reports/generated/dialogue-working-set-stage6-2026-04-16.md)
 
+## Stage 7 / Stage 9 Snapshot
+
+- Stage 7 shadow replay: `15 / 16`
+- Stage 7 scorecard: captured `16 / 16`, average raw reduction ratio `0.4191`, average package reduction ratio `0.1151`
+- Stage 9 guarded answer A/B: baseline `5 / 5`, shadow `5 / 5`, guarded `5 / 5`
+- Stage 9 guarded applied: `2 / 5`
+- Stage 9 average guarded prompt reduction ratio: `0.0424`
+- Interpretation: the Stage 7 operator-facing scorecard and the Stage 9 guarded opt-in seam are both landed, but Stage 7 is not formally closed yet and Stage 9 remains `default-off` / opt-in only
+
+Supporting evidence:
+
+- [generated/dialogue-working-set-stage7-shadow-2026-04-17.md](../reports/generated/dialogue-working-set-stage7-shadow-2026-04-17.md)
+- [generated/dialogue-working-set-scorecard-2026-04-17.md](../reports/generated/dialogue-working-set-scorecard-2026-04-17.md)
+- [generated/dialogue-working-set-guarded-answer-ab-2026-04-17.md](../reports/generated/dialogue-working-set-guarded-answer-ab-2026-04-17.md)
+- [generated/dialogue-working-set-stage7-stage9-2026-04-17.md](../reports/generated/dialogue-working-set-stage7-stage9-2026-04-17.md)
+
 ## Current Review Verdict
 
 - Completed:
@@ -77,6 +93,7 @@ Supporting evidence:
   - make `context loading optimization` the first `light and fast` priority instead of putting installation polish first
   - define one unified context-optimization scorecard so `prompt thickness / reduction / retrieval-assembly latency / answer latency / rollback metrics` are judged on one surface
   - then attach the bounded LLM-led context decision contract, operator metrics, rollback boundary, and harder live A/B redesign to that scorecard
+  - make “daily sessions should not normally depend on compat / compact, and compat / compact should stay a nightly or background safety net” an explicit milestone goal
 - Explicitly not planned right now:
   - no default active prompt mutation
   - no builtin memory behavior changes
@@ -98,6 +115,7 @@ At roadmap level this means:
 
 - `light and fast`
   - adoption cost, default-config complexity, package size, runtime footprint, context thickness, and latency stay inside milestone evaluation
+  - the hot path should not treat compat / compact as the normal survival mechanism; continuous context management should keep prompt thickness and latency inside a usable band
 - `smart`
   - retrieval, learning, working-set pruning, and budgeted assembly must improve together as one evidence surface
 - `reassuring`
@@ -119,6 +137,7 @@ The roadmap should make the current distance from the north star explicit:
 That makes the next priority order explicit:
 
 1. `light and fast / context loading optimization`: make per-turn context thickness, working-set reduction, budgeted assembly, and answer-level latency the mainline
+   - the target is not “compact more often”; it is “let long-running daily conversations continue without needing compact as the normal escape hatch”
 2. `light and fast / realtime-write latency`: then reduce the timeout-heavy pressure on the hermetic ordinary-conversation write path
 3. `light and fast / install`: only after that, shorten install / bootstrap / verify
 4. `smart`: move from shadow-only to a narrow bounded guarded user path
@@ -130,18 +149,18 @@ Stages 1-6 are complete, but the roadmap cannot stop at “all historical stages
 
 | Next Milestone | Status | Why Now | Exit Signal |
 | --- | --- | --- | --- |
-| Stage 7: context loading optimization closure | `next` | the biggest current product gap is no longer “does the feature exist?” but “is each turn’s context package light enough?”; Stage 6 is still a measurement layer | the unified scorecard is fixed and harder replay / Docker / local evidence consistently show a lighter context package without answer-quality damage |
-| Stage 8: ordinary-conversation realtime-write latency closure | `planned` | the Docker hermetic rerun now says the dominant risk is bounded-budget answer timeout, not contamination | the ordinary-conversation clean path stops being dominated by timeouts and becomes a trustworthy regular A/B surface |
-| Stage 9: guarded smart-path promotion | `planned` | context loading optimization is still not a user gain if it stays shadow-only forever | a bounded guarded experiment surface has an explicit rollback boundary, operator metrics, and promotion gate |
+| Stage 7: context loading optimization closure | `in_progress` | the biggest current product gap is no longer “does the feature exist?” but “is each turn’s context package light enough?”; Stage 6 is still a measurement layer | the unified scorecard is fixed and harder replay / Docker / local evidence consistently show a lighter context package without answer-quality damage, and daily long conversations usually no longer need compat / compact as the normal way to keep going |
+| Stage 8: ordinary-conversation realtime-write latency closure | `next` | the Docker hermetic rerun now says the dominant risk is bounded-budget answer timeout, not contamination | the ordinary-conversation clean path stops being dominated by timeouts and becomes a trustworthy regular A/B surface |
+| Stage 9: guarded smart-path promotion | `in_progress` | context loading optimization is still not a user gain if it stays shadow-only forever | a bounded guarded experiment surface has an explicit rollback boundary, operator metrics, and promotion gate, while compat / compact remains a background fallback instead of the default daily path |
 | Stage 10: adoption simplification and shared-foundation proof | `planned` | install / bootstrap is still too manual, and Codex / multi-instance product evidence still lags | adoption is shorter and clearer, and the shared-foundation story is proven beyond architecture diagrams |
 
 ## Now / Next / Later
 
 | Horizon | Focus | Exit Signal |
 | --- | --- | --- |
-| Now | finish `Stage 7`: turn context loading optimization into the explicit mainline and answer “how do we make every turn lighter and faster without hurting quality?” | roadmap, development plan, architecture docs, and `.codex/*` all point at the same Stage 7 recovery point and the same context-optimization scorecard |
-| Next | after Stage 7 evidence is stable, run `Stage 8` to close ordinary-conversation realtime-write latency | the clean Docker path is no longer dominated by timeouts and can act as a trustworthy regular A/B surface |
-| Later | discuss `Stage 9` guarded active-path experiments and `Stage 10` adoption/shared-foundation closure only after Stages 7 and 8 are stable | the smart-path promotion gate, rollback boundary, and shared-foundation proof are operator-ready |
+| Now | keep closing `Stage 7` while holding `Stage 9` at `default-off` / opt-in only: answer “how do we make every turn lighter and faster without hurting quality?” | the unified scorecard, guarded seam, rollback boundary, and operator summary are all landed, and the next focus is clearly closeout plus latency |
+| Next | run `Stage 8` for ordinary-conversation realtime-write latency while keeping the narrow Stage 9 experiment seam | the clean Docker path is no longer dominated by timeouts and can act as a trustworthy regular A/B surface |
+| Later | after Stages 7 and 8 are stable, decide whether Stage 9 can widen and whether Stage 10 adoption/shared-foundation closure should start | the smart-path promotion gate, rollback boundary, and shared-foundation proof are operator-ready |
 
 ## Current Execution Focus
 
@@ -168,9 +187,9 @@ When resuming work:
 | [Stage 4: policy adaptation](reference/unified-memory-core/development-plan.md#stage-4-policy-adaptation-and-multi-consumer-use) | completed | let governed learning outputs influence consumer behavior | Stage 3 | one reversible policy-adaptation loop is proven |
 | [Stage 5: product hardening](reference/unified-memory-core/development-plan.md#stage-5-product-hardening-and-independent-operation) | completed | validate split-ready and independent-product operation | Stage 4 | release boundary, reproducibility, maintenance workflows, and split rehearsal are all CLI-verifiable |
 | [Stage 6: dialogue working-set shadow integration](reference/unified-memory-core/development-plan.md#stage-6-dialogue-working-set-shadow-integration) | completed | validate and instrument hot-session working-set pruning in runtime shadow mode before any active prompt cutover | Stage 5 | runtime shadow telemetry is now landed default-off, replayable exports exist, and answer-level replay stays green enough to keep the feature shadow-only |
-| [Stage 7: context loading optimization closure](reference/unified-memory-core/development-plan.md#stage-7-context-loading-optimization-closure) | next | make per-turn context loading optimization a formal mainline and formal gate instead of leaving it at shadow findings | Stage 6 | the context-optimization scorecard is stable, harder replay / Docker / local evidence align, and rollout/rollback boundaries are clear |
-| [Stage 8: ordinary-conversation realtime-write latency closure](reference/unified-memory-core/development-plan.md#stage-8-ordinary-conversation-realtime-write-latency-closure) | planned | fix the clean Docker write-side answer path that is currently dominated by timeout | Stage 7 | the ordinary-conversation hermetic A/B is no longer swallowed by large timeout counts |
-| [Stage 9: guarded smart-path promotion](reference/unified-memory-core/development-plan.md#stage-9-guarded-smart-path-promotion) | planned | start turning context optimization into real user-facing value without breaking rollback safety | Stage 8 | the bounded opt-in path has a clear promotion gate and an operable rollback path |
+| [Stage 7: context loading optimization closure](reference/unified-memory-core/development-plan.md#stage-7-context-loading-optimization-closure) | in_progress | make per-turn context loading optimization a formal mainline and formal gate instead of leaving it at shadow findings | Stage 6 | the context-optimization scorecard is stable, harder replay / Docker / local evidence align, and rollout/rollback boundaries are clear |
+| [Stage 8: ordinary-conversation realtime-write latency closure](reference/unified-memory-core/development-plan.md#stage-8-ordinary-conversation-realtime-write-latency-closure) | next | fix the clean Docker write-side answer path that is currently dominated by timeout | Stage 7 | the ordinary-conversation hermetic A/B is no longer swallowed by large timeout counts |
+| [Stage 9: guarded smart-path promotion](reference/unified-memory-core/development-plan.md#stage-9-guarded-smart-path-promotion) | in_progress | start turning context optimization into real user-facing value without breaking rollback safety | Stage 8 | the bounded opt-in path has a clear promotion gate and an operable rollback path |
 | [Stage 10: adoption simplification and shared-foundation proof](reference/unified-memory-core/development-plan.md#stage-10-adoption-simplification-and-shared-foundation-proof) | planned | lift adoption experience and cross-host product proof to the same level as core capability | Stage 9 | install / bootstrap / verify is shorter, and Codex / multi-instance reuse is more concretely proven |
 
 ## Milestone Flow

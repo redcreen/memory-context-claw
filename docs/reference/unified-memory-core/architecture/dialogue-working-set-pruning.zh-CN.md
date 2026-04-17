@@ -146,6 +146,22 @@ LLM 不应该直接返回“把这些轮次永久删掉”。
 3. 小流量 guarded activation
 4. 最后才真正并入正式 assembly
 
+## 日常路径目标
+
+这条 runtime 层的长期目标，不是让用户频繁依赖 `compact / compat` 才能继续长对话。
+
+更合理的目标是：
+
+- 每轮做轻量 working-set 管理
+- 只把已经过期的 raw turns 移出下一轮 prompt
+- 让长对话在日常热路径上尽量不需要 compact 也能继续
+
+`compact / compat` 仍然可以存在，但更适合作为：
+
+- 夜间整理
+- 后台 safety net
+- 极端 token 压力下的低频兜底
+
 ## 与现有设计的关系
 
 ### 与 Context Slimming 的关系

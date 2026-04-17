@@ -49,6 +49,7 @@ Current state:
 - Stage 6 runtime shadow integration is already landed
 - it remains `default-off` and shadow-only
 - the next round starts by finishing `context loading optimization`: clarify the bounded LLM-led decision contract, operator metrics, rollback boundary, harder A/B design, and one unified scorecard before any default prompt-path change
+- the daily-product target is now explicit: normal sessions should stay sustainable through per-turn context management instead of treating compat / compact as a normal hot-path dependency; compat / compact remains only a nightly or background safety net
 
 ## Current Product Promises
 
@@ -72,6 +73,7 @@ Translated into architecture constraints:
 
 - `light and fast`
   - adapter seams, default config, install size, prompt thickness, main-path latency, and runtime footprint all belong to the same target
+  - the desired runtime shape is closer to “incremental reclamation plus low-frequency full sweep”: prune the working set continuously during normal use, and reserve compat / compact for low-frequency background safety passes
 - `smart`
   - durable memory, realtime learning, working-set pruning, budgeted assembly, and abstention guardrails should reinforce each other instead of drifting apart
 - `reassuring`
@@ -93,6 +95,7 @@ Looking at the current architecture and evidence surface:
 So the architecture-level guardrails now matter most in three ways:
 
 1. finish context loading optimization as a formal mainline instead of leaving it as scattered shadow evidence
+   - one exit signal should be that long daily conversations can usually continue without needing compat / compact as the normal escape hatch
 2. do not let `smart` degrade into more rules and heavier call chains
 3. do not let stronger capability break the `light and fast` promise; install simplification still matters, but it should not outrank context optimization right now
 4. do not leave the `reassuring` shared-core story at boundary design without stronger product proof

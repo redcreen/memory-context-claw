@@ -106,6 +106,24 @@ export function buildShadowAnswerPrompt(caseDef, snapshot = {}) {
   );
 }
 
+export function buildAssemblyAnswerPrompt(caseDef, assemblyResult = {}) {
+  const systemPromptAddition = normalizeString(assemblyResult?.systemPromptAddition);
+  const conversationText = buildTranscriptText(
+    (Array.isArray(assemblyResult?.messages) ? assemblyResult.messages : [])
+      .map((message, index) => ({
+        id: `m${index + 1}`,
+        role: normalizeString(message?.role, "assistant"),
+        content: normalizeString(message?.content)
+      }))
+  );
+  const sections = [
+    systemPromptAddition ? `System additions:\n${systemPromptAddition}` : "",
+    conversationText ? `Conversation:\n${conversationText}` : ""
+  ].filter(Boolean);
+
+  return buildAnswerPrompt(caseDef, sections.join("\n\n") || "(none)");
+}
+
 export function classifyAnswerAbOutcome(item = {}) {
   const baseline = item.baseline?.passed === true;
   const shadow = item.shadow?.passed === true;

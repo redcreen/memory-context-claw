@@ -61,6 +61,13 @@ const DEFAULT_CONFIG = {
     outputDir: "",
     cleanupSession: true
   },
+  dialogueWorkingSetGuarded: {
+    enabled: false,
+    allowedRelations: ["switch", "resolve"],
+    minReductionRatio: 0.18,
+    minEvictedTurns: 1,
+    prependCarryForward: true
+  },
   openclawAdapter: {
     enabled: true,
     debug: {
@@ -174,6 +181,10 @@ export function resolvePluginConfig(raw) {
   const dialogueWorkingSetShadow = mergeObject(
     DEFAULT_CONFIG.dialogueWorkingSetShadow,
     cfg.dialogueWorkingSetShadow
+  );
+  const dialogueWorkingSetGuarded = mergeObject(
+    DEFAULT_CONFIG.dialogueWorkingSetGuarded,
+    cfg.dialogueWorkingSetGuarded
   );
   const queryRewrite = mergeObject(DEFAULT_CONFIG.queryRewrite, cfg.queryRewrite);
   const memoryDistillation = mergeObject(DEFAULT_CONFIG.memoryDistillation, cfg.memoryDistillation);
@@ -366,6 +377,26 @@ export function resolvePluginConfig(raw) {
           ? dialogueWorkingSetShadow.outputDir.trim()
           : "",
       cleanupSession: dialogueWorkingSetShadow.cleanupSession !== false
+    },
+    dialogueWorkingSetGuarded: {
+      enabled: dialogueWorkingSetGuarded.enabled === true,
+      allowedRelations: mergeStringArrays(
+        DEFAULT_CONFIG.dialogueWorkingSetGuarded.allowedRelations,
+        dialogueWorkingSetGuarded.allowedRelations
+      ).filter((value) => ["continue", "branch", "switch", "resolve"].includes(value)),
+      minReductionRatio: clampNumber(
+        dialogueWorkingSetGuarded.minReductionRatio,
+        0,
+        1,
+        DEFAULT_CONFIG.dialogueWorkingSetGuarded.minReductionRatio
+      ),
+      minEvictedTurns: clampNumber(
+        dialogueWorkingSetGuarded.minEvictedTurns,
+        1,
+        20,
+        DEFAULT_CONFIG.dialogueWorkingSetGuarded.minEvictedTurns
+      ),
+      prependCarryForward: dialogueWorkingSetGuarded.prependCarryForward !== false
     },
     openclawAdapter: {
       enabled: openclawAdapter.enabled !== false,

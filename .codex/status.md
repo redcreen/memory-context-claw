@@ -7,7 +7,7 @@
 
 ## Current Phase
 
-`stage7 context-loading-optimization planning`
+`stage7-stage9 context-optimization hardening`
 
 ## Active Slice
 
@@ -110,6 +110,13 @@
   - runtime answer A/B baseline `5 / 5`，shadow `5 / 5`
   - runtime shadow replay average reduction ratio `0.4368`
   - active prompt mutation 继续保持 `default-off` 和 shadow-only
+- Stage 7 / Stage 9 当前已形成新的落地产物：
+  - Stage 7 scorecard：captured `16 / 16`，average raw reduction ratio `0.4191`，average package reduction ratio `0.1151`
+  - Stage 7 isolated shadow replay：`15 / 16`
+  - Stage 9 guarded answer A/B：baseline `5 / 5`、shadow `5 / 5`、guarded `5 / 5`
+  - Stage 9 guarded path 实际 applied：`2 / 5`
+  - Stage 9 average guarded prompt reduction ratio：`0.0424`
+  - 当前结论：scorecard 和 guarded seam 都已落地，但 Stage 7 还没正式 closeout，Stage 9 继续保持 `default-off` / opt-in only
 - focused history cleanup 已收口到最新主线基线：
   - `100` case live answer-level A/B 当前可读作 current `100 / 100`、legacy `99 / 100`
   - builtin-only regression = `0`
@@ -159,7 +166,7 @@
 
 ## In Progress
 
-- docs-first review 已完成，当前恢复点已经切到 `Stage 7: context loading optimization closure`
+- docs-first review 已完成，当前恢复点保持在 `Stage 7 closeout + Stage 9 opt-in only`
 - 当前 3 个用户承诺的执行顺序变成：
   - 先补 `轻快 / context loading optimization`
   - 再补 `轻快 / realtime-write latency`
@@ -170,6 +177,7 @@
   - 每一轮 prompt 还可以如何更轻
   - 如何把 durable-source slimming、working-set pruning、budgeted assembly 和 answer latency 收成同一张 scorecard
   - 如何在不改 builtin memory 行为的前提下，让 working-set decision 进入更可控的实验面
+  - 如何把“日常尽量不靠 compat / compact、compat / compact 只做夜间/后台 safety net”变成真实可验证的退出条件
   - 如何把更多 harder case 变成清晰的 UMC-only wins，而不是多数 shared wins
 - 保持 release-preflight、bundle install、host smoke、Stage 5 acceptance 证据持续为绿
 - 保持 host-neutral root policy 在 CLI、公开文档和控制面里持续一致
@@ -193,9 +201,9 @@
 
 ## Next 3 Actions
 
-1. 先定义统一的 context optimization scorecard，并把 durable-source slimming、Stage 6 shadow、history cleanup、ordinary-conversation Docker rerun 全部映射进去。
+1. 先完成 Stage 7 closeout 决策：确认 scorecard、harder replay 和“日常尽量不依赖 compat / compact”是否足够站稳。
 2. 再把 ordinary-conversation realtime-write latency 单独收成 clean Docker path 的 closure 目标，而不是继续混在污染排查里。
-3. 最后再在这两条证据站稳后，推进 bounded LLM-led smart path 和 Codex / 多实例证据。
+3. 保持 Stage 9 guarded seam 为 `default-off` / opt-in only，并在 Stage 8 之后再决定是否扩大。
 
 ## Architecture Supervision
 - Signal: `yellow`
@@ -212,10 +220,10 @@
 
 ## Current Execution Line
 
-- Objective: 先完成 Stage 7，把 context loading optimization 做成正式主线；之后再收 realtime-write latency、smart path 和 shared-foundation proof
+- Objective: 先完成 Stage 7 closeout，并保持 Stage 9 为 opt-in only；之后再收 realtime-write latency 和 shared-foundation proof
 - Plan Link: `finish-context-loading-optimization-first`
 - Runway: context scorecard，harder replay / Docker / local evidence，ordinary-conversation latency closure，bounded LLM decision contract，shared-foundation evidence；并行守住 release-preflight 和 canonical-root policy
-- Progress: `0 / 3` tasks complete
+- Progress: `1 / 3` tasks complete
 - Stop Conditions:
   - active prompt mutation is discussed before docs and rollback boundaries are explicit
   - install simplification gets moved ahead of context loading optimization before Stage 7 closes
@@ -224,9 +232,9 @@
 
 ## Execution Tasks
 
-- [ ] EL-1 define and publish the unified context optimization scorecard for Stage 7
+- [x] EL-1 define and publish the unified context optimization scorecard for Stage 7
 - [ ] EL-2 redesign the next harder replay / Docker / local evidence around `cross-source`, `conflict`, `multi-step history`, `open-loop return`, and denser natural-Chinese prompt classes
-- [ ] EL-3 isolate ordinary-conversation realtime-write latency closure from contamination discussion, then prepare the guarded smart-path and shared-foundation follow-ups
+- [ ] EL-3 isolate ordinary-conversation realtime-write latency closure from contamination discussion while Stage 9 stays opt-in only
 
 ## Development Log Capture
 

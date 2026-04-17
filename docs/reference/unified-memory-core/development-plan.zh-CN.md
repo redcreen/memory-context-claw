@@ -95,9 +95,11 @@
 - `Stage 4`：已完成
 - `Stage 5`：已完成
 - `Stage 6`：已完成
-- `Stage 7`：下一阶段
-- 当前指针：`101`
-- 当前建议：docs-first review 已完成；下一步先完成 context loading optimization，再收 ordinary-conversation realtime-write latency，之后才轮到 install 简化与 guarded smart path
+- `Stage 7`：进行中
+- `Stage 8`：下一阶段
+- `Stage 9`：进行中（`default-off` / opt-in only）
+- 当前指针：`108`
+- 当前建议：Stage 7 scorecard 与 Stage 9 guarded seam 已落地；下一步先做 Stage 7 closeout 判断与 Stage 8 ordinary-conversation realtime-write latency，再决定是否扩大 smart path
 
 当前 baseline 已经落地：
 
@@ -141,9 +143,9 @@
 | Stage 4 | `31-38` | 把受治理学习结果接到 adapter 策略使用 | `completed` |
 | Stage 5 | `39-46` | 补齐产品运维与 split-ready 执行 | `completed` |
 | Stage 6 | `93-100` | 在任何 active prompt cutover 前，用 runtime shadow mode 验证 dialogue working-set pruning | `completed` |
-| Stage 7 | `101-108` | 把 context loading optimization 收成正式主线与正式门禁 | `next` |
-| Stage 8 | `109-114` | 压下 ordinary-conversation realtime-write 的 hermetic timeout / latency | `planned` |
-| Stage 9 | `115-120` | 以 bounded、guarded 方式让 context 优化开始变成用户收益 | `planned` |
+| Stage 7 | `101-108` | 把 context loading optimization 收成正式主线与正式门禁 | `in_progress` |
+| Stage 8 | `109-114` | 压下 ordinary-conversation realtime-write 的 hermetic timeout / latency | `next` |
+| Stage 9 | `115-120` | 以 bounded、guarded 方式让 context 优化开始变成用户收益 | `in_progress` |
 | Stage 10 | `121-126` | 收 install / bootstrap / verify，并补强共享底座产品证据 | `planned` |
 
 ## 顺序开发计划
@@ -272,27 +274,34 @@ Stage 6 证据：
 
 ### Stage 7. Context Loading Optimization Closure
 
+当前证据：
+
+- Stage 7 shadow replay：[../../../reports/generated/dialogue-working-set-stage7-shadow-2026-04-17.md](../../../reports/generated/dialogue-working-set-stage7-shadow-2026-04-17.md)
+- Stage 7 scorecard：[../../../reports/generated/dialogue-working-set-scorecard-2026-04-17.md](../../../reports/generated/dialogue-working-set-scorecard-2026-04-17.md)
+- Stage 7 / Stage 9 汇总：[../../../reports/generated/dialogue-working-set-stage7-stage9-2026-04-17.md](../../../reports/generated/dialogue-working-set-stage7-stage9-2026-04-17.md)
+
 阶段完成标准：
 
 - context optimization 不再只是“有一些 shadow 报告”，而是变成有统一 scorecard 的正式主线
 - durable-source slimming、budgeted assembly、working-set pruning、harder replay / Docker / local evidence 能放在同一张证据面上判断
 - rollout / rollback boundary、operator metrics 和 harder-case coverage 已经足够支撑下一阶段
+- 日常长对话尽量不需要依赖 compat / compact 才能继续；compat / compact 只保留为夜间或后台 safety net
 
-101. `next` 定义统一的 context optimization scorecard。
+101. `completed` 定义统一的 context optimization scorecard。
    - 最少包含：`prompt thickness`、`reduction ratio`、`retrieval / assembly latency`、`answer latency`、`rollback boundary`、`case class`
-102. `todo` 把现有 evidence surface 统一映射到这套 scorecard。
+102. `completed` 把现有 evidence surface 统一映射到这套 scorecard。
    - 至少要把 durable-source slimming、Stage 6 shadow exports、history cleanup、ordinary-conversation Docker rerun 放到同一套汇总口径。
-103. `todo` 定义“context loading package”契约。
+103. `completed` 定义“context loading package”契约。
    - 明确 raw turns、pins、capsules、durable context、budget slots 分别属于什么层，而不是只留在分散报告里。
 104. `todo` 设计并补齐下一轮 harder eval matrix。
    - 优先补 `cross-source`、`conflict`、`multi-step history`、`open-loop return`、高信息密度自然中文多话题切换。
-105. `todo` 给 context optimization 增加 formal gate 和 operator summary。
+105. `completed` 给 context optimization 增加 formal gate 和 operator summary。
    - 让 Docker / local / replay 三条路径都能输出可比较的 thickness / latency / reduction 指标。
-106. `todo` 把 shadow exports、sidecar artifacts 和 answer-level regression 重新收成同一条 operator 视图。
+106. `completed` 把 shadow exports、sidecar artifacts 和 answer-level regression 重新收成同一条 operator 视图。
    - 不再只看孤立报告，而是能直接回答“更轻的 context package 是否真的更好”。
-107. `todo` 先定义一个极窄的 guarded experiment seam，但不默认开启。
+107. `completed` 先定义一个极窄的 guarded experiment seam，但不默认开启。
    - 必须是 config-only rollback，且 builtin memory 行为不变。
-108. `todo` 基于 harder replay / Docker / local evidence 做 Stage 7 closeout 决策。
+108. `in_progress` 基于 harder replay / Docker / local evidence 做 Stage 7 closeout 决策。
    - 决策对象不是“马上上线”，而是“Stage 8 能否在更干净的实时写记忆路径上继续推进”。
 
 ### Stage 8. Ordinary-Conversation Realtime-Write Latency Closure
@@ -313,18 +322,24 @@ Stage 6 证据：
 
 ### Stage 9. Guarded Smart-Path Promotion
 
+当前证据：
+
+- Stage 9 guarded answer A/B：[../../../reports/generated/dialogue-working-set-guarded-answer-ab-2026-04-17.md](../../../reports/generated/dialogue-working-set-guarded-answer-ab-2026-04-17.md)
+- Stage 7 / Stage 9 汇总：[../../../reports/generated/dialogue-working-set-stage7-stage9-2026-04-17.md](../../../reports/generated/dialogue-working-set-stage7-stage9-2026-04-17.md)
+
 阶段完成标准：
 
 - context 优化开始变成真实用户收益，而不只是 shadow telemetry
 - bounded、guarded experiment seam 有清晰 rollout / rollback 规则
 - active-path experiment 继续保持极窄，不扩成默认路径
+- guarded smart path 仍然服务于“日常尽量不靠 compat / compact”，而不是把 compat / compact 搬进更频繁的主路径
 
-115. `todo` 定义 bounded smart-path 的 promotion contract。
-116. `todo` 选择一个极窄的 opt-in active-path experiment surface。
-117. `todo` 让 operator metrics、rollback boundary 和 regression gate 绑定到这个 surface。
-118. `todo` 在固定 case class 上跑 guarded opt-in A/B。
-119. `todo` 决定是否维持 opt-in、继续 shadow-only，还是允许更广一点的试验。
-120. `todo` 以“用户能感知到收益，但 operator 仍可控”收口本阶段。
+115. `completed` 定义 bounded smart-path 的 promotion contract。
+116. `completed` 选择一个极窄的 opt-in active-path experiment surface。
+117. `completed` 让 operator metrics、rollback boundary 和 regression gate 绑定到这个 surface。
+118. `completed` 在固定 case class 上跑 guarded opt-in A/B。
+119. `completed` 决定当前继续维持 opt-in only。
+120. `in_progress` 以“用户能感知到收益，但 operator 仍可控”收口本阶段。
 
 ### Stage 10. Adoption Simplification And Shared-Foundation Proof
 
