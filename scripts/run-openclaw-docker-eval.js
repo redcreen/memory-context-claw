@@ -169,6 +169,7 @@ function buildScenarioEnv(scenario, options) {
   };
 
   for (const key of [
+    "NODE_USE_ENV_PROXY",
     "ALL_PROXY",
     "all_proxy",
     "HTTP_PROXY",
@@ -182,6 +183,18 @@ function buildScenarioEnv(scenario, options) {
     if (value) {
       env[key] = value;
     }
+  }
+
+  const hasProxyEnv = [
+    env.ALL_PROXY,
+    env.all_proxy,
+    env.HTTP_PROXY,
+    env.http_proxy,
+    env.HTTPS_PROXY,
+    env.https_proxy
+  ].some((value) => typeof value === "string" && value.length > 0);
+  if (hasProxyEnv && !normalizeString(env.NODE_USE_ENV_PROXY)) {
+    env.NODE_USE_ENV_PROXY = "1";
   }
 
   for (const key of [

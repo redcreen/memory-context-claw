@@ -131,6 +131,13 @@ That directory is excluded from git, but it lives under the repo mount, so it su
 --refresh-template-cache
 ```
 
+When the machine depends on a proxy to reach model providers, the runner now also auto-enables:
+
+- `NODE_USE_ENV_PROXY=1`
+
+That matters because the real model path in Docker uses Node `fetch`, not `curl`.
+Passing `HTTP_PROXY` / `HTTPS_PROXY` into the container was not enough by itself; without this flag, Node `fetch` could still fail immediately with `TypeError: fetch failed`.
+
 ## Compose And Entry Points
 
 - Compose file: [docker-compose.openclaw-eval.yml](../../../../docker-compose.openclaw-eval.yml)
@@ -227,6 +234,31 @@ The current trade-off is:
 - it is not yet suitable as the final answer-level capability benchmark for ordinary-conversation memory writing
 
 If we want to turn Docker ordinary-conversation A/B back into a capability surface, the next step is a truer steady-state runner that avoids repeated cold answer-path startup while still preserving zero contamination between cases.
+
+## Current Closure
+
+This line of work can now be closed with a precise split:
+
+1. benchmark-substrate problems
+   - isolation
+   - contamination
+   - config regeneration overhead
+   - proxy-unaware Node fetch
+   are now under control
+
+2. container provider/auth problems
+   - these still dominate ordinary-conversation answer-level outcomes
+   - especially on the current `openai-codex` auth-profile route inside Docker
+
+So the current closure statement is:
+
+- Docker hermetic **substrate** is now strong enough to stay as the default evaluation base
+- Docker hermetic **ordinary-conversation capability comparison** is still blocked by the container provider/auth path, not by the benchmark scaffold anymore
+
+Related diagnostic reports:
+
+- [openclaw-docker-steady-state-speedup-2026-04-17.md](../../../../reports/generated/openclaw-docker-steady-state-speedup-2026-04-17.md)
+- [openclaw-docker-proxy-and-provider-root-cause-2026-04-17.md](../../../../reports/generated/openclaw-docker-proxy-and-provider-root-cause-2026-04-17.md)
 
 ## Related Files
 

@@ -135,6 +135,13 @@ UMC_EVAL_TIMEOUT_MS=30000 npm run eval:openclaw:docker -- \
 --refresh-template-cache
 ```
 
+如果当前机器是通过代理访问模型服务，runner 现在还会自动补一层：
+
+- `NODE_USE_ENV_PROXY=1`
+
+原因是 Docker 里的真实模型调用走的是 Node `fetch`，而不是 `curl`。
+单纯把 `HTTP_PROXY` / `HTTPS_PROXY` 传进容器还不够；没有这层设置时，容器里的 Node `fetch` 可能直接 `TypeError: fetch failed`。
+
 ## Compose 与入口
 
 - Compose 文件：[docker-compose.openclaw-eval.yml](../../../../docker-compose.openclaw-eval.yml)
@@ -242,6 +249,31 @@ npm run eval:openclaw:docker -- \
 - 引入真正的 steady-state 长驻运行形态
 - 避免每题都重新冷起 answer path
 - 在保证隔离为零污染的前提下，再重跑更宽预算的 ordinary-conversation 能力对比
+
+## 当前收口结论
+
+这轮沿着 Docker 基座优化继续推进后，现在可以把问题彻底分成两层：
+
+1. 测试基座自身的问题
+   - 隔离
+   - 串写
+   - 配置重建
+   - Node fetch 不走代理
+   这些都已经收掉
+
+2. 容器里的 provider / auth 路径问题
+   - 这部分现在仍会主导 ordinary-conversation answer-level 的最终成败
+   - 特别是当前 `openai-codex` auth-profile 路径，在 Docker 里仍会出现 `fetch failed` / timeout
+
+所以这条线当前的收口判断是：
+
+- Docker hermetic **基座** 已经可以作为默认评测底座
+- 但 Docker hermetic **ordinary-conversation 能力对比** 还不能当最终产品能力结论
+
+相关诊断报告：
+
+- [openclaw-docker-steady-state-speedup-2026-04-17.md](../../../../reports/generated/openclaw-docker-steady-state-speedup-2026-04-17.md)
+- [openclaw-docker-proxy-and-provider-root-cause-2026-04-17.md](../../../../reports/generated/openclaw-docker-proxy-and-provider-root-cause-2026-04-17.md)
 
 所以这条报告现在承担的是两个职责：
 
