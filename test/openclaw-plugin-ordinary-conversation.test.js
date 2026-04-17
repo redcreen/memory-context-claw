@@ -16,8 +16,64 @@ test("ordinary GitHub keyword rules stay durable_rule and produce answer-friendl
 
   assert.ok(classified);
   assert.equal(classified.category, "durable_rule");
-  assert.match(classified.summary, /keyword saffron-releases/i);
+  assert.match(classified.summary, /default rule keyword is saffron-releases/i);
   assert.match(classified.summary, /releases tab/i);
+});
+
+test("ordinary Slack routing rules keep generic tool names without product-specific hardcoding", () => {
+  const classified = classifyOrdinaryConversationMemoryIntent({
+    userMessage: "Going forward, whenever I send you a Slack thread URL, use summarize_slack_thread first and mark the result with olive-thread. Please remember that default routing rule.",
+    assistantReply: "Understood."
+  });
+
+  assert.ok(classified);
+  assert.equal(classified.category, "tool_routing_preference");
+  assert.equal(classified.structured_rule?.action?.tool, "summarize_slack_thread");
+  assert.match(classified.summary, /Slack thread/i);
+  assert.match(classified.summary, /olive-thread/i);
+});
+
+test("ordinary routing rules recognize generic action verbs beyond use", () => {
+  const classified = classifyOrdinaryConversationMemoryIntent({
+    userMessage: "Going forward, whenever I send hotel options, run compare_hotel_options first and remember that default workflow.",
+    assistantReply: "Understood."
+  });
+
+  assert.ok(classified);
+  assert.equal(classified.category, "tool_routing_preference");
+  assert.equal(classified.structured_rule?.action?.tool, "compare_hotel_options");
+});
+
+test("ordinary durable rules do not confuse snake_case codenames with tool names", () => {
+  const classified = classifyOrdinaryConversationMemoryIntent({
+    userMessage: "From now on, whenever I send a GitHub repository link, remember the default codename olive_thread and check the Releases tab first.",
+    assistantReply: "Understood."
+  });
+
+  assert.ok(classified);
+  assert.equal(classified.category, "durable_rule");
+  assert.equal(classified.structured_rule?.action?.tool, "");
+  assert.match(classified.summary, /olive_thread/i);
+});
+
+test("durable reply-language preferences are not misclassified as session constraints", () => {
+  const classified = classifyOrdinaryConversationMemoryIntent({
+    userMessage: "以后默认都用中文回复，记住这个偏好。",
+    assistantReply: "收到。"
+  });
+
+  assert.ok(classified);
+  assert.equal(classified.category, "user_profile_fact");
+  assert.equal(classified.durability, "durable");
+});
+
+test("ordinary small talk without durable signals exits cleanly", () => {
+  const classified = classifyOrdinaryConversationMemoryIntent({
+    userMessage: "哈哈，今天路上太堵了，先随便聊聊。",
+    assistantReply: "收到。"
+  });
+
+  assert.equal(classified, null);
 });
 
 test("openclaw plugin registers an agent_end hook that captures ordinary durable rules into memory_intent", async () => {
