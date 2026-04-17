@@ -643,7 +643,7 @@
 
 ## Focused Conclusion
 
-- On this focused realtime-write surface, Unified Memory Core still wins more cases than the legacy default path: `3` UMC-only vs `0` legacy-only.
-- But the dominant result in Docker is not “memory is gone”; it is `timeout pressure`. Legacy timed out on `40 / 40` cases, while current timed out on `36 / 40` cases. So this hermetic rerun proves isolation, but it also proves that Docker answer-level latency is now the limiting factor under a `30s` budget.
+- On this focused realtime-write surface, the latest hermetic Docker fast path is no longer a capability ranking surface; it is now an infra/perf surface.
+- The dominant result in Docker is not “memory is gone”; it is `capture timeout pressure`. Legacy timed out on capture for `40 / 40` cases, and current also timed out on capture for `40 / 40` cases. So this hermetic rerun proves isolation, but it also proves that Docker answer-level latency is now the limiting factor under a strict `30s` budget.
 - This suite is intentionally different from the earlier 100-case A/B: it tests live ordinary-conversation writing and then removes session transcripts before recall.
 - That makes it the first direct probe of whether ordinary conversation itself can create durable recallable memory rather than merely improving consumption of an existing fixture.

@@ -169,12 +169,29 @@ function buildScenarioEnv(scenario, options) {
   };
 
   for (const key of [
+    "ALL_PROXY",
+    "all_proxy",
+    "HTTP_PROXY",
+    "http_proxy",
+    "HTTPS_PROXY",
+    "https_proxy",
+    "NO_PROXY",
+    "no_proxy"
+  ]) {
+    const value = normalizeString(process.env[key]);
+    if (value) {
+      env[key] = value;
+    }
+  }
+
+  for (const key of [
     "UMC_EVAL_ONLY",
     "UMC_EVAL_MAX_CASES",
     "UMC_EVAL_TIMEOUT_MS",
     "UMC_EVAL_CAPTURE_POLL_MS",
     "UMC_EVAL_EXTRA_ARGS",
-    "UMC_EVAL_KEEP_STATE"
+    "UMC_EVAL_KEEP_STATE",
+    "UMC_EVAL_FAST_FAIL_CAPTURE"
   ]) {
     const value = normalizeString(process.env[key]);
     if (value) {
