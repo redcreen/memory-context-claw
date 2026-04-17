@@ -242,6 +242,11 @@
 - Plan Link: `finish-context-loading-optimization-first`
 - Runway: context scorecard、harder replay / Docker / local evidence、bounded LLM decision contract、gateway/raw transport watch
 - Progress: `2 / 3` tasks complete
+- Current Critical Path:
+  - `108.a` 定义插件内自托管 `decision runner` 契约
+  - `108.b` 替换 `Context Minor GC` 的 working-set decision transport
+  - `108.c` 重跑 OpenClaw gateway live soak，并要求真实宿主至少 `5 / 5` captured
+  - `108.d` 仅在 `108.c` 为绿后，才判断 Stage 7 是否 closeout
 - Stop Conditions:
   - docs remain anchored to the older history-cleanup recovery pointer instead of the next context-optimization queue
   - install simplification gets moved ahead of context loading optimization before Stage 7 closes
@@ -253,8 +258,12 @@
 ## Execution Tasks
 
 - [x] EL-1 define and publish the unified context optimization scorecard for Stage 7
-- [ ] EL-2 redesign the next replay / Docker / local evidence around `cross-source`, `conflict`, `multi-step history`, `open-loop return`, and denser natural-Chinese prompts
-- [x] EL-3 isolate ordinary-conversation realtime-write latency closure from contamination discussion while keeping the bounded smart-path follow-up opt-in only
+- [ ] EL-2A define the plugin-owned `decision runner` contract for `Context Minor GC`
+- [ ] EL-2B swap the working-set decision transport away from host `runtime.subagent`
+- [ ] EL-2C rerun OpenClaw gateway live soak and require real-host `5 / 5` captured exports
+- [ ] EL-2D only after EL-2C, decide whether Stage 7 can close and whether any host-level fallback is still needed
+- [ ] EL-3 redesign the next replay / Docker / local evidence around `cross-source`, `conflict`, `multi-step history`, `open-loop return`, and denser natural-Chinese prompts
+- [x] EL-4 isolate ordinary-conversation realtime-write latency closure from contamination discussion while keeping the bounded smart-path follow-up opt-in only
 
 ## Development Log Capture
 

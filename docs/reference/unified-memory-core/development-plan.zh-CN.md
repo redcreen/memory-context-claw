@@ -309,6 +309,15 @@ Stage 6 证据：
    - 决策对象不是“马上上线”，而是“在 Stage 8 已经收口后，Stage 7 是否已经足够站稳，并且能否继续保持 Stage 9 为极窄 opt-in 面”。
    - 当前新增 blocker：OpenClaw gateway live soak 已证明当前 decision transport 还绑在宿主 subagent / request-scope seam 上，所以 Stage 7 暂时不能 closeout。
    - 当前优先路线：先把 working-set decision transport 收回插件内，再决定宿主级 fallback 是否还需要存在。
+   - 当前关键执行线已经显式拆成 4 步：
+     - `108.a next` 定义插件内自托管 `decision runner` 契约。
+       - 明确 input / output、runner 入口、失败回退、config-only rollback 和 sidecar artifact 形状。
+     - `108.b next` 替换 `Context Minor GC` 的 working-set decision transport。
+       - 先覆盖 shadow / guarded decision path，确保它不再依赖宿主 `runtime.subagent`。
+     - `108.c pending` 重跑 OpenClaw gateway live soak。
+       - 退出信号是 working-set exports 不再报 request-scope seam 错误，且真实宿主侧至少 `5 / 5` captured。
+     - `108.d pending` 仅在 `108.c` 变绿后，才判断 Stage 7 是否 closeout。
+       - 这一步再决定宿主级 fallback 是否仍有必要存在，而不是现在提前讨论。
 
 ### Stage 8. Ordinary-Conversation Realtime-Write Latency Closure
 

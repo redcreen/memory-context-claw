@@ -309,6 +309,15 @@ Stage complete when:
    - The decision is not “ship now”; it is “now that Stage 8 is closed, is Stage 7 stable enough to stand on its own while Stage 9 remains a very narrow opt-in path?”
    - New blocker: the OpenClaw gateway live soak proves the current decision transport is still tied to the host subagent / request-scope seam, so Stage 7 cannot close out yet.
    - Preferred next route: pull the working-set decision transport back into the plugin first, then decide whether any host-level fallback is still needed.
+   - The current critical path is now explicitly split into 4 steps:
+     - `108.a next` define the plugin-owned `decision runner` contract.
+       - Lock the input / output shape, runner entrypoint, failure fallback, config-only rollback, and sidecar artifact contract.
+     - `108.b next` replace the `Context Minor GC` working-set decision transport.
+       - Cover the shadow / guarded decision path first so it no longer depends on host `runtime.subagent`.
+     - `108.c pending` rerun the OpenClaw gateway live soak.
+       - The exit signal is that working-set exports no longer fail on the request-scope seam, and the real host captures at least `5 / 5`.
+     - `108.d pending` decide Stage 7 closeout only after `108.c` is green.
+       - That is when the repo should decide whether any host-level fallback is still necessary.
 
 ### Stage 8. Ordinary-Conversation Realtime-Write Latency Closure
 

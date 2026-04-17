@@ -196,6 +196,9 @@
 
 - raw `openclaw memory search` transport 仍是显式 watchlist：`3/8 raw ok`，其余为 `4` 条 `missing_json_payload` 与 `1` 条 `empty_results`
 - gateway / shared-session 路径仍可能带来宿主噪声；当前正式 answer-level gate 已改走 isolated local path
+- `Context Minor GC` 当前第一 blocker 已经明确：
+  - working-set decision transport 仍绑在宿主 `subagent / request-scope` seam 上
+  - 在“不改 OpenClaw”的前提下，必须先把这条 transport 收回插件内，后续主线才能继续
 - 下一轮真正需要先定清的是架构边界，而不是立刻改代码：
   - bounded LLM decision surface 与 hard guardrails 的分工
   - durable-source budgeted assembly 与 raw-turn working-set mutation 的先后顺序
@@ -206,9 +209,9 @@
 
 ## Next 3 Actions
 
-1. 先完成 Stage 7 closeout 决策：确认 scorecard、harder replay 和“日常尽量不依赖 compat / compact”是否足够站稳。
-2. 保持 Stage 9 guarded seam 为 `default-off` / opt-in only，并在 Stage 7 closeout 后再决定是否扩大。
-3. 继续把 remaining Docker harder misses 当成 targeted follow-up，而不是再把基座稳定性和能力 miss 混在一起。
+1. 先定义插件内自托管 `decision runner` 契约，并明确 rollback / sidecar artifact 边界。
+2. 用这条新契约替换 `Context Minor GC` 的 working-set decision transport，然后重跑 OpenClaw gateway live soak。
+3. 只有在真实宿主 `5 / 5` captured 为绿后，才继续判断 Stage 7 closeout 和 Stage 9 是否还能保持极窄 opt-in 面。
 
 ## Architecture Supervision
 - Signal: `yellow`
@@ -227,6 +230,11 @@
 
 - Objective: 先完成 Stage 7 closeout，并保持 Stage 9 为 opt-in only；ordinary-conversation Docker steady-state 已成为默认 hermetic A/B 面，之后再收 install 和 shared-foundation proof
 - Plan Link: `finish-context-loading-optimization-first`
+- Current Critical Path:
+  - `108.a` 定义插件内自托管 `decision runner` 契约
+  - `108.b` 替换 `Context Minor GC` 的 working-set decision transport
+  - `108.c` 重跑 OpenClaw gateway live soak，并要求真实宿主至少 `5 / 5` captured
+  - `108.d` 仅在 `108.c` 为绿后，才判断 Stage 7 是否 closeout
 - Runway: context scorecard，harder replay / Docker / local evidence，bounded LLM decision contract，shared-foundation evidence；并行守住 release-preflight 和 canonical-root policy
 - Progress: `2 / 3` tasks complete
 - Stop Conditions:
@@ -238,8 +246,12 @@
 ## Execution Tasks
 
 - [x] EL-1 define and publish the unified context optimization scorecard for Stage 7
-- [ ] EL-2 redesign the next harder replay / Docker / local evidence around `cross-source`, `conflict`, `multi-step history`, `open-loop return`, and denser natural-Chinese prompt classes
-- [x] EL-3 isolate ordinary-conversation realtime-write latency closure from contamination discussion while Stage 9 stays opt-in only
+- [ ] EL-2A define the plugin-owned `decision runner` contract for `Context Minor GC`
+- [ ] EL-2B swap the working-set decision transport away from host `runtime.subagent`
+- [ ] EL-2C rerun OpenClaw gateway live soak and require real-host `5 / 5` captured exports
+- [ ] EL-2D only after EL-2C, decide whether Stage 7 can close and whether any host-level fallback is still needed
+- [ ] EL-3 redesign the next harder replay / Docker / local evidence around `cross-source`, `conflict`, `multi-step history`, `open-loop return`, and denser natural-Chinese prompt classes
+- [x] EL-4 isolate ordinary-conversation realtime-write latency closure from contamination discussion while Stage 9 stays opt-in only
 
 ## Development Log Capture
 
