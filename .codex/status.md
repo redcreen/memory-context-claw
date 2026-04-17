@@ -104,12 +104,14 @@
   - host live：UMC-only `18`
   - host live：legacy-only `1`
   - host live：both-fail `1`
-  - Docker strict：current `39 / 40`
-  - Docker strict：legacy `15 / 40`
-  - Docker strict：both-pass `15`
-  - Docker strict：UMC-only `24`
-  - Docker strict：legacy-only `0`
-  - Docker strict：both-fail `1`
+  - Docker strict full-sweep：current `39 / 40`
+  - Docker strict full-sweep：legacy `15 / 40`
+  - Docker strict closeout：current `40 / 40`
+  - Docker strict closeout：legacy `15 / 40`
+  - Docker strict closeout：both-pass `15`
+  - Docker strict closeout：UMC-only `25`
+  - Docker strict closeout：legacy-only `0`
+  - Docker strict closeout：both-fail `0`
   - strict 基线下分类上 durable-rule `8 / 8 vs 0 / 8`、tool-routing `7 / 8 vs 0 / 8`、profile `8 / 8 vs 0 / 8`、session-constraint `8 / 8 vs 8 / 8`、one-off `8 / 8 vs 7 / 8`
 - Stage 6 `dialogue working-set shadow integration` 已正式收口：
   - runtime shadow replay `16 / 16`

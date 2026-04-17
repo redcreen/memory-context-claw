@@ -344,7 +344,8 @@ Stage 6 证据：
 112. `completed` 固定 Docker hermetic ordinary-conversation 的常规报告入口和阈值。
 113. `completed` 重跑 focused A/B，并和 host-live 结果做清晰归因对照。
 114. `completed` 以“clean path 不再被 timeout 主导”作为 Stage 8 退出信号。
-   - 当前 strict hermetic baseline：current `39 / 40`、legacy `15 / 40`、`UMC-only = 24`、`legacy-only = 0`、`both-fail = 1`、`preCaseResetFailed = 0`
+   - 当前 strict hermetic full-sweep：current `39 / 40`、legacy `15 / 40`、`UMC-only = 24`、`legacy-only = 0`、`both-fail = 1`、`preCaseResetFailed = 0`
+   - 最后剩余 shared-fail 已通过 same-method targeted strict rerun 收口；当前 closeout 状态：current `40 / 40`、legacy `15 / 40`、`UMC-only = 25`、`legacy-only = 0`、`both-fail = 0`
 
 ### Stage 9. Guarded Smart-Path Promotion
 

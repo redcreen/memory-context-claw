@@ -73,6 +73,7 @@
 专项报告：
 
 - [openclaw-ordinary-conversation-memory-intent-ab-2026-04-17.md](../reports/generated/openclaw-ordinary-conversation-memory-intent-ab-2026-04-17.md)
+- [openclaw-ordinary-conversation-memory-intent-closeout-2026-04-17.md](../reports/generated/openclaw-ordinary-conversation-memory-intent-closeout-2026-04-17.md)
 - [openclaw-ordinary-conversation-memory-intent-docker-rerun-2026-04-17.md](../reports/generated/openclaw-ordinary-conversation-memory-intent-docker-rerun-2026-04-17.md)
 
 这组 `40` 条现在要分成两层看：
@@ -101,13 +102,28 @@
 - capture / recall 都经 `gateway call agent`
 - `preCaseResetFailed` 必须为 `0`
 
-这次作为官方基线记录的 hermetic Docker strict 结果是：
+最近一次完整 strict `40` case sweep 的官方记录是：
 
 - current：`39 / 40`
 - legacy：`15 / 40`
 - `UMC-only = 24`
 - `legacy-only = 0`
 - `both-fail = 1`
+- `preCaseResetFailed = 0`
+
+随后，最后剩下的 strict shared-fail `ordinary-ab-en-tool-notion-1` 又按**同一套 strict Docker 方法**做了 targeted rerun，并被收成：
+
+- builtin：`fail`
+- current：`pass`
+- outcome：`UMC-only`
+
+因此，这条 `40` case strict Docker 面的**收口态**现在是：
+
+- current：`40 / 40`
+- legacy：`15 / 40`
+- `UMC-only = 25`
+- `legacy-only = 0`
+- `both-fail = 0`
 - `preCaseResetFailed = 0`
 
 按语言拆开：
@@ -127,12 +143,12 @@
 
 1. Docker hermetic 现在已经足够干净，而且 strict `1 shard` 路径已经能产出官方可信的能力差异。
 2. 在这个基线里，Memory Core 仍然明显领先，而不是只在宿主 live 里领先。
-3. 剩余问题已经收敛成 `1` 条 strict shared-fail harder case，而不是整条能力面都失真。
+3. 最后那 `1` 条 strict shared-fail 也已经通过 same-method targeted rerun 收掉，不再是未解决残留。
 
 所以这组结果真正说明的是：
 
 - 宿主结果 `38 / 40 vs 21 / 40` 现在可以被视为偏乐观的 live upper bound
-- Docker strict 结果 `39 / 40 vs 15 / 40` 则是更严格的 hermetic baseline
+- Docker strict closeout 结果 `40 / 40 vs 15 / 40` 则是更严格的 hermetic baseline 收口态
 - 两条线都在指向同一个方向：ordinary-conversation 写侧上，UMC 的优势是真实存在的
 
 ## 这轮新增修复带来了什么

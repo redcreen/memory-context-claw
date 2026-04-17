@@ -20,7 +20,7 @@ If you want the shortest practical answer before reading the whole repo:
 - Stage 9 guarded live A/B: baseline `4 / 4`, guarded `4 / 4`, guarded applied `2 / 4`, activation matched `4 / 4`, average prompt reduction ratio `0.0306`, applied-only `0.0067`
 - focused ordinary-conversation write-time A/B:
   - host live: `current=38`, `legacy=21`, `UMC-only=18`
-  - Docker hermetic strict baseline: `current=39`, `legacy=15`, `UMC-only=24`, `legacy-only=0`, `both-fail=1`, `preCaseResetFailed=0`
+  - Docker hermetic strict closeout: `current=40`, `legacy=15`, `UMC-only=25`, `legacy-only=0`, `both-fail=0`, `preCaseResetFailed=0`
 
 Read these first:
 
@@ -33,9 +33,10 @@ Read these first:
 - [OpenClaw Guarded Live A/B](reports/generated/openclaw-guarded-live-ab-2026-04-18.md)
 - [Stage 9 Closeout](reports/generated/stage9-guarded-smart-path-closeout-2026-04-18.md)
 - [Focused Ordinary-Conversation Realtime Write A/B](reports/generated/openclaw-ordinary-conversation-memory-intent-ab-2026-04-17.md)
+- [Focused Ordinary-Conversation Strict Closeout](reports/generated/openclaw-ordinary-conversation-memory-intent-closeout-2026-04-17.md)
 - [Docker Hermetic Ordinary-Conversation Rerun](reports/generated/openclaw-ordinary-conversation-memory-intent-docker-rerun-2026-04-17.md)
 
-The honest takeaway is now cleaner: OpenClaw builtin memory is already decent on many “existing memory consumption” prompts, so the older `100`-case A/B only shows a modest gap. On the ordinary-conversation write surface, both the host-live run and the hermetic Docker strict rerun now show a material Unified Memory Core advantage. The difference is attribution quality: the host run acts as the more optimistic live upper bound, while the Docker strict rerun is the official reproducible baseline. The `2/4`-shard `gateway-steady` path remains useful, but only as fast watch/smoke rather than the final truth surface. In other words, UMC is no longer only “supposed” to remember better on this surface; it now does so under a clean hermetic A/B as well.
+The honest takeaway is now cleaner: OpenClaw builtin memory is already decent on many “existing memory consumption” prompts, so the older `100`-case A/B only shows a modest gap. On the ordinary-conversation write surface, both the host-live run and the hermetic Docker strict rerun show a material Unified Memory Core advantage. The difference is attribution quality: the host run acts as the more optimistic live upper bound, while the Docker strict lane is the official reproducible baseline. The last remaining strict shared-fail was then closed by a same-method targeted rerun, so the current closeout state of the `40`-case Docker strict matrix is now `40 / 40 vs 15 / 40`. The `2/4`-shard `gateway-steady` path remains useful, but only as fast watch/smoke rather than the final truth surface.
 
 ## Three User-Facing Promises
 

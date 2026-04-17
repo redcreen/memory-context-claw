@@ -16,7 +16,7 @@ test("ordinary GitHub keyword rules stay durable_rule and produce answer-friendl
 
   assert.ok(classified);
   assert.equal(classified.category, "durable_rule");
-  assert.match(classified.summary, /default rule keyword:\s*saffron-releases/i);
+  assert.match(classified.summary, /keyword for .*GitHub repository link.*:\s*saffron-releases/i);
   assert.match(classified.summary, /releases tab/i);
 });
 
@@ -49,6 +49,7 @@ test("ordinary Slack routing rules keep generic tool names without product-speci
   assert.equal(classified.structured_rule?.action?.tool, "summarize_slack_thread");
   assert.match(classified.summary, /Slack thread/i);
   assert.match(classified.summary, /olive-thread/i);
+  assert.match(classified.summary, /Default tag for .*Slack thread.*:\s*olive-thread/i);
   assert.match(classified.summary, /tag the result olive-thread/i);
 });
 
@@ -62,7 +63,41 @@ test("ordinary Notion routing rules keep trigger labels even when English casing
   assert.equal(classified.category, "tool_routing_preference");
   assert.match(classified.summary, /Notion export package/i);
   assert.match(classified.summary, /copper-notion/i);
+  assert.match(classified.summary, /Default tag for .*Notion export package.*:\s*copper-notion/i);
   assert.match(classified.summary, /tag the result copper-notion/i);
+});
+
+test("ordinary timezone profile facts produce answer-friendly summaries", () => {
+  const classified = classifyOrdinaryConversationMemoryIntent({
+    userMessage: "My timezone is Asia/Shanghai. Remember this for future scheduling.",
+    assistantReply: "Understood."
+  });
+
+  assert.ok(classified);
+  assert.equal(classified.category, "user_profile_fact");
+  assert.match(classified.summary, /User timezone:\s*Asia\/Shanghai/i);
+});
+
+test("ordinary coffee profile facts produce answer-friendly summaries", () => {
+  const classified = classifyOrdinaryConversationMemoryIntent({
+    userMessage: "I usually order an oat-milk flat white with no sugar. Remember this.",
+    assistantReply: "Understood."
+  });
+
+  assert.ok(classified);
+  assert.equal(classified.category, "user_profile_fact");
+  assert.match(classified.summary, /Preferred coffee order:\s*an oat-milk flat white with no sugar/i);
+});
+
+test("ordinary communication preferences produce answer-friendly summaries", () => {
+  const classified = classifyOrdinaryConversationMemoryIntent({
+    userMessage: "I prefer async written updates and do not like surprise voice calls. Please remember that preference.",
+    assistantReply: "Understood."
+  });
+
+  assert.ok(classified);
+  assert.equal(classified.category, "user_profile_fact");
+  assert.match(classified.summary, /Preferred update style:\s*async written updates, not surprise voice calls/i);
 });
 
 test("ordinary routing rules recognize generic action verbs beyond use", () => {

@@ -227,7 +227,7 @@ The former is expected. The latter must stay at zero.
 
 ## Current Ordinary-Conversation Docker Conclusion
 
-The latest hermetic Docker strict baseline for the focused `40`-case suite is:
+The latest full hermetic Docker strict sweep for the focused `40`-case suite is:
 
 - current: `39 / 40`
 - legacy: `15 / 40`
@@ -236,12 +236,21 @@ The latest hermetic Docker strict baseline for the focused `40`-case suite is:
 - `both-fail = 1`
 - `preCaseResetFailed = 0`
 
+The last remaining strict shared-fail was then rerun under the same Docker method and closed as `UMC-only`, so the current closeout state is:
+
+- current: `40 / 40`
+- legacy: `15 / 40`
+- `UMC-only = 25`
+- `legacy-only = 0`
+- `both-fail = 0`
+- `preCaseResetFailed = 0`
+
 This is now the trustworthy official capability surface rather than only an infra/perf watch.
 The more accurate reading is:
 
 - the hermetic isolation layer is clean
 - the strict baseline removes the earlier `agent --local` startup and exit distortion from the official conclusion surface
-- the remaining misses are now down to one honest harder case instead of a benchmark-wide timeout wall
+- the remaining misses are no longer unresolved shared-fails; the line is now in harder-matrix expansion territory instead of trust-recovery
 
 Put more plainly:
 

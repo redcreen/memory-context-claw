@@ -344,7 +344,8 @@ Stage complete when:
 112. `completed` lock down the ordinary-conversation Docker hermetic report entrypoint and thresholds.
 113. `completed` rerun the focused A/B and compare it cleanly against the host-live result.
 114. `completed` close the stage only when the clean path stops being dominated by timeout failures.
-   - Current strict hermetic baseline: current `39 / 40`, legacy `15 / 40`, `UMC-only = 24`, `legacy-only = 0`, `both-fail = 1`, `preCaseResetFailed = 0`
+   - Current strict hermetic full sweep: current `39 / 40`, legacy `15 / 40`, `UMC-only = 24`, `legacy-only = 0`, `both-fail = 1`, `preCaseResetFailed = 0`
+   - Last residual shared-fail is now closed by same-method targeted strict rerun; current closeout state: current `40 / 40`, legacy `15 / 40`, `UMC-only = 25`, `legacy-only = 0`, `both-fail = 0`
 
 ### Stage 9. Guarded Smart-Path Promotion
 

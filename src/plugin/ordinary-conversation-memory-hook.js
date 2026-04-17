@@ -425,12 +425,44 @@ function buildOrdinaryConversationSummary({
   const cueValue = normalizeString(namedCue?.value);
   const priorityClause = extractPriorityActionClause(userText, isChinese);
 
+  if (category === "user_profile_fact") {
+    const timezoneValue = normalizeString(
+      userText.match(/\btimezone\s+is\s+([A-Za-z0-9_./+-]+)/i)?.[1]
+        || userText.match(/时区是\s*([A-Za-z0-9_./+-]+)/u)?.[1]
+    );
+    if (timezoneValue) {
+      return isChinese
+        ? `用户时区是 ${timezoneValue}。`
+        : `User timezone: ${timezoneValue}.`;
+    }
+
+    const firstSentence = normalizeString(userText.split(/[.。]/u)[0]);
+    const coffeeClause = normalizeString(
+      firstSentence.match(/\b(?:usually\s+order|order)\s+(an?\s+.+)$/i)?.[1]
+        || firstSentence.match(/我平时[^。]*?(?:喝|点)\s*([^。]+)/u)?.[1]
+    );
+    if (coffeeClause) {
+      return isChinese
+        ? `用户常点的咖啡是 ${coffeeClause}。`
+        : `Preferred coffee order: ${coffeeClause}.`;
+    }
+
+    const prefersAsyncWrittenUpdates = /\basync\b/i.test(userText) && /\bwritten\b/i.test(userText) && /\bupdates?\b/i.test(userText);
+    const dislikesVoiceCalls = /\b(?:do not|don't|dont)\s+like\s+(?:surprise\s+)?voice calls?\b/i.test(userText)
+      || /不喜欢[^。；;，,]*(?:语音|电话)/u.test(userText);
+    if (prefersAsyncWrittenUpdates || dislikesVoiceCalls) {
+      return isChinese
+        ? `用户偏好异步文字更新，不喜欢突然语音通话。`
+        : `Preferred update style: async written updates, not surprise voice calls.`;
+    }
+  }
+
   if ((category === "durable_rule" || category === "tool_routing_preference") && triggerLabel) {
     if (actionTool && cueValue) {
       if (category === "tool_routing_preference" && (namedCue?.kind === "tag" || namedCue?.kind === "标签")) {
         return isChinese
-          ? `只要用户发${triggerLabel}，先用 ${actionTool}，并把结果标成 ${cueValue}。`
-          : `When the user sends ${triggerLabel}, use ${actionTool} first and tag the result ${cueValue}.`;
+          ? `${triggerLabel}的默认标签是 ${cueValue}。只要用户发${triggerLabel}，先用 ${actionTool}，并把结果标成 ${cueValue}。`
+          : `Default tag for ${triggerLabel}: ${cueValue}. When the user sends ${triggerLabel}, use ${actionTool} first and tag the result ${cueValue}.`;
       }
       return isChinese
         ? `默认${namedCue?.kind === "标签" || namedCue?.kind === "tag" ? "标签" : namedCue?.kind === "关键词" || namedCue?.kind === "keyword" ? "规则关键词" : "规则代号"}是 ${cueValue}。只要用户发${triggerLabel}，先用 ${actionTool}。`
@@ -438,9 +470,29 @@ function buildOrdinaryConversationSummary({
     }
     if (cueValue) {
       if (priorityClause) {
+        if (namedCue?.kind === "keyword" || namedCue?.kind === "关键词") {
+          return isChinese
+            ? `${triggerLabel}的默认规则关键词是 ${cueValue}。只要用户发${triggerLabel}，${priorityClause}。`
+            : `Keyword for ${triggerLabel}: ${cueValue}. When the user sends ${triggerLabel}, ${priorityClause}.`;
+        }
+        if (namedCue?.kind === "codename" || namedCue?.kind === "代号") {
+          return isChinese
+            ? `${triggerLabel}的默认规则代号是 ${cueValue}。只要用户发${triggerLabel}，${priorityClause}。`
+            : `Codename for ${triggerLabel}: ${cueValue}. When the user sends ${triggerLabel}, ${priorityClause}.`;
+        }
         return isChinese
           ? `默认规则${namedCue?.kind === "关键词" || namedCue?.kind === "keyword" ? "关键词" : "代号"}是 ${cueValue}。只要用户发${triggerLabel}，${priorityClause}。`
           : `Default rule ${namedCue?.kind === "keyword" ? "keyword" : "codename"}: ${cueValue}. When the user sends ${triggerLabel}, ${priorityClause}.`;
+      }
+      if (namedCue?.kind === "keyword" || namedCue?.kind === "关键词") {
+        return isChinese
+          ? `${triggerLabel}的默认规则关键词是 ${cueValue}。`
+          : `Keyword for ${triggerLabel}: ${cueValue}.`;
+      }
+      if (namedCue?.kind === "codename" || namedCue?.kind === "代号") {
+        return isChinese
+          ? `${triggerLabel}的默认规则代号是 ${cueValue}。`
+          : `Codename for ${triggerLabel}: ${cueValue}.`;
       }
       return isChinese
         ? `默认规则${namedCue?.kind === "关键词" || namedCue?.kind === "keyword" ? "关键词" : "代号"}是 ${cueValue}。只要用户发${triggerLabel}。`

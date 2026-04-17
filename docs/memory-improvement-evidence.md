@@ -83,12 +83,22 @@ Host-live rerun:
 
 Hermetic Docker strict baseline:
 
-- current path: `39 / 40`
+- last full strict sweep: `39 / 40`
 - legacy default path: `15 / 40`
 - both pass: `15`
 - Memory Core only: `24`
 - legacy only: `0`
 - both fail: `1`
+- `preCaseResetFailed = 0`
+
+The last remaining shared-fail from that full sweep (`ordinary-ab-en-tool-notion-1`) was then rerun under the same strict Docker method and flipped to `UMC-only`, so the current closeout state is:
+
+- current path: `40 / 40`
+- legacy default path: `15 / 40`
+- both pass: `15`
+- Memory Core only: `25`
+- legacy only: `0`
+- both fail: `0`
 - `preCaseResetFailed = 0`
 
 The interpretation is now stricter:

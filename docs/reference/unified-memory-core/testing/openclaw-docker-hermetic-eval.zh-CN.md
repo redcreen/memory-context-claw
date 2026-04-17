@@ -229,7 +229,7 @@ npm run eval:openclaw:docker -- \
 
 ## 当前 ordinary-conversation Docker 结论
 
-最新 hermetic Docker strict baseline 的 focused `40` case 结果是：
+最近一次完整 hermetic Docker strict `40` case sweep 的结果是：
 
 - current: `39 / 40`
 - legacy: `15 / 40`
@@ -238,12 +238,21 @@ npm run eval:openclaw:docker -- \
 - `both-fail = 1`
 - `preCaseResetFailed = 0`
 
+随后，最后剩下的 strict shared-fail `ordinary-ab-en-tool-notion-1` 又按同一套 strict Docker 方法做了 targeted rerun，并翻成 `UMC-only`。因此当前这条能力面的**收口态**是：
+
+- current: `40 / 40`
+- legacy: `15 / 40`
+- `UMC-only = 25`
+- `legacy-only = 0`
+- `both-fail = 0`
+- `preCaseResetFailed = 0`
+
 这个结果现在已经可以直接当成可信的官方能力排序面，而不再只是 infra/perf watch。
 更准确的解释是：
 
 - hermetic 隔离层本身是干净的
 - strict baseline 已经把之前 `agent --local` 的冷启动 / exit tail latency 扭曲从正式结论面里挪开
-- 剩余问题收敛成 `1` 条更真实的 harder case，而不是整条路径都被 timeout 吞掉
+- 剩余问题不再是 shared-fail harder case，而是后续要继续扩 harder matrix，而不是继续怀疑这条 hermetic 基座
 
 更直白地说：
 
@@ -286,7 +295,7 @@ npm run eval:openclaw:docker -- \
 所以后面如果继续优化 ordinary-conversation Docker A/B，目标不再是“让 Docker 能不能给出可信结论”，而是：
 
 - 继续把 fast watch 的 wall-clock 压下去
-- 继续收掉最后 `1` 条 strict shared-fail harder case
+- 继续扩更难的 matrix，而不是再围绕 shared-fail 收尾
 
 ## 当前收口结论
 

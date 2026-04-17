@@ -22,7 +22,8 @@
 - Main-path perf baseline: retrieval / assembly avg `16ms`; raw transport avg `8061ms`; isolated local answer-level avg `11200ms`
 - Focused ordinary-conversation realtime-write A/B: `40` cases, builtin-first then clean-state current
 - Focused ordinary-conversation host result: current `38 / 40`, legacy `21 / 40`, `20` both-pass, `18` UMC-only, `1` legacy-only, `1` both-fail
-- Focused ordinary-conversation Docker strict result: current `39 / 40`, legacy `15 / 40`, `15` both-pass, `24` UMC-only, `0` legacy-only, `1` both-fail, `preCaseResetFailed = 0`
+- Focused ordinary-conversation Docker strict full-sweep: current `39 / 40`, legacy `15 / 40`, `15` both-pass, `24` UMC-only, `0` legacy-only, `1` both-fail, `preCaseResetFailed = 0`
+- Focused ordinary-conversation Docker strict closeout: current `40 / 40`, legacy `15 / 40`, `15` both-pass, `25` UMC-only, `0` legacy-only, `0` both-fail, `preCaseResetFailed = 0`
 - Focused ordinary-conversation interpretation: the host result remains the optimistic live upper bound, while Docker strict is now the official hermetic baseline; `2/4 shard gateway-steady` remains useful as fast watch/smoke only
 - Live answer-level A/B after history cleanup: current `100 / 100`, legacy `99 / 100`, `1` UMC-only, `0` builtin-only, `0` shared-fail
 - Dialogue working-set runtime shadow: replay `16 / 16`, average reduction ratio `0.4368`, runtime answer A/B baseline `5 / 5`, shadow `5 / 5`

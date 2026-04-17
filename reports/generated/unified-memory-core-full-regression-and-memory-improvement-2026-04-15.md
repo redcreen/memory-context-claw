@@ -264,19 +264,24 @@ Category split:
 Hermetic Docker strict baseline topline:
 
 - compared live cases: `40`
-- `unified-memory-core` current path passed: `39`
+- last full strict sweep: current `39`, legacy `15`, `UMC-only = 24`, `both-fail = 1`
+- last residual shared-fail targeted closeout: `ordinary-ab-en-tool-notion-1 -> umc_only`
+- effective strict closeout state:
+  - `unified-memory-core` current path passed: `40`
+  - legacy builtin path passed: `15`
+  - both passed: `15`
+  - Memory Core only: `25`
+  - legacy only: `0`
+  - both failed: `0`
 - legacy builtin path passed: `15`
-- both passed: `15`
-- Memory Core only: `24`
-- legacy only: `0`
-- both failed: `1`
 - `preCaseResetFailed = 0`
 
 Hermetic Docker interpretation:
 
 - the Docker rerun does not seed host `~/.openclaw` state, uses warmed shard-local hermetic states, resets every case back to its baseline snapshot before capture, prunes session transcripts before recall, and cleans up successfully
 - OpenClaw still generates bootstrap workspace files inside each hermetic state, but those are deterministic runtime bootstrap, not host-memory contamination
-- the strict `1 shard` path is now the official capability baseline, while `2/4 shard gateway-steady` remains the fast watch/smoke lane
+- the strict `1 shard` path remains the official capability baseline, while `2/4 shard gateway-steady` remains the fast watch/smoke lane
+- the last residual shared-fail has now been closed by a same-method targeted rerun, so the strict matrix no longer has unresolved shared failures on the current path
 - so the hermetic rerun now proves both things at once: the isolation root is trustworthy, and the ordinary-conversation write-time capability surface is no longer swallowed by blanket timeout failure
 
 Interpretation:

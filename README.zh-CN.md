@@ -20,7 +20,7 @@
 - Stage 9 guarded live A/B：baseline `4 / 4`、guarded `4 / 4`、guarded applied `2 / 4`、activation matched `4 / 4`，average prompt reduction ratio `0.0306`，applied-only `0.0067`
 - 普通对话实时写记忆专项 A/B：
   - 宿主 live：`current=38`、`legacy=21`、`UMC-only=18`
-  - Docker hermetic strict baseline：`current=39`、`legacy=15`、`UMC-only=24`、`legacy-only=0`、`both-fail=1`、`preCaseResetFailed=0`
+  - Docker hermetic strict closeout：`current=40`、`legacy=15`、`UMC-only=25`、`legacy-only=0`、`both-fail=0`、`preCaseResetFailed=0`
 
 建议先看这两份：
 
@@ -33,9 +33,10 @@
 - [OpenClaw Guarded Live A/B](reports/generated/openclaw-guarded-live-ab-2026-04-18.md)
 - [Stage 9 收口报告](reports/generated/stage9-guarded-smart-path-closeout-2026-04-18.zh-CN.md)
 - [普通对话实时写记忆专项对比](reports/generated/openclaw-ordinary-conversation-memory-intent-ab-2026-04-17.md)
+- [普通对话 strict 收口报告](reports/generated/openclaw-ordinary-conversation-memory-intent-closeout-2026-04-17.md)
 - [普通对话 Docker 隔离复测总结](reports/generated/openclaw-ordinary-conversation-memory-intent-docker-rerun-2026-04-17.md)
 
-最诚实的结论是：OpenClaw 内置记忆在很多“已有记忆消费”的简单题上本来就不差，所以旧的 `100` 条 A/B 差异不大；而在“普通对话里实时写入，再跨会话召回”这条线上，宿主 live 和 Docker hermetic strict baseline 现在都显示 Unified Memory Core 有明显优势。区别只在于：宿主结果更像真实上限，Docker strict 结果更像严格隔离后的官方可信基线；`2/4 shard gateway-steady` 现在只保留为 fast watch，不再当正式能力结论面。也就是说，UMC 现在已经不只是“记得更好”，而是已经在可复现 A/B 面上表现出更强写侧能力；接下来要补的，是剩余 `1` 条 strict shared-fail harder case，而不是继续怀疑这条测试基座本身。
+最诚实的结论是：OpenClaw 内置记忆在很多“已有记忆消费”的简单题上本来就不差，所以旧的 `100` 条 A/B 差异不大；而在“普通对话里实时写入，再跨会话召回”这条线上，宿主 live 和 Docker hermetic strict baseline 都显示 Unified Memory Core 有明显优势。区别只在于：宿主结果更像真实上限，Docker strict 结果更像严格隔离后的官方可信基线；`2/4 shard gateway-steady` 现在只保留为 fast watch，不再当正式能力结论面。最后剩下的 `1` 条 strict shared-fail 也已经通过同方法 targeted strict rerun 收掉，所以当前 `40` 条 Docker strict closeout 状态已经是 `40 / 40 vs 15 / 40`。
 
 ## 三个用户价值
 

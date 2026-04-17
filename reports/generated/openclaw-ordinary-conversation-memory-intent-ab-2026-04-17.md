@@ -1,6 +1,7 @@
 # OpenClaw Ordinary-Conversation Memory-Intent A/B
 
 - generatedAt: `2026-04-17T15:01:41.242Z`
+- note: this file records the last full strict `40`-case sweep; the last remaining shared-fail was later closed by [openclaw-ordinary-conversation-memory-intent-closeout-2026-04-17.md](openclaw-ordinary-conversation-memory-intent-closeout-2026-04-17.md)
 - comparedCases: `40`
 - currentPassed: `39`
 - legacyPassed: `15`
