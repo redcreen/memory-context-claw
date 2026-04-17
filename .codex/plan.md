@@ -2,7 +2,7 @@
 
 ## Current Phase
 
-`post-stage5 evaluation-driven optimization`
+`post-stage6 turn-by-turn context optimization planning`
 
 ## Current Results Snapshot
 
@@ -23,7 +23,30 @@
 - Focused ordinary-conversation realtime-write A/B: `40` cases, builtin-first then clean-state current
 - Focused ordinary-conversation result: current `38 / 40`, legacy `21 / 40`, `20` both-pass, `18` UMC-only, `1` legacy-only, `1` both-fail
 - Focused ordinary-conversation interpretation: durable rules, tool routing, and Chinese profile facts now show clear current-path gains; remaining gaps are `ordinary-ab-en-session-negative-3` (current over-retains `Hangzhou`) and `ordinary-ab-en-timezone-1` (shared fail)
-- Interpretation: the `200+` case buildout, natural-Chinese / watchlist / perf hardening, and the first answer-level gate expansion are complete; the builtin-only regression and the remaining shared-fail history cases in the `100`-case live A/B are now both closed, so the next phase is to push clearer UMC-only wins into harder `cross-source / conflict / multi-step history / natural-Chinese` cases
+- Live answer-level A/B after history cleanup: current `100 / 100`, legacy `99 / 100`, `1` UMC-only, `0` builtin-only, `0` shared-fail
+- Dialogue working-set runtime shadow: replay `16 / 16`, average reduction ratio `0.4368`, runtime answer A/B baseline `5 / 5`, shadow `5 / 5`
+- Docker hermetic eval status: official-image runner landed and reusable; focused history cleanup scenario now runs through the real Docker path
+- Interpretation: the `200+` case buildout, natural-Chinese / watchlist / perf hardening, Stage 6 runtime shadow measurement, and the history-cleanup closure are complete; the next phase is a docs-first review that turns “per-turn context optimization” into the explicit mainline before any new active-path experiment
+
+## Current Product Values
+
+- `按需加载 context`
+  - 当前已落地：fact-first assembly、durable-source slimming 方向、runtime working-set shadow instrumentation
+- `realtime + nightly self-learning`
+  - 当前已落地：realtime `memory_intent` ingestion、nightly governed learning、promotion / decay
+- `CLI-governed memory operations`
+  - 当前已落地：`umc` add / inspect / audit / repair / replay / migrate operator surface
+- `共享记忆底座`
+  - 当前已落地：shared contracts、canonical registry root、OpenClaw / Codex adapters
+
+当前还必须同时守住六条产品品质：
+
+- `简单`
+- `好用`
+- `轻量`
+- `够快`
+- `聪明`
+- `易维护`
 
 ## Slices
 
@@ -73,6 +96,14 @@
 - Risks: 如果继续停留在“多数题共享通过、只有少量 clear UMC-only wins”，产品仍然很难证明“在真实 harder cases 上明显比默认内置更强”
   - Validation: builtin-only regression fix、shared-fail history closure、下一轮 live A/B 设计、full regression / perf / A/B rerun
   - Exit Condition: 当前 regression 被关闭，且下一轮 live A/B 已明确瞄准 cross-source / conflict / history / 自然中文的净增益
+  - Status: `ongoing`
+
+- Slice: `review-and-stage-next-round-context-optimization`
+  - Objective: 先把“逐轮 context 优化”的下一轮工作收敛成 docs-first 队列，再进入新的 runtime experiment 与 harder A/B 设计
+  - Dependencies: Stage 6 runtime shadow evidence、history cleanup closeout、roadmap / development plan / architecture docs、Docker hermetic eval path
+  - Risks: 如果还沿用上一轮“history cleanup resume”的口径，下一轮 active-path discussion 会缺少清晰边界；如果直接继续堆 hardcoded rules，会违背当前“尽量使用 LLM tool、但调用次数受控”的实现约束
+  - Validation: roadmap / development plan / architecture docs / `.codex/*` 对齐；bounded LLM decision contract、operator metrics 和 rollback boundary 被写成 durable docs
+  - Exit Condition: 维护者可以只看文档就知道下一轮先做哪条 experiment、哪些 guardrail 不能动、哪些指标决定是否 promotion
   - Status: `ongoing`
 
 - Slice: `formalize-realtime-memory-intent-ingestion`
@@ -181,43 +212,43 @@
 
 ## Execution Order
 
-1. 重设计下一轮 live A/B，让更多 `cross-source`、`conflict`、`multi-step history` 与高信息密度自然中文场景变成 Memory Core 独占胜场
-2. 继续保持 `24` 条自然中文案例、当前 raw transport watchlist 和 `2026-04-15` perf baseline 在下一轮修复中持续稳定
-3. 把更难 harder-case surface 逐步从 watch 推向更强的正式门禁候选
-4. 把 gateway/shared-session 与 raw transport 继续保持在独立 watchlist，不与算法判断混淆
-5. 在 regression 清掉后，重设计下一轮 live A/B，让更多 `cross-source`、`conflict`、`multi-step history` 与高信息密度自然中文场景变成 Memory Core 独占胜场
-6. 并行保持 release-preflight / bundle install / host smoke / Stage 5 evidence 稳定
-7. 保持 host-neutral root operator policy 可见且不回退
-8. 保持 accepted-action deeper queue 的 Step 48-52 仍然显式 deferred，不把 admission / negative-path / conflict work 偷渡进当前实现
-9. memory-intent slice 已收口完成；后续只在更高层 benchmark / runtime adoption 里继续观察 drift
+1. 先完成 docs-first review，把 roadmap、development plan、architecture docs 和 `.codex/*` 对齐到“逐轮 context 优化”的下一轮主线
+2. 定义 bounded LLM-led context decision contract、operator metrics 和 rollback boundary
+3. 在 docs 收口后，再重设计下一轮 live A/B，让更多 `cross-source`、`conflict`、`multi-step history` 与高信息密度自然中文场景变成 Memory Core 独占胜场
+4. 继续保持 `24` 条自然中文案例、当前 raw transport watchlist 和 `2026-04-15` perf baseline 在下一轮修复中持续稳定
+5. 把更难 harder-case surface 逐步从 watch 推向更强的正式门禁候选
+6. 把 gateway/shared-session 与 raw transport 继续保持在独立 watchlist，不与算法判断混淆
+7. 并行保持 release-preflight / bundle install / host smoke / Stage 5 evidence 稳定
+8. 保持 host-neutral root operator policy 可见且不回退
+9. 保持 accepted-action deeper queue 的 Step 48-52 仍然显式 deferred，不把 admission / negative-path / conflict work 偷渡进当前实现
 
 ## Architecture Supervision
 - Signal: `yellow`
 - Signal Basis: open blockers or architectural risks are still recorded
-- Problem Class: shared-fail history closure and turning mostly-shared A/B wins into clearer UMC gains
-- Root Cause Hypothesis: shared-fail history cleanup 已完成，但如果下一轮 harder live A/B 仍然停留在“多数题共享通过、只有极少 clear UMC-only wins”，产品仍然很难证明“Memory Core 在真实 harder cases 上明显比默认内置更强”
-- Correct Layer: live A/B case design, retrieval / assembly behavior, negative-case abstention, history/supersede handling, transport watchlist, main-path performance baseline, control surface
+- Problem Class: next-round per-turn context optimization framing
+- Root Cause Hypothesis: 如果不先把 docs 和 control surface 从上一轮 history-cleanup 语义切换到“逐轮 context 优化”，下一轮工作会在 active-path experiment、harder A/B redesign 和 budgeted assembly 之间反复漂移
+- Correct Layer: roadmap, development plan, architecture docs, runtime experiment boundary, live A/B case design, transport watchlist, control surface
 - Rejected Shortcut: 跳过 Stage 5 证据面和当前 operator baseline，直接讨论 runtime API / service mode
 - Automatic Review Trigger: no automatic trigger is currently active
 - Escalation Gate: raise but continue
 
 ## Current Execution Line
 
-- Objective: shared-fail history cleanup 已完成；接下来推动更多 harder cases 形成 Memory Core 独占胜场
-- Plan Link: `convert-100-case-ab-from-mostly-shared-wins-into-clearer-umc-gains`
-- Runway: cross-source/conflict/history/natural-Chinese A/B redesign、gateway/raw transport watch
-- Progress: `2 / 3` tasks complete
+- Objective: 先把“逐轮 context 优化”的下一轮工作文档化、定边界，再开始新的 experiment 与 harder A/B
+- Plan Link: `review-and-stage-next-round-context-optimization`
+- Runway: docs-first review、bounded LLM decision contract、harder A/B redesign、gateway/raw transport watch
+- Progress: `0 / 3` tasks complete
 - Stop Conditions:
-  - remaining harder failures get promoted without root-cause attribution
-  - answer-level regression gets misdiagnosed as raw transport noise
-  - perf / release evidence is rerun before the deeper-watch closure boundary is clear
-  - Stage 5 evidence regresses while this enhancement work is ongoing
-- Validation: deeper-watch reruns、failure attribution notes、formal-gate promotion decision、`npm run umc:release-preflight`、full regression、CLI use cases、main-path perf baseline、memory-improvement A/B summary、roadmap / development plan、`npm run umc:cli -- registry inspect --format markdown`
+  - docs remain anchored to the older history-cleanup recovery pointer instead of the next context-optimization queue
+  - bounded LLM decision work turns into growing hardcoded rule tables
+  - active prompt mutation is discussed before rollback and operator metrics are explicit
+  - Stage 5 evidence regresses while this planning work is ongoing
+- Validation: roadmap / development plan / architecture docs、harder-case design note、formal-gate promotion decision、`npm run umc:release-preflight`、full regression、CLI use cases、main-path perf baseline、memory-improvement A/B summary、`npm run umc:cli -- registry inspect --format markdown`
 
 ## Execution Tasks
 
-- [x] EL-1 close the builtin-only regression in the `100` case live A/B: `ab100-zh-negative-4`
-- [x] EL-2 close the shared-fail Chinese history cases in the `100` case live A/B: `ab100-zh-history-editor-2` and `ab100-zh-history-editor-4`
+- [ ] EL-1 review and align roadmap, development plan, architecture docs, and `.codex/*` around the next per-turn context optimization phase
+- [ ] EL-2 define the bounded LLM-led context decision contract, operator metrics, and rollback boundary
 - [ ] EL-3 redesign the next live A/B around `cross-source`, `conflict`, `multi-step history`, and denser natural-Chinese prompts so Memory Core can win on more harder cases
 
 ## Development Log Capture

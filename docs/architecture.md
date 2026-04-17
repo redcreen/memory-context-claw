@@ -28,6 +28,77 @@ Stable boundaries:
 - adapters own consumer-specific retrieval, assembly, and export consumption
 - governance remains cross-cutting and should keep artifacts repairable and replayable
 
+## Current Flagship Tracks
+
+At this point the repo has two top-priority milestone tracks:
+
+1. `self-learning`
+2. `context optimization`
+
+The second track is now first-class. It is not just an adapter polish item.
+
+Context optimization currently means two coordinated architecture surfaces:
+
+- durable-source slimming and budgeted assembly
+  - [reference/unified-memory-core/architecture/context-slimming-and-budgeted-assembly.md](reference/unified-memory-core/architecture/context-slimming-and-budgeted-assembly.md)
+- dialogue working-set pruning for long multi-topic sessions
+  - [reference/unified-memory-core/architecture/dialogue-working-set-pruning.md](reference/unified-memory-core/architecture/dialogue-working-set-pruning.md)
+
+Current state:
+
+- Stage 6 runtime shadow integration is already landed
+- it remains `default-off` and shadow-only
+- the next round is docs-first: clarify the bounded LLM-led decision contract, operator metrics, rollback boundary, and harder A/B design before any default prompt-path change
+
+## Primary Product Value Surfaces
+
+The architecture should now be reviewed against four primary product value surfaces:
+
+1. `On-demand context loading`
+   - owned mainly by the OpenClaw adapter plus the two context-optimization architecture tracks
+   - current landed capability: fact-first assembly plus runtime working-set shadow instrumentation
+2. `Realtime + nightly self-learning`
+   - owned by the Source System, Reflection System, Memory Registry, and Governance System
+   - current landed capability: realtime `memory_intent` ingestion, nightly reflection, promotion / decay, and governed exports
+3. `CLI-governed memory operations`
+   - owned mainly by the standalone runtime, CLI entrypoints, and governance tooling
+   - current landed capability: add / inspect / audit / repair / replay / migrate flows
+4. `Shared memory foundation across OpenClaw, Codex, and future consumers`
+   - owned by the shared contracts, projection layer, registry root policy, and both adapters
+   - current landed capability: one canonical governed memory core with OpenClaw and Codex consumption paths
+
+These surfaces also carry six non-negotiable product qualities:
+
+- `simple`
+  - install, default setup, and first verification should stay straightforward
+- `usable`
+  - the default workflow should stay understandable without forcing operators into architecture archaeology
+- `lightweight`
+  - runtime gains should come from sending less context, not from creating a heavier control layer than the problem itself
+- `fast enough`
+  - context optimization, self-learning, and governance should not make the main path feel slow
+- `smart`
+  - the system should remember what matters, avoid learning noise, send only the right context, and stay conservative when uncertain
+- `maintainable`
+  - core behavior should remain inspectable, replayable, repairable, and reversible
+
+## Product North Star And Engineering Translation
+
+> Simple to install, smooth to use, light and fast to run, smart to remember, easy to maintain.
+
+Translated into architecture constraints:
+
+- `simple to install`
+  - adapter seams, default config, CLI entrypoints, and package shape should reduce adoption cost
+- `smooth to use`
+  - default paths come first so users can benefit before learning the full governance model
+- `light and fast to run`
+  - context thickness, main-path latency, runtime footprint, and install size all belong to the same target
+- `smart to remember`
+  - durable memory, realtime learning, working-set pruning, budgeted assembly, and abstention guardrails should reinforce each other instead of drifting apart
+- `easy to maintain`
+  - critical behavior stays visible through inspect / audit / replay / rollback surfaces
+
 ## Module Inventory
 
 | Module | Responsibility | Key Interfaces |
@@ -85,6 +156,7 @@ This keeps the system traceable and allows replay or repair instead of silent mu
 - contracts should stay `network-ready`, not `network-required`
 - governance outputs must stay readable enough to support promotion and smoke-gate decisions
 - adapters should not absorb product-core logic that belongs in the shared modules
+- context-decision logic should not drift into a growing hardcoded rule table; the preferred next direction is a bounded LLM-led decision surface with explicit hard safety guardrails
 
 ## Tradeoffs and Non-Goals
 

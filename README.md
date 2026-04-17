@@ -2,7 +2,7 @@
 
 [English](README.md) | [中文](README.zh-CN.md)
 
-> A governed shared-memory core for OpenClaw: fact-first context, explicit self-learning lifecycle, and CLI-verifiable release gates.
+> A governed shared-memory core for OpenClaw: fact-first context, turn-by-turn context optimization, explicit self-learning lifecycle, and CLI-verifiable release gates.
 
 ## Why It Already Matters
 
@@ -14,7 +14,8 @@ If you want the shortest practical answer before reading the whole repo:
 - isolated local answer-level gate: `12 / 12`, with `6 / 12` zh-bearing cases inside the formal gate
 - deeper answer-level watch: `14 / 18`
 - maintained runnable matrix: `392` cases with `53.83%` Chinese-bearing coverage
-- live A/B on existing-memory consumption: `100` real answer-level cases, `97` shared wins, `1` Memory Core-only win, `0` builtin-only wins, and `2` shared failures
+- live A/B on existing-memory consumption: `100` real answer-level cases, `100 / 100` current pass, `99 / 100` legacy pass, `1` Memory Core-only win, `0` builtin-only wins, and `0` shared failures
+- dialogue working-set runtime shadow: replay `16 / 16`, answer A/B baseline `5 / 5`, shadow `5 / 5`, average reduction ratio `0.4368`
 - focused ordinary-conversation write-time A/B:
   - host live: `current=38`, `legacy=21`, `UMC-only=18`
   - Docker hermetic (`30s` turn budget): `current=3`, `legacy=0`, `UMC-only=3`, `both-fail=37`
@@ -23,10 +24,70 @@ Read these first:
 
 - [Why Unified Memory Core Feels Better](docs/memory-improvement-evidence.md)
 - [Full Regression And Memory Improvement Report](reports/generated/unified-memory-core-full-regression-and-memory-improvement-2026-04-15.md)
+- [Context Slimming And Budgeted Assembly](docs/reference/unified-memory-core/architecture/context-slimming-and-budgeted-assembly.md)
+- [Dialogue Working-Set Pruning](docs/reference/unified-memory-core/architecture/dialogue-working-set-pruning.md)
 - [Focused Ordinary-Conversation Realtime Write A/B](reports/generated/openclaw-ordinary-conversation-memory-intent-ab-2026-04-16.md)
 - [Docker Hermetic Ordinary-Conversation Rerun](reports/generated/openclaw-ordinary-conversation-memory-intent-docker-rerun-2026-04-17.md)
 
 The honest takeaway is now split in two: OpenClaw builtin memory is already decent on many “existing memory consumption” prompts, so the older `100`-case A/B only shows a modest gap. On the ordinary-conversation write surface, the host-live run shows a much clearer Unified Memory Core advantage, but the hermetic Docker rerun shows that the same surface is now heavily constrained by answer-level timeout pressure. In other words, UMC is not just about “remembering better” anymore; it also has to become faster and more reproducible under bounded evaluation budgets.
+
+## Four Primary Product Values
+
+The repo should now be understood through four primary product values, not just “memory retrieval” in the abstract.
+
+1. `On-demand context loading instead of flat prompt stuffing`
+   - Already landed: fact-first context assembly, durable-source slimming architecture, and runtime working-set shadow instrumentation
+   - Measured now: dialogue working-set runtime shadow replay average reduction ratio `0.4368`, with runtime answer A/B baseline `5 / 5` and shadow `5 / 5`
+   - Next milestone: turn this into a stable builtin-comparison context-thickness and latency gate on harder live A/B
+2. `Self-learning on every turn and every night`
+   - Already landed: realtime `memory_intent` ingestion, governed promotion / decay, and nightly self-learning enabled by default
+   - Measured now: focused ordinary-conversation host-live A/B is current `38 / 40` vs legacy `21 / 40`, with `18` UMC-only wins
+   - Current caveat: the hermetic Docker rerun is still timeout-constrained, so this value is real but not yet fully saturated under tight answer budgets
+3. `CLI-governed memory you can add, inspect, and maintain`
+   - Already landed: `umc source add`, inspect / audit / repair / replay / export flows, registry inspect / migrate, and release-preflight checks
+   - Product meaning: operators can manage memory content as governed artifacts instead of treating the system as an opaque plugin
+4. `One shared memory foundation across OpenClaw, Codex, and future consumers`
+   - Already landed: shared contracts, a canonical registry root, projection / export layers, the OpenClaw adapter, and the Codex adapter
+   - Product meaning: one governed memory core can be reused across multiple OpenClaw instances and cross-host consumers instead of trapping memory inside one runtime
+
+These values also need to stay legible as six product qualities:
+
+- `simple`
+  - install, default configuration, and first verification should be obvious without forcing users to learn the whole governance stack first
+- `usable`
+  - the default workflow should feel clear and immediately better in practice, not just more feature-rich on paper
+- `lightweight`
+  - the runtime should send less context and avoid growing a heavier control layer, while keeping install footprint small
+- `fast enough`
+  - answer paths, context assembly, and day-to-day operations should stay fast enough that better memory does not feel slower
+- `smart`
+  - the system should remember what matters, avoid writing what does not, send only the right context, and stay conservative when uncertain
+- `maintainable`
+  - operators should be able to inspect, replay, repair, and roll back behavior without reverse-engineering hidden state
+
+## Product North Star
+
+The current product target can be compressed to one sentence:
+
+> Simple to install, smooth to use, light and fast to run, smart to remember, easy to maintain.
+
+In technical and engineering terms, that means:
+
+- `simple to install`
+  - the install command, default configuration, and first verification path should stay short and obvious
+  - engineering meaning: package shape, plugin wiring, default config, and CLI entrypoints should minimize first-use friction
+- `smooth to use`
+  - users should not have to learn the whole governance model before feeling the value
+  - engineering meaning: default paths come first, feature switches stay disciplined, and common tasks should remain direct
+- `light and fast to run`
+  - the product should feel lighter in prompt weight and faster in main-path behavior, not just more capable
+  - engineering meaning: prompt thickness, context assembly cost, answer latency, install size, and runtime footprint all stay in scope
+- `smart to remember`
+  - remember what matters, avoid writing what does not, send only the right context, and stay conservative when uncertain
+  - engineering meaning: self-learning, working-set pruning, budgeted assembly, abstention / guardrails, and bounded decision contracts must work together
+- `easy to maintain`
+  - when something goes wrong, operators should be able to inspect, trace, replay, and roll back it instead of guessing
+  - engineering meaning: inspect / audit / replay / repair / rollback / hermetic eval surfaces remain first-class
 
 ## Who This Is For
 
@@ -162,6 +223,7 @@ workspace/
 ## Core Capabilities
 
 - fact-first context assembly for high-value memory questions
+- turn-by-turn context optimization across durable-source slimming and hot-session working-set pruning
 - stable rule, identity, and preference prioritization
 - governed retrieval and assembly instead of flat equal-weight recall
 - a governed self-learning baseline across declared sources, reflection, candidate promotion, and export/audit surfaces
@@ -177,6 +239,46 @@ The system is organized around seven first-class modules:
 - Governance System
 - OpenClaw Adapter
 - Codex Adapter
+
+Two cross-cutting milestone tracks now matter more than anything else:
+
+- `self-learning`
+  - governed reflection, promotion, decay, policy adaptation, and export surfaces
+- `context optimization`
+  - durable-source slimming and budgeted assembly
+  - dialogue working-set pruning for long multi-topic sessions
+  - default-off runtime shadow instrumentation before any active prompt experiment
+
+## Why Context Optimization Now Matters
+
+This repo now has two flagship tracks:
+
+1. `self-learning`
+2. `context optimization`
+
+The second one is no longer a side note.
+
+The practical reason is simple:
+
+- retrieval / assembly is already fast enough to stop being the main bottleneck
+- answer-level latency and prompt thickness are now the bigger problem
+- many “memory quality” issues are really “too much irrelevant context survives into this turn”
+
+So context optimization is now treated as a first-class milestone, not a minor adapter tweak.
+
+It currently has two coordinated architecture surfaces:
+
+- durable-source slimming and budgeted assembly
+  - [Context Slimming And Budgeted Assembly](docs/reference/unified-memory-core/architecture/context-slimming-and-budgeted-assembly.md)
+- hot-session working-set pruning
+  - [Dialogue Working-Set Pruning](docs/reference/unified-memory-core/architecture/dialogue-working-set-pruning.md)
+
+Current status:
+
+- Stage 6 runtime shadow integration is landed
+- it remains `default-off` and shadow-only
+- active prompt mutation is still deferred
+- the next round is docs-first: clarify the bounded LLM-led decision contract, operator metrics, rollback boundary, and harder A/B design before changing the default prompt path
 
 ## Why Self-Learning Already Matters
 

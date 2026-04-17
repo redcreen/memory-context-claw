@@ -3,15 +3,35 @@
 ## Delivery Tier
 
 - Tier: `large`
-- Last reviewed: `2026-04-15`
+- Last reviewed: `2026-04-17`
 
 ## Current Phase
 
-`post-stage5 evaluation-driven optimization`
+`post-stage6 turn-by-turn context optimization planning`
 
 ## Active Slice
 
-`close-remaining-deeper-watch-failures-after-14-of-18`
+`review-and-stage-next-round-context-optimization`
+
+## Current Product Values
+
+- `按需加载 context`
+  - 当前已落地：fact-first assembly + Stage 6 runtime shadow instrumentation
+- `realtime + nightly self-learning`
+  - 当前已落地：realtime `memory_intent` ingestion + nightly governed learning
+- `CLI-governed memory operations`
+  - 当前已落地：add / inspect / audit / repair / replay / migrate operator flows
+- `共享记忆底座`
+  - 当前已落地：shared contracts + canonical registry root + OpenClaw / Codex adapters
+
+当前产品品质约束：
+
+- `简单`
+- `好用`
+- `轻量`
+- `够快`
+- `聪明`
+- `易维护`
 
 ## Done
 
@@ -96,6 +116,18 @@
 - legacy-only `1`
 - both-fail `1`
   - 分类上 durable-rule `8 / 8 vs 3 / 8`、tool-routing `8 / 8 vs 1 / 8`、profile `7 / 8 vs 1 / 8`；负例面 one-off `8 / 8` 两边都守住，但 session-constraint 仍有 `1` 条 current 误记
+- Stage 6 `dialogue working-set shadow integration` 已正式收口：
+  - runtime shadow replay `16 / 16`
+  - runtime answer A/B baseline `5 / 5`，shadow `5 / 5`
+  - runtime shadow replay average reduction ratio `0.4368`
+  - active prompt mutation 继续保持 `default-off` 和 shadow-only
+- focused history cleanup 已收口到最新主线基线：
+  - `100` case live answer-level A/B 当前可读作 current `100 / 100`、legacy `99 / 100`
+  - builtin-only regression = `0`
+  - shared-fail history cases = `0`
+- OpenClaw Docker hermetic eval 已可作为真实可复用入口：
+  - runner 默认跟随宿主 `openclaw --version`
+  - 官方镜像 `ghcr.io/openclaw/openclaw:<host-version>` 已能在真实容器里跑完 focused history cleanup scenario
 - control-surface 与 host-neutral workstream docs 已再次对齐：
   - 不再把 canonical-root cutover 描述成“仍待决定的窗口”
   - 当前维护重点是防止 policy drift，而不是重新定义 hard gate
@@ -138,11 +170,16 @@
 
 ## In Progress
 
-- 下一阶段已切到更深的 answer-level 主线：在 `12/12` formal gate、自然中文覆盖、watchlist 和 perf baseline 已重新稳定的前提下，继续补强 cross-source / conflict / history 深度
-- 当前 answer-level 已不再是“算法是否可用”的 blocker：repo-default isolated local formal gate `12/12` 已稳定通过，且 formal gate 内中文样本已提升到 `6/12`；更深的 `18` case watch matrix 当前结果 `14/18`，后续重点是收掉剩余 `4` 条 harder failures
+- 下一轮主线已转成“逐轮 context 优化”的 docs-first review：
+  - 把 roadmap、development plan、架构文档和 control surface 统一到同一个恢复点
+  - 明确 durable-source slimming、working-set pruning、harder live A/B 三条线的边界和顺序
+- 当前 answer-level 不再是“能力是否存在”的 blocker；真正要解决的是：
+  - 每一轮 prompt 还可以如何更轻
+  - 如何在不改 builtin memory 行为的前提下，让 working-set decision 进入更可控的实验面
+  - 如何把更多 harder case 变成清晰的 UMC-only wins，而不是多数 shared wins
 - 保持 release-preflight、bundle install、host smoke、Stage 5 acceptance 证据持续为绿
 - 保持 host-neutral root policy 在 CLI、公开文档和控制面里持续一致
-- 保持 project/workstream roadmap 摘要与新的评测驱动主线持续一致
+- 保持 project/workstream roadmap 摘要与新的逐轮 context 优化主线持续一致
 - 继续观察 legacy root 是否只停留在兼容回退窗口，而不是重新变成 active root
 - 把 accepted-action 的 Step 48-52 继续明确维持在 deferred enhancement queue，而不是在 Step 47 完成后继续悄悄并进当前 closeout baseline
 - 保持 OpenClaw `after_tool_call` accepted-action runtime hook 与配置/文档/宿主部署验证持续一致
@@ -152,21 +189,25 @@
 
 - raw `openclaw memory search` transport 仍是显式 watchlist：`3/8 raw ok`，其余为 `4` 条 `missing_json_payload` 与 `1` 条 `empty_results`
 - gateway / shared-session 路径仍可能带来宿主噪声；当前正式 answer-level gate 已改走 isolated local path
+- 下一轮真正需要先定清的是架构边界，而不是立刻改代码：
+  - bounded LLM decision surface 与 hard guardrails 的分工
+  - durable-source budgeted assembly 与 raw-turn working-set mutation 的先后顺序
+  - active-path experiment 的 rollback boundary 和 operator metrics
 - operator / planning follow-up 只剩：
   - 什么时候清理过时的 legacy root 副本
   - accepted-action Step 48-52 何时具备重开实现的前置条件
 
 ## Next 3 Actions
 
-1. 重新设计下一轮更偏 `cross-source`、`conflict`、`multi-step history` 和高信息密度自然中文的 live A/B，让 Memory Core 在更多 harder cases 上形成清晰净增益。
-2. 在更深 harder-case A/B 设计完成后，再决定是否把对应 surface 晋升成新的 formal gate 层。
-3. 继续把 gateway/shared-session 与 raw transport 保持在独立 watchlist，不让宿主噪声污染算法判断。
+1. 完成 docs-first review，把 roadmap、development plan、架构文档和 `.codex/*` 收敛到同一个“下一轮逐轮 context 优化”口径。
+2. 先定义 bounded LLM-led context decision contract、operator metrics 和 rollback boundary，再决定最小 active-path experiment 怎么切。
+3. 在 docs 收口后，重新设计更偏 `cross-source`、`conflict`、`multi-step history` 与高信息密度自然中文的 harder live A/B。
 
 ## Architecture Supervision
 - Signal: `yellow`
 - Signal Basis: open blockers or architectural risks are still recorded
-- Root Cause Hypothesis: 后续真正的风险不再是“cutover 未决”，而是 evidence / roadmap drift 让维护者误判当前阶段，或在 Step 47 已完成后继续把 Step 48-52 过早并进当前 closeout baseline
-- Correct Layer: release preflight evidence, governance evidence, registry-root operator policy, project/workstream roadmap, control surface
+- Root Cause Hypothesis: 当前最大的风险不再是“能力没做出来”，而是文档与控制面如果继续停留在上一轮 history-cleanup 语义，会让下一轮逐轮 context 优化缺少明确边界、指标和恢复点
+- Correct Layer: roadmap, development plan, architecture docs, runtime experiment boundary, release-preflight evidence, control surface
 - Automatic Review Trigger: no automatic trigger is currently active
 - Escalation Gate: raise but continue
 
@@ -177,20 +218,20 @@
 
 ## Current Execution Line
 
-- Objective: shared-fail history cleanup 已收口；下一步把更多 harder cases 推成 Memory Core 独占胜场
-- Plan Link: `convert-100-case-ab-from-mostly-shared-wins-into-clearer-umc-gains`
-- Runway: cross-source/conflict/history/natural-Chinese A/B redesign、gateway/raw transport watch；并行守住 release-preflight 和 canonical-root policy
-- Progress: `2 / 3` tasks complete
+- Objective: 把下一轮工作重新明确成“逐轮 context 优化”的 docs-first 队列，再进入更难的 experiment 和 A/B 设计
+- Plan Link: `review-and-stage-next-round-context-optimization`
+- Runway: roadmap / plan / architecture 对齐，bounded LLM decision contract，harder A/B redesign；并行守住 release-preflight 和 canonical-root policy
+- Progress: `0 / 3` tasks complete
 - Stop Conditions:
-  - deeper-watch harder failures get promoted without root-cause attribution
-  - answer-level host-path regression gets misclassified as raw transport or retrieval quality
-  - perf / release evidence gets rerun before the deeper-watch closure boundary is clear
+  - active prompt mutation is discussed before docs and rollback boundaries are explicit
+  - bounded LLM decision work degenerates into growing hardcoded rule tables
+  - harder A/B design starts before the docs review fixes the current recovery pointer
 
 ## Execution Tasks
 
-- [x] EL-1 close the builtin-only regression in the `100` case live A/B: `ab100-zh-negative-4`
-- [x] EL-2 close the shared-fail Chinese history cases in the `100` case live A/B: `ab100-zh-history-editor-2` and `ab100-zh-history-editor-4`
-- [ ] EL-3 redesign the next live A/B around `cross-source`, `conflict`, `multi-step history`, and denser natural-Chinese prompts so Memory Core can win on more harder cases
+- [ ] EL-1 review and align roadmap, development plan, architecture docs, and `.codex/*` around the next per-turn context optimization phase
+- [ ] EL-2 define the bounded LLM-led context decision contract, operator metrics, and rollback boundary
+- [ ] EL-3 redesign the next harder live A/B around `cross-source`, `conflict`, `multi-step history`, and denser natural-Chinese prompts
 
 ## Development Log Capture
 

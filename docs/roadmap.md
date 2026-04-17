@@ -27,12 +27,12 @@ This block is here to answer "where did the `200+` case program actually land?" 
 - Natural Chinese cases: `24` (`12` retrieval + `12` answer-level)
 - Retrieval-heavy formal gate: `250 / 250`
 - Isolated local answer-level formal gate: `12 / 12` (`6 / 12` zh-bearing inside the formal gate)
-- Live answer-level A/B: `100` real cases, `97` shared wins, `1` Memory Core-only win, `0` builtin-only wins, and `2` shared failures
+- Live answer-level A/B: `100` real cases, current `100 / 100`, legacy `99 / 100`, `1` Memory Core-only win, `0` builtin-only wins, and `0` shared failures
 - Natural-Chinese representative retrieval slice: `5 / 5`
 - Natural-Chinese representative answer-level slice: `6 / 6`
 - Raw transport watchlist: `3 / 8 raw ok`; the rest are `4` `missing_json_payload` failures and `1` `empty_results`
 - Main-path perf baseline: retrieval / assembly `16ms`; raw transport `8061ms`; isolated local answer-level `11200ms`
-- Interpretation: the `200+` case buildout, natural-Chinese hardening, watchlist classification, perf-baseline refresh, and the first answer-level gate expansion from `6/6` to `12/12` are complete; the builtin-only regression has now been removed from the `100`-case live A/B, and the next phase should focus on the remaining shared failures before claiming a broader product lead
+- Interpretation: the `200+` case buildout, natural-Chinese hardening, watchlist classification, perf-baseline refresh, and the first answer-level gate expansion from `6/6` to `12/12` are complete; the builtin-only regression and the shared-fail history cases are now closed, so the next phase is no longer “finish old cleanup” but “turn per-turn context optimization into the explicit mainline”
 
 Supporting evidence:
 
@@ -67,26 +67,82 @@ Supporting evidence:
 - [generated/dialogue-working-set-runtime-shadow-summary-2026-04-16.md](../reports/generated/dialogue-working-set-runtime-shadow-summary-2026-04-16.md)
 - [generated/dialogue-working-set-stage6-2026-04-16.md](../reports/generated/dialogue-working-set-stage6-2026-04-16.md)
 
+## Current Review Verdict
+
+- Completed:
+  - Stage 6 `dialogue working-set shadow integration` is landed in runtime and remains `default-off` + shadow-only
+  - the shared-fail Chinese history cleanup is closed
+  - the official-image Docker hermetic eval path is now reusable
+- Planned:
+  - run a docs-first review so roadmap, development plan, architecture docs, and `.codex/*` all describe the same “per-turn context optimization” recovery point
+  - define the bounded LLM-led context decision contract, operator metrics, and rollback boundary
+  - then redesign the harder live A/B around `cross-source`, `conflict`, `multi-step history`, and denser natural-Chinese prompts
+- Explicitly not planned right now:
+  - no default active prompt mutation
+  - no builtin memory behavior changes
+  - no continued growth of large hardcoded rule tables to mimic context decisions
+
+## Primary Product Values And Milestone Mapping
+
+| Product Value | What Is Already Landed | Current Evidence Surface | Next Milestone |
+| --- | --- | --- | --- |
+| On-demand context loading | fact-first assembly, durable-source slimming design, runtime working-set shadow instrumentation | runtime shadow replay `16 / 16`, average reduction ratio `0.4368`, runtime answer A/B `5 / 5` vs `5 / 5` | turn this into a harder builtin-comparison context-thickness / latency gate |
+| Realtime + nightly self-learning | realtime `memory_intent` ingestion, nightly self-learning default-on, governed promotion / decay | ordinary-conversation host-live A/B current `38 / 40`, legacy `21 / 40`, `18` UMC-only wins | remove timeout-heavy blind spots and convert more harder cases into clean UMC-only wins |
+| CLI-governed memory operations | add / inspect / audit / repair / replay / export / migrate surfaces, release-preflight | shipped CLI flows and regression-protected verification stack | keep the operator surface readable, replayable, and release-grade |
+| Shared memory foundation | shared contracts, canonical registry root, OpenClaw adapter, Codex adapter | stable architecture boundary and cross-host consumption path | keep the shared-core contract stable while the context-optimization layer evolves |
+
+These milestones should keep six product qualities visible as constraints:
+
+- `simple`
+  - installation and first-use setup should stay low-friction even as capability grows
+- `usable`
+  - new capability should reduce operator friction instead of increasing config and review overhead
+- `lightweight`
+  - new runtime logic should lower prompt thickness while keeping install and runtime footprint under control
+- `fast enough`
+  - latency and day-to-day responsiveness must stay part of the target, not be traded away for a more complex decision layer
+- `smart`
+  - the next round should feel more selective and better judged, not just more rule-heavy or call-heavy
+- `maintainable`
+  - rollout, rollback, replay, and audit surfaces should stay easier to operate, not harder
+
+## Product North Star
+
+> Simple to install, smooth to use, light and fast to run, smart to remember, easy to maintain.
+
+At roadmap level this means:
+
+- `simple to install`
+  - adoption cost and default-config complexity remain first-class targets
+- `smooth to use`
+  - the next phase cannot optimize only for “more powerful”; it also has to improve the default feel
+- `light and fast to run`
+  - context thickness, latency, package size, and runtime footprint stay inside milestone evaluation
+- `smart to remember`
+  - retrieval, learning, working-set pruning, and budgeted assembly must improve together as one evidence surface
+- `easy to maintain`
+  - hermetic / Docker eval, rollback boundaries, and operator metrics remain first-class constraints
+
 ## Now / Next / Later
 
 | Horizon | Focus | Exit Signal |
 | --- | --- | --- |
-| Now | treat Stage 6 runtime shadow integration as completed, keep it `default-off` and shadow-only, and resume the deferred shared-fail history cleanup using the new telemetry surface | the deferred history / harder A/B queue is running again with Stage 6 telemetry attached |
-| Next | expand harder live A/B and history cases while keeping working-set pruning shadow-only | harder answer-level cases start turning into cleaner UMC wins without active prompt mutation |
-| Later | discuss whether an active prompt experiment is justified only after a longer real-session soak | shadow telemetry stays green long enough to justify an explicit promotion decision and rollback gate |
+| Now | finish the docs-first review so “per-turn context optimization” becomes the formal next recovery point instead of a report-only conclusion | roadmap, development plan, architecture docs, and `.codex/*` all point at the same next slice |
+| Next | define the bounded LLM-led context decision contract, operator metrics, and rollback boundary, then redesign the harder live A/B | the next harder-case design carries explicit prompt-thickness / reduction / latency / rollback metrics |
+| Later | discuss any guarded active-path experiment only after a longer real-session soak | shadow telemetry stays green long enough and the promotion / rollback gate is operator-ready |
 
 ## Current Execution Focus
 
 The current roadmap horizon also maps to the concrete next execution work:
 
 1. keep Stage 6 runtime shadow integration `default-off` and shadow-only
-2. resume the deferred `ab100-zh-history-editor-*` cleanup and the harder live A/B expansion with shadow telemetry attached
-3. continue treating active prompt mutation as explicitly out of scope until the new measurement surface soaks longer
-4. use the runtime export artifacts as the new replayable operator evidence surface
+2. complete the docs-first review so durable-source slimming, working-set pruning, and harder live A/B sit inside one explicit recovery point
+3. continue treating active prompt mutation as explicitly out of the default path until rollback boundaries and operator metrics are clear
+4. use the runtime export artifacts and the Docker hermetic eval path as the new replayable operator evidence surface
 
 When resuming work:
 
-- use `91` in [reference/unified-memory-core/development-plan.md](reference/unified-memory-core/development-plan.md) for the current execution order
+- use `92` in [reference/unified-memory-core/development-plan.md](reference/unified-memory-core/development-plan.md) for the current execution order
 - use [../.codex/plan.md](../.codex/plan.md) and [../.codex/status.md](../.codex/status.md) for the live state
 
 ## Milestones
@@ -120,3 +176,4 @@ flowchart LR
 - Stage 4 and Stage 5 reports must stay readable while any later service-mode discussion remains deferred
 - the primary post-Stage-5 work is now evaluation-driven optimization, so the roadmap and `.codex/plan.md` must keep case expansion, A/B comparison, answer-level regression, transport watchlists, and performance planning visible
 - active prompt mutation remains explicitly deferred until runtime shadow telemetry proves the working-set path on real sessions
+- if the next round adds context-decision experiments, it should prefer a bounded LLM-led contract instead of growing a wider hardcoded rule table

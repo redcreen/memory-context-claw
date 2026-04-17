@@ -29,6 +29,49 @@
 - 一个具备显式 namespace、可见性规则、可修复工件的多 adapter 系统
 - 一个既能嵌入宿主，也能独立运行的产品
 
+## 当前产品卖点与执行映射
+
+当前执行计划也要直接锚定到四个产品卖点：
+
+1. `按需加载 context`
+   - 已落地：fact-first assembly 和 Stage 6 runtime shadow instrumentation
+   - 下一步：把 shadow surface 收口成更难场景下的 context-thickness / latency gate
+2. `realtime + nightly self-learning`
+   - 已落地：realtime `memory_intent` ingestion + nightly governed learning
+   - 下一步：继续清掉 timeout-heavy 盲区，让写侧优势在更紧的 answer budget 下也能保持
+3. `CLI-governed memory operations`
+   - 已落地：add / inspect / audit / repair / replay / migrate 这一整套 operator 流程
+   - 下一步：在 context 优化演进时，继续保持这些流程可读、可 replay、可发版
+4. `共享记忆底座`
+   - 已落地：shared contracts、canonical registry root、OpenClaw adapter、Codex adapter
+   - 下一步：在 OpenClaw 上下文层变得更 selective 的同时，守住 shared-core boundary 不漂移
+
+下一轮每一步，也都必须同时满足六条产品品质要求：
+
+- `简单`
+- `好用`
+- `轻量`
+- `够快`
+- `聪明`
+- `易维护`
+
+## 产品北极星与执行解释
+
+> 装得简单，用得顺手，跑得轻快，记得聪明，维护省心。
+
+把它翻成执行要求：
+
+- `装得简单`
+  - 安装、默认配置、首次验证继续走最短路径
+- `用得顺手`
+  - 默认路径优先，避免把下一轮工作做成一堆先学后用的高级开关
+- `跑得轻快`
+  - 所有新 experiment 都要一起带上 prompt thickness、latency、runtime cost 指标
+- `记得聪明`
+  - bounded decision contract、self-learning、working-set pruning、budgeted assembly 要一起提升“判断质量”
+- `维护省心`
+  - rollback boundary、operator metrics、hermetic / Docker eval 入口必须在每次推进前写清楚
+
 ## 怎么使用这份计划
 
 把这份文档当成一条单线执行队列来看。
@@ -51,8 +94,8 @@
 - `Stage 4`：已完成
 - `Stage 5`：已完成
 - `Stage 6`：已完成
-- 当前指针：`Post-Stage-6 deferred history cleanup resume`
-- 当前建议：继续保持 `dialogueWorkingSetShadow` 为 `default-off` 且 shadow-only，然后带着新的 telemetry surface 恢复之前延后的 history cleanup 与 harder A/B 扩面
+- 当前指针：`92`
+- 当前建议：先做 docs-first review，把“逐轮 context 优化”收成正式恢复点；继续保持 `dialogueWorkingSetShadow` 为 `default-off` 且 shadow-only，再进入 harder A/B 与后续 experiment 设计
 
 当前 baseline 已经落地：
 
@@ -75,6 +118,16 @@
 - 实现继续保持 `local-first`
 - 实现继续保持 `network-ready`，但不要求 `network-required`
 - 不要跳过当前 step pointer
+
+## 下一轮设计约束
+
+这组约束用于把“下一轮逐轮 context 优化”限定在可回退、可测量的范围内：
+
+- 继续保持 `dialogueWorkingSetShadow` 为 `default-off` 和 shadow-only，直到 promotion / rollback gate 足够清楚
+- 不改 builtin memory 行为，也不把 builtin memory rewrite 当成当前主线
+- 不把越来越大的硬编码规则表当成长期主路径；下一轮应优先定义 bounded、structured 的 LLM-led context decision contract
+- LLM tool 调用次数必须受控；优先做单次结构化 decision，而不是在同一轮 prompt 上堆多次辅助调用
+- 任何 active-path experiment 都必须先有 operator metrics、rollback boundary 和 hermetic / Docker 复现面
 
 ## 阶段总览
 
@@ -358,10 +411,14 @@ Stage 6 证据：
 91. `completed` 收掉 `100` case live A/B 里两条 shared-fail 的中文 history case：`ab100-zh-history-editor-2`、`ab100-zh-history-editor-4`。
    - 修复点不是“再喂更多数据”，而是 history / current-state intent 边界：中文 `history` 问法不再误触发 current-state assembly 和 query rewrite。
    - focused hermetic cleanup rerun 结果：[openclaw-memory-improvement-history-cleanup-2026-04-17.md](../../../reports/generated/openclaw-memory-improvement-history-cleanup-2026-04-17.md)
-   - 当前结果：`ab100-zh-history-editor-2 = shared-capability`，`ab100-zh-history-editor-4 = shared-capability`
-   - 这意味着 `100` case live A/B 当前已经没有 shared-fail 残留；有效当前状态可读作 current `100 / 100`、legacy `99 / 100`、`UMC-only = 1`、`both-fail = 0`
-92. `next` 在 shared-fail history cases 收口后，重新设计下一轮更偏 `cross-source`、`conflict`、`multi-step history` 与高信息密度自然中文的 live A/B，争取让 UMC 在更多 harder cases 上形成清晰净增益。
-   - 这组队列现在恢复时应把 Stage 6 shadow telemetry 一起挂上。
+   - 当前 focused rerun 结果：`ab100-zh-history-editor-2 = unified-gain`，`ab100-zh-history-editor-4 = shared-capability`
+   - 稳定高层状态可以读作：`100` case live A/B 当前 current `100 / 100`、legacy `99 / 100`、`UMC-only = 1`、`builtin-only = 0`、`both-fail = 0`
+92. `next` 在 shared-fail history cases 收口后，先完成 docs-first review，把 roadmap、development plan、架构文档和 `.codex/*` 统一到“逐轮 context 优化”的下一轮恢复点；然后再设计更偏 `cross-source`、`conflict`、`multi-step history` 与高信息密度自然中文的 live A/B。
+   - 这组队列恢复时应把 Stage 6 shadow telemetry 一起挂上。
+   - 下一轮设计约束：
+     - 优先定义 bounded、structured 的 LLM-led context decision contract，而不是继续扩硬编码规则
+     - 必须显式写清 operator metrics、rollback boundary 和 Docker / hermetic eval 入口
+     - active prompt mutation 继续不进默认路径
 
 ## 延后增强队列
 

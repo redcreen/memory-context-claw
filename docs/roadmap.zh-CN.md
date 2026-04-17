@@ -27,12 +27,12 @@
 - 自然中文案例：`24`（`12` retrieval + `12` answer-level）
 - retrieval-heavy formal gate：`250 / 250`
 - isolated local answer-level formal gate：`12 / 12`（formal gate 内中文样本 `6 / 12`）
-- live answer-level A/B：`100` 个真实案例，`97` 个两边都能答对，`1` 个只有 Memory Core 能答对，`0` 个只有内置能答对，`2` 个两边都失败
+- live answer-level A/B：`100` 个真实案例，current `100 / 100`、legacy `99 / 100`、`1` 个只有 Memory Core 能答对、`0` 个只有内置能答对、`0` 个两边都失败
 - 自然中文代表性 retrieval slice：`5 / 5`
 - 自然中文代表性 answer-level slice：`6 / 6`
 - raw transport watchlist：`3 / 8 raw ok`；其余为 `4` 条 `missing_json_payload` 和 `1` 条 `empty_results`
 - main-path perf baseline：retrieval / assembly `16ms`；raw transport `8061ms`；isolated local answer-level `11200ms`
-- 当前结论：`200+` case 建设、自然中文补强、transport watchlist failure-class 化、perf baseline 刷新，以及 answer-level formal gate 从 `6/6` 扩到 `12/12` 都已收口；`100` 个真实 A/B 里的内置独占通过已经被移除，下一步要优先把剩余共享失败收掉，再争取把更多 harder cases 变成 Memory Core 独占胜场
+- 当前结论：`200+` case 建设、自然中文补强、transport watchlist failure-class 化、perf baseline 刷新，以及 answer-level formal gate 从 `6/6` 扩到 `12/12` 都已收口；builtin-only regression 与 shared-fail history cases 都已经被移除，下一步不再是补历史尾项，而是把“逐轮 context 优化”收成明确主线，再争取把更多 harder cases 变成 Memory Core 独占胜场
 
 对应证据：
 
@@ -67,26 +67,82 @@
 - [generated/dialogue-working-set-runtime-shadow-summary-2026-04-16.md](../reports/generated/dialogue-working-set-runtime-shadow-summary-2026-04-16.md)
 - [generated/dialogue-working-set-stage6-2026-04-16.md](../reports/generated/dialogue-working-set-stage6-2026-04-16.md)
 
+## 当前评审结论
+
+- 已完成：
+  - Stage 6 `dialogue working-set shadow integration` 已正式落到 runtime，且继续保持 `default-off`、shadow-only
+  - shared-fail 的中文 history cleanup 已收口
+  - 官方镜像驱动的 Docker hermetic eval 已可真实复用
+- 计划做：
+  - 先做 docs-first review，把 roadmap、development plan、架构文档和 `.codex/*` 统一到“逐轮 context 优化”的下一轮口径
+  - 先定 bounded LLM-led context decision contract、operator metrics 和 rollback boundary
+  - 再做更偏 `cross-source`、`conflict`、`multi-step history` 与高信息密度自然中文的 harder live A/B 设计
+- 当前明确不做：
+  - 不打开默认 active prompt mutation
+  - 不改 builtin memory 行为
+  - 不靠继续增加硬编码规则表来模拟 topic / context 决策
+
+## 主要卖点与里程碑映射
+
+| 产品卖点 | 当前已落地能力 | 当前证据面 | 下一里程碑 |
+| --- | --- | --- | --- |
+| 按需加载 context | fact-first assembly、durable-source slimming 设计、runtime working-set shadow instrumentation | runtime shadow replay `16 / 16`、average reduction ratio `0.4368`、runtime answer A/B `5 / 5` vs `5 / 5` | 把它进一步收口成更难场景里稳定的“对比内置的 context thickness / latency”门禁 |
+| realtime + nightly self-learning | realtime `memory_intent` ingestion、默认开启的 nightly self-learning、governed promotion / decay | ordinary-conversation host-live A/B：current `38 / 40`、legacy `21 / 40`、`18` 条 UMC-only wins | 清掉 timeout-heavy 盲区，并把更多 harder case 变成清晰的 UMC-only wins |
+| CLI-governed memory operations | add / inspect / audit / repair / replay / export / migrate surfaces、release-preflight | 已发版级 CLI 流程与回归保护验证栈 | 持续保持 operator surface 可读、可 replay、可发版 |
+| 共享记忆底座 | shared contracts、canonical registry root、OpenClaw adapter、Codex adapter | 稳定的架构边界与跨宿主消费路径 | 在 context 优化演进时继续守住 shared-core contract 不漂移 |
+
+这些里程碑还要同时满足六条产品品质约束：
+
+- `简单`
+  - 安装和首次上手必须继续保持低门槛，不能因为能力增长就把接入流程做复杂
+- `好用`
+  - 新能力应该减少 operator 摩擦，而不是继续增加配置和 review 负担
+- `轻量`
+  - 新的 runtime 逻辑要真的降低 prompt thickness，安装包和运行负担也要一起受控
+- `够快`
+  - latency 和日常操作速度必须一起纳入目标，不能为了更复杂的 decision surface 牺牲明显体感
+- `聪明`
+  - 下一轮优化要体现为“更会记、更会忘、更会少给”，而不是只多出更多规则和更多调用
+- `易维护`
+  - rollout、rollback、replay、audit 这些面必须变得更好操作，而不是更难
+
+## 产品北极星
+
+> 装得简单，用得顺手，跑得轻快，记得聪明，维护省心。
+
+roadmap 层的含义是：
+
+- `装得简单`
+  - 接入复杂度和默认配置复杂度都要被当成正式目标
+- `用得顺手`
+  - 下一轮工作不能只做“更强”，还要做“默认体验更自然”
+- `跑得轻快`
+  - context thickness、latency、包体和运行负担都要进里程碑评估
+- `记得聪明`
+  - retrieval、learning、working-set pruning、budgeted assembly 的协同质量，必须成为下一轮主证据面
+- `维护省心`
+  - hermetic / Docker eval、rollback boundary、operator metrics 继续是一等约束
+
 ## 当前 / 下一步 / 更后面
 
 | 时间层级 | 重点 | 退出信号 |
 | --- | --- | --- |
-| 当前 | 把 Stage 6 runtime shadow integration 当成已完成能力，继续保持 `default-off` 和 shadow-only，并恢复之前延后的 shared-fail history cleanup | deferred history / harder A/B 队列已经重新带着 Stage 6 telemetry surface 跑起来 |
-| 下一步 | 带着新的 shadow telemetry surface 继续扩 harder live A/B 和 history cases | 更难的 answer-level case 开始在不打开 active prompt mutation 的情况下变成更稳定的 UMC 胜场 |
-| 更后面 | 只有在更长时间的 real-session soak 后，才讨论是否值得开 active prompt experiment | shadow telemetry 长期为绿，足以支撑显式的 promotion decision 和 rollback gate |
+| 当前 | 做 docs-first review，把“逐轮 context 优化”从 report 结论收敛成正式执行口径 | roadmap、development plan、架构文档和 `.codex/*` 已对齐到同一个恢复点 |
+| 下一步 | 先定义 bounded LLM-led context decision contract、operator metrics 与 rollback boundary，再设计更难的 live A/B | 下一轮 harder case 设计已经显式附带 prompt-thickness / reduction / latency / rollback 指标 |
+| 更后面 | 只有在更长时间的 real-session soak 后，才讨论任何 guarded active-path experiment | shadow telemetry 长期为绿，且 active-path experiment 的 promotion / rollback gate 已可操作 |
 
 ## 当前执行重点
 
 主 roadmap 里的“当前”不只是方向，也对应接下来要执行的具体工作：
 
 1. 继续保持 Stage 6 runtime shadow integration 为 `default-off` 和 shadow-only。
-2. 恢复之前延后的 `ab100-zh-history-editor-*` cleanup 与 harder live A/B 扩面，并把 shadow telemetry 一起挂上。
-3. 继续把 active prompt mutation 明确排除在当前范围外，直到新的 measurement surface 再 soak 更久。
-4. 把 runtime export artifacts 当成新的 replayable operator evidence surface。
+2. 先完成 docs-first review，把 durable-source slimming、working-set pruning、harder live A/B 三条线收成一个明确恢复点。
+3. 继续把 active prompt mutation 明确排除在默认路径外，直到 rollback boundary 与 operator metrics 足够清楚。
+4. 把 runtime export artifacts 和 Docker hermetic eval 一起当成新的 replayable operator evidence surface。
 
 恢复执行时：
 
-- 主顺序看 [reference/unified-memory-core/development-plan.zh-CN.md](reference/unified-memory-core/development-plan.zh-CN.md) 的 `91`
+- 主顺序看 [reference/unified-memory-core/development-plan.zh-CN.md](reference/unified-memory-core/development-plan.zh-CN.md) 的 `92`
 - 实时执行状态看 [../.codex/plan.md](../.codex/plan.md) 和 [../.codex/status.md](../.codex/status.md)
 
 ## 里程碑
@@ -120,3 +176,4 @@ flowchart LR
 - 只要后续 service-mode 讨论继续延后，Stage 4 和 Stage 5 的报告都必须保持可读
 - 新的主要工程主线已经转成“评测驱动优化”，所以 roadmap 和 `.codex/plan.md` 必须明确记录案例扩充、A/B 对照、answer-level 回退、transport watchlist 和性能规划，不要再只停留在 Stage 5 收口表述
 - active prompt mutation 继续显式延后，直到 runtime shadow telemetry 在真实 session 上长期为绿
+- 下一轮如果要做 context decision experiment，应优先走 bounded LLM-led contract，而不是继续扩展越来越大的硬编码规则表

@@ -29,6 +29,49 @@ Related documents:
 - a multi-adapter system with explicit namespaces, visibility rules, and repairable artifacts
 - a product that can run in embedded mode and standalone mode
 
+## Current Product Value Mapping
+
+The execution plan should stay anchored to four product values:
+
+1. `On-demand context loading`
+   - already landed: fact-first assembly and Stage 6 runtime shadow instrumentation
+   - next work: turn the shadow surface into a harder context-thickness / latency gate
+2. `Realtime + nightly self-learning`
+   - already landed: realtime `memory_intent` ingestion plus nightly governed learning
+   - next work: remove timeout-heavy blind spots so write-time gains survive tighter answer budgets
+3. `CLI-governed memory operations`
+   - already landed: add / inspect / audit / repair / replay / migrate flows
+   - next work: keep those flows readable, replayable, and release-grade while context optimization evolves
+4. `Shared memory foundation`
+   - already landed: shared contracts, canonical registry root, OpenClaw adapter, and Codex adapter
+   - next work: keep the shared-core boundary stable while the OpenClaw-facing context layer becomes more selective
+
+Every next-round step should also preserve six product qualities:
+
+- `simple`
+- `usable`
+- `lightweight`
+- `fast enough`
+- `smart`
+- `maintainable`
+
+## Product North Star And Execution Meaning
+
+> Simple to install, smooth to use, light and fast to run, smart to remember, easy to maintain.
+
+Translated into execution requirements:
+
+- `simple to install`
+  - install, default config, and first verification should keep taking the shortest path
+- `smooth to use`
+  - default paths come first, instead of turning the next round into a pile of expert-only switches
+- `light and fast to run`
+  - every new experiment should carry prompt-thickness, latency, and runtime-cost metrics
+- `smart to remember`
+  - bounded decision contracts, self-learning, working-set pruning, and budgeted assembly should all improve judgment quality together
+- `easy to maintain`
+  - rollback boundaries, operator metrics, and hermetic / Docker eval entrypoints must be explicit before each promotion step
+
 ## How To Use This Plan
 
 Read this document as one ordered build queue.
@@ -51,8 +94,8 @@ Current status:
 - `Stage 4`: completed
 - `Stage 5`: completed
 - `Stage 6`: completed
-- current pointer: `Post-Stage-6 deferred history cleanup resume`
-- current recommendation: keep `dialogueWorkingSetShadow` default-off and shadow-only, then resume the deferred history cleanup and harder A/B expansion with the new telemetry surface attached
+- current pointer: `92`
+- current recommendation: run a docs-first review so “per-turn context optimization” becomes the formal recovery point; keep `dialogueWorkingSetShadow` default-off and shadow-only, then move into harder A/B and later experiment design
 
 Already implemented in the current baseline:
 
@@ -75,6 +118,16 @@ Execution constraints that still apply:
 - keep the implementation `local-first`
 - keep the implementation `network-ready`, not `network-required`
 - do not jump ahead of the current step pointer
+
+## Next-round Design Constraints
+
+These constraints keep the next per-turn context optimization slice measurable and reversible:
+
+- keep `dialogueWorkingSetShadow` `default-off` and shadow-only until the promotion / rollback gate is explicit
+- do not modify builtin memory behavior or treat builtin-memory rewrites as the current mainline
+- do not let the long-term design drift into a wider hardcoded rule table; the preferred next direction is a bounded, structured LLM-led context decision contract
+- keep LLM tool call count bounded; prefer one structured decision surface over multiple helper calls inside the same turn
+- do not start any active-path experiment without operator metrics, a rollback boundary, and hermetic / Docker reproduction coverage
 
 ## Stage Map
 
@@ -341,10 +394,14 @@ The goal is not to reopen baseline contract work. The goal is to:
 91. `completed` Remove the two shared-fail Chinese history cases in the `100`-case live A/B: `ab100-zh-history-editor-2` and `ab100-zh-history-editor-4`.
    - The fix was not “add more memory”, but repair the history-versus-current-state boundary so Chinese history prompts stop triggering current-state assembly and query rewrites.
    - Focused hermetic cleanup rerun report: [openclaw-memory-improvement-history-cleanup-2026-04-17.md](../../../reports/generated/openclaw-memory-improvement-history-cleanup-2026-04-17.md)
-   - Current outcome: `ab100-zh-history-editor-2 = shared-capability`, `ab100-zh-history-editor-4 = shared-capability`
-   - The effective current state of the `100`-case live A/B is now current `100 / 100`, legacy `99 / 100`, `UMC-only = 1`, `both-fail = 0`
-92. `next` After the shared-fail history cases close, design the next live A/B round around `cross-source`, `conflict`, `multi-step history`, and denser natural-Chinese prompts so UMC can win on more harder cases.
+   - Current focused rerun outcome: `ab100-zh-history-editor-2 = unified-gain`, `ab100-zh-history-editor-4 = shared-capability`
+   - The stable high-level read is now current `100 / 100`, legacy `99 / 100`, `UMC-only = 1`, `builtin-only = 0`, `both-fail = 0`
+92. `next` After the shared-fail history cases close, first complete a docs-first review so the roadmap, development plan, architecture docs, and `.codex/*` all point at the next “per-turn context optimization” recovery point; then redesign the next live A/B around `cross-source`, `conflict`, `multi-step history`, and denser natural-Chinese prompts.
    - This queue now resumes with Stage 6 shadow telemetry attached as a new measurement surface.
+   - Next-round design constraints:
+     - prefer a bounded, structured LLM-led context decision contract instead of expanding hardcoded rules
+     - make operator metrics, rollback boundaries, and Docker / hermetic eval entrypoints explicit
+     - keep active prompt mutation out of the default path
 
 ## Deferred Enhancement Queue
 

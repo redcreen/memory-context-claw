@@ -44,6 +44,18 @@
 - 检索本身可能已经对了
 - 但活动 prompt working set 还是太厚
 
+## 在产品卖点里的位置
+
+这份文档对应的是第一个核心卖点里的 hot-session 半边：
+
+- `按需加载 context，而不是平铺直塞 prompt`
+
+而且当前并不是停留在想法层：
+
+- helper、evaluator、replay harness 和 runtime shadow path 都已经落地
+- runtime shadow mode 已经能记录 `relation / evict / pins / reduction ratio`
+- 现在真正要讨论的，已经不是“这层能不能存在”，而是如何继续推进，同时避免把 runtime policy 做成一大堆脆弱规则
+
 ## 非目标
 
 这条设计不做这些事：
@@ -108,18 +120,21 @@ LLM 不应该直接返回“把这些轮次永久删掉”。
 
 ## 运行时策略
 
-第一版应该坚持 rule-first、guarded：
+下一版更合理的生产形态，应该是 guarded、bounded-call、LLM-led：
 
-1. 先看廉价信号
-   - token 压力
-   - 显式换题标记
-   - 是否仍有 unresolved task
-   - 是否出现 durable preference
-2. 只在必要时引入 LLM hint
+1. 先把 runtime ownership 守死
+   - latest user turn 永远受保护
+   - 非法或不安全的 evict 直接忽略
+   - session log 完整保留
+2. 只在边界真正重要时做一次 bounded、structured 的 LLM decision
    - 换题边界模糊
    - open loop 与新任务冲突
    - durable pin 和 session chatter 难区分
-3. 只做 soft eviction
+3. 廉价启发式只做 admission 和 fallback
+   - token 压力
+   - 显式换题标记
+   - 是否仍有 unresolved task
+4. 只做 soft eviction
    - 从下一轮 prompt 移出
    - 日志继续保留
    - 后续允许再召回或转成 capsule
@@ -206,6 +221,7 @@ mock 阶段至少要先证明 3 件事：
 
 - 方向已经强到足以成为正式 runtime shadow measurement surface
 - 但证据仍然不够支撑直接切 active prompt path
+- 下一轮设计复核，重点应该是 bounded LLM-led decision shape 和 operator safety，而不是继续扩更大的规则表
 
 ## 当前 Runtime Gate
 
@@ -249,4 +265,5 @@ mock 阶段至少要先证明 3 件事：
 
 - 保持 `dialogueWorkingSetShadow` 为 `default-off` 且 shadow-only
 - 把 runtime shadow telemetry 作为后续 harder A/B 和 history cleanup 的新测量面
+- 先复核 bounded、structured 的 LLM-led decision contract，再谈任何 active-path experiment
 - active prompt mutation 继续等 promotion gate 满足后再讨论

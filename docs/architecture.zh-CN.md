@@ -28,6 +28,77 @@ flowchart TB
 - 适配器负责面向具体消费者的 retrieval、assembly 和 export consumption
 - governance 是横切层，职责是保证 artifacts 可追踪、可修复、可 replay
 
+## 当前旗舰主线
+
+到当前这个阶段，仓库其实已经有两条最高优先级的里程碑主线：
+
+1. `self-learning`
+2. `context 优化`
+
+第二条现在已经是一等主线，不再只是 adapter 内的局部修补。
+
+`context 优化` 当前明确分成两条互补的架构面：
+
+- durable source 的瘦身与预算化组装
+  - [reference/unified-memory-core/architecture/context-slimming-and-budgeted-assembly.zh-CN.md](reference/unified-memory-core/architecture/context-slimming-and-budgeted-assembly.zh-CN.md)
+- 长多话题会话里的 dialogue working-set pruning
+  - [reference/unified-memory-core/architecture/dialogue-working-set-pruning.zh-CN.md](reference/unified-memory-core/architecture/dialogue-working-set-pruning.zh-CN.md)
+
+当前状态：
+
+- Stage 6 runtime shadow integration 已经落地
+- 继续保持 `default-off` 和 shadow-only
+- 下一轮要先做 docs-first：先把 bounded LLM-led decision contract、operator metrics、rollback boundary 和 harder A/B 设计写清楚，再讨论任何默认 prompt-path 改动
+
+## 当前产品卖点与架构映射
+
+当前架构应该直接映射到四个主要卖点：
+
+1. `按需加载 context`
+   - 主要落在 OpenClaw adapter 和两条 context 优化架构线上
+   - 当前已落地能力：fact-first assembly + runtime working-set shadow instrumentation
+2. `realtime + nightly self-learning`
+   - 主要落在 Source System、Reflection System、Memory Registry 和 Governance System
+   - 当前已落地能力：realtime `memory_intent` ingestion、nightly reflection、promotion / decay 和 governed exports
+3. `可用 CLI 管理的记忆系统`
+   - 主要落在 standalone runtime、CLI 入口和 governance tooling
+   - 当前已落地能力：add / inspect / audit / repair / replay / migrate 这一整组 operator 流程
+4. `跨 OpenClaw / Codex / 后续消费者的共享记忆底座`
+   - 主要落在 shared contracts、projection layer、registry root policy 和两条 adapter 路径
+   - 当前已落地能力：一套 canonical governed memory core，同时具备 OpenClaw 与 Codex 的消费路径
+
+这些卖点还要同时满足六条产品品质要求：
+
+- `简单`
+  - 安装、默认配置、首次验证都必须足够直观
+- `好用`
+  - 默认工作流必须容易理解，不能逼着 operator 去做架构考古
+- `轻量`
+  - runtime 的收益应该来自“少给 context”，而不是长出一个比问题本身更重的控制层
+- `够快`
+  - context 优化、自学习和治理都不能把主路径拖慢到用户明显有感
+- `聪明`
+  - 该记的记住，不该记的不乱记；该给的 context 才给；不确定时宁可收敛
+- `易维护`
+  - 核心行为必须保持可 inspect、可 replay、可 repair、可 rollback
+
+## 产品北极星与工程解释
+
+> 装得简单，用得顺手，跑得轻快，记得聪明，维护省心。
+
+把这句话翻成架构约束，分别是：
+
+- `装得简单`
+  - adapter 接线、默认配置、CLI 入口、安装包结构要优先减少接入成本
+- `用得顺手`
+  - 默认路径优先，用户不需要先理解复杂治理模型才能得到收益
+- `跑得轻快`
+  - context thickness、主路径 latency、运行时负担、安装包体积都属于同一个目标面
+- `记得聪明`
+  - durable memory、realtime learning、working-set pruning、budgeted assembly、abstention guardrail 要协同，而不是各自为战
+- `维护省心`
+  - 所有关键行为都要留在 inspect / audit / replay / rollback 的 operator surface 里
+
 ## 模块清单
 
 | 模块 | 职责 | 关键接口 |
@@ -85,6 +156,7 @@ flowchart LR
 - 契约设计保持 `network-ready`，但不是 `network-required`
 - governance 输出必须足够可读，才能支撑 promotion 和 smoke-gate 决策
 - 适配器不应吸收本该属于产品主干的逻辑
+- context decision 逻辑不应该继续漂移成越来越大的硬编码规则表；下一轮更合理的方向是 bounded 的 LLM-led decision surface，加显式的硬安全 guardrails
 
 ## 取舍与非目标
 

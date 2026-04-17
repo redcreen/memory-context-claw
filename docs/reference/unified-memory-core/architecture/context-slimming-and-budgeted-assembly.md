@@ -53,6 +53,20 @@ It should be:
 - allocate slots and budgets first
 - assemble the smallest correct context package
 
+## Product Value Placement
+
+This document is one half of the first product value:
+
+- `on-demand context loading instead of flat prompt stuffing`
+
+The current capability already exists in partial form:
+
+- fact-first context assembly is already the product baseline
+- retrieval / assembly fast paths are already stable enough to stop being the main bottleneck
+- Stage 6 runtime shadow instrumentation is already landed on the hot-session side
+
+What is missing is not proof that context matters. What is missing is the next selective policy layer that can turn those capabilities into a clearer product advantage over builtin flat-context behavior.
+
 ## Why This Matters Now
 
 The current evidence already shows:
@@ -76,7 +90,7 @@ This proposal is grounded in the current evidence:
 - isolated local answer-level formal gate: `12 / 12`
 - deeper answer-level watch: `14 / 18`
 - retrieval-heavy benchmark: `262 / 262`
-- `100` live A/B cases: `96` shared wins, `1` UMC-only, `1` builtin-only, `2` shared fails
+- `100` live A/B cases after history cleanup: current `100 / 100`, legacy `99 / 100`, `1` UMC-only, `0` builtin-only, `0` shared failures
 - main-path perf baseline:
   - retrieval / assembly avg `16ms`
   - raw transport avg `8061ms`
@@ -117,7 +131,7 @@ This proposal does **not** currently try to:
 - delete durable memory sources or encourage users to erase long-term knowledge “for speed”
 - pretend that raw transport failures such as `missing_json_payload` or `empty_results` can be solved by assembly alone
 - replace the retrieval / governance workstream; it raises “send less after retrieval” to the same priority
-- depend on an LLM-only classifier on the main path; the first version should prefer rule-based question-shape classification
+- depend on an unbounded LLM-only control loop on the main path; the preferred next shape is a bounded structured decision contract with hard runtime guardrails and cheap heuristics only as admission / fallback
 - require users to immediately rewrite every `MEMORY.md` or `AGENTS.md`; distill + default-off raw-doc policy should solve most of the problem first
 
 ## Boundary With Dialogue Working-Set Pruning
@@ -496,5 +510,5 @@ It should also be:
 The immediate execution boundary is now narrower than the full architecture:
 
 - keep the landed runtime shadow instrumentation `default-off` and shadow-only
-- use that telemetry surface while resuming deferred history cleanup and harder A/B work
+- use that telemetry surface while reviewing the bounded LLM-led decision contract, operator metrics, and harder A/B work
 - postpone any active prompt mutation until the shadow gate proves out on real sessions

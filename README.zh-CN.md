@@ -2,7 +2,7 @@
 
 [English](README.md) | [中文](README.zh-CN.md)
 
-> 一套面向 OpenClaw 的受治理共享记忆核心：已经具备事实优先上下文、显式 self-learning lifecycle，以及可用 CLI 验证的发版门禁。
+> 一套面向 OpenClaw 的受治理共享记忆核心：已经具备事实优先上下文、逐轮 context 优化、显式 self-learning lifecycle，以及可用 CLI 验证的发版门禁。
 
 ## 为什么现在就值得用
 
@@ -14,7 +14,8 @@
 - isolated local answer-level gate：`12 / 12`，其中中文样本 `6 / 12`
 - 更深的 answer-level watch：`14 / 18`
 - 仓库当前维护的 runnable matrix：`392` 个 case，其中中文相关占比 `53.83%`
-- 既有记忆消费型 live A/B：`100` 个真实 answer-level 案例里，`97` 个两边都能答对，`1` 个只有 Memory Core 能答对，`0` 个只有默认内置能答对，`2` 个两边都失败
+- 既有记忆消费型 live A/B：`100` 个真实 answer-level 案例里，current `100 / 100`、legacy `99 / 100`、`1` 个只有 Memory Core 能答对、`0` 个只有默认内置能答对、`0` 个两边都失败
+- dialogue working-set runtime shadow：replay `16 / 16`，answer A/B baseline `5 / 5`、shadow `5 / 5`，average reduction ratio `0.4368`
 - 普通对话实时写记忆专项 A/B：
   - 宿主 live：`current=38`、`legacy=21`、`UMC-only=18`
   - Docker hermetic（`30s` turn budget）：`current=3`、`legacy=0`、`UMC-only=3`、`both-fail=37`
@@ -23,10 +24,68 @@
 
 - [为什么 Unified Memory Core 用起来更顺手](docs/memory-improvement-evidence.zh-CN.md)
 - [完整回归与记忆提升报告](reports/generated/unified-memory-core-full-regression-and-memory-improvement-2026-04-15.md)
+- [Context 瘦身与预算化组装](docs/reference/unified-memory-core/architecture/context-slimming-and-budgeted-assembly.zh-CN.md)
+- [对话 Working-Set 裁剪](docs/reference/unified-memory-core/architecture/dialogue-working-set-pruning.zh-CN.md)
 - [普通对话实时写记忆专项对比](reports/generated/openclaw-ordinary-conversation-memory-intent-ab-2026-04-16.md)
 - [普通对话 Docker 隔离复测总结](reports/generated/openclaw-ordinary-conversation-memory-intent-docker-rerun-2026-04-17.md)
 
 最诚实的结论是：OpenClaw 内置记忆在很多“已有记忆消费”的简单题上本来就不差，所以旧的 `100` 条 A/B 差异不大；而在“普通对话里实时写入，再跨会话召回”这条线上，宿主 live 结果显示 Unified Memory Core 有明显优势，但 Docker hermetic 复测又证明这条优势目前会被 answer-level timeout 严重吞掉。也就是说，UMC 现在不只是要“记得更好”，还要把这条写侧能力做得更快、更稳、更可复现。
+
+## 四个主要卖点
+
+这个仓库现在不应该再只被理解成“一个检索更强的记忆插件”，而应该从四个主要卖点来理解。
+
+1. `按需加载 context，而不是平铺直塞 prompt`
+   - 当前已落地：fact-first context assembly、durable-source slimming 架构，以及 runtime working-set shadow instrumentation
+   - 当前可量化证据：dialogue working-set runtime shadow replay average reduction ratio = `0.4368`，同时 runtime answer A/B baseline `5 / 5`、shadow `5 / 5`
+   - 下一里程碑：把它进一步收口成更难 live A/B 上稳定的“对比内置的 context thickness / latency”门禁
+2. `每轮对话 + 每夜批处理的 self-learning`
+   - 当前已落地：realtime `memory_intent` ingestion、governed promotion / decay，以及默认开启的 nightly self-learning
+   - 当前可量化证据：ordinary-conversation host-live A/B 当前是 current `38 / 40`、legacy `21 / 40`，其中 `18` 条是 UMC-only wins
+   - 当前限制：Docker hermetic 复测仍然明显受 answer timeout 约束，所以这条卖点已经真实存在，但在紧预算下还没完全释放出来
+3. `可用 CLI 管理、检查、维护的记忆系统`
+   - 当前已落地：`umc source add`、inspect / audit / repair / replay / export、registry inspect / migrate，以及 release-preflight checks
+   - 产品含义：记忆内容可以被 operator 当成受治理工件来添加、维护和回放，而不是一个黑盒插件状态
+4. `一个共享底座，OpenClaw / Codex / 多实例都能复用`
+   - 当前已落地：shared contracts、canonical registry root、projection / export 层、OpenClaw adapter、Codex adapter
+   - 产品含义：一套 governed memory core 可以服务多个 OpenClaw 实例和跨宿主消费者，而不是把记忆锁死在单个 runtime 里
+
+这些卖点还必须同时满足六条产品品质要求：
+
+- `简单`
+  - 安装路径、默认配置和首次验证应该一看就会，不需要用户先理解整套治理体系
+- `好用`
+  - 默认工作流应该直接、清楚，一上手就能感觉到“回答更顺、上下文更准”
+- `轻量`
+  - runtime 的目标是少给 context、少长控制层，安装包和运行负担都要尽量小
+- `够快`
+  - answer path、context assembly 和日常操作必须足够快，不能让用户为了“更聪明的记忆”付出明显卡顿
+- `易维护`
+  - operator 必须能够 inspect、replay、repair、rollback，而不是去反向猜测隐藏状态
+
+## 产品北极星
+
+这条产品目标现在可以直接压成一句话：
+
+> 装得简单，用得顺手，跑得轻快，记得聪明，维护省心。
+
+如果拆成技术和工程约束，分别是：
+
+- `装得简单`
+  - 安装命令要短，默认配置要少，首次验证要直接
+  - 工程含义：安装包结构、默认配置、插件加载验证、CLI 入口都必须尽量降低首次接入成本
+- `用得顺手`
+  - 用户不应该先学一整套治理概念，才能感受到价值
+  - 工程含义：默认路径优先，功能开关克制，常见操作和常见问题都要能被直觉式完成
+- `跑得轻快`
+  - 不只是“能跑”，而是上下文更轻、主路径更顺、体感更快
+  - 工程含义：prompt thickness、context assembly、answer latency、安装包体积、运行时负担都要一起受控
+- `记得聪明`
+  - 该记的记住，不该记的不乱记；该给的 context 才给，不相关的不乱塞；不确定时宁可收敛，不乱猜
+  - 工程含义：self-learning、working-set pruning、budgeted assembly、abstention / guardrail、bounded decision contract 要协同工作
+- `维护省心`
+  - 出问题时要能看、能查、能回放、能回退，而不是只能靠猜
+  - 工程含义：inspect / audit / replay / repair / rollback / hermetic eval 这些 operator surface 必须一直是正式能力
 
 ## 适用对象
 
@@ -162,6 +221,7 @@ workspace/
 ## 核心能力
 
 - 面向高价值记忆问题的事实优先上下文组装
+- 把 durable source 瘦身和长对话 working-set 裁剪收成“逐轮 context 优化”主线
 - 对规则、身份、偏好等稳定信号的优先级控制
 - 以治理和策略代替“所有召回结果一视同仁”
 - 一条已经落地基线的受治理 self-learning 路径，覆盖 declared sources、reflection、candidate promotion 和 export/audit surfaces
@@ -177,6 +237,46 @@ workspace/
 - Governance System
 - OpenClaw Adapter
 - Codex Adapter
+
+现在最重要的两条横切主线已经很明确：
+
+- `self-learning`
+  - 受治理的 reflection、promotion、decay、policy adaptation 和 export surfaces
+- `context 优化`
+  - durable-source slimming 与 budgeted assembly
+  - 长多话题会话里的 dialogue working-set pruning
+  - 在任何 active prompt experiment 之前先落 `default-off` 的 runtime shadow instrumentation
+
+## 为什么 Context 优化已经变成主线
+
+这个仓库现在其实有两条旗舰方向：
+
+1. `self-learning`
+2. `context 优化`
+
+第二条现在已经不是边角优化了。
+
+原因很现实：
+
+- retrieval / assembly 本身已经够快，不再是最主要瓶颈
+- answer-level latency 和 prompt thickness 才是接下来更大的问题
+- 很多“记忆质量问题”本质上是“这一轮还带了太多已经不相关的 context”
+
+所以 `context 优化` 现在必须被当成正式里程碑工作，而不是 OpenClaw adapter 里的局部微调。
+
+它现在分成两条互补的架构面：
+
+- durable source 的瘦身与预算化组装
+  - [Context 瘦身与预算化组装](docs/reference/unified-memory-core/architecture/context-slimming-and-budgeted-assembly.zh-CN.md)
+- 长对话 raw turns 的 working-set 裁剪
+  - [对话 Working-Set 裁剪](docs/reference/unified-memory-core/architecture/dialogue-working-set-pruning.zh-CN.md)
+
+当前状态：
+
+- Stage 6 runtime shadow integration 已经落地
+- 继续保持 `default-off` 和 shadow-only
+- active prompt mutation 仍然延后
+- 下一轮先做 docs-first：先把 bounded LLM-led decision contract、operator metrics、rollback boundary 和 harder A/B 设计写清楚，再动默认 prompt path
 
 ## 为什么 Self-Learning 现在就重要
 

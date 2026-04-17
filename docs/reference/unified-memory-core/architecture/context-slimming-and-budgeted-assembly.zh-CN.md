@@ -50,7 +50,7 @@
 - isolated local answer-level formal gate：`12 / 12`
 - deeper answer-level watch：`14 / 18`
 - retrieval-heavy benchmark：`262 / 262`
-- `100` 个 live A/B：`96` 个 shared wins、`1` 个 UMC-only、`1` 个 builtin-only、`2` 个 shared fails
+- history cleanup 之后的 `100` 个 live A/B：current `100 / 100`、legacy `99 / 100`、`1` 个 UMC-only、`0` 个 builtin-only、`0` 个 shared fails
 - main-path perf baseline：
   - retrieval / assembly 平均 `16ms`
   - raw transport 平均 `8061ms`
@@ -119,6 +119,20 @@
 - 再按槽位和预算装配 context
 - 多余信息默认不进入最终 prompt
 
+## 在产品卖点里的位置
+
+这份文档对应的是第一个核心卖点的一半：
+
+- `按需加载 context，而不是平铺直塞 prompt`
+
+当前并不是“完全从零开始”：
+
+- fact-first context assembly 已经是产品基线
+- retrieval / assembly 的快路径已经稳定到“不再是最大瓶颈”
+- hot-session 一侧的 Stage 6 runtime shadow instrumentation 也已经落地
+
+现在缺的，不是“证明 context 重要”，而是把这些能力继续收成一层更 selective 的策略，让它在产品层比 builtin 的 flat context 行为更有明确优势。
+
 也就是从：
 
 - `retrieval-first`
@@ -134,7 +148,7 @@
 - 不删除 durable memory source，也不鼓励用户把长期知识“为了快而删掉”
 - 不把 raw transport 的 `missing_json_payload` / `empty_results` 归因成 assembly 可独自修复的问题
 - 不取代 retrieval / governance 这条主线，只是把“召回后如何少给”提到同等优先级
-- 不把 LLM classifier 作为主路径前提；第一版应该优先用规则型 question-shape classifier
+- 不把无界的 LLM-only 控制环直接塞进主路径；更合理的下一形态是 bounded、structured 的 decision contract，加显式 runtime guardrails，启发式规则只做 admission / fallback
 - 不要求用户今天就重写所有 `MEMORY.md` / `AGENTS.md`；应先通过 distill + default-off prompt policy 解决大部分问题
 
 ## 与 Dialogue Working-Set Pruning 的边界
@@ -726,8 +740,9 @@ adapter 需要从“尽量把有用信息都喂进去”转成：
 
 解决：
 
-- 先用规则型 classifier
-- 不先引入 LLM classifier 作为主路径
+- 把硬安全与 rollback policy 留在 runtime ownership
+- 优先做单次 bounded、structured 的 LLM-led decision surface，而不是继续长出越来越大的硬编码规则表
+- 启发式规则只做廉价的 admission / fallback，不把它们扩成新的巨型 pseudo-classifier
 
 ## 推荐实施顺序
 
@@ -789,5 +804,5 @@ adapter 需要从“尽量把有用信息都喂进去”转成：
 当前真正的执行边界比完整架构更窄：
 
 - 继续保持已落地的 runtime shadow instrumentation 为 `default-off` 和 shadow-only
-- 用这条 telemetry surface 恢复 deferred history cleanup 与 harder A/B
+- 用这条 telemetry surface 去复核 bounded LLM-led decision contract、operator metrics 与 harder A/B
 - active prompt mutation 必须等 shadow gate 在真实 session 上证明成立后再谈

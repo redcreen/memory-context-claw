@@ -44,6 +44,18 @@ This creates a different problem from durable-memory retrieval:
 - retrieval may already be correct
 - but the active prompt working set is still too thick
 
+## Product Value Placement
+
+This document is the hot-session half of the first product value:
+
+- `on-demand context loading instead of flat prompt stuffing`
+
+Existing capability is already present:
+
+- the helper, evaluator, replay harness, and runtime shadow path are all landed
+- the feature already measures `relation / evict / pins / reduction ratio` in runtime shadow mode
+- the current question is no longer whether this layer can exist, but how to evolve it without turning runtime policy into a brittle ruleset
+
 ## Non-Goals
 
 This design does not:
@@ -108,18 +120,21 @@ Runtime ownership remains with the system:
 
 ## Runtime Policy
 
-The first production shape should be rule-first and guarded:
+The preferred next production shape should be guarded, bounded-call, and LLM-led:
 
-1. cheap signals first
-   - token pressure
-   - explicit topic-shift markers
-   - unresolved-task presence
-   - durable-preference detection
-2. LLM hint only when needed
+1. hard runtime ownership first
+   - latest user turn stays guarded
+   - invalid or unsafe evictions are ignored
+   - session logs remain intact
+2. one bounded structured LLM decision surface when the boundary matters
    - ambiguous topic change
    - conflict between “open loop” and “new task”
    - unclear distinction between durable pin and session-only chatter
-3. soft eviction only
+3. cheap heuristics only as admission and fallback
+   - token pressure
+   - explicit topic-shift markers
+   - unresolved-task presence
+4. soft eviction only
    - remove from next-turn prompt
    - keep in log
    - allow later recall or capsule retrieval
@@ -206,6 +221,7 @@ Interpretation:
 
 - the direction is now strong enough to act as the runtime shadow measurement surface
 - the evidence is still not strong enough for active prompt cutover
+- the next design review should focus on bounded LLM-led decision shape and operator safety, not on expanding a larger rule table
 
 ## Current Runtime Gate
 
@@ -249,4 +265,5 @@ The current program decision is therefore:
 
 - keep `dialogueWorkingSetShadow` `default-off` and shadow-only
 - use runtime shadow telemetry as the new measurement surface for harder A/B and deferred history cleanup
+- review the bounded structured LLM-led decision contract before any active-path experiment
 - defer active prompt mutation until the promotion gate is explicitly satisfied
