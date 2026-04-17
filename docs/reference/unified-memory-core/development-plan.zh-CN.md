@@ -97,7 +97,7 @@
 - `Stage 8`：已完成
 - `Stage 9`：进行中（`default-off` / opt-in only）
 - 当前指针：`108`
-- 当前建议：Stage 7 scorecard、Stage 8 hermetic closure 与 Stage 9 guarded seam 都已落地；但 OpenClaw live soak 已经证明 host runtime seam 仍是 blocker，所以下一步先补宿主接缝，再做 Stage 7 closeout 判断
+- 当前建议：Stage 7 scorecard、Stage 8 hermetic closure 与 Stage 9 guarded seam 都已落地；但 OpenClaw live soak 已经证明当前 decision transport 仍绑在宿主 runtime seam 上，所以下一步优先做插件内自托管 `memory + context decision overlay`，而不是先改 OpenClaw
 
 当前 baseline 已经落地：
 
@@ -302,7 +302,8 @@ Stage 6 证据：
    - 必须是 config-only rollback，且 builtin memory 行为不变。
 108. `in_progress` 基于 harder replay / Docker / local evidence 做 Stage 7 closeout 决策。
    - 决策对象不是“马上上线”，而是“在 Stage 8 已经收口后，Stage 7 是否已经足够站稳，并且能否继续保持 Stage 9 为极窄 opt-in 面”。
-   - 当前新增 blocker：OpenClaw gateway live soak 已证明宿主 runtime 还没有把所需 subagent / decision seam 暴露给 context optimization 路径，所以 Stage 7 暂时不能 closeout。
+   - 当前新增 blocker：OpenClaw gateway live soak 已证明当前 decision transport 还绑在宿主 subagent / request-scope seam 上，所以 Stage 7 暂时不能 closeout。
+   - 当前优先路线：先把 working-set decision transport 收回插件内，再决定宿主级 fallback 是否还需要存在。
 
 ### Stage 8. Ordinary-Conversation Realtime-Write Latency Closure
 

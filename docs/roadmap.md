@@ -75,7 +75,7 @@ Supporting evidence:
 - Stage 9 guarded applied: `2 / 5`
 - Stage 9 average guarded prompt reduction ratio: `0.0424`
 - OpenClaw gateway live validation: the gateway service is back and a two-turn smoke passes, but `5 / 5` working-set exports still fail on the host runtime seam
-- Interpretation: the Stage 7 operator-facing scorecard and the Stage 9 guarded opt-in seam are both landed, but the real OpenClaw live soak now proves the host runtime seam is still not open, so Stage 7 is not formally closed yet and Stage 9 remains `default-off` / opt-in only
+- Interpretation: the Stage 7 operator-facing scorecard and the Stage 9 guarded opt-in seam are both landed, but the real OpenClaw live soak now proves the current decision transport is still tied to the host runtime seam; the preferred next path is therefore a plugin-owned memory + context decision overlay rather than direct OpenClaw modification
 
 Supporting evidence:
 
@@ -152,15 +152,15 @@ Stages 1-6 are complete, but the roadmap cannot stop at “all historical stages
 | --- | --- | --- | --- |
 | Stage 7: context loading optimization closure | `in_progress` | the biggest current product gap is no longer “does the feature exist?” but “is each turn’s context package light enough?”; Stage 6 is still a measurement layer | the unified scorecard is fixed and harder replay / Docker / local evidence consistently show a lighter context package without answer-quality damage, and daily long conversations usually no longer need compat / compact as the normal way to keep going |
 | Stage 8: ordinary-conversation realtime-write latency closure | `completed` | the Docker ordinary-conversation A/B has been recovered from a blanket timeout wall into a trustworthy steady-state surface | the clean Docker path is no longer dominated by large timeout counts and now reports `32 / 40 vs 17 / 40` with `preCaseResetFailed = 0` |
-| Stage 9: guarded smart-path promotion | `in_progress` | context loading optimization is still not a user gain if it stays shadow-only forever | a bounded guarded experiment surface has an explicit rollback boundary, operator metrics, and promotion gate, while compat / compact remains a background fallback instead of the default daily path; the OpenClaw live runtime seam must be opened before the guarded path can become user-visible value |
+| Stage 9: guarded smart-path promotion | `in_progress` | context loading optimization is still not a user gain if it stays shadow-only forever | a bounded guarded experiment surface has an explicit rollback boundary, operator metrics, and promotion gate, while compat / compact remains a background fallback instead of the default daily path; the preferred next step is to pull the decision transport back into the plugin before deciding whether any host-level fallback is still needed |
 | Stage 10: adoption simplification and shared-foundation proof | `planned` | install / bootstrap is still too manual, and Codex / multi-instance product evidence still lags | adoption is shorter and clearer, and the shared-foundation story is proven beyond architecture diagrams |
 
 ## Now / Next / Later
 
 | Horizon | Focus | Exit Signal |
 | --- | --- | --- |
-| Now | keep closing `Stage 7` while holding `Stage 9` at `default-off` / opt-in only: answer “how do we make every turn lighter and faster without hurting quality?” | the unified scorecard, guarded seam, rollback boundary, and operator summary are all landed, but the OpenClaw gateway live soak proves the host runtime seam is still the blocker |
-| Next | open the OpenClaw live runtime seam first, then keep closing `Stage 7` while holding the narrow Stage 9 experiment seam; ordinary-conversation Docker steady-state remains the default hermetic A/B baseline | the unified scorecard, guarded seam, rollback boundary, and operator summary stay stable, and the remaining blockers are narrowed to the host-side decision seam plus targeted Docker follow-up |
+| Now | keep closing `Stage 7` while holding `Stage 9` at `default-off` / opt-in only: answer “how do we make every turn lighter and faster without hurting quality?” | the unified scorecard, guarded seam, rollback boundary, and operator summary are all landed, but the OpenClaw gateway live soak proves the current decision transport is still blocked by the host runtime seam |
+| Next | first implement the plugin-owned `memory + context decision overlay`, so the working-set decision transport no longer depends on the host `subagent` seam, then continue the `Stage 7` closeout while keeping `Stage 9` narrow; ordinary-conversation Docker steady-state remains the default hermetic A/B baseline | the unified scorecard, guarded seam, rollback boundary, and operator summary are stable, and the remaining blocker is narrowed to the plugin-owned decision runner plus targeted Docker follow-up |
 | Later | after Stage 7 is stable, decide whether Stage 9 can widen and whether Stage 10 adoption/shared-foundation closure should start | the smart-path promotion gate, rollback boundary, and shared-foundation proof are operator-ready |
 
 ## Current Execution Focus
@@ -220,4 +220,5 @@ flowchart LR
 - active prompt mutation remains explicitly deferred until runtime shadow telemetry proves the working-set path on real sessions
 - if the next round adds context-decision experiments, it should prefer a bounded LLM-led contract instead of growing a wider hardcoded rule table
 - install / bootstrap / verify simplification still matters, but it is now explicitly behind context loading optimization and realtime-write latency closure in the roadmap order
-- real OpenClaw live soak now proves the remaining blocker is mainly not the algorithm but the host runtime failing to expose the required subagent / decision seam to the context-optimization path
+- real OpenClaw live soak now proves the remaining blocker is mainly not the algorithm but the current decision transport still depending on the host subagent / request-scope seam
+- this retrospective also hardens one process lesson: integration-point preflight should have happened at proposal time; call order, input/output surface, and runtime-helper constraints should not wait for live soak

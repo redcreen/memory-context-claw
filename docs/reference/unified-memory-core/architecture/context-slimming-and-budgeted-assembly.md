@@ -19,6 +19,7 @@ Related documents:
 
 - [openclaw-adapter.md](openclaw-adapter.md)
 - [dialogue-working-set-pruning.md](dialogue-working-set-pruning.md)
+- [plugin-owned-context-decision-overlay.md](plugin-owned-context-decision-overlay.md)
 - [execution-modes.md](execution-modes.md)
 - [../testing/main-path-performance-plan.md](../testing/main-path-performance-plan.md)
 - [../../../../reports/generated/unified-memory-core-full-regression-and-memory-improvement-2026-04-15.md](../../../../reports/generated/unified-memory-core-full-regression-and-memory-improvement-2026-04-15.md)

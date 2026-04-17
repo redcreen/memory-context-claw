@@ -43,12 +43,15 @@ Context optimization currently means two coordinated architecture surfaces:
   - [reference/unified-memory-core/architecture/context-slimming-and-budgeted-assembly.md](reference/unified-memory-core/architecture/context-slimming-and-budgeted-assembly.md)
 - dialogue working-set pruning for long multi-topic sessions
   - [reference/unified-memory-core/architecture/dialogue-working-set-pruning.md](reference/unified-memory-core/architecture/dialogue-working-set-pruning.md)
+- plugin-owned `memory + context decision overlay`
+  - [reference/unified-memory-core/architecture/plugin-owned-context-decision-overlay.md](reference/unified-memory-core/architecture/plugin-owned-context-decision-overlay.md)
 
 Current state:
 
 - Stage 6 runtime shadow integration is already landed
 - it remains `default-off` and shadow-only
 - the next round starts by finishing `context loading optimization`: clarify the bounded LLM-led decision contract, operator metrics, rollback boundary, harder A/B design, and one unified scorecard before any default prompt-path change
+- the preferred implementation path is no longer an OpenClaw patch first; it is to pull the `memory + context decision` transport back into the plugin layer first
 - the daily-product target is now explicit: normal sessions should stay sustainable through per-turn context management instead of treating compat / compact as a normal hot-path dependency; compat / compact remains only a nightly or background safety net
 
 ## Current Product Promises

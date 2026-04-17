@@ -13,6 +13,7 @@ This document defines a separate runtime layer for long multi-topic chats:
 This is not a replacement for:
 
 - [context-slimming-and-budgeted-assembly.md](context-slimming-and-budgeted-assembly.md)
+- [plugin-owned-context-decision-overlay.md](plugin-owned-context-decision-overlay.md)
 - [../../pre-compaction-memory-distillation-design.md](../../pre-compaction-memory-distillation-design.md)
 
 Instead it fills the gap between them:
@@ -238,6 +239,24 @@ Interpretation:
 - the direction is now strong enough to act as the runtime shadow measurement surface
 - the evidence is still not strong enough for active prompt cutover
 - the next design review should focus on bounded LLM-led decision shape and operator safety, not on expanding a larger rule table
+
+## Current blocker and integration-point retrospective
+
+The blocker is no longer “can the LLM make a working-set decision”.
+
+The blocker is now:
+
+- the current runtime decision transport still depends on the host `subagent` seam
+- real OpenClaw live soak proved that this seam is not reliably available from the `contextEngine.assemble()` path
+
+This also exposed a process gap:
+
+- the earliest proposal should have locked call order, available inputs, allowed outputs, and request-scope constraints first
+- that should not have waited until Stage 7 / 9 live soak
+
+That retrospective and the new preferred path are now documented here:
+
+- [plugin-owned-context-decision-overlay.md](plugin-owned-context-decision-overlay.md)
 
 ## Current Runtime Gate
 

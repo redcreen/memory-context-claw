@@ -19,6 +19,7 @@
 
 - [openclaw-adapter.zh-CN.md](openclaw-adapter.zh-CN.md)
 - [dialogue-working-set-pruning.zh-CN.md](dialogue-working-set-pruning.zh-CN.md)
+- [plugin-owned-context-decision-overlay.zh-CN.md](plugin-owned-context-decision-overlay.zh-CN.md)
 - [execution-modes.zh-CN.md](execution-modes.zh-CN.md)
 - [../testing/main-path-performance-plan.zh-CN.md](../testing/main-path-performance-plan.zh-CN.md)
 - [../../../../reports/generated/unified-memory-core-full-regression-and-memory-improvement-2026-04-15.md](../../../../reports/generated/unified-memory-core-full-regression-and-memory-improvement-2026-04-15.md)

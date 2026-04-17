@@ -13,6 +13,7 @@
 它不是下面两份设计的替代品：
 
 - [context-slimming-and-budgeted-assembly.zh-CN.md](context-slimming-and-budgeted-assembly.zh-CN.md)
+- [plugin-owned-context-decision-overlay.zh-CN.md](plugin-owned-context-decision-overlay.zh-CN.md)
 - [../../pre-compaction-memory-distillation-design.zh-CN.md](../../pre-compaction-memory-distillation-design.zh-CN.md)
 
 它补的是两者之间的缺口：
@@ -238,6 +239,22 @@ mock 阶段至少要先证明 3 件事：
 - 方向已经强到足以成为正式 runtime shadow measurement surface
 - 但证据仍然不够支撑直接切 active prompt path
 - 下一轮设计复核，重点应该是 bounded LLM-led decision shape 和 operator safety，而不是继续扩更大的规则表
+
+## 当前 blocker 与接入点复盘
+
+这条线现在的 blocker 已经不是“LLM 会不会做出 working-set 判断”，而是：
+
+- 当前 runtime decision transport 依赖宿主 `subagent` seam
+- 真实 OpenClaw live soak 证明这条 seam 在 `contextEngine.assemble()` 路径上并不稳定可用
+
+这次也暴露出一个流程问题：
+
+- 最早方案阶段就应该先确认调用顺序、可用输入、可改输出、request-scope 约束
+- 不应该等到 Stage 7 / 9 live soak 再被动确认
+
+这条复盘和新的推荐路径，已经单独整理到这里：
+
+- [plugin-owned-context-decision-overlay.zh-CN.md](plugin-owned-context-decision-overlay.zh-CN.md)
 
 ## 当前 Runtime Gate
 

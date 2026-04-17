@@ -43,12 +43,15 @@ flowchart TB
   - [reference/unified-memory-core/architecture/context-slimming-and-budgeted-assembly.zh-CN.md](reference/unified-memory-core/architecture/context-slimming-and-budgeted-assembly.zh-CN.md)
 - 长多话题会话里的 dialogue working-set pruning
   - [reference/unified-memory-core/architecture/dialogue-working-set-pruning.zh-CN.md](reference/unified-memory-core/architecture/dialogue-working-set-pruning.zh-CN.md)
+- 插件内自托管 `memory + context decision overlay`
+  - [reference/unified-memory-core/architecture/plugin-owned-context-decision-overlay.zh-CN.md](reference/unified-memory-core/architecture/plugin-owned-context-decision-overlay.zh-CN.md)
 
 当前状态：
 
 - Stage 6 runtime shadow integration 已经落地
 - 继续保持 `default-off` 和 shadow-only
 - 下一轮要先完成 `context loading optimization`：先把 bounded LLM-led decision contract、operator metrics、rollback boundary、harder A/B 设计和统一 scorecard 写清楚，再讨论任何默认 prompt-path 改动
+- 当前推荐实施线不是修改 OpenClaw，而是优先把 `memory + context decision` 的 decision transport 收回插件层
 - 日常产品目标已经明确：平时尽量靠逐轮 context 管理保持可持续，不把 compat / compact 当成日常热路径依赖；compat / compact 只保留为夜间或后台 safety net
 
 ## 当前产品承诺与架构映射

@@ -97,7 +97,7 @@ Current status:
 - `Stage 8`: completed
 - `Stage 9`: in progress (`default-off` / opt-in only)
 - current pointer: `108`
-- current recommendation: the Stage 7 scorecard, the Stage 8 hermetic closure, and the Stage 9 guarded seam are all landed; but the OpenClaw live soak now proves the host runtime seam is still the blocker, so the next step is to open that seam before making the Stage 7 closeout call
+- current recommendation: the Stage 7 scorecard, the Stage 8 hermetic closure, and the Stage 9 guarded seam are all landed; but the OpenClaw live soak now proves the current decision transport is still tied to the host runtime seam, so the next step is to build a plugin-owned `memory + context decision overlay` before considering any OpenClaw modification
 
 Already implemented in the current baseline:
 
@@ -302,7 +302,8 @@ Stage complete when:
    - Rollback must stay configuration-only, and builtin memory behavior must stay unchanged.
 108. `in_progress` Use harder replay / Docker / local evidence to make the Stage 7 closeout decision.
    - The decision is not “ship now”; it is “now that Stage 8 is closed, is Stage 7 stable enough to stand on its own while Stage 9 remains a very narrow opt-in path?”
-   - New blocker: the OpenClaw gateway live soak proves the host runtime still does not expose the required subagent / decision seam to the context-optimization path, so Stage 7 cannot close out yet.
+   - New blocker: the OpenClaw gateway live soak proves the current decision transport is still tied to the host subagent / request-scope seam, so Stage 7 cannot close out yet.
+   - Preferred next route: pull the working-set decision transport back into the plugin first, then decide whether any host-level fallback is still needed.
 
 ### Stage 8. Ordinary-Conversation Realtime-Write Latency Closure
 
