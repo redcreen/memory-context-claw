@@ -28,6 +28,7 @@ export class ContextAssemblyEngine {
     pluginConfig,
     retrievalFn = retrieveMemoryCandidates,
     rerankFn = rerankCandidatesWithSubagent,
+    structuredDecisionRunner = null,
     scoreFn = scoreCandidates,
     compactFn = delegateCompactionToRuntime
   }) {
@@ -36,6 +37,7 @@ export class ContextAssemblyEngine {
     this.config = resolvePluginConfig(pluginConfig);
     this.retrievalFn = retrievalFn;
     this.rerankFn = rerankFn;
+    this.structuredDecisionRunner = structuredDecisionRunner;
     this.scoreFn = scoreFn;
     this.compactFn = compactFn;
     this.openclawAdapterRuntime = createOpenClawAdapterRuntime({
@@ -146,6 +148,7 @@ export class ContextAssemblyEngine {
             sessionKey: params.sessionKey,
             query,
             messages: params.messages,
+            decisionRunner: this.structuredDecisionRunner,
             assemblyMetrics: {
               candidateLoadElapsedMs
             }
@@ -187,7 +190,8 @@ export class ContextAssemblyEngine {
               query,
               candidates: heuristicCandidates,
               config: this.config.llmRerank,
-              logger: this.logger
+              logger: this.logger,
+              decisionRunner: this.structuredDecisionRunner
             });
             if (reranked.length > 0) {
               rankedCandidates = applyRerankOrder(heuristicCandidates, reranked);
@@ -217,6 +221,7 @@ export class ContextAssemblyEngine {
             sessionKey: params.sessionKey,
             query,
             messages: params.messages,
+            decisionRunner: this.structuredDecisionRunner,
             assemblyMetrics: {
               candidateLoadElapsedMs
             }

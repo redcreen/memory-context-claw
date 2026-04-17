@@ -96,7 +96,8 @@ test("assemble records runtime shadow telemetry even when retrieval returns no c
       },
       dialogueWorkingSetShadow: {
         enabled: true,
-        outputDir
+        outputDir,
+        transport: "runtime_subagent"
       }
     },
     retrievalFn: async () => []
@@ -135,7 +136,8 @@ test("assemble keeps prompt path stable and writes a skipped shadow event when s
       },
       dialogueWorkingSetShadow: {
         enabled: true,
-        outputDir
+        outputDir,
+        transport: "runtime_subagent"
       }
     },
     retrievalFn: async () => []
@@ -156,6 +158,59 @@ test("assemble keeps prompt path stable and writes a skipped shadow event when s
   assert.equal(events.length, 1);
   assert.equal(events[0].status, "skipped");
   assert.equal(events[0].reason, "subagent_unavailable");
+});
+
+test("assemble captures shadow telemetry through a plugin-owned decision runner without runtime.subagent", async () => {
+  const outputDir = await fs.mkdtemp(path.join(os.tmpdir(), "umc-shadow-inline-"));
+  let runnerCalls = 0;
+  const engine = new ContextAssemblyEngine({
+    runtime: {},
+    logger: { warn() {}, info() {} },
+    pluginConfig: {
+      enabled: true,
+      openclawAdapter: {
+        enabled: false,
+        governedExports: {
+          enabled: false
+        }
+      },
+      dialogueWorkingSetShadow: {
+        enabled: true,
+        outputDir
+      }
+    },
+    structuredDecisionRunner: async ({ query, input }) => {
+      runnerCalls += 1;
+      assert.match(query, /当前任务/);
+      assert.equal(Array.isArray(input?.turns), true);
+      return {
+        relation: "switch",
+        confidence: 0.92,
+        evict_turn_ids: ["t1", "t2"],
+        pin_turn_ids: [],
+        archive_summary: "",
+        reasoning_summary: "The active topic switched."
+      };
+    },
+    retrievalFn: async () => []
+  });
+
+  const result = await engine.assemble({
+    messages: [
+      { role: "user", content: "以后默认中文。" },
+      { role: "assistant", content: "记住了。" },
+      { role: "user", content: "当前任务是什么？" }
+    ],
+    tokenBudget: 4096,
+    sessionKey: "agent:main:test-shadow-inline"
+  });
+
+  assert.equal(result.systemPromptAddition, "");
+  assert.equal(runnerCalls, 1);
+  const events = await listExportEvents(resolveDialogueWorkingSetShadowOutputDir(outputDir));
+  assert.equal(events.length, 1);
+  assert.equal(events[0].status, "captured");
+  assert.equal(events[0].decision.relation, "switch");
 });
 
 test("assemble applies guarded working-set pruning only on opt-in switch cases", async () => {
@@ -180,7 +235,8 @@ test("assemble applies guarded working-set pruning only on opt-in switch cases",
       },
       dialogueWorkingSetShadow: {
         enabled: true,
-        outputDir
+        outputDir,
+        transport: "runtime_subagent"
       },
       dialogueWorkingSetGuarded: {
         enabled: true
@@ -231,7 +287,8 @@ test("assemble does not apply guarded pruning for continue relations", async () 
       },
       dialogueWorkingSetShadow: {
         enabled: true,
-        outputDir
+        outputDir,
+        transport: "runtime_subagent"
       },
       dialogueWorkingSetGuarded: {
         enabled: true

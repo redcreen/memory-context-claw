@@ -61,6 +61,14 @@
       "label": "Dialogue Shadow Provider",
       "help": "Optional provider override used with dialogueWorkingSetShadow.model."
     },
+    "dialogueWorkingSetShadow.transport": {
+      "label": "Dialogue Shadow Transport",
+      "help": "Structured decision transport. Defaults to auto: prefer plugin-owned codex exec, then fall back to runtime subagent if needed."
+    },
+    "dialogueWorkingSetShadow.reasoningEffort": {
+      "label": "Dialogue Shadow Reasoning Effort",
+      "help": "Reasoning effort passed to the plugin-owned codex decision runner."
+    },
     "dialogueWorkingSetShadow.timeoutMs": {
       "label": "Dialogue Shadow Timeout",
       "help": "Maximum wait time for one shadow decision."
@@ -83,7 +91,7 @@
     },
     "dialogueWorkingSetShadow.cleanupSession": {
       "label": "Dialogue Shadow Cleanup",
-      "help": "Delete the temporary shadow subagent session after capture."
+      "help": "Delete the temporary runtime subagent session after capture."
     },
     "dialogueWorkingSetGuarded.enabled": {
       "label": "Dialogue Guarded Path",
@@ -127,7 +135,7 @@
     },
     "llmRerank.enabled": {
       "label": "LLM Rerank",
-      "help": "Use a subagent run to rerank top candidates with a model."
+      "help": "Use a structured model run to rerank top candidates."
     },
     "llmRerank.model": {
       "label": "LLM Rerank Model",
@@ -136,6 +144,14 @@
     "llmRerank.provider": {
       "label": "LLM Rerank Provider",
       "help": "Optional provider override used with llmRerank.model."
+    },
+    "llmRerank.transport": {
+      "label": "LLM Rerank Transport",
+      "help": "Structured rerank transport. Defaults to auto: prefer plugin-owned codex exec, then fall back to runtime subagent if needed."
+    },
+    "llmRerank.reasoningEffort": {
+      "label": "LLM Rerank Reasoning Effort",
+      "help": "Reasoning effort passed to the plugin-owned codex rerank runner."
     },
     "llmRerank.maxSnippetChars": {
       "label": "Rerank Snippet Chars",
@@ -226,6 +242,14 @@
           },
           "provider": {
             "type": "string"
+          },
+          "transport": {
+            "type": "string",
+            "enum": ["auto", "codex_exec", "runtime_subagent"]
+          },
+          "reasoningEffort": {
+            "type": "string",
+            "enum": ["low", "medium", "high"]
           },
           "timeoutMs": {
             "type": "integer",
@@ -369,6 +393,14 @@
           },
           "provider": {
             "type": "string"
+          },
+          "transport": {
+            "type": "string",
+            "enum": ["auto", "codex_exec", "runtime_subagent"]
+          },
+          "reasoningEffort": {
+            "type": "string",
+            "enum": ["low", "medium", "high"]
           },
           "timeoutMs": {
             "type": "integer",

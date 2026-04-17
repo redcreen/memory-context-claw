@@ -97,8 +97,8 @@ Current status:
 - `Stage 7`: in progress
 - `Stage 8`: completed
 - `Stage 9`: in progress (`default-off` / opt-in only)
-- current pointer: `108`
-- current recommendation: the Stage 7 scorecard, the Stage 8 hermetic closure, and the Stage 9 guarded seam are all landed; but the OpenClaw live soak now proves the current `Context Minor GC` decision transport is still tied to the host runtime seam, so the next step is to build a plugin-owned `memory + context decision overlay` before considering any OpenClaw modification
+- current pointer: `104`
+- current recommendation: the Stage 7 scorecard, the Stage 8 hermetic closure, the Stage 9 guarded seam, and the Step 108 plugin-owned transport closeout are all landed; the next step is to finish `104` (the harder eval matrix) while keeping Stage 9 `default-off` / opt-in only
 
 Already implemented in the current baseline:
 
@@ -283,6 +283,7 @@ Current evidence:
 - Stage 7 scorecard: [../../../reports/generated/dialogue-working-set-scorecard-2026-04-17.md](../../../reports/generated/dialogue-working-set-scorecard-2026-04-17.md)
 - Stage 7 / Stage 9 summary: [../../../reports/generated/dialogue-working-set-stage7-stage9-2026-04-17.md](../../../reports/generated/dialogue-working-set-stage7-stage9-2026-04-17.md)
 - OpenClaw gateway live validation: [../../../reports/generated/openclaw-gateway-context-optimization-2026-04-17.md](../../../reports/generated/openclaw-gateway-context-optimization-2026-04-17.md)
+- Stage 7 / Step 108 closeout: [../../../reports/generated/stage7-step108-context-minor-gc-closeout-2026-04-18.md](../../../reports/generated/stage7-step108-context-minor-gc-closeout-2026-04-18.md)
 
 Stage complete when:
 
@@ -305,19 +306,21 @@ Stage complete when:
    - The system should be able to answer “is the lighter context package actually better?” directly.
 107. `completed` Define one very narrow guarded experiment seam without turning it on by default.
    - Rollback must stay configuration-only, and builtin memory behavior must stay unchanged.
-108. `in_progress` Use harder replay / Docker / local evidence to make the Stage 7 closeout decision.
+108. `completed` Use harder replay / Docker / local evidence to make the Stage 7 / Step 108 closeout decision.
    - The decision is not “ship now”; it is “now that Stage 8 is closed, is Stage 7 stable enough to stand on its own while Stage 9 remains a very narrow opt-in path?”
-   - New blocker: the OpenClaw gateway live soak proves the current decision transport is still tied to the host subagent / request-scope seam, so Stage 7 cannot close out yet.
-   - Preferred next route: pull the working-set decision transport back into the plugin first, then decide whether any host-level fallback is still needed.
-   - The current critical path is now explicitly split into 4 steps:
-     - `108.a next` define the plugin-owned `decision runner` contract.
-       - Lock the input / output shape, runner entrypoint, failure fallback, config-only rollback, and sidecar artifact contract.
-     - `108.b next` replace the `Context Minor GC` working-set decision transport.
-       - Cover the shadow / guarded decision path first so it no longer depends on host `runtime.subagent`.
-     - `108.c pending` rerun the OpenClaw gateway live soak.
-       - The exit signal is that working-set exports no longer fail on the request-scope seam, and the real host captures at least `5 / 5`.
-     - `108.d pending` decide Stage 7 closeout only after `108.c` is green.
-       - That is when the repo should decide whether any host-level fallback is still necessary.
+   - Decision: the `Context Minor GC` working-set decision transport is now plugin-owned and no longer depends on host `runtime.subagent`; OpenClaw core changes are not required.
+   - Live validation:
+     - hermetic gateway: `5 / 5` captured
+     - real local service smoke: `3 / 3` captured
+   - The explicit 4-step critical path is now complete:
+     - `108.a completed` define the plugin-owned `decision runner` contract.
+       - The input / output shape, runner entrypoint, failure fallback, config-only rollback, and sidecar artifact contract are now fixed.
+     - `108.b completed` replace the `Context Minor GC` working-set decision transport.
+       - The shadow / guarded decision path no longer depends on host `runtime.subagent`.
+     - `108.c completed` rerun the OpenClaw gateway live soak.
+       - Working-set exports no longer fail on the request-scope seam, and the real host captured green runs.
+     - `108.d completed` make the Stage 7 / Step 108 closeout decision.
+       - Result: Step 108 is closed; Stage 7 as a whole remains open because `104` (the harder eval matrix) is still unfinished, and Stage 9 remains a narrow opt-in surface.
 
 ### Stage 8. Ordinary-Conversation Realtime-Write Latency Closure
 

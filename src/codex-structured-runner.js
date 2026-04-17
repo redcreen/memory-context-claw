@@ -7,6 +7,23 @@ import { promisify } from "node:util";
 const execFileAsync = promisify(execFile);
 const defaultCodexHome = path.join(os.homedir(), ".codex");
 
+function buildSanitizedCodexEnv({
+  model,
+  reasoningEffort,
+  codexHome
+}) {
+  const baseEnv = Object.fromEntries(
+    Object.entries(process.env).filter(([key]) => !key.startsWith("CODEX_"))
+  );
+
+  return {
+    ...baseEnv,
+    MODEL_NAME: model,
+    ...(codexHome ? { CODEX_HOME: codexHome } : {}),
+    ...(reasoningEffort ? { CODEX_MODEL_REASONING_EFFORT: reasoningEffort } : {})
+  };
+}
+
 export function normalizeString(value, fallback = "") {
   if (typeof value !== "string") {
     return fallback;
@@ -52,6 +69,25 @@ export async function createTemporaryCodexHome(reasoningEffort = "low") {
   }
 
   await fs.writeFile(configPath, configContent, "utf8");
+
+  return tempHome;
+}
+
+export async function createMinimalCodexHome(reasoningEffort = "low") {
+  const tempHome = await fs.mkdtemp(path.join(os.tmpdir(), "umc-codex-home-"));
+  const sourceAuthPath = path.join(defaultCodexHome, "auth.json");
+  const targetAuthPath = path.join(tempHome, "auth.json");
+
+  try {
+    await fs.copyFile(sourceAuthPath, targetAuthPath);
+  } catch (error) {
+    if (error?.code !== "ENOENT") {
+      throw error;
+    }
+  }
+
+  const configContent = `model_reasoning_effort = ${JSON.stringify(reasoningEffort)}\n`;
+  await fs.writeFile(path.join(tempHome, "config.toml"), configContent, "utf8");
 
   return tempHome;
 }
@@ -111,6 +147,37 @@ export function extractStructuredPayload(stdout = "") {
   };
 }
 
+export function normalizeExecErrorMetadata(error) {
+  return {
+    exitCode: Number.isFinite(error?.code) ? Number(error.code) : null,
+    signal: normalizeString(error?.signal),
+    killed: error?.killed === true,
+    timedOut: error?.code === "ETIMEDOUT" || /timed out/i.test(String(error?.message || ""))
+  };
+}
+
+export function tryRecoverStructuredPayloadFromExecError(error, startedAt) {
+  const stdout = String(error?.stdout || "");
+  if (!stdout.trim()) {
+    return null;
+  }
+
+  try {
+    const extracted = extractStructuredPayload(stdout);
+    return {
+      payload: extracted.payload,
+      usage: extracted.usage,
+      stdout,
+      stderr: normalizeString(error?.stderr),
+      elapsedMs: Date.now() - startedAt,
+      recoveredFromExecError: true,
+      execError: normalizeExecErrorMetadata(error)
+    };
+  } catch {
+    return null;
+  }
+}
+
 export async function runStructuredCodexPrompt({
   prompt,
   schema,
@@ -118,7 +185,8 @@ export async function runStructuredCodexPrompt({
   reasoningEffort = "low",
   cwd = process.cwd(),
   codexHome = "",
-  maxBuffer = 16 * 1024 * 1024
+  maxBuffer = 16 * 1024 * 1024,
+  timeoutMs = 120000
 } = {}) {
   const promptPath = path.join(
     os.tmpdir(),
@@ -135,36 +203,48 @@ export async function runStructuredCodexPrompt({
   const startedAt = Date.now();
 
   try {
-    const { stdout, stderr } = await execFileAsync(
-      "zsh",
-      [
-        "-c",
-        'codex exec --json -m "$MODEL_NAME" --ephemeral --color never --output-schema "$SCHEMA_PATH" --skip-git-repo-check -C "$WORKDIR_PATH" - < "$PROMPT_PATH"'
-      ],
-      {
-        cwd,
-        env: {
-          ...process.env,
-          MODEL_NAME: model,
-          PROMPT_PATH: promptPath,
-          SCHEMA_PATH: schemaPath,
-          WORKDIR_PATH: cwd,
-          ...(codexHome ? { CODEX_HOME: codexHome } : {}),
-          ...(reasoningEffort ? { CODEX_MODEL_REASONING_EFFORT: reasoningEffort } : {})
-        },
-        maxBuffer
+    try {
+      const { stdout, stderr } = await execFileAsync(
+        "zsh",
+        [
+          "-c",
+          'codex exec --json -m "$MODEL_NAME" --ephemeral --color never --output-schema "$SCHEMA_PATH" --skip-git-repo-check -C "$WORKDIR_PATH" - < "$PROMPT_PATH"'
+        ],
+        {
+          cwd,
+          env: {
+            ...buildSanitizedCodexEnv({
+              model,
+              reasoningEffort,
+              codexHome
+            }),
+            PROMPT_PATH: promptPath,
+            SCHEMA_PATH: schemaPath,
+            WORKDIR_PATH: cwd
+          },
+          maxBuffer,
+          timeout: timeoutMs
+        }
+      );
+
+      const extracted = extractStructuredPayload(stdout);
+
+      return {
+        payload: extracted.payload,
+        usage: extracted.usage,
+        stdout: String(stdout || ""),
+        stderr: normalizeString(stderr),
+        elapsedMs: Date.now() - startedAt,
+        recoveredFromExecError: false,
+        execError: null
+      };
+    } catch (error) {
+      const recovered = tryRecoverStructuredPayloadFromExecError(error, startedAt);
+      if (recovered) {
+        return recovered;
       }
-    );
-
-    const extracted = extractStructuredPayload(stdout);
-
-    return {
-      payload: extracted.payload,
-      usage: extracted.usage,
-      stdout: String(stdout || ""),
-      stderr: normalizeString(stderr),
-      elapsedMs: Date.now() - startedAt
-    };
+      throw error;
+    }
   } finally {
     await fs.rm(promptPath, { force: true });
     await fs.rm(schemaPath, { force: true });

@@ -46,6 +46,8 @@ const DEFAULT_CONFIG = {
     topN: 6,
     model: "gpt-5.4",
     provider: "",
+    transport: "auto",
+    reasoningEffort: "low",
     timeoutMs: 20000,
     maxSnippetChars: 900,
     minScoreDeltaToSkip: 0.18
@@ -54,6 +56,8 @@ const DEFAULT_CONFIG = {
     enabled: false,
     model: "gpt-5.4",
     provider: "",
+    transport: "auto",
+    reasoningEffort: "low",
     timeoutMs: 20000,
     maxTurns: 12,
     minTurns: 3,
@@ -171,6 +175,18 @@ function normalizeTimeOfDay(value, fallback) {
     return fallback;
   }
   return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
+}
+
+function normalizeTransport(value, fallback = "auto") {
+  const normalized = typeof value === "string" ? value.trim() : "";
+  return ["auto", "codex_exec", "runtime_subagent"].includes(normalized)
+    ? normalized
+    : fallback;
+}
+
+function normalizeReasoningEffort(value, fallback = "low") {
+  const normalized = typeof value === "string" ? value.trim() : "";
+  return ["low", "medium", "high"].includes(normalized) ? normalized : fallback;
 }
 
 export function resolvePluginConfig(raw) {
@@ -319,6 +335,14 @@ export function resolvePluginConfig(raw) {
           : DEFAULT_CONFIG.llmRerank.model,
       provider:
         typeof llmRerank.provider === "string" ? llmRerank.provider.trim() : "",
+      transport: normalizeTransport(
+        llmRerank.transport,
+        DEFAULT_CONFIG.llmRerank.transport
+      ),
+      reasoningEffort: normalizeReasoningEffort(
+        llmRerank.reasoningEffort,
+        DEFAULT_CONFIG.llmRerank.reasoningEffort
+      ),
       timeoutMs: clampNumber(
         llmRerank.timeoutMs,
         1000,
@@ -348,6 +372,14 @@ export function resolvePluginConfig(raw) {
         typeof dialogueWorkingSetShadow.provider === "string"
           ? dialogueWorkingSetShadow.provider.trim()
           : "",
+      transport: normalizeTransport(
+        dialogueWorkingSetShadow.transport,
+        DEFAULT_CONFIG.dialogueWorkingSetShadow.transport
+      ),
+      reasoningEffort: normalizeReasoningEffort(
+        dialogueWorkingSetShadow.reasoningEffort,
+        DEFAULT_CONFIG.dialogueWorkingSetShadow.reasoningEffort
+      ),
       timeoutMs: clampNumber(
         dialogueWorkingSetShadow.timeoutMs,
         1000,

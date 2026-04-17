@@ -2,7 +2,7 @@
 
 ## Current Phase
 
-`stage7-stage9 context-optimization hardening`
+`stage7 context-minor-gc post-step108`
 
 ## Current Results Snapshot
 
@@ -27,6 +27,7 @@
 - Live answer-level A/B after history cleanup: current `100 / 100`, legacy `99 / 100`, `1` UMC-only, `0` builtin-only, `0` shared-fail
 - Dialogue working-set runtime shadow: replay `16 / 16`, average reduction ratio `0.4368`, runtime answer A/B baseline `5 / 5`, shadow `5 / 5`
 - Stage 7 scorecard: captured `16 / 16`, average raw reduction ratio `0.4191`, average package reduction ratio `0.1151`
+- Stage 7 / Step 108 closeout: plugin-owned decision runner landed; hermetic gateway `5 / 5` captured; local service smoke `3 / 3` captured
 - Stage 9 guarded answer A/B: baseline `5 / 5`, shadow `5 / 5`, guarded `5 / 5`, guarded applied `2 / 5`, average guarded prompt reduction ratio `0.0424`
 - Docker hermetic eval status: official-image runner, proxy rewrite, cloned-state path rewrite, warmed template cache, strict ordinary benchmark, and `gateway-steady` fast-watch ordinary benchmark are all landed; Docker is now the default trustworthy hermetic A/B base for this repo
 - Interpretation: the `200+` case buildout, natural-Chinese / watchlist / perf hardening, Stage 6 runtime shadow measurement, and the history-cleanup closure are complete; the docs-first review is now done, so the next phase is north-star gap closure before any new active-path experiment
@@ -107,6 +108,14 @@
   - Risks: 如果 install 简化又被提前，当前主问题会再次从“每轮 context 还不够轻”漂移掉；如果直接继续堆 hardcoded rules，会违背当前“尽量使用 LLM tool、但调用次数受控”的实现约束
   - Validation: roadmap / development plan / architecture docs / `.codex/*` 对齐；Stage 7 context-optimization scorecard、operator metrics 和 rollback boundary 被写成 durable docs
   - Exit Condition: 维护者可以只看文档就知道当前先收的是 `context loading optimization` closeout，Stage 9 仍是 opt-in only，而 ordinary-conversation Docker baseline 已经稳定，之后才是 install、shared-foundation proof
+  - Status: `ongoing`
+
+- Slice: `design-harder-context-minor-gc-matrix`
+  - Objective: Step 108 已关闭；当前把 `Context Minor GC` 的 harder eval matrix 补成正式执行面，并继续保持 Stage 9 为 `default-off` / opt-in only
+  - Dependencies: plugin-owned decision runner、Stage 7 scorecard、Stage 8 hermetic closure、hermetic/service live soak、roadmap / development plan / `.codex/*`
+  - Risks: 如果 Step 108 刚关闭就过早扩大 guarded 面，当前证据会再次从“可运行”漂移回“默认上线”；如果 harder matrix 仍停留在 report 想法层，Stage 7 会继续缺少真正的关闭门槛
+  - Validation: `104` harder eval matrix、同一套 operator scorecard 重跑、Stage 9 继续保持窄路径约束、closeout 报告
+  - Exit Condition: 更难的 case class 也能稳定说明更轻的 context package 不伤回答质量，且 guarded seam 没有越界成默认路径
   - Status: `ongoing`
 
 - Slice: `formalize-realtime-memory-intent-ingestion`
@@ -238,15 +247,14 @@
 
 ## Current Execution Line
 
-- Objective: 先完成 `Stage 7 / context loading optimization` closeout，并把 `Stage 9` 保持为 opt-in only；ordinary-conversation Docker steady-state 已成为默认 hermetic A/B 面，之后再推进 install 和 shared-foundation proof
-- Plan Link: `finish-context-loading-optimization-first`
+- Objective: Step 108 已关闭；当前继续完成 `Stage 7 / context loading optimization` 的 harder matrix，并把 `Stage 9` 保持为 opt-in only；ordinary-conversation Docker steady-state 已成为默认 hermetic A/B 面，之后再推进 install 和 shared-foundation proof
+- Plan Link: `design-harder-context-minor-gc-matrix`
 - Runway: context scorecard、harder replay / Docker / local evidence、bounded LLM decision contract、gateway/raw transport watch
-- Progress: `2 / 3` tasks complete
+- Progress: `3 / 4` tasks complete
 - Current Critical Path:
-  - `108.a` 定义插件内自托管 `decision runner` 契约
-  - `108.b` 替换 `Context Minor GC` 的 working-set decision transport
-  - `108.c` 重跑 OpenClaw gateway live soak，并要求真实宿主至少 `5 / 5` captured
-  - `108.d` 仅在 `108.c` 为绿后，才判断 Stage 7 是否 closeout
+  - `104.a` 设计更硬的 replay / Docker / local case matrix
+  - `104.b` 用同一套 scorecard 重跑 `Context Minor GC`
+  - `104.c` 只有 harder matrix 为绿后，才判断 Stage 7 整体 closeout 与 Stage 9 guarded promotion
 - Stop Conditions:
   - docs remain anchored to the older history-cleanup recovery pointer instead of the next context-optimization queue
   - install simplification gets moved ahead of context loading optimization before Stage 7 closes
@@ -258,10 +266,10 @@
 ## Execution Tasks
 
 - [x] EL-1 define and publish the unified context optimization scorecard for Stage 7
-- [ ] EL-2A define the plugin-owned `decision runner` contract for `Context Minor GC`
-- [ ] EL-2B swap the working-set decision transport away from host `runtime.subagent`
-- [ ] EL-2C rerun OpenClaw gateway live soak and require real-host `5 / 5` captured exports
-- [ ] EL-2D only after EL-2C, decide whether Stage 7 can close and whether any host-level fallback is still needed
+- [x] EL-2A define the plugin-owned `decision runner` contract for `Context Minor GC`
+- [x] EL-2B swap the working-set decision transport away from host `runtime.subagent`
+- [x] EL-2C rerun OpenClaw gateway live soak and require real-host `5 / 5` captured exports
+- [x] EL-2D only after EL-2C, decide whether Stage 7 can close and whether any host-level fallback is still needed
 - [ ] EL-3 redesign the next replay / Docker / local evidence around `cross-source`, `conflict`, `multi-step history`, `open-loop return`, and denser natural-Chinese prompts
 - [x] EL-4 isolate ordinary-conversation realtime-write latency closure from contamination discussion while keeping the bounded smart-path follow-up opt-in only
 

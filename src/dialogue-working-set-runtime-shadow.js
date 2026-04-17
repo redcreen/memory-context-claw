@@ -4,17 +4,15 @@ import { fileURLToPath } from "node:url";
 
 import {
   buildWorkingSetDecisionPrompt,
+  buildWorkingSetDecisionSchema,
+  normalizeWorkingSetDecisionPayload,
   parseWorkingSetDecisionResponse
 } from "./dialogue-working-set-llm.js";
 import { applyGuardedWorkingSetToMessages } from "./dialogue-working-set-guarded.js";
 import { buildContextOptimizationScorecard } from "./dialogue-working-set-scorecard.js";
 import { buildShadowContextSnapshot } from "./dialogue-working-set-shadow.js";
-import {
-  messageContentToText,
-  normalizeWhitespace,
-  parseAgentId,
-  sanitizeForSystemPrompt
-} from "./utils.js";
+import { runStructuredDecision } from "./structured-decision-runner.js";
+import { messageContentToText, normalizeWhitespace, parseAgentId } from "./utils.js";
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 export const DEFAULT_DIALOGUE_WORKING_SET_SHADOW_OUTPUT_DIR = path.join(
@@ -63,6 +61,10 @@ function hasSubagentRuntime(runtime) {
     && runtime?.subagent?.waitForRun
     && runtime?.subagent?.getSessionMessages
   );
+}
+
+function requiresRuntimeSubagent(config = {}) {
+  return normalizeString(config.transport, "auto") === "runtime_subagent";
 }
 
 export function resolveDialogueWorkingSetShadowOutputDir(outputDir = "") {
@@ -127,7 +129,7 @@ export function evaluateDialogueWorkingSetShadowSampling({
   if (!turns.some((turn) => turn.role === "user")) {
     return { eligible: false, reason: "missing_user_turn", turns, projection: projected.projection };
   }
-  if (!hasSubagentRuntime(runtime)) {
+  if (requiresRuntimeSubagent(config) && !hasSubagentRuntime(runtime)) {
     return { eligible: false, reason: "subagent_unavailable", turns, projection: projected.projection };
   }
   return { eligible: true, turns, projection: projected.projection };
@@ -139,64 +141,29 @@ async function runWorkingSetShadowDecision({
   query,
   turns,
   config,
-  logger
+  logger,
+  decisionRunner
 }) {
-  const shadowSessionKey = `${normalizeSessionKey(sessionKey)}:dialogue-working-set-shadow:${Date.now()}`;
-  const startedAt = Date.now();
-
-  const runResult = await runtime.subagent.run({
-    sessionKey: shadowSessionKey,
-    message: buildWorkingSetDecisionPrompt({
+  return runStructuredDecision({
+    runtime,
+    logger,
+    sessionKey: normalizeSessionKey(sessionKey),
+    prompt: buildWorkingSetDecisionPrompt({
       id: normalizeSessionKey(sessionKey),
       description: query,
       transcript: turns
     }),
-    provider: config.provider || undefined,
-    model: config.model || undefined,
-    extraSystemPrompt:
-      "Return only JSON. Do not include markdown fences, prose, or explanation outside the JSON payload.",
-    lane: "subagent",
-    deliver: false,
-    idempotencyKey: `dialogue-working-set-shadow-${Date.now()}`
+    schema: buildWorkingSetDecisionSchema(),
+    config,
+    parser: parseWorkingSetDecisionResponse,
+    normalizePayload: normalizeWorkingSetDecisionPayload,
+    purpose: "dialogue-working-set-shadow",
+    query,
+    input: {
+      turns
+    },
+    overrideRunner: decisionRunner
   });
-
-  const waitResult = await runtime.subagent.waitForRun({
-    runId: runResult.runId,
-    timeoutMs: config.timeoutMs
-  });
-
-  if (waitResult.status !== "ok") {
-    throw new Error(waitResult.error || `shadow run failed: ${waitResult.status}`);
-  }
-
-  const session = await runtime.subagent.getSessionMessages({
-    sessionKey: shadowSessionKey,
-    limit: 20
-  });
-  const assistantMessages = Array.isArray(session?.messages) ? session.messages : [];
-  const finalAssistant = [...assistantMessages]
-    .reverse()
-    .find((message) => message && message.role === "assistant");
-  const assistantText = sanitizeForSystemPrompt(messageContentToText(finalAssistant?.content));
-  const payload = parseWorkingSetDecisionResponse(assistantText);
-
-  if (config.cleanupSession !== false && typeof runtime.subagent.deleteSession === "function") {
-    try {
-      await runtime.subagent.deleteSession({
-        sessionKey: shadowSessionKey,
-        deleteTranscript: true
-      });
-    } catch (error) {
-      logger?.warn?.(
-        `[unified-memory-core] failed to delete dialogue shadow session ${shadowSessionKey}: ${String(error)}`
-      );
-    }
-  }
-
-  return {
-    payload,
-    elapsedMs: Date.now() - startedAt
-  };
 }
 
 function buildShadowSummaryEvent(event, exportRelativePath = "") {
@@ -213,6 +180,7 @@ function buildShadowSummaryEvent(event, exportRelativePath = "") {
     query: event.query,
     status: event.status,
     reason: event.reason || "",
+    decision_transport: String(event.decision_transport || ""),
     relation: event.decision?.relation || applied.relation || "",
     pin_turn_ids: applied.pinTurnIds || [],
     evict_turn_ids: applied.appliedEvictTurnIds || [],
@@ -265,7 +233,8 @@ export async function captureDialogueWorkingSetShadow({
   sessionKey,
   query,
   messages,
-  assemblyMetrics = {}
+  assemblyMetrics = {},
+  decisionRunner = null
 }) {
   const startedAt = Date.now();
   const normalizedSessionKey = normalizeSessionKey(sessionKey);
@@ -293,6 +262,7 @@ export async function captureDialogueWorkingSetShadow({
     },
     transcript: sampling.turns || projectRuntimeMessagesToDialogueTurns(messages, config),
     decision: null,
+    decision_transport: "",
     snapshot: null,
     scorecard: null,
     guarded: {
@@ -332,7 +302,8 @@ export async function captureDialogueWorkingSetShadow({
       query,
       turns: sampling.turns,
       config,
-      logger
+      logger,
+      decisionRunner
     });
     const snapshot = buildShadowContextSnapshot({
       turns: sampling.turns,
@@ -348,6 +319,7 @@ export async function captureDialogueWorkingSetShadow({
     return writeShadowArtifacts(config.outputDir, {
       ...baseEvent,
       decision: decision.payload,
+      decision_transport: decision.transport || "",
       snapshot,
       scorecard: buildContextOptimizationScorecard({
         projectionTurns: sampling.turns,

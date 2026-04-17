@@ -1,4 +1,5 @@
-import { messageContentToText, sanitizeForSystemPrompt } from "./utils.js";
+import { runStructuredDecision } from "./structured-decision-runner.js";
+import { sanitizeForSystemPrompt } from "./utils.js";
 
 function truncateSnippet(text, maxChars) {
   const value = sanitizeForSystemPrompt(text);
@@ -61,6 +62,30 @@ export function buildRerankPrompt(query, candidates) {
   ].join("\n\n");
 }
 
+export function buildRerankSchema() {
+  return {
+    $schema: "https://json-schema.org/draft/2020-12/schema",
+    type: "object",
+    additionalProperties: false,
+    required: ["selected"],
+    properties: {
+      selected: {
+        type: "array",
+        items: {
+          type: "object",
+          additionalProperties: false,
+          required: ["id", "score", "reason"],
+          properties: {
+            id: { type: "string" },
+            score: { type: "number" },
+            reason: { type: "string" }
+          }
+        }
+      }
+    }
+  };
+}
+
 function extractJson(text) {
   const trimmed = String(text || "").trim();
   const direct = trimmed.match(/\{[\s\S]*\}$/);
@@ -71,8 +96,7 @@ function extractJson(text) {
   return fenced ? fenced[1] : trimmed;
 }
 
-export function parseRerankResponse(text) {
-  const payload = JSON.parse(extractJson(text));
+export function normalizeRerankPayload(payload = {}) {
   if (!Array.isArray(payload?.selected)) {
     return [];
   }
@@ -85,61 +109,37 @@ export function parseRerankResponse(text) {
     }));
 }
 
+export function parseRerankResponse(text) {
+  return normalizeRerankPayload(JSON.parse(extractJson(text)));
+}
+
 export async function rerankCandidatesWithSubagent({
   runtime,
   sessionKey,
   query,
   candidates,
   config,
-  logger
+  logger,
+  decisionRunner = null
 }) {
-  const rerankSessionKey = `${sessionKey}:context-rerank:${Date.now()}`;
-  const prompt = buildRerankPrompt(query, prepareRerankCandidates(candidates, config));
-  const runResult = await runtime.subagent.run({
-    sessionKey: rerankSessionKey,
-    message: prompt,
-    provider: config.provider || undefined,
-    model: config.model || undefined,
-    extraSystemPrompt:
-      "Return only JSON. Do not include markdown fences, prose, or explanation outside the JSON payload.",
-    lane: "subagent",
-    deliver: false,
-    idempotencyKey: `context-rerank-${Date.now()}`
+  const preparedCandidates = prepareRerankCandidates(candidates, config);
+  const decision = await runStructuredDecision({
+    runtime,
+    logger,
+    sessionKey,
+    prompt: buildRerankPrompt(query, preparedCandidates),
+    schema: buildRerankSchema(),
+    config,
+    parser: parseRerankResponse,
+    normalizePayload: normalizeRerankPayload,
+    purpose: "context-rerank",
+    query,
+    input: {
+      candidates: preparedCandidates
+    },
+    overrideRunner: decisionRunner
   });
-
-  const waitResult = await runtime.subagent.waitForRun({
-    runId: runResult.runId,
-    timeoutMs: config.timeoutMs
-  });
-
-  if (waitResult.status !== "ok") {
-    throw new Error(waitResult.error || `rerank run failed: ${waitResult.status}`);
-  }
-
-  const session = await runtime.subagent.getSessionMessages({
-    sessionKey: rerankSessionKey,
-    limit: 20
-  });
-
-  const assistantMessages = Array.isArray(session?.messages) ? session.messages : [];
-  const finalAssistant = [...assistantMessages]
-    .reverse()
-    .find((message) => message && message.role === "assistant");
-  const text = sanitizeForSystemPrompt(messageContentToText(finalAssistant?.content));
-  const reranked = parseRerankResponse(text);
-
-  try {
-    await runtime.subagent.deleteSession({
-      sessionKey: rerankSessionKey,
-      deleteTranscript: true
-    });
-  } catch (error) {
-    logger?.warn?.(
-      `[unified-memory-core] failed to delete rerank session ${rerankSessionKey}: ${String(error)}`
-    );
-  }
-
-  return reranked;
+  return decision.payload;
 }
 
 export function applyRerankOrder(candidates, reranked) {

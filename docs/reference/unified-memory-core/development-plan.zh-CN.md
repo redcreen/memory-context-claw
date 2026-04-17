@@ -97,8 +97,8 @@
 - `Stage 7`：进行中
 - `Stage 8`：已完成
 - `Stage 9`：进行中（`default-off` / opt-in only）
-- 当前指针：`108`
-- 当前建议：Stage 7 scorecard、Stage 8 hermetic closure 与 Stage 9 guarded seam 都已落地；但 OpenClaw live soak 已经证明当前 `Context Minor GC` decision transport 仍绑在宿主 runtime seam 上，所以下一步优先做插件内自托管 `memory + context decision overlay`，而不是先改 OpenClaw
+- 当前指针：`104`
+- 当前建议：Stage 7 scorecard、Stage 8 hermetic closure、Stage 9 guarded seam，以及 Step 108 的 plugin-owned transport closeout 都已落地；下一步先完成 `104` 的 harder eval matrix，并继续把 Stage 9 保持在 `default-off` / opt-in only
 
 当前 baseline 已经落地：
 
@@ -283,6 +283,7 @@ Stage 6 证据：
 - Stage 7 scorecard：[../../../reports/generated/dialogue-working-set-scorecard-2026-04-17.md](../../../reports/generated/dialogue-working-set-scorecard-2026-04-17.md)
 - Stage 7 / Stage 9 汇总：[../../../reports/generated/dialogue-working-set-stage7-stage9-2026-04-17.md](../../../reports/generated/dialogue-working-set-stage7-stage9-2026-04-17.md)
 - OpenClaw gateway live validation：[../../../reports/generated/openclaw-gateway-context-optimization-2026-04-17.md](../../../reports/generated/openclaw-gateway-context-optimization-2026-04-17.md)
+- Stage 7 / Step 108 closeout：[../../../reports/generated/stage7-step108-context-minor-gc-closeout-2026-04-18.zh-CN.md](../../../reports/generated/stage7-step108-context-minor-gc-closeout-2026-04-18.zh-CN.md)
 
 阶段完成标准：
 
@@ -305,19 +306,21 @@ Stage 6 证据：
    - 不再只看孤立报告，而是能直接回答“更轻的 context package 是否真的更好”。
 107. `completed` 先定义一个极窄的 guarded experiment seam，但不默认开启。
    - 必须是 config-only rollback，且 builtin memory 行为不变。
-108. `in_progress` 基于 harder replay / Docker / local evidence 做 Stage 7 closeout 决策。
+108. `completed` 基于 harder replay / Docker / local evidence 做 Stage 7 / Step 108 closeout 决策。
    - 决策对象不是“马上上线”，而是“在 Stage 8 已经收口后，Stage 7 是否已经足够站稳，并且能否继续保持 Stage 9 为极窄 opt-in 面”。
-   - 当前新增 blocker：OpenClaw gateway live soak 已证明当前 decision transport 还绑在宿主 subagent / request-scope seam 上，所以 Stage 7 暂时不能 closeout。
-   - 当前优先路线：先把 working-set decision transport 收回插件内，再决定宿主级 fallback 是否还需要存在。
-   - 当前关键执行线已经显式拆成 4 步：
-     - `108.a next` 定义插件内自托管 `decision runner` 契约。
-       - 明确 input / output、runner 入口、失败回退、config-only rollback 和 sidecar artifact 形状。
-     - `108.b next` 替换 `Context Minor GC` 的 working-set decision transport。
-       - 先覆盖 shadow / guarded decision path，确保它不再依赖宿主 `runtime.subagent`。
-     - `108.c pending` 重跑 OpenClaw gateway live soak。
-       - 退出信号是 working-set exports 不再报 request-scope seam 错误，且真实宿主侧至少 `5 / 5` captured。
-     - `108.d pending` 仅在 `108.c` 变绿后，才判断 Stage 7 是否 closeout。
-       - 这一步再决定宿主级 fallback 是否仍有必要存在，而不是现在提前讨论。
+   - 结论：`Context Minor GC` 的 working-set decision transport 已经收回插件内，不再依赖宿主 `runtime.subagent`；OpenClaw core 无需修改。
+   - live 验证：
+     - hermetic gateway：`5 / 5` captured
+     - 本机真实 service smoke：`3 / 3` captured
+   - 当前关键执行线 4 步已经全部完成：
+     - `108.a completed` 定义插件内自托管 `decision runner` 契约。
+       - input / output、runner 入口、失败回退、config-only rollback 和 sidecar artifact 形状已经固定。
+     - `108.b completed` 替换 `Context Minor GC` 的 working-set decision transport。
+       - shadow / guarded decision path 已不再依赖宿主 `runtime.subagent`。
+     - `108.c completed` 重跑 OpenClaw gateway live soak。
+       - working-set exports 已不再报 request-scope seam 错误，且真实宿主侧达到 captured 门槛。
+     - `108.d completed` 做出 Stage 7 / Step 108 closeout 决策。
+       - 结论是：Step 108 已关闭；Stage 7 整体仍继续进行，因为 `104` 的 harder eval matrix 还未完成，Stage 9 继续保持极窄 opt-in 面。
 
 ### Stage 8. Ordinary-Conversation Realtime-Write Latency Closure
 

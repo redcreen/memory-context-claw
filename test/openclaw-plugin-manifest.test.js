@@ -19,6 +19,8 @@ test("openclaw plugin manifest exposes dialogue working-set shadow config", () =
   assert.equal(shadow.additionalProperties, false);
   assert.ok(shadow.properties.enabled);
   assert.ok(shadow.properties.model);
+  assert.ok(shadow.properties.transport);
+  assert.ok(shadow.properties.reasoningEffort);
   assert.ok(shadow.properties.timeoutMs);
   assert.ok(shadow.properties.outputDir);
 });
@@ -35,3 +37,12 @@ test("openclaw plugin manifest exposes guarded working-set config", () => {
   assert.ok(guarded.properties.minEvictedTurns);
 });
 
+test("openclaw plugin manifest exposes llm rerank transport config", () => {
+  const rerank =
+    manifest?.configSchema?.properties?.llmRerank;
+  assert.ok(rerank, "llmRerank should exist in configSchema");
+  assert.equal(rerank.type, "object");
+  assert.equal(rerank.additionalProperties, false);
+  assert.ok(rerank.properties.transport);
+  assert.ok(rerank.properties.reasoningEffort);
+});

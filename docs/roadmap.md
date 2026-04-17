@@ -75,8 +75,8 @@ Supporting evidence:
 - Stage 9 guarded answer A/B: baseline `5 / 5`, shadow `5 / 5`, guarded `5 / 5`
 - Stage 9 guarded applied: `2 / 5`
 - Stage 9 average guarded prompt reduction ratio: `0.0424`
-- OpenClaw gateway live validation: the gateway service is back and a two-turn smoke passes, but `5 / 5` working-set exports still fail on the host runtime seam
-- Interpretation: the Stage 7 operator-facing scorecard and the Stage 9 guarded opt-in seam are both landed, but the real OpenClaw live soak now proves the current `Context Minor GC` decision transport is still tied to the host runtime seam; the preferred next path is therefore a plugin-owned memory + context decision overlay rather than direct OpenClaw modification
+- Stage 7 / Step 108 closeout: the plugin-owned decision runner is landed, the hermetic gateway rerun captured `5 / 5`, and the real local service smoke captured `3 / 3`
+- Interpretation: the Stage 7 operator-facing scorecard, the Stage 9 guarded opt-in seam, and the Step 108 plugin-owned transport closeout are now all landed; the main remaining work is no longer the host seam but the harder eval matrix and the guarded promotion gate
 
 Supporting evidence:
 
@@ -85,6 +85,7 @@ Supporting evidence:
 - [generated/dialogue-working-set-guarded-answer-ab-2026-04-17.md](../reports/generated/dialogue-working-set-guarded-answer-ab-2026-04-17.md)
 - [generated/dialogue-working-set-stage7-stage9-2026-04-17.md](../reports/generated/dialogue-working-set-stage7-stage9-2026-04-17.md)
 - [generated/openclaw-gateway-context-optimization-2026-04-17.md](../reports/generated/openclaw-gateway-context-optimization-2026-04-17.md)
+- [generated/stage7-step108-context-minor-gc-closeout-2026-04-18.md](../reports/generated/stage7-step108-context-minor-gc-closeout-2026-04-18.md)
 
 ## Current Review Verdict
 
@@ -153,15 +154,15 @@ Stages 1-6 are complete, but the roadmap cannot stop at “all historical stages
 | --- | --- | --- | --- |
 | Stage 7: context loading optimization closure | `in_progress` | the biggest current product gap is no longer “does the feature exist?” but “is each turn’s context package light enough?”; Stage 6 is still a measurement layer, and this mainline is now externally named `Context Minor GC` | the unified scorecard is fixed and harder replay / Docker / local evidence consistently show a lighter context package without answer-quality damage, and daily long conversations usually no longer need compat / compact as the normal way to keep going |
 | Stage 8: ordinary-conversation realtime-write latency closure | `completed` | the Docker ordinary-conversation A/B has been recovered from a blanket timeout wall into a trustworthy strict baseline, while `2/4`-shard `gateway-steady` remains the fast watch lane | the clean Docker path is no longer dominated by large timeout counts and now reports `39 / 40 vs 15 / 40` with `preCaseResetFailed = 0` |
-| Stage 9: guarded smart-path promotion | `in_progress` | context loading optimization is still not a user gain if it stays shadow-only forever | a bounded guarded experiment surface has an explicit rollback boundary, operator metrics, and promotion gate, while compat / compact remains a background fallback instead of the default daily path; the preferred next step is to pull the decision transport back into the plugin before deciding whether any host-level fallback is still needed |
+| Stage 9: guarded smart-path promotion | `in_progress` | context loading optimization is still not a user gain if it stays shadow-only forever | a bounded guarded experiment surface has an explicit rollback boundary, operator metrics, and promotion gate, while compat / compact remains a background fallback instead of the default daily path; Step 108 is now closed, so the next step is to finish the harder matrix before widening guarded opt-in |
 | Stage 10: adoption simplification and shared-foundation proof | `planned` | install / bootstrap is still too manual, and Codex / multi-instance product evidence still lags | adoption is shorter and clearer, and the shared-foundation story is proven beyond architecture diagrams |
 
 ## Now / Next / Later
 
 | Horizon | Focus | Exit Signal |
 | --- | --- | --- |
-| Now | keep closing `Stage 7 / Context Minor GC` while holding `Stage 9` at `default-off` / opt-in only: answer “how do we make every turn lighter and faster without hurting quality?” | the unified scorecard, guarded seam, rollback boundary, and operator summary are all landed, but the OpenClaw gateway live soak proves the current decision transport is still blocked by the host runtime seam |
-| Next | first implement the plugin-owned `memory + context decision overlay`, so the `Context Minor GC` working-set decision transport no longer depends on the host `subagent` seam, then continue the `Stage 7` closeout while keeping `Stage 9` narrow; the execution line is now explicit: `decision runner contract -> transport swap -> gateway live-soak rerun -> Stage 7 closeout decision`; ordinary-conversation Docker steady-state remains the default hermetic A/B baseline | the unified scorecard, guarded seam, rollback boundary, and operator summary are stable, and the remaining blocker is narrowed to the plugin-owned decision runner plus targeted Docker follow-up |
+| Now | keep closing `Stage 7 / Context Minor GC` while holding `Stage 9` at `default-off` / opt-in only: finish the harder eval matrix and the promotion gate instead of returning to the host seam debate | the unified scorecard, guarded seam, rollback boundary, and operator summary are landed, and Step 108 is already closed; the remaining gap is the harder case matrix plus guarded promotion discipline |
+| Next | finish `104`, rerun `Context Minor GC` on the same operator scorecard, and keep ordinary-conversation Docker steady-state as the default hermetic A/B baseline | the harder case classes also show that lighter context packages stay safe, and Stage 9 remains a narrow opt-in surface |
 | Later | after Stage 7 is stable, decide whether Stage 9 can widen and whether Stage 10 adoption/shared-foundation closure should start | the smart-path promotion gate, rollback boundary, and shared-foundation proof are operator-ready |
 
 ## Current Execution Focus
