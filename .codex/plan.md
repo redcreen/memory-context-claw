@@ -22,12 +22,13 @@
 - Main-path perf baseline: retrieval / assembly avg `16ms`; raw transport avg `8061ms`; isolated local answer-level avg `11200ms`
 - Focused ordinary-conversation realtime-write A/B: `40` cases, builtin-first then clean-state current
 - Focused ordinary-conversation result: current `38 / 40`, legacy `21 / 40`, `20` both-pass, `18` UMC-only, `1` legacy-only, `1` both-fail
-- Focused ordinary-conversation interpretation: durable rules, tool routing, and Chinese profile facts now show clear current-path gains; remaining gaps are `ordinary-ab-en-session-negative-3` (current over-retains `Hangzhou`) and `ordinary-ab-en-timezone-1` (shared fail)
+- Focused ordinary-conversation Docker steady-state result: current `32 / 40`, legacy `17 / 40`, `15` both-pass, `17` UMC-only, `2` legacy-only, `6` both-fail, `preCaseResetFailed = 0`
+- Focused ordinary-conversation interpretation: the host result remains the optimistic live upper bound, while Docker steady-state is now the trustworthy hermetic baseline; the substrate line is closed and the remaining work is targeted cleanup of the residual harder misses
 - Live answer-level A/B after history cleanup: current `100 / 100`, legacy `99 / 100`, `1` UMC-only, `0` builtin-only, `0` shared-fail
 - Dialogue working-set runtime shadow: replay `16 / 16`, average reduction ratio `0.4368`, runtime answer A/B baseline `5 / 5`, shadow `5 / 5`
 - Stage 7 scorecard: captured `16 / 16`, average raw reduction ratio `0.4191`, average package reduction ratio `0.1151`
 - Stage 9 guarded answer A/B: baseline `5 / 5`, shadow `5 / 5`, guarded `5 / 5`, guarded applied `2 / 5`, average guarded prompt reduction ratio `0.0424`
-- Docker hermetic eval status: official-image runner landed and reusable; focused history cleanup scenario now runs through the real Docker path
+- Docker hermetic eval status: official-image runner, proxy rewrite, cloned-state path rewrite, warmed template cache, and `gateway-steady` ordinary benchmark are all landed; Docker is now the default trustworthy hermetic A/B base for this repo
 - Interpretation: the `200+` case buildout, natural-Chinese / watchlist / perf hardening, Stage 6 runtime shadow measurement, and the history-cleanup closure are complete; the docs-first review is now done, so the next phase is north-star gap closure before any new active-path experiment
 
 ## Current Product Promises
@@ -43,13 +44,11 @@
 
 1. `轻快 / context loading optimization`
    - 每轮 context 仍然偏厚；scorecard 已落地，但 Stage 7 closeout 还没完成
-2. `轻快 / realtime-write latency`
-   - hermetic ordinary-conversation 写记忆路径仍然 timeout-heavy
-3. `轻快 / install`
+2. `轻快 / install`
    - install / bootstrap / verify 还不够短
-4. `聪明`
+3. `聪明`
    - bounded guarded seam 已落地，但仍然是 `default-off` / opt-in only，不是默认用户收益
-5. `省心`
+4. `省心`
    - Codex / 多实例产品证据弱于 OpenClaw
 
 ## Slices
@@ -103,11 +102,11 @@
   - Status: `ongoing`
 
 - Slice: `finish-context-loading-optimization-first`
-  - Objective: docs-first review 已完成；当前先完成 `轻快 / context loading optimization` 的 closeout，并保持 Stage 9 为 `default-off` / opt-in only；然后再收 `轻快 / realtime-write latency`
+  - Objective: docs-first review 已完成；当前先完成 `轻快 / context loading optimization` 的 closeout，并保持 Stage 9 为 `default-off` / opt-in only；ordinary-conversation hermetic A/B 已经收口为默认 Docker 基线，之后再收 `轻快 / install`
   - Dependencies: Stage 6 runtime shadow evidence、history cleanup closeout、roadmap / development plan / architecture docs、Docker hermetic eval path
   - Risks: 如果 install 简化又被提前，当前主问题会再次从“每轮 context 还不够轻”漂移掉；如果直接继续堆 hardcoded rules，会违背当前“尽量使用 LLM tool、但调用次数受控”的实现约束
   - Validation: roadmap / development plan / architecture docs / `.codex/*` 对齐；Stage 7 context-optimization scorecard、operator metrics 和 rollback boundary 被写成 durable docs
-  - Exit Condition: 维护者可以只看文档就知道当前先收的是 `context loading optimization` closeout，Stage 9 仍是 opt-in only，之后才是 realtime-write latency、install、shared-foundation proof
+  - Exit Condition: 维护者可以只看文档就知道当前先收的是 `context loading optimization` closeout，Stage 9 仍是 opt-in only，而 ordinary-conversation Docker baseline 已经稳定，之后才是 install、shared-foundation proof
   - Status: `ongoing`
 
 - Slice: `formalize-realtime-memory-intent-ingestion`
@@ -217,10 +216,9 @@
 ## Execution Order
 
 1. 先补 `轻快 / context loading optimization`：定义 unified scorecard，并把 durable-source slimming、working-set pruning、budgeted assembly、harder replay / Docker / local evidence 收成一个主线
-2. 再补 `轻快 / realtime-write latency`：让 ordinary-conversation clean Docker path 不再被 timeout 主导
-3. 然后再收 `轻快 / install`：简化 install / bootstrap / verify
-4. 再补 `聪明`：定义 bounded LLM-led context decision contract、operator metrics 和 rollback boundary
-5. 最后补 `省心`：持续加强 Codex / 多实例证据和 operator 体验
+2. 然后再收 `轻快 / install`：简化 install / bootstrap / verify
+3. 再补 `聪明`：定义 bounded LLM-led context decision contract、operator metrics 和 rollback boundary
+4. 最后补 `省心`：持续加强 Codex / 多实例证据和 operator 体验
 6. 继续保持 `24` 条自然中文案例、当前 raw transport watchlist 和 `2026-04-15` perf baseline 在下一轮修复中持续稳定
 7. 把更难 harder-case surface 逐步从 watch 推向更强的正式门禁候选
 8. 把 gateway/shared-session 与 raw transport 继续保持在独立 watchlist，不与算法判断混淆
@@ -240,10 +238,10 @@
 
 ## Current Execution Line
 
-- Objective: 先完成 `Stage 7 / context loading optimization` closeout，并把 `Stage 9` 保持为 opt-in only；再推进 realtime-write latency 和 shared-foundation proof
+- Objective: 先完成 `Stage 7 / context loading optimization` closeout，并把 `Stage 9` 保持为 opt-in only；ordinary-conversation Docker steady-state 已成为默认 hermetic A/B 面，之后再推进 install 和 shared-foundation proof
 - Plan Link: `finish-context-loading-optimization-first`
-- Runway: context scorecard、harder replay / Docker / local evidence、ordinary-conversation latency closure、bounded LLM decision contract、gateway/raw transport watch
-- Progress: `1 / 3` tasks complete
+- Runway: context scorecard、harder replay / Docker / local evidence、bounded LLM decision contract、gateway/raw transport watch
+- Progress: `2 / 3` tasks complete
 - Stop Conditions:
   - docs remain anchored to the older history-cleanup recovery pointer instead of the next context-optimization queue
   - install simplification gets moved ahead of context loading optimization before Stage 7 closes
@@ -256,7 +254,7 @@
 
 - [x] EL-1 define and publish the unified context optimization scorecard for Stage 7
 - [ ] EL-2 redesign the next replay / Docker / local evidence around `cross-source`, `conflict`, `multi-step history`, `open-loop return`, and denser natural-Chinese prompts
-- [ ] EL-3 isolate ordinary-conversation realtime-write latency closure from contamination discussion while keeping the bounded smart-path follow-up opt-in only
+- [x] EL-3 isolate ordinary-conversation realtime-write latency closure from contamination discussion while keeping the bounded smart-path follow-up opt-in only
 
 ## Development Log Capture
 

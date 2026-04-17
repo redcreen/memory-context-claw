@@ -18,6 +18,7 @@ const defaultFixtureRoot = path.resolve(__dirname, "../evals/openclaw-ordinary-c
 const defaultTemplateCacheRoot = path.resolve(repoRoot, ".cache", "openclaw-ordinary-state-templates");
 const ordinaryStateTemplateVersion = "v4";
 const ordinaryTemplateWarmupMessage = "What repository is this workspace for? Answer in one short sentence.";
+const gatewayToken = "x";
 
 function normalizeString(value, fallback = "") {
   if (typeof value !== "string") {
@@ -28,6 +29,7 @@ function normalizeString(value, fallback = "") {
 }
 
 function parseArgs(argv) {
+  const executionEnvironment = normalizeString(process.env.UMC_EVAL_EXECUTION_ENV, "host");
   const args = {
     agentId: "rtab",
     sourceAgentId: "main",
@@ -44,6 +46,11 @@ function parseArgs(argv) {
     refreshTemplateCache: normalizeString(process.env.UMC_EVAL_REFRESH_TEMPLATE_CACHE) === "1",
     keepState: normalizeString(process.env.UMC_EVAL_KEEP_STATE) === "1",
     fastFailCapture: normalizeString(process.env.UMC_EVAL_FAST_FAIL_CAPTURE, "1") !== "0",
+    runnerMode: normalizeString(
+      process.env.UMC_EVAL_ORDINARY_RUNNER_MODE,
+      executionEnvironment === "docker" ? "gateway-steady" : "local"
+    ),
+    gatewayPortBase: Number(normalizeString(process.env.UMC_EVAL_GATEWAY_PORT_BASE, "44100")) || 44100,
     shardSize: Number(normalizeString(process.env.UMC_EVAL_SHARD_SIZE, "10")) || 10,
     shardCount: Number(normalizeString(process.env.UMC_EVAL_SHARD_COUNT, "4")) || 4,
     maxCases: 0,
@@ -69,6 +76,8 @@ function parseArgs(argv) {
     else if (arg === "--refresh-template-cache") args.refreshTemplateCache = true;
     else if (arg === "--keep-state") args.keepState = true;
     else if (arg === "--no-fast-fail-capture") args.fastFailCapture = false;
+    else if (arg === "--runner-mode") args.runnerMode = String(argv[++index] || args.runnerMode);
+    else if (arg === "--gateway-port-base") args.gatewayPortBase = Number(argv[++index] || args.gatewayPortBase);
     else if (arg === "--shard-size") args.shardSize = Number(argv[++index] || args.shardSize);
     else if (arg === "--shard-count") args.shardCount = Number(argv[++index] || args.shardCount);
     else if (arg === "--max-cases") args.maxCases = Number(argv[++index] || 0);
@@ -131,6 +140,59 @@ async function listRelativeFiles(rootPath) {
 
   await walk(rootPath);
   return files;
+}
+
+async function pathExists(targetPath) {
+  try {
+    await fs.access(targetPath);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+async function hashFile(filePath) {
+  const content = await fs.readFile(filePath);
+  return createHash("sha1").update(content).digest("hex");
+}
+
+async function captureDirectorySignature(rootPath) {
+  if (!(await pathExists(rootPath))) {
+    return {
+      present: false,
+      fileCount: 0,
+      hash: "missing"
+    };
+  }
+
+  const files = [];
+
+  async function walk(currentPath) {
+    const entries = await fs.readdir(currentPath, { withFileTypes: true });
+    entries.sort((a, b) => a.name.localeCompare(b.name));
+    for (const entry of entries) {
+      const fullPath = path.join(currentPath, entry.name);
+      const relativePath = path.relative(rootPath, fullPath);
+      if (entry.isDirectory()) {
+        await walk(fullPath);
+        continue;
+      }
+      files.push(`${relativePath}:${await hashFile(fullPath)}`);
+    }
+  }
+
+  await walk(rootPath);
+  return {
+    present: true,
+    fileCount: files.length,
+    hash: createHash("sha1").update(files.join("\n")).digest("hex")
+  };
+}
+
+function signaturesEqual(left, right) {
+  return Boolean(left?.present) === Boolean(right?.present)
+    && Number(left?.fileCount || 0) === Number(right?.fileCount || 0)
+    && String(left?.hash || "") === String(right?.hash || "");
 }
 
 async function buildOrdinaryTemplateCacheKey(args, includeUMC) {
@@ -258,6 +320,7 @@ function summarizeIsolation(results) {
   const registryRoots = [];
   let cleanupOk = 0;
   let sessionClearOk = 0;
+  let preCaseResetOk = 0;
 
   for (const item of results) {
     for (const run of [item.legacy, item.current]) {
@@ -266,6 +329,7 @@ function summarizeIsolation(results) {
       if (run.registryRootKey) registryRoots.push(run.registryRootKey);
       if (run.cleanupOk === true) cleanupOk += 1;
       if (run.sessionClearOk === true) sessionClearOk += 1;
+      if (run.preCaseResetOk === true) preCaseResetOk += 1;
     }
   }
 
@@ -278,7 +342,9 @@ function summarizeIsolation(results) {
     cleanupOk,
     cleanupFailed: results.length * 2 - cleanupOk,
     sessionClearOk,
-    sessionClearFailed: results.length * 2 - sessionClearOk
+    sessionClearFailed: results.length * 2 - sessionClearOk,
+    preCaseResetOk,
+    preCaseResetFailed: results.length * 2 - preCaseResetOk
   };
 }
 
@@ -286,6 +352,7 @@ function createTimingBucket() {
   return {
     runs: 0,
     cloneMs: 0,
+    resetMs: 0,
     captureMs: 0,
     captureWaitMs: 0,
     sessionClearMs: 0,
@@ -295,6 +362,7 @@ function createTimingBucket() {
     captureTimeouts: 0,
     recallTimeouts: 0,
     maxCloneMs: 0,
+    maxResetMs: 0,
     maxCaptureMs: 0,
     maxCaptureWaitMs: 0,
     maxSessionClearMs: 0,
@@ -314,6 +382,7 @@ function applyRunTimings(bucket, run) {
 
   for (const key of [
     "cloneMs",
+    "resetMs",
     "captureMs",
     "captureWaitMs",
     "sessionClearMs",
@@ -340,6 +409,7 @@ function finalizeTimingBucket(bucket) {
   return {
     ...bucket,
     avgCloneMs: Math.round(bucket.cloneMs / divisor),
+    avgResetMs: Math.round(bucket.resetMs / divisor),
     avgCaptureMs: Math.round(bucket.captureMs / divisor),
     avgCaptureWaitMs: Math.round(bucket.captureWaitMs / divisor),
     avgSessionClearMs: Math.round(bucket.sessionClearMs / divisor),
@@ -442,6 +512,7 @@ function renderMarkdown(report) {
   lines.push(`- currentCaptureObserved: \`${report.summary.captureObserved}\``);
   lines.push(`- phaseOrder: \`legacy first -> delete isolated legacy state -> current second\``);
   lines.push(`- executionEnvironment: \`${report.environment.executionEnvironment}\``);
+  lines.push(`- runnerMode: \`${report.environment.runnerMode}\``);
   lines.push(`- shardCount: \`${report.environment.shardCount}\``);
   lines.push(`- fastFailCapture: \`${report.environment.fastFailCapture === true}\``);
   if (report.environment.dockerImage) {
@@ -453,13 +524,21 @@ function renderMarkdown(report) {
   lines.push("");
   lines.push("## Method");
   lines.push("");
-  lines.push("- Each case runs a real `openclaw agent --local` capture turn, then prunes session transcripts before the recall turn.");
-  lines.push("- The benchmark does not interleave systems case-by-case. It runs all `legacy builtin` cases first in isolated temp state roots, deletes those state roots, and only then runs all `current` Unified Memory Core cases in fresh isolated temp state roots.");
-  lines.push("- The runner now prebuilds one hermetic `legacy` base state and one hermetic `current` base state per benchmark run, including fixture copy, auth profile placement, and `openclaw.json` generation.");
-  lines.push("- Those base states are pre-warmed with one low-signal answer turn so later cases start from a steadier answer path without seeding durable benchmark memory.");
-  lines.push("- Each case then clones one of those preconfigured base states instead of regenerating config and directory scaffolding from scratch.");
-  lines.push("- Cases are split into shards and run in parallel inside the same hermetic Docker container, while each case still keeps its own isolated state root.");
-  lines.push("- Each case still gets its own isolated state root so earlier cases cannot leak durable memory into later cases.");
+  if (report.environment.runnerMode === "gateway-steady") {
+    lines.push("- Each shard now boots one warmed `openclaw gateway run` process and reuses it across multiple cases instead of spawning `openclaw agent --local` for every turn.");
+    lines.push("- The benchmark still does not interleave systems case-by-case. It runs all `legacy builtin` shards first, then all `current` Unified Memory Core shards second.");
+    lines.push("- Each shard owns one isolated temp state root cloned from a warmed hermetic base state.");
+    lines.push("- Before every case, the shard state is reset back to the warmed base snapshot for `agentDir`, `workspace`, `sessions`, and `registry` so earlier cases cannot leave durable memory behind.");
+    lines.push("- Capture and recall both go through `gateway call agent`, which removes the worst `agent --local` CLI tail latency while keeping the same isolated Docker substrate.");
+  } else {
+    lines.push("- Each case runs a real `openclaw agent --local` capture turn, then prunes session transcripts before the recall turn.");
+    lines.push("- The benchmark does not interleave systems case-by-case. It runs all `legacy builtin` cases first in isolated temp state roots, deletes those state roots, and only then runs all `current` Unified Memory Core cases in fresh isolated temp state roots.");
+    lines.push("- The runner now prebuilds one hermetic `legacy` base state and one hermetic `current` base state per benchmark run, including fixture copy, auth profile placement, and `openclaw.json` generation.");
+    lines.push("- Those base states are pre-warmed with one low-signal answer turn so later cases start from a steadier answer path without seeding durable benchmark memory.");
+    lines.push("- Each case then clones one of those preconfigured base states instead of regenerating config and directory scaffolding from scratch.");
+    lines.push("- Cases are split into shards and run in parallel inside the same hermetic Docker container, while each case still keeps its own isolated state root.");
+    lines.push("- Each case still gets its own isolated state root so earlier cases cannot leak durable memory into later cases.");
+  }
   lines.push("- Ordinary-conversation Docker eval does **not** seed from host `~/.openclaw` workspaces or host memory DBs. The only mounted host inputs are the auth profiles file and model/API credentials.");
   lines.push(`- State roots are built from the repo fixture root \`${report.environment.fixtureRoot}\`, which is intentionally empty except for tracked scaffold files; no prior memory is preloaded.`);
   lines.push("- This isolates explicit long-memory behavior from short-lived session/bootstrap carry-over.");
@@ -478,6 +557,8 @@ function renderMarkdown(report) {
   lines.push(`- cleanupFailed: \`${report.summary.isolation.cleanupFailed}\``);
   lines.push(`- sessionClearOk: \`${report.summary.isolation.sessionClearOk}\``);
   lines.push(`- sessionClearFailed: \`${report.summary.isolation.sessionClearFailed}\``);
+  lines.push(`- preCaseResetOk: \`${report.summary.isolation.preCaseResetOk}\``);
+  lines.push(`- preCaseResetFailed: \`${report.summary.isolation.preCaseResetFailed}\``);
   if (report.environment.baseStateReuse === true) {
     lines.push(`- baseStateReuse: \`true\``);
     lines.push(`- legacyBaseStateKey: \`${report.environment.legacyBaseStateKey}\``);
@@ -489,17 +570,22 @@ function renderMarkdown(report) {
   lines.push("## Phase Timing");
   lines.push("");
   lines.push(`- templatePrepMs: legacy=\`${report.timing.templatePrepMs.legacy}\`, current=\`${report.timing.templatePrepMs.current}\``);
-  lines.push(`- legacy avg(ms): clone=\`${report.timing.legacy.avgCloneMs}\`, capture=\`${report.timing.legacy.avgCaptureMs}\`, wait=\`${report.timing.legacy.avgCaptureWaitMs}\`, sessionClear=\`${report.timing.legacy.avgSessionClearMs}\`, recall=\`${report.timing.legacy.avgRecallMs}\`, cleanup=\`${report.timing.legacy.avgCleanupMs}\`, total=\`${report.timing.legacy.avgTotalCaseMs}\``);
-  lines.push(`- legacy max(ms): clone=\`${report.timing.legacy.maxCloneMs}\`, capture=\`${report.timing.legacy.maxCaptureMs}\`, wait=\`${report.timing.legacy.maxCaptureWaitMs}\`, sessionClear=\`${report.timing.legacy.maxSessionClearMs}\`, recall=\`${report.timing.legacy.maxRecallMs}\`, cleanup=\`${report.timing.legacy.maxCleanupMs}\`, total=\`${report.timing.legacy.maxTotalCaseMs}\``);
+  lines.push(`- legacy avg(ms): clone=\`${report.timing.legacy.avgCloneMs}\`, reset=\`${report.timing.legacy.avgResetMs}\`, capture=\`${report.timing.legacy.avgCaptureMs}\`, wait=\`${report.timing.legacy.avgCaptureWaitMs}\`, sessionClear=\`${report.timing.legacy.avgSessionClearMs}\`, recall=\`${report.timing.legacy.avgRecallMs}\`, cleanup=\`${report.timing.legacy.avgCleanupMs}\`, total=\`${report.timing.legacy.avgTotalCaseMs}\``);
+  lines.push(`- legacy max(ms): clone=\`${report.timing.legacy.maxCloneMs}\`, reset=\`${report.timing.legacy.maxResetMs}\`, capture=\`${report.timing.legacy.maxCaptureMs}\`, wait=\`${report.timing.legacy.maxCaptureWaitMs}\`, sessionClear=\`${report.timing.legacy.maxSessionClearMs}\`, recall=\`${report.timing.legacy.maxRecallMs}\`, cleanup=\`${report.timing.legacy.maxCleanupMs}\`, total=\`${report.timing.legacy.maxTotalCaseMs}\``);
   lines.push(`- legacy timeouts: capture=\`${report.timing.legacy.captureTimeouts}\`, recall=\`${report.timing.legacy.recallTimeouts}\``);
-  lines.push(`- current avg(ms): clone=\`${report.timing.current.avgCloneMs}\`, capture=\`${report.timing.current.avgCaptureMs}\`, wait=\`${report.timing.current.avgCaptureWaitMs}\`, sessionClear=\`${report.timing.current.avgSessionClearMs}\`, recall=\`${report.timing.current.avgRecallMs}\`, cleanup=\`${report.timing.current.avgCleanupMs}\`, total=\`${report.timing.current.avgTotalCaseMs}\``);
-  lines.push(`- current max(ms): clone=\`${report.timing.current.maxCloneMs}\`, capture=\`${report.timing.current.maxCaptureMs}\`, wait=\`${report.timing.current.maxCaptureWaitMs}\`, sessionClear=\`${report.timing.current.maxSessionClearMs}\`, recall=\`${report.timing.current.maxRecallMs}\`, cleanup=\`${report.timing.current.maxCleanupMs}\`, total=\`${report.timing.current.maxTotalCaseMs}\``);
+  lines.push(`- current avg(ms): clone=\`${report.timing.current.avgCloneMs}\`, reset=\`${report.timing.current.avgResetMs}\`, capture=\`${report.timing.current.avgCaptureMs}\`, wait=\`${report.timing.current.avgCaptureWaitMs}\`, sessionClear=\`${report.timing.current.avgSessionClearMs}\`, recall=\`${report.timing.current.avgRecallMs}\`, cleanup=\`${report.timing.current.avgCleanupMs}\`, total=\`${report.timing.current.avgTotalCaseMs}\``);
+  lines.push(`- current max(ms): clone=\`${report.timing.current.maxCloneMs}\`, reset=\`${report.timing.current.maxResetMs}\`, capture=\`${report.timing.current.maxCaptureMs}\`, wait=\`${report.timing.current.maxCaptureWaitMs}\`, sessionClear=\`${report.timing.current.maxSessionClearMs}\`, recall=\`${report.timing.current.maxRecallMs}\`, cleanup=\`${report.timing.current.maxCleanupMs}\`, total=\`${report.timing.current.maxTotalCaseMs}\``);
   lines.push(`- current timeouts: capture=\`${report.timing.current.captureTimeouts}\`, recall=\`${report.timing.current.recallTimeouts}\``);
   lines.push("");
   lines.push("- Interpretation:");
-  lines.push("  - `duplicateStateRoots = 0` means every legacy/current run used a distinct temp OpenClaw state root.");
-  lines.push("  - `duplicateRegistryRoots = 0` means current-mode governed memory writes did not share registry directories across cases.");
-  lines.push("  - `cleanupFailed = 0` and `sessionClearFailed = 0` mean the runner both pruned session transcripts before recall and removed the temp state roots after each case.");
+  if (report.environment.runnerMode === "gateway-steady") {
+    lines.push("  - In `gateway-steady` mode, duplicate state roots are expected inside each shard because one warmed shard state is reused across multiple cases.");
+    lines.push("  - The hard isolation guard moves to `preCaseResetFailed = 0`: every case must start from a restored baseline for agent/workspace/session/registry state.");
+  } else {
+    lines.push("  - `duplicateStateRoots = 0` means every legacy/current run used a distinct temp OpenClaw state root.");
+    lines.push("  - `duplicateRegistryRoots = 0` means current-mode governed memory writes did not share registry directories across cases.");
+  }
+  lines.push("  - `cleanupFailed = 0` and `sessionClearFailed = 0` mean the runner both pruned session transcripts before recall and removed the temp state roots after each case or shard.");
   lines.push("  - If any of those counters drift, the benchmark should be treated as contaminated until re-run.");
   lines.push("");
   lines.push("## Language Split");
@@ -659,6 +745,137 @@ async function runCommand(bin, args, options = {}) {
   });
 }
 
+async function runGatewayCommand({ stateDir, gatewayUrl, method, params = {}, timeoutMs = 10_000, expectFinal = false }) {
+  const commandArgs = [
+    "gateway",
+    "call",
+    method,
+    "--url",
+    gatewayUrl,
+    "--token",
+    gatewayToken,
+    "--json",
+    "--timeout",
+    String(timeoutMs),
+    "--params",
+    JSON.stringify(params)
+  ];
+  if (expectFinal) {
+    commandArgs.splice(3, 0, "--expect-final");
+  }
+
+  return await runCommand("openclaw", commandArgs, {
+    env: { OPENCLAW_STATE_DIR: stateDir },
+    timeoutMs: timeoutMs + 5_000
+  });
+}
+
+async function waitForGatewayReadyFromLogs({ runtime, port, timeoutMs }) {
+  const startedAt = Date.now();
+  const readyPatterns = [
+    new RegExp(`listening on ws://127\\.0\\.0\\.1:${port}`),
+    new RegExp(`host mounted at http://127\\.0\\.0\\.1:${port}`)
+  ];
+  while (Date.now() - startedAt < timeoutMs) {
+    const combined = `${runtime.stdout()}\n${runtime.stderr()}`;
+    if (readyPatterns.some((pattern) => pattern.test(combined))) {
+      return;
+    }
+    if (runtime.child.exitCode !== null) {
+      throw new Error(`gateway exited before ready (code=${runtime.child.exitCode})`);
+    }
+    await new Promise((resolve) => setTimeout(resolve, 500));
+  }
+  throw new Error("gateway startup timeout waiting for listening log");
+}
+
+async function startGatewayForState({ stateDir, port }) {
+  const child = spawn("openclaw", [
+    "gateway",
+    "run",
+    "--allow-unconfigured",
+    "--auth",
+    "none",
+    "--bind",
+    "loopback",
+    "--port",
+    String(port),
+    "--force"
+  ], {
+    cwd: repoRoot,
+    env: { ...process.env, OPENCLAW_STATE_DIR: stateDir },
+    stdio: ["ignore", "pipe", "pipe"],
+    detached: true
+  });
+
+  let stdout = "";
+  let stderr = "";
+  child.stdout.on("data", (chunk) => {
+    stdout = `${stdout}${String(chunk)}`.slice(-32_000);
+  });
+  child.stderr.on("data", (chunk) => {
+    stderr = `${stderr}${String(chunk)}`.slice(-32_000);
+  });
+
+  const gatewayUrl = `ws://127.0.0.1:${port}`;
+  try {
+    const runtime = {
+      child,
+      gatewayUrl,
+      stdout: () => stdout,
+      stderr: () => stderr
+    };
+    await waitForGatewayReadyFromLogs({
+      runtime,
+      port,
+      timeoutMs: process.env.UMC_EVAL_EXECUTION_ENV === "docker" ? 90_000 : 30_000
+    });
+    return runtime;
+  } catch (error) {
+    try {
+      process.kill(-child.pid, "SIGKILL");
+    } catch {
+      try {
+        child.kill("SIGKILL");
+      } catch {
+        // ignore cleanup failure
+      }
+    }
+    throw new Error(`${String(error?.message || error)} | gatewayStdout=${normalizeSingleLine(stdout)} | gatewayStderr=${normalizeSingleLine(stderr)}`);
+  }
+}
+
+async function stopGatewayProcess(runtime) {
+  if (!runtime?.child) {
+    return;
+  }
+  await new Promise((resolve) => {
+    const finish = () => resolve();
+    runtime.child.once("close", finish);
+    try {
+      process.kill(-runtime.child.pid, "SIGTERM");
+    } catch {
+      try {
+        runtime.child.kill("SIGTERM");
+      } catch {
+        resolve();
+        return;
+      }
+    }
+    setTimeout(() => {
+      try {
+        process.kill(-runtime.child.pid, "SIGKILL");
+      } catch {
+        try {
+          runtime.child.kill("SIGKILL");
+        } catch {
+          // ignore cleanup failure
+        }
+      }
+    }, 2_000);
+  });
+}
+
 function buildOrdinaryConfig({
   includeUMC,
   agentId,
@@ -783,6 +1000,52 @@ async function rewriteClonedStateConfig(args, includeUMC, stateDir) {
   await writeText(path.join(stateDir, "openclaw.json"), `${JSON.stringify(config, null, 2)}\n`);
 }
 
+function buildMutableStatePaths(stateDir, args) {
+  return {
+    agentDir: path.join(stateDir, "agents", args.agentId, "agent"),
+    workspaceDir: path.join(stateDir, "workspace"),
+    sessionsDir: path.join(stateDir, "agents", args.agentId, "sessions"),
+    registryDir: path.join(stateDir, "registry")
+  };
+}
+
+async function captureMutableStateSignatures(stateDir, args, includeUMC) {
+  const paths = buildMutableStatePaths(stateDir, args);
+  return {
+    agent: await captureDirectorySignature(paths.agentDir),
+    workspace: await captureDirectorySignature(paths.workspaceDir),
+    sessions: await captureDirectorySignature(paths.sessionsDir),
+    registry: includeUMC
+      ? await captureDirectorySignature(paths.registryDir)
+      : { present: false, fileCount: 0, hash: "missing" }
+  };
+}
+
+async function replaceDirectoryFromSource(sourceDir, targetDir) {
+  await fs.rm(targetDir, { recursive: true, force: true }).catch(() => {});
+  if (!(await pathExists(sourceDir))) {
+    return;
+  }
+  await fs.mkdir(path.dirname(targetDir), { recursive: true });
+  await fs.cp(sourceDir, targetDir, {
+    recursive: true,
+    force: true
+  });
+}
+
+async function resetShardStateFromBase(baseStateDir, shardStateDir, args, includeUMC) {
+  const basePaths = buildMutableStatePaths(baseStateDir, args);
+  const shardPaths = buildMutableStatePaths(shardStateDir, args);
+  await replaceDirectoryFromSource(basePaths.agentDir, shardPaths.agentDir);
+  await replaceDirectoryFromSource(basePaths.workspaceDir, shardPaths.workspaceDir);
+  await replaceDirectoryFromSource(basePaths.sessionsDir, shardPaths.sessionsDir);
+  if (includeUMC) {
+    await replaceDirectoryFromSource(basePaths.registryDir, shardPaths.registryDir);
+  } else {
+    await fs.rm(shardPaths.registryDir, { recursive: true, force: true }).catch(() => {});
+  }
+}
+
 async function cloneEvalStateDir(baseStateDir, prefix, args, includeUMC) {
   const targetDir = path.join(os.tmpdir(), `${prefix}${randomUUID()}`);
   await fs.cp(baseStateDir, targetDir, {
@@ -805,12 +1068,14 @@ async function ensureCachedEvalBaseState(args, includeUMC) {
 
   try {
     await fs.access(metaPath);
+    const baselineSignatures = await captureMutableStateSignatures(stateDir, args, includeUMC);
     return {
       stateDir,
       registryDir: path.join(stateDir, "registry"),
       baseStateRootKey: path.basename(stateDir),
       baseRegistryRootKey: path.relative(os.tmpdir(), path.join(stateDir, "registry")),
-      cacheHit: true
+      cacheHit: true,
+      baselineSignatures
     };
   } catch {
     // build below
@@ -855,7 +1120,8 @@ async function ensureCachedEvalBaseState(args, includeUMC) {
     registryDir: path.join(stateDir, "registry"),
     baseStateRootKey: path.basename(stateDir),
     baseRegistryRootKey: path.relative(os.tmpdir(), path.join(stateDir, "registry")),
-    cacheHit: false
+    cacheHit: false,
+    baselineSignatures: await captureMutableStateSignatures(stateDir, args, includeUMC)
   };
 }
 
@@ -1107,6 +1373,50 @@ async function runAgentTurn({ stateDir, agentId, sessionId, message, timeoutMs }
   };
 }
 
+async function runGatewayAgentTurn({ stateDir, gatewayUrl, agentId, sessionId, message, timeoutMs }) {
+  const result = await runGatewayCommand({
+    stateDir,
+    gatewayUrl,
+    method: "agent",
+    expectFinal: true,
+    timeoutMs,
+    params: {
+      agentId,
+      sessionId,
+      message,
+      idempotencyKey: randomUUID()
+    }
+  });
+
+  if (!result.ok) {
+    return {
+      ok: false,
+      error: result.error,
+      stdout: result.stdout,
+      stderr: result.stderr
+    };
+  }
+
+  const text = pickJsonText(result.stdout, result.stderr);
+  try {
+    const payload = extractJsonPayload(text);
+    return {
+      ok: true,
+      payload,
+      answer: extractAgentText(payload),
+      stdout: result.stdout,
+      stderr: result.stderr
+    };
+  } catch {
+    return {
+      ok: false,
+      error: "json_parse_failed",
+      stdout: result.stdout,
+      stderr: result.stderr
+    };
+  }
+}
+
 async function runCaseForMode(caseDef, args, includeUMC, baseState) {
   const caseStartedAt = Date.now();
   const cloneStartedAt = Date.now();
@@ -1174,6 +1484,7 @@ async function runCaseForMode(caseDef, args, includeUMC, baseState) {
       ...evaluation,
       captureObserved,
       sessionClearOk,
+      preCaseResetOk: true,
       captureAnswer: capture.answer || "",
       captureError: capture.error || "",
       fastFailedAfterCapture: captureFailed && args.fastFailCapture,
@@ -1208,6 +1519,92 @@ async function runCaseForMode(caseDef, args, includeUMC, baseState) {
   }
 }
 
+async function runCaseForModeGateway(caseDef, args, includeUMC, baseState, shardRuntime) {
+  const caseStartedAt = Date.now();
+  const resetStartedAt = Date.now();
+  await resetShardStateFromBase(baseState.stateDir, shardRuntime.stateDir, args, includeUMC);
+  const baselineChecks = await captureMutableStateSignatures(shardRuntime.stateDir, args, includeUMC);
+  const resetMs = Date.now() - resetStartedAt;
+  const preCaseResetOk = signaturesEqual(baselineChecks.agent, baseState.baselineSignatures.agent)
+    && signaturesEqual(baselineChecks.workspace, baseState.baselineSignatures.workspace)
+    && signaturesEqual(baselineChecks.sessions, baseState.baselineSignatures.sessions)
+    && signaturesEqual(baselineChecks.registry, baseState.baselineSignatures.registry);
+
+  const recordsSizeBefore = includeUMC
+    ? await fileSizeOrZero(path.join(shardRuntime.registryDir, "records.jsonl"))
+    : 0;
+  const captureStartedAt = Date.now();
+  const capture = await runGatewayAgentTurn({
+    stateDir: shardRuntime.stateDir,
+    gatewayUrl: shardRuntime.gatewayUrl,
+    agentId: args.agentId,
+    sessionId: `${caseDef.id}-capture`,
+    message: caseDef.captureMessage,
+    timeoutMs: args.timeoutMs
+  });
+  const captureMs = Date.now() - captureStartedAt;
+  const captureFailed = capture.ok !== true;
+  let captureObserved = false;
+  let captureWaitMs = 0;
+  if (!captureFailed) {
+    const captureWaitStartedAt = Date.now();
+    captureObserved = includeUMC && caseDef.category !== "one_off_instruction"
+      ? await waitForRegistryWrite(shardRuntime.registryDir, recordsSizeBefore, args.capturePollMs)
+      : false;
+    captureWaitMs = Date.now() - captureWaitStartedAt;
+  }
+
+  const sessionClearStartedAt = Date.now();
+  await clearSessionArtifacts(shardRuntime.stateDir, args.agentId);
+  const sessionClearMs = Date.now() - sessionClearStartedAt;
+  const sessionClearOk = await pathMissing(path.join(shardRuntime.stateDir, "agents", args.agentId, "sessions", `${caseDef.id}-capture.jsonl`));
+
+  let recall = {
+    ok: false,
+    error: "skipped_due_to_capture_failure",
+    answer: ""
+  };
+  let recallMs = 0;
+  if (!(captureFailed && args.fastFailCapture)) {
+    const recallStartedAt = Date.now();
+    recall = await runGatewayAgentTurn({
+      stateDir: shardRuntime.stateDir,
+      gatewayUrl: shardRuntime.gatewayUrl,
+      agentId: args.agentId,
+      sessionId: `${caseDef.id}-recall`,
+      message: caseDef.recallMessage,
+      timeoutMs: args.timeoutMs
+    });
+    recallMs = Date.now() - recallStartedAt;
+  }
+
+  const evaluation = evaluateCase(caseDef, recall);
+  return {
+    ...evaluation,
+    captureObserved,
+    sessionClearOk,
+    preCaseResetOk,
+    captureAnswer: capture.answer || "",
+    captureError: capture.error || "",
+    fastFailedAfterCapture: captureFailed && args.fastFailCapture,
+    answer: recall.answer || "",
+    error: recall.error || "",
+    stateRootKey: shardRuntime.stateRootKey,
+    registryRootKey: includeUMC ? shardRuntime.registryRootKey : "",
+    cleanupOk: false,
+    timings: {
+      cloneMs: 0,
+      resetMs,
+      captureMs,
+      captureWaitMs,
+      sessionClearMs,
+      recallMs,
+      cleanupMs: 0,
+      totalCaseMs: Date.now() - caseStartedAt
+    }
+  };
+}
+
 async function main() {
   const args = parseArgs(process.argv.slice(2));
   const importedCases = await importCases(args.casesPath);
@@ -1230,6 +1627,7 @@ async function main() {
   );
   const shards = shardCases(selectedCases, effectiveShardCount);
   const resultMap = new Map(results.map((item) => [item.id, item]));
+  const runnerMode = args.runnerMode;
 
   async function runShardCases(items, includeUMC, baseState) {
     const modeName = includeUMC ? "current" : "legacy";
@@ -1252,17 +1650,81 @@ async function main() {
     }
   }
 
+  async function runGatewayShardCases(items, includeUMC, baseState, shardIndex) {
+    const modeName = includeUMC ? "current" : "legacy";
+    const stateDir = await cloneEvalStateDir(
+      baseState.stateDir,
+      includeUMC ? "umc-ordinary-current-shard-" : "umc-ordinary-legacy-shard-",
+      args,
+      includeUMC
+    );
+    const shardRuntime = {
+      stateDir,
+      registryDir: path.join(stateDir, "registry"),
+      stateRootKey: path.basename(stateDir),
+      registryRootKey: path.relative(os.tmpdir(), path.join(stateDir, "registry"))
+    };
+    const port = args.gatewayPortBase + (includeUMC ? 100 : 0) + shardIndex;
+    let gatewayRuntime = null;
+    let cleanupOk = false;
+  try {
+    if (process.env.UMC_EVAL_EXECUTION_ENV === "docker" && shardIndex > 0) {
+      await new Promise((resolve) => setTimeout(resolve, shardIndex * 8_000));
+    }
+    gatewayRuntime = await startGatewayForState({
+      stateDir,
+      port
+      });
+      shardRuntime.gatewayUrl = gatewayRuntime.gatewayUrl;
+      for (let index = 0; index < items.length; index += 1) {
+        const caseDef = items[index];
+        process.stderr.write(`[ordinary-ab][${modeName}][gateway] shard-case ${index + 1}/${items.length} start ${caseDef.id}\n`);
+        // eslint-disable-next-line no-await-in-loop
+        const run = await runCaseForModeGateway(caseDef, args, includeUMC, baseState, shardRuntime);
+        const target = resultMap.get(caseDef.id);
+        target[modeName] = run;
+        if (includeUMC) {
+          process.stderr.write(
+            `[ordinary-ab][${modeName}][gateway] shard-case ${index + 1}/${items.length} done ${caseDef.id} outcome=${classifyOutcome(target)} current=${run.passed === true} legacy=${target.legacy?.passed === true}\n`
+          );
+        } else {
+          process.stderr.write(
+            `[ordinary-ab][${modeName}][gateway] shard-case ${index + 1}/${items.length} done ${caseDef.id} passed=${run.passed === true}\n`
+          );
+        }
+      }
+      cleanupOk = true;
+    } finally {
+      await stopGatewayProcess(gatewayRuntime);
+      if (!args.keepState) {
+        await removeStateDir(stateDir);
+      }
+      cleanupOk = cleanupOk && (args.keepState ? true : await pathMissing(stateDir));
+      for (const caseDef of items) {
+        const target = resultMap.get(caseDef.id)?.[modeName];
+        if (target) {
+          target.cleanupOk = cleanupOk;
+          target.timings.cleanupMs = 0;
+        }
+      }
+    }
+  }
+
+  const shardRunner = runnerMode === "gateway-steady"
+    ? runGatewayShardCases
+    : runShardCases;
+
   await Promise.all(
     shards.map((items, index) => {
-      process.stderr.write(`[ordinary-ab][legacy] shard ${index + 1}/${shards.length} cases=${items.length}\n`);
-      return runShardCases(items, false, legacyBaseState);
+      process.stderr.write(`[ordinary-ab][legacy] shard ${index + 1}/${shards.length} cases=${items.length} mode=${runnerMode}\n`);
+      return shardRunner(items, false, legacyBaseState, index);
     })
   );
 
   await Promise.all(
     shards.map((items, index) => {
-      process.stderr.write(`[ordinary-ab][current] shard ${index + 1}/${shards.length} cases=${items.length}\n`);
-      return runShardCases(items, true, currentBaseState);
+      process.stderr.write(`[ordinary-ab][current] shard ${index + 1}/${shards.length} cases=${items.length} mode=${runnerMode}\n`);
+      return shardRunner(items, true, currentBaseState, index);
     })
   );
 
@@ -1273,6 +1735,7 @@ async function main() {
     sourceAgentId: args.sourceAgentId,
     environment: {
       executionEnvironment: normalizeString(process.env.UMC_EVAL_EXECUTION_ENV, "host"),
+      runnerMode,
       dockerImage: normalizeString(process.env.UMC_EVAL_DOCKER_IMAGE),
       fixtureRoot: args.fixtureRoot,
       pluginPath: args.pluginPath,

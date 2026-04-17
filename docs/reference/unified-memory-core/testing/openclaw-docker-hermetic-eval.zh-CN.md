@@ -191,14 +191,19 @@ npm run eval:openclaw:docker -- \
 
 当前 ordinary-conversation Docker runner 用这几条硬约束来判定 contamination：
 
-- `duplicateStateRoots = 0`
-  说明每个 legacy/current run 都用了新的 temp OpenClaw state root
-- `duplicateRegistryRoots = 0`
-  说明 current-mode 的 governed registry 没有跨 case 复用
+- `preCaseResetFailed = 0`
+  说明每个 case 开始前，复用 shard state 已经被重置回 warmed baseline
 - `cleanupFailed = 0`
-  说明每个 case 结束后 temp state root 都被删掉了
+  说明每个 case 或 shard 结束后 temp state root 都被删掉了
 - `sessionClearFailed = 0`
   说明 recall 前 session transcript 已经清干净
+
+在 `gateway-steady` 模式下：
+
+- `duplicateStateRoots > 0`
+- `duplicateRegistryRoots > 0`
+
+本身是预期现象，因为同一 shard 会复用一个 warmed state root；真正的硬门禁转移到了 `preCaseResetFailed = 0`。
 
 另外需要注意一个容易误判的点：
 
@@ -217,26 +222,25 @@ npm run eval:openclaw:docker -- \
 
 最新 hermetic Docker rerun 的 focused `40` case 结果是：
 
-- current: `0 / 40`
-- legacy: `0 / 40`
-- `UMC-only = 0`
-- `both-fail = 40`
+- current: `32 / 40`
+- legacy: `17 / 40`
+- `UMC-only = 17`
+- `legacy-only = 2`
+- `both-fail = 6`
+- `preCaseResetFailed = 0`
 
-这个结果不能简单读成“Memory Core 没提升”。
+这个结果现在已经可以直接当成可信的能力排序面，而不再只是 infra/perf watch。
 更准确的解释是：
 
 - hermetic 隔离层本身是干净的
-- 但在 Docker 下、当前这条 `30s` 快路径里，answer-level capture turn 本身仍然跑不完
-- legacy `40 / 40` capture timeout
-- current `40 / 40` capture timeout
-
-所以这条 ordinary-conversation Docker 快路径，现在承担的是 `infra/perf watch`，不是最终的能力排序面。
+- `gateway-steady` runner 已经把之前 `agent --local` 的冷启动 / exit tail latency 扭曲压下去
+- 剩余问题收敛成更小、更真实的一组 case miss，而不是整条路径都被 timeout 吞掉
 
 更直白地说：
 
-- 它现在已经足够快，也足够干净
-- 但它测到的主要是“在严格预算下，这条 answer path 还跑不跑得完”
-- 不能直接拿来替代 host live 或更宽预算下的能力结论
+- 它现在既足够干净，也足够能产出能力差异
+- 它应该继续作为默认 Docker hermetic A/B 面
+- host live 结果现在更适合被当成 optimistic upper bound，而不是唯一证据
 
 ## 为什么仍然值得保留这条快路径
 
@@ -249,15 +253,15 @@ npm run eval:openclaw:docker -- \
 
 当前速度面已经可以这样理解：
 
-- 旧路径：虽然逐题逻辑简单，但 wall-clock 非常差
-- 新路径：通过模板缓存、warmup、fast-fail、4-shard 并行，把整轮 `40` case 压到约 `10` 分钟
+- 旧的 `agent --local` 快路径：整轮更短，但能力面几乎全被 timeout 吞掉
+- 新的 `gateway-steady` 路径：整轮约 `22.5` 分钟，但已经能给出可信 A/B 结果
 
-代价是：
+代价是 wall-clock 变长，收益是：
 
-- 这条快路径现在更适合作为 infra / perf / contamination gate
-- 不再适合作为 ordinary-conversation answer-level 能力的最终定量结论
+- ordinary-conversation Docker A/B 终于能回到“能力结论面”
+- 这条路径仍然保留了严格 reset / cleanup / session-clear 检查
 
-如果后面要继续把 Docker ordinary-conversation A/B 收回“能力结论面”，正确方向是：
+如果后面要继续优化 Docker ordinary-conversation A/B，正确方向是：
 
 - 引入真正的 steady-state 长驻运行形态
 - 避免每题都重新冷起 answer path

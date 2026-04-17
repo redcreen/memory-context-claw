@@ -162,7 +162,7 @@ Interpretation:
 
 - report: [openclaw-memory-improvement-ab-2026-04-15.md](openclaw-memory-improvement-ab-2026-04-15.md)
 - compact summary: [openclaw-memory-improvement-summary-2026-04-15.md](openclaw-memory-improvement-summary-2026-04-15.md)
-- focused ordinary-conversation write-time report: [openclaw-ordinary-conversation-memory-intent-ab-2026-04-16.md](openclaw-ordinary-conversation-memory-intent-ab-2026-04-16.md)
+- focused ordinary-conversation write-time report: [openclaw-ordinary-conversation-memory-intent-ab-2026-04-17.md](openclaw-ordinary-conversation-memory-intent-ab-2026-04-17.md)
 - focused ordinary-conversation Docker rerun summary: [openclaw-ordinary-conversation-memory-intent-docker-rerun-2026-04-17.md](openclaw-ordinary-conversation-memory-intent-docker-rerun-2026-04-17.md)
 - Docker fast-harness speedup summary: [openclaw-docker-steady-state-speedup-2026-04-17.md](openclaw-docker-steady-state-speedup-2026-04-17.md)
 - focused history cleanup rerun: [openclaw-memory-improvement-history-cleanup-2026-04-17.md](openclaw-memory-improvement-history-cleanup-2026-04-17.md)
@@ -264,27 +264,28 @@ Category split:
 Hermetic Docker rerun topline:
 
 - compared live cases: `40`
-- `unified-memory-core` current path passed: `0`
-- legacy builtin path passed: `0`
-- both passed: `0`
-- Memory Core only: `0`
-- legacy only: `0`
-- both failed: `40`
+- `unified-memory-core` current path passed: `32`
+- legacy builtin path passed: `17`
+- both passed: `15`
+- Memory Core only: `17`
+- legacy only: `2`
+- both failed: `6`
+- `preCaseResetFailed = 0`
 
 Hermetic Docker interpretation:
 
-- the Docker rerun does not seed host `~/.openclaw` state, uses one fresh temp state root per case, uses one unique temp registry root per current-mode case, prunes session transcripts before recall, and removes temp state roots after each case
-- OpenClaw still generates bootstrap workspace files inside each fresh temp state, but those are deterministic runtime bootstrap, not host-memory contamination
-- under the explicit Docker `30s` fast-path budget, legacy timed out on capture for `40 / 40` cases and current also timed out on capture for `40 / 40` cases
-- so the hermetic rerun proves the isolation root is now trustworthy, but it also shows that answer-level latency has become the dominant limiter on this surface
+- the Docker rerun does not seed host `~/.openclaw` state, uses warmed shard-local hermetic states, resets every case back to its baseline snapshot before capture, prunes session transcripts before recall, and cleans up successfully
+- OpenClaw still generates bootstrap workspace files inside each hermetic state, but those are deterministic runtime bootstrap, not host-memory contamination
+- under the current `gateway-steady` path, legacy capture timed out on `5 / 40` cases and current on `3 / 40`, while recall timeouts dropped to `0`
+- so the hermetic rerun now proves both things at once: the isolation root is trustworthy, and the ordinary-conversation write-time capability surface is no longer swallowed by blanket timeout failure
 
 Interpretation:
 
 - the earlier `100`-case suite said “existing-memory consumption uplift is modest”
 - the host-live focused suite says “ordinary-conversation realtime write behavior is already meaningfully better with Unified Memory Core than with the current default legacy path”
 - the write-time advantage the user expected was real, but the earlier `100`-case fixture-consumption A/B was the wrong tool to reveal it
-- the hermetic Docker rerun shows the next bottleneck clearly: not contamination, but bounded answer-level latency under a reproducible isolated budget
-- taken together, the two runs mean the host delta should no longer be treated as a fully clean attribution claim; it should now be treated as an optimistic live upper bound that must be read together with the stricter Docker result
+- the hermetic Docker rerun now confirms that the host-side ordinary-conversation delta survives under a clean reproducible substrate as well
+- taken together, the two runs now form a cleaner pair: host live acts as the optimistic upper bound, while Docker hermetic steady-state acts as the stricter baseline
 
 The clearest current UMC-only wins in this focused suite are:
 

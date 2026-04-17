@@ -20,7 +20,7 @@ If you want the shortest practical answer before reading the whole repo:
 - Stage 9 guarded opt-in A/B: baseline `5 / 5`, shadow `5 / 5`, guarded `5 / 5`, guarded applied `2 / 5`, average guarded prompt reduction ratio `0.0424`
 - focused ordinary-conversation write-time A/B:
   - host live: `current=38`, `legacy=21`, `UMC-only=18`
-  - Docker hermetic fast path (`30s` turn budget): `current=0`, `legacy=0`, `UMC-only=0`, `both-fail=40`
+  - Docker hermetic steady-state: `current=32`, `legacy=17`, `UMC-only=17`, `legacy-only=2`, `both-fail=6`, `preCaseResetFailed=0`
 
 Read these first:
 
@@ -29,10 +29,10 @@ Read these first:
 - [Context Slimming And Budgeted Assembly](docs/reference/unified-memory-core/architecture/context-slimming-and-budgeted-assembly.md)
 - [Dialogue Working-Set Pruning](docs/reference/unified-memory-core/architecture/dialogue-working-set-pruning.md)
 - [Stage 7 / Stage 9 Summary](reports/generated/dialogue-working-set-stage7-stage9-2026-04-17.md)
-- [Focused Ordinary-Conversation Realtime Write A/B](reports/generated/openclaw-ordinary-conversation-memory-intent-ab-2026-04-16.md)
+- [Focused Ordinary-Conversation Realtime Write A/B](reports/generated/openclaw-ordinary-conversation-memory-intent-ab-2026-04-17.md)
 - [Docker Hermetic Ordinary-Conversation Rerun](reports/generated/openclaw-ordinary-conversation-memory-intent-docker-rerun-2026-04-17.md)
 
-The honest takeaway is now split in two: OpenClaw builtin memory is already decent on many “existing memory consumption” prompts, so the older `100`-case A/B only shows a modest gap. On the ordinary-conversation write surface, the host-live run still shows a much clearer Unified Memory Core advantage, but the latest hermetic Docker fast path shows that this surface is now dominated by answer-level capture timeout pressure under a strict `30s` budget. In other words, UMC is not just about “remembering better” anymore; it also has to become faster and more reproducible under bounded evaluation budgets.
+The honest takeaway is now cleaner: OpenClaw builtin memory is already decent on many “existing memory consumption” prompts, so the older `100`-case A/B only shows a modest gap. On the ordinary-conversation write surface, both the host-live run and the hermetic Docker steady-state rerun now show a material Unified Memory Core advantage. The difference is attribution quality: the host run acts as the more optimistic live upper bound, while the Docker rerun is the stricter reproducible baseline. In other words, UMC is no longer only “supposed” to remember better on this surface; it now does so under a clean hermetic A/B as well.
 
 ## Three User-Facing Promises
 
@@ -41,7 +41,7 @@ From a user perspective, this product should collapse to three promises:
 1. `Light and fast`
    - simple to install, low-friction to adopt, small in footprint, and fast enough on the main path
    - already landed: fact-first assembly, runtime working-set shadow instrumentation, release-preflight, and reproducible Docker hermetic eval
-   - biggest current gap: per-turn context loading optimization is not yet a formal mainline and formal gate; in parallel, ordinary-conversation realtime write is still too timeout-heavy in hermetic runs. The daily-use target is also now explicit: normal sessions should stay usable through lighter per-turn context management instead of depending on compat / compact to survive, while compat / compact remains a nightly or background safety net
+   - biggest current gap: per-turn context loading optimization is not yet a formal mainline and formal gate; ordinary-conversation hermetic A/B has already been recovered into a trustworthy steady-state surface, so the next gap is shrinking the remaining harder misses and keeping wall-clock down. The daily-use target is also now explicit: normal sessions should stay usable through lighter per-turn context management instead of depending on compat / compact to survive, while compat / compact remains a nightly or background safety net
 2. `Smart`
    - remember what matters, avoid writing noise, send only the right context, and stay conservative when uncertain
    - already landed: realtime `memory_intent` ingestion, nightly self-learning, durable-source slimming direction, and the working-set pruning shadow path

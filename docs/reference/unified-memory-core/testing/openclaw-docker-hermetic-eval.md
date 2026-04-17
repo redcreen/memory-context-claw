@@ -192,10 +192,16 @@ This is the foundation. If this part is unstable, the benchmark conclusions are 
 
 The ordinary-conversation Docker runner treats these as hard contamination checks:
 
-- `duplicateStateRoots = 0`
-- `duplicateRegistryRoots = 0`
+- `preCaseResetFailed = 0`
 - `cleanupFailed = 0`
 - `sessionClearFailed = 0`
+
+In `gateway-steady` mode:
+
+- `duplicateStateRoots > 0`
+- `duplicateRegistryRoots > 0`
+
+are expected, because one warmed shard state is intentionally reused across multiple cases. The real hard gate moves to `preCaseResetFailed = 0`.
 
 One subtlety matters:
 
@@ -214,27 +220,25 @@ The former is expected. The latter must stay at zero.
 
 The latest hermetic Docker rerun for the focused `40`-case suite is:
 
-- current: `0 / 40`
-- legacy: `0 / 40`
-- `UMC-only = 0`
-- `both-fail = 40`
+- current: `32 / 40`
+- legacy: `17 / 40`
+- `UMC-only = 17`
+- `legacy-only = 2`
+- `both-fail = 6`
+- `preCaseResetFailed = 0`
 
-This should not be read as “Memory Core did not improve anything”.
+This is now a trustworthy capability surface rather than only an infra/perf watch.
 The more accurate reading is:
 
-- the hermetic isolation layer is now clean
-- under the current `30s` fast path, the answer-level capture turn itself still does not finish
-- legacy times out on capture for `40 / 40`
-- current also times out on capture for `40 / 40`
-
-So this ordinary-conversation Docker fast path is currently an `infra/perf watch`, not the final capability ranking surface.
+- the hermetic isolation layer is clean
+- the `gateway-steady` runner suppresses the earlier `agent --local` startup and exit distortion
+- the remaining misses are now a smaller honest set of harder cases, not a benchmark-wide timeout wall
 
 Put more plainly:
 
-- it is now fast enough
-- it is now clean enough
-- but at this strict budget it mainly measures whether the answer path can finish at all
-- it should not replace host-live or wider-budget capability conclusions
+- it is clean enough
+- it is representative enough
+- and it should now remain the default Docker hermetic A/B surface
 
 ## Why This Fast Path Still Matters
 
@@ -247,10 +251,12 @@ It already answers the questions that had to be settled first:
 
 The current trade-off is:
 
-- this path is now suitable as an infra / perf / contamination gate
-- it is not yet suitable as the final answer-level capability benchmark for ordinary-conversation memory writing
+- the old `agent --local` fast path remained shorter in wall-clock
+- the new `gateway-steady` path takes roughly `22.5` minutes for the full `40`-case suite
+- but the new path now yields a meaningful answer-quality comparison instead of a fake timeout wall
 
-If we want to turn Docker ordinary-conversation A/B back into a capability surface, the next step is a truer steady-state runner that avoids repeated cold answer-path startup while still preserving zero contamination between cases.
+So the next optimization target is no longer “make Docker A/B valid at all”.
+It is “keep this clean capability surface while shrinking the residual `6` shared-fail and `2` legacy-only cases, and continue pushing wall-clock down without reintroducing contamination risk”.
 
 ## Current Closure
 

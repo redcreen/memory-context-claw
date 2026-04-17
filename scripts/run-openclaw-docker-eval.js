@@ -242,11 +242,11 @@ function applyScenarioArgs(env, scenario) {
   for (let index = 0; index < args.length; index += 2) {
     const flag = args[index];
     const value = args[index + 1];
-    if (flag === "--shard-size") env.UMC_EVAL_SHARD_SIZE = String(value);
-    else if (flag === "--shard-count") env.UMC_EVAL_SHARD_COUNT = String(value);
-    else if (flag === "--agent-timeout-ms") env.UMC_EVAL_AGENT_TIMEOUT_MS = String(value);
-    else if (flag === "--max-cases") env.UMC_EVAL_MAX_CASES = String(value);
-    else if (flag === "--only") env.UMC_EVAL_ONLY = String(value);
+    if (flag === "--shard-size" && !normalizeString(env.UMC_EVAL_SHARD_SIZE)) env.UMC_EVAL_SHARD_SIZE = String(value);
+    else if (flag === "--shard-count" && !normalizeString(env.UMC_EVAL_SHARD_COUNT)) env.UMC_EVAL_SHARD_COUNT = String(value);
+    else if (flag === "--agent-timeout-ms" && !normalizeString(env.UMC_EVAL_AGENT_TIMEOUT_MS)) env.UMC_EVAL_AGENT_TIMEOUT_MS = String(value);
+    else if (flag === "--max-cases" && !normalizeString(env.UMC_EVAL_MAX_CASES)) env.UMC_EVAL_MAX_CASES = String(value);
+    else if (flag === "--only" && !normalizeString(env.UMC_EVAL_ONLY)) env.UMC_EVAL_ONLY = String(value);
   }
   return env;
 }

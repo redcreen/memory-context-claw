@@ -67,7 +67,7 @@ We also added a second live A/B that is much closer to the user intuition behind
 
 Focused report:
 
-- [openclaw-ordinary-conversation-memory-intent-ab-2026-04-16.md](../reports/generated/openclaw-ordinary-conversation-memory-intent-ab-2026-04-16.md)
+- [openclaw-ordinary-conversation-memory-intent-ab-2026-04-17.md](../reports/generated/openclaw-ordinary-conversation-memory-intent-ab-2026-04-17.md)
 - [openclaw-ordinary-conversation-memory-intent-docker-rerun-2026-04-17.md](../reports/generated/openclaw-ordinary-conversation-memory-intent-docker-rerun-2026-04-17.md)
 
 This surface now has two readings:
@@ -81,20 +81,21 @@ Host-live rerun:
 - legacy only: `1`
 - both fail: `1`
 
-Hermetic Docker fast path rerun:
+Hermetic Docker steady-state rerun:
 
-- current path: `0 / 40`
-- legacy default path: `0 / 40`
-- both pass: `0`
-- Memory Core only: `0`
-- legacy only: `0`
-- both fail: `40`
+- current path: `32 / 40`
+- legacy default path: `17 / 40`
+- both pass: `15`
+- Memory Core only: `17`
+- legacy only: `2`
+- both fail: `6`
+- `preCaseResetFailed = 0`
 
 The interpretation is now stricter:
 
 - the older `100`-case A/B still says “existing-memory consumption uplift is modest”
 - the host-live focused `40`-case suite says “ordinary-conversation realtime write behavior is materially better with Unified Memory Core”
-- the hermetic Docker rerun says “the isolation root is now trustworthy, but answer-level capture timeout pressure dominates under a `30s` fast-path budget”
+- the hermetic Docker steady-state rerun now says “the isolation root is trustworthy, and the Memory Core advantage survives under clean Docker A/B as well”
 
 ## What This Round Improved
 

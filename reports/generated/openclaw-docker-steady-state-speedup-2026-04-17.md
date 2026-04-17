@@ -6,11 +6,9 @@
 
 ## Why This Report Exists
 
-This report does not try to prove Memory Core is smarter.
+This report now answers a slightly different question:
 
-It answers a narrower question first:
-
-- is the Docker A/B substrate now fast enough and clean enough to be worth keeping as the default eval path?
+- did the move from the old Docker fast path to the new `gateway-steady` runner actually recover a usable capability surface without losing isolation?
 
 ## Before vs After
 
@@ -24,13 +22,14 @@ The new path changes the substrate itself:
 
 - one cached base state per mode
 - one warmup turn before freezing that base state into the template cache
-- one cloned temp state per case instead of regenerating config + fixture scaffolding
-- fast-fail after capture timeout
+- one warmed shard state reused across multiple cases
+- per-case reset back to a baseline snapshot instead of cold rebuild
+- gateway call execution instead of repeated `agent --local` cold starts
 - `4` shards by default so the full suite runs in parallel
 
 ## Targeted Timing Evidence
 
-The targeted slow-case rerun still shows the core answer-path problem clearly:
+The older targeted slow-case rerun showed the core answer-path problem clearly:
 
 - comparedCases: `3`
 - bothFail: `3`
@@ -50,68 +49,70 @@ The targeted slow-case rerun still shows the core answer-path problem clearly:
 
 Interpretation:
 
-- the old wasted recall path is gone
-- the main bottleneck is still the capture turn itself
-- this means the fast substrate is no longer dominated by config generation
+- the old wasted recall path was gone
+- but the benchmark was still trapped behind the `agent --local` turn path
+- that is what justified the move to `gateway-steady`
 
-## Full 40-Case Fast-Path Result
+## Full 40-Case Gateway-Steady Result
 
-With cached templates, warmup, fast-fail, and `4` shards:
+With cached templates, warmup, per-case baseline reset, `gateway call agent`, and `4` shards:
 
 - comparedCases: `40`
-- totalWallClockMs: `607825`
-- total wall-clock: `~10.1 min`
+- totalWallClockMs: `1347259`
+- total wall-clock: `~22.5 min`
 - templateCacheHits:
   - legacy: `true`
   - current: `true`
 - templatePrepMs:
-  - legacy: `5ms`
-  - current: `1ms`
+  - legacy: `47ms`
+  - current: `34ms`
 
 Isolation checks remain clean:
 
 - totalRuns: `80`
-- duplicateStateRoots: `0`
-- duplicateRegistryRoots: `0`
+- preCaseResetFailed: `0`
 - cleanupFailed: `0`
 - sessionClearFailed: `0`
 
-Fast-path answer results:
+Gateway-steady answer results:
 
-- legacy capture timeouts: `40 / 40`
-- current capture timeouts: `40 / 40`
-- legacyPassed: `0 / 40`
-- currentPassed: `0 / 40`
+- legacy capture timeouts: `5 / 40`
+- current capture timeouts: `3 / 40`
+- legacyPassed: `17 / 40`
+- currentPassed: `32 / 40`
+- `UMC-only = 17`
+- `legacy-only = 2`
+- `both-fail = 6`
 
 ## What Improved
 
 What improved materially:
 
-- the benchmark no longer wastes most of its time rebuilding config scaffolding
-- the benchmark no longer wastes recall time after capture has already failed
-- the full `40`-case suite now completes in a bounded wall-clock window
+- the benchmark no longer collapses into a fake `0 / 40` timeout wall
+- the Docker path now produces a real ordinary-conversation A/B capability reading
+- the full `40`-case suite still completes in a bounded wall-clock window
 - isolation remains strict, so cross-case contamination is still ruled out
 
 ## What Did Not Improve
 
 What did **not** improve yet:
 
-- Docker answer-level capture itself is still too slow under a strict `30s` budget
-- this fast path is therefore not yet a fair capability surface for ordinary-conversation answer quality
+- wall-clock is still higher than the old infra-only fast path
+- the residual `6` shared-fail and `2` legacy-only cases still need targeted cleanup
 
 In other words:
 
-- the Docker substrate is now fast enough to serve as the default hermetic infra gate
-- but it is not yet the final capability benchmark for ordinary-conversation answer quality
+- the Docker substrate is still fast enough and clean enough to remain the default hermetic base
+- and it is now also a fair ordinary-conversation capability surface
 
 ## Current Decision
 
-Keep this fast Docker path as the default hermetic eval baseline for:
+Keep this `gateway-steady` Docker path as the default hermetic eval baseline for:
 
 - contamination checks
 - infra/perf regressions
 - reproducibility
+- ordinary-conversation capability A/B
 
-Do **not** use this exact `30s` fast path alone as the final answer-level capability conclusion.
-
-For that, the next step is a truer steady-state runner that avoids repeated cold answer-path startup while preserving zero contamination between cases.
+The next step is no longer “make Docker A/B valid at all”.
+The next step is “use this clean base to shrink the remaining harder failures and then continue reducing wall-clock”.

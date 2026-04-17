@@ -34,8 +34,8 @@ Related documents:
 The execution plan should stay anchored to three user-facing promises:
 
 1. `Light and fast`
-   - already landed: fact-first assembly, Stage 6 runtime shadow instrumentation, release-preflight, and Docker hermetic eval
-   - next work: first make context loading optimization a formal mainline and formal gate, then close ordinary-conversation realtime-write latency, and only after that shorten install / bootstrap / verify
+   - already landed: fact-first assembly, Stage 6 runtime shadow instrumentation, release-preflight, Docker hermetic eval, and ordinary-conversation Docker steady-state A/B
+   - next work: first make context loading optimization a formal mainline and formal gate; keep ordinary-conversation hermetic A/B as the default Docker baseline; only after that shorten install / bootstrap / verify
 2. `Smart`
    - already landed: realtime `memory_intent` ingestion plus nightly governed learning plus the working-set shadow path
    - next work: once the context-optimization scorecard is stable, move the shadow-first context-decision path toward a bounded guarded narrow gain
@@ -64,13 +64,11 @@ The current priority order should now follow the three promises:
 
 1. `light and fast / context loading optimization`
    - make per-turn context thickness, working-set reduction, budgeted assembly, and answer-level latency the mainline
-2. `light and fast / realtime-write latency`
-   - then reduce timeout / latency pressure on the hermetic ordinary-conversation write path
-3. `light and fast / install`
+2. `light and fast / install`
    - only after that, shorten install / bootstrap / verify
-4. `smart`
+3. `smart`
    - once the bounded decision contract is clear, move shadow-first evidence into a very narrow guarded opt-in path
-5. `reassuring`
+4. `reassuring`
    - strengthen product evidence beyond OpenClaw, especially on Codex / multi-instance reuse, while keeping rollback / replay strong
 
 ## How To Use This Plan
@@ -96,10 +94,10 @@ Current status:
 - `Stage 5`: completed
 - `Stage 6`: completed
 - `Stage 7`: in progress
-- `Stage 8`: next
+- `Stage 8`: completed
 - `Stage 9`: in progress (`default-off` / opt-in only)
 - current pointer: `108`
-- current recommendation: the Stage 7 scorecard and the Stage 9 guarded seam are both landed; next make the Stage 7 closeout call and run Stage 8 ordinary-conversation realtime-write latency before widening any smart path
+- current recommendation: the Stage 7 scorecard, the Stage 8 hermetic closure, and the Stage 9 guarded seam are all landed; next make the Stage 7 closeout call before widening any smart path or switching to adoption simplification
 
 Already implemented in the current baseline:
 
@@ -144,7 +142,7 @@ These constraints keep the next per-turn context optimization slice measurable a
 | Stage 5 | `39-46` | harden product operations and split-ready execution | `completed` |
 | Stage 6 | `93-100` | validate dialogue working-set pruning in runtime shadow mode before any active prompt cutover | `completed` |
 | Stage 7 | `101-108` | turn context loading optimization into a formal mainline and formal gate | `in_progress` |
-| Stage 8 | `109-114` | push down hermetic timeout / latency on ordinary-conversation realtime write | `next` |
+| Stage 8 | `109-114` | turn the ordinary-conversation hermetic path into a trustworthy steady-state A/B surface | `completed` |
 | Stage 9 | `115-120` | start turning context optimization into user-visible value through a bounded guarded path | `in_progress` |
 | Stage 10 | `121-126` | shorten install / bootstrap / verify and strengthen shared-foundation product proof | `planned` |
 
@@ -302,9 +300,16 @@ Stage complete when:
 107. `completed` Define one very narrow guarded experiment seam without turning it on by default.
    - Rollback must stay configuration-only, and builtin memory behavior must stay unchanged.
 108. `in_progress` Use harder replay / Docker / local evidence to make the Stage 7 closeout decision.
-   - The decision is not “ship now”; it is “is Stage 8 now safe to continue on a cleaner realtime-write path?”
+   - The decision is not “ship now”; it is “now that Stage 8 is closed, is Stage 7 stable enough to stand on its own while Stage 9 remains a very narrow opt-in path?”
 
 ### Stage 8. Ordinary-Conversation Realtime-Write Latency Closure
+
+Current evidence:
+
+- detailed Docker steady-state A/B: [../../../reports/generated/openclaw-ordinary-conversation-memory-intent-ab-2026-04-17.md](../../../reports/generated/openclaw-ordinary-conversation-memory-intent-ab-2026-04-17.md)
+- Docker rerun summary: [../../../reports/generated/openclaw-ordinary-conversation-memory-intent-docker-rerun-2026-04-17.md](../../../reports/generated/openclaw-ordinary-conversation-memory-intent-docker-rerun-2026-04-17.md)
+- Docker speedup summary: [../../../reports/generated/openclaw-docker-steady-state-speedup-2026-04-17.md](../../../reports/generated/openclaw-docker-steady-state-speedup-2026-04-17.md)
+- Docker proxy/provider root cause: [../../../reports/generated/openclaw-docker-proxy-and-provider-root-cause-2026-04-17.md](../../../reports/generated/openclaw-docker-proxy-and-provider-root-cause-2026-04-17.md)
 
 Stage complete when:
 
@@ -312,13 +317,14 @@ Stage complete when:
 - the clean Docker path becomes a trustworthy regular A/B surface
 - timeout root causes are separated clearly instead of blending into “the feature is weak”
 
-109. `todo` Treat the ordinary-conversation realtime-write path as its own latency-closure program.
+109. `completed` Treat the ordinary-conversation realtime-write path as its own latency-closure program.
    - It is tightly coupled to context loading optimization, but should no longer be mixed together with contamination investigation.
-110. `todo` separate capture, governed ingest, retrieval, and answer-generation latency layers.
-111. `todo` run targeted fixes and reruns against the timeout-heavy case classes.
-112. `todo` lock down the ordinary-conversation Docker hermetic report entrypoint and thresholds.
-113. `todo` rerun the focused A/B and compare it cleanly against the host-live result.
-114. `todo` close the stage only when the clean path stops being dominated by timeout failures.
+110. `completed` separate capture, governed ingest, retrieval, and answer-generation latency layers.
+111. `completed` run targeted fixes and reruns against the timeout-heavy case classes.
+112. `completed` lock down the ordinary-conversation Docker hermetic report entrypoint and thresholds.
+113. `completed` rerun the focused A/B and compare it cleanly against the host-live result.
+114. `completed` close the stage only when the clean path stops being dominated by timeout failures.
+   - Current steady-state result: current `32 / 40`, legacy `17 / 40`, `UMC-only = 17`, `legacy-only = 2`, `both-fail = 6`, `preCaseResetFailed = 0`
 
 ### Stage 9. Guarded Smart-Path Promotion
 

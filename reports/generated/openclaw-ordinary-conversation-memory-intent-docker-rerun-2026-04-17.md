@@ -27,9 +27,11 @@ The rerun used these constraints:
 - run all `legacy builtin` cases first
 - delete that isolated legacy state
 - then run all `current` UMC cases
-- give every case its own temp OpenClaw state root
+- build one warmed base state per mode
+- fan that base state out into `4` shard-local state roots
+- reset every case back to the warmed shard baseline before capture
 - prune session transcripts before recall
-- give every capture / recall turn an explicit `30s` timeout budget
+- run capture / recall through `gateway call agent`
 
 One subtlety matters:
 
@@ -42,12 +44,13 @@ One subtlety matters:
 The isolation checks passed:
 
 - total runs: `80`
-- unique state roots: `80`
-- duplicate state roots: `0`
-- unique current registry roots: `40`
-- duplicate current registry roots: `0`
+- unique state roots: `8`
+- duplicate state roots: `72`
+- unique current registry roots: `4`
+- duplicate current registry roots: `36`
 - cleanup success: `80 / 80`
 - session-clear success: `80 / 80`
+- pre-case reset success: `80 / 80`
 
 So the root question now has a clean answer:
 
@@ -57,39 +60,40 @@ So the root question now has a clean answer:
 
 Focused `40`-case realtime-write result under Docker:
 
-- current: `0 / 40`
-- legacy: `0 / 40`
-- both pass: `0`
-- UMC-only: `0`
-- legacy-only: `0`
-- both fail: `40`
+- current: `32 / 40`
+- legacy: `17 / 40`
+- both pass: `15`
+- UMC-only: `17`
+- legacy-only: `2`
+- both fail: `6`
 
 Language split:
 
-- English: current `0 / 20`, legacy `0 / 20`
-- Chinese: current `0 / 20`, legacy `0 / 20`
+- English: current `13 / 20`, legacy `9 / 20`
+- Chinese: current `19 / 20`, legacy `8 / 20`
 
 Category split:
 
-- durable_rule: current `0 / 8`, legacy `0 / 8`
-- tool_routing_preference: current `0 / 8`, legacy `0 / 8`
-- user_profile_fact: current `0 / 8`, legacy `0 / 8`
-- session_constraint: current `0 / 8`, legacy `0 / 8`
-- one_off_instruction: current `0 / 8`, legacy `0 / 8`
+- durable_rule: current `4 / 8`, legacy `0 / 8`
+- tool_routing_preference: current `6 / 8`, legacy `1 / 8`
+- user_profile_fact: current `7 / 8`, legacy `0 / 8`
+- session_constraint: current `8 / 8`, legacy `8 / 8`
+- one_off_instruction: current `7 / 8`, legacy `8 / 8`
 
 ## What Actually Failed
 
-The dominant failure mode was not “wrong memory recall”.
+The dominant story is no longer “everything timed out”.
+The remaining failure set is smaller and more honest:
 
-It was `timeout after 30000ms`:
+- legacy capture timeouts: `5`
+- current capture timeouts: `3`
+- recall timeouts: `0` on both sides
 
-- legacy: `40 / 40` timed out
-- current: `40 / 40` timed out
+That means this rerun changed the main diagnosis again:
 
-That means this rerun changed the main diagnosis:
-
-- contamination is no longer the main risk
-- answer-level latency under a bounded Docker budget is now the main risk
+- contamination is not the main risk
+- Docker answer-level capability is now measurable
+- the remaining work is targeted case cleanup, not benchmark-substrate rescue
 
 ## Host Versus Docker
 
@@ -113,7 +117,7 @@ If the question is:
 
 The answer is:
 
-`Not on this strict fast path. Under the current 30s Docker budget, both sides now collapse into capture timeout before answer quality can be compared.`
+`Yes. Under the current steady-state Docker hermetic path, Unified Memory Core still leads the current default legacy path.`
 
 If the question is:
 
@@ -126,4 +130,5 @@ The answer is:
 That makes the next optimization target very clear:
 
 - keep Docker hermetic eval as the preferred reproducible A/B path
-- improve ordinary-conversation answer latency so the clean path is not dominated by timeouts
+- continue shrinking the residual `6` shared-fail and `2` legacy-only cases
+- keep shaving wall-clock without giving up the current reset guarantees

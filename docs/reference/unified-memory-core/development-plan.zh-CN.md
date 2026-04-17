@@ -34,8 +34,8 @@
 当前执行计划也要直接锚定到 3 个用户承诺：
 
 1. `轻快`
-   - 已落地：fact-first assembly、Stage 6 runtime shadow instrumentation、release-preflight、Docker hermetic eval
-   - 下一步：先把 context loading optimization 做成正式主线和正式门禁，再收 ordinary-conversation realtime-write latency，最后才是 install / bootstrap / verify
+   - 已落地：fact-first assembly、Stage 6 runtime shadow instrumentation、release-preflight、Docker hermetic eval、ordinary-conversation Docker steady-state A/B
+   - 下一步：先把 context loading optimization 做成正式主线和正式门禁；ordinary-conversation hermetic A/B 继续保持为默认 Docker 基线；最后才是 install / bootstrap / verify
 2. `聪明`
    - 已落地：realtime `memory_intent` ingestion + nightly governed learning + working-set shadow path
    - 下一步：在 context optimization scorecard 稳定后，把 shadow-first 的 context decision 逐步推进到 bounded、guarded 的窄路径收益
@@ -64,13 +64,11 @@
 
 1. `轻快 / context loading optimization`
    - 先把每轮 context thickness、working-set reduction、budgeted assembly 和 answer-level latency 收成正式主线
-2. `轻快 / realtime-write latency`
-   - 再把 hermetic ordinary-conversation 写记忆路径里的 timeout / latency 问题压下去
-3. `轻快 / install`
+2. `轻快 / install`
    - 然后再收 install / bootstrap / verify 路径
-4. `聪明`
+3. `聪明`
    - 在 bounded decision contract 明确后，把 shadow-first 结果推进到极窄的 guarded opt-in 路径
-5. `省心`
+4. `省心`
    - 补 OpenClaw 之外，尤其是 Codex / 多实例的产品证据，并继续守住 rollback / replay / audit 能力
 
 ## 怎么使用这份计划
@@ -96,10 +94,10 @@
 - `Stage 5`：已完成
 - `Stage 6`：已完成
 - `Stage 7`：进行中
-- `Stage 8`：下一阶段
+- `Stage 8`：已完成
 - `Stage 9`：进行中（`default-off` / opt-in only）
 - 当前指针：`108`
-- 当前建议：Stage 7 scorecard 与 Stage 9 guarded seam 已落地；下一步先做 Stage 7 closeout 判断与 Stage 8 ordinary-conversation realtime-write latency，再决定是否扩大 smart path
+- 当前建议：Stage 7 scorecard、Stage 8 hermetic closure 与 Stage 9 guarded seam 都已落地；下一步先做 Stage 7 closeout 判断，再决定是否扩大 smart path 或转入 adoption 简化
 
 当前 baseline 已经落地：
 
@@ -144,7 +142,7 @@
 | Stage 5 | `39-46` | 补齐产品运维与 split-ready 执行 | `completed` |
 | Stage 6 | `93-100` | 在任何 active prompt cutover 前，用 runtime shadow mode 验证 dialogue working-set pruning | `completed` |
 | Stage 7 | `101-108` | 把 context loading optimization 收成正式主线与正式门禁 | `in_progress` |
-| Stage 8 | `109-114` | 压下 ordinary-conversation realtime-write 的 hermetic timeout / latency | `next` |
+| Stage 8 | `109-114` | 把 ordinary-conversation hermetic 路径收成可信的 steady-state A/B 面 | `completed` |
 | Stage 9 | `115-120` | 以 bounded、guarded 方式让 context 优化开始变成用户收益 | `in_progress` |
 | Stage 10 | `121-126` | 收 install / bootstrap / verify，并补强共享底座产品证据 | `planned` |
 
@@ -302,9 +300,16 @@ Stage 6 证据：
 107. `completed` 先定义一个极窄的 guarded experiment seam，但不默认开启。
    - 必须是 config-only rollback，且 builtin memory 行为不变。
 108. `in_progress` 基于 harder replay / Docker / local evidence 做 Stage 7 closeout 决策。
-   - 决策对象不是“马上上线”，而是“Stage 8 能否在更干净的实时写记忆路径上继续推进”。
+   - 决策对象不是“马上上线”，而是“在 Stage 8 已经收口后，Stage 7 是否已经足够站稳，并且能否继续保持 Stage 9 为极窄 opt-in 面”。
 
 ### Stage 8. Ordinary-Conversation Realtime-Write Latency Closure
+
+当前证据：
+
+- detailed Docker steady-state A/B：[../../../reports/generated/openclaw-ordinary-conversation-memory-intent-ab-2026-04-17.md](../../../reports/generated/openclaw-ordinary-conversation-memory-intent-ab-2026-04-17.md)
+- Docker rerun summary：[../../../reports/generated/openclaw-ordinary-conversation-memory-intent-docker-rerun-2026-04-17.md](../../../reports/generated/openclaw-ordinary-conversation-memory-intent-docker-rerun-2026-04-17.md)
+- Docker speedup summary：[../../../reports/generated/openclaw-docker-steady-state-speedup-2026-04-17.md](../../../reports/generated/openclaw-docker-steady-state-speedup-2026-04-17.md)
+- Docker proxy/provider root cause：[../../../reports/generated/openclaw-docker-proxy-and-provider-root-cause-2026-04-17.md](../../../reports/generated/openclaw-docker-proxy-and-provider-root-cause-2026-04-17.md)
 
 阶段完成标准：
 
@@ -312,13 +317,14 @@ Stage 6 证据：
 - clean Docker path 可以成为可信的常规 A/B 面
 - timeout root cause 已经被拆清，不再混成“能力不行”
 
-109. `todo` 把 ordinary-conversation realtime-write 路径单独收成 latency closure 专项。
+109. `completed` 把 ordinary-conversation realtime-write 路径单独收成 latency closure 专项。
    - 这条线和 context loading optimization 紧耦合，但不要再和污染排查混写。
-110. `todo` 拆清 capture、governed ingest、retrieval、answer generation 各层 latency。
-111. `todo` 针对 timeout-heavy case class 做定向优化与复测。
-112. `todo` 固定 Docker hermetic ordinary-conversation 的常规报告入口和阈值。
-113. `todo` 重跑 focused A/B，并和 host-live 结果做清晰归因对照。
-114. `todo` 以“clean path 不再被 timeout 主导”作为 Stage 8 退出信号。
+110. `completed` 拆清 capture、governed ingest、retrieval、answer generation 各层 latency。
+111. `completed` 针对 timeout-heavy case class 做定向优化与复测。
+112. `completed` 固定 Docker hermetic ordinary-conversation 的常规报告入口和阈值。
+113. `completed` 重跑 focused A/B，并和 host-live 结果做清晰归因对照。
+114. `completed` 以“clean path 不再被 timeout 主导”作为 Stage 8 退出信号。
+   - 当前 steady-state 结果：current `32 / 40`、legacy `17 / 40`、`UMC-only = 17`、`legacy-only = 2`、`both-fail = 6`、`preCaseResetFailed = 0`
 
 ### Stage 9. Guarded Smart-Path Promotion
 

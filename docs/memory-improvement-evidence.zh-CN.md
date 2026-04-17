@@ -72,7 +72,7 @@
 
 专项报告：
 
-- [openclaw-ordinary-conversation-memory-intent-ab-2026-04-16.md](../reports/generated/openclaw-ordinary-conversation-memory-intent-ab-2026-04-16.md)
+- [openclaw-ordinary-conversation-memory-intent-ab-2026-04-17.md](../reports/generated/openclaw-ordinary-conversation-memory-intent-ab-2026-04-17.md)
 - [openclaw-ordinary-conversation-memory-intent-docker-rerun-2026-04-17.md](../reports/generated/openclaw-ordinary-conversation-memory-intent-docker-rerun-2026-04-17.md)
 
 这组 `40` 条现在要分成两层看：
@@ -96,41 +96,44 @@
 - 空 fixture 起步
 - 不 seed 宿主 `~/.openclaw`
 - 先完整跑 legacy，再删隔离状态，再完整跑 current
-- 每个 case 独立 temp state / 独立 registry
-- 每个 capture / recall turn 固定 `30s` timeout budget
+- 每个 shard 先从 warmed base state 起步
+- 每个 case 开跑前都把 agent/workspace/sessions/registry 重置回 warmed baseline
+- capture / recall 都经 `gateway call agent`
+- `preCaseResetFailed` 必须为 `0`
 
-这次的 hermetic Docker 快路径结果是：
+这次的 hermetic Docker steady-state 结果是：
 
-- current：`0 / 40`
-- legacy：`0 / 40`
-- `UMC-only = 0`
-- `legacy-only = 0`
-- `both-fail = 40`
+- current：`32 / 40`
+- legacy：`17 / 40`
+- `UMC-only = 17`
+- `legacy-only = 2`
+- `both-fail = 6`
+- `preCaseResetFailed = 0`
 
 按语言拆开：
 
-- 英文：current `1 / 20`，legacy `0 / 20`
-- 中文：current `2 / 20`，legacy `0 / 20`
+- 英文：current `13 / 20`，legacy `9 / 20`
+- 中文：current `19 / 20`，legacy `8 / 20`
 
 按类别拆开：
 
-- durable_rule：current `2 / 8`，legacy `0 / 8`
-- tool_routing_preference：current `0 / 8`，legacy `0 / 8`
-- user_profile_fact：current `1 / 8`，legacy `0 / 8`
-- session_constraint：current `0 / 8`，legacy `0 / 8`
-- one_off_instruction：current `0 / 8`，legacy `0 / 8`
+- durable_rule：current `4 / 8`，legacy `0 / 8`
+- tool_routing_preference：current `6 / 8`，legacy `1 / 8`
+- user_profile_fact：current `7 / 8`，legacy `0 / 8`
+- session_constraint：current `8 / 8`，legacy `8 / 8`
+- one_off_instruction：current `7 / 8`，legacy `8 / 8`
 
-这里最关键的解释不是“Memory Core 只剩 3 条胜场”，而是：
+这里最关键的解释已经不是“Docker 把所有结果都打成 timeout”，而是：
 
-1. Docker hermetic 现在已经足够干净，可以当作真正的可复现基线。
-2. 在这个基线里，主瓶颈已经变成 answer-level latency，而不是串记忆。
-3. legacy `40 / 40` 和 current `40 / 40` 都是 capture timeout；也就是说，这一轮 Docker 快路径更像是在测“固定时延预算下 answer path 能不能跑完”。
+1. Docker hermetic 现在已经足够干净，而且 `gateway-steady` 路径已经能产出可信的能力差异。
+2. 在这个基线里，Memory Core 仍然明显领先，而不是只在宿主 live 里领先。
+3. 剩余问题已经收敛成更小的一组真实 case：`6` 条 shared-fail、`2` 条 legacy-only，而不是整条能力面都失真。
 
 所以这组结果真正说明的是：
 
-- 宿主结果 `38 / 40 vs 21 / 40` 不能再被当成完全无污染的最终归因
-- 但它也没有被 Docker 证明成“纯假象”
-- 更准确的判断是：host 环境下 UMC 写侧优势是存在的；而 Docker hermetic 把环境污染压下去以后，新的主问题变成了 answer-level timeout budget
+- 宿主结果 `38 / 40 vs 21 / 40` 现在可以被视为偏乐观的 live upper bound
+- Docker 结果 `32 / 40 vs 17 / 40` 则是更严格的 hermetic baseline
+- 两条线都在指向同一个方向：ordinary-conversation 写侧上，UMC 的优势是真实存在的
 
 ## 这轮新增修复带来了什么
 
@@ -147,7 +150,7 @@
 - formal gate 本身的中文占比已经抬到 `6 / 12`
 - 更深的 watch 面维持在 `14 / 18`
 
-这说明当前主问题已经不再是“stable gate 根本不可信”，而是“更深、更难的 answer-level 覆盖还没完全收口”。
+这说明当前主问题已经不再是“普通对话写侧的 Docker 基座靠不住”，而是“剩余 harder case 还没完全收口”。
 
 ## 一个更有说服力的真实例子
 

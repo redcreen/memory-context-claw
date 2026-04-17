@@ -169,7 +169,6 @@
 - docs-first review 已完成，当前恢复点保持在 `Stage 7 closeout + Stage 9 opt-in only`
 - 当前 3 个用户承诺的执行顺序变成：
   - 先补 `轻快 / context loading optimization`
-  - 再补 `轻快 / realtime-write latency`
   - 然后再补 `轻快 / install`
   - 再推进 `聪明`
   - 最后补 `省心` 的跨宿主证据
@@ -202,8 +201,8 @@
 ## Next 3 Actions
 
 1. 先完成 Stage 7 closeout 决策：确认 scorecard、harder replay 和“日常尽量不依赖 compat / compact”是否足够站稳。
-2. 再把 ordinary-conversation realtime-write latency 单独收成 clean Docker path 的 closure 目标，而不是继续混在污染排查里。
-3. 保持 Stage 9 guarded seam 为 `default-off` / opt-in only，并在 Stage 8 之后再决定是否扩大。
+2. 保持 Stage 9 guarded seam 为 `default-off` / opt-in only，并在 Stage 7 closeout 后再决定是否扩大。
+3. 继续把 remaining Docker harder misses 当成 targeted follow-up，而不是再把基座稳定性和能力 miss 混在一起。
 
 ## Architecture Supervision
 - Signal: `yellow`
@@ -220,10 +219,10 @@
 
 ## Current Execution Line
 
-- Objective: 先完成 Stage 7 closeout，并保持 Stage 9 为 opt-in only；之后再收 realtime-write latency 和 shared-foundation proof
+- Objective: 先完成 Stage 7 closeout，并保持 Stage 9 为 opt-in only；ordinary-conversation Docker steady-state 已成为默认 hermetic A/B 面，之后再收 install 和 shared-foundation proof
 - Plan Link: `finish-context-loading-optimization-first`
-- Runway: context scorecard，harder replay / Docker / local evidence，ordinary-conversation latency closure，bounded LLM decision contract，shared-foundation evidence；并行守住 release-preflight 和 canonical-root policy
-- Progress: `1 / 3` tasks complete
+- Runway: context scorecard，harder replay / Docker / local evidence，bounded LLM decision contract，shared-foundation evidence；并行守住 release-preflight 和 canonical-root policy
+- Progress: `2 / 3` tasks complete
 - Stop Conditions:
   - active prompt mutation is discussed before docs and rollback boundaries are explicit
   - install simplification gets moved ahead of context loading optimization before Stage 7 closes
@@ -234,7 +233,7 @@
 
 - [x] EL-1 define and publish the unified context optimization scorecard for Stage 7
 - [ ] EL-2 redesign the next harder replay / Docker / local evidence around `cross-source`, `conflict`, `multi-step history`, `open-loop return`, and denser natural-Chinese prompt classes
-- [ ] EL-3 isolate ordinary-conversation realtime-write latency closure from contamination discussion while Stage 9 stays opt-in only
+- [x] EL-3 isolate ordinary-conversation realtime-write latency closure from contamination discussion while Stage 9 stays opt-in only
 
 ## Development Log Capture
 
