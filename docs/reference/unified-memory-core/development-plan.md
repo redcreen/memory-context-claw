@@ -97,7 +97,7 @@ Current status:
 - `Stage 8`: completed
 - `Stage 9`: in progress (`default-off` / opt-in only)
 - current pointer: `108`
-- current recommendation: the Stage 7 scorecard, the Stage 8 hermetic closure, and the Stage 9 guarded seam are all landed; next make the Stage 7 closeout call before widening any smart path or switching to adoption simplification
+- current recommendation: the Stage 7 scorecard, the Stage 8 hermetic closure, and the Stage 9 guarded seam are all landed; but the OpenClaw live soak now proves the host runtime seam is still the blocker, so the next step is to open that seam before making the Stage 7 closeout call
 
 Already implemented in the current baseline:
 
@@ -277,6 +277,7 @@ Current evidence:
 - Stage 7 shadow replay: [../../../reports/generated/dialogue-working-set-stage7-shadow-2026-04-17.md](../../../reports/generated/dialogue-working-set-stage7-shadow-2026-04-17.md)
 - Stage 7 scorecard: [../../../reports/generated/dialogue-working-set-scorecard-2026-04-17.md](../../../reports/generated/dialogue-working-set-scorecard-2026-04-17.md)
 - Stage 7 / Stage 9 summary: [../../../reports/generated/dialogue-working-set-stage7-stage9-2026-04-17.md](../../../reports/generated/dialogue-working-set-stage7-stage9-2026-04-17.md)
+- OpenClaw gateway live validation: [../../../reports/generated/openclaw-gateway-context-optimization-2026-04-17.md](../../../reports/generated/openclaw-gateway-context-optimization-2026-04-17.md)
 
 Stage complete when:
 
@@ -301,6 +302,7 @@ Stage complete when:
    - Rollback must stay configuration-only, and builtin memory behavior must stay unchanged.
 108. `in_progress` Use harder replay / Docker / local evidence to make the Stage 7 closeout decision.
    - The decision is not “ship now”; it is “now that Stage 8 is closed, is Stage 7 stable enough to stand on its own while Stage 9 remains a very narrow opt-in path?”
+   - New blocker: the OpenClaw gateway live soak proves the host runtime still does not expose the required subagent / decision seam to the context-optimization path, so Stage 7 cannot close out yet.
 
 ### Stage 8. Ordinary-Conversation Realtime-Write Latency Closure
 
@@ -332,6 +334,7 @@ Current evidence:
 
 - Stage 9 guarded answer A/B: [../../../reports/generated/dialogue-working-set-guarded-answer-ab-2026-04-17.md](../../../reports/generated/dialogue-working-set-guarded-answer-ab-2026-04-17.md)
 - Stage 7 / Stage 9 summary: [../../../reports/generated/dialogue-working-set-stage7-stage9-2026-04-17.md](../../../reports/generated/dialogue-working-set-stage7-stage9-2026-04-17.md)
+- OpenClaw gateway live validation: [../../../reports/generated/openclaw-gateway-context-optimization-2026-04-17.md](../../../reports/generated/openclaw-gateway-context-optimization-2026-04-17.md)
 
 Stage complete when:
 
@@ -339,6 +342,7 @@ Stage complete when:
 - the bounded guarded experiment seam has a clear rollout / rollback contract
 - the active-path experiment stays narrow and does not drift into a default-path switch
 - the guarded smart path still serves the goal of “daily use should avoid depending on compat / compact”, rather than making compat / compact a more frequent main-path habit
+- the OpenClaw live runtime seam is open, so guarded / shadow decisions no longer fail on the real host because of missing runtime capability
 
 115. `completed` define the promotion contract for the bounded smart path.
 116. `completed` choose one very narrow opt-in active-path experiment surface.

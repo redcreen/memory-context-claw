@@ -82,23 +82,38 @@ After Stage 7 / 9:
 - 但还没有把宿主层的大 prompt thickness 真正打下来
 - 从用户体感上，`轻快` 还没有完全兑现
 
-### 2. `agent --local` still cannot execute the shadow decision itself
+### 2. Even after the live config seam was fixed, the runtime decision path is still blocked by the host seam
 
-本轮 live smoke 里，shadow sidecar exports 已经能写出来，共 `6` 个。
+本轮补完了 OpenClaw live config schema 之后，我又分别做了：
 
-但这些 export 的 `status` 都是 `error`，核心原因一致：
+- `agent --local` 多话题 live smoke
+- gateway 两轮 smoke
+- gateway 多话题 live soak
+
+现在结论更精确了：
+
+- `agent --local` 下，shadow sidecar exports 会写出来，但 decision 仍然报错
+- gateway 服务本身已经恢复、两轮 smoke 也能正常回答
+- 但 gateway 多话题 live soak 生成的 `5` 个 export 仍然全部是 `error`
+
+统一失败原因还是：
 
 - `Plugin runtime subagent methods are only available during a gateway request.`
 
-这意味着：
+这意味着当前真正的 blocker 已经不是：
 
-- Stage 7 / 9 的 runtime shadow / guarded decision 在当前 OpenClaw `--local` transport 下还不能完整执行
-- 真正的 live decision soak 仍然需要 gateway request 路径
+- 配置没暴露
+- OpenClaw 没接上
+- gateway 没起来
+
+而是：
+
+- **当前 OpenClaw 宿主给到 context optimization 这条 seam 的 runtime capability 还不够。**
 
 所以这条线现在的状态不是“不能用”，而是：
 
 - **OpenClaw live config seam 已可用**
-- **local transport full decision path 仍受宿主 runtime 限制**
+- **真实 live decision path 仍受宿主 runtime seam 限制**
 
 ### 3. User-visible gain is still narrow
 
@@ -148,7 +163,8 @@ Stage 9 虽然已经有 guarded opt-in seam，但目前仍然是：
 下一步最值得做的不是再扩概念，而是把剩下这两个缺口收掉：
 
 1. 用 gateway request 路径完成 Stage 7 / 9 的真实 live soak，而不是只停在 `agent --local`。
-2. 继续压宿主层 prompt thickness，让 `轻快` 变成默认用户收益，而不是 operator-only evidence。
+2. 先补宿主接缝：让 context optimization runtime 在 assembly 时能够安全调用 decision path，或者提供 host-side bridge。
+3. 再继续压宿主层 prompt thickness，让 `轻快` 变成默认用户收益，而不是 operator-only evidence。
 
 ## Evidence
 
@@ -156,4 +172,4 @@ Stage 9 虽然已经有 guarded opt-in seam，但目前仍然是：
 - [dialogue-working-set-scorecard-2026-04-17.md](dialogue-working-set-scorecard-2026-04-17.md)
 - [dialogue-working-set-guarded-answer-ab-2026-04-17.md](dialogue-working-set-guarded-answer-ab-2026-04-17.md)
 - [dialogue-working-set-stage7-stage9-2026-04-17.md](dialogue-working-set-stage7-stage9-2026-04-17.md)
-
+- [openclaw-gateway-context-optimization-2026-04-17.md](openclaw-gateway-context-optimization-2026-04-17.md)

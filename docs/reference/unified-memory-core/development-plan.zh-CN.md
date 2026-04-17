@@ -97,7 +97,7 @@
 - `Stage 8`：已完成
 - `Stage 9`：进行中（`default-off` / opt-in only）
 - 当前指针：`108`
-- 当前建议：Stage 7 scorecard、Stage 8 hermetic closure 与 Stage 9 guarded seam 都已落地；下一步先做 Stage 7 closeout 判断，再决定是否扩大 smart path 或转入 adoption 简化
+- 当前建议：Stage 7 scorecard、Stage 8 hermetic closure 与 Stage 9 guarded seam 都已落地；但 OpenClaw live soak 已经证明 host runtime seam 仍是 blocker，所以下一步先补宿主接缝，再做 Stage 7 closeout 判断
 
 当前 baseline 已经落地：
 
@@ -277,6 +277,7 @@ Stage 6 证据：
 - Stage 7 shadow replay：[../../../reports/generated/dialogue-working-set-stage7-shadow-2026-04-17.md](../../../reports/generated/dialogue-working-set-stage7-shadow-2026-04-17.md)
 - Stage 7 scorecard：[../../../reports/generated/dialogue-working-set-scorecard-2026-04-17.md](../../../reports/generated/dialogue-working-set-scorecard-2026-04-17.md)
 - Stage 7 / Stage 9 汇总：[../../../reports/generated/dialogue-working-set-stage7-stage9-2026-04-17.md](../../../reports/generated/dialogue-working-set-stage7-stage9-2026-04-17.md)
+- OpenClaw gateway live validation：[../../../reports/generated/openclaw-gateway-context-optimization-2026-04-17.md](../../../reports/generated/openclaw-gateway-context-optimization-2026-04-17.md)
 
 阶段完成标准：
 
@@ -301,6 +302,7 @@ Stage 6 证据：
    - 必须是 config-only rollback，且 builtin memory 行为不变。
 108. `in_progress` 基于 harder replay / Docker / local evidence 做 Stage 7 closeout 决策。
    - 决策对象不是“马上上线”，而是“在 Stage 8 已经收口后，Stage 7 是否已经足够站稳，并且能否继续保持 Stage 9 为极窄 opt-in 面”。
+   - 当前新增 blocker：OpenClaw gateway live soak 已证明宿主 runtime 还没有把所需 subagent / decision seam 暴露给 context optimization 路径，所以 Stage 7 暂时不能 closeout。
 
 ### Stage 8. Ordinary-Conversation Realtime-Write Latency Closure
 
@@ -332,6 +334,7 @@ Stage 6 证据：
 
 - Stage 9 guarded answer A/B：[../../../reports/generated/dialogue-working-set-guarded-answer-ab-2026-04-17.md](../../../reports/generated/dialogue-working-set-guarded-answer-ab-2026-04-17.md)
 - Stage 7 / Stage 9 汇总：[../../../reports/generated/dialogue-working-set-stage7-stage9-2026-04-17.md](../../../reports/generated/dialogue-working-set-stage7-stage9-2026-04-17.md)
+- OpenClaw gateway live validation：[../../../reports/generated/openclaw-gateway-context-optimization-2026-04-17.md](../../../reports/generated/openclaw-gateway-context-optimization-2026-04-17.md)
 
 阶段完成标准：
 
@@ -339,6 +342,7 @@ Stage 6 证据：
 - bounded、guarded experiment seam 有清晰 rollout / rollback 规则
 - active-path experiment 继续保持极窄，不扩成默认路径
 - guarded smart path 仍然服务于“日常尽量不靠 compat / compact”，而不是把 compat / compact 搬进更频繁的主路径
+- OpenClaw live runtime seam 已经打通，guarded / shadow decision 不再在真实宿主上因 runtime capability 缺失而失败
 
 115. `completed` 定义 bounded smart-path 的 promotion contract。
 116. `completed` 选择一个极窄的 opt-in active-path experiment surface。
