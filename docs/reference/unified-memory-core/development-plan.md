@@ -29,31 +29,19 @@ Related documents:
 - a multi-adapter system with explicit namespaces, visibility rules, and repairable artifacts
 - a product that can run in embedded mode and standalone mode
 
-## Current Product Value Mapping
+## Current Product Promise Mapping
 
-The execution plan should stay anchored to four product values:
+The execution plan should stay anchored to three user-facing promises:
 
-1. `On-demand context loading`
-   - already landed: fact-first assembly and Stage 6 runtime shadow instrumentation
-   - next work: turn the shadow surface into a harder context-thickness / latency gate
-2. `Realtime + nightly self-learning`
-   - already landed: realtime `memory_intent` ingestion plus nightly governed learning
-   - next work: remove timeout-heavy blind spots so write-time gains survive tighter answer budgets
-3. `CLI-governed memory operations`
-   - already landed: add / inspect / audit / repair / replay / migrate flows
-   - next work: keep those flows readable, replayable, and release-grade while context optimization evolves
-4. `Shared memory foundation`
-   - already landed: shared contracts, canonical registry root, OpenClaw adapter, and Codex adapter
-   - next work: keep the shared-core boundary stable while the OpenClaw-facing context layer becomes more selective
-
-Every next-round step should also preserve six product qualities:
-
-- `simple`
-- `usable`
-- `lightweight`
-- `fast enough`
-- `smart`
-- `maintainable`
+1. `Light and fast`
+   - already landed: fact-first assembly, Stage 6 runtime shadow instrumentation, release-preflight, and Docker hermetic eval
+   - next work: shorten install / bootstrap / verify and turn context-thickness / latency into harder gates
+2. `Smart`
+   - already landed: realtime `memory_intent` ingestion plus nightly governed learning plus the working-set shadow path
+   - next work: remove timeout-heavy blind spots and move the shadow-first context-decision path toward a bounded guarded narrow gain
+3. `Reassuring`
+   - already landed: CLI / audit / replay / rollback operator flows, canonical registry root, and OpenClaw / Codex adapters
+   - next work: keep those flows readable and replayable while strengthening Codex / multi-instance product evidence
 
 ## Product North Star And Execution Meaning
 
@@ -61,33 +49,25 @@ Every next-round step should also preserve six product qualities:
 
 Translated into execution requirements:
 
-- `simple to install`
-  - install, default config, and first verification should keep taking the shortest path
-- `smooth to use`
-  - default paths come first, instead of turning the next round into a pile of expert-only switches
-- `light and fast to run`
-  - every new experiment should carry prompt-thickness, latency, and runtime-cost metrics
-- `smart to remember`
+- `light and fast`
+  - install, default config, first verification, prompt-thickness, latency, and runtime cost all stay inside the gate
+- `smart`
   - bounded decision contracts, self-learning, working-set pruning, and budgeted assembly should all improve judgment quality together
-- `easy to maintain`
-  - rollback boundaries, operator metrics, and hermetic / Docker eval entrypoints must be explicit before each promotion step
+- `reassuring`
+  - rollback boundaries, operator metrics, hermetic / Docker eval, and shared-registry entrypoints must be explicit before each promotion step
 
 ## North-Star-Driven Current Priorities
 
 This plan is no longer only in a docs-first review state.
 
-The current priority order should now follow the north-star gaps:
+The current priority order should now follow the three promises:
 
-1. `simple`
-   - shorten install / bootstrap / verify and reduce manual setup
-2. `fast enough`
-   - push down timeout / latency pressure on the hermetic ordinary-conversation write path
-3. `smart`
+1. `light and fast`
+   - shorten install / bootstrap / verify and push down timeout / latency pressure on the hermetic ordinary-conversation write path
+2. `smart`
    - after the bounded decision contract is clear, move shadow-first evidence into a very narrow guarded opt-in path
-4. `lightweight`
-   - define explicit budgets for package size, startup cost, prompt thickness, and runtime cost
-5. `shared foundation`
-   - strengthen product evidence beyond OpenClaw, especially on Codex / multi-instance reuse
+3. `reassuring`
+   - strengthen product evidence beyond OpenClaw, especially on Codex / multi-instance reuse, while keeping rollback / replay strong
 
 ## How To Use This Plan
 

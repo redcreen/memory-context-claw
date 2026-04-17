@@ -82,29 +82,13 @@ Supporting evidence:
   - no builtin memory behavior changes
   - no continued growth of large hardcoded rule tables to mimic context decisions
 
-## Primary Product Values And Milestone Mapping
+## Three User-Facing Promises And Milestone Mapping
 
-| Product Value | What Is Already Landed | Current Evidence Surface | Next Milestone |
+| Promise | What Is Already Landed | Current Evidence Surface | Next Milestone |
 | --- | --- | --- | --- |
-| On-demand context loading | fact-first assembly, durable-source slimming design, runtime working-set shadow instrumentation | runtime shadow replay `16 / 16`, average reduction ratio `0.4368`, runtime answer A/B `5 / 5` vs `5 / 5` | turn this into a harder builtin-comparison context-thickness / latency gate |
-| Realtime + nightly self-learning | realtime `memory_intent` ingestion, nightly self-learning default-on, governed promotion / decay | ordinary-conversation host-live A/B current `38 / 40`, legacy `21 / 40`, `18` UMC-only wins | remove timeout-heavy blind spots and convert more harder cases into clean UMC-only wins |
-| CLI-governed memory operations | add / inspect / audit / repair / replay / export / migrate surfaces, release-preflight | shipped CLI flows and regression-protected verification stack | keep the operator surface readable, replayable, and release-grade |
-| Shared memory foundation | shared contracts, canonical registry root, OpenClaw adapter, Codex adapter | stable architecture boundary and cross-host consumption path | keep the shared-core contract stable while the context-optimization layer evolves |
-
-These milestones should keep six product qualities visible as constraints:
-
-- `simple`
-  - installation and first-use setup should stay low-friction even as capability grows
-- `usable`
-  - new capability should reduce operator friction instead of increasing config and review overhead
-- `lightweight`
-  - new runtime logic should lower prompt thickness while keeping install and runtime footprint under control
-- `fast enough`
-  - latency and day-to-day responsiveness must stay part of the target, not be traded away for a more complex decision layer
-- `smart`
-  - the next round should feel more selective and better judged, not just more rule-heavy or call-heavy
-- `maintainable`
-  - rollout, rollback, replay, and audit surfaces should stay easier to operate, not harder
+| Light and fast | fact-first assembly, runtime working-set shadow instrumentation, release-preflight, Docker hermetic eval | runtime shadow replay `16 / 16`, average reduction ratio `0.4368`, runtime answer A/B `5 / 5` vs `5 / 5` | simplify install / bootstrap / verify and turn context-thickness / latency into harder gates |
+| Smart | realtime `memory_intent` ingestion, nightly self-learning, governed promotion / decay, working-set shadow path | ordinary-conversation host-live A/B current `38 / 40`, legacy `21 / 40`, `18` UMC-only wins | move the shadow-first context-decision path toward a bounded guarded narrow user gain |
+| Reassuring | add / inspect / audit / repair / replay / rollback, canonical registry root, OpenClaw / Codex adapters | shipped CLI flows and regression-protected verification stack | keep the operator surface readable and replayable while strengthening Codex / multi-instance product evidence |
 
 ## Product North Star
 
@@ -112,46 +96,38 @@ These milestones should keep six product qualities visible as constraints:
 
 At roadmap level this means:
 
-- `simple to install`
-  - adoption cost and default-config complexity remain first-class targets
-- `smooth to use`
-  - the next phase cannot optimize only for “more powerful”; it also has to improve the default feel
-- `light and fast to run`
-  - context thickness, latency, package size, and runtime footprint stay inside milestone evaluation
-- `smart to remember`
+- `light and fast`
+  - adoption cost, default-config complexity, package size, runtime footprint, context thickness, and latency stay inside milestone evaluation
+- `smart`
   - retrieval, learning, working-set pruning, and budgeted assembly must improve together as one evidence surface
-- `easy to maintain`
-  - hermetic / Docker eval, rollback boundaries, and operator metrics remain first-class constraints
+- `reassuring`
+  - hermetic / Docker eval, rollback boundaries, operator metrics, and shared registry behavior remain first-class constraints
 
 ## Current Gap Review
 
 The roadmap should make the current distance from the north star explicit:
 
 - already relatively strong:
-  - `easy to maintain`
-  - the `self-learning` backbone
+  - `reassuring`
+  - the `smart` self-learning backbone
   - `context optimization` as a formal mainline
 - currently weakest:
-  - `simple`: install / bootstrap / verify still asks too much manual setup
-  - `fast enough`: the hermetic ordinary-conversation write path is still timeout-heavy
+  - `light and fast`: install / bootstrap / verify still asks too much manual setup, and the hermetic ordinary-conversation write path is still timeout-heavy
   - `smart`: working-set optimization is validated but not yet a default user-visible gain
-  - `lightweight`: package, startup, and default runtime budgets are not yet enforced as hard targets
-  - `shared foundation`: Codex / multi-instance product evidence still trails OpenClaw
+  - `reassuring`: Codex / multi-instance product evidence still trails OpenClaw
 
 That makes the next priority order explicit:
 
-1. simplify install / bootstrap / verify
-2. reduce hermetic timeout and latency pressure
-3. move from shadow-only to a narrow guarded smart path
-4. turn lightweight goals into explicit budgets
-5. strengthen shared-foundation evidence across OpenClaw and Codex
+1. `light and fast`: simplify install / bootstrap / verify and reduce hermetic timeout / latency pressure
+2. `smart`: move from shadow-only to a narrow bounded guarded user path
+3. `reassuring`: strengthen shared-foundation evidence across OpenClaw and Codex
 
 ## Now / Next / Later
 
 | Horizon | Focus | Exit Signal |
 | --- | --- | --- |
-| Now | shift from docs-first review into north-star gap closure: simplify adoption first, then improve speed, then advance the smart path | roadmap, development plan, architecture docs, and `.codex/*` all point at the same gap-driven priority order |
-| Next | define the bounded LLM-led context decision contract, operator metrics, and rollback boundary, while turning install / timeout / lightweight into formal gates | the next harder-case design carries explicit prompt-thickness / reduction / latency / rollback metrics, with install / latency / budget thresholds made explicit too |
+| Now | move from docs-first review into a 3-promise closure order: improve `light and fast` first, then `smart`, then `reassuring` cross-host evidence | roadmap, development plan, architecture docs, and `.codex/*` all point at the same 3-promise priority order |
+| Next | define the bounded LLM-led context decision contract, operator metrics, and rollback boundary, while turning install / timeout / budget into formal gates | the next harder-case design carries explicit prompt-thickness / reduction / latency / rollback metrics, with install / latency / budget thresholds made explicit too |
 | Later | discuss any guarded active-path experiment only after a longer real-session soak | shadow telemetry stays green long enough and the promotion / rollback gate is operator-ready |
 
 ## Current Execution Focus

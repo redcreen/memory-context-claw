@@ -50,69 +50,45 @@ flowchart TB
 - 继续保持 `default-off` 和 shadow-only
 - 下一轮要先做 docs-first：先把 bounded LLM-led decision contract、operator metrics、rollback boundary 和 harder A/B 设计写清楚，再讨论任何默认 prompt-path 改动
 
-## 当前产品卖点与架构映射
+## 当前产品承诺与架构映射
 
-当前架构应该直接映射到四个主要卖点：
+当前架构应该直接服务 3 个用户承诺：
 
-1. `按需加载 context`
-   - 主要落在 OpenClaw adapter 和两条 context 优化架构线上
-   - 当前已落地能力：fact-first assembly + runtime working-set shadow instrumentation
-2. `realtime + nightly self-learning`
-   - 主要落在 Source System、Reflection System、Memory Registry 和 Governance System
-   - 当前已落地能力：realtime `memory_intent` ingestion、nightly reflection、promotion / decay 和 governed exports
-3. `可用 CLI 管理的记忆系统`
-   - 主要落在 standalone runtime、CLI 入口和 governance tooling
-   - 当前已落地能力：add / inspect / audit / repair / replay / migrate 这一整组 operator 流程
-4. `跨 OpenClaw / Codex / 后续消费者的共享记忆底座`
-   - 主要落在 shared contracts、projection layer、registry root policy 和两条 adapter 路径
-   - 当前已落地能力：一套 canonical governed memory core，同时具备 OpenClaw 与 Codex 的消费路径
-
-这些卖点还要同时满足六条产品品质要求：
-
-- `简单`
-  - 安装、默认配置、首次验证都必须足够直观
-- `好用`
-  - 默认工作流必须容易理解，不能逼着 operator 去做架构考古
-- `轻量`
-  - runtime 的收益应该来自“少给 context”，而不是长出一个比问题本身更重的控制层
-- `够快`
-  - context 优化、自学习和治理都不能把主路径拖慢到用户明显有感
-- `聪明`
-  - 该记的记住，不该记的不乱记；该给的 context 才给；不确定时宁可收敛
-- `易维护`
-  - 核心行为必须保持可 inspect、可 replay、可 repair、可 rollback
+1. `轻快`
+   - 主要落在 OpenClaw adapter、context 优化两条架构线，以及 release / install / hermetic eval 工作流
+   - 当前已落地能力：fact-first assembly、runtime working-set shadow instrumentation、release-preflight、Docker hermetic eval
+2. `聪明`
+   - 主要落在 Source System、Reflection System、Memory Registry，以及 context 优化的 selective decision 层
+   - 当前已落地能力：realtime `memory_intent` ingestion、nightly reflection、promotion / decay、working-set shadow path
+3. `省心`
+   - 主要落在 standalone runtime、CLI / governance tooling、shared contracts、projection layer、registry root policy 和两条 adapter 路径
+   - 当前已落地能力：inspect / audit / replay / repair / rollback、canonical governed memory core、OpenClaw / Codex consumption path
 
 ## 产品北极星与工程解释
 
 > 装得简单，用得顺手，跑得轻快，记得聪明，维护省心。
 
-把这句话翻成架构约束，分别是：
+把这句话翻成架构约束，统一就是 3 点：
 
-- `装得简单`
-  - adapter 接线、默认配置、CLI 入口、安装包结构要优先减少接入成本
-- `用得顺手`
-  - 默认路径优先，用户不需要先理解复杂治理模型才能得到收益
-- `跑得轻快`
-  - context thickness、主路径 latency、运行时负担、安装包体积都属于同一个目标面
-- `记得聪明`
+- `轻快`
+  - adapter 接线、默认配置、CLI 首次验证、包体、主路径 latency、prompt thickness、runtime cost 都属于同一个目标面
+- `聪明`
   - durable memory、realtime learning、working-set pruning、budgeted assembly、abstention guardrail 要协同，而不是各自为战
-- `维护省心`
-  - 所有关键行为都要留在 inspect / audit / replay / rollback 的 operator surface 里
+- `省心`
+  - 所有关键行为都要留在 inspect / audit / replay / rollback / hermetic eval / shared registry 的 operator surface 里
 
 ## 当前强项与薄弱点
 
 按当前架构和证据面看：
 
 - 强项：
-  - governance / operator surface 已经较完整
-  - self-learning lifecycle 已经形成主干
-  - context 优化的边界已经明确，不再漂移成 report-only 想法
+  - `省心` 相关的 governance / operator surface 已经较完整
+  - `聪明` 的 self-learning 主干已经形成
+  - context 优化边界已经明确，不再漂移成 report-only 想法
 - 薄弱点：
-  - `简单` 仍然更多依赖人工安装和人工接线
-  - `够快` 还没有在 hermetic answer path 上形成足够强的默认保证
+  - `轻快` 仍然更多依赖人工安装和人工接线，而且 hermetic answer path 还不够稳
   - `聪明` 还停留在 shadow-first，不是默认体验
-  - `轻量` 还缺少更硬的包体、启动、预算约束
-  - `共享底座` 还缺少 Codex / 多实例的更强产品证据
+  - `省心` 里的共享底座仍缺 Codex / 多实例的更强产品证据
 
 所以架构层接下来最需要守住的是：
 

@@ -82,29 +82,13 @@
   - 不改 builtin memory 行为
   - 不靠继续增加硬编码规则表来模拟 topic / context 决策
 
-## 主要卖点与里程碑映射
+## 三个用户承诺与里程碑映射
 
-| 产品卖点 | 当前已落地能力 | 当前证据面 | 下一里程碑 |
+| 用户承诺 | 当前已落地能力 | 当前证据面 | 下一里程碑 |
 | --- | --- | --- | --- |
-| 按需加载 context | fact-first assembly、durable-source slimming 设计、runtime working-set shadow instrumentation | runtime shadow replay `16 / 16`、average reduction ratio `0.4368`、runtime answer A/B `5 / 5` vs `5 / 5` | 把它进一步收口成更难场景里稳定的“对比内置的 context thickness / latency”门禁 |
-| realtime + nightly self-learning | realtime `memory_intent` ingestion、默认开启的 nightly self-learning、governed promotion / decay | ordinary-conversation host-live A/B：current `38 / 40`、legacy `21 / 40`、`18` 条 UMC-only wins | 清掉 timeout-heavy 盲区，并把更多 harder case 变成清晰的 UMC-only wins |
-| CLI-governed memory operations | add / inspect / audit / repair / replay / export / migrate surfaces、release-preflight | 已发版级 CLI 流程与回归保护验证栈 | 持续保持 operator surface 可读、可 replay、可发版 |
-| 共享记忆底座 | shared contracts、canonical registry root、OpenClaw adapter、Codex adapter | 稳定的架构边界与跨宿主消费路径 | 在 context 优化演进时继续守住 shared-core contract 不漂移 |
-
-这些里程碑还要同时满足六条产品品质约束：
-
-- `简单`
-  - 安装和首次上手必须继续保持低门槛，不能因为能力增长就把接入流程做复杂
-- `好用`
-  - 新能力应该减少 operator 摩擦，而不是继续增加配置和 review 负担
-- `轻量`
-  - 新的 runtime 逻辑要真的降低 prompt thickness，安装包和运行负担也要一起受控
-- `够快`
-  - latency 和日常操作速度必须一起纳入目标，不能为了更复杂的 decision surface 牺牲明显体感
-- `聪明`
-  - 下一轮优化要体现为“更会记、更会忘、更会少给”，而不是只多出更多规则和更多调用
-- `易维护`
-  - rollout、rollback、replay、audit 这些面必须变得更好操作，而不是更难
+| 轻快 | fact-first assembly、runtime working-set shadow instrumentation、release-preflight、Docker hermetic eval | runtime shadow replay `16 / 16`、average reduction ratio `0.4368`、runtime answer A/B `5 / 5` vs `5 / 5` | 把 install / bootstrap / verify 简化下来，并把 context thickness / latency 收成更硬门禁 |
+| 聪明 | realtime `memory_intent` ingestion、nightly self-learning、governed promotion / decay、working-set shadow path | ordinary-conversation host-live A/B：current `38 / 40`、legacy `21 / 40`、`18` 条 UMC-only wins | 把 shadow-first 的 context decision 逐步推进到 bounded、guarded 的窄路径用户收益 |
+| 省心 | add / inspect / audit / repair / replay / rollback、canonical registry root、OpenClaw / Codex adapters | 已发版级 CLI 流程与回归保护验证栈 | 持续保持 operator surface 可读、可 replay，并补强 Codex / 多实例产品证据 |
 
 ## 产品北极星
 
@@ -112,46 +96,38 @@
 
 roadmap 层的含义是：
 
-- `装得简单`
-  - 接入复杂度和默认配置复杂度都要被当成正式目标
-- `用得顺手`
-  - 下一轮工作不能只做“更强”，还要做“默认体验更自然”
-- `跑得轻快`
-  - context thickness、latency、包体和运行负担都要进里程碑评估
-- `记得聪明`
+- `轻快`
+  - 接入复杂度、默认配置复杂度、包体、运行负担、context thickness、latency 都属于同一个正式目标
+- `聪明`
   - retrieval、learning、working-set pruning、budgeted assembly 的协同质量，必须成为下一轮主证据面
-- `维护省心`
-  - hermetic / Docker eval、rollback boundary、operator metrics 继续是一等约束
+- `省心`
+  - hermetic / Docker eval、rollback boundary、operator metrics、shared registry 继续是一等约束
 
 ## 当前缺口评估
 
 当前离北极星最近和最远的地方，需要在 roadmap 上写清楚：
 
 - 已经比较稳：
-  - `维护省心`
-  - `self-learning` 主干
-  - `context 优化` 已经成为正式主线
+  - `省心`
+  - `聪明` 的 self-learning 主干
+  - context 优化已经成为正式主线
 - 当前最薄弱：
-  - `简单`：安装 / bootstrap / verify 仍然偏手工
-  - `够快`：hermetic 普通对话写记忆路径仍然明显受 timeout 影响
+  - `轻快`：安装 / bootstrap / verify 仍然偏手工，hermetic 普通对话写记忆路径仍明显受 timeout 影响
   - `聪明`：working-set 优化还没有变成默认用户收益
-  - `轻量`：包体、启动、默认运行负担还没被收成硬预算
-  - `共享底座`：Codex / 多实例的产品证据仍弱于 OpenClaw
+  - `省心`：Codex / 多实例的产品证据仍弱于 OpenClaw
 
 这意味着下一轮 priority order 应该是：
 
-1. install / bootstrap / verify 简化
-2. hermetic timeout / latency 收敛
-3. shadow-only 到 guarded opt-in 的聪明路径
-4. 轻量预算化
-5. 共享底座证据补强
+1. `轻快`：install / bootstrap / verify 简化 + hermetic timeout / latency 收敛
+2. `聪明`：shadow-only 到 bounded、guarded opt-in 的聪明路径
+3. `省心`：共享底座与跨 Codex 证据补强
 
 ## 当前 / 下一步 / 更后面
 
 | 时间层级 | 重点 | 退出信号 |
 | --- | --- | --- |
-| 当前 | 以北极星缺口为入口，开始做 gap-driven 收敛：先简化接入，再补速度，再推进聪明路径 | roadmap、development plan、架构文档和 `.codex/*` 已从 docs-first review 切到同一套 gap-driven 优先级 |
-| 下一步 | 先定义 bounded LLM-led context decision contract、operator metrics 与 rollback boundary，并把 install / timeout / lightweight 变成正式门禁 | 下一轮 harder case 设计已经显式附带 prompt-thickness / reduction / latency / rollback 指标，同时 install / latency / budget 也有明确阈值 |
+| 当前 | 以 3 个用户承诺为入口，先补 `轻快`，再补 `聪明`，最后补 `省心` 的跨宿主证据 | roadmap、development plan、架构文档和 `.codex/*` 已统一到同一套 3 点优先级 |
+| 下一步 | 先定义 bounded LLM-led context decision contract、operator metrics 与 rollback boundary，并把 install / timeout / budget 变成正式门禁 | 下一轮 harder case 设计已经显式附带 prompt-thickness / reduction / latency / rollback 指标，同时 install / latency / budget 也有明确阈值 |
 | 更后面 | 只有在更长时间的 real-session soak 后，才讨论任何 guarded active-path experiment | shadow telemetry 长期为绿，且 active-path experiment 的 promotion / rollback gate 已可操作 |
 
 ## 当前执行重点

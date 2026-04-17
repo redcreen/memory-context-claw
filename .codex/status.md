@@ -13,25 +13,14 @@
 
 `close-north-star-gaps-after-docs-review`
 
-## Current Product Values
+## Current Product Promises
 
-- `按需加载 context`
-  - 当前已落地：fact-first assembly + Stage 6 runtime shadow instrumentation
-- `realtime + nightly self-learning`
-  - 当前已落地：realtime `memory_intent` ingestion + nightly governed learning
-- `CLI-governed memory operations`
-  - 当前已落地：add / inspect / audit / repair / replay / migrate operator flows
-- `共享记忆底座`
-  - 当前已落地：shared contracts + canonical registry root + OpenClaw / Codex adapters
-
-当前产品品质约束：
-
-- `简单`
-- `好用`
-- `轻量`
-- `够快`
+- `轻快`
+  - 当前已落地：fact-first assembly + Stage 6 runtime shadow instrumentation + release-preflight
 - `聪明`
-- `易维护`
+  - 当前已落地：realtime `memory_intent` ingestion + nightly governed learning
+- `省心`
+  - 当前已落地：CLI / audit / replay / rollback operator flows + shared contracts + canonical registry root + OpenClaw / Codex adapters
 
 ## Done
 
@@ -170,10 +159,10 @@
 
 ## In Progress
 
-- docs-first review 已完成，下一轮主线改成北极星缺口收敛：
-  - 先简化 install / bootstrap / verify
-  - 再收敛 hermetic timeout / latency
-  - 再推进 bounded、guarded 的聪明路径
+- docs-first review 已完成，下一轮主线改成 3 个用户承诺收敛：
+  - 先补 `轻快`
+  - 再补 `聪明`
+  - 再补 `省心` 的跨宿主证据
 - 当前 answer-level 不再是“能力是否存在”的 blocker；真正要解决的是：
   - 每一轮 prompt 还可以如何更轻
   - 如何在不改 builtin memory 行为的前提下，让 working-set decision 进入更可控的实验面
@@ -200,9 +189,9 @@
 
 ## Next 3 Actions
 
-1. 完成 docs-first review，把 roadmap、development plan、架构文档和 `.codex/*` 收敛到同一个“下一轮逐轮 context 优化”口径。
-2. 先把 install / bootstrap / verify 的复杂度压下来，并把 hermetic timeout / latency 收成更强门禁。
-3. 再定义 bounded LLM-led context decision contract、operator metrics 和 rollback boundary，然后设计更偏 `cross-source`、`conflict`、`multi-step history` 与高信息密度自然中文的 harder live A/B。
+1. 先把 `轻快` 收成更短的 install / bootstrap / verify 路径，并把 hermetic timeout / latency 收成更强门禁。
+2. 再定义 bounded LLM-led context decision contract、operator metrics 和 rollback boundary，把 `聪明` 从 shadow-first 推进到窄路径用户收益。
+3. 最后补强 `省心` 这条在 Codex / 多实例上的产品证据，并继续守住 replay / rollback / audit。
 
 ## Architecture Supervision
 - Signal: `yellow`
@@ -219,9 +208,9 @@
 
 ## Current Execution Line
 
-- Objective: 按北极星缺口来推进下一轮工作，先简化接入，再补速度，再推进聪明路径和 harder A/B
+- Objective: 按 3 个用户承诺来推进下一轮工作，先补轻快，再补聪明，再补省心
 - Plan Link: `close-north-star-gaps-after-docs-review`
-- Runway: install simplification，hermetic speed gate，bounded LLM decision contract，harder A/B redesign；并行守住 release-preflight 和 canonical-root policy
+- Runway: install simplification，hermetic speed gate，bounded LLM decision contract，shared-foundation evidence；并行守住 release-preflight 和 canonical-root policy
 - Progress: `0 / 3` tasks complete
 - Stop Conditions:
   - active prompt mutation is discussed before docs and rollback boundaries are explicit
@@ -230,9 +219,9 @@
 
 ## Execution Tasks
 
-- [ ] EL-1 simplify install / bootstrap / verify around the north-star `simple` goal
-- [ ] EL-2 strengthen hermetic timeout / latency gates around the north-star `fast enough` goal
-- [ ] EL-3 define the bounded LLM-led smart path and redesign the next harder live A/B around `cross-source`, `conflict`, `multi-step history`, and denser natural-Chinese prompts
+- [ ] EL-1 simplify install / bootstrap / verify and strengthen hermetic timeout / latency gates around the `轻快` promise
+- [ ] EL-2 define the bounded LLM-led smart path and redesign the next harder live A/B around `cross-source`, `conflict`, `multi-step history`, and denser natural-Chinese prompts
+- [ ] EL-3 strengthen `省心` with clearer Codex / multi-instance evidence while keeping replay / rollback / audit strong
 
 ## Development Log Capture
 

@@ -50,37 +50,19 @@ Current state:
 - it remains `default-off` and shadow-only
 - the next round is docs-first: clarify the bounded LLM-led decision contract, operator metrics, rollback boundary, and harder A/B design before any default prompt-path change
 
-## Primary Product Value Surfaces
+## Current Product Promises
 
-The architecture should now be reviewed against four primary product value surfaces:
+The architecture should now be reviewed against three user-facing promises:
 
-1. `On-demand context loading`
-   - owned mainly by the OpenClaw adapter plus the two context-optimization architecture tracks
-   - current landed capability: fact-first assembly plus runtime working-set shadow instrumentation
-2. `Realtime + nightly self-learning`
-   - owned by the Source System, Reflection System, Memory Registry, and Governance System
-   - current landed capability: realtime `memory_intent` ingestion, nightly reflection, promotion / decay, and governed exports
-3. `CLI-governed memory operations`
-   - owned mainly by the standalone runtime, CLI entrypoints, and governance tooling
-   - current landed capability: add / inspect / audit / repair / replay / migrate flows
-4. `Shared memory foundation across OpenClaw, Codex, and future consumers`
-   - owned by the shared contracts, projection layer, registry root policy, and both adapters
-   - current landed capability: one canonical governed memory core with OpenClaw and Codex consumption paths
-
-These surfaces also carry six non-negotiable product qualities:
-
-- `simple`
-  - install, default setup, and first verification should stay straightforward
-- `usable`
-  - the default workflow should stay understandable without forcing operators into architecture archaeology
-- `lightweight`
-  - runtime gains should come from sending less context, not from creating a heavier control layer than the problem itself
-- `fast enough`
-  - context optimization, self-learning, and governance should not make the main path feel slow
-- `smart`
-  - the system should remember what matters, avoid learning noise, send only the right context, and stay conservative when uncertain
-- `maintainable`
-  - core behavior should remain inspectable, replayable, repairable, and reversible
+1. `Light and fast`
+   - owned mainly by the OpenClaw adapter, the two context-optimization tracks, and the release / install / hermetic-eval workflows
+   - current landed capability: fact-first assembly, runtime working-set shadow instrumentation, release-preflight, and Docker hermetic eval
+2. `Smart`
+   - owned by the Source System, Reflection System, Memory Registry, and the selective context-decision layer
+   - current landed capability: realtime `memory_intent` ingestion, nightly reflection, promotion / decay, and the working-set shadow path
+3. `Reassuring`
+   - owned by the standalone runtime, CLI / governance tooling, shared contracts, projection layer, registry root policy, and both adapters
+   - current landed capability: inspect / audit / replay / repair / rollback flows, one canonical governed memory core, and OpenClaw / Codex consumption paths
 
 ## Product North Star And Engineering Translation
 
@@ -88,37 +70,31 @@ These surfaces also carry six non-negotiable product qualities:
 
 Translated into architecture constraints:
 
-- `simple to install`
-  - adapter seams, default config, CLI entrypoints, and package shape should reduce adoption cost
-- `smooth to use`
-  - default paths come first so users can benefit before learning the full governance model
-- `light and fast to run`
-  - context thickness, main-path latency, runtime footprint, and install size all belong to the same target
-- `smart to remember`
+- `light and fast`
+  - adapter seams, default config, install size, prompt thickness, main-path latency, and runtime footprint all belong to the same target
+- `smart`
   - durable memory, realtime learning, working-set pruning, budgeted assembly, and abstention guardrails should reinforce each other instead of drifting apart
-- `easy to maintain`
-  - critical behavior stays visible through inspect / audit / replay / rollback surfaces
+- `reassuring`
+  - critical behavior stays visible through inspect / audit / replay / rollback / hermetic eval / shared registry surfaces
 
 ## Current Strengths And Weak Spots
 
 Looking at the current architecture and evidence surface:
 
 - strengths:
-  - the governance / operator surface is already fairly complete
-  - the self-learning lifecycle is already a real backbone
+  - the `reassuring` operator surface is already fairly complete
+  - the `smart` self-learning backbone is already real
   - context optimization now has explicit boundaries instead of drifting as a report-only idea
 - weak spots:
-  - `simple` still depends on manual install wiring
-  - `fast enough` is not yet strong enough on hermetic answer paths
+  - `light and fast` still depends on manual install wiring and is not yet strong enough on hermetic answer paths
   - `smart` is still shadow-first rather than a default experience
-  - `lightweight` still lacks harder package, startup, and budget constraints
-  - `shared foundation` still needs stronger Codex / multi-instance product evidence
+  - `reassuring` still needs stronger Codex / multi-instance product evidence
 
 So the architecture-level guardrails now matter most in three ways:
 
-1. do not let “smarter” degrade into “more rules and heavier call chains”
-2. do not let stronger capability break installation simplicity or main-path speed
-3. do not leave the shared-core story at boundary design without stronger product proof
+1. do not let `smart` degrade into more rules and heavier call chains
+2. do not let stronger capability break the `light and fast` promise
+3. do not leave the `reassuring` shared-core story at boundary design without stronger product proof
 
 ## Module Inventory
 

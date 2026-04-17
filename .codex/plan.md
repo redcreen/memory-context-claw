@@ -28,37 +28,22 @@
 - Docker hermetic eval status: official-image runner landed and reusable; focused history cleanup scenario now runs through the real Docker path
 - Interpretation: the `200+` case buildout, natural-Chinese / watchlist / perf hardening, Stage 6 runtime shadow measurement, and the history-cleanup closure are complete; the docs-first review is now done, so the next phase is north-star gap closure before any new active-path experiment
 
-## Current Product Values
+## Current Product Promises
 
-- `按需加载 context`
+- `轻快`
   - 当前已落地：fact-first assembly、durable-source slimming 方向、runtime working-set shadow instrumentation
-- `realtime + nightly self-learning`
-  - 当前已落地：realtime `memory_intent` ingestion、nightly governed learning、promotion / decay
-- `CLI-governed memory operations`
-  - 当前已落地：`umc` add / inspect / audit / repair / replay / migrate operator surface
-- `共享记忆底座`
-  - 当前已落地：shared contracts、canonical registry root、OpenClaw / Codex adapters
-
-当前还必须同时守住六条产品品质：
-
-- `简单`
-- `好用`
-- `轻量`
-- `够快`
 - `聪明`
-- `易维护`
+  - 当前已落地：realtime `memory_intent` ingestion、nightly governed learning、promotion / decay
+- `省心`
+  - 当前已落地：`umc` add / inspect / audit / repair / replay / migrate operator surface、shared contracts、canonical registry root、OpenClaw / Codex adapters
 
 ## Current Gap Order
 
-1. `简单`
-   - install / bootstrap / verify 还不够短
-2. `够快`
-   - hermetic ordinary-conversation 写记忆路径仍然 timeout-heavy
-3. `聪明`
+1. `轻快`
+   - install / bootstrap / verify 还不够短，hermetic ordinary-conversation 写记忆路径仍然 timeout-heavy
+2. `聪明`
    - working-set 和 context optimization 仍是 shadow-first，不是默认用户收益
-4. `轻量`
-   - 包体、启动、默认运行负担还缺硬预算
-5. `共享底座`
+3. `省心`
    - Codex / 多实例产品证据弱于 OpenClaw
 
 ## Slices
@@ -112,11 +97,11 @@
   - Status: `ongoing`
 
 - Slice: `close-north-star-gaps-after-docs-review`
-  - Objective: docs-first review 已完成；当前要按北极星缺口顺序推进下一轮工作，先简化接入，再补速度，再推进聪明路径与 harder A/B
+  - Objective: docs-first review 已完成；当前要按 3 个用户承诺推进下一轮工作，先补轻快，再补聪明，再补省心
   - Dependencies: Stage 6 runtime shadow evidence、history cleanup closeout、roadmap / development plan / architecture docs、Docker hermetic eval path
-  - Risks: 如果继续只谈 context 优化、不把 install 和 speed 收成正式缺口，后续方向会再次偏到“功能更强但产品体感没变好”；如果直接继续堆 hardcoded rules，会违背当前“尽量使用 LLM tool、但调用次数受控”的实现约束
-  - Validation: roadmap / development plan / architecture docs / `.codex/*` 对齐；北极星缺口顺序明确；bounded LLM decision contract、operator metrics 和 rollback boundary 被写成 durable docs
-  - Exit Condition: 维护者可以只看文档就知道下一轮先收哪一类产品缺口，再进入哪条 experiment、哪些 guardrail 不能动、哪些指标决定是否 promotion
+  - Risks: 如果继续只谈 context 优化、不把轻快和省心一起收成正式缺口，后续方向会再次偏到“功能更强但产品体感没变好”；如果直接继续堆 hardcoded rules，会违背当前“尽量使用 LLM tool、但调用次数受控”的实现约束
+  - Validation: roadmap / development plan / architecture docs / `.codex/*` 对齐；3 个用户承诺顺序明确；bounded LLM decision contract、operator metrics 和 rollback boundary 被写成 durable docs
+  - Exit Condition: 维护者可以只看文档就知道下一轮先收哪一个用户承诺的缺口，再进入哪条 experiment、哪些 guardrail 不能动、哪些指标决定是否 promotion
   - Status: `ongoing`
 
 - Slice: `formalize-realtime-memory-intent-ingestion`
@@ -225,10 +210,10 @@
 
 ## Execution Order
 
-1. 先按北极星缺口顺序推进：install / bootstrap / verify 简化优先
-2. 收敛 hermetic timeout / latency，把 `够快` 变成正式门禁
-3. 定义 bounded LLM-led context decision contract、operator metrics 和 rollback boundary
-4. 在此基础上再重设计下一轮 live A/B，让更多 `cross-source`、`conflict`、`multi-step history` 与高信息密度自然中文场景变成 Memory Core 独占胜场
+1. 先补 `轻快`：install / bootstrap / verify 简化优先，并收敛 hermetic timeout / latency
+2. 再补 `聪明`：定义 bounded LLM-led context decision contract、operator metrics 和 rollback boundary
+3. 在此基础上重设计下一轮 live A/B，让更多 `cross-source`、`conflict`、`multi-step history` 与高信息密度自然中文场景变成 Memory Core 独占胜场
+4. 最后补 `省心`：持续加强 Codex / 多实例证据和 operator 体验
 4. 继续保持 `24` 条自然中文案例、当前 raw transport watchlist 和 `2026-04-15` perf baseline 在下一轮修复中持续稳定
 5. 把更难 harder-case surface 逐步从 watch 推向更强的正式门禁候选
 6. 把 gateway/shared-session 与 raw transport 继续保持在独立 watchlist，不与算法判断混淆
@@ -248,7 +233,7 @@
 
 ## Current Execution Line
 
-- Objective: 把北极星缺口转成执行顺序，先解决简单和速度，再推进聪明路径与 harder A/B
+- Objective: 把 3 个用户承诺转成执行顺序，先解决轻快，再推进聪明路径与 harder A/B，最后补强省心证据
 - Plan Link: `close-north-star-gaps-after-docs-review`
 - Runway: install simplification、hermetic speed gate、bounded LLM decision contract、harder A/B redesign、gateway/raw transport watch
 - Progress: `0 / 3` tasks complete

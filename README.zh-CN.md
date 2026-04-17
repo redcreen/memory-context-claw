@@ -31,39 +31,22 @@
 
 最诚实的结论是：OpenClaw 内置记忆在很多“已有记忆消费”的简单题上本来就不差，所以旧的 `100` 条 A/B 差异不大；而在“普通对话里实时写入，再跨会话召回”这条线上，宿主 live 结果显示 Unified Memory Core 有明显优势，但 Docker hermetic 复测又证明这条优势目前会被 answer-level timeout 严重吞掉。也就是说，UMC 现在不只是要“记得更好”，还要把这条写侧能力做得更快、更稳、更可复现。
 
-## 四个主要卖点
+## 三个用户价值
 
-这个仓库现在不应该再只被理解成“一个检索更强的记忆插件”，而应该从四个主要卖点来理解。
+从用户视角，这个产品最终只应该收成 3 点：
 
-1. `按需加载 context，而不是平铺直塞 prompt`
-   - 当前已落地：fact-first context assembly、durable-source slimming 架构，以及 runtime working-set shadow instrumentation
-   - 当前可量化证据：dialogue working-set runtime shadow replay average reduction ratio = `0.4368`，同时 runtime answer A/B baseline `5 / 5`、shadow `5 / 5`
-   - 下一里程碑：把它进一步收口成更难 live A/B 上稳定的“对比内置的 context thickness / latency”门禁
-2. `每轮对话 + 每夜批处理的 self-learning`
-   - 当前已落地：realtime `memory_intent` ingestion、governed promotion / decay，以及默认开启的 nightly self-learning
-   - 当前可量化证据：ordinary-conversation host-live A/B 当前是 current `38 / 40`、legacy `21 / 40`，其中 `18` 条是 UMC-only wins
-   - 当前限制：Docker hermetic 复测仍然明显受 answer timeout 约束，所以这条卖点已经真实存在，但在紧预算下还没完全释放出来
-3. `可用 CLI 管理、检查、维护的记忆系统`
-   - 当前已落地：`umc source add`、inspect / audit / repair / replay / export、registry inspect / migrate，以及 release-preflight checks
-   - 产品含义：记忆内容可以被 operator 当成受治理工件来添加、维护和回放，而不是一个黑盒插件状态
-4. `一个共享底座，OpenClaw / Codex / 多实例都能复用`
-   - 当前已落地：shared contracts、canonical registry root、projection / export 层、OpenClaw adapter、Codex adapter
-   - 产品含义：一套 governed memory core 可以服务多个 OpenClaw 实例和跨宿主消费者，而不是把记忆锁死在单个 runtime 里
-
-这些卖点还必须同时满足六条产品品质要求：
-
-- `简单`
-  - 安装路径、默认配置和首次验证应该一看就会，不需要用户先理解整套治理体系
-- `好用`
-  - 默认工作流应该直接、清楚，一上手就能感觉到“回答更顺、上下文更准”
-- `轻量`
-  - runtime 的目标是少给 context、少长控制层，安装包和运行负担都要尽量小
-- `够快`
-  - answer path、context assembly 和日常操作必须足够快，不能让用户为了“更聪明的记忆”付出明显卡顿
-- `聪明`
-  - 系统应该会记重点、会拒绝噪音、会按需给 context，并在不确定时保持收敛
-- `易维护`
-  - operator 必须能够 inspect、replay、repair、rollback，而不是去反向猜测隐藏状态
+1. `轻快`
+   - 装得简单，接入轻，包体和运行负担尽量小，主路径尽量快
+   - 当前已落地：fact-first assembly、runtime working-set shadow instrumentation、release-preflight、独立 Docker hermetic eval
+   - 当前最大缺口：普通对话实时写记忆在 hermetic 环境下仍然明显受 timeout 压力影响，安装接入也还不够“一看就会”
+2. `聪明`
+   - 该记的记住，不该记的不乱记；该给的 context 才给，不确定时尽量收敛
+   - 当前已落地：realtime `memory_intent` ingestion、nightly self-learning、durable-source slimming 方向、working-set pruning shadow 路径
+   - 当前最大缺口：working-set 优化还停留在 shadow-only，聪明还没有完全变成默认用户收益
+3. `省心`
+   - 可查、可管、可回放、可回退，也能跨 OpenClaw / Codex / 多实例复用
+   - 当前已落地：`umc` CLI、inspect / audit / replay / repair / rollback、canonical registry root、OpenClaw / Codex adapters
+   - 当前最大缺口：跨 Codex / 多实例的产品证据还弱于 OpenClaw 主路径
 
 ## 产品北极星
 
@@ -71,23 +54,14 @@
 
 > 装得简单，用得顺手，跑得轻快，记得聪明，维护省心。
 
-如果拆成技术和工程约束，分别是：
+如果拆成技术和工程约束，可以统一翻成这 3 点：
 
-- `装得简单`
-  - 安装命令要短，默认配置要少，首次验证要直接
-  - 工程含义：安装包结构、默认配置、插件加载验证、CLI 入口都必须尽量降低首次接入成本
-- `用得顺手`
-  - 用户不应该先学一整套治理概念，才能感受到价值
-  - 工程含义：默认路径优先，功能开关克制，常见操作和常见问题都要能被直觉式完成
-- `跑得轻快`
-  - 不只是“能跑”，而是上下文更轻、主路径更顺、体感更快
-  - 工程含义：prompt thickness、context assembly、answer latency、安装包体积、运行时负担都要一起受控
-- `记得聪明`
-  - 该记的记住，不该记的不乱记；该给的 context 才给，不相关的不乱塞；不确定时宁可收敛，不乱猜
-  - 工程含义：self-learning、working-set pruning、budgeted assembly、abstention / guardrail、bounded decision contract 要协同工作
-- `维护省心`
-  - 出问题时要能看、能查、能回放、能回退，而不是只能靠猜
-  - 工程含义：inspect / audit / replay / repair / rollback / hermetic eval 这些 operator surface 必须一直是正式能力
+- `轻快`
+  - 安装命令、默认配置、首次验证、包体、启动成本、prompt thickness、answer latency、runtime cost 都属于同一个目标面
+- `聪明`
+  - self-learning、working-set pruning、budgeted assembly、abstention / guardrail、bounded decision contract 要协同提升“判断质量”
+- `省心`
+  - inspect / audit / replay / repair / rollback / hermetic eval / shared registry 这些 operator surface 必须一直是正式能力
 
 ## 当前离北极星还有多远
 
@@ -95,33 +69,25 @@
 
 已经比较稳的部分：
 
-- `维护省心`
+- `省心`
   - CLI、audit、replay、repair、rollback、release-preflight、Docker hermetic eval 这些 operator 面已经很像正式产品能力
-- `self-learning` 主干
-  - realtime + nightly 两条学习路径都已经落地，而且 host-live A/B 已经能看到真实增益
-- `context 优化` 的主线地位
-  - durable-source slimming 和 working-set pruning 都已经成为正式 workstream，不再只是 report 里的想法
+- `聪明` 的主干
+  - realtime + nightly 学习链路已经落地，而且 host-live A/B 已经能看到真实增益
 
 当前仍然偏薄弱的部分：
 
-- `简单`
-  - 安装后仍然需要手改 `openclaw.json`、可选改 `PATH`，首次接入还不够“一看就会”
-- `够快`
-  - Docker hermetic 下的普通对话实时写记忆仍然明显受 timeout 压力影响，真实可复现环境下的速度还不够稳
+- `轻快`
+  - 安装仍需手改 `openclaw.json`，hermetic 普通对话写记忆路径也还明显受 timeout 影响
 - `聪明`
   - context 优化虽然已经验证可行，但当前仍是 shadow-only，还没有变成默认用户收益
-- `轻量`
-  - 轻量目前更多还是目标和方向，包体、启动成本、默认运行负担还没被收成硬门禁
-- `共享底座`
-  - 架构上已经成立，但产品级证据目前仍明显偏 OpenClaw，Codex / 多实例这条还缺更像产品证明的案例
+- `省心`
+  - 共享底座的架构已经成立，但 Codex / 多实例的产品证据还不够强
 
 所以接下来的重点顺序应该很明确：
 
-1. 先把 `简单` 收成更短的 install / bootstrap / verify 路径。
-2. 再把 `够快` 收成更强的 hermetic / timeout / latency gate。
-3. 然后把 `聪明` 从 shadow measurement surface 推进到极窄的 guarded opt-in 用户路径。
-4. 同时把 `轻量` 收成明确的包体、启动成本、prompt thickness 和 runtime budget 目标。
-5. 最后补强 `共享底座` 的跨 OpenClaw / Codex 证据面。
+1. 先把 `轻快` 收成更短的 install / bootstrap / verify 路径，并压下 hermetic timeout / latency。
+2. 再把 `聪明` 从 shadow measurement surface 推进到极窄的 guarded opt-in 用户路径。
+3. 最后补强 `省心` 这条在 Codex / 多实例上的产品证据。
 
 ## 适用对象
 

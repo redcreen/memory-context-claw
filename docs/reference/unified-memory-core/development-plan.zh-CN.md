@@ -29,31 +29,19 @@
 - 一个具备显式 namespace、可见性规则、可修复工件的多 adapter 系统
 - 一个既能嵌入宿主，也能独立运行的产品
 
-## 当前产品卖点与执行映射
+## 当前产品承诺与执行映射
 
-当前执行计划也要直接锚定到四个产品卖点：
+当前执行计划也要直接锚定到 3 个用户承诺：
 
-1. `按需加载 context`
-   - 已落地：fact-first assembly 和 Stage 6 runtime shadow instrumentation
-   - 下一步：把 shadow surface 收口成更难场景下的 context-thickness / latency gate
-2. `realtime + nightly self-learning`
-   - 已落地：realtime `memory_intent` ingestion + nightly governed learning
-   - 下一步：继续清掉 timeout-heavy 盲区，让写侧优势在更紧的 answer budget 下也能保持
-3. `CLI-governed memory operations`
-   - 已落地：add / inspect / audit / repair / replay / migrate 这一整套 operator 流程
-   - 下一步：在 context 优化演进时，继续保持这些流程可读、可 replay、可发版
-4. `共享记忆底座`
-   - 已落地：shared contracts、canonical registry root、OpenClaw adapter、Codex adapter
-   - 下一步：在 OpenClaw 上下文层变得更 selective 的同时，守住 shared-core boundary 不漂移
-
-下一轮每一步，也都必须同时满足六条产品品质要求：
-
-- `简单`
-- `好用`
-- `轻量`
-- `够快`
-- `聪明`
-- `易维护`
+1. `轻快`
+   - 已落地：fact-first assembly、Stage 6 runtime shadow instrumentation、release-preflight、Docker hermetic eval
+   - 下一步：把 install / bootstrap / verify 压短，并把 context-thickness / latency 变成更硬门禁
+2. `聪明`
+   - 已落地：realtime `memory_intent` ingestion + nightly governed learning + working-set shadow path
+   - 下一步：继续清掉 timeout-heavy 盲区，并把 shadow-first 的 context decision 逐步推进到 bounded、guarded 的窄路径收益
+3. `省心`
+   - 已落地：CLI / audit / replay / rollback operator 流程、canonical registry root、OpenClaw / Codex adapters
+   - 下一步：继续保持这些流程可读、可 replay、可发版，并补强跨 Codex / 多实例的产品证据
 
 ## 产品北极星与执行解释
 
@@ -61,33 +49,25 @@
 
 把它翻成执行要求：
 
-- `装得简单`
-  - 安装、默认配置、首次验证继续走最短路径
-- `用得顺手`
-  - 默认路径优先，避免把下一轮工作做成一堆先学后用的高级开关
-- `跑得轻快`
-  - 所有新 experiment 都要一起带上 prompt thickness、latency、runtime cost 指标
-- `记得聪明`
-  - bounded decision contract、self-learning、working-set pruning、budgeted assembly 要一起提升“判断质量”
-- `维护省心`
-  - rollback boundary、operator metrics、hermetic / Docker eval 入口必须在每次推进前写清楚
+- `轻快`
+  - 安装、默认配置、首次验证、prompt thickness、latency、runtime cost 一起进门禁
+- `聪明`
+  - bounded decision contract、self-learning、working-set pruning、budgeted assembly 一起提升“判断质量”
+- `省心`
+  - rollback boundary、operator metrics、hermetic / Docker eval、shared registry 入口必须在每次推进前写清楚
 
 ## 北极星驱动的当前优先级
 
 这份计划现在不再只是“docs-first review”。
 
-接下来应该按北极星缺口来排当前优先级：
+接下来应该按 3 个用户承诺来排当前优先级：
 
-1. `简单`
-   - 先把 install / bootstrap / verify 路径压短，减少人工配置和人工验证
-2. `够快`
-   - 先把 hermetic ordinary-conversation 写记忆路径里的 timeout / latency 问题压下去
-3. `聪明`
+1. `轻快`
+   - 先把 install / bootstrap / verify 路径压短，再把 hermetic ordinary-conversation 写记忆路径里的 timeout / latency 问题压下去
+2. `聪明`
    - 在 bounded decision contract 明确后，把 shadow-first 结果推进到极窄的 guarded opt-in 路径
-4. `轻量`
-   - 为包体、启动成本、prompt thickness、runtime cost 建明确预算
-5. `共享底座`
-   - 补 OpenClaw 之外，尤其是 Codex / 多实例的产品证据
+3. `省心`
+   - 补 OpenClaw 之外，尤其是 Codex / 多实例的产品证据，并继续守住 rollback / replay / audit 能力
 
 ## 怎么使用这份计划
 

@@ -31,39 +31,22 @@ Read these first:
 
 The honest takeaway is now split in two: OpenClaw builtin memory is already decent on many “existing memory consumption” prompts, so the older `100`-case A/B only shows a modest gap. On the ordinary-conversation write surface, the host-live run shows a much clearer Unified Memory Core advantage, but the hermetic Docker rerun shows that the same surface is now heavily constrained by answer-level timeout pressure. In other words, UMC is not just about “remembering better” anymore; it also has to become faster and more reproducible under bounded evaluation budgets.
 
-## Four Primary Product Values
+## Three User-Facing Promises
 
-The repo should now be understood through four primary product values, not just “memory retrieval” in the abstract.
+From a user perspective, this product should collapse to three promises:
 
-1. `On-demand context loading instead of flat prompt stuffing`
-   - Already landed: fact-first context assembly, durable-source slimming architecture, and runtime working-set shadow instrumentation
-   - Measured now: dialogue working-set runtime shadow replay average reduction ratio `0.4368`, with runtime answer A/B baseline `5 / 5` and shadow `5 / 5`
-   - Next milestone: turn this into a stable builtin-comparison context-thickness and latency gate on harder live A/B
-2. `Self-learning on every turn and every night`
-   - Already landed: realtime `memory_intent` ingestion, governed promotion / decay, and nightly self-learning enabled by default
-   - Measured now: focused ordinary-conversation host-live A/B is current `38 / 40` vs legacy `21 / 40`, with `18` UMC-only wins
-   - Current caveat: the hermetic Docker rerun is still timeout-constrained, so this value is real but not yet fully saturated under tight answer budgets
-3. `CLI-governed memory you can add, inspect, and maintain`
-   - Already landed: `umc source add`, inspect / audit / repair / replay / export flows, registry inspect / migrate, and release-preflight checks
-   - Product meaning: operators can manage memory content as governed artifacts instead of treating the system as an opaque plugin
-4. `One shared memory foundation across OpenClaw, Codex, and future consumers`
-   - Already landed: shared contracts, a canonical registry root, projection / export layers, the OpenClaw adapter, and the Codex adapter
-   - Product meaning: one governed memory core can be reused across multiple OpenClaw instances and cross-host consumers instead of trapping memory inside one runtime
-
-These values also need to stay legible as six product qualities:
-
-- `simple`
-  - install, default configuration, and first verification should be obvious without forcing users to learn the whole governance stack first
-- `usable`
-  - the default workflow should feel clear and immediately better in practice, not just more feature-rich on paper
-- `lightweight`
-  - the runtime should send less context and avoid growing a heavier control layer, while keeping install footprint small
-- `fast enough`
-  - answer paths, context assembly, and day-to-day operations should stay fast enough that better memory does not feel slower
-- `smart`
-  - the system should remember what matters, avoid writing what does not, send only the right context, and stay conservative when uncertain
-- `maintainable`
-  - operators should be able to inspect, replay, repair, and roll back behavior without reverse-engineering hidden state
+1. `Light and fast`
+   - simple to install, low-friction to adopt, small in footprint, and fast enough on the main path
+   - already landed: fact-first assembly, runtime working-set shadow instrumentation, release-preflight, and reproducible Docker hermetic eval
+   - biggest current gap: ordinary-conversation realtime write is still too timeout-heavy in hermetic runs, and installation is not yet “obvious at a glance”
+2. `Smart`
+   - remember what matters, avoid writing noise, send only the right context, and stay conservative when uncertain
+   - already landed: realtime `memory_intent` ingestion, nightly self-learning, durable-source slimming direction, and the working-set pruning shadow path
+   - biggest current gap: working-set optimization is still shadow-only, so the “smart” gain is not fully user-visible yet
+3. `Reassuring`
+   - inspectable, governable, replayable, rollback-friendly, and reusable across OpenClaw, Codex, and future consumers
+   - already landed: `umc` CLI, inspect / audit / replay / repair / rollback surfaces, canonical registry root, and OpenClaw / Codex adapters
+   - biggest current gap: product-grade cross-Codex and multi-instance evidence still lags behind the OpenClaw path
 
 ## Product North Star
 
@@ -73,21 +56,12 @@ The current product target can be compressed to one sentence:
 
 In technical and engineering terms, that means:
 
-- `simple to install`
-  - the install command, default configuration, and first verification path should stay short and obvious
-  - engineering meaning: package shape, plugin wiring, default config, and CLI entrypoints should minimize first-use friction
-- `smooth to use`
-  - users should not have to learn the whole governance model before feeling the value
-  - engineering meaning: default paths come first, feature switches stay disciplined, and common tasks should remain direct
-- `light and fast to run`
-  - the product should feel lighter in prompt weight and faster in main-path behavior, not just more capable
-  - engineering meaning: prompt thickness, context assembly cost, answer latency, install size, and runtime footprint all stay in scope
-- `smart to remember`
-  - remember what matters, avoid writing what does not, send only the right context, and stay conservative when uncertain
-  - engineering meaning: self-learning, working-set pruning, budgeted assembly, abstention / guardrails, and bounded decision contracts must work together
-- `easy to maintain`
-  - when something goes wrong, operators should be able to inspect, trace, replay, and roll back it instead of guessing
-  - engineering meaning: inspect / audit / replay / repair / rollback / hermetic eval surfaces remain first-class
+- `light and fast`
+  - install command, default configuration, first verification, package size, startup cost, prompt thickness, answer latency, and runtime cost all belong to the same target
+- `smart`
+  - self-learning, working-set pruning, budgeted assembly, abstention / guardrails, and bounded decision contracts must improve judgment quality together
+- `reassuring`
+  - inspect / audit / replay / repair / rollback / hermetic eval / shared registry surfaces remain first-class so operators do not need to guess
 
 ## Current Distance From The North Star
 
@@ -95,33 +69,25 @@ The product is already beyond “concept validation”, but it still has several
 
 Areas that are already relatively strong:
 
-- `easy to maintain`
+- `reassuring`
   - CLI, audit, replay, repair, rollback, release-preflight, and Docker hermetic eval already behave like real operator surfaces
-- `self-learning` as a product backbone
+- the backbone of `smart`
   - both realtime and nightly learning paths are landed, and the host-live A/B already shows real value
-- `context optimization` as a formal mainline
-  - durable-source slimming and working-set pruning are now first-class workstreams, not report-only ideas
 
 Areas that are still comparatively weak:
 
-- `simple`
-  - installation still expects manual `openclaw.json` edits and optional `PATH` changes, so first-use is not yet “obvious at a glance”
-- `fast enough`
-  - ordinary-conversation realtime write still hits heavy timeout pressure in Docker hermetic runs, so reproducible speed is not yet strong enough
+- `light and fast`
+  - installation still expects manual `openclaw.json` edits, and hermetic ordinary-conversation realtime write still hits heavy timeout pressure
 - `smart`
-  - context optimization is validated, but still shadow-only; it is not yet a default user-visible gain
-- `lightweight`
-  - lightweight is still more of a direction than a hard gate, because package size, startup cost, and default runtime overhead are not yet enforced as budgets
-- `shared foundation`
-  - the architecture is there, but the product evidence is still much stronger on OpenClaw than on Codex or multi-instance reuse
+  - context optimization is validated, but still shadow-only, so the gain is not yet the default user experience
+- `reassuring`
+  - the shared-foundation story is strong architecturally, but product evidence is still much stronger on OpenClaw than on Codex or multi-instance reuse
 
 So the next focus order should stay explicit:
 
-1. make `simple` real through a shorter install / bootstrap / verify path
-2. make `fast enough` real through stronger hermetic / timeout / latency gates
-3. move `smart` from a shadow measurement surface into a very narrow guarded opt-in user path
-4. turn `lightweight` into explicit package, startup, prompt-thickness, and runtime-budget targets
-5. strengthen `shared foundation` with clearer cross-OpenClaw / Codex evidence
+1. make `light and fast` real through a shorter install / bootstrap / verify path and stronger hermetic timeout / latency gates
+2. move `smart` from a shadow measurement surface into a very narrow guarded opt-in user path
+3. strengthen `reassuring` with clearer cross-OpenClaw / Codex evidence
 
 ## Who This Is For
 
