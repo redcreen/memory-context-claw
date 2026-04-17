@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-04-16T16:44:15.487Z",
+  "generatedAt": "2026-04-17T05:26:55.001Z",
   "agentId": "umceval65",
   "shardCount": 1,
-  "casesPath": "/Users/redcreen/Project/unified-memory-core/evals/openclaw-memory-improvement-history-cleanup-cases.js",
-  "fixtureRoot": "/Users/redcreen/Project/unified-memory-core/evals/openclaw-cli-memory-fixture",
-  "pluginPath": "/Users/redcreen/Project/unified-memory-core",
-  "authProfilesPath": "",
-  "embedModelPath": "/Users/redcreen/.openclaw/models/embeddinggemma-300m-qat-Q8_0.gguf",
+  "casesPath": "/workspace/evals/openclaw-memory-improvement-history-cleanup-cases.js",
+  "fixtureRoot": "/workspace/evals/openclaw-cli-memory-fixture",
+  "pluginPath": "/workspace",
+  "authProfilesPath": "/opt/openclaw/auth/auth-profiles.json",
+  "embedModelPath": "/opt/openclaw/models/embedding.gguf",
   "agentModel": "openai-codex/gpt-5.4-mini",
   "preset": "safe-local",
   "hermeticState": true,
@@ -15,7 +15,7 @@
     "passed": 2,
     "failed": 0,
     "comparedLegacy": 2,
-    "legacyPassed": 2,
+    "legacyPassed": 1,
     "byLanguage": {
       "en": {
         "total": 0,
@@ -29,9 +29,9 @@
       "zh": {
         "total": 2,
         "unifiedPassed": 2,
-        "legacyPassed": 2,
-        "bothPass": 2,
-        "umcOnly": 0,
+        "legacyPassed": 1,
+        "bothPass": 1,
+        "umcOnly": 1,
         "legacyOnly": 0,
         "bothFail": 0
       }
@@ -40,12 +40,13 @@
       "ab-zh-history": {
         "total": 2,
         "unifiedPassed": 2,
-        "legacyPassed": 2,
-        "umcOnly": 0
+        "legacyPassed": 1,
+        "umcOnly": 1
       }
     },
     "byAttribution": {
-      "shared-capability": 2
+      "unified-gain": 1,
+      "shared-capability": 1
     }
   },
   "results": [
@@ -57,7 +58,7 @@
       "message": "只根据当前记忆，切到现在这个编辑器之前，我原来主力是哪个编辑器？如果没有这条记忆，就只回答：I don't know based on current memory.",
       "compareLegacy": true,
       "attributionKind": "history",
-      "attribution": "shared-capability",
+      "attribution": "unified-gain",
       "current": {
         "ok": true,
         "transport": "agent_local",
@@ -73,7 +74,7 @@
           "MEMORY.md"
         ],
         "observedSessionKey": "agent:umceval65:main",
-        "observedSessionId": "umc-bench-ab100-zh-history-editor-2-1136cd34",
+        "observedSessionId": "umc-bench-ab100-zh-history-editor-2-7df2bc86",
         "warning": "",
         "passed": true,
         "expectedAnyOk": true,
@@ -85,7 +86,7 @@
       "legacy": {
         "ok": true,
         "transport": "agent_local",
-        "answer": "Vim.",
+        "answer": "Zed",
         "injectedWorkspaceFiles": [
           "AGENTS.md",
           "SOUL.md",
@@ -97,14 +98,14 @@
           "MEMORY.md"
         ],
         "observedSessionKey": "agent:umceval65:main",
-        "observedSessionId": "umc-bench-ab100-zh-history-editor-2-85620bdd",
+        "observedSessionId": "umc-bench-ab100-zh-history-editor-2-2c06fd8c",
         "warning": "",
-        "passed": true,
-        "expectedAnyOk": true,
+        "passed": false,
+        "expectedAnyOk": false,
         "expectedAllOk": true,
-        "forbiddenOk": true,
+        "forbiddenOk": false,
         "sourcesOk": true,
-        "reason": "matched"
+        "reason": "expectation mismatch"
       }
     },
     {
@@ -119,7 +120,7 @@
       "current": {
         "ok": true,
         "transport": "agent_local",
-        "answer": "Vim。Source: `memory/2026-04-10.md#L1-L6`",
+        "answer": "Vim。",
         "injectedWorkspaceFiles": [
           "AGENTS.md",
           "SOUL.md",
@@ -131,7 +132,7 @@
           "MEMORY.md"
         ],
         "observedSessionKey": "agent:umceval65:main",
-        "observedSessionId": "umc-bench-ab100-zh-history-editor-4-a37b5477",
+        "observedSessionId": "umc-bench-ab100-zh-history-editor-4-8c6e8fbe",
         "warning": "",
         "passed": true,
         "expectedAnyOk": true,
@@ -155,7 +156,7 @@
           "MEMORY.md"
         ],
         "observedSessionKey": "agent:umceval65:main",
-        "observedSessionId": "umc-bench-ab100-zh-history-editor-4-8d3140fb",
+        "observedSessionId": "umc-bench-ab100-zh-history-editor-4-34ab233c",
         "warning": "",
         "passed": true,
         "expectedAnyOk": true,
