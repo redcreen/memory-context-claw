@@ -27,14 +27,27 @@ const scenarios = [
   },
   {
     id: "ordinary-conversation-memory-intent-ab",
-    description: "Focused 40-case ordinary-conversation realtime-write A/B in hermetic Docker state.",
+    description: "Focused 40-case ordinary-conversation realtime-write A/B in hermetic Docker state (strict sequential baseline).",
     script: "scripts/eval-openclaw-ordinary-conversation-memory-intent-ab.js",
     cases: "evals/openclaw-ordinary-conversation-memory-intent-ab-cases.js",
     agent: "rtab",
     fixtureRoot: "evals/openclaw-ordinary-conversation-fixture",
     preset: "safe-local",
     agentModel: "openai-codex/gpt-5.4-mini",
-    args: ["--shard-size", "10", "--shard-count", "4"],
+    args: ["--shard-size", "40", "--shard-count", "1"],
+    writeJson: `reports/openclaw-ordinary-conversation-memory-intent-ab-${date}.json`,
+    writeMarkdown: `reports/generated/openclaw-ordinary-conversation-memory-intent-ab-${date}.md`
+  },
+  {
+    id: "ordinary-conversation-memory-intent-ab-fast",
+    description: "Focused 40-case ordinary-conversation realtime-write A/B in hermetic Docker state (fast watch mode).",
+    script: "scripts/eval-openclaw-ordinary-conversation-memory-intent-ab.js",
+    cases: "evals/openclaw-ordinary-conversation-memory-intent-ab-cases.js",
+    agent: "rtab",
+    fixtureRoot: "evals/openclaw-ordinary-conversation-fixture",
+    preset: "safe-local",
+    agentModel: "openai-codex/gpt-5.4-mini",
+    args: ["--shard-size", "20", "--shard-count", "2"],
     writeJson: `reports/openclaw-ordinary-conversation-memory-intent-ab-${date}.json`,
     writeMarkdown: `reports/generated/openclaw-ordinary-conversation-memory-intent-ab-${date}.md`
   }

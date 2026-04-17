@@ -126,6 +126,7 @@ export default {
       api.on("after_tool_call", async (event, ctx) => acceptedActionHookRuntime.captureAfterToolCall(event, ctx));
     }
     if (typeof api.on === "function" && ordinaryConversationHookRuntime.enabled) {
+      api.on("before_agent_start", async (event, ctx) => ordinaryConversationHookRuntime.captureBeforeAgentStart(event, ctx));
       api.on("agent_end", async (event, ctx) => ordinaryConversationHookRuntime.captureAgentEnd(event, ctx));
     }
 

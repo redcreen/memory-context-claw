@@ -10,6 +10,12 @@ This report now answers a slightly different question:
 
 - did the move from the old Docker fast path to the new `gateway-steady` runner actually recover a usable capability surface without losing isolation?
 
+This report is now historical in one narrow sense:
+
+- it records the fast-watch `gateway-steady` improvement line
+- it is no longer the official ordinary-conversation capability baseline
+- the official baseline is the later strict `1 shard` result: `current=39 / 40`, `legacy=15 / 40`, `UMC-only=24`, `legacy-only=0`, `both-fail=1`
+
 ## Before vs After
 
 The older Docker path paid three repeated costs over and over:

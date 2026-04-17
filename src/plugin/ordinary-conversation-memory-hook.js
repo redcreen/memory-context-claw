@@ -136,14 +136,19 @@ const ONE_OFF_MARKERS = [
   /\bthis time only\b/i,
   /\bjust this once\b/i,
   /\bonly this time\b/i,
+  /\bfor today only\b/i,
   /\bdon't remember\b/i,
   /\bdo not remember\b/i,
   /\bno need to remember\b/i,
+  /这一次/u,
   /只处理这一次/u,
   /只这一次/u,
+  /今天这一次/u,
   /不用记住/u,
   /别记住/u,
-  /不要记住/u
+  /不要记住/u,
+  /不要把这个记成/u,
+  /不要记成长期/u
 ];
 
 const DURABLE_FUTURE_MARKERS = [
@@ -229,35 +234,35 @@ function inferTriggerDescriptor(text) {
       domains: ["github.com"]
     },
     {
-      test: /slack thread|Slack 线程/u,
+      test: /slack thread|Slack 线程/iu,
       contentKind: "slack_thread",
       labelEn: "a Slack thread URL",
       labelZh: "Slack 线程链接",
       domains: []
     },
     {
-      test: /notion export|Notion 导出/u,
+      test: /notion export|Notion 导出/iu,
       contentKind: "notion_export",
       labelEn: "a Notion export package",
       labelZh: "Notion 导出包",
       domains: []
     },
     {
-      test: /receipt screenshot|发票截图/u,
+      test: /receipt screenshot|发票截图/iu,
       contentKind: "receipt_screenshot",
       labelEn: "a receipt screenshot",
       labelZh: "发票截图",
       domains: []
     },
     {
-      test: /csv export|CSV 导出/u,
+      test: /csv export|CSV 导出/iu,
       contentKind: "csv_export",
       labelEn: "a CSV export",
       labelZh: "CSV 导出",
       domains: []
     },
     {
-      test: /hotel options|酒店方案/u,
+      test: /hotel options|酒店方案/iu,
       contentKind: "hotel_options",
       labelEn: "hotel options",
       labelZh: "酒店方案",
@@ -339,9 +344,19 @@ function extractNamedMemoryCue(text = "") {
   }
 
   const patterns = [
-    { kind: "keyword", match: normalized.match(/\bkeyword\s+[`'"]?([a-z0-9_-]+)[`'"]?/i) },
+    {
+      kind: "keyword",
+      match: normalized.match(/\bkeyword(?:\s+for\b[^.]{0,160}?\bis|\s+is|\s+called)?\s+[`'"]?([a-z0-9_-]+)[`'"]?/i)
+    },
     { kind: "tag", match: normalized.match(/\btag(?:\s+the\s+result)?(?:\s+with)?\s+[`'"]?([a-z0-9_-]+)[`'"]?/i) },
-    { kind: "codename", match: normalized.match(/\bcodename(?:d)?(?:\s+(?:called|is))?\s+[`'"]?([a-z0-9_-]+)[`'"]?/i) },
+    {
+      kind: "tag",
+      match: normalized.match(/\bmark(?:\s+the\s+result)?(?:\s+with)?\s+[`'"]?([a-z0-9_-]+)[`'"]?/i)
+    },
+    {
+      kind: "codename",
+      match: normalized.match(/\bcodename(?:d)?(?:\s+for\b[^.]{0,160}?\bis|\s+(?:called|is))?\s+[`'"]?([a-z0-9_-]+)[`'"]?/i)
+    },
     { kind: "代号", match: normalized.match(/代号(?:叫做|是)?\s*([^\s，。；;、]+)/u) },
     { kind: "关键词", match: normalized.match(/关键词(?:叫做|是)?\s*([^\s，。；;、]+)/u) },
     { kind: "标签", match: normalized.match(/打\s*([a-z0-9_-]+)\s*标签/i) },
@@ -412,19 +427,24 @@ function buildOrdinaryConversationSummary({
 
   if ((category === "durable_rule" || category === "tool_routing_preference") && triggerLabel) {
     if (actionTool && cueValue) {
+      if (category === "tool_routing_preference" && (namedCue?.kind === "tag" || namedCue?.kind === "标签")) {
+        return isChinese
+          ? `只要用户发${triggerLabel}，先用 ${actionTool}，并把结果标成 ${cueValue}。`
+          : `When the user sends ${triggerLabel}, use ${actionTool} first and tag the result ${cueValue}.`;
+      }
       return isChinese
-        ? `只要用户发${triggerLabel}，先用 ${actionTool}，并使用 ${cueValue}${namedCue?.kind === "标签" || namedCue?.kind === "tag" ? " 标签" : namedCue?.kind === "关键词" || namedCue?.kind === "keyword" ? " 关键词" : " 代号"}。`
-        : `When the user sends ${triggerLabel}, use ${actionTool} first and use ${namedCue?.kind === "tag" ? "tag" : namedCue?.kind === "keyword" ? "keyword" : "codename"} ${cueValue}.`;
+        ? `默认${namedCue?.kind === "标签" || namedCue?.kind === "tag" ? "标签" : namedCue?.kind === "关键词" || namedCue?.kind === "keyword" ? "规则关键词" : "规则代号"}是 ${cueValue}。只要用户发${triggerLabel}，先用 ${actionTool}。`
+        : `Default ${namedCue?.kind === "tag" ? "tag" : namedCue?.kind === "keyword" ? "rule keyword" : "rule codename"}: ${cueValue}. When the user sends ${triggerLabel}, use ${actionTool} first.`;
     }
     if (cueValue) {
       if (priorityClause) {
         return isChinese
-          ? `只要用户发${triggerLabel}，${priorityClause}，默认规则${namedCue?.kind === "关键词" || namedCue?.kind === "keyword" ? "关键词" : "代号"}是 ${cueValue}。`
-          : `When the user sends ${triggerLabel}, ${priorityClause}, and the default rule ${namedCue?.kind === "keyword" ? "keyword" : "codename"} is ${cueValue}.`;
+          ? `默认规则${namedCue?.kind === "关键词" || namedCue?.kind === "keyword" ? "关键词" : "代号"}是 ${cueValue}。只要用户发${triggerLabel}，${priorityClause}。`
+          : `Default rule ${namedCue?.kind === "keyword" ? "keyword" : "codename"}: ${cueValue}. When the user sends ${triggerLabel}, ${priorityClause}.`;
       }
       return isChinese
-        ? `只要用户发${triggerLabel}，默认规则${namedCue?.kind === "关键词" || namedCue?.kind === "keyword" ? "关键词" : "代号"}是 ${cueValue}。`
-        : `When the user sends ${triggerLabel}, the default rule ${namedCue?.kind === "keyword" ? "keyword" : "codename"} is ${cueValue}.`;
+        ? `默认规则${namedCue?.kind === "关键词" || namedCue?.kind === "keyword" ? "关键词" : "代号"}是 ${cueValue}。只要用户发${triggerLabel}。`
+        : `Default rule ${namedCue?.kind === "keyword" ? "keyword" : "codename"}: ${cueValue}. When the user sends ${triggerLabel}.`;
     }
     if (actionTool) {
       return isChinese
@@ -547,10 +567,11 @@ export function classifyOrdinaryConversationMemoryIntent({ userMessage = "", ass
 export function createOpenClawOrdinaryConversationMemorySource({
   event = {},
   ctx = {},
-  pluginConfig = {}
+  pluginConfig = {},
+  requireSuccess = true
 } = {}) {
   const config = resolveOrdinaryConversationConfig(pluginConfig);
-  if (!config.enabled || !event.success) {
+  if (!config.enabled || (requireSuccess && !event.success)) {
     return null;
   }
 
@@ -606,6 +627,29 @@ export function createOpenClawOrdinaryConversationHookRuntime(options = {}) {
     clock
   });
   const writeChains = new Map();
+  const recentIntentWrites = new Map();
+
+  function buildRecentIntentKey({ ctx = {}, source = null } = {}) {
+    const category = normalizeString(source?.category);
+    const userMessage = normalizeText(source?.userMessage);
+    const sessionKey = normalizeString(ctx.sessionKey);
+    const agentId = normalizeString(ctx.agentId);
+
+    if (!category || !userMessage) {
+      return "";
+    }
+
+    return [sessionKey, agentId, category, userMessage].join("|");
+  }
+
+  function pruneRecentIntentWrites() {
+    const now = Date.now();
+    for (const [key, value] of recentIntentWrites.entries()) {
+      if (!Number.isFinite(value) || now - value > 5 * 60 * 1000) {
+        recentIntentWrites.delete(key);
+      }
+    }
+  }
 
   async function withNamespaceWriteLock(namespace, task) {
     const namespaceKey = createNamespaceKey(namespace);
@@ -620,18 +664,14 @@ export function createOpenClawOrdinaryConversationHookRuntime(options = {}) {
     return settled;
   }
 
-  async function captureAgentEnd(event = {}, ctx = {}) {
-    const declaredSource = createOpenClawOrdinaryConversationMemorySource({
-      event,
-      ctx,
-      pluginConfig
-    });
-
-    if (!declaredSource) {
+  async function persistDeclaredSource(declaredSource, ctx = {}) {
+    pruneRecentIntentWrites();
+    const recentKey = buildRecentIntentKey({ ctx, source: declaredSource });
+    if (recentKey && recentIntentWrites.has(recentKey)) {
       return null;
     }
 
-    return withNamespaceWriteLock(declaredSource.namespace, async () => {
+    const result = await withNamespaceWriteLock(declaredSource.namespace, async () => {
       const sourceResult = await sourceSystem.ingestDeclaredSource(declaredSource);
       const sourceRecord = await registry.persistSourceArtifact(sourceResult.sourceArtifact);
       const reflection = await reflectionSystem.runReflection({
@@ -669,11 +709,47 @@ export function createOpenClawOrdinaryConversationHookRuntime(options = {}) {
         promoted
       };
     });
+
+    if (recentKey && result) {
+      recentIntentWrites.set(recentKey, Date.now());
+    }
+
+    return result;
+  }
+
+  async function captureBeforeAgentStart(event = {}, ctx = {}) {
+    const declaredSource = createOpenClawOrdinaryConversationMemorySource({
+      event,
+      ctx,
+      pluginConfig,
+      requireSuccess: false
+    });
+
+    if (!declaredSource || declaredSource.durability !== "durable") {
+      return null;
+    }
+
+    return persistDeclaredSource(declaredSource, ctx);
+  }
+
+  async function captureAgentEnd(event = {}, ctx = {}) {
+    const declaredSource = createOpenClawOrdinaryConversationMemorySource({
+      event,
+      ctx,
+      pluginConfig
+    });
+
+    if (!declaredSource) {
+      return null;
+    }
+
+    return persistDeclaredSource(declaredSource, ctx);
   }
 
   return {
     enabled: config.enabled,
     config,
+    captureBeforeAgentStart,
     captureAgentEnd
   };
 }

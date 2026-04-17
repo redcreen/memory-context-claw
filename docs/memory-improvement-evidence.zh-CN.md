@@ -89,50 +89,50 @@
 
 这说明 ordinary-conversation 写侧在宿主环境里，UMC 的确表现出明显优势。
 
-### Docker hermetic 结果
+### Docker hermetic 严格基线结果
 
 后来我又把同一组 `40` 条搬到 Docker hermetic 路径，并且显式固定：
 
 - 空 fixture 起步
 - 不 seed 宿主 `~/.openclaw`
 - 先完整跑 legacy，再删隔离状态，再完整跑 current
-- 每个 shard 先从 warmed base state 起步
+- 先跑完整 `1 shard` strict baseline，再把 `2/4 shard gateway-steady` 留给 fast watch
 - 每个 case 开跑前都把 agent/workspace/sessions/registry 重置回 warmed baseline
 - capture / recall 都经 `gateway call agent`
 - `preCaseResetFailed` 必须为 `0`
 
-这次的 hermetic Docker steady-state 结果是：
+这次作为官方基线记录的 hermetic Docker strict 结果是：
 
-- current：`32 / 40`
-- legacy：`17 / 40`
-- `UMC-only = 17`
-- `legacy-only = 2`
-- `both-fail = 6`
+- current：`39 / 40`
+- legacy：`15 / 40`
+- `UMC-only = 24`
+- `legacy-only = 0`
+- `both-fail = 1`
 - `preCaseResetFailed = 0`
 
 按语言拆开：
 
-- 英文：current `13 / 20`，legacy `9 / 20`
-- 中文：current `19 / 20`，legacy `8 / 20`
+- 英文：current `19 / 20`，legacy `7 / 20`
+- 中文：current `20 / 20`，legacy `8 / 20`
 
 按类别拆开：
 
-- durable_rule：current `4 / 8`，legacy `0 / 8`
-- tool_routing_preference：current `6 / 8`，legacy `1 / 8`
-- user_profile_fact：current `7 / 8`，legacy `0 / 8`
+- durable_rule：current `8 / 8`，legacy `0 / 8`
+- tool_routing_preference：current `7 / 8`，legacy `0 / 8`
+- user_profile_fact：current `8 / 8`，legacy `0 / 8`
 - session_constraint：current `8 / 8`，legacy `8 / 8`
-- one_off_instruction：current `7 / 8`，legacy `8 / 8`
+- one_off_instruction：current `8 / 8`，legacy `7 / 8`
 
 这里最关键的解释已经不是“Docker 把所有结果都打成 timeout”，而是：
 
-1. Docker hermetic 现在已经足够干净，而且 `gateway-steady` 路径已经能产出可信的能力差异。
+1. Docker hermetic 现在已经足够干净，而且 strict `1 shard` 路径已经能产出官方可信的能力差异。
 2. 在这个基线里，Memory Core 仍然明显领先，而不是只在宿主 live 里领先。
-3. 剩余问题已经收敛成更小的一组真实 case：`6` 条 shared-fail、`2` 条 legacy-only，而不是整条能力面都失真。
+3. 剩余问题已经收敛成 `1` 条 strict shared-fail harder case，而不是整条能力面都失真。
 
 所以这组结果真正说明的是：
 
 - 宿主结果 `38 / 40 vs 21 / 40` 现在可以被视为偏乐观的 live upper bound
-- Docker 结果 `32 / 40 vs 17 / 40` 则是更严格的 hermetic baseline
+- Docker strict 结果 `39 / 40 vs 15 / 40` 则是更严格的 hermetic baseline
 - 两条线都在指向同一个方向：ordinary-conversation 写侧上，UMC 的优势是真实存在的
 
 ## 这轮新增修复带来了什么

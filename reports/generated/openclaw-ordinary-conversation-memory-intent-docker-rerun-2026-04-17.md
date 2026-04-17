@@ -14,6 +14,11 @@ The earlier focused `40`-case ordinary-conversation A/B was useful, but it still
 
 This Docker rerun exists to answer that concern directly.
 
+It now also carries one explicit distinction:
+
+- the official capability conclusion comes from the strict `1 shard` baseline
+- the `2/4`-shard `gateway-steady` path remains a fast watch/smoke lane
+
 ## Hermetic Method
 
 The rerun used these constraints:
@@ -58,41 +63,38 @@ So the root question now has a clean answer:
 
 ## Docker Result
 
-Focused `40`-case realtime-write result under Docker:
+Focused `40`-case realtime-write strict baseline result under Docker:
 
-- current: `32 / 40`
-- legacy: `17 / 40`
+- current: `39 / 40`
+- legacy: `15 / 40`
 - both pass: `15`
-- UMC-only: `17`
-- legacy-only: `2`
-- both fail: `6`
+- UMC-only: `24`
+- legacy-only: `0`
+- both fail: `1`
 
 Language split:
 
-- English: current `13 / 20`, legacy `9 / 20`
-- Chinese: current `19 / 20`, legacy `8 / 20`
+- English: current `19 / 20`, legacy `7 / 20`
+- Chinese: current `20 / 20`, legacy `8 / 20`
 
 Category split:
 
-- durable_rule: current `4 / 8`, legacy `0 / 8`
-- tool_routing_preference: current `6 / 8`, legacy `1 / 8`
-- user_profile_fact: current `7 / 8`, legacy `0 / 8`
+- durable_rule: current `8 / 8`, legacy `0 / 8`
+- tool_routing_preference: current `7 / 8`, legacy `0 / 8`
+- user_profile_fact: current `8 / 8`, legacy `0 / 8`
 - session_constraint: current `8 / 8`, legacy `8 / 8`
-- one_off_instruction: current `7 / 8`, legacy `8 / 8`
+- one_off_instruction: current `8 / 8`, legacy `7 / 8`
 
 ## What Actually Failed
 
 The dominant story is no longer “everything timed out”.
-The remaining failure set is smaller and more honest:
-
-- legacy capture timeouts: `5`
-- current capture timeouts: `3`
-- recall timeouts: `0` on both sides
+The remaining failure set is now one strict shared-fail harder case rather than a broad timeout wall.
 
 That means this rerun changed the main diagnosis again:
 
 - contamination is not the main risk
 - Docker answer-level capability is now measurable
+- the strict baseline is now strong enough to be the official ordinary-conversation A/B surface
 - the remaining work is targeted case cleanup, not benchmark-substrate rescue
 
 ## Host Versus Docker

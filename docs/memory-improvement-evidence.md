@@ -81,21 +81,21 @@ Host-live rerun:
 - legacy only: `1`
 - both fail: `1`
 
-Hermetic Docker steady-state rerun:
+Hermetic Docker strict baseline:
 
-- current path: `32 / 40`
-- legacy default path: `17 / 40`
+- current path: `39 / 40`
+- legacy default path: `15 / 40`
 - both pass: `15`
-- Memory Core only: `17`
-- legacy only: `2`
-- both fail: `6`
+- Memory Core only: `24`
+- legacy only: `0`
+- both fail: `1`
 - `preCaseResetFailed = 0`
 
 The interpretation is now stricter:
 
 - the older `100`-case A/B still says “existing-memory consumption uplift is modest”
 - the host-live focused `40`-case suite says “ordinary-conversation realtime write behavior is materially better with Unified Memory Core”
-- the hermetic Docker steady-state rerun now says “the isolation root is trustworthy, and the Memory Core advantage survives under clean Docker A/B as well”
+- the hermetic Docker strict baseline now says “the isolation root is trustworthy, and the Memory Core advantage survives under clean Docker A/B as well”
 
 ## What This Round Improved
 

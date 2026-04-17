@@ -638,6 +638,44 @@ function shardCases(cases, count) {
   return shards.filter((items) => items.length > 0);
 }
 
+function optimizeGatewayExecutionOrder(cases = []) {
+  const categoryOrder = [
+    "durable_rule",
+    "tool_routing_preference",
+    "user_profile_fact",
+    "session_constraint",
+    "one_off_instruction"
+  ];
+  const buckets = new Map(categoryOrder.map((category) => [category, []]));
+  const fallback = [];
+
+  for (const item of cases) {
+    if (buckets.has(item.category)) {
+      buckets.get(item.category).push(item);
+    } else {
+      fallback.push(item);
+    }
+  }
+
+  const ordered = [];
+  while (ordered.length < cases.length - fallback.length) {
+    let progressed = false;
+    for (const category of categoryOrder) {
+      const queue = buckets.get(category);
+      if (!queue?.length) {
+        continue;
+      }
+      ordered.push(queue.shift());
+      progressed = true;
+    }
+    if (!progressed) {
+      break;
+    }
+  }
+
+  return ordered.concat(fallback);
+}
+
 async function writeText(filePath, text) {
   await fs.mkdir(path.dirname(filePath), { recursive: true });
   await fs.writeFile(filePath, text, "utf8");
@@ -1374,47 +1412,65 @@ async function runAgentTurn({ stateDir, agentId, sessionId, message, timeoutMs }
 }
 
 async function runGatewayAgentTurn({ stateDir, gatewayUrl, agentId, sessionId, message, timeoutMs }) {
-  const result = await runGatewayCommand({
-    stateDir,
-    gatewayUrl,
-    method: "agent",
-    expectFinal: true,
-    timeoutMs,
-    params: {
-      agentId,
-      sessionId,
-      message,
-      idempotencyKey: randomUUID()
+  const maxAttempts = process.env.UMC_EVAL_EXECUTION_ENV === "docker" ? 2 : 1;
+
+  for (let attempt = 0; attempt < maxAttempts; attempt += 1) {
+    const result = await runGatewayCommand({
+      stateDir,
+      gatewayUrl,
+      method: "agent",
+      expectFinal: true,
+      timeoutMs,
+      params: {
+        agentId,
+        sessionId,
+        message,
+        idempotencyKey: randomUUID()
+      }
+    });
+
+    if (!result.ok) {
+      const retryable = /timeout after|json_parse_failed|fetch failed|exit /i.test(String(result.error || ""));
+      if (retryable && attempt + 1 < maxAttempts) {
+        await new Promise((resolve) => setTimeout(resolve, 1_000));
+        continue;
+      }
+      return {
+        ok: false,
+        error: result.error,
+        stdout: result.stdout,
+        stderr: result.stderr
+      };
     }
-  });
 
-  if (!result.ok) {
-    return {
-      ok: false,
-      error: result.error,
-      stdout: result.stdout,
-      stderr: result.stderr
-    };
+    const text = pickJsonText(result.stdout, result.stderr);
+    try {
+      const payload = extractJsonPayload(text);
+      return {
+        ok: true,
+        payload,
+        answer: extractAgentText(payload),
+        stdout: result.stdout,
+        stderr: result.stderr
+      };
+    } catch {
+      if (attempt + 1 < maxAttempts) {
+        await new Promise((resolve) => setTimeout(resolve, 1_000));
+        continue;
+      }
+      return {
+        ok: false,
+        error: "json_parse_failed",
+        stdout: result.stdout,
+        stderr: result.stderr
+      };
+    }
   }
 
-  const text = pickJsonText(result.stdout, result.stderr);
-  try {
-    const payload = extractJsonPayload(text);
-    return {
-      ok: true,
-      payload,
-      answer: extractAgentText(payload),
-      stdout: result.stdout,
-      stderr: result.stderr
-    };
-  } catch {
-    return {
-      ok: false,
-      error: "json_parse_failed",
-      stdout: result.stdout,
-      stderr: result.stderr
-    };
-  }
+  return {
+    ok: false,
+    error: "gateway_retry_exhausted"
+  };
 }
 
 async function runCaseForMode(caseDef, args, includeUMC, baseState) {
@@ -1625,7 +1681,10 @@ async function main() {
     Math.max(1, args.shardCount),
     Math.max(1, Math.ceil(selectedCases.length / Math.max(1, args.shardSize)))
   );
-  const shards = shardCases(selectedCases, effectiveShardCount);
+  const executionCases = args.runnerMode === "gateway-steady"
+    ? optimizeGatewayExecutionOrder(selectedCases)
+    : selectedCases;
+  const shards = shardCases(executionCases, effectiveShardCount);
   const resultMap = new Map(results.map((item) => [item.id, item]));
   const runnerMode = args.runnerMode;
 

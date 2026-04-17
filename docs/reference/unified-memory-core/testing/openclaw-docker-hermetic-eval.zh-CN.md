@@ -198,7 +198,16 @@ npm run eval:openclaw:docker -- \
 - `sessionClearFailed = 0`
   说明 recall 前 session transcript 已经清干净
 
-在 `gateway-steady` 模式下：
+在 ordinary-conversation Docker A/B 里，现在要区分两层：
+
+- `strict baseline`
+  - `1 shard`
+  - 作为正式能力结论面
+- `gateway-steady` fast watch
+  - `2/4 shard`
+  - 只用于更快的 smoke / watch，不再当正式能力结论
+
+在 `gateway-steady` fast watch 模式下：
 
 - `duplicateStateRoots > 0`
 - `duplicateRegistryRoots > 0`
@@ -220,27 +229,28 @@ npm run eval:openclaw:docker -- \
 
 ## 当前 ordinary-conversation Docker 结论
 
-最新 hermetic Docker rerun 的 focused `40` case 结果是：
+最新 hermetic Docker strict baseline 的 focused `40` case 结果是：
 
-- current: `32 / 40`
-- legacy: `17 / 40`
-- `UMC-only = 17`
-- `legacy-only = 2`
-- `both-fail = 6`
+- current: `39 / 40`
+- legacy: `15 / 40`
+- `UMC-only = 24`
+- `legacy-only = 0`
+- `both-fail = 1`
 - `preCaseResetFailed = 0`
 
-这个结果现在已经可以直接当成可信的能力排序面，而不再只是 infra/perf watch。
+这个结果现在已经可以直接当成可信的官方能力排序面，而不再只是 infra/perf watch。
 更准确的解释是：
 
 - hermetic 隔离层本身是干净的
-- `gateway-steady` runner 已经把之前 `agent --local` 的冷启动 / exit tail latency 扭曲压下去
-- 剩余问题收敛成更小、更真实的一组 case miss，而不是整条路径都被 timeout 吞掉
+- strict baseline 已经把之前 `agent --local` 的冷启动 / exit tail latency 扭曲从正式结论面里挪开
+- 剩余问题收敛成 `1` 条更真实的 harder case，而不是整条路径都被 timeout 吞掉
 
 更直白地说：
 
 - 它现在既足够干净，也足够能产出能力差异
 - 它应该继续作为默认 Docker hermetic A/B 面
 - host live 结果现在更适合被当成 optimistic upper bound，而不是唯一证据
+- `2/4 shard gateway-steady` 结果继续保留，但只作为 fast watch / smoke
 
 ## 为什么仍然值得保留这条快路径
 
@@ -254,7 +264,8 @@ npm run eval:openclaw:docker -- \
 当前速度面已经可以这样理解：
 
 - 旧的 `agent --local` 快路径：整轮更短，但能力面几乎全被 timeout 吞掉
-- 新的 `gateway-steady` 路径：整轮约 `22.5` 分钟，但已经能给出可信 A/B 结果
+- 新的 strict baseline 路径：整轮 wall-clock 更长，但已经能给出官方可信 A/B 结果
+- `gateway-steady` 路径：继续用于更快的 smoke / watch
 
 代价是 wall-clock 变长，收益是：
 
@@ -267,16 +278,15 @@ npm run eval:openclaw:docker -- \
 - 避免每题都重新冷起 answer path
 - 在保证隔离为零污染的前提下，再重跑更宽预算的 ordinary-conversation 能力对比
 
-目前已经有一个明确结论：
+当前已经有一个更准确的分工：
 
-- Docker 里的 `gateway` steady-state 路径已经验证能绕开一部分 `agent --local` 的 CLI 收尾延迟
+- strict baseline：默认 official hermetic baseline
+- `gateway-steady`：默认 fast watch / smoke
 
-但在把它切成默认 ordinary benchmark 之前，还需要额外验证：
+所以后面如果继续优化 ordinary-conversation Docker A/B，目标不再是“让 Docker 能不能给出可信结论”，而是：
 
-- 长驻进程
-- 每题清理 session / registry / workspace 改动
-
-不会重新引入跨题污染。
+- 继续把 fast watch 的 wall-clock 压下去
+- 继续收掉最后 `1` 条 strict shared-fail harder case
 
 ## 当前收口结论
 

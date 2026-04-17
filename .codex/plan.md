@@ -21,14 +21,14 @@
 - Raw transport watchlist: `3 / 8 raw ok`; the rest are `4` `missing_json_payload` failures and `1` `empty_results`
 - Main-path perf baseline: retrieval / assembly avg `16ms`; raw transport avg `8061ms`; isolated local answer-level avg `11200ms`
 - Focused ordinary-conversation realtime-write A/B: `40` cases, builtin-first then clean-state current
-- Focused ordinary-conversation result: current `38 / 40`, legacy `21 / 40`, `20` both-pass, `18` UMC-only, `1` legacy-only, `1` both-fail
-- Focused ordinary-conversation Docker steady-state result: current `32 / 40`, legacy `17 / 40`, `15` both-pass, `17` UMC-only, `2` legacy-only, `6` both-fail, `preCaseResetFailed = 0`
-- Focused ordinary-conversation interpretation: the host result remains the optimistic live upper bound, while Docker steady-state is now the trustworthy hermetic baseline; the substrate line is closed and the remaining work is targeted cleanup of the residual harder misses
+- Focused ordinary-conversation host result: current `38 / 40`, legacy `21 / 40`, `20` both-pass, `18` UMC-only, `1` legacy-only, `1` both-fail
+- Focused ordinary-conversation Docker strict result: current `39 / 40`, legacy `15 / 40`, `15` both-pass, `24` UMC-only, `0` legacy-only, `1` both-fail, `preCaseResetFailed = 0`
+- Focused ordinary-conversation interpretation: the host result remains the optimistic live upper bound, while Docker strict is now the official hermetic baseline; `2/4 shard gateway-steady` remains useful as fast watch/smoke only
 - Live answer-level A/B after history cleanup: current `100 / 100`, legacy `99 / 100`, `1` UMC-only, `0` builtin-only, `0` shared-fail
 - Dialogue working-set runtime shadow: replay `16 / 16`, average reduction ratio `0.4368`, runtime answer A/B baseline `5 / 5`, shadow `5 / 5`
 - Stage 7 scorecard: captured `16 / 16`, average raw reduction ratio `0.4191`, average package reduction ratio `0.1151`
 - Stage 9 guarded answer A/B: baseline `5 / 5`, shadow `5 / 5`, guarded `5 / 5`, guarded applied `2 / 5`, average guarded prompt reduction ratio `0.0424`
-- Docker hermetic eval status: official-image runner, proxy rewrite, cloned-state path rewrite, warmed template cache, and `gateway-steady` ordinary benchmark are all landed; Docker is now the default trustworthy hermetic A/B base for this repo
+- Docker hermetic eval status: official-image runner, proxy rewrite, cloned-state path rewrite, warmed template cache, strict ordinary benchmark, and `gateway-steady` fast-watch ordinary benchmark are all landed; Docker is now the default trustworthy hermetic A/B base for this repo
 - Interpretation: the `200+` case buildout, natural-Chinese / watchlist / perf hardening, Stage 6 runtime shadow measurement, and the history-cleanup closure are complete; the docs-first review is now done, so the next phase is north-star gap closure before any new active-path experiment
 
 ## Current Product Promises

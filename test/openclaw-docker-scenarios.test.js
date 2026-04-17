@@ -28,5 +28,5 @@ test("openclaw docker scenarios include the focused ordinary-conversation A/B pa
   assert.equal(ordinary.script, "scripts/eval-openclaw-ordinary-conversation-memory-intent-ab.js");
   assert.equal(ordinary.cases, "evals/openclaw-ordinary-conversation-memory-intent-ab-cases.js");
   assert.equal(ordinary.fixtureRoot, "evals/openclaw-ordinary-conversation-fixture");
-  assert.deepEqual(ordinary.args, ["--shard-size", "10", "--shard-count", "4"]);
+  assert.deepEqual(ordinary.args, ["--shard-size", "40", "--shard-count", "1"]);
 });

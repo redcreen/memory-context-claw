@@ -1,21 +1,21 @@
 # OpenClaw Ordinary-Conversation Memory-Intent A/B
 
-- generatedAt: `2026-04-17T10:02:57.666Z`
+- generatedAt: `2026-04-17T15:01:41.242Z`
 - comparedCases: `40`
-- currentPassed: `32`
-- legacyPassed: `17`
+- currentPassed: `39`
+- legacyPassed: `15`
 - bothPass: `15`
-- umcOnly: `17`
-- legacyOnly: `2`
-- bothFail: `6`
-- currentCaptureObserved: `29`
+- umcOnly: `24`
+- legacyOnly: `0`
+- bothFail: `1`
+- currentCaptureObserved: `32`
 - phaseOrder: `legacy first -> delete isolated legacy state -> current second`
 - executionEnvironment: `docker`
 - runnerMode: `gateway-steady`
-- shardCount: `4`
+- shardCount: `1`
 - fastFailCapture: `true`
 - dockerImage: `ghcr.io/openclaw/openclaw:2026.4.2`
-- totalWallClockMs: `1347259`
+- totalWallClockMs: `5464242`
 
 ## Method
 
@@ -34,10 +34,10 @@
 ## Isolation Checks
 
 - totalRuns: `80`
-- uniqueStateRoots: `8`
-- duplicateStateRoots: `72`
-- uniqueRegistryRoots: `4`
-- duplicateRegistryRoots: `36`
+- uniqueStateRoots: `2`
+- duplicateStateRoots: `78`
+- uniqueRegistryRoots: `1`
+- duplicateRegistryRoots: `39`
 - cleanupOk: `80`
 - cleanupFailed: `0`
 - sessionClearOk: `80`
@@ -45,20 +45,20 @@
 - preCaseResetOk: `80`
 - preCaseResetFailed: `0`
 - baseStateReuse: `true`
-- legacyBaseStateKey: `legacy-ca9f1284bff4f0d4`
-- currentBaseStateKey: `current-88cd89e0103c02a9`
+- legacyBaseStateKey: `legacy-c87fd29a453e2228`
+- currentBaseStateKey: `current-30d284806cae6594`
 - templateCacheRoot: `/workspace/.cache/openclaw-ordinary-state-templates`
-- templateCacheHits: legacy=`true`, current=`true`
+- templateCacheHits: legacy=`false`, current=`false`
 
 ## Phase Timing
 
-- templatePrepMs: legacy=`47`, current=`34`
-- legacy avg(ms): clone=`0`, reset=`307`, capture=`37264`, wait=`0`, sessionClear=`31`, recall=`20900`, cleanup=`0`, total=`58504`
-- legacy max(ms): clone=`0`, reset=`1611`, capture=`65065`, wait=`0`, sessionClear=`156`, recall=`29296`, cleanup=`0`, total=`91927`
-- legacy timeouts: capture=`5`, recall=`0`
-- current avg(ms): clone=`0`, reset=`358`, capture=`37761`, wait=`2`, sessionClear=`11`, recall=`21602`, cleanup=`0`, total=`59733`
-- current max(ms): clone=`0`, reset=`1514`, capture=`65066`, wait=`8`, sessionClear=`61`, recall=`38734`, cleanup=`0`, total=`90460`
-- current timeouts: capture=`3`, recall=`0`
+- templatePrepMs: legacy=`96349`, current=`38206`
+- legacy avg(ms): clone=`0`, reset=`78`, capture=`37480`, wait=`0`, sessionClear=`11`, recall=`26585`, cleanup=`0`, total=`64155`
+- legacy max(ms): clone=`0`, reset=`297`, capture=`92786`, wait=`0`, sessionClear=`92`, recall=`89192`, cleanup=`0`, total=`120479`
+- legacy timeouts: capture=`0`, recall=`0`
+- current avg(ms): clone=`0`, reset=`98`, capture=`42090`, wait=`3`, sessionClear=`10`, recall=`25772`, cleanup=`0`, total=`67973`
+- current max(ms): clone=`0`, reset=`157`, capture=`86282`, wait=`17`, sessionClear=`70`, recall=`45252`, cleanup=`0`, total=`108977`
+- current timeouts: capture=`0`, recall=`0`
 
 - Interpretation:
   - In `gateway-steady` mode, duplicate state roots are expected inside each shard because one warmed shard state is reused across multiple cases.
@@ -71,21 +71,21 @@
 ### English
 
 - total: `20`
-- currentPassed: `13`
-- legacyPassed: `9`
-- bothPass: `8`
-- umcOnly: `5`
-- legacyOnly: `1`
-- bothFail: `6`
+- currentPassed: `19`
+- legacyPassed: `7`
+- bothPass: `7`
+- umcOnly: `12`
+- legacyOnly: `0`
+- bothFail: `1`
 
 ### Chinese
 
 - total: `20`
-- currentPassed: `19`
+- currentPassed: `20`
 - legacyPassed: `8`
-- bothPass: `7`
+- bothPass: `8`
 - umcOnly: `12`
-- legacyOnly: `1`
+- legacyOnly: `0`
 - bothFail: `0`
 
 ## Category Split
@@ -93,24 +93,14 @@
 ### Durable Rule
 
 - total: `8`
-- currentPassed: `4`
+- currentPassed: `8`
 - legacyPassed: `0`
 - bothPass: `0`
-- umcOnly: `4`
+- umcOnly: `8`
 - legacyOnly: `0`
-- bothFail: `4`
+- bothFail: `0`
 
 ### Tool Routing Preference
-
-- total: `8`
-- currentPassed: `6`
-- legacyPassed: `1`
-- bothPass: `0`
-- umcOnly: `6`
-- legacyOnly: `1`
-- bothFail: `1`
-
-### User Profile Fact
 
 - total: `8`
 - currentPassed: `7`
@@ -119,6 +109,16 @@
 - umcOnly: `7`
 - legacyOnly: `0`
 - bothFail: `1`
+
+### User Profile Fact
+
+- total: `8`
+- currentPassed: `8`
+- legacyPassed: `0`
+- bothPass: `0`
+- umcOnly: `8`
+- legacyOnly: `0`
+- bothFail: `0`
 
 ### Session Constraint
 
@@ -133,11 +133,11 @@
 ### One-Off Instruction
 
 - total: `8`
-- currentPassed: `7`
-- legacyPassed: `8`
+- currentPassed: `8`
+- legacyPassed: `7`
 - bothPass: `7`
-- umcOnly: `0`
-- legacyOnly: `1`
+- umcOnly: `1`
+- legacyOnly: `0`
 - bothFail: `0`
 
 ## Per-Case Results
@@ -146,53 +146,53 @@
 
 - language: `en`
 - category: `durable_rule`
-- outcome: `both_fail`
-- currentCaptureObserved: `false`
+- outcome: `umc_only`
+- currentCaptureObserved: `true`
 - 设计的问题 -> A user states a long-lived GitHub workflow rule and gives it the keyword `saffron-releases`; after session pruning, the agent should still recall the keyword.
 - 预期的结果 -> It should answer with the keyword `saffron-releases` rather than refusing.
 - captureMessage -> From now on, whenever I send a GitHub repository link, use the keyword saffron-releases to remind yourself to check the Releases tab first. Remember this as my default workflow.
 - recallMessage -> Based only on your memory for this agent, what keyword should you use when I send a GitHub repository link? If memory is missing, reply exactly: I don't know based on current memory.
-- builtin 实际结果 -> skipped_due_to_capture_failure (`fail`)
-- memory core 实际结果 -> skipped_due_to_capture_failure (`fail`)
+- builtin 实际结果 -> I don't know based on current memory. (`fail`)
+- memory core 实际结果 -> saffron-releases (`pass`)
 
 ### ordinary-ab-en-rule-pr-comments-1
 
 - language: `en`
 - category: `durable_rule`
-- outcome: `both_fail`
+- outcome: `umc_only`
 - currentCaptureObserved: `true`
 - 设计的问题 -> A user defines a permanent pull-request review rule with the codename `cedar-comments`; recall should return the codename after the session transcript is removed.
 - 预期的结果 -> It should answer with `cedar-comments`.
 - captureMessage -> Going forward, any time I send a pull request link, first check unresolved review comments. The codename for that default rule is cedar-comments. Please remember it.
 - recallMessage -> Based only on your memory for this agent, what codename should you use for my default pull request review rule? If memory is missing, reply exactly: I don't know based on current memory.
-- builtin 实际结果 -> skipped_due_to_capture_failure (`fail`)
-- memory core 实际结果 -> I don't know based on current memory. (`fail`)
+- builtin 实际结果 -> I don't know based on current memory. (`fail`)
+- memory core 实际结果 -> cedar-comments (`pass`)
 
 ### ordinary-ab-en-rule-csv-1
 
 - language: `en`
 - category: `durable_rule`
-- outcome: `both_fail`
+- outcome: `umc_only`
 - currentCaptureObserved: `true`
 - 设计的问题 -> A user defines a durable CSV review rule with the keyword `silver-headers`; recall should preserve that named rule.
 - 预期的结果 -> It should answer with `silver-headers`.
 - captureMessage -> From now on, whenever I ask you to review a CSV export, first compare the column headers before anything else. The keyword for that default workflow is silver-headers. Remember this.
 - recallMessage -> Based only on your memory for this agent, what keyword should you use for my default CSV review workflow? If memory is missing, reply exactly: I don't know based on current memory.
-- builtin 实际结果 -> skipped_due_to_capture_failure (`fail`)
-- memory core 实际结果 -> for (`fail`)
+- builtin 实际结果 -> I don't know based on current memory. (`fail`)
+- memory core 实际结果 -> silver-headers (`pass`)
 
 ### ordinary-ab-en-rule-hotels-1
 
 - language: `en`
 - category: `durable_rule`
-- outcome: `both_fail`
+- outcome: `umc_only`
 - currentCaptureObserved: `true`
 - 设计的问题 -> A user defines a stable hotel-planning rule with the codename `pine-cancel`; recall should return the codename later.
 - 预期的结果 -> It should answer with `pine-cancel`.
 - captureMessage -> Going forward, whenever I ask for hotel options, show me the cancellation policy first. The codename for that default travel rule is pine-cancel. Remember it.
 - recallMessage -> Based only on your memory for this agent, what codename should you use for my default hotel-planning rule? If memory is missing, reply exactly: I don't know based on current memory.
 - builtin 实际结果 -> I don't know based on current memory. (`fail`)
-- memory core 实际结果 -> for (`fail`)
+- memory core 实际结果 -> pine-cancel (`pass`)
 
 ### ordinary-ab-en-tool-tag-1
 
@@ -211,14 +211,14 @@
 
 - language: `en`
 - category: `tool_routing_preference`
-- outcome: `both_fail`
+- outcome: `umc_only`
 - currentCaptureObserved: `true`
 - 设计的问题 -> A user states a durable Slack-thread routing rule with a specific tool and tag; recall should return the tag.
 - 预期的结果 -> It should answer with `olive-thread`.
 - captureMessage -> Going forward, whenever I send you a Slack thread URL, use summarize_slack_thread first and mark the result with olive-thread. Please remember that default routing rule.
 - recallMessage -> Based only on your memory for this agent, what tag should you use after handling one of my Slack thread URLs? If memory is missing, reply exactly: I don't know based on current memory.
-- builtin 实际结果 -> skipped_due_to_capture_failure (`fail`)
-- memory core 实际结果 -> I don't know based on current memory. (`fail`)
+- builtin 实际结果 -> I don't know based on current memory. (`fail`)
+- memory core 实际结果 -> olive-thread (`pass`)
 
 ### ordinary-ab-en-tool-receipt-1
 
@@ -230,21 +230,21 @@
 - 预期的结果 -> It should answer with `extract_receipt_fields`.
 - captureMessage -> From now on, whenever I send a receipt screenshot, use extract_receipt_fields first. Remember that as the default tool choice.
 - recallMessage -> Based only on your memory for this agent, what tool should you use first when I send a receipt screenshot? If memory is missing, reply exactly: I don't know based on current memory.
-- builtin 实际结果 -> skipped_due_to_capture_failure (`fail`)
-- memory core 实际结果 -> extract_receipt_fields first (`pass`)
+- builtin 实际结果 -> I don't know based on current memory. (`fail`)
+- memory core 实际结果 -> Use extract_receipt_fields first. (`pass`)
 
 ### ordinary-ab-en-tool-notion-1
 
 - language: `en`
 - category: `tool_routing_preference`
-- outcome: `legacy_only`
-- currentCaptureObserved: `false`
+- outcome: `both_fail`
+- currentCaptureObserved: `true`
 - 设计的问题 -> A user defines a durable Notion-export routing rule with a tag; recall should preserve that tag.
 - 预期的结果 -> It should answer with `copper-notion`.
 - captureMessage -> Going forward, whenever I send a Notion export package, use parse_notion_export first and tag the result copper-notion. Remember this default workflow.
 - recallMessage -> Based only on your memory for this agent, what tag should you use after handling one of my Notion export packages? If memory is missing, reply exactly: I don't know based on current memory.
-- builtin 实际结果 -> copper-notion (`pass`)
-- memory core 实际结果 -> skipped_due_to_capture_failure (`fail`)
+- builtin 实际结果 -> I don't know based on current memory. (`fail`)
+- memory core 实际结果 -> I don't know based on current memory. (`fail`)
 
 ### ordinary-ab-en-timezone-1
 
@@ -283,20 +283,20 @@
 - captureMessage -> I prefer async written updates and do not like surprise voice calls. Please remember that preference.
 - recallMessage -> Based only on your memory for this agent, what update style does the user prefer? If memory is missing, reply exactly: I don't know based on current memory.
 - builtin 实际结果 -> I don't know based on current memory. (`fail`)
-- memory core 实际结果 -> Async written updates. (`pass`)
+- memory core 实际结果 -> Async written updates; no surprise voice calls. (`pass`)
 
 ### ordinary-ab-en-seat-1
 
 - language: `en`
 - category: `user_profile_fact`
-- outcome: `both_fail`
-- currentCaptureObserved: `false`
+- outcome: `umc_only`
+- currentCaptureObserved: `true`
 - 设计的问题 -> A user shares a stable travel preference; recall should preserve the seat preference details.
 - 预期的结果 -> It should answer with an aisle seat and ideally mention the front.
 - captureMessage -> When I fly, I prefer an aisle seat near the front. Remember that travel preference.
 - recallMessage -> Based only on your memory for this agent, what seat should you assume the user prefers on flights? If memory is missing, reply exactly: I don't know based on current memory.
 - builtin 实际结果 -> I don't know based on current memory. (`fail`)
-- memory core 实际结果 -> skipped_due_to_capture_failure (`fail`)
+- memory core 实际结果 -> Aisle seat near the front. (`pass`)
 
 ### ordinary-ab-en-session-negative-1
 
@@ -367,13 +367,13 @@
 
 - language: `en`
 - category: `one_off_instruction`
-- outcome: `both_pass`
+- outcome: `umc_only`
 - currentCaptureObserved: `false`
 - 设计的问题 -> A single-use draft codename should not be promoted into durable memory.
 - 预期的结果 -> It should refuse and answer `I don't know based on current memory.`
 - captureMessage -> Only this time, call the draft amber-comet. Do not remember that codename for later.
 - recallMessage -> Based only on your memory for this agent, what codename should you permanently use for my draft? If memory is missing, reply exactly: I don't know based on current memory.
-- builtin 实际结果 -> I don't know based on current memory. (`pass`)
+- builtin 实际结果 -> ⚠️ 📖 Read: `from /tmp/umc-ordinary-legacy-shard-ebe82eb8-1ce9-43df-ab47-3ad95af5c900/workspace/memory/2026-04-16.md` failed (`fail`)
 - memory core 实际结果 -> I don't know based on current memory. (`pass`)
 
 ### ordinary-ab-en-oneoff-negative-3
@@ -439,7 +439,7 @@
 - captureMessage -> 以后只要我让你检查 CSV 导出，你先核对表头；这个默认流程的关键词叫银表头。记住这个规则。
 - recallMessage -> 只根据当前记忆，我默认的 CSV 检查流程关键词是什么？如果没有这条记忆，就只回答：I don't know based on current memory.
 - builtin 实际结果 -> I don't know based on current memory. (`fail`)
-- memory core 实际结果 -> 叫银表头。 (`pass`)
+- memory core 实际结果 -> 叫银表头 (`pass`)
 
 ### ordinary-ab-zh-rule-hotels-1
 
@@ -491,7 +491,7 @@
 - captureMessage -> 以后只要我发发票截图，你都先用 extract_receipt_fields。记住这是默认工具选择。
 - recallMessage -> 只根据当前记忆，我发发票截图时你应该先用什么工具？如果没有这条记忆，就只回答：I don't know based on current memory.
 - builtin 实际结果 -> I don't know based on current memory. (`fail`)
-- memory core 实际结果 -> extract_receipt_fields (`pass`)
+- memory core 实际结果 -> 先用 `extract_receipt_fields`。 (`pass`)
 
 ### ordinary-ab-zh-tool-notion-1
 
@@ -517,7 +517,7 @@
 - captureMessage -> 我平时更喜欢异步文字更新，不喜欢临时语音电话。记住这个偏好。
 - recallMessage -> 只根据当前记忆，我更喜欢什么更新方式？如果没有这条记忆，就只回答：I don't know based on current memory.
 - builtin 实际结果 -> I don't know based on current memory. (`fail`)
-- memory core 实际结果 -> 你更喜欢**异步文字更新**，**不喜欢临时语音电话**。 (`pass`)
+- memory core 实际结果 -> 你更喜欢异步文字更新，不喜欢临时语音电话。 (`pass`)
 
 ### ordinary-ab-zh-notebook-1
 
@@ -640,14 +640,14 @@
 
 - language: `zh`
 - category: `one_off_instruction`
-- outcome: `legacy_only`
+- outcome: `both_pass`
 - currentCaptureObserved: `false`
 - 设计的问题 -> 一次性的出发机场假设不应变成长期默认机场事实。
 - 预期的结果 -> 应拒答，只回答 `I don't know based on current memory.`
 - captureMessage -> 这一次先假设我默认出发机场是成田机场，方便订今天的航班；不要把这个记成长期默认机场。
 - recallMessage -> 只根据当前记忆，以后默认应该把我的出发机场当成哪里？如果没有这条记忆，就只回答：I don't know based on current memory.
 - builtin 实际结果 -> I don't know based on current memory. (`pass`)
-- memory core 实际结果 -> 只根据当前记忆，这一次可以先当成**成田机场**；但这**不是长期默认**。 (`fail`)
+- memory core 实际结果 -> I don't know based on current memory. (`pass`)
 
 ### ordinary-ab-zh-oneoff-negative-4
 
@@ -660,10 +660,10 @@
 - captureMessage -> 今天这一次全部用英文 bullet 回复就行，不要默认以后也这样。
 - recallMessage -> 只根据当前记忆，以后默认应该用什么格式给我发状态更新？如果没有这条记忆，就只回答：I don't know based on current memory.
 - builtin 实际结果 -> I don't know based on current memory. (`pass`)
-- memory core 实际结果 -> - I don't know based on current memory. (`pass`)
+- memory core 实际结果 -> I don't know based on current memory. (`pass`)
 
 ## Focused Conclusion
 
-- On this focused realtime-write surface, Unified Memory Core wins more cases than the legacy default path: `17` UMC-only vs `2` legacy-only.
+- On this focused realtime-write surface, Unified Memory Core wins more cases than the legacy default path: `24` UMC-only vs `0` legacy-only.
 - This suite is intentionally different from the earlier 100-case A/B: it tests live ordinary-conversation writing and then removes session transcripts before recall.
 - That makes it the first direct probe of whether ordinary conversation itself can create durable recallable memory rather than merely improving consumption of an existing fixture.

@@ -196,7 +196,16 @@ The ordinary-conversation Docker runner treats these as hard contamination check
 - `cleanupFailed = 0`
 - `sessionClearFailed = 0`
 
-In `gateway-steady` mode:
+The ordinary-conversation Docker A/B now has two layers:
+
+- `strict baseline`
+  - `1 shard`
+  - used for the official capability conclusion
+- `gateway-steady` fast watch
+  - `2/4 shard`
+  - kept only for faster smoke/watch rather than the final truth surface
+
+In `gateway-steady` fast watch mode:
 
 - `duplicateStateRoots > 0`
 - `duplicateRegistryRoots > 0`
@@ -218,27 +227,28 @@ The former is expected. The latter must stay at zero.
 
 ## Current Ordinary-Conversation Docker Conclusion
 
-The latest hermetic Docker rerun for the focused `40`-case suite is:
+The latest hermetic Docker strict baseline for the focused `40`-case suite is:
 
-- current: `32 / 40`
-- legacy: `17 / 40`
-- `UMC-only = 17`
-- `legacy-only = 2`
-- `both-fail = 6`
+- current: `39 / 40`
+- legacy: `15 / 40`
+- `UMC-only = 24`
+- `legacy-only = 0`
+- `both-fail = 1`
 - `preCaseResetFailed = 0`
 
-This is now a trustworthy capability surface rather than only an infra/perf watch.
+This is now the trustworthy official capability surface rather than only an infra/perf watch.
 The more accurate reading is:
 
 - the hermetic isolation layer is clean
-- the `gateway-steady` runner suppresses the earlier `agent --local` startup and exit distortion
-- the remaining misses are now a smaller honest set of harder cases, not a benchmark-wide timeout wall
+- the strict baseline removes the earlier `agent --local` startup and exit distortion from the official conclusion surface
+- the remaining misses are now down to one honest harder case instead of a benchmark-wide timeout wall
 
 Put more plainly:
 
 - it is clean enough
 - it is representative enough
 - and it should now remain the default Docker hermetic A/B surface
+- while the `2/4`-shard `gateway-steady` path remains a fast watch/smoke lane
 
 ## Why This Fast Path Still Matters
 
@@ -252,11 +262,12 @@ It already answers the questions that had to be settled first:
 The current trade-off is:
 
 - the old `agent --local` fast path remained shorter in wall-clock
-- the new `gateway-steady` path takes roughly `22.5` minutes for the full `40`-case suite
-- but the new path now yields a meaningful answer-quality comparison instead of a fake timeout wall
+- the strict baseline takes longer in wall-clock
+- but it now yields the authoritative answer-quality comparison instead of a fake timeout wall
+- the `gateway-steady` path remains useful when faster smoke/watch feedback matters more than official publication quality
 
 So the next optimization target is no longer “make Docker A/B valid at all”.
-It is “keep this clean capability surface while shrinking the residual `6` shared-fail and `2` legacy-only cases, and continue pushing wall-clock down without reintroducing contamination risk”.
+It is “keep this clean capability surface while shrinking the last strict shared-fail, and continue pushing fast-watch wall-clock down without reintroducing contamination risk”.
 
 ## Current Closure
 
@@ -275,8 +286,9 @@ This line of work can now be closed with a precise split:
 
 So the current closure statement is:
 
-- Docker hermetic **substrate** is now strong enough to stay as the default evaluation base
-- Docker hermetic **ordinary-conversation capability comparison** is still blocked by the container provider/auth path, not by the benchmark scaffold anymore
+- Docker hermetic **substrate** is now strong enough to remain the default evaluation base
+- Docker hermetic **strict ordinary-conversation capability comparison** is now strong enough to remain the official baseline
+- the remaining work is no longer “is Docker trustworthy at all”, but “close the last strict shared-fail and keep fast-watch wall-clock low”
 
 Related diagnostic reports:
 

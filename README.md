@@ -20,7 +20,7 @@ If you want the shortest practical answer before reading the whole repo:
 - Stage 9 guarded opt-in A/B: baseline `5 / 5`, shadow `5 / 5`, guarded `5 / 5`, guarded applied `2 / 5`, average guarded prompt reduction ratio `0.0424`
 - focused ordinary-conversation write-time A/B:
   - host live: `current=38`, `legacy=21`, `UMC-only=18`
-  - Docker hermetic steady-state: `current=32`, `legacy=17`, `UMC-only=17`, `legacy-only=2`, `both-fail=6`, `preCaseResetFailed=0`
+  - Docker hermetic strict baseline: `current=39`, `legacy=15`, `UMC-only=24`, `legacy-only=0`, `both-fail=1`, `preCaseResetFailed=0`
 
 Read these first:
 
@@ -33,7 +33,7 @@ Read these first:
 - [Focused Ordinary-Conversation Realtime Write A/B](reports/generated/openclaw-ordinary-conversation-memory-intent-ab-2026-04-17.md)
 - [Docker Hermetic Ordinary-Conversation Rerun](reports/generated/openclaw-ordinary-conversation-memory-intent-docker-rerun-2026-04-17.md)
 
-The honest takeaway is now cleaner: OpenClaw builtin memory is already decent on many “existing memory consumption” prompts, so the older `100`-case A/B only shows a modest gap. On the ordinary-conversation write surface, both the host-live run and the hermetic Docker steady-state rerun now show a material Unified Memory Core advantage. The difference is attribution quality: the host run acts as the more optimistic live upper bound, while the Docker rerun is the stricter reproducible baseline. In other words, UMC is no longer only “supposed” to remember better on this surface; it now does so under a clean hermetic A/B as well.
+The honest takeaway is now cleaner: OpenClaw builtin memory is already decent on many “existing memory consumption” prompts, so the older `100`-case A/B only shows a modest gap. On the ordinary-conversation write surface, both the host-live run and the hermetic Docker strict rerun now show a material Unified Memory Core advantage. The difference is attribution quality: the host run acts as the more optimistic live upper bound, while the Docker strict rerun is the official reproducible baseline. The `2/4`-shard `gateway-steady` path remains useful, but only as fast watch/smoke rather than the final truth surface. In other words, UMC is no longer only “supposed” to remember better on this surface; it now does so under a clean hermetic A/B as well.
 
 ## Three User-Facing Promises
 

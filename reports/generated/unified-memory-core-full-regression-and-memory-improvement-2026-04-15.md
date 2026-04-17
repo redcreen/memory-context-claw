@@ -261,22 +261,22 @@ Category split:
 - session constraints: current `7 / 8`, legacy `8 / 8`
 - one-off instructions: current `8 / 8`, legacy `8 / 8`
 
-Hermetic Docker rerun topline:
+Hermetic Docker strict baseline topline:
 
 - compared live cases: `40`
-- `unified-memory-core` current path passed: `32`
-- legacy builtin path passed: `17`
+- `unified-memory-core` current path passed: `39`
+- legacy builtin path passed: `15`
 - both passed: `15`
-- Memory Core only: `17`
-- legacy only: `2`
-- both failed: `6`
+- Memory Core only: `24`
+- legacy only: `0`
+- both failed: `1`
 - `preCaseResetFailed = 0`
 
 Hermetic Docker interpretation:
 
 - the Docker rerun does not seed host `~/.openclaw` state, uses warmed shard-local hermetic states, resets every case back to its baseline snapshot before capture, prunes session transcripts before recall, and cleans up successfully
 - OpenClaw still generates bootstrap workspace files inside each hermetic state, but those are deterministic runtime bootstrap, not host-memory contamination
-- under the current `gateway-steady` path, legacy capture timed out on `5 / 40` cases and current on `3 / 40`, while recall timeouts dropped to `0`
+- the strict `1 shard` path is now the official capability baseline, while `2/4 shard gateway-steady` remains the fast watch/smoke lane
 - so the hermetic rerun now proves both things at once: the isolation root is trustworthy, and the ordinary-conversation write-time capability surface is no longer swallowed by blanket timeout failure
 
 Interpretation:
@@ -285,7 +285,7 @@ Interpretation:
 - the host-live focused suite says “ordinary-conversation realtime write behavior is already meaningfully better with Unified Memory Core than with the current default legacy path”
 - the write-time advantage the user expected was real, but the earlier `100`-case fixture-consumption A/B was the wrong tool to reveal it
 - the hermetic Docker rerun now confirms that the host-side ordinary-conversation delta survives under a clean reproducible substrate as well
-- taken together, the two runs now form a cleaner pair: host live acts as the optimistic upper bound, while Docker hermetic steady-state acts as the stricter baseline
+- taken together, the two runs now form a cleaner pair: host live acts as the optimistic upper bound, while Docker hermetic strict acts as the official stricter baseline
 
 The clearest current UMC-only wins in this focused suite are:
 

@@ -16,8 +16,26 @@ test("ordinary GitHub keyword rules stay durable_rule and produce answer-friendl
 
   assert.ok(classified);
   assert.equal(classified.category, "durable_rule");
-  assert.match(classified.summary, /default rule keyword is saffron-releases/i);
+  assert.match(classified.summary, /default rule keyword:\s*saffron-releases/i);
   assert.match(classified.summary, /releases tab/i);
+});
+
+test("ordinary keyword and codename extraction does not collapse to the filler word 'for'", () => {
+  const csvRule = classifyOrdinaryConversationMemoryIntent({
+    userMessage: "From now on, whenever I ask you to review a CSV export, first compare the column headers before anything else. The keyword for that default workflow is silver-headers. Remember this.",
+    assistantReply: "Understood."
+  });
+  const hotelRule = classifyOrdinaryConversationMemoryIntent({
+    userMessage: "Going forward, whenever I ask for hotel options, show me the cancellation policy first. The codename for that default travel rule is pine-cancel. Remember it.",
+    assistantReply: "Understood."
+  });
+
+  assert.ok(csvRule);
+  assert.ok(hotelRule);
+  assert.match(csvRule.summary, /silver-headers/i);
+  assert.doesNotMatch(csvRule.summary, /\bfor\.$/i);
+  assert.match(hotelRule.summary, /pine-cancel/i);
+  assert.doesNotMatch(hotelRule.summary, /\bfor\.$/i);
 });
 
 test("ordinary Slack routing rules keep generic tool names without product-specific hardcoding", () => {
@@ -31,6 +49,20 @@ test("ordinary Slack routing rules keep generic tool names without product-speci
   assert.equal(classified.structured_rule?.action?.tool, "summarize_slack_thread");
   assert.match(classified.summary, /Slack thread/i);
   assert.match(classified.summary, /olive-thread/i);
+  assert.match(classified.summary, /tag the result olive-thread/i);
+});
+
+test("ordinary Notion routing rules keep trigger labels even when English casing changes", () => {
+  const classified = classifyOrdinaryConversationMemoryIntent({
+    userMessage: "Going forward, whenever I send a Notion export package, use parse_notion_export first and tag the result copper-notion. Remember this default workflow.",
+    assistantReply: "Understood."
+  });
+
+  assert.ok(classified);
+  assert.equal(classified.category, "tool_routing_preference");
+  assert.match(classified.summary, /Notion export package/i);
+  assert.match(classified.summary, /copper-notion/i);
+  assert.match(classified.summary, /tag the result copper-notion/i);
 });
 
 test("ordinary routing rules recognize generic action verbs beyond use", () => {
@@ -241,4 +273,80 @@ test("openclaw ordinary conversation hook ignores one-off instructions that shou
   const registry = createMemoryRegistry({ rootDir: registryRoot });
   const records = await registry.listRecords();
   assert.equal(records.length, 0);
+});
+
+test("openclaw ordinary conversation hook ignores Chinese one-off airport assumptions", async () => {
+  const classified = classifyOrdinaryConversationMemoryIntent({
+    userMessage: "这一次先假设我默认出发机场是成田机场，方便订今天的航班；不要把这个记成长期默认机场。",
+    assistantReply: "收到。"
+  });
+
+  assert.equal(classified, null);
+});
+
+test("openclaw plugin pre-captures durable ordinary memory on before_agent_start and dedupes agent_end", async () => {
+  const registryRoot = await fs.mkdtemp(path.join(os.tmpdir(), "umc-openclaw-plugin-before-agent-start-"));
+  const hooks = new Map();
+
+  plugin.register({
+    runtime: {},
+    logger: {
+      info() {},
+      warn() {},
+      error() {}
+    },
+    pluginConfig: {
+      openclawAdapter: {
+        ordinaryConversationMemory: {
+          enabled: true
+        },
+        governedExports: {
+          registryDir: registryRoot,
+          workspaceId: "demo-workspace"
+        }
+      }
+    },
+    registerContextEngine() {},
+    registerService() {},
+    registerTool() {},
+    on(hookName, handler) {
+      hooks.set(hookName, handler);
+    }
+  });
+
+  const beforeAgentStart = hooks.get("before_agent_start");
+  const agentEnd = hooks.get("agent_end");
+  assert.equal(typeof beforeAgentStart, "function");
+  assert.equal(typeof agentEnd, "function");
+
+  const beforeResult = await beforeAgentStart({
+    prompt: "dummy",
+    messages: [
+      { role: "user", content: "Going forward, whenever I send a pull request link, first check unresolved review comments. The codename for that default rule is cedar-comments. Please remember it." }
+    ]
+  }, {
+    agentId: "main",
+    sessionKey: "agent:main:test"
+  });
+
+  assert.ok(beforeResult);
+  assert.equal(beforeResult.declared_source.category, "durable_rule");
+
+  const endResult = await agentEnd({
+    success: true,
+    messages: [
+      { role: "user", content: "Going forward, whenever I send a pull request link, first check unresolved review comments. The codename for that default rule is cedar-comments. Please remember it." },
+      { role: "assistant", content: "Got it — I’ll use cedar-comments." }
+    ]
+  }, {
+    agentId: "main",
+    sessionKey: "agent:main:test"
+  });
+
+  assert.equal(endResult, null);
+
+  const registry = createMemoryRegistry({ rootDir: registryRoot });
+  const records = await registry.listRecords();
+  assert.equal(records.filter((record) => record.record_type === "source_artifact").length, 1);
+  assert.equal(records.filter((record) => record.record_type === "stable_artifact").length, 1);
 });

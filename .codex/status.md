@@ -98,13 +98,19 @@
   - `npm run verify:memory-intent` 已成为这条 slice 的正式 gate
   - architecture / self-learning / development-plan / control-surface 文档已补上 realtime memory-intent ingestion 设计基线并收口
 - ordinary-conversation realtime-write A/B 已扩到更有代表性的 `40` 条 live case，并按“先 builtin、清空状态、再 current”的方法重跑：
-  - current `38 / 40`
-  - legacy `21 / 40`
-  - both-pass `20`
-  - UMC-only `18`
-- legacy-only `1`
-- both-fail `1`
-  - 分类上 durable-rule `8 / 8 vs 3 / 8`、tool-routing `8 / 8 vs 1 / 8`、profile `7 / 8 vs 1 / 8`；负例面 one-off `8 / 8` 两边都守住，但 session-constraint 仍有 `1` 条 current 误记
+  - host live：current `38 / 40`
+  - host live：legacy `21 / 40`
+  - host live：both-pass `20`
+  - host live：UMC-only `18`
+  - host live：legacy-only `1`
+  - host live：both-fail `1`
+  - Docker strict：current `39 / 40`
+  - Docker strict：legacy `15 / 40`
+  - Docker strict：both-pass `15`
+  - Docker strict：UMC-only `24`
+  - Docker strict：legacy-only `0`
+  - Docker strict：both-fail `1`
+  - strict 基线下分类上 durable-rule `8 / 8 vs 0 / 8`、tool-routing `7 / 8 vs 0 / 8`、profile `8 / 8 vs 0 / 8`、session-constraint `8 / 8 vs 8 / 8`、one-off `8 / 8 vs 7 / 8`
 - Stage 6 `dialogue working-set shadow integration` 已正式收口：
   - runtime shadow replay `16 / 16`
   - runtime answer A/B baseline `5 / 5`，shadow `5 / 5`
