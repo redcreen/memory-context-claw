@@ -49,6 +49,62 @@
       "label": "Rewrite Query Count",
       "help": "Maximum number of rewritten retrieval queries used for one recall."
     },
+    "dialogueWorkingSetShadow.enabled": {
+      "label": "Dialogue Shadow",
+      "help": "Enable runtime working-set shadow telemetry for multi-topic dialogue turns."
+    },
+    "dialogueWorkingSetShadow.model": {
+      "label": "Dialogue Shadow Model",
+      "help": "Model override for the working-set shadow decision."
+    },
+    "dialogueWorkingSetShadow.provider": {
+      "label": "Dialogue Shadow Provider",
+      "help": "Optional provider override used with dialogueWorkingSetShadow.model."
+    },
+    "dialogueWorkingSetShadow.timeoutMs": {
+      "label": "Dialogue Shadow Timeout",
+      "help": "Maximum wait time for one shadow decision."
+    },
+    "dialogueWorkingSetShadow.maxTurns": {
+      "label": "Dialogue Shadow Max Turns",
+      "help": "Maximum projected transcript turns sent into the shadow decision."
+    },
+    "dialogueWorkingSetShadow.minTurns": {
+      "label": "Dialogue Shadow Min Turns",
+      "help": "Minimum projected turns required before the shadow path runs."
+    },
+    "dialogueWorkingSetShadow.maxCharsPerTurn": {
+      "label": "Dialogue Shadow Chars Per Turn",
+      "help": "Maximum characters preserved from each turn in the shadow transcript."
+    },
+    "dialogueWorkingSetShadow.outputDir": {
+      "label": "Dialogue Shadow Output Dir",
+      "help": "Sidecar output directory for runtime shadow exports."
+    },
+    "dialogueWorkingSetShadow.cleanupSession": {
+      "label": "Dialogue Shadow Cleanup",
+      "help": "Delete the temporary shadow subagent session after capture."
+    },
+    "dialogueWorkingSetGuarded.enabled": {
+      "label": "Dialogue Guarded Path",
+      "help": "Enable the very narrow guarded working-set active path."
+    },
+    "dialogueWorkingSetGuarded.allowedRelations": {
+      "label": "Dialogue Guarded Relations",
+      "help": "Only allow guarded activation for selected relation classes."
+    },
+    "dialogueWorkingSetGuarded.minReductionRatio": {
+      "label": "Dialogue Guarded Min Reduction",
+      "help": "Minimum raw reduction ratio required before guarded activation."
+    },
+    "dialogueWorkingSetGuarded.minEvictedTurns": {
+      "label": "Dialogue Guarded Min Evictions",
+      "help": "Minimum evicted turn count required before guarded activation."
+    },
+    "dialogueWorkingSetGuarded.prependCarryForward": {
+      "label": "Dialogue Guarded Carry Forward",
+      "help": "When enabled, prepend the carry-forward block ahead of filtered messages."
+    },
     "openclawAdapter.governedExports.agentNamespace.enabled": {
       "label": "Agent Sub Namespace",
       "help": "When enabled, governed memory reads merge workspace-shared memory with the current agent's sub-namespace, and nightly self-learning writes per-agent artifacts into that sub-namespace."
@@ -155,6 +211,76 @@
             "type": "integer",
             "minimum": 1,
             "maximum": 8
+          }
+        }
+      },
+      "dialogueWorkingSetShadow": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "enabled": {
+            "type": "boolean"
+          },
+          "model": {
+            "type": "string"
+          },
+          "provider": {
+            "type": "string"
+          },
+          "timeoutMs": {
+            "type": "integer",
+            "minimum": 1000,
+            "maximum": 120000
+          },
+          "maxTurns": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "minTurns": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50
+          },
+          "maxCharsPerTurn": {
+            "type": "integer",
+            "minimum": 80,
+            "maximum": 8000
+          },
+          "outputDir": {
+            "type": "string"
+          },
+          "cleanupSession": {
+            "type": "boolean"
+          }
+        }
+      },
+      "dialogueWorkingSetGuarded": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "enabled": {
+            "type": "boolean"
+          },
+          "allowedRelations": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["continue", "branch", "switch", "resolve"]
+            }
+          },
+          "minReductionRatio": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "minEvictedTurns": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20
+          },
+          "prependCarryForward": {
+            "type": "boolean"
           }
         }
       },
