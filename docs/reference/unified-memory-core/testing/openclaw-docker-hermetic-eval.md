@@ -138,6 +138,18 @@ When the machine depends on a proxy to reach model providers, the runner now als
 That matters because the real model path in Docker uses Node `fetch`, not `curl`.
 Passing `HTTP_PROXY` / `HTTPS_PROXY` into the container was not enough by itself; without this flag, Node `fetch` could still fail immediately with `TypeError: fetch failed`.
 
+The runner also rewrites common host loopback proxy addresses:
+
+- `127.0.0.1`
+- `localhost`
+- `::1`
+
+into:
+
+- `host.docker.internal`
+
+Inside Docker, loopback points at the container itself rather than the host proxy process.
+
 ## Compose And Entry Points
 
 - Compose file: [docker-compose.openclaw-eval.yml](../../../../docker-compose.openclaw-eval.yml)
@@ -168,6 +180,11 @@ npm run eval:openclaw:docker -- \
 3. Only if you still need online-path confirmation, add a separate gateway smoke container
 
 4. For ordinary-conversation write-time behavior, prefer `ordinary-conversation-memory-intent-ab`
+
+The current state is now clearer:
+
+- the Docker `gateway` steady-state route has already been validated as a way to bypass part of the `agent --local` CLI tail latency
+- but it should not replace the default ordinary benchmark until long-lived process cleanup has been shown not to reintroduce cross-case contamination
 
 ## How To Decide Whether Docker Isolation Is Still Contaminated
 

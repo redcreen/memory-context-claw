@@ -16,7 +16,7 @@ const repoRoot = path.resolve(__dirname, "..");
 const defaultCasesPath = path.resolve(__dirname, "../evals/openclaw-ordinary-conversation-memory-intent-ab-cases.js");
 const defaultFixtureRoot = path.resolve(__dirname, "../evals/openclaw-ordinary-conversation-fixture");
 const defaultTemplateCacheRoot = path.resolve(repoRoot, ".cache", "openclaw-ordinary-state-templates");
-const ordinaryStateTemplateVersion = "v3";
+const ordinaryStateTemplateVersion = "v4";
 const ordinaryTemplateWarmupMessage = "What repository is this workspace for? Answer in one short sentence.";
 
 function normalizeString(value, fallback = "") {
@@ -767,12 +767,29 @@ async function materializeEvalStateDir(args, includeUMC, tempRoot) {
   };
 }
 
-async function cloneEvalStateDir(baseStateDir, prefix) {
+async function rewriteClonedStateConfig(args, includeUMC, stateDir) {
+  const agentDir = path.join(stateDir, "agents", args.agentId, "agent");
+  const workspaceDir = path.join(stateDir, "workspace");
+  const registryDir = path.join(stateDir, "registry");
+  const config = buildOrdinaryConfig({
+    includeUMC,
+    agentId: args.agentId,
+    agentDir,
+    workspaceDir,
+    registryDir,
+    pluginPath: args.pluginPath,
+    agentModel: args.agentModel
+  });
+  await writeText(path.join(stateDir, "openclaw.json"), `${JSON.stringify(config, null, 2)}\n`);
+}
+
+async function cloneEvalStateDir(baseStateDir, prefix, args, includeUMC) {
   const targetDir = path.join(os.tmpdir(), `${prefix}${randomUUID()}`);
   await fs.cp(baseStateDir, targetDir, {
     recursive: true,
     force: true
   });
+  await rewriteClonedStateConfig(args, includeUMC, targetDir);
   return targetDir;
 }
 
@@ -910,39 +927,161 @@ async function runAgentTurn({ stateDir, agentId, sessionId, message, timeoutMs }
   const maxAttempts = process.env.UMC_EVAL_EXECUTION_ENV === "docker" ? 1 : 2;
   let last = null;
   for (let attempt = 0; attempt < maxAttempts; attempt += 1) {
-    const result = await runCommand("openclaw", [
-      "agent",
-      "--agent",
-      agentId,
-      "--local",
-      "--thinking",
-      "off",
-      "--timeout",
-      String(timeoutSeconds),
-      "--json",
-      "--session-id",
-      sessionId,
-      "--message",
-      message
-    ], {
-      timeoutMs,
-      env: { OPENCLAW_STATE_DIR: stateDir }
+    const result = await new Promise((resolve) => {
+      const child = spawn("openclaw", [
+        "agent",
+        "--agent",
+        agentId,
+        "--local",
+        "--thinking",
+        "off",
+        "--timeout",
+        String(timeoutSeconds),
+        "--json",
+        "--session-id",
+        sessionId,
+        "--message",
+        message
+      ], {
+        cwd: repoRoot,
+        env: { ...process.env, OPENCLAW_STATE_DIR: stateDir },
+        stdio: ["ignore", "pipe", "pipe"],
+        detached: true
+      });
+
+      let stdout = "";
+      let stderr = "";
+      let settled = false;
+      let timedOut = false;
+      let sawJson = false;
+      let timer = null;
+      let killTimer = null;
+      let parsedResult = null;
+
+      const trimBuffer = (value) => {
+        const maxBuffer = 8 * 1024 * 1024;
+        if (value.length <= maxBuffer) {
+          return value;
+        }
+        return value.slice(value.length - maxBuffer);
+      };
+
+      const killTree = (signal = "SIGTERM") => {
+        try {
+          process.kill(-child.pid, signal);
+          return;
+        } catch {
+          try {
+            child.kill(signal);
+          } catch {
+            // ignore cleanup failure
+          }
+        }
+      };
+
+      const finish = (payload) => {
+        if (settled) {
+          return;
+        }
+        settled = true;
+        clearTimeout(timer);
+        clearTimeout(killTimer);
+        resolve(payload);
+      };
+
+      const tryParsePayload = () => {
+        const candidates = [stdout, stderr, `${stdout}\n${stderr}`];
+        for (const candidate of candidates) {
+          if (!candidate.trim()) {
+            continue;
+          }
+          try {
+            const payload = extractJsonPayload(candidate);
+            const answer = extractAgentText(payload);
+            return {
+              ok: true,
+              payload,
+              answer,
+              stdout,
+              stderr
+            };
+          } catch {
+            // keep buffering until a full JSON payload appears
+          }
+        }
+        return null;
+      };
+
+      const onChunk = (target, chunk) => {
+        if (target === "stdout") {
+          stdout = trimBuffer(stdout + String(chunk));
+        } else {
+          stderr = trimBuffer(stderr + String(chunk));
+        }
+        if (sawJson) {
+          return;
+        }
+        const parsed = tryParsePayload();
+        if (parsed) {
+          sawJson = true;
+          parsedResult = parsed;
+          killTree("SIGTERM");
+          killTimer = setTimeout(() => killTree("SIGKILL"), 1500);
+        }
+      };
+
+      child.stdout.on("data", (chunk) => onChunk("stdout", chunk));
+      child.stderr.on("data", (chunk) => onChunk("stderr", chunk));
+
+      child.on("error", (error) => {
+        finish({
+          ok: false,
+          error: String(error?.message || error),
+          stdout,
+          stderr
+        });
+      });
+
+      child.on("close", (code, signal) => {
+        if (settled) {
+          return;
+        }
+        if (timedOut) {
+          finish({
+            ok: false,
+            error: `timeout after ${timeoutMs}ms`,
+            stdout,
+            stderr
+          });
+          return;
+        }
+        if (parsedResult) {
+          finish(parsedResult);
+          return;
+        }
+        const parsed = tryParsePayload();
+        if (parsed) {
+          finish(parsed);
+          return;
+        }
+        finish({
+          ok: false,
+          error: code === 0 ? "json_parse_failed" : `exit ${code ?? "null"} signal ${signal ?? "null"}`,
+          stdout,
+          stderr
+        });
+      });
+
+      timer = timeoutMs
+        ? setTimeout(() => {
+          timedOut = true;
+          killTree("SIGKILL");
+        }, timeoutMs)
+        : null;
     });
 
-    if (!result.ok) {
-      last = {
-        ok: false,
-        error: result.error,
-        stdout: result.stdout,
-        stderr: result.stderr
-      };
-      continue;
-    }
-
-    try {
-      const payload = extractJsonPayload(pickJsonText(result.stdout, result.stderr));
-      const answer = extractAgentText(payload);
-      if (!answer && attempt === 0) {
+    if (result.ok) {
+      if (!result.answer && attempt === 0) {
         last = {
           ok: false,
           error: "empty_answer",
@@ -951,21 +1090,15 @@ async function runAgentTurn({ stateDir, agentId, sessionId, message, timeoutMs }
         };
         continue;
       }
-      return {
-        ok: true,
-        payload,
-        answer,
-        stdout: result.stdout,
-        stderr: result.stderr
-      };
-    } catch (error) {
-      last = {
-        ok: false,
-        error: `json_parse_failed: ${String(error)}`,
-        stdout: result.stdout,
-        stderr: result.stderr
-      };
+      return result;
     }
+
+    last = {
+      ok: false,
+      error: result.error,
+      stdout: result.stdout,
+      stderr: result.stderr
+    };
   }
 
   return last || {
@@ -979,7 +1112,9 @@ async function runCaseForMode(caseDef, args, includeUMC, baseState) {
   const cloneStartedAt = Date.now();
   const stateDir = await cloneEvalStateDir(
     baseState.stateDir,
-    includeUMC ? "umc-ordinary-current-case-" : "umc-ordinary-legacy-case-"
+    includeUMC ? "umc-ordinary-current-case-" : "umc-ordinary-legacy-case-",
+    args,
+    includeUMC
   );
   const cloneMs = Date.now() - cloneStartedAt;
   const state = {

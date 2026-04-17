@@ -41,6 +41,26 @@ function normalizeString(value, fallback = "") {
   return normalized || fallback;
 }
 
+function rewriteDockerProxyUrl(value) {
+  const normalized = normalizeString(value);
+  if (!normalized) {
+    return normalized;
+  }
+
+  try {
+    const parsed = new URL(normalized);
+    const host = parsed.hostname;
+    if (host === "127.0.0.1" || host === "localhost" || host === "::1") {
+      parsed.hostname = "host.docker.internal";
+      return parsed.toString();
+    }
+  } catch {
+    // Preserve the original string when proxy parsing fails.
+  }
+
+  return normalized;
+}
+
 function parseArgs(argv) {
   const options = {
     dockerBin: "docker",
@@ -181,7 +201,7 @@ function buildScenarioEnv(scenario, options) {
   ]) {
     const value = normalizeString(process.env[key]);
     if (value) {
-      env[key] = value;
+      env[key] = /proxy/i.test(key) ? rewriteDockerProxyUrl(value) : value;
     }
   }
 
@@ -203,6 +223,8 @@ function buildScenarioEnv(scenario, options) {
     "UMC_EVAL_TIMEOUT_MS",
     "UMC_EVAL_CAPTURE_POLL_MS",
     "UMC_EVAL_EXTRA_ARGS",
+    "UMC_EVAL_REFRESH_TEMPLATE_CACHE",
+    "UMC_EVAL_TEMPLATE_CACHE_ROOT",
     "UMC_EVAL_KEEP_STATE",
     "UMC_EVAL_FAST_FAIL_CAPTURE"
   ]) {

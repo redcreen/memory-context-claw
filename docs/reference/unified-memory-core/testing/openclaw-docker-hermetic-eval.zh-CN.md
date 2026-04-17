@@ -142,6 +142,19 @@ UMC_EVAL_TIMEOUT_MS=30000 npm run eval:openclaw:docker -- \
 原因是 Docker 里的真实模型调用走的是 Node `fetch`，而不是 `curl`。
 单纯把 `HTTP_PROXY` / `HTTPS_PROXY` 传进容器还不够；没有这层设置时，容器里的 Node `fetch` 可能直接 `TypeError: fetch failed`。
 
+另外，runner 还会把这些常见的宿主 loopback 代理地址：
+
+- `127.0.0.1`
+- `localhost`
+- `::1`
+
+自动改写成：
+
+- `host.docker.internal`
+
+原因很简单：对 Docker 容器来说，`127.0.0.1` 指向的是容器自己，不是宿主代理进程。
+如果不做这层改写，容器里的模型请求会被错误地导向一个根本不存在的本地代理。
+
 ## Compose 与入口
 
 - Compose 文件：[docker-compose.openclaw-eval.yml](../../../../docker-compose.openclaw-eval.yml)
@@ -249,6 +262,17 @@ npm run eval:openclaw:docker -- \
 - 引入真正的 steady-state 长驻运行形态
 - 避免每题都重新冷起 answer path
 - 在保证隔离为零污染的前提下，再重跑更宽预算的 ordinary-conversation 能力对比
+
+目前已经有一个明确结论：
+
+- Docker 里的 `gateway` steady-state 路径已经验证能绕开一部分 `agent --local` 的 CLI 收尾延迟
+
+但在把它切成默认 ordinary benchmark 之前，还需要额外验证：
+
+- 长驻进程
+- 每题清理 session / registry / workspace 改动
+
+不会重新引入跨题污染。
 
 ## 当前收口结论
 
