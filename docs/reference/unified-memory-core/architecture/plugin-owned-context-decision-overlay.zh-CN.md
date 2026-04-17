@@ -12,6 +12,7 @@
 
 相关文档：
 
+- [context-minor-gc.zh-CN.md](context-minor-gc.zh-CN.md)
 - [dialogue-working-set-pruning.zh-CN.md](dialogue-working-set-pruning.zh-CN.md)
 - [context-slimming-and-budgeted-assembly.zh-CN.md](context-slimming-and-budgeted-assembly.zh-CN.md)
 - [../development-plan.zh-CN.md](../development-plan.zh-CN.md)
@@ -35,6 +36,7 @@
 
 - OpenClaw 继续负责 session、tool loop、gateway、channel、agent 主执行
 - UMC 负责 retrieval、rerank、working-set decision、guarded assembly、pins / capsules / telemetry
+- 在这个分工里，`Context Minor GC` 是热路径 working-set control plane，而这份 overlay 文档专门回答它的 transport / seam 怎么解开
 
 ## 为什么这次必须先做接入点评审
 
@@ -361,4 +363,3 @@ OpenClaw 继续负责：
 - **不把修改 OpenClaw 当作主路径**
 - **优先尝试插件内自托管 memory + context decision overlay**
 - **宿主改动只作为 fallback，不作为当前推荐实施线**
-

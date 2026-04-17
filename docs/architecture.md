@@ -37,10 +37,13 @@ At this point the repo has two top-priority milestone tracks:
 
 The second track is now first-class. It is not just an adapter polish item.
 
-Context optimization currently means two coordinated architecture surfaces:
+Context optimization currently means several coordinated architecture surfaces:
 
 - durable-source slimming and budgeted assembly
   - [reference/unified-memory-core/architecture/context-slimming-and-budgeted-assembly.md](reference/unified-memory-core/architecture/context-slimming-and-budgeted-assembly.md)
+- `Context Minor GC`
+  - [reference/unified-memory-core/architecture/context-minor-gc.md](reference/unified-memory-core/architecture/context-minor-gc.md)
+  - it turns hot-path working-set management, task-state carry-forward, `direct / local_complete / full_assembly` routing, and “compat / compact as background-only safety net” into one explicit mainline
 - dialogue working-set pruning for long multi-topic sessions
   - [reference/unified-memory-core/architecture/dialogue-working-set-pruning.md](reference/unified-memory-core/architecture/dialogue-working-set-pruning.md)
 - plugin-owned `memory + context decision overlay`
@@ -50,6 +53,7 @@ Current state:
 
 - Stage 6 runtime shadow integration is already landed
 - it remains `default-off` and shadow-only
+- the public workstream name for this turn-by-turn context path is now `Context Minor GC`
 - the next round starts by finishing `context loading optimization`: clarify the bounded LLM-led decision contract, operator metrics, rollback boundary, harder A/B design, and one unified scorecard before any default prompt-path change
 - the preferred implementation path is no longer an OpenClaw patch first; it is to pull the `memory + context decision` transport back into the plugin layer first
 - the daily-product target is now explicit: normal sessions should stay sustainable through per-turn context management instead of treating compat / compact as a normal hot-path dependency; compat / compact remains only a nightly or background safety net
@@ -76,7 +80,7 @@ Translated into architecture constraints:
 
 - `light and fast`
   - adapter seams, default config, install size, prompt thickness, main-path latency, and runtime footprint all belong to the same target
-  - the desired runtime shape is closer to “incremental reclamation plus low-frequency full sweep”: prune the working set continuously during normal use, and reserve compat / compact for low-frequency background safety passes
+  - the desired runtime shape is closer to “`Context Minor GC` plus low-frequency full sweep”: prune the working set continuously during normal use, and reserve compat / compact for low-frequency background safety passes
 - `smart`
   - durable memory, realtime learning, working-set pruning, budgeted assembly, and abstention guardrails should reinforce each other instead of drifting apart
 - `reassuring`

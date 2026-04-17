@@ -18,6 +18,7 @@ The goal here is not to argue that recall is already “good enough”. The goal
 Related documents:
 
 - [openclaw-adapter.md](openclaw-adapter.md)
+- [context-minor-gc.md](context-minor-gc.md)
 - [dialogue-working-set-pruning.md](dialogue-working-set-pruning.md)
 - [plugin-owned-context-decision-overlay.md](plugin-owned-context-decision-overlay.md)
 - [execution-modes.md](execution-modes.md)
@@ -123,6 +124,7 @@ The current decision is:
 In other words:
 
 - this document still owns durable-source slimming and budgeted assembly
+- `Context Minor GC` now owns the unified hot-path story for turn-by-turn context management
 - but the immediate runtime slice starts with `dialogue working-set pruning` in shadow mode, not with a direct assembly cutover
 
 ## Non-Goals

@@ -35,7 +35,7 @@ The execution plan should stay anchored to three user-facing promises:
 
 1. `Light and fast`
    - already landed: fact-first assembly, Stage 6 runtime shadow instrumentation, release-preflight, Docker hermetic eval, and ordinary-conversation Docker steady-state A/B
-   - next work: first make context loading optimization a formal mainline and formal gate; keep ordinary-conversation hermetic A/B as the default Docker baseline; only after that shorten install / bootstrap / verify
+   - next work: first make `Context Minor GC / context loading optimization` a formal mainline and formal gate; keep ordinary-conversation hermetic A/B as the default Docker baseline; only after that shorten install / bootstrap / verify
 2. `Smart`
    - already landed: realtime `memory_intent` ingestion plus nightly governed learning plus the working-set shadow path
    - next work: once the context-optimization scorecard is stable, move the shadow-first context-decision path toward a bounded guarded narrow gain
@@ -51,6 +51,7 @@ Translated into execution requirements:
 
 - `light and fast`
   - install, default config, first verification, prompt-thickness, latency, and runtime cost all stay inside the gate
+  - the public name for this hot-path program is now `Context Minor GC`
 - `smart`
   - bounded decision contracts, self-learning, working-set pruning, and budgeted assembly should all improve judgment quality together
 - `reassuring`
@@ -97,7 +98,7 @@ Current status:
 - `Stage 8`: completed
 - `Stage 9`: in progress (`default-off` / opt-in only)
 - current pointer: `108`
-- current recommendation: the Stage 7 scorecard, the Stage 8 hermetic closure, and the Stage 9 guarded seam are all landed; but the OpenClaw live soak now proves the current decision transport is still tied to the host runtime seam, so the next step is to build a plugin-owned `memory + context decision overlay` before considering any OpenClaw modification
+- current recommendation: the Stage 7 scorecard, the Stage 8 hermetic closure, and the Stage 9 guarded seam are all landed; but the OpenClaw live soak now proves the current `Context Minor GC` decision transport is still tied to the host runtime seam, so the next step is to build a plugin-owned `memory + context decision overlay` before considering any OpenClaw modification
 
 Already implemented in the current baseline:
 
@@ -141,7 +142,7 @@ These constraints keep the next per-turn context optimization slice measurable a
 | Stage 4 | `31-38` | connect governed learning outputs into adapter policy use | `completed` |
 | Stage 5 | `39-46` | harden product operations and split-ready execution | `completed` |
 | Stage 6 | `93-100` | validate dialogue working-set pruning in runtime shadow mode before any active prompt cutover | `completed` |
-| Stage 7 | `101-108` | turn context loading optimization into a formal mainline and formal gate | `in_progress` |
+| Stage 7 | `101-108` | turn `Context Minor GC / context loading optimization` into a formal mainline and formal gate | `in_progress` |
 | Stage 8 | `109-114` | turn the ordinary-conversation hermetic path into a trustworthy steady-state A/B surface | `completed` |
 | Stage 9 | `115-120` | start turning context optimization into user-visible value through a bounded guarded path | `in_progress` |
 | Stage 10 | `121-126` | shorten install / bootstrap / verify and strengthen shared-foundation product proof | `planned` |
@@ -271,6 +272,10 @@ Stage 6 evidence:
    - The repo now explicitly treats Stage 6 as “measurement landed”, not “default path switched”.
 
 ### Stage 7. Context Loading Optimization Closure
+
+The public workstream name for this stage is now:
+
+- `Context Minor GC`
 
 Current evidence:
 

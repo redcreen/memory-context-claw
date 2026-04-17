@@ -27,6 +27,7 @@
 - [为什么 Unified Memory Core 用起来更顺手](docs/memory-improvement-evidence.zh-CN.md)
 - [完整回归与记忆提升报告](reports/generated/unified-memory-core-full-regression-and-memory-improvement-2026-04-15.md)
 - [Context 瘦身与预算化组装](docs/reference/unified-memory-core/architecture/context-slimming-and-budgeted-assembly.zh-CN.md)
+- [Context Minor GC](docs/reference/unified-memory-core/architecture/context-minor-gc.zh-CN.md)
 - [对话 Working-Set 裁剪](docs/reference/unified-memory-core/architecture/dialogue-working-set-pruning.zh-CN.md)
 - [插件内自托管 Context Decision Overlay](docs/reference/unified-memory-core/architecture/plugin-owned-context-decision-overlay.zh-CN.md)
 - [Stage 7 / Stage 9 汇总报告](reports/generated/dialogue-working-set-stage7-stage9-2026-04-17.md)
@@ -42,6 +43,7 @@
 1. `轻快`
    - 装得简单，接入轻，包体和运行负担尽量小，主路径尽量快
    - 当前已落地：fact-first assembly、runtime working-set shadow instrumentation、release-preflight、独立 Docker hermetic eval
+   - 当前这条逐轮 context 优化主线，对外工作名统一为：`Context Minor GC`
    - 当前最大缺口：每轮 context 加载优化还没有收成正式主线和正式门禁；与此同时，普通对话实时写记忆在 hermetic 环境下仍然明显受 timeout 压力影响。日常目标也已经明确成“尽量不靠 compat / compact 才能继续对话”，而是靠更轻的逐轮 context 管理维持热路径可持续；compat / compact 只保留为夜间或后台 safety net
 2. `聪明`
    - 该记的记住，不该记的不乱记；该给的 context 才给，不确定时尽量收敛
@@ -62,7 +64,7 @@
 
 - `轻快`
   - 安装命令、默认配置、首次验证、包体、启动成本、prompt thickness、answer latency、runtime cost 都属于同一个目标面
-  - 日常热路径的目标是不依赖 compat / compact 才能继续，而是用逐轮 context 管理把 prompt 厚度持续压在可用范围内；compat / compact 只保留为夜间或后台 safety net
+  - 这条热路径主线现在统一叫 `Context Minor GC`；目标是不依赖 compat / compact 才能继续，而是用逐轮 context 管理把 prompt 厚度持续压在可用范围内；compat / compact 只保留为夜间或后台 safety net
 - `聪明`
   - self-learning、working-set pruning、budgeted assembly、abstention / guardrail、bounded decision contract 要协同提升“判断质量”
 - `省心`

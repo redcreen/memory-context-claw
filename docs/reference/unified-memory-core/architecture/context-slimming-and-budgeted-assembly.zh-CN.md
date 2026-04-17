@@ -18,6 +18,7 @@
 相关文档：
 
 - [openclaw-adapter.zh-CN.md](openclaw-adapter.zh-CN.md)
+- [context-minor-gc.zh-CN.md](context-minor-gc.zh-CN.md)
 - [dialogue-working-set-pruning.zh-CN.md](dialogue-working-set-pruning.zh-CN.md)
 - [plugin-owned-context-decision-overlay.zh-CN.md](plugin-owned-context-decision-overlay.zh-CN.md)
 - [execution-modes.zh-CN.md](execution-modes.zh-CN.md)
@@ -83,6 +84,7 @@
 也就是说：
 
 - 这份文档仍然负责 durable-source slimming 和 budgeted assembly 的总体边界
+- `Context Minor GC` 负责把热路径上的逐轮 context 管理收成统一主线
 - 但眼前真正先动的 runtime slice，是 `dialogue working-set pruning` 的 shadow mode，而不是直接切 assembly 主路径
 
 ## 最短结论

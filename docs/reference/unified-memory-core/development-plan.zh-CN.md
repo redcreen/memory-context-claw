@@ -35,7 +35,7 @@
 
 1. `轻快`
    - 已落地：fact-first assembly、Stage 6 runtime shadow instrumentation、release-preflight、Docker hermetic eval、ordinary-conversation Docker steady-state A/B
-   - 下一步：先把 context loading optimization 做成正式主线和正式门禁；ordinary-conversation hermetic A/B 继续保持为默认 Docker 基线；最后才是 install / bootstrap / verify
+   - 下一步：先把 `Context Minor GC / context loading optimization` 做成正式主线和正式门禁；ordinary-conversation hermetic A/B 继续保持为默认 Docker 基线；最后才是 install / bootstrap / verify
 2. `聪明`
    - 已落地：realtime `memory_intent` ingestion + nightly governed learning + working-set shadow path
    - 下一步：在 context optimization scorecard 稳定后，把 shadow-first 的 context decision 逐步推进到 bounded、guarded 的窄路径收益
@@ -51,6 +51,7 @@
 
 - `轻快`
   - 安装、默认配置、首次验证、prompt thickness、latency、runtime cost 一起进门禁
+  - 这条热路径主线现在统一对外叫 `Context Minor GC`
 - `聪明`
   - bounded decision contract、self-learning、working-set pruning、budgeted assembly 一起提升“判断质量”
 - `省心`
@@ -97,7 +98,7 @@
 - `Stage 8`：已完成
 - `Stage 9`：进行中（`default-off` / opt-in only）
 - 当前指针：`108`
-- 当前建议：Stage 7 scorecard、Stage 8 hermetic closure 与 Stage 9 guarded seam 都已落地；但 OpenClaw live soak 已经证明当前 decision transport 仍绑在宿主 runtime seam 上，所以下一步优先做插件内自托管 `memory + context decision overlay`，而不是先改 OpenClaw
+- 当前建议：Stage 7 scorecard、Stage 8 hermetic closure 与 Stage 9 guarded seam 都已落地；但 OpenClaw live soak 已经证明当前 `Context Minor GC` decision transport 仍绑在宿主 runtime seam 上，所以下一步优先做插件内自托管 `memory + context decision overlay`，而不是先改 OpenClaw
 
 当前 baseline 已经落地：
 
@@ -141,7 +142,7 @@
 | Stage 4 | `31-38` | 把受治理学习结果接到 adapter 策略使用 | `completed` |
 | Stage 5 | `39-46` | 补齐产品运维与 split-ready 执行 | `completed` |
 | Stage 6 | `93-100` | 在任何 active prompt cutover 前，用 runtime shadow mode 验证 dialogue working-set pruning | `completed` |
-| Stage 7 | `101-108` | 把 context loading optimization 收成正式主线与正式门禁 | `in_progress` |
+| Stage 7 | `101-108` | 把 `Context Minor GC / context loading optimization` 收成正式主线与正式门禁 | `in_progress` |
 | Stage 8 | `109-114` | 把 ordinary-conversation hermetic 路径收成可信的 steady-state A/B 面 | `completed` |
 | Stage 9 | `115-120` | 以 bounded、guarded 方式让 context 优化开始变成用户收益 | `in_progress` |
 | Stage 10 | `121-126` | 收 install / bootstrap / verify，并补强共享底座产品证据 | `planned` |
@@ -271,6 +272,10 @@ Stage 6 证据：
    - 当前已经明确：Stage 6 是“测量面已落地”，不是“默认路径已切换”。
 
 ### Stage 7. Context Loading Optimization Closure
+
+这条阶段主线现在统一对外工作名为：
+
+- `Context Minor GC`
 
 当前证据：
 

@@ -42,18 +42,19 @@ Supporting evidence:
 - [generated/openclaw-natural-chinese-watch-and-perf-2026-04-15.md](../reports/generated/openclaw-natural-chinese-watch-and-perf-2026-04-15.md)
 - [generated/openclaw-answer-level-gate-expansion-2026-04-15.md](../reports/generated/openclaw-answer-level-gate-expansion-2026-04-15.md)
 
-## Dialogue Working-Set Runtime Snapshot
+## Context Minor GC Snapshot
 
-This block tracks the completed Stage 6 runtime shadow integration.
+This block tracks how far the `Context Minor GC` mainline has actually landed, including the completed Stage 6 runtime shadow integration and the later Stage 7 / 9 evidence.
 
-- Program: `dialogue-working-set-shadow-runtime`
+- Program alias: `context-minor-gc`
+- Stage 6 program: `dialogue-working-set-shadow-runtime`
 - Status: `completed / shadow-only`
 - Runtime shadow replay: `16 / 16`
 - Runtime shadow replay average reduction ratio: `0.4368`
 - Runtime answer A/B: baseline `5 / 5`, shadow `5 / 5`
 - Runtime answer A/B shadow-only wins: `0`
 - Runtime answer A/B average prompt reduction ratio: `0.0114`
-- Interpretation: runtime shadow integration is now the durable measurement surface, but active prompt mutation remains deferred
+- Interpretation: runtime shadow integration is now the durable measurement surface for `Context Minor GC`, but active prompt mutation remains deferred
 
 Supporting evidence:
 
@@ -75,7 +76,7 @@ Supporting evidence:
 - Stage 9 guarded applied: `2 / 5`
 - Stage 9 average guarded prompt reduction ratio: `0.0424`
 - OpenClaw gateway live validation: the gateway service is back and a two-turn smoke passes, but `5 / 5` working-set exports still fail on the host runtime seam
-- Interpretation: the Stage 7 operator-facing scorecard and the Stage 9 guarded opt-in seam are both landed, but the real OpenClaw live soak now proves the current decision transport is still tied to the host runtime seam; the preferred next path is therefore a plugin-owned memory + context decision overlay rather than direct OpenClaw modification
+- Interpretation: the Stage 7 operator-facing scorecard and the Stage 9 guarded opt-in seam are both landed, but the real OpenClaw live soak now proves the current `Context Minor GC` decision transport is still tied to the host runtime seam; the preferred next path is therefore a plugin-owned memory + context decision overlay rather than direct OpenClaw modification
 
 Supporting evidence:
 
@@ -92,7 +93,7 @@ Supporting evidence:
   - the shared-fail Chinese history cleanup is closed
   - the official-image Docker hermetic eval path is now reusable
 - Planned:
-  - make `context loading optimization` the first `light and fast` priority instead of putting installation polish first
+  - make `Context Minor GC / context loading optimization` the first `light and fast` priority instead of putting installation polish first
   - define one unified context-optimization scorecard so `prompt thickness / reduction / retrieval-assembly latency / answer latency / rollback metrics` are judged on one surface
   - then attach the bounded LLM-led context decision contract, operator metrics, rollback boundary, and harder live A/B redesign to that scorecard
   - make “daily sessions should not normally depend on compat / compact, and compat / compact should stay a nightly or background safety net” an explicit milestone goal
@@ -105,7 +106,7 @@ Supporting evidence:
 
 | Promise | What Is Already Landed | Current Evidence Surface | Next Milestone |
 | --- | --- | --- | --- |
-| Light and fast | fact-first assembly, runtime working-set shadow instrumentation, release-preflight, Docker hermetic eval | runtime shadow replay `16 / 16`, average reduction ratio `0.4368`, runtime answer A/B `5 / 5` vs `5 / 5`, ordinary-conversation Docker strict baseline `current=39 / 40`, `legacy=15 / 40`, `UMC-only=24`, `preCaseResetFailed=0` | finish context loading optimization first by turning context-thickness / reduction / latency into hard gates; keep Docker as the default hermetic A/B surface and move the remaining ordinary-conversation harder misses into targeted follow-up |
+| Light and fast | fact-first assembly, runtime working-set shadow instrumentation, release-preflight, Docker hermetic eval | runtime shadow replay `16 / 16`, average reduction ratio `0.4368`, runtime answer A/B `5 / 5` vs `5 / 5`, ordinary-conversation Docker strict baseline `current=39 / 40`, `legacy=15 / 40`, `UMC-only=24`, `preCaseResetFailed=0` | finish `Context Minor GC / context loading optimization` first by turning context-thickness / reduction / latency into hard gates; keep Docker as the default hermetic A/B surface and move the remaining ordinary-conversation harder misses into targeted follow-up |
 | Smart | realtime `memory_intent` ingestion, nightly self-learning, governed promotion / decay, working-set shadow path | ordinary-conversation host-live A/B current `38 / 40`, legacy `21 / 40`, `18` UMC-only wins | move the shadow-first context-decision path toward a bounded guarded narrow user gain and make context optimization feel user-visible |
 | Reassuring | add / inspect / audit / repair / replay / rollback, canonical registry root, OpenClaw / Codex adapters | shipped CLI flows and regression-protected verification stack | keep the operator surface readable and replayable while strengthening Codex / multi-instance product evidence |
 
@@ -117,7 +118,7 @@ At roadmap level this means:
 
 - `light and fast`
   - adoption cost, default-config complexity, package size, runtime footprint, context thickness, and latency stay inside milestone evaluation
-  - the hot path should not treat compat / compact as the normal survival mechanism; continuous context management should keep prompt thickness and latency inside a usable band
+  - this hot-path program is now explicitly named `Context Minor GC`; it should not treat compat / compact as the normal survival mechanism, and continuous context management should keep prompt thickness and latency inside a usable band
 - `smart`
   - retrieval, learning, working-set pruning, and budgeted assembly must improve together as one evidence surface
 - `reassuring`
@@ -139,7 +140,7 @@ The roadmap should make the current distance from the north star explicit:
 That makes the next priority order explicit:
 
 1. `light and fast / context loading optimization`: make per-turn context thickness, working-set reduction, budgeted assembly, and answer-level latency the mainline
-   - the target is not “compact more often”; it is “let long-running daily conversations continue without needing compact as the normal escape hatch”
+   - this mainline is now explicitly named `Context Minor GC`; the target is not “compact more often”; it is “let long-running daily conversations continue without needing compact as the normal escape hatch”
 2. `light and fast / install`: once ordinary-conversation hermetic A/B is closed, shorten install / bootstrap / verify
 3. `smart`: keep the bounded guarded smart path narrow and opt-in while making the user-visible gain real
 4. `reassuring`: strengthen shared-foundation evidence across OpenClaw and Codex
@@ -150,7 +151,7 @@ Stages 1-6 are complete, but the roadmap cannot stop at “all historical stages
 
 | Next Milestone | Status | Why Now | Exit Signal |
 | --- | --- | --- | --- |
-| Stage 7: context loading optimization closure | `in_progress` | the biggest current product gap is no longer “does the feature exist?” but “is each turn’s context package light enough?”; Stage 6 is still a measurement layer | the unified scorecard is fixed and harder replay / Docker / local evidence consistently show a lighter context package without answer-quality damage, and daily long conversations usually no longer need compat / compact as the normal way to keep going |
+| Stage 7: context loading optimization closure | `in_progress` | the biggest current product gap is no longer “does the feature exist?” but “is each turn’s context package light enough?”; Stage 6 is still a measurement layer, and this mainline is now externally named `Context Minor GC` | the unified scorecard is fixed and harder replay / Docker / local evidence consistently show a lighter context package without answer-quality damage, and daily long conversations usually no longer need compat / compact as the normal way to keep going |
 | Stage 8: ordinary-conversation realtime-write latency closure | `completed` | the Docker ordinary-conversation A/B has been recovered from a blanket timeout wall into a trustworthy strict baseline, while `2/4`-shard `gateway-steady` remains the fast watch lane | the clean Docker path is no longer dominated by large timeout counts and now reports `39 / 40 vs 15 / 40` with `preCaseResetFailed = 0` |
 | Stage 9: guarded smart-path promotion | `in_progress` | context loading optimization is still not a user gain if it stays shadow-only forever | a bounded guarded experiment surface has an explicit rollback boundary, operator metrics, and promotion gate, while compat / compact remains a background fallback instead of the default daily path; the preferred next step is to pull the decision transport back into the plugin before deciding whether any host-level fallback is still needed |
 | Stage 10: adoption simplification and shared-foundation proof | `planned` | install / bootstrap is still too manual, and Codex / multi-instance product evidence still lags | adoption is shorter and clearer, and the shared-foundation story is proven beyond architecture diagrams |
@@ -159,8 +160,8 @@ Stages 1-6 are complete, but the roadmap cannot stop at “all historical stages
 
 | Horizon | Focus | Exit Signal |
 | --- | --- | --- |
-| Now | keep closing `Stage 7` while holding `Stage 9` at `default-off` / opt-in only: answer “how do we make every turn lighter and faster without hurting quality?” | the unified scorecard, guarded seam, rollback boundary, and operator summary are all landed, but the OpenClaw gateway live soak proves the current decision transport is still blocked by the host runtime seam |
-| Next | first implement the plugin-owned `memory + context decision overlay`, so the working-set decision transport no longer depends on the host `subagent` seam, then continue the `Stage 7` closeout while keeping `Stage 9` narrow; ordinary-conversation Docker steady-state remains the default hermetic A/B baseline | the unified scorecard, guarded seam, rollback boundary, and operator summary are stable, and the remaining blocker is narrowed to the plugin-owned decision runner plus targeted Docker follow-up |
+| Now | keep closing `Stage 7 / Context Minor GC` while holding `Stage 9` at `default-off` / opt-in only: answer “how do we make every turn lighter and faster without hurting quality?” | the unified scorecard, guarded seam, rollback boundary, and operator summary are all landed, but the OpenClaw gateway live soak proves the current decision transport is still blocked by the host runtime seam |
+| Next | first implement the plugin-owned `memory + context decision overlay`, so the `Context Minor GC` working-set decision transport no longer depends on the host `subagent` seam, then continue the `Stage 7` closeout while keeping `Stage 9` narrow; ordinary-conversation Docker steady-state remains the default hermetic A/B baseline | the unified scorecard, guarded seam, rollback boundary, and operator summary are stable, and the remaining blocker is narrowed to the plugin-owned decision runner plus targeted Docker follow-up |
 | Later | after Stage 7 is stable, decide whether Stage 9 can widen and whether Stage 10 adoption/shared-foundation closure should start | the smart-path promotion gate, rollback boundary, and shared-foundation proof are operator-ready |
 
 ## Current Execution Focus

@@ -12,6 +12,7 @@ This document answers one blocker that is now explicit:
 
 Related documents:
 
+- [context-minor-gc.md](context-minor-gc.md)
 - [dialogue-working-set-pruning.md](dialogue-working-set-pruning.md)
 - [context-slimming-and-budgeted-assembly.md](context-slimming-and-budgeted-assembly.md)
 - [../development-plan.md](../development-plan.md)
@@ -35,6 +36,7 @@ More concretely:
 
 - OpenClaw keeps session, tool loop, gateway, channel, and agent lifecycle ownership
 - UMC owns retrieval, rerank, working-set decision, guarded assembly, pins / capsules / telemetry
+- inside that split, `Context Minor GC` is the hot-path working-set control plane, and this overlay document explains how its transport / seam gets untied
 
 ## Why This Review Had To Happen First
 
@@ -361,4 +363,3 @@ The formal decision now is:
 - **do not treat OpenClaw modification as the primary path**
 - **prefer a plugin-owned memory + context decision overlay first**
 - **treat host modification as fallback only**
-

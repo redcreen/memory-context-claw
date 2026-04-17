@@ -27,6 +27,7 @@ Read these first:
 - [Why Unified Memory Core Feels Better](docs/memory-improvement-evidence.md)
 - [Full Regression And Memory Improvement Report](reports/generated/unified-memory-core-full-regression-and-memory-improvement-2026-04-15.md)
 - [Context Slimming And Budgeted Assembly](docs/reference/unified-memory-core/architecture/context-slimming-and-budgeted-assembly.md)
+- [Context Minor GC](docs/reference/unified-memory-core/architecture/context-minor-gc.md)
 - [Dialogue Working-Set Pruning](docs/reference/unified-memory-core/architecture/dialogue-working-set-pruning.md)
 - [Plugin-Owned Context Decision Overlay](docs/reference/unified-memory-core/architecture/plugin-owned-context-decision-overlay.md)
 - [Stage 7 / Stage 9 Summary](reports/generated/dialogue-working-set-stage7-stage9-2026-04-17.md)
@@ -42,6 +43,7 @@ From a user perspective, this product should collapse to three promises:
 1. `Light and fast`
    - simple to install, low-friction to adopt, small in footprint, and fast enough on the main path
    - already landed: fact-first assembly, runtime working-set shadow instrumentation, release-preflight, and reproducible Docker hermetic eval
+   - the public workstream name for this turn-by-turn context path is now: `Context Minor GC`
    - biggest current gap: per-turn context loading optimization is not yet a formal mainline and formal gate; ordinary-conversation hermetic A/B has already been recovered into a trustworthy steady-state surface, so the next gap is shrinking the remaining harder misses and keeping wall-clock down. The daily-use target is also now explicit: normal sessions should stay usable through lighter per-turn context management instead of depending on compat / compact to survive, while compat / compact remains a nightly or background safety net
 2. `Smart`
    - remember what matters, avoid writing noise, send only the right context, and stay conservative when uncertain
@@ -62,7 +64,7 @@ In technical and engineering terms, that means:
 
 - `light and fast`
   - install command, default configuration, first verification, package size, startup cost, prompt thickness, answer latency, and runtime cost all belong to the same target
-  - the hot path should remain usable without depending on compat / compact as a normal habit; per-turn context management should keep prompt thickness under control, while compat / compact remains a nightly or background safety net
+  - this hot-path program is now explicitly named `Context Minor GC`; it should remain usable without depending on compat / compact as a normal habit, while per-turn context management keeps prompt thickness under control and compat / compact stays nightly or background-only
 - `smart`
   - self-learning, working-set pruning, budgeted assembly, abstention / guardrails, and bounded decision contracts must improve judgment quality together
 - `reassuring`

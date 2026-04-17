@@ -12,6 +12,7 @@ This document defines a separate runtime layer for long multi-topic chats:
 
 This is not a replacement for:
 
+- [context-minor-gc.md](context-minor-gc.md)
 - [context-slimming-and-budgeted-assembly.md](context-slimming-and-budgeted-assembly.md)
 - [plugin-owned-context-decision-overlay.md](plugin-owned-context-decision-overlay.md)
 - [../../pre-compaction-memory-distillation-design.md](../../pre-compaction-memory-distillation-design.md)
@@ -50,6 +51,7 @@ This creates a different problem from durable-memory retrieval:
 This document is the hot-session half of the first product value:
 
 - `on-demand context loading instead of flat prompt stuffing`
+- the public workstream name for this hot-path line is now `Context Minor GC`
 
 Existing capability is already present:
 

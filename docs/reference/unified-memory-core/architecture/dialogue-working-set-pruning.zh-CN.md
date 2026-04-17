@@ -12,6 +12,7 @@
 
 它不是下面两份设计的替代品：
 
+- [context-minor-gc.zh-CN.md](context-minor-gc.zh-CN.md)
 - [context-slimming-and-budgeted-assembly.zh-CN.md](context-slimming-and-budgeted-assembly.zh-CN.md)
 - [plugin-owned-context-decision-overlay.zh-CN.md](plugin-owned-context-decision-overlay.zh-CN.md)
 - [../../pre-compaction-memory-distillation-design.zh-CN.md](../../pre-compaction-memory-distillation-design.zh-CN.md)
@@ -50,6 +51,7 @@
 这份文档对应的是第一个核心卖点里的 hot-session 半边：
 
 - `按需加载 context，而不是平铺直塞 prompt`
+- 对外工作名现在统一收成：`Context Minor GC`
 
 而且当前并不是停留在想法层：
 

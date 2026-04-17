@@ -13,6 +13,7 @@ Module architecture documents:
 - [codex-adapter.md](codex-adapter.md)
 - [realtime-memory-intent-ingestion.md](realtime-memory-intent-ingestion.md)
 - [context-slimming-and-budgeted-assembly.md](context-slimming-and-budgeted-assembly.md)
+- [context-minor-gc.md](context-minor-gc.md)
 - [dialogue-working-set-pruning.md](dialogue-working-set-pruning.md)
 - [plugin-owned-context-decision-overlay.md](plugin-owned-context-decision-overlay.md)
 - [execution-modes.md](execution-modes.md)
@@ -26,11 +27,12 @@ Recommended implementation review order:
 2. `Memory Registry`
 3. `OpenClaw Adapter`
 4. `Context Slimming And Budgeted Assembly`
-5. `Dialogue Working-Set Pruning`
-6. `Plugin-Owned Context Decision Overlay`
-7. `Codex Adapter`
-8. `Reflection System`
-9. `Standalone Mode`
-10. `Independent Execution`
-11. `Projection System`
-12. `Governance System`
+5. `Context Minor GC`
+6. `Dialogue Working-Set Pruning`
+7. `Plugin-Owned Context Decision Overlay`
+8. `Codex Adapter`
+9. `Reflection System`
+10. `Standalone Mode`
+11. `Independent Execution`
+12. `Projection System`
+13. `Governance System`

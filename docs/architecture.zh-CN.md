@@ -37,10 +37,13 @@ flowchart TB
 
 第二条现在已经是一等主线，不再只是 adapter 内的局部修补。
 
-`context 优化` 当前明确分成两条互补的架构面：
+`context 优化` 当前明确分成几条互补的架构面：
 
 - durable source 的瘦身与预算化组装
   - [reference/unified-memory-core/architecture/context-slimming-and-budgeted-assembly.zh-CN.md](reference/unified-memory-core/architecture/context-slimming-and-budgeted-assembly.zh-CN.md)
+- `Context Minor GC`
+  - [reference/unified-memory-core/architecture/context-minor-gc.zh-CN.md](reference/unified-memory-core/architecture/context-minor-gc.zh-CN.md)
+  - 它把热路径上的 working-set 管理、task-state carry-forward、`direct / local_complete / full_assembly` 路由，以及“compat / compact 只做后台保底”收成一条统一主线
 - 长多话题会话里的 dialogue working-set pruning
   - [reference/unified-memory-core/architecture/dialogue-working-set-pruning.zh-CN.md](reference/unified-memory-core/architecture/dialogue-working-set-pruning.zh-CN.md)
 - 插件内自托管 `memory + context decision overlay`
@@ -50,6 +53,7 @@ flowchart TB
 
 - Stage 6 runtime shadow integration 已经落地
 - 继续保持 `default-off` 和 shadow-only
+- 这条逐轮 context 优化主线，对外工作名现在统一收成 `Context Minor GC`
 - 下一轮要先完成 `context loading optimization`：先把 bounded LLM-led decision contract、operator metrics、rollback boundary、harder A/B 设计和统一 scorecard 写清楚，再讨论任何默认 prompt-path 改动
 - 当前推荐实施线不是修改 OpenClaw，而是优先把 `memory + context decision` 的 decision transport 收回插件层
 - 日常产品目标已经明确：平时尽量靠逐轮 context 管理保持可持续，不把 compat / compact 当成日常热路径依赖；compat / compact 只保留为夜间或后台 safety net
@@ -76,7 +80,7 @@ flowchart TB
 
 - `轻快`
   - adapter 接线、默认配置、CLI 首次验证、包体、主路径 latency、prompt thickness、runtime cost 都属于同一个目标面
-  - 运行形态更接近“增量回收 + 低频 full sweep”：平时按轮裁剪 working set，夜间或后台才允许 compat / compact 做低频保底
+  - 运行形态更接近“`Context Minor GC` + 低频 full sweep”：平时按轮裁剪 working set，夜间或后台才允许 compat / compact 做低频保底
 - `聪明`
   - durable memory、realtime learning、working-set pruning、budgeted assembly、abstention guardrail 要协同，而不是各自为战
 - `省心`
