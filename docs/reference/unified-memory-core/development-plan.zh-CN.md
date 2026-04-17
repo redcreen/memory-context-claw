@@ -35,10 +35,10 @@
 
 1. `轻快`
    - 已落地：fact-first assembly、Stage 6 runtime shadow instrumentation、release-preflight、Docker hermetic eval
-   - 下一步：把 install / bootstrap / verify 压短，并把 context-thickness / latency 变成更硬门禁
+   - 下一步：先把 context loading optimization 做成正式主线和正式门禁，再收 ordinary-conversation realtime-write latency，最后才是 install / bootstrap / verify
 2. `聪明`
    - 已落地：realtime `memory_intent` ingestion + nightly governed learning + working-set shadow path
-   - 下一步：继续清掉 timeout-heavy 盲区，并把 shadow-first 的 context decision 逐步推进到 bounded、guarded 的窄路径收益
+   - 下一步：在 context optimization scorecard 稳定后，把 shadow-first 的 context decision 逐步推进到 bounded、guarded 的窄路径收益
 3. `省心`
    - 已落地：CLI / audit / replay / rollback operator 流程、canonical registry root、OpenClaw / Codex adapters
    - 下一步：继续保持这些流程可读、可 replay、可发版，并补强跨 Codex / 多实例的产品证据
@@ -62,11 +62,15 @@
 
 接下来应该按 3 个用户承诺来排当前优先级：
 
-1. `轻快`
-   - 先把 install / bootstrap / verify 路径压短，再把 hermetic ordinary-conversation 写记忆路径里的 timeout / latency 问题压下去
-2. `聪明`
+1. `轻快 / context loading optimization`
+   - 先把每轮 context thickness、working-set reduction、budgeted assembly 和 answer-level latency 收成正式主线
+2. `轻快 / realtime-write latency`
+   - 再把 hermetic ordinary-conversation 写记忆路径里的 timeout / latency 问题压下去
+3. `轻快 / install`
+   - 然后再收 install / bootstrap / verify 路径
+4. `聪明`
    - 在 bounded decision contract 明确后，把 shadow-first 结果推进到极窄的 guarded opt-in 路径
-3. `省心`
+5. `省心`
    - 补 OpenClaw 之外，尤其是 Codex / 多实例的产品证据，并继续守住 rollback / replay / audit 能力
 
 ## 怎么使用这份计划
@@ -91,8 +95,9 @@
 - `Stage 4`：已完成
 - `Stage 5`：已完成
 - `Stage 6`：已完成
-- 当前指针：`92`
-- 当前建议：docs-first review 已完成；下一步按北极星缺口推进，先简化接入，再收敛速度，再推进 bounded、guarded 的聪明路径
+- `Stage 7`：下一阶段
+- 当前指针：`101`
+- 当前建议：docs-first review 已完成；下一步先完成 context loading optimization，再收 ordinary-conversation realtime-write latency，之后才轮到 install 简化与 guarded smart path
 
 当前 baseline 已经落地：
 
@@ -136,6 +141,10 @@
 | Stage 4 | `31-38` | 把受治理学习结果接到 adapter 策略使用 | `completed` |
 | Stage 5 | `39-46` | 补齐产品运维与 split-ready 执行 | `completed` |
 | Stage 6 | `93-100` | 在任何 active prompt cutover 前，用 runtime shadow mode 验证 dialogue working-set pruning | `completed` |
+| Stage 7 | `101-108` | 把 context loading optimization 收成正式主线与正式门禁 | `next` |
+| Stage 8 | `109-114` | 压下 ordinary-conversation realtime-write 的 hermetic timeout / latency | `planned` |
+| Stage 9 | `115-120` | 以 bounded、guarded 方式让 context 优化开始变成用户收益 | `planned` |
+| Stage 10 | `121-126` | 收 install / bootstrap / verify，并补强共享底座产品证据 | `planned` |
 
 ## 顺序开发计划
 
@@ -258,6 +267,79 @@ Stage 6 证据：
    - rollback 现在是纯配置回退：`dialogueWorkingSetShadow.enabled=false`；promotion 继续要求更长时间的 real-session soak 与显式 regression threshold。
 99. `completed` 只有当 Stage 6 shadow gate 长期为绿后，才决定是否打开 active prompt experiment。
    - 当前决策：不打开 active prompt mutation，继续保持 shadow-only。
+100. `completed` 把 Stage 6 收口到 docs、控制面和报告一致的恢复点。
+   - 当前已经明确：Stage 6 是“测量面已落地”，不是“默认路径已切换”。
+
+### Stage 7. Context Loading Optimization Closure
+
+阶段完成标准：
+
+- context optimization 不再只是“有一些 shadow 报告”，而是变成有统一 scorecard 的正式主线
+- durable-source slimming、budgeted assembly、working-set pruning、harder replay / Docker / local evidence 能放在同一张证据面上判断
+- rollout / rollback boundary、operator metrics 和 harder-case coverage 已经足够支撑下一阶段
+
+101. `next` 定义统一的 context optimization scorecard。
+   - 最少包含：`prompt thickness`、`reduction ratio`、`retrieval / assembly latency`、`answer latency`、`rollback boundary`、`case class`
+102. `todo` 把现有 evidence surface 统一映射到这套 scorecard。
+   - 至少要把 durable-source slimming、Stage 6 shadow exports、history cleanup、ordinary-conversation Docker rerun 放到同一套汇总口径。
+103. `todo` 定义“context loading package”契约。
+   - 明确 raw turns、pins、capsules、durable context、budget slots 分别属于什么层，而不是只留在分散报告里。
+104. `todo` 设计并补齐下一轮 harder eval matrix。
+   - 优先补 `cross-source`、`conflict`、`multi-step history`、`open-loop return`、高信息密度自然中文多话题切换。
+105. `todo` 给 context optimization 增加 formal gate 和 operator summary。
+   - 让 Docker / local / replay 三条路径都能输出可比较的 thickness / latency / reduction 指标。
+106. `todo` 把 shadow exports、sidecar artifacts 和 answer-level regression 重新收成同一条 operator 视图。
+   - 不再只看孤立报告，而是能直接回答“更轻的 context package 是否真的更好”。
+107. `todo` 先定义一个极窄的 guarded experiment seam，但不默认开启。
+   - 必须是 config-only rollback，且 builtin memory 行为不变。
+108. `todo` 基于 harder replay / Docker / local evidence 做 Stage 7 closeout 决策。
+   - 决策对象不是“马上上线”，而是“Stage 8 能否在更干净的实时写记忆路径上继续推进”。
+
+### Stage 8. Ordinary-Conversation Realtime-Write Latency Closure
+
+阶段完成标准：
+
+- ordinary-conversation hermetic 路径不再被 timeout 大面积主导
+- clean Docker path 可以成为可信的常规 A/B 面
+- timeout root cause 已经被拆清，不再混成“能力不行”
+
+109. `todo` 把 ordinary-conversation realtime-write 路径单独收成 latency closure 专项。
+   - 这条线和 context loading optimization 紧耦合，但不要再和污染排查混写。
+110. `todo` 拆清 capture、governed ingest、retrieval、answer generation 各层 latency。
+111. `todo` 针对 timeout-heavy case class 做定向优化与复测。
+112. `todo` 固定 Docker hermetic ordinary-conversation 的常规报告入口和阈值。
+113. `todo` 重跑 focused A/B，并和 host-live 结果做清晰归因对照。
+114. `todo` 以“clean path 不再被 timeout 主导”作为 Stage 8 退出信号。
+
+### Stage 9. Guarded Smart-Path Promotion
+
+阶段完成标准：
+
+- context 优化开始变成真实用户收益，而不只是 shadow telemetry
+- bounded、guarded experiment seam 有清晰 rollout / rollback 规则
+- active-path experiment 继续保持极窄，不扩成默认路径
+
+115. `todo` 定义 bounded smart-path 的 promotion contract。
+116. `todo` 选择一个极窄的 opt-in active-path experiment surface。
+117. `todo` 让 operator metrics、rollback boundary 和 regression gate 绑定到这个 surface。
+118. `todo` 在固定 case class 上跑 guarded opt-in A/B。
+119. `todo` 决定是否维持 opt-in、继续 shadow-only，还是允许更广一点的试验。
+120. `todo` 以“用户能感知到收益，但 operator 仍可控”收口本阶段。
+
+### Stage 10. Adoption Simplification And Shared-Foundation Proof
+
+阶段完成标准：
+
+- install / bootstrap / verify 路径明显更短
+- 共享底座不只停留在 OpenClaw 主路径
+- Codex / 多实例证据变成公开可读的产品能力
+
+121. `todo` 收 install / bootstrap / verify 的最短路径。
+122. `todo` 把 package / startup / first-run 成本也收进 `轻快` 证据面。
+123. `todo` 为 Codex 补更完整的 shared-foundation 评测和用例。
+124. `todo` 为多实例共享底座补更明确的 operator 证据。
+125. `todo` 保持 replay / rollback / audit 与 install 简化并行不退化。
+126. `todo` 以“接入更短、共享证据更强”收口本阶段。
 100. `completed` 等 Stage 6 telemetry 路径存在后，再恢复之前延后的 history cleanup 与 harder live A/B 扩面。
    - 下一条执行指针现在已经回到 `ab100-zh-history-editor-*` 清理和 harder A/B 扩面，并且可以直接挂上新的 shadow telemetry surface。
 

@@ -2,7 +2,7 @@
 
 ## Current Phase
 
-`post-stage6 north-star gap closure planning`
+`stage7 context-loading-optimization planning`
 
 ## Current Results Snapshot
 
@@ -39,11 +39,15 @@
 
 ## Current Gap Order
 
-1. `轻快`
-   - install / bootstrap / verify 还不够短，hermetic ordinary-conversation 写记忆路径仍然 timeout-heavy
-2. `聪明`
+1. `轻快 / context loading optimization`
+   - 每轮 context 仍然偏厚，Stage 6 还只是 shadow measurement，正式 scorecard 也还没有收口
+2. `轻快 / realtime-write latency`
+   - hermetic ordinary-conversation 写记忆路径仍然 timeout-heavy
+3. `轻快 / install`
+   - install / bootstrap / verify 还不够短
+4. `聪明`
    - working-set 和 context optimization 仍是 shadow-first，不是默认用户收益
-3. `省心`
+5. `省心`
    - Codex / 多实例产品证据弱于 OpenClaw
 
 ## Slices
@@ -96,12 +100,12 @@
   - Exit Condition: 当前 regression 被关闭，且下一轮 live A/B 已明确瞄准 cross-source / conflict / history / 自然中文的净增益
   - Status: `ongoing`
 
-- Slice: `close-north-star-gaps-after-docs-review`
-  - Objective: docs-first review 已完成；当前要按 3 个用户承诺推进下一轮工作，先补轻快，再补聪明，再补省心
+- Slice: `finish-context-loading-optimization-first`
+  - Objective: docs-first review 已完成；当前先完成 `轻快 / context loading optimization`，再收 `轻快 / realtime-write latency`，之后才进入 install 简化、聪明路径和省心证据
   - Dependencies: Stage 6 runtime shadow evidence、history cleanup closeout、roadmap / development plan / architecture docs、Docker hermetic eval path
-  - Risks: 如果继续只谈 context 优化、不把轻快和省心一起收成正式缺口，后续方向会再次偏到“功能更强但产品体感没变好”；如果直接继续堆 hardcoded rules，会违背当前“尽量使用 LLM tool、但调用次数受控”的实现约束
-  - Validation: roadmap / development plan / architecture docs / `.codex/*` 对齐；3 个用户承诺顺序明确；bounded LLM decision contract、operator metrics 和 rollback boundary 被写成 durable docs
-  - Exit Condition: 维护者可以只看文档就知道下一轮先收哪一个用户承诺的缺口，再进入哪条 experiment、哪些 guardrail 不能动、哪些指标决定是否 promotion
+  - Risks: 如果 install 简化又被提前，当前主问题会再次从“每轮 context 还不够轻”漂移掉；如果直接继续堆 hardcoded rules，会违背当前“尽量使用 LLM tool、但调用次数受控”的实现约束
+  - Validation: roadmap / development plan / architecture docs / `.codex/*` 对齐；Stage 7 context-optimization scorecard、operator metrics 和 rollback boundary 被写成 durable docs
+  - Exit Condition: 维护者可以只看文档就知道当前先收的是 `context loading optimization`，之后才是 realtime-write latency、install、smart path、shared-foundation proof
   - Status: `ongoing`
 
 - Slice: `formalize-realtime-memory-intent-ingestion`
@@ -210,16 +214,17 @@
 
 ## Execution Order
 
-1. 先补 `轻快`：install / bootstrap / verify 简化优先，并收敛 hermetic timeout / latency
-2. 再补 `聪明`：定义 bounded LLM-led context decision contract、operator metrics 和 rollback boundary
-3. 在此基础上重设计下一轮 live A/B，让更多 `cross-source`、`conflict`、`multi-step history` 与高信息密度自然中文场景变成 Memory Core 独占胜场
-4. 最后补 `省心`：持续加强 Codex / 多实例证据和 operator 体验
-4. 继续保持 `24` 条自然中文案例、当前 raw transport watchlist 和 `2026-04-15` perf baseline 在下一轮修复中持续稳定
-5. 把更难 harder-case surface 逐步从 watch 推向更强的正式门禁候选
-6. 把 gateway/shared-session 与 raw transport 继续保持在独立 watchlist，不与算法判断混淆
-7. 并行保持 release-preflight / bundle install / host smoke / Stage 5 evidence 稳定
-8. 保持 host-neutral root operator policy 可见且不回退
-9. 保持 accepted-action deeper queue 的 Step 48-52 仍然显式 deferred，不把 admission / negative-path / conflict work 偷渡进当前实现
+1. 先补 `轻快 / context loading optimization`：定义 unified scorecard，并把 durable-source slimming、working-set pruning、budgeted assembly、harder replay / Docker / local evidence 收成一个主线
+2. 再补 `轻快 / realtime-write latency`：让 ordinary-conversation clean Docker path 不再被 timeout 主导
+3. 然后再收 `轻快 / install`：简化 install / bootstrap / verify
+4. 再补 `聪明`：定义 bounded LLM-led context decision contract、operator metrics 和 rollback boundary
+5. 最后补 `省心`：持续加强 Codex / 多实例证据和 operator 体验
+6. 继续保持 `24` 条自然中文案例、当前 raw transport watchlist 和 `2026-04-15` perf baseline 在下一轮修复中持续稳定
+7. 把更难 harder-case surface 逐步从 watch 推向更强的正式门禁候选
+8. 把 gateway/shared-session 与 raw transport 继续保持在独立 watchlist，不与算法判断混淆
+9. 并行保持 release-preflight / bundle install / host smoke / Stage 5 evidence 稳定
+10. 保持 host-neutral root operator policy 可见且不回退
+11. 保持 accepted-action deeper queue 的 Step 48-52 仍然显式 deferred，不把 admission / negative-path / conflict work 偷渡进当前实现
 
 ## Architecture Supervision
 - Signal: `yellow`
@@ -233,12 +238,13 @@
 
 ## Current Execution Line
 
-- Objective: 把 3 个用户承诺转成执行顺序，先解决轻快，再推进聪明路径与 harder A/B，最后补强省心证据
-- Plan Link: `close-north-star-gaps-after-docs-review`
-- Runway: install simplification、hermetic speed gate、bounded LLM decision contract、harder A/B redesign、gateway/raw transport watch
+- Objective: 先完成 `Stage 7 / context loading optimization`，再推进 realtime-write latency、smart path 和 shared-foundation proof
+- Plan Link: `finish-context-loading-optimization-first`
+- Runway: context scorecard、harder replay / Docker / local evidence、ordinary-conversation latency closure、bounded LLM decision contract、gateway/raw transport watch
 - Progress: `0 / 3` tasks complete
 - Stop Conditions:
   - docs remain anchored to the older history-cleanup recovery pointer instead of the next context-optimization queue
+  - install simplification gets moved ahead of context loading optimization before Stage 7 closes
   - bounded LLM decision work turns into growing hardcoded rule tables
   - active prompt mutation is discussed before rollback and operator metrics are explicit
   - Stage 5 evidence regresses while this planning work is ongoing
@@ -246,9 +252,9 @@
 
 ## Execution Tasks
 
-- [ ] EL-1 review and align roadmap, development plan, architecture docs, and `.codex/*` around the next per-turn context optimization phase
-- [ ] EL-2 define the bounded LLM-led context decision contract, operator metrics, and rollback boundary
-- [ ] EL-3 redesign the next live A/B around `cross-source`, `conflict`, `multi-step history`, and denser natural-Chinese prompts so Memory Core can win on more harder cases
+- [ ] EL-1 define and publish the unified context optimization scorecard for Stage 7
+- [ ] EL-2 redesign the next replay / Docker / local evidence around `cross-source`, `conflict`, `multi-step history`, `open-loop return`, and denser natural-Chinese prompts
+- [ ] EL-3 isolate ordinary-conversation realtime-write latency closure from contamination discussion, then prepare the bounded smart-path follow-up
 
 ## Development Log Capture
 

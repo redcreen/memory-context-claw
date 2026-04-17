@@ -48,7 +48,7 @@ flowchart TB
 
 - Stage 6 runtime shadow integration 已经落地
 - 继续保持 `default-off` 和 shadow-only
-- 下一轮要先做 docs-first：先把 bounded LLM-led decision contract、operator metrics、rollback boundary 和 harder A/B 设计写清楚，再讨论任何默认 prompt-path 改动
+- 下一轮要先完成 `context loading optimization`：先把 bounded LLM-led decision contract、operator metrics、rollback boundary、harder A/B 设计和统一 scorecard 写清楚，再讨论任何默认 prompt-path 改动
 
 ## 当前产品承诺与架构映射
 
@@ -86,15 +86,16 @@ flowchart TB
   - `聪明` 的 self-learning 主干已经形成
   - context 优化边界已经明确，不再漂移成 report-only 想法
 - 薄弱点：
-  - `轻快` 仍然更多依赖人工安装和人工接线，而且 hermetic answer path 还不够稳
+  - `轻快` 当前最先要补的是每轮 context package 仍然偏厚，而且 Stage 6 还停留在 shadow measurement；安装接线手工和 hermetic answer path 不稳，则是紧随其后的问题
   - `聪明` 还停留在 shadow-first，不是默认体验
   - `省心` 里的共享底座仍缺 Codex / 多实例的更强产品证据
 
 所以架构层接下来最需要守住的是：
 
-1. 不让“更聪明”退化成“更多规则、更重调用”
-2. 不让“更强能力”破坏安装简单和主路径速度
-3. 不让 shared-core 叙事只停留在边界设计，缺少真实产品证明
+1. 先把 context loading optimization 做成正式主线，不要让它继续停在零散 shadow 报告
+2. 不让“更聪明”退化成“更多规则、更重调用”
+3. 不让“更强能力”破坏主路径速度；install 简化要继续做，但当前不应排在 context optimization 之前
+4. 不让 shared-core 叙事只停留在边界设计，缺少真实产品证明
 
 ## 模块清单
 

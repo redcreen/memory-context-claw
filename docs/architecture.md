@@ -48,7 +48,7 @@ Current state:
 
 - Stage 6 runtime shadow integration is already landed
 - it remains `default-off` and shadow-only
-- the next round is docs-first: clarify the bounded LLM-led decision contract, operator metrics, rollback boundary, and harder A/B design before any default prompt-path change
+- the next round starts by finishing `context loading optimization`: clarify the bounded LLM-led decision contract, operator metrics, rollback boundary, harder A/B design, and one unified scorecard before any default prompt-path change
 
 ## Current Product Promises
 
@@ -86,15 +86,16 @@ Looking at the current architecture and evidence surface:
   - the `smart` self-learning backbone is already real
   - context optimization now has explicit boundaries instead of drifting as a report-only idea
 - weak spots:
-  - `light and fast` still depends on manual install wiring and is not yet strong enough on hermetic answer paths
+  - `light and fast` first needs a thinner per-turn context package because Stage 6 is still only a measurement layer; manual install wiring and unstable hermetic answer paths are the next problems after that
   - `smart` is still shadow-first rather than a default experience
   - `reassuring` still needs stronger Codex / multi-instance product evidence
 
 So the architecture-level guardrails now matter most in three ways:
 
-1. do not let `smart` degrade into more rules and heavier call chains
-2. do not let stronger capability break the `light and fast` promise
-3. do not leave the `reassuring` shared-core story at boundary design without stronger product proof
+1. finish context loading optimization as a formal mainline instead of leaving it as scattered shadow evidence
+2. do not let `smart` degrade into more rules and heavier call chains
+3. do not let stronger capability break the `light and fast` promise; install simplification still matters, but it should not outrank context optimization right now
+4. do not leave the `reassuring` shared-core story at boundary design without stronger product proof
 
 ## Module Inventory
 

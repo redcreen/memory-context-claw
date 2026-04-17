@@ -38,7 +38,7 @@
 1. `轻快`
    - 装得简单，接入轻，包体和运行负担尽量小，主路径尽量快
    - 当前已落地：fact-first assembly、runtime working-set shadow instrumentation、release-preflight、独立 Docker hermetic eval
-   - 当前最大缺口：普通对话实时写记忆在 hermetic 环境下仍然明显受 timeout 压力影响，安装接入也还不够“一看就会”
+   - 当前最大缺口：每轮 context 加载优化还没有收成正式主线和正式门禁；与此同时，普通对话实时写记忆在 hermetic 环境下仍然明显受 timeout 压力影响
 2. `聪明`
    - 该记的记住，不该记的不乱记；该给的 context 才给，不确定时尽量收敛
    - 当前已落地：realtime `memory_intent` ingestion、nightly self-learning、durable-source slimming 方向、working-set pruning shadow 路径
@@ -77,7 +77,7 @@
 当前仍然偏薄弱的部分：
 
 - `轻快`
-  - 安装仍需手改 `openclaw.json`，hermetic 普通对话写记忆路径也还明显受 timeout 影响
+  - 当前最先要补的不是安装，而是每轮 context 仍然偏厚、Stage 6 还停留在 shadow measurement、hermetic 普通对话写记忆路径也还明显受 timeout 影响
 - `聪明`
   - context 优化虽然已经验证可行，但当前仍是 shadow-only，还没有变成默认用户收益
 - `省心`
@@ -85,9 +85,11 @@
 
 所以接下来的重点顺序应该很明确：
 
-1. 先把 `轻快` 收成更短的 install / bootstrap / verify 路径，并压下 hermetic timeout / latency。
-2. 再把 `聪明` 从 shadow measurement surface 推进到极窄的 guarded opt-in 用户路径。
-3. 最后补强 `省心` 这条在 Codex / 多实例上的产品证据。
+1. 先把 `轻快` 里的 `context 加载优化` 做完：把 context thickness、working-set reduction、budgeted assembly 和 answer-level latency 收成一条正式主线。
+2. 再继续收 `轻快`：把 ordinary-conversation realtime-write 的 hermetic timeout / latency 压下去。
+3. 然后再回到 install / bootstrap / verify 的接入体验。
+4. 再把 `聪明` 从 shadow measurement surface 推进到极窄的 guarded opt-in 用户路径。
+5. 最后补强 `省心` 这条在 Codex / 多实例上的产品证据。
 
 ## 适用对象
 

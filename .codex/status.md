@@ -7,11 +7,11 @@
 
 ## Current Phase
 
-`post-stage6 north-star gap closure planning`
+`stage7 context-loading-optimization planning`
 
 ## Active Slice
 
-`close-north-star-gaps-after-docs-review`
+`finish-context-loading-optimization-first`
 
 ## Current Product Promises
 
@@ -159,12 +159,16 @@
 
 ## In Progress
 
-- docs-first review 已完成，下一轮主线改成 3 个用户承诺收敛：
-  - 先补 `轻快`
-  - 再补 `聪明`
-  - 再补 `省心` 的跨宿主证据
+- docs-first review 已完成，当前恢复点已经切到 `Stage 7: context loading optimization closure`
+- 当前 3 个用户承诺的执行顺序变成：
+  - 先补 `轻快 / context loading optimization`
+  - 再补 `轻快 / realtime-write latency`
+  - 然后再补 `轻快 / install`
+  - 再推进 `聪明`
+  - 最后补 `省心` 的跨宿主证据
 - 当前 answer-level 不再是“能力是否存在”的 blocker；真正要解决的是：
   - 每一轮 prompt 还可以如何更轻
+  - 如何把 durable-source slimming、working-set pruning、budgeted assembly 和 answer latency 收成同一张 scorecard
   - 如何在不改 builtin memory 行为的前提下，让 working-set decision 进入更可控的实验面
   - 如何把更多 harder case 变成清晰的 UMC-only wins，而不是多数 shared wins
 - 保持 release-preflight、bundle install、host smoke、Stage 5 acceptance 证据持续为绿
@@ -189,9 +193,9 @@
 
 ## Next 3 Actions
 
-1. 先把 `轻快` 收成更短的 install / bootstrap / verify 路径，并把 hermetic timeout / latency 收成更强门禁。
-2. 再定义 bounded LLM-led context decision contract、operator metrics 和 rollback boundary，把 `聪明` 从 shadow-first 推进到窄路径用户收益。
-3. 最后补强 `省心` 这条在 Codex / 多实例上的产品证据，并继续守住 replay / rollback / audit。
+1. 先定义统一的 context optimization scorecard，并把 durable-source slimming、Stage 6 shadow、history cleanup、ordinary-conversation Docker rerun 全部映射进去。
+2. 再把 ordinary-conversation realtime-write latency 单独收成 clean Docker path 的 closure 目标，而不是继续混在污染排查里。
+3. 最后再在这两条证据站稳后，推进 bounded LLM-led smart path 和 Codex / 多实例证据。
 
 ## Architecture Supervision
 - Signal: `yellow`
@@ -208,20 +212,21 @@
 
 ## Current Execution Line
 
-- Objective: 按 3 个用户承诺来推进下一轮工作，先补轻快，再补聪明，再补省心
-- Plan Link: `close-north-star-gaps-after-docs-review`
-- Runway: install simplification，hermetic speed gate，bounded LLM decision contract，shared-foundation evidence；并行守住 release-preflight 和 canonical-root policy
+- Objective: 先完成 Stage 7，把 context loading optimization 做成正式主线；之后再收 realtime-write latency、smart path 和 shared-foundation proof
+- Plan Link: `finish-context-loading-optimization-first`
+- Runway: context scorecard，harder replay / Docker / local evidence，ordinary-conversation latency closure，bounded LLM decision contract，shared-foundation evidence；并行守住 release-preflight 和 canonical-root policy
 - Progress: `0 / 3` tasks complete
 - Stop Conditions:
   - active prompt mutation is discussed before docs and rollback boundaries are explicit
+  - install simplification gets moved ahead of context loading optimization before Stage 7 closes
   - bounded LLM decision work degenerates into growing hardcoded rule tables
   - harder A/B design starts before the docs review fixes the current recovery pointer
 
 ## Execution Tasks
 
-- [ ] EL-1 simplify install / bootstrap / verify and strengthen hermetic timeout / latency gates around the `轻快` promise
-- [ ] EL-2 define the bounded LLM-led smart path and redesign the next harder live A/B around `cross-source`, `conflict`, `multi-step history`, and denser natural-Chinese prompts
-- [ ] EL-3 strengthen `省心` with clearer Codex / multi-instance evidence while keeping replay / rollback / audit strong
+- [ ] EL-1 define and publish the unified context optimization scorecard for Stage 7
+- [ ] EL-2 redesign the next harder replay / Docker / local evidence around `cross-source`, `conflict`, `multi-step history`, `open-loop return`, and denser natural-Chinese prompt classes
+- [ ] EL-3 isolate ordinary-conversation realtime-write latency closure from contamination discussion, then prepare the guarded smart-path and shared-foundation follow-ups
 
 ## Development Log Capture
 

@@ -35,10 +35,10 @@ The execution plan should stay anchored to three user-facing promises:
 
 1. `Light and fast`
    - already landed: fact-first assembly, Stage 6 runtime shadow instrumentation, release-preflight, and Docker hermetic eval
-   - next work: shorten install / bootstrap / verify and turn context-thickness / latency into harder gates
+   - next work: first make context loading optimization a formal mainline and formal gate, then close ordinary-conversation realtime-write latency, and only after that shorten install / bootstrap / verify
 2. `Smart`
    - already landed: realtime `memory_intent` ingestion plus nightly governed learning plus the working-set shadow path
-   - next work: remove timeout-heavy blind spots and move the shadow-first context-decision path toward a bounded guarded narrow gain
+   - next work: once the context-optimization scorecard is stable, move the shadow-first context-decision path toward a bounded guarded narrow gain
 3. `Reassuring`
    - already landed: CLI / audit / replay / rollback operator flows, canonical registry root, and OpenClaw / Codex adapters
    - next work: keep those flows readable and replayable while strengthening Codex / multi-instance product evidence
@@ -62,11 +62,15 @@ This plan is no longer only in a docs-first review state.
 
 The current priority order should now follow the three promises:
 
-1. `light and fast`
-   - shorten install / bootstrap / verify and push down timeout / latency pressure on the hermetic ordinary-conversation write path
-2. `smart`
-   - after the bounded decision contract is clear, move shadow-first evidence into a very narrow guarded opt-in path
-3. `reassuring`
+1. `light and fast / context loading optimization`
+   - make per-turn context thickness, working-set reduction, budgeted assembly, and answer-level latency the mainline
+2. `light and fast / realtime-write latency`
+   - then reduce timeout / latency pressure on the hermetic ordinary-conversation write path
+3. `light and fast / install`
+   - only after that, shorten install / bootstrap / verify
+4. `smart`
+   - once the bounded decision contract is clear, move shadow-first evidence into a very narrow guarded opt-in path
+5. `reassuring`
    - strengthen product evidence beyond OpenClaw, especially on Codex / multi-instance reuse, while keeping rollback / replay strong
 
 ## How To Use This Plan
@@ -91,8 +95,9 @@ Current status:
 - `Stage 4`: completed
 - `Stage 5`: completed
 - `Stage 6`: completed
-- current pointer: `92`
-- current recommendation: the docs-first review is complete; next move by north-star gap order, starting with simpler adoption, then faster hermetic performance, then a bounded guarded smart path
+- `Stage 7`: next
+- current pointer: `101`
+- current recommendation: the docs-first review is complete; next finish context loading optimization first, then close ordinary-conversation realtime-write latency, and only then move to install simplification and the guarded smart path
 
 Already implemented in the current baseline:
 
@@ -136,6 +141,10 @@ These constraints keep the next per-turn context optimization slice measurable a
 | Stage 4 | `31-38` | connect governed learning outputs into adapter policy use | `completed` |
 | Stage 5 | `39-46` | harden product operations and split-ready execution | `completed` |
 | Stage 6 | `93-100` | validate dialogue working-set pruning in runtime shadow mode before any active prompt cutover | `completed` |
+| Stage 7 | `101-108` | turn context loading optimization into a formal mainline and formal gate | `next` |
+| Stage 8 | `109-114` | push down hermetic timeout / latency on ordinary-conversation realtime write | `planned` |
+| Stage 9 | `115-120` | start turning context optimization into user-visible value through a bounded guarded path | `planned` |
+| Stage 10 | `121-126` | shorten install / bootstrap / verify and strengthen shared-foundation product proof | `planned` |
 
 ## Sequential Build Plan
 
@@ -258,6 +267,79 @@ Stage 6 evidence:
    - Rollback is configuration-only via `dialogueWorkingSetShadow.enabled=false`, and promotion remains gated behind longer real-session soak plus explicit regression thresholds.
 99. `completed` Decide whether to open any active prompt experiment only after the Stage 6 shadow gate stays green.
    - Current decision: do not open active prompt mutation yet; keep the feature shadow-only.
+100. `completed` Close Stage 6 around one consistent recovery point in docs, control surfaces, and reports.
+   - The repo now explicitly treats Stage 6 as “measurement landed”, not “default path switched”.
+
+### Stage 7. Context Loading Optimization Closure
+
+Stage complete when:
+
+- context optimization is no longer just “some shadow reports” and becomes one formal mainline with one scorecard
+- durable-source slimming, budgeted assembly, working-set pruning, and harder replay / Docker / local evidence can be judged on one surface
+- rollout / rollback boundaries, operator metrics, and harder-case coverage are strong enough to support the next phase
+
+101. `next` Define one unified context-optimization scorecard.
+   - It must include at least `prompt thickness`, `reduction ratio`, `retrieval / assembly latency`, `answer latency`, `rollback boundary`, and `case class`.
+102. `todo` Map the existing evidence surfaces onto that scorecard.
+   - At minimum, durable-source slimming, Stage 6 shadow exports, history cleanup, and the ordinary-conversation Docker rerun should report through one aggregation view.
+103. `todo` Define the `context loading package` contract.
+   - Make raw turns, pins, capsules, durable context, and budget slots explicit layers instead of leaving them spread across separate reports.
+104. `todo` Design and add the next harder eval matrix.
+   - Prioritize `cross-source`, `conflict`, `multi-step history`, `open-loop return`, and denser natural-Chinese multi-topic switches.
+105. `todo` Add a formal gate and operator summary for context optimization.
+   - Docker / local / replay paths should all emit comparable thickness / latency / reduction metrics.
+106. `todo` Collapse shadow exports, sidecar artifacts, and answer-level regression into one operator view.
+   - The system should be able to answer “is the lighter context package actually better?” directly.
+107. `todo` Define one very narrow guarded experiment seam without turning it on by default.
+   - Rollback must stay configuration-only, and builtin memory behavior must stay unchanged.
+108. `todo` Use harder replay / Docker / local evidence to make the Stage 7 closeout decision.
+   - The decision is not “ship now”; it is “is Stage 8 now safe to continue on a cleaner realtime-write path?”
+
+### Stage 8. Ordinary-Conversation Realtime-Write Latency Closure
+
+Stage complete when:
+
+- the ordinary-conversation hermetic path is no longer dominated by timeouts
+- the clean Docker path becomes a trustworthy regular A/B surface
+- timeout root causes are separated clearly instead of blending into “the feature is weak”
+
+109. `todo` Treat the ordinary-conversation realtime-write path as its own latency-closure program.
+   - It is tightly coupled to context loading optimization, but should no longer be mixed together with contamination investigation.
+110. `todo` separate capture, governed ingest, retrieval, and answer-generation latency layers.
+111. `todo` run targeted fixes and reruns against the timeout-heavy case classes.
+112. `todo` lock down the ordinary-conversation Docker hermetic report entrypoint and thresholds.
+113. `todo` rerun the focused A/B and compare it cleanly against the host-live result.
+114. `todo` close the stage only when the clean path stops being dominated by timeout failures.
+
+### Stage 9. Guarded Smart-Path Promotion
+
+Stage complete when:
+
+- context optimization starts becoming a real user gain instead of shadow telemetry only
+- the bounded guarded experiment seam has a clear rollout / rollback contract
+- the active-path experiment stays narrow and does not drift into a default-path switch
+
+115. `todo` define the promotion contract for the bounded smart path.
+116. `todo` choose one very narrow opt-in active-path experiment surface.
+117. `todo` bind operator metrics, rollback boundaries, and regression gates to that surface.
+118. `todo` run guarded opt-in A/B on fixed case classes.
+119. `todo` decide whether to keep opt-in only, stay shadow-only, or allow slightly wider testing.
+120. `todo` close the stage when users can feel the gain and operators still stay in control.
+
+### Stage 10. Adoption Simplification And Shared-Foundation Proof
+
+Stage complete when:
+
+- install / bootstrap / verify is clearly shorter
+- the shared foundation is proven beyond the OpenClaw main path
+- Codex / multi-instance evidence becomes readable product proof
+
+121. `todo` shorten the install / bootstrap / verify path.
+122. `todo` add package / startup / first-run cost to the `light and fast` evidence surface.
+123. `todo` add stronger shared-foundation evaluation and usage proof for Codex.
+124. `todo` add clearer operator proof for multi-instance shared memory.
+125. `todo` keep replay / rollback / audit strong while adoption gets simpler.
+126. `todo` close the stage when adoption is shorter and shared-foundation proof is materially stronger.
 100. `completed` Resume the deferred history cleanup and harder live A/B expansion with Stage 6 telemetry attached.
    - The next execution pointer now returns to the deferred `ab100-zh-history-editor-*` cleanup and the harder A/B expansion, with the new shadow telemetry available as the measurement surface.
 

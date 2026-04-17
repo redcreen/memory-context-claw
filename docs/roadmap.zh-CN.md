@@ -74,9 +74,9 @@
   - shared-fail 的中文 history cleanup 已收口
   - 官方镜像驱动的 Docker hermetic eval 已可真实复用
 - 计划做：
-  - 先做 docs-first review，把 roadmap、development plan、架构文档和 `.codex/*` 统一到“逐轮 context 优化”的下一轮口径
-  - 先定 bounded LLM-led context decision contract、operator metrics 和 rollback boundary
-  - 再做更偏 `cross-source`、`conflict`、`multi-step history` 与高信息密度自然中文的 harder live A/B 设计
+  - 先把 `轻快` 里的 `context 加载优化` 做成下一轮主线，而不是继续把“安装体验”排在前面
+  - 先定 unified context-optimization scorecard，把 `prompt thickness / reduction / retrieval-assembly latency / answer latency / rollback metrics` 收成同一套证据面
+  - 再把 bounded LLM-led context decision contract、operator metrics、rollback boundary 和 harder live A/B 设计接到这套证据面上
 - 当前明确不做：
   - 不打开默认 active prompt mutation
   - 不改 builtin memory 行为
@@ -86,8 +86,8 @@
 
 | 用户承诺 | 当前已落地能力 | 当前证据面 | 下一里程碑 |
 | --- | --- | --- | --- |
-| 轻快 | fact-first assembly、runtime working-set shadow instrumentation、release-preflight、Docker hermetic eval | runtime shadow replay `16 / 16`、average reduction ratio `0.4368`、runtime answer A/B `5 / 5` vs `5 / 5` | 把 install / bootstrap / verify 简化下来，并把 context thickness / latency 收成更硬门禁 |
-| 聪明 | realtime `memory_intent` ingestion、nightly self-learning、governed promotion / decay、working-set shadow path | ordinary-conversation host-live A/B：current `38 / 40`、legacy `21 / 40`、`18` 条 UMC-only wins | 把 shadow-first 的 context decision 逐步推进到 bounded、guarded 的窄路径用户收益 |
+| 轻快 | fact-first assembly、runtime working-set shadow instrumentation、release-preflight、Docker hermetic eval | runtime shadow replay `16 / 16`、average reduction ratio `0.4368`、runtime answer A/B `5 / 5` vs `5 / 5`、ordinary-conversation Docker rerun `current=3 / 40`、`both-fail=37` | 先完成 context 加载优化，把 context thickness / reduction / latency 收成硬门禁；随后再收 install / bootstrap / verify |
+| 聪明 | realtime `memory_intent` ingestion、nightly self-learning、governed promotion / decay、working-set shadow path | ordinary-conversation host-live A/B：current `38 / 40`、legacy `21 / 40`、`18` 条 UMC-only wins | 把 shadow-first 的 context decision 逐步推进到 bounded、guarded 的窄路径用户收益，并让 context 优化真正变成默认可感知收益 |
 | 省心 | add / inspect / audit / repair / replay / rollback、canonical registry root、OpenClaw / Codex adapters | 已发版级 CLI 流程与回归保护验证栈 | 持续保持 operator surface 可读、可 replay，并补强 Codex / 多实例产品证据 |
 
 ## 产品北极星
@@ -118,30 +118,44 @@ roadmap 层的含义是：
 
 这意味着下一轮 priority order 应该是：
 
-1. `轻快`：install / bootstrap / verify 简化 + hermetic timeout / latency 收敛
-2. `聪明`：shadow-only 到 bounded、guarded opt-in 的聪明路径
-3. `省心`：共享底座与跨 Codex 证据补强
+1. `轻快 / context 加载优化`：先把每轮 context thickness、working-set reduction、budgeted assembly 和 answer-level latency 收成正式主线
+2. `轻快 / realtime-write latency`：再把 ordinary-conversation hermetic timeout-heavy 路径压下来
+3. `轻快 / install`：再收 install / bootstrap / verify 的接入体验
+4. `聪明`：shadow-only 到 bounded、guarded opt-in 的聪明路径
+5. `省心`：共享底座与跨 Codex 证据补强
+
+## Post-Stage-6 路线图
+
+Stage 1-6 已经完成，但 roadmap 不能停在“历史阶段都绿了”。当前真正的后续地图应该是：
+
+| 后续里程碑 | 状态 | 为什么现在做 | 退出信号 |
+| --- | --- | --- | --- |
+| Stage 7：context loading optimization closure | `next` | 当前最大的产品缺口不是“功能有没有”，而是每轮 context 仍然偏厚，Stage 6 也还只是 shadow measurement | unified scorecard 固定；harder replay / Docker / local evidence 能稳定说明更轻的 context package 不伤回答质量 |
+| Stage 8：ordinary-conversation realtime-write latency closure | `planned` | Docker hermetic rerun 已把主要风险定位成 `30s` 预算下的 answer-level timeout，而不是污染问题 | ordinary-conversation clean path 不再被大面积 timeout 主导，至少能成为可信的常规 A/B 面 |
+| Stage 9：guarded smart-path promotion | `planned` | context 加载优化如果一直停在 shadow-only，就还不是用户收益 | bounded、guarded 的窄路径 experiment 有明确 rollback boundary、operator metrics 和 promotion gate |
+| Stage 10：adoption simplification and shared-foundation proof | `planned` | 当前 install / bootstrap 仍偏手工，Codex / 多实例证据也还弱 | 接入更短、更稳，且共享底座不只停留在架构叙事 |
 
 ## 当前 / 下一步 / 更后面
 
 | 时间层级 | 重点 | 退出信号 |
 | --- | --- | --- |
-| 当前 | 以 3 个用户承诺为入口，先补 `轻快`，再补 `聪明`，最后补 `省心` 的跨宿主证据 | roadmap、development plan、架构文档和 `.codex/*` 已统一到同一套 3 点优先级 |
-| 下一步 | 先定义 bounded LLM-led context decision contract、operator metrics 与 rollback boundary，并把 install / timeout / budget 变成正式门禁 | 下一轮 harder case 设计已经显式附带 prompt-thickness / reduction / latency / rollback 指标，同时 install / latency / budget 也有明确阈值 |
-| 更后面 | 只有在更长时间的 real-session soak 后，才讨论任何 guarded active-path experiment | shadow telemetry 长期为绿，且 active-path experiment 的 promotion / rollback gate 已可操作 |
+| 当前 | 先完成 `Stage 7`：把 context 加载优化收成正式主线，先回答“怎样让每轮 context 更轻、更快、且不伤回答质量” | roadmap、development plan、架构文档和 `.codex/*` 已统一到 `Stage 7` 恢复点，并以 context optimization scorecard 为共同入口 |
+| 下一步 | 在 `Stage 7` 证据稳定后，再做 `Stage 8` 的 ordinary-conversation realtime-write latency closure | ordinary-conversation clean Docker path 不再被 timeout 主导，能够稳定充当可信 A/B 面 |
+| 更后面 | 只有在 `Stage 7 + Stage 8` 都站稳后，才讨论 `Stage 9` 的 guarded active-path experiment，以及 `Stage 10` 的接入简化与跨宿主证明 | smart-path promotion gate、rollback boundary、shared-foundation proof 都变成 operator-ready 状态 |
 
 ## 当前执行重点
 
 主 roadmap 里的“当前”不只是方向，也对应接下来要执行的具体工作：
 
 1. 继续保持 Stage 6 runtime shadow integration 为 `default-off` 和 shadow-only。
-2. 先完成 docs-first review，把 durable-source slimming、working-set pruning、harder live A/B 三条线收成一个明确恢复点。
+2. 先把 durable-source slimming、working-set pruning、harder live A/B、ordinary-conversation Docker rerun 收成一个统一的 `context optimization scorecard`。
 3. 继续把 active prompt mutation 明确排除在默认路径外，直到 rollback boundary 与 operator metrics 足够清楚。
 4. 把 runtime export artifacts 和 Docker hermetic eval 一起当成新的 replayable operator evidence surface。
+5. 在 context 加载优化站稳之前，不要把 install 简化重新排到更前面。
 
 恢复执行时：
 
-- 主顺序看 [reference/unified-memory-core/development-plan.zh-CN.md](reference/unified-memory-core/development-plan.zh-CN.md) 的 `92`
+- 主顺序看 [reference/unified-memory-core/development-plan.zh-CN.md](reference/unified-memory-core/development-plan.zh-CN.md) 的 `101`
 - 实时执行状态看 [../.codex/plan.md](../.codex/plan.md) 和 [../.codex/status.md](../.codex/status.md)
 
 ## 里程碑
@@ -154,6 +168,10 @@ roadmap 层的含义是：
 | [Stage 4：policy adaptation](reference/unified-memory-core/development-plan.zh-CN.md#stage-4-policy-adaptation-与多消费者使用) | completed | 让治理后的学习产物影响消费者行为 | Stage 3 | 一条可回退的 policy-adaptation 闭环被证明 |
 | [Stage 5：product hardening](reference/unified-memory-core/development-plan.zh-CN.md#stage-5-产品加固与独立运行) | completed | 验证独立产品运行和 split-ready 边界 | Stage 4 | release boundary、可复现性、维护工作流和 split rehearsal 都已经 CLI 可验证 |
 | [Stage 6：dialogue working-set shadow integration](reference/unified-memory-core/development-plan.zh-CN.md#stage-6-dialogue-working-set-shadow-integration) | completed | 在任何 active prompt cutover 之前，先用 runtime shadow mode 验证热会话 working-set pruning | Stage 5 | runtime shadow telemetry 已经 default-off 落地、replayable exports 已存在，且 answer-level replay 继续足够绿色，支持保持 shadow-only |
+| [Stage 7：context loading optimization closure](reference/unified-memory-core/development-plan.zh-CN.md#stage-7-context-loading-optimization-closure) | next | 先把逐轮 context 加载优化做成正式主线和正式门禁，而不是继续停在 shadow 结论 | Stage 6 | context optimization scorecard 稳定、harder replay / Docker / local evidence 对齐，且 rollout/rollback 边界清楚 |
+| [Stage 8：ordinary-conversation realtime-write latency closure](reference/unified-memory-core/development-plan.zh-CN.md#stage-8-ordinary-conversation-realtime-write-latency-closure) | planned | 解决 clean Docker path 下被 timeout 主导的写侧 answer 路径 | Stage 7 | ordinary-conversation hermetic A/B 不再被 timeout 大面积吞掉 |
+| [Stage 9：guarded smart-path promotion](reference/unified-memory-core/development-plan.zh-CN.md#stage-9-guarded-smart-path-promotion) | planned | 在不破坏回退边界的前提下，让 context 优化开始变成真实用户收益 | Stage 8 | bounded opt-in path 有明确 promotion gate 和可操作 rollback |
+| [Stage 10：adoption simplification and shared-foundation proof](reference/unified-memory-core/development-plan.zh-CN.md#stage-10-adoption-simplification-and-shared-foundation-proof) | planned | 把接入体验和跨宿主产品证据收口到与核心能力同等重要的层级 | Stage 9 | install / bootstrap / verify 更短，Codex / 多实例复用更可证明 |
 
 ## 里程碑流转
 
@@ -164,6 +182,10 @@ flowchart LR
     C --> D["Stage 4<br/>policy adaptation"]
     D --> E["Stage 5<br/>product hardening"]
     E --> F["Stage 6<br/>working-set shadow integration"]
+    F --> G["Stage 7<br/>context loading optimization"]
+    G --> H["Stage 8<br/>realtime-write latency closure"]
+    H --> I["Stage 9<br/>guarded smart-path promotion"]
+    I --> J["Stage 10<br/>adoption simplification + shared-foundation proof"]
 ```
 
 ## 风险与依赖
@@ -171,8 +193,10 @@ flowchart LR
 - 路线图不能和 `.codex/status.md`、`.codex/plan.md` 漂移
 - `todo.md` 应继续只是个人速记，不应成为并行状态源
 - 当前的下一依赖不再是 Stage 5 实现，而是让 release-preflight 与 deployment 证据面长期保持稳定
+- 当前的第一主线不再是 Stage 5 或 Stage 6 收口，而是 Stage 7 的 context loading optimization
 - registry-root cutover policy 仍是 operator follow-up，但不再算隐藏的 Stage 5 contract 工作
 - 只要后续 service-mode 讨论继续延后，Stage 4 和 Stage 5 的报告都必须保持可读
 - 新的主要工程主线已经转成“评测驱动优化”，所以 roadmap 和 `.codex/plan.md` 必须明确记录案例扩充、A/B 对照、answer-level 回退、transport watchlist 和性能规划，不要再只停留在 Stage 5 收口表述
 - active prompt mutation 继续显式延后，直到 runtime shadow telemetry 在真实 session 上长期为绿
 - 下一轮如果要做 context decision experiment，应优先走 bounded LLM-led contract，而不是继续扩展越来越大的硬编码规则表
+- install / bootstrap / verify 简化仍然重要，但在当前 roadmap 上已经明确排在 context loading optimization 和 realtime-write latency closure 之后

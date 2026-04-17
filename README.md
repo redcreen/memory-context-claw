@@ -38,7 +38,7 @@ From a user perspective, this product should collapse to three promises:
 1. `Light and fast`
    - simple to install, low-friction to adopt, small in footprint, and fast enough on the main path
    - already landed: fact-first assembly, runtime working-set shadow instrumentation, release-preflight, and reproducible Docker hermetic eval
-   - biggest current gap: ordinary-conversation realtime write is still too timeout-heavy in hermetic runs, and installation is not yet “obvious at a glance”
+   - biggest current gap: per-turn context loading optimization is not yet a formal mainline and formal gate; in parallel, ordinary-conversation realtime write is still too timeout-heavy in hermetic runs
 2. `Smart`
    - remember what matters, avoid writing noise, send only the right context, and stay conservative when uncertain
    - already landed: realtime `memory_intent` ingestion, nightly self-learning, durable-source slimming direction, and the working-set pruning shadow path
@@ -77,7 +77,7 @@ Areas that are already relatively strong:
 Areas that are still comparatively weak:
 
 - `light and fast`
-  - installation still expects manual `openclaw.json` edits, and hermetic ordinary-conversation realtime write still hits heavy timeout pressure
+  - the first gap to close is not installation polish but the fact that per-turn context is still thicker than it should be, Stage 6 is still only a shadow measurement layer, and hermetic ordinary-conversation realtime write still hits heavy timeout pressure
 - `smart`
   - context optimization is validated, but still shadow-only, so the gain is not yet the default user experience
 - `reassuring`
@@ -85,9 +85,11 @@ Areas that are still comparatively weak:
 
 So the next focus order should stay explicit:
 
-1. make `light and fast` real through a shorter install / bootstrap / verify path and stronger hermetic timeout / latency gates
-2. move `smart` from a shadow measurement surface into a very narrow guarded opt-in user path
-3. strengthen `reassuring` with clearer cross-OpenClaw / Codex evidence
+1. finish the `light and fast` context-loading problem first by making context thickness, working-set reduction, budgeted assembly, and answer-level latency one formal mainline
+2. continue `light and fast` by pushing down ordinary-conversation realtime-write timeout / latency in hermetic runs
+3. then shorten install / bootstrap / verify
+4. move `smart` from a shadow measurement surface into a very narrow guarded opt-in user path
+5. strengthen `reassuring` with clearer cross-OpenClaw / Codex evidence
 
 ## Who This Is For
 
