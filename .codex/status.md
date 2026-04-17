@@ -120,10 +120,11 @@
   - Stage 7 scorecard：captured `16 / 16`，average raw reduction ratio `0.4191`，average package reduction ratio `0.1151`
   - Stage 7 isolated shadow replay：`15 / 16`
   - Stage 7 / Step 108 closeout：plugin-owned decision runner 已落地；hermetic gateway `5 / 5` captured，本机 service smoke `3 / 3` captured
-  - Stage 9 guarded answer A/B：baseline `5 / 5`、shadow `5 / 5`、guarded `5 / 5`
-  - Stage 9 guarded path 实际 applied：`2 / 5`
-  - Stage 9 average guarded prompt reduction ratio：`0.0424`
-  - 当前结论：scorecard 和 guarded seam 都已落地，但 Stage 7 还没正式 closeout，Stage 9 继续保持 `default-off` / opt-in only
+  - Stage 9 guarded live A/B：baseline `4 / 4`、guarded `4 / 4`
+  - Stage 9 guarded path 实际 applied：`2 / 4`
+  - Stage 9 activation matched：`4 / 4`
+  - Stage 9 average guarded prompt reduction ratio：`0.0306`
+  - 当前结论：Stage 9 已收口；Stage 7 还没正式 closeout，剩余问题只在 `104` harder eval matrix
 - focused history cleanup 已收口到最新主线基线：
   - `100` case live answer-level A/B 当前可读作 current `100 / 100`、legacy `99 / 100`
   - builtin-only regression = `0`
@@ -173,7 +174,7 @@
 
 ## In Progress
 
-- docs-first review 已完成，当前恢复点保持在 `Stage 7 closeout + Stage 9 opt-in only`
+- docs-first review 已完成，当前恢复点保持在 `Stage 7 harder matrix`
 - 当前 3 个用户承诺的执行顺序变成：
   - 先补 `轻快 / context loading optimization`
   - 然后再补 `轻快 / install`
@@ -202,7 +203,7 @@
   - OpenClaw core 不需要为 Step 108 做改动
 - 当前新的 Stage 7 开口变成：
   - `104` harder eval matrix 还没完成
-  - Stage 9 仍然必须保持 `default-off` / opt-in only
+  - Stage 9 虽已收口，但仍然必须保持 `default-off` / opt-in only
   - bounded LLM decision surface、rollback boundary 和 operator metrics 仍要继续保持在同一张 scorecard 上
 - operator / planning follow-up 只剩：
   - 什么时候清理过时的 legacy root 副本
@@ -212,7 +213,7 @@
 
 1. 完成 `104` 的 harder eval matrix，把 `cross-source / conflict / multi-step history / open-loop return / 更密集中文多话题切换` 补成正式矩阵。
 2. 用同一套 operator scorecard 重跑 `Context Minor GC`，确认更难 case class 里仍能稳定保持更轻的 context package。
-3. 只有 harder matrix 为绿后，才继续讨论 Stage 9 guarded opt-in 是否扩大。
+3. 只有 harder matrix 为绿后，才继续讨论 Stage 7 整体 closeout 与 Stage 10 的进入条件。
 
 ## Architecture Supervision
 - Signal: `yellow`
@@ -229,12 +230,12 @@
 
 ## Current Execution Line
 
-- Objective: Step 108 已关闭；当前继续完成 Stage 7 的 harder eval matrix，并保持 Stage 9 为 opt-in only；ordinary-conversation Docker steady-state 已成为默认 hermetic A/B 面，之后再收 install 和 shared-foundation proof
+- Objective: Step 108 和 Stage 9 都已关闭；当前继续完成 Stage 7 的 harder eval matrix；ordinary-conversation Docker steady-state 已成为默认 hermetic A/B 面，之后再收 install 和 shared-foundation proof
 - Plan Link: `design-harder-context-minor-gc-matrix`
 - Current Critical Path:
   - `104.a` 设计更硬的 replay / Docker / local case matrix
   - `104.b` 用同一套 scorecard 重跑 `Context Minor GC`
-  - `104.c` 只有 harder matrix 为绿后，才判断 Stage 7 整体 closeout 与 Stage 9 guarded promotion
+  - `104.c` 只有 harder matrix 为绿后，才判断 Stage 7 整体 closeout 与 Stage 10 的进入条件
 - Runway: context scorecard，harder replay / Docker / local evidence，bounded LLM decision contract，shared-foundation evidence；并行守住 release-preflight 和 canonical-root policy
 - Progress: `3 / 4` tasks complete
 - Stop Conditions:
@@ -251,7 +252,7 @@
 - [x] EL-2C rerun OpenClaw gateway live soak and require real-host `5 / 5` captured exports
 - [x] EL-2D only after EL-2C, decide whether Stage 7 can close and whether any host-level fallback is still needed
 - [ ] EL-3 redesign the next harder replay / Docker / local evidence around `cross-source`, `conflict`, `multi-step history`, `open-loop return`, and denser natural-Chinese prompt classes
-- [x] EL-4 isolate ordinary-conversation realtime-write latency closure from contamination discussion while Stage 9 stays opt-in only
+- [x] EL-4 isolate ordinary-conversation realtime-write latency closure from contamination discussion while Stage 9 remains closed and opt-in only
 
 ## Development Log Capture
 

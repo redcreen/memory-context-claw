@@ -52,7 +52,8 @@ flowchart TB
 当前状态：
 
 - Stage 6 runtime shadow integration 已经落地
-- 继续保持 `default-off` 和 shadow-only
+- Stage 6 继续保持 `default-off` 和 shadow-only，作为测量面
+- Stage 9 guarded smart-path 已收口，但继续保持 `default-off` / opt-in only
 - 这条逐轮 context 优化主线，对外工作名现在统一收成 `Context Minor GC`
 - 下一轮要先完成 `context loading optimization`：先把 bounded LLM-led decision contract、operator metrics、rollback boundary、harder A/B 设计和统一 scorecard 写清楚，再讨论任何默认 prompt-path 改动
 - 当前推荐实施线不是修改 OpenClaw，而是优先把 `memory + context decision` 的 decision transport 收回插件层

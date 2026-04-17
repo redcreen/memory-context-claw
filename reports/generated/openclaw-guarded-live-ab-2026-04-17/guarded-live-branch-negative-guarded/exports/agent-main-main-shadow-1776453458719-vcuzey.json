@@ -1,0 +1,377 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776453458719-vcuzey",
+  "generated_at": "2026-04-17T19:17:38.719Z",
+  "session_key": "agent:main:main",
+  "agent_id": "main",
+  "query": "先回到刚才的发布验收，那三部分是什么？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "把发布验收拆成版本、安装、回滚三部分。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "可以，建议拆成这三块： - **版本验收** - 版本号是否正确 - 变更范围是否符合预期 - 发布说明、变更记录是否完整 - 关键功能/修复点是否都已覆盖 - **安装验收** - 安装步骤是否顺畅 - 依赖是否齐全 - 新装、升级、增量安装是否可用 - 安装后服务/功能是否正常启动 - **回滚验收** - 回滚流程是否可执行 - 回滚后版本是否恢复正确 - 配置、数据、依赖是否兼容 - 回滚后系统是否稳定可用 如果你要，我可以继续帮你把它整理成一份更正式的“发布验收清单”模板。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "插一句，我的时区是 Asia/Shanghai，记住。"
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "记住了，时区是 Asia/Shanghai。"
+    }
+  ],
+  "decision": {
+    "relation": "continue",
+    "confidence": 0.95,
+    "evict_turn_ids": [
+      "t3",
+      "t4"
+    ],
+    "pin_turn_ids": [
+      "t3"
+    ],
+    "archive_summary": "保留发布验收的原始上下文 t1-t2，因为当前用户在回到同一主题并依赖这段内容；将时区事实 Asia/Shanghai 从对话原文中抽成持久语义 pin。",
+    "reasoning_summary": "最新用户仍在追问同一发布验收主题，必须保留 t1-t2 作为原始依据，不能降级为仅 pin。t3-t4 属于已解决的元信息，适合从工作集移除，但用户时区是稳定偏好，应以 pin 形式保留。"
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "continue",
+      "confidence": 0.95,
+      "archiveSummary": "保留发布验收的原始上下文 t1-t2，因为当前用户在回到同一主题并依赖这段内容；将时区事实 Asia/Shanghai 从对话原文中抽成持久语义 pin。",
+      "reasoningSummary": "最新用户仍在追问同一发布验收主题，必须保留 t1-t2 作为原始依据，不能降级为仅 pin。t3-t4 属于已解决的元信息，适合从工作集移除，但用户时区是稳定偏好，应以 pin 形式保留。",
+      "latestUserTurnId": "t3",
+      "pinTurnIds": [
+        "t3"
+      ],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t3",
+        "t4"
+      ],
+      "blockedEvictTurnIds": [
+        "t3"
+      ],
+      "appliedEvictTurnIds": [
+        "t4"
+      ],
+      "keepTurnIds": [
+        "t1",
+        "t2",
+        "t3"
+      ],
+      "baselineTokens": 79,
+      "keptTokens": 73,
+      "prunedTokens": 6,
+      "reductionRatio": 0.0759493670886076,
+      "keepTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "把发布验收拆成版本、安装、回滚三部分。",
+          "tokenEstimate": 5
+        },
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "可以，建议拆成这三块： - **版本验收** - 版本号是否正确 - 变更范围是否符合预期 - 发布说明、变更记录是否完整 - 关键功能/修复点是否都已覆盖 - **安装验收** - 安装步骤是否顺畅 - 依赖是否齐全 - 新装、升级、增量安装是否可用 - 安装后服务/功能是否正常启动 - **回滚验收** - 回滚流程是否可执行 - 回滚后版本是否恢复正确 - 配置、数据、依赖是否兼容 - 回滚后系统是否稳定可用 如果你要，我可以继续帮你把它整理成一份更正式的“发布验收清单”模板。",
+          "tokenEstimate": 61
+        },
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "插一句，我的时区是 Asia/Shanghai，记住。",
+          "tokenEstimate": 7
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t4",
+          "role": "assistant",
+          "content": "记住了，时区是 Asia/Shanghai。",
+          "tokenEstimate": 6
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 把发布验收拆成版本、安装、回滚三部分。\nt2 assistant: 可以，建议拆成这三块： - **版本验收** - 版本号是否正确 - 变更范围是否符合预期 - 发布说明、变更记录是否完整 - 关键功能/修复点是否都已覆盖 - **安装验收** - 安装步骤是否顺畅 - 依赖是否齐全 - 新装、升级、增量安装是否可用 - 安装后服务/功能是否正常启动 - **回滚验收** - 回滚流程是否可执行 - 回滚后版本是否恢复正确 - 配置、数据、依赖是否兼容 - 回滚后系统是否稳定可用 如果你要，我可以继续帮你把它整理成一份更正式的“发布验收清单”模板。\nt3 user: 插一句，我的时区是 Asia/Shanghai，记住。\nt4 assistant: 记住了，时区是 Asia/Shanghai。",
+    "shadowRawTranscript": "t1 user: 把发布验收拆成版本、安装、回滚三部分。\nt2 assistant: 可以，建议拆成这三块： - **版本验收** - 版本号是否正确 - 变更范围是否符合预期 - 发布说明、变更记录是否完整 - 关键功能/修复点是否都已覆盖 - **安装验收** - 安装步骤是否顺畅 - 依赖是否齐全 - 新装、升级、增量安装是否可用 - 安装后服务/功能是否正常启动 - **回滚验收** - 回滚流程是否可执行 - 回滚后版本是否恢复正确 - 配置、数据、依赖是否兼容 - 回滚后系统是否稳定可用 如果你要，我可以继续帮你把它整理成一份更正式的“发布验收清单”模板。\nt3 user: 插一句，我的时区是 Asia/Shanghai，记住。",
+    "semanticPinNotes": [],
+    "archiveSummary": "保留发布验收的原始上下文 t1-t2，因为当前用户在回到同一主题并依赖这段内容；将时区事实 Asia/Shanghai 从对话原文中抽成持久语义 pin。",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 91,
+    "shadowRawPromptEstimate": 81,
+    "shadowPackageEstimate": 86,
+    "shadowPackageText": "Active raw turns:\nt1 user: 把发布验收拆成版本、安装、回滚三部分。\nt2 assistant: 可以，建议拆成这三块： - **版本验收** - 版本号是否正确 - 变更范围是否符合预期 - 发布说明、变更记录是否完整 - 关键功能/修复点是否都已覆盖 - **安装验收** - 安装步骤是否顺畅 - 依赖是否齐全 - 新装、升级、增量安装是否可用 - 安装后服务/功能是否正常启动 - **回滚验收** - 回滚流程是否可执行 - 回滚后版本是否恢复正确 - 配置、数据、依赖是否兼容 - 回滚后系统是否稳定可用 如果你要，我可以继续帮你把它整理成一份更正式的“发布验收清单”模板。\nt3 user: 插一句，我的时区是 Asia/Shanghai，记住。"
+  },
+  "scorecard": {
+    "relation": "continue",
+    "baselineTurnCount": 4,
+    "keptTurnCount": 3,
+    "evictedTurnCount": 1,
+    "pinCount": 1,
+    "baselinePromptEstimate": 91,
+    "shadowRawPromptEstimate": 81,
+    "shadowPackageEstimate": 86,
+    "rawReductionRatio": 0.0759,
+    "packageReductionRatio": 0.0549,
+    "candidateLoadElapsedMs": 20,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 13677,
+    "totalElapsedMs": 13684,
+    "guardedEnabled": true,
+    "guardedApplied": false,
+    "guardedReason": "relation_not_allowed",
+    "guardedMessageCount": 10,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 473
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": false,
+    "reason": "relation_not_allowed",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "把发布验收拆成版本、安装、回滚三部分。"
+          }
+        ],
+        "timestamp": 1776453401623
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "toolCall",
+            "id": "call_65nAaCWkmqwjTl18vK0jZHmU",
+            "name": "read",
+            "arguments": {
+              "path": "./docs/reference/configuration.md"
+            },
+            "partialJson": "{\"path\":\"./docs/reference/configuration.md\"}"
+          },
+          {
+            "type": "toolCall",
+            "id": "call_LWSFjnnO3rFq2YN0HTnaYsbQ",
+            "name": "read",
+            "arguments": {
+              "path": "./README.md"
+            },
+            "partialJson": "{\"path\":\"./README.md\"}"
+          },
+          {
+            "type": "toolCall",
+            "id": "call_uj7Aa643TsG4mHPMO7TE5eoT",
+            "name": "read",
+            "arguments": {
+              "path": "./docs/reference/formal-memory-policy.md"
+            },
+            "partialJson": "{\"path\":\"./docs/reference/formal-memory-policy.md\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 13449,
+          "output": 73,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "totalTokens": 13522,
+          "cost": {
+            "input": 0.01008675,
+            "output": 0.0003285,
+            "cacheRead": 0,
+            "cacheWrite": 0,
+            "total": 0.010415250000000001
+          }
+        },
+        "stopReason": "toolUse",
+        "timestamp": 1776453401639,
+        "responseId": "resp_05165aea1260d3790169e2871be51881918fade1ed8910d702"
+      },
+      {
+        "role": "toolResult",
+        "toolCallId": "call_65nAaCWkmqwjTl18vK0jZHmU",
+        "toolName": "read",
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"status\": \"error\",\n  \"tool\": \"read\",\n  \"error\": \"ENOENT: no such file or directory, access '/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-hermetic-current-w6G7pL/agents/main/agent/docs/reference/configuration.md'\"\n}"
+          }
+        ],
+        "isError": false,
+        "timestamp": 1776453405280
+      },
+      {
+        "role": "toolResult",
+        "toolCallId": "call_LWSFjnnO3rFq2YN0HTnaYsbQ",
+        "toolName": "read",
+        "content": [
+          {
+            "type": "text",
+            "text": "# OpenClaw CLI Memory Benchmark Fixture\n\nThis fixture is the source-of-truth workspace used by the hermetic OpenClaw CLI benchmark.\n\nIt exists for four reasons:\n\n1. keep the benchmark facts reviewable in-repo\n2. make the benchmark matrix readable without digging through session logs\n3. document which facts are meant to exercise bootstrap, ordinary retrieval, temporal override, and abstention\n4. provide a stable workspace snapshot that can be copied into isolated host temp states or Docker containers\n\nThe hermetic benchmark no longer seeds from `~/.openclaw`.\nInstead, the runner copies this fixture into a fresh OpenClaw state, indexes it there, and then clones a clean state per case.\n\nThat same fixture is also the intended input for the Docker-based OpenClaw eval harness.\n\nFiles:\n\n- `MEMORY.md`: stable identity, preferences, and rules\n- `notes/personal-profile.md`: ordinary retrieval facts that should not rely only on bootstrap\n- `notes/project-lantern.md`: project knowledge retrieval\n- `memory/2026-04-10.md`: older state\n- `memory/2026-04-12.md`: current superseding state\n"
+          }
+        ],
+        "isError": false,
+        "timestamp": 1776453405292
+      },
+      {
+        "role": "toolResult",
+        "toolCallId": "call_uj7Aa643TsG4mHPMO7TE5eoT",
+        "toolName": "read",
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"status\": \"error\",\n  \"tool\": \"read\",\n  \"error\": \"ENOENT: no such file or directory, access '/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-hermetic-current-w6G7pL/agents/main/agent/docs/reference/formal-memory-policy.md'\"\n}"
+          }
+        ],
+        "isError": false,
+        "timestamp": 1776453405292
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "可以，建议拆成这三块：\n\n- **版本验收**\n  - 版本号是否正确\n  - 变更范围是否符合预期\n  - 发布说明、变更记录是否完整\n  - 关键功能/修复点是否都已覆盖\n\n- **安装验收**\n  - 安装步骤是否顺畅\n  - 依赖是否齐全\n  - 新装、升级、增量安装是否可用\n  - 安装后服务/功能是否正常启动\n\n- **回滚验收**\n  - 回滚流程是否可执行\n  - 回滚后版本是否恢复正确\n  - 配置、数据、依赖是否兼容\n  - 回滚后系统是否稳定可用\n\n如果你要，我可以继续帮你把它整理成一份更正式的“发布验收清单”模板。",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0d66d582671b66320169e2872126208191bd3a4479dceb0f74\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 638,
+          "output": 189,
+          "cacheRead": 13312,
+          "cacheWrite": 0,
+          "totalTokens": 14139,
+          "cost": {
+            "input": 0.00047850000000000003,
+            "output": 0.0008505,
+            "cacheRead": 0.0009984,
+            "cacheWrite": 0,
+            "total": 0.0023274000000000003
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776453405294,
+        "responseId": "resp_0d66d582671b66320169e2871f8a2481918666715616e47ba8"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "插一句，我的时区是 Asia/Shanghai，记住。"
+          }
+        ],
+        "timestamp": 1776453430326
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "toolCall",
+            "id": "call_nHDLt4hNBK6W98O9o7YyRozz",
+            "name": "write",
+            "arguments": {
+              "path": "./USER.md",
+              "content": "# USER.md - About Your Human\n\n_Learn about the person you're helping. Update this as you go._\n\n- **Name:**\n- **What to call them:**\n- **Pronouns:** _(optional)_\n- **Timezone:** Asia/Shanghai\n- **Notes:**\n\n## Context\n\n_(What do they care about? What projects are they working on? What annoys them? What makes them laugh? Build this over time.)_\n\n---\n\nThe more you know, the better you can help. But remember — you're learning about a person, not building a dossier. Respect the difference.\n"
+            },
+            "partialJson": "{\"path\":\"./USER.md\",\"content\":\"# USER.md - About Your Human\\n\\n_Learn about the person you're helping. Update this as you go._\\n\\n- **Name:**\\n- **What to call them:**\\n- **Pronouns:** _(optional)_\\n- **Timezone:** Asia/Shanghai\\n- **Notes:**\\n\\n## Context\\n\\n_(What do they care about? What projects are they working on? What annoys them? What makes them laugh? Build this over time.)_\\n\\n---\\n\\nThe more you know, the better you can help. But remember — you're learning about a person, not building a dossier. Respect the difference.\\n\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 8932,
+          "output": 158,
+          "cacheRead": 5120,
+          "cacheWrite": 0,
+          "totalTokens": 14210,
+          "cost": {
+            "input": 0.006699,
+            "output": 0.000711,
+            "cacheRead": 0.000384,
+            "cacheWrite": 0,
+            "total": 0.007794
+          }
+        },
+        "stopReason": "toolUse",
+        "timestamp": 1776453430338,
+        "responseId": "resp_0d66d582671b66320169e28738b0388191af1db2b9b3c83d96"
+      },
+      {
+        "role": "toolResult",
+        "toolCallId": "call_nHDLt4hNBK6W98O9o7YyRozz",
+        "toolName": "write",
+        "content": [
+          {
+            "type": "text",
+            "text": "Successfully wrote 489 bytes to ./USER.md"
+          }
+        ],
+        "isError": false,
+        "timestamp": 1776453436095
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "记住了，时区是 Asia/Shanghai。",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0d66d582671b66320169e2873f0a4081919a14ebd9004d8628\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 405,
+          "output": 15,
+          "cacheRead": 13824,
+          "cacheWrite": 0,
+          "totalTokens": 14244,
+          "cost": {
+            "input": 0.00030375,
+            "output": 0.0000675,
+            "cacheRead": 0.0010368,
+            "cacheWrite": 0,
+            "total": 0.00140805
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776453436098,
+        "responseId": "resp_0d66d582671b66320169e2873e628481919ab08780655cfdc7"
+      }
+    ],
+    "filteredMessageCount": 10,
+    "filteredMessageTokenEstimate": 473,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 13684,
+    "decisionElapsedMs": 13677
+  }
+}

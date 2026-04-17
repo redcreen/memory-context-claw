@@ -1,0 +1,65 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776453589478-37dg45",
+  "generated_at": "2026-04-17T19:19:49.478Z",
+  "session_key": "agent:main:main",
+  "agent_id": "main",
+  "query": "报告里还要明确 rollback boundary。",
+  "status": "skipped",
+  "reason": "not_enough_turns",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "当前新任务是写 shadow mode 报告。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "我先按这个方向做：你把要覆盖的范围发我，我来整理成 shadow mode 报告。 如果你想让我直接起草，给我这 4 项就够了： - 目标系统/功能 - shadow mode 的时间范围 - 关键观察点（比如准确率、延迟、误报、人工接管） - 结论偏向（继续、调整、停用） 也可以直接丢原始素材，我帮你整理成一版可发的报告。"
+    }
+  ],
+  "decision": null,
+  "decision_transport": "",
+  "snapshot": null,
+  "scorecard": {
+    "relation": "",
+    "baselineTurnCount": 2,
+    "keptTurnCount": 0,
+    "evictedTurnCount": 0,
+    "pinCount": 0,
+    "baselinePromptEstimate": 0,
+    "shadowRawPromptEstimate": 0,
+    "shadowPackageEstimate": 0,
+    "rawReductionRatio": 0,
+    "packageReductionRatio": 0,
+    "candidateLoadElapsedMs": 61,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 0,
+    "totalElapsedMs": 1,
+    "guardedEnabled": true,
+    "guardedApplied": false,
+    "guardedReason": "not_evaluated",
+    "guardedMessageCount": 2,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 0
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": false,
+    "reason": "not_evaluated",
+    "filteredMessageCount": 2,
+    "filteredMessageTokenEstimate": 0,
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 1,
+    "decisionElapsedMs": 0
+  }
+}

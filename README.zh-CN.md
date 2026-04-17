@@ -17,7 +17,7 @@
 - 既有记忆消费型 live A/B：`100` 个真实 answer-level 案例里，current `100 / 100`、legacy `99 / 100`、`1` 个只有 Memory Core 能答对、`0` 个只有默认内置能答对、`0` 个两边都失败
 - dialogue working-set runtime shadow：replay `16 / 16`，answer A/B baseline `5 / 5`、shadow `5 / 5`，average reduction ratio `0.4368`
 - Stage 7 context-optimization scorecard：captured `16 / 16`，average raw reduction ratio `0.4191`，average package reduction ratio `0.1151`
-- Stage 9 guarded opt-in A/B：baseline `5 / 5`、shadow `5 / 5`、guarded `5 / 5`，guarded applied `2 / 5`，average guarded prompt reduction ratio `0.0424`
+- Stage 9 guarded live A/B：baseline `4 / 4`、guarded `4 / 4`、guarded applied `2 / 4`、activation matched `4 / 4`，average prompt reduction ratio `0.0306`，applied-only `0.0067`
 - 普通对话实时写记忆专项 A/B：
   - 宿主 live：`current=38`、`legacy=21`、`UMC-only=18`
   - Docker hermetic strict baseline：`current=39`、`legacy=15`、`UMC-only=24`、`legacy-only=0`、`both-fail=1`、`preCaseResetFailed=0`
@@ -30,7 +30,8 @@
 - [Context Minor GC](docs/reference/unified-memory-core/architecture/context-minor-gc.zh-CN.md)
 - [对话 Working-Set 裁剪](docs/reference/unified-memory-core/architecture/dialogue-working-set-pruning.zh-CN.md)
 - [插件内自托管 Context Decision Overlay](docs/reference/unified-memory-core/architecture/plugin-owned-context-decision-overlay.zh-CN.md)
-- [Stage 7 / Stage 9 汇总报告](reports/generated/dialogue-working-set-stage7-stage9-2026-04-17.md)
+- [OpenClaw Guarded Live A/B](reports/generated/openclaw-guarded-live-ab-2026-04-18.md)
+- [Stage 9 收口报告](reports/generated/stage9-guarded-smart-path-closeout-2026-04-18.zh-CN.md)
 - [普通对话实时写记忆专项对比](reports/generated/openclaw-ordinary-conversation-memory-intent-ab-2026-04-17.md)
 - [普通对话 Docker 隔离复测总结](reports/generated/openclaw-ordinary-conversation-memory-intent-docker-rerun-2026-04-17.md)
 
@@ -48,7 +49,7 @@
 2. `聪明`
    - 该记的记住，不该记的不乱记；该给的 context 才给，不确定时尽量收敛
    - 当前已落地：realtime `memory_intent` ingestion、nightly self-learning、durable-source slimming 方向、working-set pruning shadow 路径
-   - 当前最大缺口：working-set 优化还停留在 shadow-only，聪明还没有完全变成默认用户收益
+   - 当前最大缺口：working-set 优化现在已经有了极窄的 guarded opt-in 用户收益，但还没有变成默认体验；Stage 7 的 harder matrix 也还没收口
 3. `省心`
    - 可查、可管、可回放、可回退，也能跨 OpenClaw / Codex / 多实例复用
    - 当前已落地：`umc` CLI、inspect / audit / replay / repair / rollback、canonical registry root、OpenClaw / Codex adapters
@@ -86,7 +87,7 @@
 - `轻快`
   - 当前最先要补的不是安装，而是每轮 context 仍然偏厚、Stage 6 还停留在 shadow measurement、hermetic 普通对话写记忆路径也还明显受 timeout 影响
 - `聪明`
-  - context 优化虽然已经验证可行，但当前仍是 shadow-only，还没有变成默认用户收益
+  - context 优化虽然已经从 shadow-only 推进到极窄的 guarded opt-in 路径，但还没有变成默认用户收益
 - `省心`
   - 共享底座的架构已经成立，但 Codex / 多实例的产品证据还不够强
 
@@ -96,7 +97,7 @@
    - 这条线的阶段目标不只是“让平均 token 更低”，而是让日常使用尽量不再需要 compat / compact 才能继续长对话。
 2. 再继续收 `轻快`：把 ordinary-conversation realtime-write 的 hermetic timeout / latency 压下去。
 3. 然后再回到 install / bootstrap / verify 的接入体验。
-4. 再把 `聪明` 从 shadow measurement surface 推进到极窄的 guarded opt-in 用户路径。
+4. 在 Stage 9 已收口后，继续把 guarded opt-in 收益保持可控，并等待 Stage 7 harder matrix 为绿。
 5. 最后补强 `省心` 这条在 Codex / 多实例上的产品证据。
 
 ## 适用对象
@@ -257,7 +258,8 @@ workspace/
 - `context 优化`
   - durable-source slimming 与 budgeted assembly
   - 长多话题会话里的 dialogue working-set pruning
-  - 在任何 active prompt experiment 之前先落 `default-off` 的 runtime shadow instrumentation
+  - `default-off` 的 runtime shadow instrumentation
+  - 极窄的 guarded opt-in active path
 
 ## 为什么 Context 优化已经变成主线
 
@@ -286,8 +288,8 @@ workspace/
 当前状态：
 
 - Stage 6 runtime shadow integration 已经落地
-- 继续保持 `default-off` 和 shadow-only
-- active prompt mutation 仍然延后
+- Stage 9 guarded smart-path 也已收口，但继续保持 `default-off` / opt-in only
+- 默认 active prompt mutation 仍然延后
 - 下一轮先做 docs-first：先把 bounded LLM-led decision contract、operator metrics、rollback boundary 和 harder A/B 设计写清楚，再动默认 prompt path
 
 ## 为什么 Self-Learning 现在就重要

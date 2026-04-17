@@ -96,9 +96,9 @@ Current status:
 - `Stage 6`: completed
 - `Stage 7`: in progress
 - `Stage 8`: completed
-- `Stage 9`: in progress (`default-off` / opt-in only)
+- `Stage 9`: completed (still `default-off` / opt-in only)
 - current pointer: `104`
-- current recommendation: the Stage 7 scorecard, the Stage 8 hermetic closure, the Stage 9 guarded seam, and the Step 108 plugin-owned transport closeout are all landed; the next step is to finish `104` (the harder eval matrix) while keeping Stage 9 `default-off` / opt-in only
+- current recommendation: the Stage 7 scorecard, the Stage 8 hermetic closure, the Step 108 plugin-owned transport closeout, and the Stage 9 guarded live A/B closeout are all landed; the next step is only to finish `104` (the harder eval matrix), while keeping Stage 9 `default-off` / opt-in only instead of widening it into the default path
 
 Already implemented in the current baseline:
 
@@ -144,7 +144,7 @@ These constraints keep the next per-turn context optimization slice measurable a
 | Stage 6 | `93-100` | validate dialogue working-set pruning in runtime shadow mode before any active prompt cutover | `completed` |
 | Stage 7 | `101-108` | turn `Context Minor GC / context loading optimization` into a formal mainline and formal gate | `in_progress` |
 | Stage 8 | `109-114` | turn the ordinary-conversation hermetic path into a trustworthy steady-state A/B surface | `completed` |
-| Stage 9 | `115-120` | start turning context optimization into user-visible value through a bounded guarded path | `in_progress` |
+| Stage 9 | `115-120` | start turning context optimization into user-visible value through a bounded guarded path | `completed` |
 | Stage 10 | `121-126` | shorten install / bootstrap / verify and strengthen shared-foundation product proof | `planned` |
 
 ## Sequential Build Plan
@@ -351,6 +351,8 @@ Stage complete when:
 Current evidence:
 
 - Stage 9 guarded answer A/B: [../../../reports/generated/dialogue-working-set-guarded-answer-ab-2026-04-17.md](../../../reports/generated/dialogue-working-set-guarded-answer-ab-2026-04-17.md)
+- OpenClaw guarded live A/B: [../../../reports/generated/openclaw-guarded-live-ab-2026-04-18.md](../../../reports/generated/openclaw-guarded-live-ab-2026-04-18.md)
+- Stage 9 closeout: [../../../reports/generated/stage9-guarded-smart-path-closeout-2026-04-18.md](../../../reports/generated/stage9-guarded-smart-path-closeout-2026-04-18.md)
 - Stage 7 / Stage 9 summary: [../../../reports/generated/dialogue-working-set-stage7-stage9-2026-04-17.md](../../../reports/generated/dialogue-working-set-stage7-stage9-2026-04-17.md)
 - OpenClaw gateway live validation: [../../../reports/generated/openclaw-gateway-context-optimization-2026-04-17.md](../../../reports/generated/openclaw-gateway-context-optimization-2026-04-17.md)
 
@@ -367,7 +369,15 @@ Stage complete when:
 117. `completed` bind operator metrics, rollback boundaries, and regression gates to that surface.
 118. `completed` run guarded opt-in A/B on fixed case classes.
 119. `completed` decide to keep the feature opt-in only for now.
-120. `in_progress` close the stage when users can feel the gain and operators still stay in control.
+120. `completed` close the stage when users can feel the gain and operators still stay in control.
+   - Real OpenClaw live A/B now proves:
+     - baseline `4 / 4`
+     - guarded `4 / 4`
+     - guarded applied `2 / 4`
+     - activation matched `4 / 4`
+     - false activations `0`
+     - missed activations `0`
+   - The guarded gain is no longer just an offline answer A/B artifact; it is a real-host observable narrow gain, while the feature still remains `default-off` / opt-in only instead of becoming a default path.
 
 ### Stage 10. Adoption Simplification And Shared-Foundation Proof
 
@@ -390,9 +400,9 @@ Stage complete when:
 
 Resume exactly from here:
 
-1. start from `92`, redesigning the next harder live A/B around `cross-source / conflict / multi-step history / denser natural-Chinese` prompts
-2. keep `dialogueWorkingSetShadow` `default-off` and shadow-only while the new telemetry surface soaks
-3. use Stage 6 telemetry when expanding the harder live A/B surface and deciding whether any part should later graduate toward a stronger formal gate
+1. start from `104`, adding the harder eval matrix around `cross-source / conflict / multi-step history / open-loop return / denser natural-Chinese multi-topic switches`
+2. rerun `Context Minor GC` on the same operator scorecard and confirm that the harder case classes still keep the context package lighter without answer-level regressions
+3. keep Stage 9 `default-off` / opt-in only until `104` is green, rather than widening the guarded surface early
 
 Do not start with:
 

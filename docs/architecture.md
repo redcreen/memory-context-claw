@@ -52,7 +52,8 @@ Context optimization currently means several coordinated architecture surfaces:
 Current state:
 
 - Stage 6 runtime shadow integration is already landed
-- it remains `default-off` and shadow-only
+- Stage 6 remains `default-off` and shadow-only as the measurement surface
+- Stage 9 guarded smart-path is also closed, but stays `default-off` / opt-in only
 - the public workstream name for this turn-by-turn context path is now `Context Minor GC`
 - the next round starts by finishing `context loading optimization`: clarify the bounded LLM-led decision contract, operator metrics, rollback boundary, harder A/B design, and one unified scorecard before any default prompt-path change
 - the preferred implementation path is no longer an OpenClaw patch first; it is to pull the `memory + context decision` transport back into the plugin layer first

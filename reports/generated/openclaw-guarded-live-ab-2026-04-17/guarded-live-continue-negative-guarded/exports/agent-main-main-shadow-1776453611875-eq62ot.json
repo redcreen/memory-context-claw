@@ -1,0 +1,224 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776453611875-eq62ot",
+  "generated_at": "2026-04-17T19:20:11.875Z",
+  "session_key": "agent:main:main",
+  "agent_id": "main",
+  "query": "我们当前新任务是什么？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "当前新任务是写 shadow mode 报告。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "我先按这个方向做：你把要覆盖的范围发我，我来整理成 shadow mode 报告。 如果你想让我直接起草，给我这 4 项就够了： - 目标系统/功能 - shadow mode 的时间范围 - 关键观察点（比如准确率、延迟、误报、人工接管） - 结论偏向（继续、调整、停用） 也可以直接丢原始素材，我帮你整理成一版可发的报告。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "报告里还要明确 rollback boundary。"
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "收到。shadow mode 报告里我会把 **rollback boundary** 单独写清楚，通常会包括： - **触发条件**：什么情况算越界 - **影响范围**：只回退 shadow 逻辑，还是连相关配置/依赖一起回退 - **决策门槛**：谁来判定、需要什么证据 - **执行动作**：回滚到哪个版本/配置点 - **恢复条件**：什么时候可以重新进入 shadow 或放量 你把下面这些信息给我，我就能直接起草： - 报告对象是谁 - 这次 shadow 的具体功能/模块 - 当前已知风险点 - 你希望的 rollback boundary 口径 - 需要偏技术版还是偏管理版 如果你愿意，我也可以先给你出一个 **shadow mode 报告模板**，里面已经把 rollback boundary 预留好了。"
+    }
+  ],
+  "decision": {
+    "relation": "continue",
+    "confidence": 0.97,
+    "evict_turn_ids": [],
+    "pin_turn_ids": [],
+    "archive_summary": "当前活跃任务是撰写 shadow mode 报告；报告中需要明确 rollback boundary。",
+    "reasoning_summary": "最新用户在追问当前任务，本质上仍依赖前文的同一未完成主题：shadow mode 报告及其 rollback boundary 要求。该任务尚未解决，因此不应缩减为仅保留 pins，也不应清除任何相关原始轮次。"
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "continue",
+      "confidence": 0.97,
+      "archiveSummary": "当前活跃任务是撰写 shadow mode 报告；报告中需要明确 rollback boundary。",
+      "reasoningSummary": "最新用户在追问当前任务，本质上仍依赖前文的同一未完成主题：shadow mode 报告及其 rollback boundary 要求。该任务尚未解决，因此不应缩减为仅保留 pins，也不应清除任何相关原始轮次。",
+      "latestUserTurnId": "t3",
+      "pinTurnIds": [],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [],
+      "keepTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ],
+      "baselineTokens": 146,
+      "keptTokens": 146,
+      "prunedTokens": 0,
+      "reductionRatio": 0,
+      "keepTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "当前新任务是写 shadow mode 报告。",
+          "tokenEstimate": 6
+        },
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "我先按这个方向做：你把要覆盖的范围发我，我来整理成 shadow mode 报告。 如果你想让我直接起草，给我这 4 项就够了： - 目标系统/功能 - shadow mode 的时间范围 - 关键观察点（比如准确率、延迟、误报、人工接管） - 结论偏向（继续、调整、停用） 也可以直接丢原始素材，我帮你整理成一版可发的报告。",
+          "tokenEstimate": 41
+        },
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "报告里还要明确 rollback boundary。",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t4",
+          "role": "assistant",
+          "content": "收到。shadow mode 报告里我会把 **rollback boundary** 单独写清楚，通常会包括： - **触发条件**：什么情况算越界 - **影响范围**：只回退 shadow 逻辑，还是连相关配置/依赖一起回退 - **决策门槛**：谁来判定、需要什么证据 - **执行动作**：回滚到哪个版本/配置点 - **恢复条件**：什么时候可以重新进入 shadow 或放量 你把下面这些信息给我，我就能直接起草： - 报告对象是谁 - 这次 shadow 的具体功能/模块 - 当前已知风险点 - 你希望的 rollback boundary 口径 - 需要偏技术版还是偏管理版 如果你愿意，我也可以先给你出一个 **shadow mode 报告模板**，里面已经把 rollback boundary 预留好了。",
+          "tokenEstimate": 92
+        }
+      ],
+      "evictedTurns": []
+    },
+    "baselineRawTranscript": "t1 user: 当前新任务是写 shadow mode 报告。\nt2 assistant: 我先按这个方向做：你把要覆盖的范围发我，我来整理成 shadow mode 报告。 如果你想让我直接起草，给我这 4 项就够了： - 目标系统/功能 - shadow mode 的时间范围 - 关键观察点（比如准确率、延迟、误报、人工接管） - 结论偏向（继续、调整、停用） 也可以直接丢原始素材，我帮你整理成一版可发的报告。\nt3 user: 报告里还要明确 rollback boundary。\nt4 assistant: 收到。shadow mode 报告里我会把 **rollback boundary** 单独写清楚，通常会包括： - **触发条件**：什么情况算越界 - **影响范围**：只回退 shadow 逻辑，还是连相关配置/依赖一起回退 - **决策门槛**：谁来判定、需要什么证据 - **执行动作**：回滚到哪个版本/配置点 - **恢复条件**：什么时候可以重新进入 shadow 或放量 你把下面这些信息给我，我就能直接起草： - 报告对象是谁 - 这次 shadow 的具体功能/模块 - 当前已知风险点 - 你希望的 rollback boundary 口径 - 需要偏技术版还是偏管理版 如果你愿意，我也可以先给你出一个 **shadow mode 报告模板**，里面已经把 rollback boundary 预留好了。",
+    "shadowRawTranscript": "t1 user: 当前新任务是写 shadow mode 报告。\nt2 assistant: 我先按这个方向做：你把要覆盖的范围发我，我来整理成 shadow mode 报告。 如果你想让我直接起草，给我这 4 项就够了： - 目标系统/功能 - shadow mode 的时间范围 - 关键观察点（比如准确率、延迟、误报、人工接管） - 结论偏向（继续、调整、停用） 也可以直接丢原始素材，我帮你整理成一版可发的报告。\nt3 user: 报告里还要明确 rollback boundary。\nt4 assistant: 收到。shadow mode 报告里我会把 **rollback boundary** 单独写清楚，通常会包括： - **触发条件**：什么情况算越界 - **影响范围**：只回退 shadow 逻辑，还是连相关配置/依赖一起回退 - **决策门槛**：谁来判定、需要什么证据 - **执行动作**：回滚到哪个版本/配置点 - **恢复条件**：什么时候可以重新进入 shadow 或放量 你把下面这些信息给我，我就能直接起草： - 报告对象是谁 - 这次 shadow 的具体功能/模块 - 当前已知风险点 - 你希望的 rollback boundary 口径 - 需要偏技术版还是偏管理版 如果你愿意，我也可以先给你出一个 **shadow mode 报告模板**，里面已经把 rollback boundary 预留好了。",
+    "semanticPinNotes": [],
+    "archiveSummary": "当前活跃任务是撰写 shadow mode 报告；报告中需要明确 rollback boundary。",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 157,
+    "shadowRawPromptEstimate": 157,
+    "shadowPackageEstimate": 161,
+    "shadowPackageText": "Active raw turns:\nt1 user: 当前新任务是写 shadow mode 报告。\nt2 assistant: 我先按这个方向做：你把要覆盖的范围发我，我来整理成 shadow mode 报告。 如果你想让我直接起草，给我这 4 项就够了： - 目标系统/功能 - shadow mode 的时间范围 - 关键观察点（比如准确率、延迟、误报、人工接管） - 结论偏向（继续、调整、停用） 也可以直接丢原始素材，我帮你整理成一版可发的报告。\nt3 user: 报告里还要明确 rollback boundary。\nt4 assistant: 收到。shadow mode 报告里我会把 **rollback boundary** 单独写清楚，通常会包括： - **触发条件**：什么情况算越界 - **影响范围**：只回退 shadow 逻辑，还是连相关配置/依赖一起回退 - **决策门槛**：谁来判定、需要什么证据 - **执行动作**：回滚到哪个版本/配置点 - **恢复条件**：什么时候可以重新进入 shadow 或放量 你把下面这些信息给我，我就能直接起草： - 报告对象是谁 - 这次 shadow 的具体功能/模块 - 当前已知风险点 - 你希望的 rollback boundary 口径 - 需要偏技术版还是偏管理版 如果你愿意，我也可以先给你出一个 **shadow mode 报告模板**，里面已经把 rollback boundary 预留好了。"
+  },
+  "scorecard": {
+    "relation": "continue",
+    "baselineTurnCount": 4,
+    "keptTurnCount": 4,
+    "evictedTurnCount": 0,
+    "pinCount": 0,
+    "baselinePromptEstimate": 157,
+    "shadowRawPromptEstimate": 157,
+    "shadowPackageEstimate": 161,
+    "rawReductionRatio": 0,
+    "packageReductionRatio": -0.0255,
+    "candidateLoadElapsedMs": 79,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 13559,
+    "totalElapsedMs": 13564,
+    "guardedEnabled": true,
+    "guardedApplied": false,
+    "guardedReason": "relation_not_allowed",
+    "guardedMessageCount": 4,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 146
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": false,
+    "reason": "relation_not_allowed",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "当前新任务是写 shadow mode 报告。"
+          }
+        ],
+        "timestamp": 1776453567259
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "我先按这个方向做：你把要覆盖的范围发我，我来整理成 shadow mode 报告。\n\n如果你想让我直接起草，给我这 4 项就够了：\n- 目标系统/功能\n- shadow mode 的时间范围\n- 关键观察点（比如准确率、延迟、误报、人工接管）\n- 结论偏向（继续、调整、停用）\n\n也可以直接丢原始素材，我帮你整理成一版可发的报告。",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0fd89b4809ff30680169e287c2229c8191a6bcb8350a61518e\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 8265,
+          "output": 115,
+          "cacheRead": 5120,
+          "cacheWrite": 0,
+          "totalTokens": 13500,
+          "cost": {
+            "input": 0.00619875,
+            "output": 0.0005175000000000001,
+            "cacheRead": 0.000384,
+            "cacheWrite": 0,
+            "total": 0.00710025
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776453567267,
+        "responseId": "resp_0fd89b4809ff30680169e287c180988191bcc32b38921c0caa"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "报告里还要明确 rollback boundary。"
+          }
+        ],
+        "timestamp": 1776453589486
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "收到。shadow mode 报告里我会把 **rollback boundary** 单独写清楚，通常会包括：\n\n- **触发条件**：什么情况算越界\n- **影响范围**：只回退 shadow 逻辑，还是连相关配置/依赖一起回退\n- **决策门槛**：谁来判定、需要什么证据\n- **执行动作**：回滚到哪个版本/配置点\n- **恢复条件**：什么时候可以重新进入 shadow 或放量\n\n你把下面这些信息给我，我就能直接起草：\n- 报告对象是谁\n- 这次 shadow 的具体功能/模块\n- 当前已知风险点\n- 你希望的 rollback boundary 口径\n- 需要偏技术版还是偏管理版\n\n如果你愿意，我也可以先给你出一个 **shadow mode 报告模板**，里面已经把 rollback boundary 预留好了。",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0fd89b4809ff30680169e287d833b48191a373e986f3efa7eb\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 8426,
+          "output": 208,
+          "cacheRead": 5120,
+          "cacheWrite": 0,
+          "totalTokens": 13754,
+          "cost": {
+            "input": 0.0063195000000000005,
+            "output": 0.000936,
+            "cacheRead": 0.000384,
+            "cacheWrite": 0,
+            "total": 0.0076395000000000005
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776453589497,
+        "responseId": "resp_0fd89b4809ff30680169e287d7a9288191b215559372c3423b"
+      }
+    ],
+    "filteredMessageCount": 4,
+    "filteredMessageTokenEstimate": 146,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 13564,
+    "decisionElapsedMs": 13559
+  }
+}

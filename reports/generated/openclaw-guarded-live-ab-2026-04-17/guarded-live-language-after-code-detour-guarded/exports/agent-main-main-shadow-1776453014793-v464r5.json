@@ -1,0 +1,65 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776453014793-v464r5",
+  "generated_at": "2026-04-17T19:10:14.793Z",
+  "session_key": "agent:main:main",
+  "agent_id": "main",
+  "query": "先切到代码：这轮先不改原有记忆系统，只做 shadow。",
+  "status": "skipped",
+  "reason": "not_enough_turns",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "以后默认给我中文回复。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "好的，之后我默认用中文回复。"
+    }
+  ],
+  "decision": null,
+  "decision_transport": "",
+  "snapshot": null,
+  "scorecard": {
+    "relation": "",
+    "baselineTurnCount": 2,
+    "keptTurnCount": 0,
+    "evictedTurnCount": 0,
+    "pinCount": 0,
+    "baselinePromptEstimate": 0,
+    "shadowRawPromptEstimate": 0,
+    "shadowPackageEstimate": 0,
+    "rawReductionRatio": 0,
+    "packageReductionRatio": 0,
+    "candidateLoadElapsedMs": 23,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 0,
+    "totalElapsedMs": 3,
+    "guardedEnabled": true,
+    "guardedApplied": false,
+    "guardedReason": "not_evaluated",
+    "guardedMessageCount": 2,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 0
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": false,
+    "reason": "not_evaluated",
+    "filteredMessageCount": 2,
+    "filteredMessageTokenEstimate": 0,
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 3,
+    "decisionElapsedMs": 0
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776453430319-j5w5c9",
+  "generated_at": "2026-04-17T19:17:10.319Z",
+  "session_key": "agent:main:main",
+  "agent_id": "main",
+  "query": "插一句，我的时区是 Asia/Shanghai，记住。",
+  "status": "skipped",
+  "reason": "not_enough_turns",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "把发布验收拆成版本、安装、回滚三部分。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "可以，建议拆成这三块： - **版本验收** - 版本号是否正确 - 变更范围是否符合预期 - 发布说明、变更记录是否完整 - 关键功能/修复点是否都已覆盖 - **安装验收** - 安装步骤是否顺畅 - 依赖是否齐全 - 新装、升级、增量安装是否可用 - 安装后服务/功能是否正常启动 - **回滚验收** - 回滚流程是否可执行 - 回滚后版本是否恢复正确 - 配置、数据、依赖是否兼容 - 回滚后系统是否稳定可用 如果你要，我可以继续帮你把它整理成一份更正式的“发布验收清单”模板。"
+    }
+  ],
+  "decision": null,
+  "decision_transport": "",
+  "snapshot": null,
+  "scorecard": {
+    "relation": "",
+    "baselineTurnCount": 2,
+    "keptTurnCount": 0,
+    "evictedTurnCount": 0,
+    "pinCount": 0,
+    "baselinePromptEstimate": 0,
+    "shadowRawPromptEstimate": 0,
+    "shadowPackageEstimate": 0,
+    "rawReductionRatio": 0,
+    "packageReductionRatio": 0,
+    "candidateLoadElapsedMs": 20,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 0,
+    "totalElapsedMs": 0,
+    "guardedEnabled": true,
+    "guardedApplied": false,
+    "guardedReason": "not_evaluated",
+    "guardedMessageCount": 6,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 0
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": false,
+    "reason": "not_evaluated",
+    "filteredMessageCount": 6,
+    "filteredMessageTokenEstimate": 0,
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 0,
+    "decisionElapsedMs": 0
+  }
+}

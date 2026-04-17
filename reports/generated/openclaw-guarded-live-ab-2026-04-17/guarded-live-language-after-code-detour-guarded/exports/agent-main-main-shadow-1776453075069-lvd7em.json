@@ -1,0 +1,213 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776453075069-lvd7em",
+  "generated_at": "2026-04-17T19:11:15.069Z",
+  "session_key": "agent:main:main",
+  "agent_id": "main",
+  "query": "先不说代码了。我刚才要求你默认用什么语言回复？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "以后默认给我中文回复。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "好的，之后我默认用中文回复。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "先切到代码：这轮先不改原有记忆系统，只做 shadow。"
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "明白，这轮只做 shadow，不改原有记忆系统。 你要我先做哪一块 shadow？ - 设计影子记忆的数据流 - 画出读写路径 - 定义 shadow 与原记忆的隔离边界 - 直接开始落代码 如果你有现成仓库/文件，我可以先读结构再动手。"
+    },
+    {
+      "id": "t5",
+      "role": "user",
+      "content": "再补一条：切回 builtin 也不能丢记忆。"
+    },
+    {
+      "id": "t6",
+      "role": "assistant",
+      "content": "收到，补一条约束： - 切回 builtin 时，记忆不能丢 - 这轮仍然只做 shadow，不改原有记忆系统 我会按这个前提处理：shadow 可以并行存在，但切换回 builtin 时要能保留/回收 shadow 里的有效记忆，不做丢失性操作。 如果你要我现在开始，我可以先把这条写成设计约束/测试用例，或者直接进代码。"
+    }
+  ],
+  "decision": {
+    "relation": "resolve",
+    "confidence": 0.98,
+    "evict_turn_ids": [
+      "t2",
+      "t3",
+      "t4",
+      "t5",
+      "t6"
+    ],
+    "pin_turn_ids": [
+      "t1"
+    ],
+    "archive_summary": "用户的长期偏好：默认用中文回复。其余关于 shadow 记忆与 builtin 切换的讨论与当前问题无关，可从下一轮原始上下文中移除。",
+    "reasoning_summary": "当前用户只是在追问之前设定的回复语言偏好，主要需要保留的是持久化语言偏好这一语义 pin。后续代码/影子记忆话题已转离当前请求，且没有未完成的直接任务，因此适合用 resolve：保留最新用户问句与中文回复偏好，清理其余已解决或无关的原始轮次。"
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "resolve",
+      "confidence": 0.98,
+      "archiveSummary": "用户的长期偏好：默认用中文回复。其余关于 shadow 记忆与 builtin 切换的讨论与当前问题无关，可从下一轮原始上下文中移除。",
+      "reasoningSummary": "当前用户只是在追问之前设定的回复语言偏好，主要需要保留的是持久化语言偏好这一语义 pin。后续代码/影子记忆话题已转离当前请求，且没有未完成的直接任务，因此适合用 resolve：保留最新用户问句与中文回复偏好，清理其余已解决或无关的原始轮次。",
+      "latestUserTurnId": "t5",
+      "pinTurnIds": [
+        "t1"
+      ],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6"
+      ],
+      "blockedEvictTurnIds": [
+        "t5"
+      ],
+      "appliedEvictTurnIds": [
+        "t2",
+        "t3",
+        "t4",
+        "t6"
+      ],
+      "keepTurnIds": [
+        "t1",
+        "t5"
+      ],
+      "baselineTokens": 91,
+      "keptTokens": 9,
+      "prunedTokens": 82,
+      "reductionRatio": 0.9010989010989011,
+      "keepTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "以后默认给我中文回复。",
+          "tokenEstimate": 3
+        },
+        {
+          "id": "t5",
+          "role": "user",
+          "content": "再补一条：切回 builtin 也不能丢记忆。",
+          "tokenEstimate": 6
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "好的，之后我默认用中文回复。",
+          "tokenEstimate": 4
+        },
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "先切到代码：这轮先不改原有记忆系统，只做 shadow。",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t4",
+          "role": "assistant",
+          "content": "明白，这轮只做 shadow，不改原有记忆系统。 你要我先做哪一块 shadow？ - 设计影子记忆的数据流 - 画出读写路径 - 定义 shadow 与原记忆的隔离边界 - 直接开始落代码 如果你有现成仓库/文件，我可以先读结构再动手。",
+          "tokenEstimate": 30
+        },
+        {
+          "id": "t6",
+          "role": "assistant",
+          "content": "收到，补一条约束： - 切回 builtin 时，记忆不能丢 - 这轮仍然只做 shadow，不改原有记忆系统 我会按这个前提处理：shadow 可以并行存在，但切换回 builtin 时要能保留/回收 shadow 里的有效记忆，不做丢失性操作。 如果你要我现在开始，我可以先把这条写成设计约束/测试用例，或者直接进代码。",
+          "tokenEstimate": 41
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 以后默认给我中文回复。\nt2 assistant: 好的，之后我默认用中文回复。\nt3 user: 先切到代码：这轮先不改原有记忆系统，只做 shadow。\nt4 assistant: 明白，这轮只做 shadow，不改原有记忆系统。 你要我先做哪一块 shadow？ - 设计影子记忆的数据流 - 画出读写路径 - 定义 shadow 与原记忆的隔离边界 - 直接开始落代码 如果你有现成仓库/文件，我可以先读结构再动手。\nt5 user: 再补一条：切回 builtin 也不能丢记忆。\nt6 assistant: 收到，补一条约束： - 切回 builtin 时，记忆不能丢 - 这轮仍然只做 shadow，不改原有记忆系统 我会按这个前提处理：shadow 可以并行存在，但切换回 builtin 时要能保留/回收 shadow 里的有效记忆，不做丢失性操作。 如果你要我现在开始，我可以先把这条写成设计约束/测试用例，或者直接进代码。",
+    "shadowRawTranscript": "t1 user: 以后默认给我中文回复。\nt5 user: 再补一条：切回 builtin 也不能丢记忆。",
+    "semanticPinNotes": [],
+    "archiveSummary": "用户的长期偏好：默认用中文回复。其余关于 shadow 记忆与 builtin 切换的讨论与当前问题无关，可从下一轮原始上下文中移除。",
+    "injectedArchiveSummary": "用户的长期偏好：默认用中文回复。其余关于 shadow 记忆与 builtin 切换的讨论与当前问题无关，可从下一轮原始上下文中移除...",
+    "baselinePromptEstimate": 108,
+    "shadowRawPromptEstimate": 14,
+    "shadowPackageEstimate": 40,
+    "shadowPackageText": "Active raw turns:\nt1 user: 以后默认给我中文回复。\nt5 user: 再补一条：切回 builtin 也不能丢记忆。\n\nArchived summary:\n用户的长期偏好：默认用中文回复。其余关于 shadow 记忆与 builtin 切换的讨论与当前问题无关，可从下一轮原始上下文中移除..."
+  },
+  "scorecard": {
+    "relation": "resolve",
+    "baselineTurnCount": 6,
+    "keptTurnCount": 2,
+    "evictedTurnCount": 4,
+    "pinCount": 1,
+    "baselinePromptEstimate": 108,
+    "shadowRawPromptEstimate": 14,
+    "shadowPackageEstimate": 40,
+    "rawReductionRatio": 0.9011,
+    "packageReductionRatio": 0.6296,
+    "candidateLoadElapsedMs": 25,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 13088,
+    "totalElapsedMs": 13093,
+    "guardedEnabled": true,
+    "guardedApplied": true,
+    "guardedReason": "guarded_candidate",
+    "guardedMessageCount": 2,
+    "guardedCarryForwardEstimate": 24,
+    "guardedFilteredMessageEstimate": 9
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": true,
+    "reason": "guarded_candidate",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "以后默认给我中文回复。"
+          }
+        ],
+        "timestamp": 1776452993325
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "再补一条：切回 builtin 也不能丢记忆。"
+          }
+        ],
+        "timestamp": 1776453051271
+      }
+    ],
+    "filteredMessageCount": 2,
+    "filteredMessageTokenEstimate": 9,
+    "carryForwardText": "Archived topic summary:\n用户的长期偏好：默认用中文回复。其余关于 shadow 记忆与 builtin 切换的讨论与当前问题无关，可从下一轮原始上下文中移除...",
+    "carryForwardEstimate": 24,
+    "evictedSourceIndices": [
+      1,
+      2,
+      3,
+      5
+    ]
+  },
+  "timings": {
+    "totalElapsedMs": 13093,
+    "decisionElapsedMs": 13088
+  }
+}

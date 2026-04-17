@@ -96,9 +96,9 @@
 - `Stage 6`：已完成
 - `Stage 7`：进行中
 - `Stage 8`：已完成
-- `Stage 9`：进行中（`default-off` / opt-in only）
+- `Stage 9`：已完成（继续保持 `default-off` / opt-in only）
 - 当前指针：`104`
-- 当前建议：Stage 7 scorecard、Stage 8 hermetic closure、Stage 9 guarded seam，以及 Step 108 的 plugin-owned transport closeout 都已落地；下一步先完成 `104` 的 harder eval matrix，并继续把 Stage 9 保持在 `default-off` / opt-in only
+- 当前建议：Stage 7 scorecard、Stage 8 hermetic closure、Step 108 的 plugin-owned transport closeout，以及 Stage 9 guarded live A/B closeout 都已落地；下一步只剩先完成 `104` 的 harder eval matrix；Stage 9 继续保持 `default-off` / opt-in only，不扩大到默认路径
 
 当前 baseline 已经落地：
 
@@ -144,7 +144,7 @@
 | Stage 6 | `93-100` | 在任何 active prompt cutover 前，用 runtime shadow mode 验证 dialogue working-set pruning | `completed` |
 | Stage 7 | `101-108` | 把 `Context Minor GC / context loading optimization` 收成正式主线与正式门禁 | `in_progress` |
 | Stage 8 | `109-114` | 把 ordinary-conversation hermetic 路径收成可信的 steady-state A/B 面 | `completed` |
-| Stage 9 | `115-120` | 以 bounded、guarded 方式让 context 优化开始变成用户收益 | `in_progress` |
+| Stage 9 | `115-120` | 以 bounded、guarded 方式让 context 优化开始变成用户收益 | `completed` |
 | Stage 10 | `121-126` | 收 install / bootstrap / verify，并补强共享底座产品证据 | `planned` |
 
 ## 顺序开发计划
@@ -351,6 +351,8 @@ Stage 6 证据：
 当前证据：
 
 - Stage 9 guarded answer A/B：[../../../reports/generated/dialogue-working-set-guarded-answer-ab-2026-04-17.md](../../../reports/generated/dialogue-working-set-guarded-answer-ab-2026-04-17.md)
+- OpenClaw guarded live A/B：[../../../reports/generated/openclaw-guarded-live-ab-2026-04-18.md](../../../reports/generated/openclaw-guarded-live-ab-2026-04-18.md)
+- Stage 9 收口报告：[../../../reports/generated/stage9-guarded-smart-path-closeout-2026-04-18.zh-CN.md](../../../reports/generated/stage9-guarded-smart-path-closeout-2026-04-18.zh-CN.md)
 - Stage 7 / Stage 9 汇总：[../../../reports/generated/dialogue-working-set-stage7-stage9-2026-04-17.md](../../../reports/generated/dialogue-working-set-stage7-stage9-2026-04-17.md)
 - OpenClaw gateway live validation：[../../../reports/generated/openclaw-gateway-context-optimization-2026-04-17.md](../../../reports/generated/openclaw-gateway-context-optimization-2026-04-17.md)
 
@@ -367,7 +369,15 @@ Stage 6 证据：
 117. `completed` 让 operator metrics、rollback boundary 和 regression gate 绑定到这个 surface。
 118. `completed` 在固定 case class 上跑 guarded opt-in A/B。
 119. `completed` 决定当前继续维持 opt-in only。
-120. `in_progress` 以“用户能感知到收益，但 operator 仍可控”收口本阶段。
+120. `completed` 以“用户能感知到收益，但 operator 仍可控”收口本阶段。
+   - 真实 OpenClaw live A/B 已证明：
+     - baseline `4 / 4`
+     - guarded `4 / 4`
+     - guarded applied `2 / 4`
+     - activation matched `4 / 4`
+     - false activations `0`
+     - missed activations `0`
+   - guarded gain 已经不再只是离线 answer A/B，而是有真实宿主可观测收益；但 feature 继续保持 `default-off` / opt-in only，不扩大成默认路径。
 
 ### Stage 10. Adoption Simplification And Shared-Foundation Proof
 
@@ -390,9 +400,9 @@ Stage 6 证据：
 
 从这里恢复：
 
-1. 从 `92` 开始，重设计更偏 `cross-source / conflict / multi-step history / 高信息密度自然中文` 的 harder live A/B
-2. 继续保持 `dialogueWorkingSetShadow` 为 `default-off` 且 shadow-only，让这条 telemetry surface 继续 soak
-3. 用新的 Stage 6 telemetry surface 承接更深 harder-case A/B，并在必要时决定是否晋升 formal gate
+1. 从 `104` 开始，补齐更偏 `cross-source / conflict / multi-step history / open-loop return / 高信息密度自然中文多话题切换` 的 harder eval matrix
+2. 用同一套 operator scorecard 重跑 `Context Minor GC`，确认更难 case class 下 context package 仍然更轻且 answer-level 不回退
+3. 在 `104` 为绿之前，继续保持 Stage 9 为 `default-off` / opt-in only，不扩大 guarded 面
 
 当前不要开始：
 

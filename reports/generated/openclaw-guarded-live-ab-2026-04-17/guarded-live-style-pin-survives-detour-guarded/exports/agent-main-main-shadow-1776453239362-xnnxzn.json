@@ -1,0 +1,238 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776453239362-xnnxzn",
+  "generated_at": "2026-04-17T19:13:59.362Z",
+  "session_key": "agent:main:main",
+  "agent_id": "main",
+  "query": "先别开 rerank，这轮只做 shadow 数据。",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "以后默认先给我结论，再展开细节。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "记住了：以后我默认先给你结论，再展开细节。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "检索策略先走 fast path。"
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "记住了：检索策略默认先走 fast path。"
+    }
+  ],
+  "decision": {
+    "relation": "resolve",
+    "confidence": 0.95,
+    "evict_turn_ids": [
+      "t2",
+      "t4"
+    ],
+    "pin_turn_ids": [
+      "t1",
+      "t3"
+    ],
+    "archive_summary": "保留两条长期偏好：默认先给结论再展开细节；检索策略默认先走 fast path。当前对话已闭合，后续可只依赖这两个语义 pin 和最新用户轮次。",
+    "reasoning_summary": "这段对话只是在记录两条稳定偏好，没有未完成任务。最新用户轮次会由运行时保留，因此可回收两条助手确认轮次；将用户表达的两项偏好提升为语义 pin 以便跨轮次保留。"
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "resolve",
+      "confidence": 0.95,
+      "archiveSummary": "保留两条长期偏好：默认先给结论再展开细节；检索策略默认先走 fast path。当前对话已闭合，后续可只依赖这两个语义 pin 和最新用户轮次。",
+      "reasoningSummary": "这段对话只是在记录两条稳定偏好，没有未完成任务。最新用户轮次会由运行时保留，因此可回收两条助手确认轮次；将用户表达的两项偏好提升为语义 pin 以便跨轮次保留。",
+      "latestUserTurnId": "t3",
+      "pinTurnIds": [
+        "t1",
+        "t3"
+      ],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t2",
+        "t4"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t2",
+        "t4"
+      ],
+      "keepTurnIds": [
+        "t1",
+        "t3"
+      ],
+      "baselineTokens": 21,
+      "keptTokens": 9,
+      "prunedTokens": 12,
+      "reductionRatio": 0.5714285714285714,
+      "keepTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "以后默认先给我结论，再展开细节。",
+          "tokenEstimate": 4
+        },
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "检索策略先走 fast path。",
+          "tokenEstimate": 5
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "记住了：以后我默认先给你结论，再展开细节。",
+          "tokenEstimate": 6
+        },
+        {
+          "id": "t4",
+          "role": "assistant",
+          "content": "记住了：检索策略默认先走 fast path。",
+          "tokenEstimate": 6
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 以后默认先给我结论，再展开细节。\nt2 assistant: 记住了：以后我默认先给你结论，再展开细节。\nt3 user: 检索策略先走 fast path。\nt4 assistant: 记住了：检索策略默认先走 fast path。",
+    "shadowRawTranscript": "t1 user: 以后默认先给我结论，再展开细节。\nt3 user: 检索策略先走 fast path。",
+    "semanticPinNotes": [],
+    "archiveSummary": "保留两条长期偏好：默认先给结论再展开细节；检索策略默认先走 fast path。当前对话已闭合，后续可只依赖这两个语义 pin 和最新用户轮次。",
+    "injectedArchiveSummary": "保留两条长期偏好：默认先给结论再展开细节；检索策略默认先走 fast path。当前对话已闭合，后续可只依赖这两个语义 pin 和最新用户轮次...",
+    "baselinePromptEstimate": 32,
+    "shadowRawPromptEstimate": 13,
+    "shadowPackageEstimate": 41,
+    "shadowPackageText": "Active raw turns:\nt1 user: 以后默认先给我结论，再展开细节。\nt3 user: 检索策略先走 fast path。\n\nArchived summary:\n保留两条长期偏好：默认先给结论再展开细节；检索策略默认先走 fast path。当前对话已闭合，后续可只依赖这两个语义 pin 和最新用户轮次..."
+  },
+  "scorecard": {
+    "relation": "resolve",
+    "baselineTurnCount": 4,
+    "keptTurnCount": 2,
+    "evictedTurnCount": 2,
+    "pinCount": 2,
+    "baselinePromptEstimate": 32,
+    "shadowRawPromptEstimate": 13,
+    "shadowPackageEstimate": 41,
+    "rawReductionRatio": 0.5714,
+    "packageReductionRatio": -0.2813,
+    "candidateLoadElapsedMs": 31,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 14773,
+    "totalElapsedMs": 14782,
+    "guardedEnabled": true,
+    "guardedApplied": false,
+    "guardedReason": "no_net_token_gain",
+    "guardedMessageCount": 4,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 21
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": false,
+    "reason": "no_net_token_gain",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "以后默认先给我结论，再展开细节。"
+          }
+        ],
+        "timestamp": 1776453194179
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "记住了：以后我默认先给你结论，再展开细节。",
+            "textSignature": "{\"v\":1,\"id\":\"msg_072879defec4a8d90169e2864e5974819190b56497d6a06eb4\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 13366,
+          "output": 21,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "totalTokens": 13387,
+          "cost": {
+            "input": 0.0100245,
+            "output": 0.0000945,
+            "cacheRead": 0,
+            "cacheWrite": 0,
+            "total": 0.010119000000000001
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776453194195,
+        "responseId": "resp_072879defec4a8d90169e2864c70ac8191823c0ad4d7a5b41c"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "检索策略先走 fast path。"
+          }
+        ],
+        "timestamp": 1776453217106
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "记住了：检索策略默认先走 fast path。",
+            "textSignature": "{\"v\":1,\"id\":\"msg_072879defec4a8d90169e28664036881919151ca385586740d\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 8406,
+          "output": 17,
+          "cacheRead": 5120,
+          "cacheWrite": 0,
+          "totalTokens": 13543,
+          "cost": {
+            "input": 0.0063045,
+            "output": 0.0000765,
+            "cacheRead": 0.000384,
+            "cacheWrite": 0,
+            "total": 0.006765
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776453217121,
+        "responseId": "resp_072879defec4a8d90169e286637890819180bff45bed8b36d9"
+      }
+    ],
+    "filteredMessageCount": 4,
+    "filteredMessageTokenEstimate": 21,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 14782,
+    "decisionElapsedMs": 14773
+  }
+}

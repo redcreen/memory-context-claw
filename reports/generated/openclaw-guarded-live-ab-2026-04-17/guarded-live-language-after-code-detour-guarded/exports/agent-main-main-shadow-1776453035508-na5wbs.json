@@ -1,0 +1,242 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776453035508-na5wbs",
+  "generated_at": "2026-04-17T19:10:35.509Z",
+  "session_key": "agent:main:main",
+  "agent_id": "main",
+  "query": "再补一条：切回 builtin 也不能丢记忆。",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "以后默认给我中文回复。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "好的，之后我默认用中文回复。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "先切到代码：这轮先不改原有记忆系统，只做 shadow。"
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "明白，这轮只做 shadow，不改原有记忆系统。 你要我先做哪一块 shadow？ - 设计影子记忆的数据流 - 画出读写路径 - 定义 shadow 与原记忆的隔离边界 - 直接开始落代码 如果你有现成仓库/文件，我可以先读结构再动手。"
+    }
+  ],
+  "decision": {
+    "relation": "continue",
+    "confidence": 0.94,
+    "evict_turn_ids": [
+      "t1",
+      "t2"
+    ],
+    "pin_turn_ids": [
+      "t1",
+      "t3"
+    ],
+    "archive_summary": "保留当前代码任务的主线：本轮先做 shadow，不改原有记忆系统；新增约束是切回 builtin 也不能丢记忆。用户的长期偏好是默认中文回复，适合做语义 pin。",
+    "reasoning_summary": "这是同一 सक्रिय 话题的补充要求，不是切换主题；因此用 continue。原始对话里 t3/t4 仍然是当前任务依赖的核心上下文，最新用户补充的是对该任务的约束。t1 的“默认中文回复”属于稳定用户偏好，适合从 raw 转为 pin；t2 只是对该偏好的确认，可安全回收。"
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "continue",
+      "confidence": 0.94,
+      "archiveSummary": "保留当前代码任务的主线：本轮先做 shadow，不改原有记忆系统；新增约束是切回 builtin 也不能丢记忆。用户的长期偏好是默认中文回复，适合做语义 pin。",
+      "reasoningSummary": "这是同一 सक्रिय 话题的补充要求，不是切换主题；因此用 continue。原始对话里 t3/t4 仍然是当前任务依赖的核心上下文，最新用户补充的是对该任务的约束。t1 的“默认中文回复”属于稳定用户偏好，适合从 raw 转为 pin；t2 只是对该偏好的确认，可安全回收。",
+      "latestUserTurnId": "t3",
+      "pinTurnIds": [
+        "t1",
+        "t3"
+      ],
+      "pinnedOnlyTurnIds": [
+        "t1"
+      ],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t2"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t2"
+      ],
+      "keepTurnIds": [
+        "t3",
+        "t4"
+      ],
+      "baselineTokens": 44,
+      "keptTokens": 37,
+      "prunedTokens": 7,
+      "reductionRatio": 0.1590909090909091,
+      "keepTurns": [
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "先切到代码：这轮先不改原有记忆系统，只做 shadow。",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t4",
+          "role": "assistant",
+          "content": "明白，这轮只做 shadow，不改原有记忆系统。 你要我先做哪一块 shadow？ - 设计影子记忆的数据流 - 画出读写路径 - 定义 shadow 与原记忆的隔离边界 - 直接开始落代码 如果你有现成仓库/文件，我可以先读结构再动手。",
+          "tokenEstimate": 30
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "以后默认给我中文回复。",
+          "tokenEstimate": 3
+        },
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "好的，之后我默认用中文回复。",
+          "tokenEstimate": 4
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 以后默认给我中文回复。\nt2 assistant: 好的，之后我默认用中文回复。\nt3 user: 先切到代码：这轮先不改原有记忆系统，只做 shadow。\nt4 assistant: 明白，这轮只做 shadow，不改原有记忆系统。 你要我先做哪一块 shadow？ - 设计影子记忆的数据流 - 画出读写路径 - 定义 shadow 与原记忆的隔离边界 - 直接开始落代码 如果你有现成仓库/文件，我可以先读结构再动手。",
+    "shadowRawTranscript": "t3 user: 先切到代码：这轮先不改原有记忆系统，只做 shadow。\nt4 assistant: 明白，这轮只做 shadow，不改原有记忆系统。 你要我先做哪一块 shadow？ - 设计影子记忆的数据流 - 画出读写路径 - 定义 shadow 与原记忆的隔离边界 - 直接开始落代码 如果你有现成仓库/文件，我可以先读结构再动手。",
+    "semanticPinNotes": [
+      "user: 以后默认给我中文回复。"
+    ],
+    "archiveSummary": "保留当前代码任务的主线：本轮先做 shadow，不改原有记忆系统；新增约束是切回 builtin 也不能丢记忆。用户的长期偏好是默认中文回复，适合做语义 pin。",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 56,
+    "shadowRawPromptEstimate": 43,
+    "shadowPackageEstimate": 56,
+    "shadowPackageText": "Active raw turns:\nt3 user: 先切到代码：这轮先不改原有记忆系统，只做 shadow。\nt4 assistant: 明白，这轮只做 shadow，不改原有记忆系统。 你要我先做哪一块 shadow？ - 设计影子记忆的数据流 - 画出读写路径 - 定义 shadow 与原记忆的隔离边界 - 直接开始落代码 如果你有现成仓库/文件，我可以先读结构再动手。\n\nSemantic pins:\nuser: 以后默认给我中文回复。"
+  },
+  "scorecard": {
+    "relation": "continue",
+    "baselineTurnCount": 4,
+    "keptTurnCount": 2,
+    "evictedTurnCount": 2,
+    "pinCount": 2,
+    "baselinePromptEstimate": 56,
+    "shadowRawPromptEstimate": 43,
+    "shadowPackageEstimate": 56,
+    "rawReductionRatio": 0.1591,
+    "packageReductionRatio": 0,
+    "candidateLoadElapsedMs": 37,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 15745,
+    "totalElapsedMs": 15756,
+    "guardedEnabled": true,
+    "guardedApplied": false,
+    "guardedReason": "relation_not_allowed",
+    "guardedMessageCount": 4,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 44
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": false,
+    "reason": "relation_not_allowed",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "以后默认给我中文回复。"
+          }
+        ],
+        "timestamp": 1776452993325
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "好的，之后我默认用中文回复。",
+            "textSignature": "{\"v\":1,\"id\":\"msg_050ce0b6fb9df8230169e2858522908191833d0070a477e80d\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 13361,
+          "output": 13,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "totalTokens": 13374,
+          "cost": {
+            "input": 0.01002075,
+            "output": 0.0000585,
+            "cacheRead": 0,
+            "cacheWrite": 0,
+            "total": 0.01007925
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776452993334,
+        "responseId": "resp_050ce0b6fb9df8230169e28583b9dc8191a721fd4736c0c0ba"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "先切到代码：这轮先不改原有记忆系统，只做 shadow。"
+          }
+        ],
+        "timestamp": 1776453014817
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "明白，这轮只做 shadow，不改原有记忆系统。\n\n你要我先做哪一块 shadow？\n- 设计影子记忆的数据流\n- 画出读写路径\n- 定义 shadow 与原记忆的隔离边界\n- 直接开始落代码\n\n如果你有现成仓库/文件，我可以先读结构再动手。",
+            "textSignature": "{\"v\":1,\"id\":\"msg_050ce0b6fb9df8230169e28599fe9c8191a159e689c44f8336\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 8394,
+          "output": 86,
+          "cacheRead": 5120,
+          "cacheWrite": 0,
+          "totalTokens": 13600,
+          "cost": {
+            "input": 0.0062955,
+            "output": 0.00038700000000000003,
+            "cacheRead": 0.000384,
+            "cacheWrite": 0,
+            "total": 0.0070665
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776453014825,
+        "responseId": "resp_050ce0b6fb9df8230169e285994f6c81919d9a281e2a1c8085"
+      }
+    ],
+    "filteredMessageCount": 4,
+    "filteredMessageTokenEstimate": 44,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 15756,
+    "decisionElapsedMs": 15745
+  }
+}

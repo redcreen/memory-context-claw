@@ -17,7 +17,7 @@ If you want the shortest practical answer before reading the whole repo:
 - live A/B on existing-memory consumption: `100` real answer-level cases, `100 / 100` current pass, `99 / 100` legacy pass, `1` Memory Core-only win, `0` builtin-only wins, and `0` shared failures
 - dialogue working-set runtime shadow: replay `16 / 16`, answer A/B baseline `5 / 5`, shadow `5 / 5`, average reduction ratio `0.4368`
 - Stage 7 context-optimization scorecard: captured `16 / 16`, average raw reduction ratio `0.4191`, average package reduction ratio `0.1151`
-- Stage 9 guarded opt-in A/B: baseline `5 / 5`, shadow `5 / 5`, guarded `5 / 5`, guarded applied `2 / 5`, average guarded prompt reduction ratio `0.0424`
+- Stage 9 guarded live A/B: baseline `4 / 4`, guarded `4 / 4`, guarded applied `2 / 4`, activation matched `4 / 4`, average prompt reduction ratio `0.0306`, applied-only `0.0067`
 - focused ordinary-conversation write-time A/B:
   - host live: `current=38`, `legacy=21`, `UMC-only=18`
   - Docker hermetic strict baseline: `current=39`, `legacy=15`, `UMC-only=24`, `legacy-only=0`, `both-fail=1`, `preCaseResetFailed=0`
@@ -30,7 +30,8 @@ Read these first:
 - [Context Minor GC](docs/reference/unified-memory-core/architecture/context-minor-gc.md)
 - [Dialogue Working-Set Pruning](docs/reference/unified-memory-core/architecture/dialogue-working-set-pruning.md)
 - [Plugin-Owned Context Decision Overlay](docs/reference/unified-memory-core/architecture/plugin-owned-context-decision-overlay.md)
-- [Stage 7 / Stage 9 Summary](reports/generated/dialogue-working-set-stage7-stage9-2026-04-17.md)
+- [OpenClaw Guarded Live A/B](reports/generated/openclaw-guarded-live-ab-2026-04-18.md)
+- [Stage 9 Closeout](reports/generated/stage9-guarded-smart-path-closeout-2026-04-18.md)
 - [Focused Ordinary-Conversation Realtime Write A/B](reports/generated/openclaw-ordinary-conversation-memory-intent-ab-2026-04-17.md)
 - [Docker Hermetic Ordinary-Conversation Rerun](reports/generated/openclaw-ordinary-conversation-memory-intent-docker-rerun-2026-04-17.md)
 
@@ -48,7 +49,7 @@ From a user perspective, this product should collapse to three promises:
 2. `Smart`
    - remember what matters, avoid writing noise, send only the right context, and stay conservative when uncertain
    - already landed: realtime `memory_intent` ingestion, nightly self-learning, durable-source slimming direction, and the working-set pruning shadow path
-   - biggest current gap: working-set optimization is still shadow-only, so the “smart” gain is not fully user-visible yet
+   - biggest current gap: working-set optimization now has a very narrow guarded opt-in user gain, but it is still not the default experience, and the Stage 7 harder matrix is still open
 3. `Reassuring`
    - inspectable, governable, replayable, rollback-friendly, and reusable across OpenClaw, Codex, and future consumers
    - already landed: `umc` CLI, inspect / audit / replay / repair / rollback surfaces, canonical registry root, and OpenClaw / Codex adapters
@@ -86,7 +87,7 @@ Areas that are still comparatively weak:
 - `light and fast`
   - the first gap to close is not installation polish but the fact that per-turn context is still thicker than it should be, Stage 6 is still only a shadow measurement layer, and hermetic ordinary-conversation realtime write still hits heavy timeout pressure
 - `smart`
-  - context optimization is validated, but still shadow-only, so the gain is not yet the default user experience
+  - context optimization is validated and now has a narrow guarded opt-in path, but the gain is still not the default user experience
 - `reassuring`
   - the shared-foundation story is strong architecturally, but product evidence is still much stronger on OpenClaw than on Codex or multi-instance reuse
 
@@ -96,7 +97,7 @@ So the next focus order should stay explicit:
    - the stage goal is not just “lower average tokens”; it is “keep daily long-running use alive without requiring compat / compact as the normal escape hatch”
 2. continue `light and fast` by pushing down ordinary-conversation realtime-write timeout / latency in hermetic runs
 3. then shorten install / bootstrap / verify
-4. move `smart` from a shadow measurement surface into a very narrow guarded opt-in user path
+4. now that Stage 9 is closed, keep the guarded opt-in gain bounded while waiting for the Stage 7 harder matrix to go green
 5. strengthen `reassuring` with clearer cross-OpenClaw / Codex evidence
 
 ## Who This Is For
@@ -257,7 +258,8 @@ Two cross-cutting milestone tracks now matter more than anything else:
 - `context optimization`
   - durable-source slimming and budgeted assembly
   - dialogue working-set pruning for long multi-topic sessions
-  - default-off runtime shadow instrumentation before any active prompt experiment
+  - default-off runtime shadow instrumentation
+  - a very narrow guarded opt-in active path
 
 ## Why Context Optimization Now Matters
 
@@ -286,8 +288,8 @@ It currently has two coordinated architecture surfaces:
 Current status:
 
 - Stage 6 runtime shadow integration is landed
-- it remains `default-off` and shadow-only
-- active prompt mutation is still deferred
+- Stage 9 guarded smart-path is also closed, but remains `default-off` / opt-in only
+- default active prompt mutation is still deferred
 - the next round is docs-first: clarify the bounded LLM-led decision contract, operator metrics, rollback boundary, and harder A/B design before changing the default prompt path
 
 ## Why Self-Learning Already Matters

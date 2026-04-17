@@ -1,0 +1,54 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776453567253-yt0p8c",
+  "generated_at": "2026-04-17T19:19:27.253Z",
+  "session_key": "agent:main:main",
+  "agent_id": "main",
+  "query": "当前新任务是写 shadow mode 报告。",
+  "status": "skipped",
+  "reason": "not_enough_turns",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [],
+  "decision": null,
+  "decision_transport": "",
+  "snapshot": null,
+  "scorecard": {
+    "relation": "",
+    "baselineTurnCount": 0,
+    "keptTurnCount": 0,
+    "evictedTurnCount": 0,
+    "pinCount": 0,
+    "baselinePromptEstimate": 0,
+    "shadowRawPromptEstimate": 0,
+    "shadowPackageEstimate": 0,
+    "rawReductionRatio": 0,
+    "packageReductionRatio": 0,
+    "candidateLoadElapsedMs": 27,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 0,
+    "totalElapsedMs": 0,
+    "guardedEnabled": true,
+    "guardedApplied": false,
+    "guardedReason": "not_evaluated",
+    "guardedMessageCount": 0,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 0
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": false,
+    "reason": "not_evaluated",
+    "filteredMessageCount": 0,
+    "filteredMessageTokenEstimate": 0,
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 0,
+    "decisionElapsedMs": 0
+  }
+}

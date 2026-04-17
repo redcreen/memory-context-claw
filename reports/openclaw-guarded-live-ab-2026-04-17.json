@@ -1,0 +1,1428 @@
+{
+  "generatedAt": "2026-04-17T19:20:32.257Z",
+  "agentId": "main",
+  "agentModel": "openai-codex/gpt-5.4-mini",
+  "shadowModel": "gpt-5.4-mini",
+  "reasoningEffort": "low",
+  "transport": "codex_exec",
+  "outputRoot": "/Users/redcreen/Project/unified-memory-core/reports/generated/openclaw-guarded-live-ab-2026-04-17",
+  "summary": {
+    "total": 4,
+    "baselinePassed": 4,
+    "guardedPassed": 4,
+    "guardedApplied": 2,
+    "expectedGuarded": 2,
+    "activationMatched": 4,
+    "falseActivations": 0,
+    "missedActivations": 0,
+    "guardedOnly": 0,
+    "baselineOnly": 0,
+    "bothFail": 0,
+    "averageBaselinePromptTokens": 14219,
+    "averageGuardedPromptTokens": 13770,
+    "averagePromptReductionRatio": 0.0306,
+    "averageAppliedPromptReductionRatio": 0.0067,
+    "averageAppliedRawReductionRatio": 0.7422
+  },
+  "results": [
+    {
+      "id": "guarded-live-language-after-code-detour",
+      "description": "A language preference should survive a short code detour and still answer correctly.",
+      "expectGuardedApplied": true,
+      "baseline": {
+        "mode": "baseline",
+        "sessionId": "guarded-live-language-after-code-detour-baseline",
+        "sessionKey": "agent:main:guarded-live-language-after-code-detour-baseline",
+        "turnsCompleted": 4,
+        "ok": true,
+        "answer": "中文。",
+        "error": "",
+        "promptTokens": 13583,
+        "durationMs": 10651,
+        "evaluation": {
+          "passed": true,
+          "checks": [
+            {
+              "name": "expected_any",
+              "passed": true,
+              "expected": [],
+              "actual": "中文。"
+            },
+            {
+              "name": "expected_all",
+              "passed": true,
+              "expected": [
+                "中文"
+              ],
+              "actual": "中文。"
+            },
+            {
+              "name": "forbidden_any",
+              "passed": true,
+              "expected": [
+                "英文",
+                "不知道"
+              ],
+              "actual": "中文。"
+            }
+          ]
+        },
+        "event": null
+      },
+      "guarded": {
+        "mode": "guarded",
+        "sessionId": "guarded-live-language-after-code-detour-guarded",
+        "sessionKey": "agent:main:guarded-live-language-after-code-detour-guarded",
+        "turnsCompleted": 4,
+        "ok": true,
+        "answer": "你刚才要求我：**以后默认用中文回复**。",
+        "error": "",
+        "promptTokens": 13447,
+        "durationMs": 23842,
+        "evaluation": {
+          "passed": true,
+          "checks": [
+            {
+              "name": "expected_any",
+              "passed": true,
+              "expected": [],
+              "actual": "你刚才要求我：**以后默认用中文回复**。"
+            },
+            {
+              "name": "expected_all",
+              "passed": true,
+              "expected": [
+                "中文"
+              ],
+              "actual": "你刚才要求我：**以后默认用中文回复**。"
+            },
+            {
+              "name": "forbidden_any",
+              "passed": true,
+              "expected": [
+                "英文",
+                "不知道"
+              ],
+              "actual": "你刚才要求我：**以后默认用中文回复**。"
+            }
+          ]
+        },
+        "event": {
+          "schema_version": "umc.dialogue-working-set-shadow.v1",
+          "event_id": "shadow-1776453075069-lvd7em",
+          "generated_at": "2026-04-17T19:11:15.069Z",
+          "session_key": "agent:main:main",
+          "agent_id": "main",
+          "query": "先不说代码了。我刚才要求你默认用什么语言回复？",
+          "status": "captured",
+          "reason": "",
+          "sampling": {
+            "max_turns": 12,
+            "min_turns": 3,
+            "max_chars_per_turn": 900
+          },
+          "transcript": [
+            {
+              "id": "t1",
+              "role": "user",
+              "content": "以后默认给我中文回复。"
+            },
+            {
+              "id": "t2",
+              "role": "assistant",
+              "content": "好的，之后我默认用中文回复。"
+            },
+            {
+              "id": "t3",
+              "role": "user",
+              "content": "先切到代码：这轮先不改原有记忆系统，只做 shadow。"
+            },
+            {
+              "id": "t4",
+              "role": "assistant",
+              "content": "明白，这轮只做 shadow，不改原有记忆系统。 你要我先做哪一块 shadow？ - 设计影子记忆的数据流 - 画出读写路径 - 定义 shadow 与原记忆的隔离边界 - 直接开始落代码 如果你有现成仓库/文件，我可以先读结构再动手。"
+            },
+            {
+              "id": "t5",
+              "role": "user",
+              "content": "再补一条：切回 builtin 也不能丢记忆。"
+            },
+            {
+              "id": "t6",
+              "role": "assistant",
+              "content": "收到，补一条约束： - 切回 builtin 时，记忆不能丢 - 这轮仍然只做 shadow，不改原有记忆系统 我会按这个前提处理：shadow 可以并行存在，但切换回 builtin 时要能保留/回收 shadow 里的有效记忆，不做丢失性操作。 如果你要我现在开始，我可以先把这条写成设计约束/测试用例，或者直接进代码。"
+            }
+          ],
+          "decision": {
+            "relation": "resolve",
+            "confidence": 0.98,
+            "evict_turn_ids": [
+              "t2",
+              "t3",
+              "t4",
+              "t5",
+              "t6"
+            ],
+            "pin_turn_ids": [
+              "t1"
+            ],
+            "archive_summary": "用户的长期偏好：默认用中文回复。其余关于 shadow 记忆与 builtin 切换的讨论与当前问题无关，可从下一轮原始上下文中移除。",
+            "reasoning_summary": "当前用户只是在追问之前设定的回复语言偏好，主要需要保留的是持久化语言偏好这一语义 pin。后续代码/影子记忆话题已转离当前请求，且没有未完成的直接任务，因此适合用 resolve：保留最新用户问句与中文回复偏好，清理其余已解决或无关的原始轮次。"
+          },
+          "decision_transport": "codex_exec",
+          "snapshot": {
+            "applied": {
+              "relation": "resolve",
+              "confidence": 0.98,
+              "archiveSummary": "用户的长期偏好：默认用中文回复。其余关于 shadow 记忆与 builtin 切换的讨论与当前问题无关，可从下一轮原始上下文中移除。",
+              "reasoningSummary": "当前用户只是在追问之前设定的回复语言偏好，主要需要保留的是持久化语言偏好这一语义 pin。后续代码/影子记忆话题已转离当前请求，且没有未完成的直接任务，因此适合用 resolve：保留最新用户问句与中文回复偏好，清理其余已解决或无关的原始轮次。",
+              "latestUserTurnId": "t5",
+              "pinTurnIds": [
+                "t1"
+              ],
+              "pinnedOnlyTurnIds": [],
+              "requestedEvictTurnIds": [
+                "t2",
+                "t3",
+                "t4",
+                "t5",
+                "t6"
+              ],
+              "blockedEvictTurnIds": [
+                "t5"
+              ],
+              "appliedEvictTurnIds": [
+                "t2",
+                "t3",
+                "t4",
+                "t6"
+              ],
+              "keepTurnIds": [
+                "t1",
+                "t5"
+              ],
+              "baselineTokens": 91,
+              "keptTokens": 9,
+              "prunedTokens": 82,
+              "reductionRatio": 0.9010989010989011,
+              "keepTurns": [
+                {
+                  "id": "t1",
+                  "role": "user",
+                  "content": "以后默认给我中文回复。",
+                  "tokenEstimate": 3
+                },
+                {
+                  "id": "t5",
+                  "role": "user",
+                  "content": "再补一条：切回 builtin 也不能丢记忆。",
+                  "tokenEstimate": 6
+                }
+              ],
+              "evictedTurns": [
+                {
+                  "id": "t2",
+                  "role": "assistant",
+                  "content": "好的，之后我默认用中文回复。",
+                  "tokenEstimate": 4
+                },
+                {
+                  "id": "t3",
+                  "role": "user",
+                  "content": "先切到代码：这轮先不改原有记忆系统，只做 shadow。",
+                  "tokenEstimate": 7
+                },
+                {
+                  "id": "t4",
+                  "role": "assistant",
+                  "content": "明白，这轮只做 shadow，不改原有记忆系统。 你要我先做哪一块 shadow？ - 设计影子记忆的数据流 - 画出读写路径 - 定义 shadow 与原记忆的隔离边界 - 直接开始落代码 如果你有现成仓库/文件，我可以先读结构再动手。",
+                  "tokenEstimate": 30
+                },
+                {
+                  "id": "t6",
+                  "role": "assistant",
+                  "content": "收到，补一条约束： - 切回 builtin 时，记忆不能丢 - 这轮仍然只做 shadow，不改原有记忆系统 我会按这个前提处理：shadow 可以并行存在，但切换回 builtin 时要能保留/回收 shadow 里的有效记忆，不做丢失性操作。 如果你要我现在开始，我可以先把这条写成设计约束/测试用例，或者直接进代码。",
+                  "tokenEstimate": 41
+                }
+              ]
+            },
+            "baselineRawTranscript": "t1 user: 以后默认给我中文回复。\nt2 assistant: 好的，之后我默认用中文回复。\nt3 user: 先切到代码：这轮先不改原有记忆系统，只做 shadow。\nt4 assistant: 明白，这轮只做 shadow，不改原有记忆系统。 你要我先做哪一块 shadow？ - 设计影子记忆的数据流 - 画出读写路径 - 定义 shadow 与原记忆的隔离边界 - 直接开始落代码 如果你有现成仓库/文件，我可以先读结构再动手。\nt5 user: 再补一条：切回 builtin 也不能丢记忆。\nt6 assistant: 收到，补一条约束： - 切回 builtin 时，记忆不能丢 - 这轮仍然只做 shadow，不改原有记忆系统 我会按这个前提处理：shadow 可以并行存在，但切换回 builtin 时要能保留/回收 shadow 里的有效记忆，不做丢失性操作。 如果你要我现在开始，我可以先把这条写成设计约束/测试用例，或者直接进代码。",
+            "shadowRawTranscript": "t1 user: 以后默认给我中文回复。\nt5 user: 再补一条：切回 builtin 也不能丢记忆。",
+            "semanticPinNotes": [],
+            "archiveSummary": "用户的长期偏好：默认用中文回复。其余关于 shadow 记忆与 builtin 切换的讨论与当前问题无关，可从下一轮原始上下文中移除。",
+            "injectedArchiveSummary": "用户的长期偏好：默认用中文回复。其余关于 shadow 记忆与 builtin 切换的讨论与当前问题无关，可从下一轮原始上下文中移除...",
+            "baselinePromptEstimate": 108,
+            "shadowRawPromptEstimate": 14,
+            "shadowPackageEstimate": 40,
+            "shadowPackageText": "Active raw turns:\nt1 user: 以后默认给我中文回复。\nt5 user: 再补一条：切回 builtin 也不能丢记忆。\n\nArchived summary:\n用户的长期偏好：默认用中文回复。其余关于 shadow 记忆与 builtin 切换的讨论与当前问题无关，可从下一轮原始上下文中移除..."
+          },
+          "scorecard": {
+            "relation": "resolve",
+            "baselineTurnCount": 6,
+            "keptTurnCount": 2,
+            "evictedTurnCount": 4,
+            "pinCount": 1,
+            "baselinePromptEstimate": 108,
+            "shadowRawPromptEstimate": 14,
+            "shadowPackageEstimate": 40,
+            "rawReductionRatio": 0.9011,
+            "packageReductionRatio": 0.6296,
+            "candidateLoadElapsedMs": 25,
+            "assemblyBuildElapsedMs": 0,
+            "decisionElapsedMs": 13088,
+            "totalElapsedMs": 13093,
+            "guardedEnabled": true,
+            "guardedApplied": true,
+            "guardedReason": "guarded_candidate",
+            "guardedMessageCount": 2,
+            "guardedCarryForwardEstimate": 24,
+            "guardedFilteredMessageEstimate": 9
+          },
+          "guarded": {
+            "enabled": true,
+            "applied": true,
+            "reason": "guarded_candidate",
+            "filteredMessages": [
+              {
+                "role": "user",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "以后默认给我中文回复。"
+                  }
+                ],
+                "timestamp": 1776452993325
+              },
+              {
+                "role": "user",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "再补一条：切回 builtin 也不能丢记忆。"
+                  }
+                ],
+                "timestamp": 1776453051271
+              }
+            ],
+            "filteredMessageCount": 2,
+            "filteredMessageTokenEstimate": 9,
+            "carryForwardText": "Archived topic summary:\n用户的长期偏好：默认用中文回复。其余关于 shadow 记忆与 builtin 切换的讨论与当前问题无关，可从下一轮原始上下文中移除...",
+            "carryForwardEstimate": 24,
+            "evictedSourceIndices": [
+              1,
+              2,
+              3,
+              5
+            ]
+          },
+          "timings": {
+            "totalElapsedMs": 13093,
+            "decisionElapsedMs": 13088
+          },
+          "exportPath": "/Users/redcreen/Project/unified-memory-core/reports/generated/openclaw-guarded-live-ab-2026-04-17/guarded-live-language-after-code-detour-guarded/exports/agent-main-main-shadow-1776453075069-lvd7em.json"
+        }
+      },
+      "promptReductionRatio": 0.01
+    },
+    {
+      "id": "guarded-live-style-pin-survives-detour",
+      "description": "A style preference should survive an unrelated retrieval-policy detour.",
+      "expectGuardedApplied": true,
+      "baseline": {
+        "mode": "baseline",
+        "sessionId": "guarded-live-style-pin-survives-detour-baseline",
+        "sessionKey": "agent:main:guarded-live-style-pin-survives-detour-baseline",
+        "turnsCompleted": 4,
+        "ok": true,
+        "answer": "先给结论，再展开细节。",
+        "error": "",
+        "promptTokens": 13649,
+        "durationMs": 11087,
+        "evaluation": {
+          "passed": true,
+          "checks": [
+            {
+              "name": "expected_any",
+              "passed": true,
+              "expected": [],
+              "actual": "先给结论，再展开细节。"
+            },
+            {
+              "name": "expected_all",
+              "passed": true,
+              "expected": [
+                "先给",
+                "再展开"
+              ],
+              "actual": "先给结论，再展开细节。"
+            },
+            {
+              "name": "forbidden_any",
+              "passed": true,
+              "expected": [
+                "不知道"
+              ],
+              "actual": "先给结论，再展开细节。"
+            }
+          ]
+        },
+        "event": null
+      },
+      "guarded": {
+        "mode": "guarded",
+        "sessionId": "guarded-live-style-pin-survives-detour-guarded",
+        "sessionKey": "agent:main:guarded-live-style-pin-survives-detour-guarded",
+        "turnsCompleted": 4,
+        "ok": true,
+        "answer": "先给结论，再展开细节。",
+        "error": "",
+        "promptTokens": 13602,
+        "durationMs": 29041,
+        "evaluation": {
+          "passed": true,
+          "checks": [
+            {
+              "name": "expected_any",
+              "passed": true,
+              "expected": [],
+              "actual": "先给结论，再展开细节。"
+            },
+            {
+              "name": "expected_all",
+              "passed": true,
+              "expected": [
+                "先给",
+                "再展开"
+              ],
+              "actual": "先给结论，再展开细节。"
+            },
+            {
+              "name": "forbidden_any",
+              "passed": true,
+              "expected": [
+                "不知道"
+              ],
+              "actual": "先给结论，再展开细节。"
+            }
+          ]
+        },
+        "event": {
+          "schema_version": "umc.dialogue-working-set-shadow.v1",
+          "event_id": "shadow-1776453274087-tv371l",
+          "generated_at": "2026-04-17T19:14:34.087Z",
+          "session_key": "agent:main:main",
+          "agent_id": "main",
+          "query": "先不聊检索了。我刚才要求你默认怎么组织回复？",
+          "status": "captured",
+          "reason": "",
+          "sampling": {
+            "max_turns": 12,
+            "min_turns": 3,
+            "max_chars_per_turn": 900
+          },
+          "transcript": [
+            {
+              "id": "t1",
+              "role": "user",
+              "content": "以后默认先给我结论，再展开细节。"
+            },
+            {
+              "id": "t2",
+              "role": "assistant",
+              "content": "记住了：以后我默认先给你结论，再展开细节。"
+            },
+            {
+              "id": "t3",
+              "role": "user",
+              "content": "检索策略先走 fast path。"
+            },
+            {
+              "id": "t4",
+              "role": "assistant",
+              "content": "记住了：检索策略默认先走 fast path。"
+            },
+            {
+              "id": "t5",
+              "role": "user",
+              "content": "先别开 rerank，这轮只做 shadow 数据。"
+            },
+            {
+              "id": "t6",
+              "role": "assistant",
+              "content": "记住了：这轮先不启用 rerank，只做 shadow 数据。"
+            }
+          ],
+          "decision": {
+            "relation": "switch",
+            "confidence": 0.96,
+            "evict_turn_ids": [
+              "t1",
+              "t2",
+              "t3",
+              "t4"
+            ],
+            "pin_turn_ids": [
+              "t1",
+              "t3",
+              "t5"
+            ],
+            "archive_summary": "已抽取可长期保留的用户偏好：默认先给结论再展开细节；检索策略默认走 fast path；本轮检索先不启用 rerank，只做 shadow 数据。其余原始轮次可从下一轮提示中移出。",
+            "reasoning_summary": "当前问题已从检索执行细节切换到回顾并确认回复组织偏好，因此旧的检索相关原始上下文可以退出下一轮工作集。最新用户轮次 t5 仍由运行时保留，不列入 evict；同时将可复用的稳定偏好压缩为 pin，重点保留 t1 的“先结论后细节”规则。"
+          },
+          "decision_transport": "codex_exec",
+          "snapshot": {
+            "applied": {
+              "relation": "switch",
+              "confidence": 0.96,
+              "archiveSummary": "已抽取可长期保留的用户偏好：默认先给结论再展开细节；检索策略默认走 fast path；本轮检索先不启用 rerank，只做 shadow 数据。其余原始轮次可从下一轮提示中移出。",
+              "reasoningSummary": "当前问题已从检索执行细节切换到回顾并确认回复组织偏好，因此旧的检索相关原始上下文可以退出下一轮工作集。最新用户轮次 t5 仍由运行时保留，不列入 evict；同时将可复用的稳定偏好压缩为 pin，重点保留 t1 的“先结论后细节”规则。",
+              "latestUserTurnId": "t5",
+              "pinTurnIds": [
+                "t1",
+                "t3",
+                "t5"
+              ],
+              "pinnedOnlyTurnIds": [
+                "t1",
+                "t3"
+              ],
+              "requestedEvictTurnIds": [
+                "t1",
+                "t2",
+                "t3",
+                "t4"
+              ],
+              "blockedEvictTurnIds": [],
+              "appliedEvictTurnIds": [
+                "t1",
+                "t2",
+                "t3",
+                "t4"
+              ],
+              "keepTurnIds": [
+                "t5",
+                "t6"
+              ],
+              "baselineTokens": 36,
+              "keptTokens": 15,
+              "prunedTokens": 21,
+              "reductionRatio": 0.5833333333333334,
+              "keepTurns": [
+                {
+                  "id": "t5",
+                  "role": "user",
+                  "content": "先别开 rerank，这轮只做 shadow 数据。",
+                  "tokenEstimate": 7
+                },
+                {
+                  "id": "t6",
+                  "role": "assistant",
+                  "content": "记住了：这轮先不启用 rerank，只做 shadow 数据。",
+                  "tokenEstimate": 8
+                }
+              ],
+              "evictedTurns": [
+                {
+                  "id": "t1",
+                  "role": "user",
+                  "content": "以后默认先给我结论，再展开细节。",
+                  "tokenEstimate": 4
+                },
+                {
+                  "id": "t2",
+                  "role": "assistant",
+                  "content": "记住了：以后我默认先给你结论，再展开细节。",
+                  "tokenEstimate": 6
+                },
+                {
+                  "id": "t3",
+                  "role": "user",
+                  "content": "检索策略先走 fast path。",
+                  "tokenEstimate": 5
+                },
+                {
+                  "id": "t4",
+                  "role": "assistant",
+                  "content": "记住了：检索策略默认先走 fast path。",
+                  "tokenEstimate": 6
+                }
+              ]
+            },
+            "baselineRawTranscript": "t1 user: 以后默认先给我结论，再展开细节。\nt2 assistant: 记住了：以后我默认先给你结论，再展开细节。\nt3 user: 检索策略先走 fast path。\nt4 assistant: 记住了：检索策略默认先走 fast path。\nt5 user: 先别开 rerank，这轮只做 shadow 数据。\nt6 assistant: 记住了：这轮先不启用 rerank，只做 shadow 数据。",
+            "shadowRawTranscript": "t5 user: 先别开 rerank，这轮只做 shadow 数据。\nt6 assistant: 记住了：这轮先不启用 rerank，只做 shadow 数据。",
+            "semanticPinNotes": [
+              "user: 以后默认先给我结论，再展开细节。",
+              "user: 检索策略先走 fast path。"
+            ],
+            "archiveSummary": "已抽取可长期保留的用户偏好：默认先给结论再展开细节；检索策略默认走 fast path；本轮检索先不启用 rerank，只做 shadow 数据。其余原始轮次可从下一轮提示中移出。",
+            "injectedArchiveSummary": "",
+            "baselinePromptEstimate": 52,
+            "shadowRawPromptEstimate": 21,
+            "shadowPackageEstimate": 41,
+            "shadowPackageText": "Active raw turns:\nt5 user: 先别开 rerank，这轮只做 shadow 数据。\nt6 assistant: 记住了：这轮先不启用 rerank，只做 shadow 数据。\n\nSemantic pins:\nuser: 以后默认先给我结论，再展开细节。\nuser: 检索策略先走 fast path。"
+          },
+          "scorecard": {
+            "relation": "switch",
+            "baselineTurnCount": 6,
+            "keptTurnCount": 2,
+            "evictedTurnCount": 4,
+            "pinCount": 3,
+            "baselinePromptEstimate": 52,
+            "shadowRawPromptEstimate": 21,
+            "shadowPackageEstimate": 41,
+            "rawReductionRatio": 0.5833,
+            "packageReductionRatio": 0.2115,
+            "candidateLoadElapsedMs": 82,
+            "assemblyBuildElapsedMs": 0,
+            "decisionElapsedMs": 18495,
+            "totalElapsedMs": 18501,
+            "guardedEnabled": true,
+            "guardedApplied": true,
+            "guardedReason": "guarded_candidate",
+            "guardedMessageCount": 2,
+            "guardedCarryForwardEstimate": 21,
+            "guardedFilteredMessageEstimate": 15
+          },
+          "guarded": {
+            "enabled": true,
+            "applied": true,
+            "reason": "guarded_candidate",
+            "filteredMessages": [
+              {
+                "role": "user",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "先别开 rerank，这轮只做 shadow 数据。"
+                  }
+                ],
+                "timestamp": 1776453254153
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "记住了：这轮先不启用 rerank，只做 shadow 数据。",
+                    "textSignature": "{\"v\":1,\"id\":\"msg_072879defec4a8d90169e2868924c081918110fea79bd00cf9\",\"phase\":\"final_answer\"}"
+                  }
+                ],
+                "api": "openai-codex-responses",
+                "provider": "openai-codex",
+                "model": "gpt-5.4-mini",
+                "usage": {
+                  "input": 8303,
+                  "output": 21,
+                  "cacheRead": 5120,
+                  "cacheWrite": 0,
+                  "totalTokens": 13444,
+                  "cost": {
+                    "input": 0.00622725,
+                    "output": 0.0000945,
+                    "cacheRead": 0.000384,
+                    "cacheWrite": 0,
+                    "total": 0.00670575
+                  }
+                },
+                "stopReason": "stop",
+                "timestamp": 1776453254173,
+                "responseId": "resp_072879defec4a8d90169e28688890881919f6968070ea5403b"
+              }
+            ],
+            "filteredMessageCount": 2,
+            "filteredMessageTokenEstimate": 15,
+            "carryForwardText": "Conversation carry-forward pins:\n- user: 以后默认先给我结论，再展开细节。\n- user: 检索策略先走 fast path。",
+            "carryForwardEstimate": 21,
+            "evictedSourceIndices": [
+              0,
+              1,
+              2,
+              3
+            ]
+          },
+          "timings": {
+            "totalElapsedMs": 18502,
+            "decisionElapsedMs": 18495
+          },
+          "exportPath": "/Users/redcreen/Project/unified-memory-core/reports/generated/openclaw-guarded-live-ab-2026-04-17/guarded-live-style-pin-survives-detour-guarded/exports/agent-main-main-shadow-1776453274087-tv371l.json"
+        }
+      },
+      "promptReductionRatio": 0.0034
+    },
+    {
+      "id": "guarded-live-branch-negative",
+      "description": "A branch return should stay answer-correct without activating the guarded path.",
+      "expectGuardedApplied": false,
+      "baseline": {
+        "mode": "baseline",
+        "sessionId": "guarded-live-branch-negative-baseline",
+        "sessionKey": "agent:main:guarded-live-branch-negative-baseline",
+        "turnsCompleted": 3,
+        "ok": true,
+        "answer": "- **版本验收**\n- **安装验收**\n- **回滚验收**",
+        "error": "",
+        "promptTokens": 14948,
+        "durationMs": 12157,
+        "evaluation": {
+          "passed": true,
+          "checks": [
+            {
+              "name": "expected_any",
+              "passed": true,
+              "expected": [],
+              "actual": "- **版本验收**\n- **安装验收**\n- **回滚验收**"
+            },
+            {
+              "name": "expected_all",
+              "passed": true,
+              "expected": [
+                "版本",
+                "安装",
+                "回滚"
+              ],
+              "actual": "- **版本验收**\n- **安装验收**\n- **回滚验收**"
+            },
+            {
+              "name": "forbidden_any",
+              "passed": true,
+              "expected": [
+                "不知道"
+              ],
+              "actual": "- **版本验收**\n- **安装验收**\n- **回滚验收**"
+            }
+          ]
+        },
+        "event": null
+      },
+      "guarded": {
+        "mode": "guarded",
+        "sessionId": "guarded-live-branch-negative-guarded",
+        "sessionKey": "agent:main:guarded-live-branch-negative-guarded",
+        "turnsCompleted": 3,
+        "ok": true,
+        "answer": "- **版本验收**\n- **安装验收**\n- **回滚验收**\n\n如果你要，我也可以把每一部分再展开成检查项。",
+        "error": "",
+        "promptTokens": 14286,
+        "durationMs": 24841,
+        "evaluation": {
+          "passed": true,
+          "checks": [
+            {
+              "name": "expected_any",
+              "passed": true,
+              "expected": [],
+              "actual": "- **版本验收**\n- **安装验收**\n- **回滚验收**\n\n如果你要，我也可以把每一部分再展开成检查项。"
+            },
+            {
+              "name": "expected_all",
+              "passed": true,
+              "expected": [
+                "版本",
+                "安装",
+                "回滚"
+              ],
+              "actual": "- **版本验收**\n- **安装验收**\n- **回滚验收**\n\n如果你要，我也可以把每一部分再展开成检查项。"
+            },
+            {
+              "name": "forbidden_any",
+              "passed": true,
+              "expected": [
+                "不知道"
+              ],
+              "actual": "- **版本验收**\n- **安装验收**\n- **回滚验收**\n\n如果你要，我也可以把每一部分再展开成检查项。"
+            }
+          ]
+        },
+        "event": {
+          "schema_version": "umc.dialogue-working-set-shadow.v1",
+          "event_id": "shadow-1776453458719-vcuzey",
+          "generated_at": "2026-04-17T19:17:38.719Z",
+          "session_key": "agent:main:main",
+          "agent_id": "main",
+          "query": "先回到刚才的发布验收，那三部分是什么？",
+          "status": "captured",
+          "reason": "",
+          "sampling": {
+            "max_turns": 12,
+            "min_turns": 3,
+            "max_chars_per_turn": 900
+          },
+          "transcript": [
+            {
+              "id": "t1",
+              "role": "user",
+              "content": "把发布验收拆成版本、安装、回滚三部分。"
+            },
+            {
+              "id": "t2",
+              "role": "assistant",
+              "content": "可以，建议拆成这三块： - **版本验收** - 版本号是否正确 - 变更范围是否符合预期 - 发布说明、变更记录是否完整 - 关键功能/修复点是否都已覆盖 - **安装验收** - 安装步骤是否顺畅 - 依赖是否齐全 - 新装、升级、增量安装是否可用 - 安装后服务/功能是否正常启动 - **回滚验收** - 回滚流程是否可执行 - 回滚后版本是否恢复正确 - 配置、数据、依赖是否兼容 - 回滚后系统是否稳定可用 如果你要，我可以继续帮你把它整理成一份更正式的“发布验收清单”模板。"
+            },
+            {
+              "id": "t3",
+              "role": "user",
+              "content": "插一句，我的时区是 Asia/Shanghai，记住。"
+            },
+            {
+              "id": "t4",
+              "role": "assistant",
+              "content": "记住了，时区是 Asia/Shanghai。"
+            }
+          ],
+          "decision": {
+            "relation": "continue",
+            "confidence": 0.95,
+            "evict_turn_ids": [
+              "t3",
+              "t4"
+            ],
+            "pin_turn_ids": [
+              "t3"
+            ],
+            "archive_summary": "保留发布验收的原始上下文 t1-t2，因为当前用户在回到同一主题并依赖这段内容；将时区事实 Asia/Shanghai 从对话原文中抽成持久语义 pin。",
+            "reasoning_summary": "最新用户仍在追问同一发布验收主题，必须保留 t1-t2 作为原始依据，不能降级为仅 pin。t3-t4 属于已解决的元信息，适合从工作集移除，但用户时区是稳定偏好，应以 pin 形式保留。"
+          },
+          "decision_transport": "codex_exec",
+          "snapshot": {
+            "applied": {
+              "relation": "continue",
+              "confidence": 0.95,
+              "archiveSummary": "保留发布验收的原始上下文 t1-t2，因为当前用户在回到同一主题并依赖这段内容；将时区事实 Asia/Shanghai 从对话原文中抽成持久语义 pin。",
+              "reasoningSummary": "最新用户仍在追问同一发布验收主题，必须保留 t1-t2 作为原始依据，不能降级为仅 pin。t3-t4 属于已解决的元信息，适合从工作集移除，但用户时区是稳定偏好，应以 pin 形式保留。",
+              "latestUserTurnId": "t3",
+              "pinTurnIds": [
+                "t3"
+              ],
+              "pinnedOnlyTurnIds": [],
+              "requestedEvictTurnIds": [
+                "t3",
+                "t4"
+              ],
+              "blockedEvictTurnIds": [
+                "t3"
+              ],
+              "appliedEvictTurnIds": [
+                "t4"
+              ],
+              "keepTurnIds": [
+                "t1",
+                "t2",
+                "t3"
+              ],
+              "baselineTokens": 79,
+              "keptTokens": 73,
+              "prunedTokens": 6,
+              "reductionRatio": 0.0759493670886076,
+              "keepTurns": [
+                {
+                  "id": "t1",
+                  "role": "user",
+                  "content": "把发布验收拆成版本、安装、回滚三部分。",
+                  "tokenEstimate": 5
+                },
+                {
+                  "id": "t2",
+                  "role": "assistant",
+                  "content": "可以，建议拆成这三块： - **版本验收** - 版本号是否正确 - 变更范围是否符合预期 - 发布说明、变更记录是否完整 - 关键功能/修复点是否都已覆盖 - **安装验收** - 安装步骤是否顺畅 - 依赖是否齐全 - 新装、升级、增量安装是否可用 - 安装后服务/功能是否正常启动 - **回滚验收** - 回滚流程是否可执行 - 回滚后版本是否恢复正确 - 配置、数据、依赖是否兼容 - 回滚后系统是否稳定可用 如果你要，我可以继续帮你把它整理成一份更正式的“发布验收清单”模板。",
+                  "tokenEstimate": 61
+                },
+                {
+                  "id": "t3",
+                  "role": "user",
+                  "content": "插一句，我的时区是 Asia/Shanghai，记住。",
+                  "tokenEstimate": 7
+                }
+              ],
+              "evictedTurns": [
+                {
+                  "id": "t4",
+                  "role": "assistant",
+                  "content": "记住了，时区是 Asia/Shanghai。",
+                  "tokenEstimate": 6
+                }
+              ]
+            },
+            "baselineRawTranscript": "t1 user: 把发布验收拆成版本、安装、回滚三部分。\nt2 assistant: 可以，建议拆成这三块： - **版本验收** - 版本号是否正确 - 变更范围是否符合预期 - 发布说明、变更记录是否完整 - 关键功能/修复点是否都已覆盖 - **安装验收** - 安装步骤是否顺畅 - 依赖是否齐全 - 新装、升级、增量安装是否可用 - 安装后服务/功能是否正常启动 - **回滚验收** - 回滚流程是否可执行 - 回滚后版本是否恢复正确 - 配置、数据、依赖是否兼容 - 回滚后系统是否稳定可用 如果你要，我可以继续帮你把它整理成一份更正式的“发布验收清单”模板。\nt3 user: 插一句，我的时区是 Asia/Shanghai，记住。\nt4 assistant: 记住了，时区是 Asia/Shanghai。",
+            "shadowRawTranscript": "t1 user: 把发布验收拆成版本、安装、回滚三部分。\nt2 assistant: 可以，建议拆成这三块： - **版本验收** - 版本号是否正确 - 变更范围是否符合预期 - 发布说明、变更记录是否完整 - 关键功能/修复点是否都已覆盖 - **安装验收** - 安装步骤是否顺畅 - 依赖是否齐全 - 新装、升级、增量安装是否可用 - 安装后服务/功能是否正常启动 - **回滚验收** - 回滚流程是否可执行 - 回滚后版本是否恢复正确 - 配置、数据、依赖是否兼容 - 回滚后系统是否稳定可用 如果你要，我可以继续帮你把它整理成一份更正式的“发布验收清单”模板。\nt3 user: 插一句，我的时区是 Asia/Shanghai，记住。",
+            "semanticPinNotes": [],
+            "archiveSummary": "保留发布验收的原始上下文 t1-t2，因为当前用户在回到同一主题并依赖这段内容；将时区事实 Asia/Shanghai 从对话原文中抽成持久语义 pin。",
+            "injectedArchiveSummary": "",
+            "baselinePromptEstimate": 91,
+            "shadowRawPromptEstimate": 81,
+            "shadowPackageEstimate": 86,
+            "shadowPackageText": "Active raw turns:\nt1 user: 把发布验收拆成版本、安装、回滚三部分。\nt2 assistant: 可以，建议拆成这三块： - **版本验收** - 版本号是否正确 - 变更范围是否符合预期 - 发布说明、变更记录是否完整 - 关键功能/修复点是否都已覆盖 - **安装验收** - 安装步骤是否顺畅 - 依赖是否齐全 - 新装、升级、增量安装是否可用 - 安装后服务/功能是否正常启动 - **回滚验收** - 回滚流程是否可执行 - 回滚后版本是否恢复正确 - 配置、数据、依赖是否兼容 - 回滚后系统是否稳定可用 如果你要，我可以继续帮你把它整理成一份更正式的“发布验收清单”模板。\nt3 user: 插一句，我的时区是 Asia/Shanghai，记住。"
+          },
+          "scorecard": {
+            "relation": "continue",
+            "baselineTurnCount": 4,
+            "keptTurnCount": 3,
+            "evictedTurnCount": 1,
+            "pinCount": 1,
+            "baselinePromptEstimate": 91,
+            "shadowRawPromptEstimate": 81,
+            "shadowPackageEstimate": 86,
+            "rawReductionRatio": 0.0759,
+            "packageReductionRatio": 0.0549,
+            "candidateLoadElapsedMs": 20,
+            "assemblyBuildElapsedMs": 0,
+            "decisionElapsedMs": 13677,
+            "totalElapsedMs": 13684,
+            "guardedEnabled": true,
+            "guardedApplied": false,
+            "guardedReason": "relation_not_allowed",
+            "guardedMessageCount": 10,
+            "guardedCarryForwardEstimate": 0,
+            "guardedFilteredMessageEstimate": 473
+          },
+          "guarded": {
+            "enabled": true,
+            "applied": false,
+            "reason": "relation_not_allowed",
+            "filteredMessages": [
+              {
+                "role": "user",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "把发布验收拆成版本、安装、回滚三部分。"
+                  }
+                ],
+                "timestamp": 1776453401623
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "toolCall",
+                    "id": "call_65nAaCWkmqwjTl18vK0jZHmU",
+                    "name": "read",
+                    "arguments": {
+                      "path": "./docs/reference/configuration.md"
+                    },
+                    "partialJson": "{\"path\":\"./docs/reference/configuration.md\"}"
+                  },
+                  {
+                    "type": "toolCall",
+                    "id": "call_LWSFjnnO3rFq2YN0HTnaYsbQ",
+                    "name": "read",
+                    "arguments": {
+                      "path": "./README.md"
+                    },
+                    "partialJson": "{\"path\":\"./README.md\"}"
+                  },
+                  {
+                    "type": "toolCall",
+                    "id": "call_uj7Aa643TsG4mHPMO7TE5eoT",
+                    "name": "read",
+                    "arguments": {
+                      "path": "./docs/reference/formal-memory-policy.md"
+                    },
+                    "partialJson": "{\"path\":\"./docs/reference/formal-memory-policy.md\"}"
+                  }
+                ],
+                "api": "openai-codex-responses",
+                "provider": "openai-codex",
+                "model": "gpt-5.4-mini",
+                "usage": {
+                  "input": 13449,
+                  "output": 73,
+                  "cacheRead": 0,
+                  "cacheWrite": 0,
+                  "totalTokens": 13522,
+                  "cost": {
+                    "input": 0.01008675,
+                    "output": 0.0003285,
+                    "cacheRead": 0,
+                    "cacheWrite": 0,
+                    "total": 0.010415250000000001
+                  }
+                },
+                "stopReason": "toolUse",
+                "timestamp": 1776453401639,
+                "responseId": "resp_05165aea1260d3790169e2871be51881918fade1ed8910d702"
+              },
+              {
+                "role": "toolResult",
+                "toolCallId": "call_65nAaCWkmqwjTl18vK0jZHmU",
+                "toolName": "read",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "{\n  \"status\": \"error\",\n  \"tool\": \"read\",\n  \"error\": \"ENOENT: no such file or directory, access '/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-hermetic-current-w6G7pL/agents/main/agent/docs/reference/configuration.md'\"\n}"
+                  }
+                ],
+                "isError": false,
+                "timestamp": 1776453405280
+              },
+              {
+                "role": "toolResult",
+                "toolCallId": "call_LWSFjnnO3rFq2YN0HTnaYsbQ",
+                "toolName": "read",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "# OpenClaw CLI Memory Benchmark Fixture\n\nThis fixture is the source-of-truth workspace used by the hermetic OpenClaw CLI benchmark.\n\nIt exists for four reasons:\n\n1. keep the benchmark facts reviewable in-repo\n2. make the benchmark matrix readable without digging through session logs\n3. document which facts are meant to exercise bootstrap, ordinary retrieval, temporal override, and abstention\n4. provide a stable workspace snapshot that can be copied into isolated host temp states or Docker containers\n\nThe hermetic benchmark no longer seeds from `~/.openclaw`.\nInstead, the runner copies this fixture into a fresh OpenClaw state, indexes it there, and then clones a clean state per case.\n\nThat same fixture is also the intended input for the Docker-based OpenClaw eval harness.\n\nFiles:\n\n- `MEMORY.md`: stable identity, preferences, and rules\n- `notes/personal-profile.md`: ordinary retrieval facts that should not rely only on bootstrap\n- `notes/project-lantern.md`: project knowledge retrieval\n- `memory/2026-04-10.md`: older state\n- `memory/2026-04-12.md`: current superseding state\n"
+                  }
+                ],
+                "isError": false,
+                "timestamp": 1776453405292
+              },
+              {
+                "role": "toolResult",
+                "toolCallId": "call_uj7Aa643TsG4mHPMO7TE5eoT",
+                "toolName": "read",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "{\n  \"status\": \"error\",\n  \"tool\": \"read\",\n  \"error\": \"ENOENT: no such file or directory, access '/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-hermetic-current-w6G7pL/agents/main/agent/docs/reference/formal-memory-policy.md'\"\n}"
+                  }
+                ],
+                "isError": false,
+                "timestamp": 1776453405292
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "可以，建议拆成这三块：\n\n- **版本验收**\n  - 版本号是否正确\n  - 变更范围是否符合预期\n  - 发布说明、变更记录是否完整\n  - 关键功能/修复点是否都已覆盖\n\n- **安装验收**\n  - 安装步骤是否顺畅\n  - 依赖是否齐全\n  - 新装、升级、增量安装是否可用\n  - 安装后服务/功能是否正常启动\n\n- **回滚验收**\n  - 回滚流程是否可执行\n  - 回滚后版本是否恢复正确\n  - 配置、数据、依赖是否兼容\n  - 回滚后系统是否稳定可用\n\n如果你要，我可以继续帮你把它整理成一份更正式的“发布验收清单”模板。",
+                    "textSignature": "{\"v\":1,\"id\":\"msg_0d66d582671b66320169e2872126208191bd3a4479dceb0f74\",\"phase\":\"final_answer\"}"
+                  }
+                ],
+                "api": "openai-codex-responses",
+                "provider": "openai-codex",
+                "model": "gpt-5.4-mini",
+                "usage": {
+                  "input": 638,
+                  "output": 189,
+                  "cacheRead": 13312,
+                  "cacheWrite": 0,
+                  "totalTokens": 14139,
+                  "cost": {
+                    "input": 0.00047850000000000003,
+                    "output": 0.0008505,
+                    "cacheRead": 0.0009984,
+                    "cacheWrite": 0,
+                    "total": 0.0023274000000000003
+                  }
+                },
+                "stopReason": "stop",
+                "timestamp": 1776453405294,
+                "responseId": "resp_0d66d582671b66320169e2871f8a2481918666715616e47ba8"
+              },
+              {
+                "role": "user",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "插一句，我的时区是 Asia/Shanghai，记住。"
+                  }
+                ],
+                "timestamp": 1776453430326
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "toolCall",
+                    "id": "call_nHDLt4hNBK6W98O9o7YyRozz",
+                    "name": "write",
+                    "arguments": {
+                      "path": "./USER.md",
+                      "content": "# USER.md - About Your Human\n\n_Learn about the person you're helping. Update this as you go._\n\n- **Name:**\n- **What to call them:**\n- **Pronouns:** _(optional)_\n- **Timezone:** Asia/Shanghai\n- **Notes:**\n\n## Context\n\n_(What do they care about? What projects are they working on? What annoys them? What makes them laugh? Build this over time.)_\n\n---\n\nThe more you know, the better you can help. But remember — you're learning about a person, not building a dossier. Respect the difference.\n"
+                    },
+                    "partialJson": "{\"path\":\"./USER.md\",\"content\":\"# USER.md - About Your Human\\n\\n_Learn about the person you're helping. Update this as you go._\\n\\n- **Name:**\\n- **What to call them:**\\n- **Pronouns:** _(optional)_\\n- **Timezone:** Asia/Shanghai\\n- **Notes:**\\n\\n## Context\\n\\n_(What do they care about? What projects are they working on? What annoys them? What makes them laugh? Build this over time.)_\\n\\n---\\n\\nThe more you know, the better you can help. But remember — you're learning about a person, not building a dossier. Respect the difference.\\n\"}"
+                  }
+                ],
+                "api": "openai-codex-responses",
+                "provider": "openai-codex",
+                "model": "gpt-5.4-mini",
+                "usage": {
+                  "input": 8932,
+                  "output": 158,
+                  "cacheRead": 5120,
+                  "cacheWrite": 0,
+                  "totalTokens": 14210,
+                  "cost": {
+                    "input": 0.006699,
+                    "output": 0.000711,
+                    "cacheRead": 0.000384,
+                    "cacheWrite": 0,
+                    "total": 0.007794
+                  }
+                },
+                "stopReason": "toolUse",
+                "timestamp": 1776453430338,
+                "responseId": "resp_0d66d582671b66320169e28738b0388191af1db2b9b3c83d96"
+              },
+              {
+                "role": "toolResult",
+                "toolCallId": "call_nHDLt4hNBK6W98O9o7YyRozz",
+                "toolName": "write",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Successfully wrote 489 bytes to ./USER.md"
+                  }
+                ],
+                "isError": false,
+                "timestamp": 1776453436095
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "记住了，时区是 Asia/Shanghai。",
+                    "textSignature": "{\"v\":1,\"id\":\"msg_0d66d582671b66320169e2873f0a4081919a14ebd9004d8628\",\"phase\":\"final_answer\"}"
+                  }
+                ],
+                "api": "openai-codex-responses",
+                "provider": "openai-codex",
+                "model": "gpt-5.4-mini",
+                "usage": {
+                  "input": 405,
+                  "output": 15,
+                  "cacheRead": 13824,
+                  "cacheWrite": 0,
+                  "totalTokens": 14244,
+                  "cost": {
+                    "input": 0.00030375,
+                    "output": 0.0000675,
+                    "cacheRead": 0.0010368,
+                    "cacheWrite": 0,
+                    "total": 0.00140805
+                  }
+                },
+                "stopReason": "stop",
+                "timestamp": 1776453436098,
+                "responseId": "resp_0d66d582671b66320169e2873e628481919ab08780655cfdc7"
+              }
+            ],
+            "filteredMessageCount": 10,
+            "filteredMessageTokenEstimate": 473,
+            "carryForwardText": "",
+            "carryForwardEstimate": 0,
+            "evictedSourceIndices": []
+          },
+          "timings": {
+            "totalElapsedMs": 13684,
+            "decisionElapsedMs": 13677
+          },
+          "exportPath": "/Users/redcreen/Project/unified-memory-core/reports/generated/openclaw-guarded-live-ab-2026-04-17/guarded-live-branch-negative-guarded/exports/agent-main-main-shadow-1776453458719-vcuzey.json"
+        }
+      },
+      "promptReductionRatio": 0.0443
+    },
+    {
+      "id": "guarded-live-continue-negative",
+      "description": "A same-topic continue turn should not activate guarded pruning.",
+      "expectGuardedApplied": false,
+      "baseline": {
+        "mode": "baseline",
+        "sessionId": "guarded-live-continue-negative-baseline",
+        "sessionKey": "agent:main:guarded-live-continue-negative-baseline",
+        "turnsCompleted": 3,
+        "ok": true,
+        "answer": "当前新任务是：**写 shadow mode 报告，并明确 rollback boundary**。",
+        "error": "",
+        "promptTokens": 14694,
+        "durationMs": 11252,
+        "evaluation": {
+          "passed": true,
+          "checks": [
+            {
+              "name": "expected_any",
+              "passed": true,
+              "expected": [],
+              "actual": "当前新任务是：**写 shadow mode 报告，并明确 rollback boundary**。"
+            },
+            {
+              "name": "expected_all",
+              "passed": true,
+              "expected": [
+                "shadow",
+                "报告"
+              ],
+              "actual": "当前新任务是：**写 shadow mode 报告，并明确 rollback boundary**。"
+            },
+            {
+              "name": "forbidden_any",
+              "passed": true,
+              "expected": [
+                "不知道"
+              ],
+              "actual": "当前新任务是：**写 shadow mode 报告，并明确 rollback boundary**。"
+            }
+          ]
+        },
+        "event": null
+      },
+      "guarded": {
+        "mode": "guarded",
+        "sessionId": "guarded-live-continue-negative-guarded",
+        "sessionKey": "agent:main:guarded-live-continue-negative-guarded",
+        "turnsCompleted": 3,
+        "ok": true,
+        "answer": "当前新任务是：**写 shadow mode 报告**。 \n并且报告里要**明确 rollback boundary**。",
+        "error": "",
+        "promptTokens": 13743,
+        "durationMs": 25210,
+        "evaluation": {
+          "passed": true,
+          "checks": [
+            {
+              "name": "expected_any",
+              "passed": true,
+              "expected": [],
+              "actual": "当前新任务是：**写 shadow mode 报告**。 \n并且报告里要**明确 rollback boundary**。"
+            },
+            {
+              "name": "expected_all",
+              "passed": true,
+              "expected": [
+                "shadow",
+                "报告"
+              ],
+              "actual": "当前新任务是：**写 shadow mode 报告**。 \n并且报告里要**明确 rollback boundary**。"
+            },
+            {
+              "name": "forbidden_any",
+              "passed": true,
+              "expected": [
+                "不知道"
+              ],
+              "actual": "当前新任务是：**写 shadow mode 报告**。 \n并且报告里要**明确 rollback boundary**。"
+            }
+          ]
+        },
+        "event": {
+          "schema_version": "umc.dialogue-working-set-shadow.v1",
+          "event_id": "shadow-1776453611875-eq62ot",
+          "generated_at": "2026-04-17T19:20:11.875Z",
+          "session_key": "agent:main:main",
+          "agent_id": "main",
+          "query": "我们当前新任务是什么？",
+          "status": "captured",
+          "reason": "",
+          "sampling": {
+            "max_turns": 12,
+            "min_turns": 3,
+            "max_chars_per_turn": 900
+          },
+          "transcript": [
+            {
+              "id": "t1",
+              "role": "user",
+              "content": "当前新任务是写 shadow mode 报告。"
+            },
+            {
+              "id": "t2",
+              "role": "assistant",
+              "content": "我先按这个方向做：你把要覆盖的范围发我，我来整理成 shadow mode 报告。 如果你想让我直接起草，给我这 4 项就够了： - 目标系统/功能 - shadow mode 的时间范围 - 关键观察点（比如准确率、延迟、误报、人工接管） - 结论偏向（继续、调整、停用） 也可以直接丢原始素材，我帮你整理成一版可发的报告。"
+            },
+            {
+              "id": "t3",
+              "role": "user",
+              "content": "报告里还要明确 rollback boundary。"
+            },
+            {
+              "id": "t4",
+              "role": "assistant",
+              "content": "收到。shadow mode 报告里我会把 **rollback boundary** 单独写清楚，通常会包括： - **触发条件**：什么情况算越界 - **影响范围**：只回退 shadow 逻辑，还是连相关配置/依赖一起回退 - **决策门槛**：谁来判定、需要什么证据 - **执行动作**：回滚到哪个版本/配置点 - **恢复条件**：什么时候可以重新进入 shadow 或放量 你把下面这些信息给我，我就能直接起草： - 报告对象是谁 - 这次 shadow 的具体功能/模块 - 当前已知风险点 - 你希望的 rollback boundary 口径 - 需要偏技术版还是偏管理版 如果你愿意，我也可以先给你出一个 **shadow mode 报告模板**，里面已经把 rollback boundary 预留好了。"
+            }
+          ],
+          "decision": {
+            "relation": "continue",
+            "confidence": 0.97,
+            "evict_turn_ids": [],
+            "pin_turn_ids": [],
+            "archive_summary": "当前活跃任务是撰写 shadow mode 报告；报告中需要明确 rollback boundary。",
+            "reasoning_summary": "最新用户在追问当前任务，本质上仍依赖前文的同一未完成主题：shadow mode 报告及其 rollback boundary 要求。该任务尚未解决，因此不应缩减为仅保留 pins，也不应清除任何相关原始轮次。"
+          },
+          "decision_transport": "codex_exec",
+          "snapshot": {
+            "applied": {
+              "relation": "continue",
+              "confidence": 0.97,
+              "archiveSummary": "当前活跃任务是撰写 shadow mode 报告；报告中需要明确 rollback boundary。",
+              "reasoningSummary": "最新用户在追问当前任务，本质上仍依赖前文的同一未完成主题：shadow mode 报告及其 rollback boundary 要求。该任务尚未解决，因此不应缩减为仅保留 pins，也不应清除任何相关原始轮次。",
+              "latestUserTurnId": "t3",
+              "pinTurnIds": [],
+              "pinnedOnlyTurnIds": [],
+              "requestedEvictTurnIds": [],
+              "blockedEvictTurnIds": [],
+              "appliedEvictTurnIds": [],
+              "keepTurnIds": [
+                "t1",
+                "t2",
+                "t3",
+                "t4"
+              ],
+              "baselineTokens": 146,
+              "keptTokens": 146,
+              "prunedTokens": 0,
+              "reductionRatio": 0,
+              "keepTurns": [
+                {
+                  "id": "t1",
+                  "role": "user",
+                  "content": "当前新任务是写 shadow mode 报告。",
+                  "tokenEstimate": 6
+                },
+                {
+                  "id": "t2",
+                  "role": "assistant",
+                  "content": "我先按这个方向做：你把要覆盖的范围发我，我来整理成 shadow mode 报告。 如果你想让我直接起草，给我这 4 项就够了： - 目标系统/功能 - shadow mode 的时间范围 - 关键观察点（比如准确率、延迟、误报、人工接管） - 结论偏向（继续、调整、停用） 也可以直接丢原始素材，我帮你整理成一版可发的报告。",
+                  "tokenEstimate": 41
+                },
+                {
+                  "id": "t3",
+                  "role": "user",
+                  "content": "报告里还要明确 rollback boundary。",
+                  "tokenEstimate": 7
+                },
+                {
+                  "id": "t4",
+                  "role": "assistant",
+                  "content": "收到。shadow mode 报告里我会把 **rollback boundary** 单独写清楚，通常会包括： - **触发条件**：什么情况算越界 - **影响范围**：只回退 shadow 逻辑，还是连相关配置/依赖一起回退 - **决策门槛**：谁来判定、需要什么证据 - **执行动作**：回滚到哪个版本/配置点 - **恢复条件**：什么时候可以重新进入 shadow 或放量 你把下面这些信息给我，我就能直接起草： - 报告对象是谁 - 这次 shadow 的具体功能/模块 - 当前已知风险点 - 你希望的 rollback boundary 口径 - 需要偏技术版还是偏管理版 如果你愿意，我也可以先给你出一个 **shadow mode 报告模板**，里面已经把 rollback boundary 预留好了。",
+                  "tokenEstimate": 92
+                }
+              ],
+              "evictedTurns": []
+            },
+            "baselineRawTranscript": "t1 user: 当前新任务是写 shadow mode 报告。\nt2 assistant: 我先按这个方向做：你把要覆盖的范围发我，我来整理成 shadow mode 报告。 如果你想让我直接起草，给我这 4 项就够了： - 目标系统/功能 - shadow mode 的时间范围 - 关键观察点（比如准确率、延迟、误报、人工接管） - 结论偏向（继续、调整、停用） 也可以直接丢原始素材，我帮你整理成一版可发的报告。\nt3 user: 报告里还要明确 rollback boundary。\nt4 assistant: 收到。shadow mode 报告里我会把 **rollback boundary** 单独写清楚，通常会包括： - **触发条件**：什么情况算越界 - **影响范围**：只回退 shadow 逻辑，还是连相关配置/依赖一起回退 - **决策门槛**：谁来判定、需要什么证据 - **执行动作**：回滚到哪个版本/配置点 - **恢复条件**：什么时候可以重新进入 shadow 或放量 你把下面这些信息给我，我就能直接起草： - 报告对象是谁 - 这次 shadow 的具体功能/模块 - 当前已知风险点 - 你希望的 rollback boundary 口径 - 需要偏技术版还是偏管理版 如果你愿意，我也可以先给你出一个 **shadow mode 报告模板**，里面已经把 rollback boundary 预留好了。",
+            "shadowRawTranscript": "t1 user: 当前新任务是写 shadow mode 报告。\nt2 assistant: 我先按这个方向做：你把要覆盖的范围发我，我来整理成 shadow mode 报告。 如果你想让我直接起草，给我这 4 项就够了： - 目标系统/功能 - shadow mode 的时间范围 - 关键观察点（比如准确率、延迟、误报、人工接管） - 结论偏向（继续、调整、停用） 也可以直接丢原始素材，我帮你整理成一版可发的报告。\nt3 user: 报告里还要明确 rollback boundary。\nt4 assistant: 收到。shadow mode 报告里我会把 **rollback boundary** 单独写清楚，通常会包括： - **触发条件**：什么情况算越界 - **影响范围**：只回退 shadow 逻辑，还是连相关配置/依赖一起回退 - **决策门槛**：谁来判定、需要什么证据 - **执行动作**：回滚到哪个版本/配置点 - **恢复条件**：什么时候可以重新进入 shadow 或放量 你把下面这些信息给我，我就能直接起草： - 报告对象是谁 - 这次 shadow 的具体功能/模块 - 当前已知风险点 - 你希望的 rollback boundary 口径 - 需要偏技术版还是偏管理版 如果你愿意，我也可以先给你出一个 **shadow mode 报告模板**，里面已经把 rollback boundary 预留好了。",
+            "semanticPinNotes": [],
+            "archiveSummary": "当前活跃任务是撰写 shadow mode 报告；报告中需要明确 rollback boundary。",
+            "injectedArchiveSummary": "",
+            "baselinePromptEstimate": 157,
+            "shadowRawPromptEstimate": 157,
+            "shadowPackageEstimate": 161,
+            "shadowPackageText": "Active raw turns:\nt1 user: 当前新任务是写 shadow mode 报告。\nt2 assistant: 我先按这个方向做：你把要覆盖的范围发我，我来整理成 shadow mode 报告。 如果你想让我直接起草，给我这 4 项就够了： - 目标系统/功能 - shadow mode 的时间范围 - 关键观察点（比如准确率、延迟、误报、人工接管） - 结论偏向（继续、调整、停用） 也可以直接丢原始素材，我帮你整理成一版可发的报告。\nt3 user: 报告里还要明确 rollback boundary。\nt4 assistant: 收到。shadow mode 报告里我会把 **rollback boundary** 单独写清楚，通常会包括： - **触发条件**：什么情况算越界 - **影响范围**：只回退 shadow 逻辑，还是连相关配置/依赖一起回退 - **决策门槛**：谁来判定、需要什么证据 - **执行动作**：回滚到哪个版本/配置点 - **恢复条件**：什么时候可以重新进入 shadow 或放量 你把下面这些信息给我，我就能直接起草： - 报告对象是谁 - 这次 shadow 的具体功能/模块 - 当前已知风险点 - 你希望的 rollback boundary 口径 - 需要偏技术版还是偏管理版 如果你愿意，我也可以先给你出一个 **shadow mode 报告模板**，里面已经把 rollback boundary 预留好了。"
+          },
+          "scorecard": {
+            "relation": "continue",
+            "baselineTurnCount": 4,
+            "keptTurnCount": 4,
+            "evictedTurnCount": 0,
+            "pinCount": 0,
+            "baselinePromptEstimate": 157,
+            "shadowRawPromptEstimate": 157,
+            "shadowPackageEstimate": 161,
+            "rawReductionRatio": 0,
+            "packageReductionRatio": -0.0255,
+            "candidateLoadElapsedMs": 79,
+            "assemblyBuildElapsedMs": 0,
+            "decisionElapsedMs": 13559,
+            "totalElapsedMs": 13564,
+            "guardedEnabled": true,
+            "guardedApplied": false,
+            "guardedReason": "relation_not_allowed",
+            "guardedMessageCount": 4,
+            "guardedCarryForwardEstimate": 0,
+            "guardedFilteredMessageEstimate": 146
+          },
+          "guarded": {
+            "enabled": true,
+            "applied": false,
+            "reason": "relation_not_allowed",
+            "filteredMessages": [
+              {
+                "role": "user",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "当前新任务是写 shadow mode 报告。"
+                  }
+                ],
+                "timestamp": 1776453567259
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "我先按这个方向做：你把要覆盖的范围发我，我来整理成 shadow mode 报告。\n\n如果你想让我直接起草，给我这 4 项就够了：\n- 目标系统/功能\n- shadow mode 的时间范围\n- 关键观察点（比如准确率、延迟、误报、人工接管）\n- 结论偏向（继续、调整、停用）\n\n也可以直接丢原始素材，我帮你整理成一版可发的报告。",
+                    "textSignature": "{\"v\":1,\"id\":\"msg_0fd89b4809ff30680169e287c2229c8191a6bcb8350a61518e\",\"phase\":\"final_answer\"}"
+                  }
+                ],
+                "api": "openai-codex-responses",
+                "provider": "openai-codex",
+                "model": "gpt-5.4-mini",
+                "usage": {
+                  "input": 8265,
+                  "output": 115,
+                  "cacheRead": 5120,
+                  "cacheWrite": 0,
+                  "totalTokens": 13500,
+                  "cost": {
+                    "input": 0.00619875,
+                    "output": 0.0005175000000000001,
+                    "cacheRead": 0.000384,
+                    "cacheWrite": 0,
+                    "total": 0.00710025
+                  }
+                },
+                "stopReason": "stop",
+                "timestamp": 1776453567267,
+                "responseId": "resp_0fd89b4809ff30680169e287c180988191bcc32b38921c0caa"
+              },
+              {
+                "role": "user",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "报告里还要明确 rollback boundary。"
+                  }
+                ],
+                "timestamp": 1776453589486
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "收到。shadow mode 报告里我会把 **rollback boundary** 单独写清楚，通常会包括：\n\n- **触发条件**：什么情况算越界\n- **影响范围**：只回退 shadow 逻辑，还是连相关配置/依赖一起回退\n- **决策门槛**：谁来判定、需要什么证据\n- **执行动作**：回滚到哪个版本/配置点\n- **恢复条件**：什么时候可以重新进入 shadow 或放量\n\n你把下面这些信息给我，我就能直接起草：\n- 报告对象是谁\n- 这次 shadow 的具体功能/模块\n- 当前已知风险点\n- 你希望的 rollback boundary 口径\n- 需要偏技术版还是偏管理版\n\n如果你愿意，我也可以先给你出一个 **shadow mode 报告模板**，里面已经把 rollback boundary 预留好了。",
+                    "textSignature": "{\"v\":1,\"id\":\"msg_0fd89b4809ff30680169e287d833b48191a373e986f3efa7eb\",\"phase\":\"final_answer\"}"
+                  }
+                ],
+                "api": "openai-codex-responses",
+                "provider": "openai-codex",
+                "model": "gpt-5.4-mini",
+                "usage": {
+                  "input": 8426,
+                  "output": 208,
+                  "cacheRead": 5120,
+                  "cacheWrite": 0,
+                  "totalTokens": 13754,
+                  "cost": {
+                    "input": 0.0063195000000000005,
+                    "output": 0.000936,
+                    "cacheRead": 0.000384,
+                    "cacheWrite": 0,
+                    "total": 0.0076395000000000005
+                  }
+                },
+                "stopReason": "stop",
+                "timestamp": 1776453589497,
+                "responseId": "resp_0fd89b4809ff30680169e287d7a9288191b215559372c3423b"
+              }
+            ],
+            "filteredMessageCount": 4,
+            "filteredMessageTokenEstimate": 146,
+            "carryForwardText": "",
+            "carryForwardEstimate": 0,
+            "evictedSourceIndices": []
+          },
+          "timings": {
+            "totalElapsedMs": 13564,
+            "decisionElapsedMs": 13559
+          },
+          "exportPath": "/Users/redcreen/Project/unified-memory-core/reports/generated/openclaw-guarded-live-ab-2026-04-17/guarded-live-continue-negative-guarded/exports/agent-main-main-shadow-1776453611875-eq62ot.json"
+        }
+      },
+      "promptReductionRatio": 0.0647
+    }
+  ]
+}

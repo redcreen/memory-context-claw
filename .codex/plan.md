@@ -28,7 +28,8 @@
 - Dialogue working-set runtime shadow: replay `16 / 16`, average reduction ratio `0.4368`, runtime answer A/B baseline `5 / 5`, shadow `5 / 5`
 - Stage 7 scorecard: captured `16 / 16`, average raw reduction ratio `0.4191`, average package reduction ratio `0.1151`
 - Stage 7 / Step 108 closeout: plugin-owned decision runner landed; hermetic gateway `5 / 5` captured; local service smoke `3 / 3` captured
-- Stage 9 guarded answer A/B: baseline `5 / 5`, shadow `5 / 5`, guarded `5 / 5`, guarded applied `2 / 5`, average guarded prompt reduction ratio `0.0424`
+- Stage 9 guarded live A/B: baseline `4 / 4`, guarded `4 / 4`, guarded applied `2 / 4`, activation matched `4 / 4`
+- Stage 9 average guarded prompt reduction ratio: `0.0306`; applied-only prompt reduction ratio: `0.0067`; applied-only raw reduction ratio: `0.7422`
 - Docker hermetic eval status: official-image runner, proxy rewrite, cloned-state path rewrite, warmed template cache, strict ordinary benchmark, and `gateway-steady` fast-watch ordinary benchmark are all landed; Docker is now the default trustworthy hermetic A/B base for this repo
 - Interpretation: the `200+` case buildout, natural-Chinese / watchlist / perf hardening, Stage 6 runtime shadow measurement, and the history-cleanup closure are complete; the docs-first review is now done, so the next phase is north-star gap closure before any new active-path experiment
 
@@ -48,7 +49,7 @@
 2. `轻快 / install`
    - install / bootstrap / verify 还不够短
 3. `聪明`
-   - bounded guarded seam 已落地，但仍然是 `default-off` / opt-in only，不是默认用户收益
+   - bounded guarded seam 已收口，并且已有真实 live A/B；但仍然是 `default-off` / opt-in only，不是默认用户收益
 4. `省心`
    - Codex / 多实例产品证据弱于 OpenClaw
 
@@ -103,19 +104,19 @@
   - Status: `ongoing`
 
 - Slice: `finish-context-loading-optimization-first`
-  - Objective: docs-first review 已完成；当前先完成 `轻快 / context loading optimization` 的 closeout，并保持 Stage 9 为 `default-off` / opt-in only；ordinary-conversation hermetic A/B 已经收口为默认 Docker 基线，之后再收 `轻快 / install`
+  - Objective: docs-first review 已完成；当前先完成 `轻快 / context loading optimization` 的 closeout；Stage 9 已收口但继续保持 `default-off` / opt-in only；ordinary-conversation hermetic A/B 已经收口为默认 Docker 基线，之后再收 `轻快 / install`
   - Dependencies: Stage 6 runtime shadow evidence、history cleanup closeout、roadmap / development plan / architecture docs、Docker hermetic eval path
   - Risks: 如果 install 简化又被提前，当前主问题会再次从“每轮 context 还不够轻”漂移掉；如果直接继续堆 hardcoded rules，会违背当前“尽量使用 LLM tool、但调用次数受控”的实现约束
   - Validation: roadmap / development plan / architecture docs / `.codex/*` 对齐；Stage 7 context-optimization scorecard、operator metrics 和 rollback boundary 被写成 durable docs
-  - Exit Condition: 维护者可以只看文档就知道当前先收的是 `context loading optimization` closeout，Stage 9 仍是 opt-in only，而 ordinary-conversation Docker baseline 已经稳定，之后才是 install、shared-foundation proof
+  - Exit Condition: 维护者可以只看文档就知道当前先收的是 `context loading optimization` closeout，Stage 9 已关闭但仍是 opt-in only，而 ordinary-conversation Docker baseline 已经稳定，之后才是 install、shared-foundation proof
   - Status: `ongoing`
 
 - Slice: `design-harder-context-minor-gc-matrix`
-  - Objective: Step 108 已关闭；当前把 `Context Minor GC` 的 harder eval matrix 补成正式执行面，并继续保持 Stage 9 为 `default-off` / opt-in only
+  - Objective: Step 108 和 Stage 9 都已关闭；当前把 `Context Minor GC` 的 harder eval matrix 补成正式执行面
   - Dependencies: plugin-owned decision runner、Stage 7 scorecard、Stage 8 hermetic closure、hermetic/service live soak、roadmap / development plan / `.codex/*`
-  - Risks: 如果 Step 108 刚关闭就过早扩大 guarded 面，当前证据会再次从“可运行”漂移回“默认上线”；如果 harder matrix 仍停留在 report 想法层，Stage 7 会继续缺少真正的关闭门槛
-  - Validation: `104` harder eval matrix、同一套 operator scorecard 重跑、Stage 9 继续保持窄路径约束、closeout 报告
-  - Exit Condition: 更难的 case class 也能稳定说明更轻的 context package 不伤回答质量，且 guarded seam 没有越界成默认路径
+  - Risks: 如果 Step 108 和 Stage 9 都关闭后还不补 harder matrix，Stage 7 会长期停在“有能力、有 live gain、但没有更硬门禁”的半收口状态
+  - Validation: `104` harder eval matrix、同一套 operator scorecard 重跑、Stage 7 closeout 报告
+  - Exit Condition: 更难的 case class 也能稳定说明更轻的 context package 不伤回答质量，且 Stage 7 整体可以正式关闭
   - Status: `ongoing`
 
 - Slice: `formalize-realtime-memory-intent-ingestion`
@@ -247,14 +248,14 @@
 
 ## Current Execution Line
 
-- Objective: Step 108 已关闭；当前继续完成 `Stage 7 / context loading optimization` 的 harder matrix，并把 `Stage 9` 保持为 opt-in only；ordinary-conversation Docker steady-state 已成为默认 hermetic A/B 面，之后再推进 install 和 shared-foundation proof
+- Objective: Step 108 和 Stage 9 都已关闭；当前继续完成 `Stage 7 / context loading optimization` 的 harder matrix；ordinary-conversation Docker steady-state 已成为默认 hermetic A/B 面，之后再推进 install 和 shared-foundation proof
 - Plan Link: `design-harder-context-minor-gc-matrix`
 - Runway: context scorecard、harder replay / Docker / local evidence、bounded LLM decision contract、gateway/raw transport watch
 - Progress: `3 / 4` tasks complete
 - Current Critical Path:
   - `104.a` 设计更硬的 replay / Docker / local case matrix
   - `104.b` 用同一套 scorecard 重跑 `Context Minor GC`
-  - `104.c` 只有 harder matrix 为绿后，才判断 Stage 7 整体 closeout 与 Stage 9 guarded promotion
+  - `104.c` 只有 harder matrix 为绿后，才判断 Stage 7 整体 closeout 与 Stage 10 进入条件
 - Stop Conditions:
   - docs remain anchored to the older history-cleanup recovery pointer instead of the next context-optimization queue
   - install simplification gets moved ahead of context loading optimization before Stage 7 closes

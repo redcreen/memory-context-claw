@@ -1,0 +1,239 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776453274087-tv371l",
+  "generated_at": "2026-04-17T19:14:34.087Z",
+  "session_key": "agent:main:main",
+  "agent_id": "main",
+  "query": "先不聊检索了。我刚才要求你默认怎么组织回复？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "以后默认先给我结论，再展开细节。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "记住了：以后我默认先给你结论，再展开细节。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "检索策略先走 fast path。"
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "记住了：检索策略默认先走 fast path。"
+    },
+    {
+      "id": "t5",
+      "role": "user",
+      "content": "先别开 rerank，这轮只做 shadow 数据。"
+    },
+    {
+      "id": "t6",
+      "role": "assistant",
+      "content": "记住了：这轮先不启用 rerank，只做 shadow 数据。"
+    }
+  ],
+  "decision": {
+    "relation": "switch",
+    "confidence": 0.96,
+    "evict_turn_ids": [
+      "t1",
+      "t2",
+      "t3",
+      "t4"
+    ],
+    "pin_turn_ids": [
+      "t1",
+      "t3",
+      "t5"
+    ],
+    "archive_summary": "已抽取可长期保留的用户偏好：默认先给结论再展开细节；检索策略默认走 fast path；本轮检索先不启用 rerank，只做 shadow 数据。其余原始轮次可从下一轮提示中移出。",
+    "reasoning_summary": "当前问题已从检索执行细节切换到回顾并确认回复组织偏好，因此旧的检索相关原始上下文可以退出下一轮工作集。最新用户轮次 t5 仍由运行时保留，不列入 evict；同时将可复用的稳定偏好压缩为 pin，重点保留 t1 的“先结论后细节”规则。"
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "switch",
+      "confidence": 0.96,
+      "archiveSummary": "已抽取可长期保留的用户偏好：默认先给结论再展开细节；检索策略默认走 fast path；本轮检索先不启用 rerank，只做 shadow 数据。其余原始轮次可从下一轮提示中移出。",
+      "reasoningSummary": "当前问题已从检索执行细节切换到回顾并确认回复组织偏好，因此旧的检索相关原始上下文可以退出下一轮工作集。最新用户轮次 t5 仍由运行时保留，不列入 evict；同时将可复用的稳定偏好压缩为 pin，重点保留 t1 的“先结论后细节”规则。",
+      "latestUserTurnId": "t5",
+      "pinTurnIds": [
+        "t1",
+        "t3",
+        "t5"
+      ],
+      "pinnedOnlyTurnIds": [
+        "t1",
+        "t3"
+      ],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ],
+      "keepTurnIds": [
+        "t5",
+        "t6"
+      ],
+      "baselineTokens": 36,
+      "keptTokens": 15,
+      "prunedTokens": 21,
+      "reductionRatio": 0.5833333333333334,
+      "keepTurns": [
+        {
+          "id": "t5",
+          "role": "user",
+          "content": "先别开 rerank，这轮只做 shadow 数据。",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t6",
+          "role": "assistant",
+          "content": "记住了：这轮先不启用 rerank，只做 shadow 数据。",
+          "tokenEstimate": 8
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "以后默认先给我结论，再展开细节。",
+          "tokenEstimate": 4
+        },
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "记住了：以后我默认先给你结论，再展开细节。",
+          "tokenEstimate": 6
+        },
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "检索策略先走 fast path。",
+          "tokenEstimate": 5
+        },
+        {
+          "id": "t4",
+          "role": "assistant",
+          "content": "记住了：检索策略默认先走 fast path。",
+          "tokenEstimate": 6
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 以后默认先给我结论，再展开细节。\nt2 assistant: 记住了：以后我默认先给你结论，再展开细节。\nt3 user: 检索策略先走 fast path。\nt4 assistant: 记住了：检索策略默认先走 fast path。\nt5 user: 先别开 rerank，这轮只做 shadow 数据。\nt6 assistant: 记住了：这轮先不启用 rerank，只做 shadow 数据。",
+    "shadowRawTranscript": "t5 user: 先别开 rerank，这轮只做 shadow 数据。\nt6 assistant: 记住了：这轮先不启用 rerank，只做 shadow 数据。",
+    "semanticPinNotes": [
+      "user: 以后默认先给我结论，再展开细节。",
+      "user: 检索策略先走 fast path。"
+    ],
+    "archiveSummary": "已抽取可长期保留的用户偏好：默认先给结论再展开细节；检索策略默认走 fast path；本轮检索先不启用 rerank，只做 shadow 数据。其余原始轮次可从下一轮提示中移出。",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 52,
+    "shadowRawPromptEstimate": 21,
+    "shadowPackageEstimate": 41,
+    "shadowPackageText": "Active raw turns:\nt5 user: 先别开 rerank，这轮只做 shadow 数据。\nt6 assistant: 记住了：这轮先不启用 rerank，只做 shadow 数据。\n\nSemantic pins:\nuser: 以后默认先给我结论，再展开细节。\nuser: 检索策略先走 fast path。"
+  },
+  "scorecard": {
+    "relation": "switch",
+    "baselineTurnCount": 6,
+    "keptTurnCount": 2,
+    "evictedTurnCount": 4,
+    "pinCount": 3,
+    "baselinePromptEstimate": 52,
+    "shadowRawPromptEstimate": 21,
+    "shadowPackageEstimate": 41,
+    "rawReductionRatio": 0.5833,
+    "packageReductionRatio": 0.2115,
+    "candidateLoadElapsedMs": 82,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 18495,
+    "totalElapsedMs": 18501,
+    "guardedEnabled": true,
+    "guardedApplied": true,
+    "guardedReason": "guarded_candidate",
+    "guardedMessageCount": 2,
+    "guardedCarryForwardEstimate": 21,
+    "guardedFilteredMessageEstimate": 15
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": true,
+    "reason": "guarded_candidate",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "先别开 rerank，这轮只做 shadow 数据。"
+          }
+        ],
+        "timestamp": 1776453254153
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "记住了：这轮先不启用 rerank，只做 shadow 数据。",
+            "textSignature": "{\"v\":1,\"id\":\"msg_072879defec4a8d90169e2868924c081918110fea79bd00cf9\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 8303,
+          "output": 21,
+          "cacheRead": 5120,
+          "cacheWrite": 0,
+          "totalTokens": 13444,
+          "cost": {
+            "input": 0.00622725,
+            "output": 0.0000945,
+            "cacheRead": 0.000384,
+            "cacheWrite": 0,
+            "total": 0.00670575
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776453254173,
+        "responseId": "resp_072879defec4a8d90169e28688890881919f6968070ea5403b"
+      }
+    ],
+    "filteredMessageCount": 2,
+    "filteredMessageTokenEstimate": 15,
+    "carryForwardText": "Conversation carry-forward pins:\n- user: 以后默认先给我结论，再展开细节。\n- user: 检索策略先走 fast path。",
+    "carryForwardEstimate": 21,
+    "evictedSourceIndices": [
+      0,
+      1,
+      2,
+      3
+    ]
+  },
+  "timings": {
+    "totalElapsedMs": 18502,
+    "decisionElapsedMs": 18495
+  }
+}
