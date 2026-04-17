@@ -94,11 +94,11 @@
 - `Stage 4`：已完成
 - `Stage 5`：已完成
 - `Stage 6`：已完成
-- `Stage 7`：进行中
+- `Stage 7`：已完成
 - `Stage 8`：已完成
 - `Stage 9`：已完成（继续保持 `default-off` / opt-in only）
-- 当前指针：`104`
-- 当前建议：Stage 7 scorecard、Stage 8 hermetic closure、Step 108 的 plugin-owned transport closeout，以及 Stage 9 guarded live A/B closeout 都已落地；下一步只剩先完成 `104` 的 harder eval matrix；Stage 9 继续保持 `default-off` / opt-in only，不扩大到默认路径
+- 当前指针：`121`
+- 当前建议：Stage 7 scorecard、harder live matrix、Step 108 的 plugin-owned transport closeout，以及 Stage 9 guarded live A/B closeout 都已一起收口；下一步转入 Stage 10 的 adoption simplification and shared-foundation proof，同时继续保持 Stage 9 为 `default-off` / opt-in only
 
 当前 baseline 已经落地：
 
@@ -142,7 +142,7 @@
 | Stage 4 | `31-38` | 把受治理学习结果接到 adapter 策略使用 | `completed` |
 | Stage 5 | `39-46` | 补齐产品运维与 split-ready 执行 | `completed` |
 | Stage 6 | `93-100` | 在任何 active prompt cutover 前，用 runtime shadow mode 验证 dialogue working-set pruning | `completed` |
-| Stage 7 | `101-108` | 把 `Context Minor GC / context loading optimization` 收成正式主线与正式门禁 | `in_progress` |
+| Stage 7 | `101-108` | 把 `Context Minor GC / context loading optimization` 收成正式主线与正式门禁 | `completed` |
 | Stage 8 | `109-114` | 把 ordinary-conversation hermetic 路径收成可信的 steady-state A/B 面 | `completed` |
 | Stage 9 | `115-120` | 以 bounded、guarded 方式让 context 优化开始变成用户收益 | `completed` |
 | Stage 10 | `121-126` | 收 install / bootstrap / verify，并补强共享底座产品证据 | `planned` |
@@ -284,6 +284,7 @@ Stage 6 证据：
 - Stage 7 / Stage 9 汇总：[../../../reports/generated/dialogue-working-set-stage7-stage9-2026-04-17.md](../../../reports/generated/dialogue-working-set-stage7-stage9-2026-04-17.md)
 - OpenClaw gateway live validation：[../../../reports/generated/openclaw-gateway-context-optimization-2026-04-17.md](../../../reports/generated/openclaw-gateway-context-optimization-2026-04-17.md)
 - Stage 7 / Step 108 closeout：[../../../reports/generated/stage7-step108-context-minor-gc-closeout-2026-04-18.zh-CN.md](../../../reports/generated/stage7-step108-context-minor-gc-closeout-2026-04-18.zh-CN.md)
+- Stage 7 closeout：[../../../reports/generated/stage7-context-minor-gc-closeout-2026-04-18.zh-CN.md](../../../reports/generated/stage7-context-minor-gc-closeout-2026-04-18.zh-CN.md)
 
 阶段完成标准：
 
@@ -298,8 +299,8 @@ Stage 6 证据：
    - 至少要把 durable-source slimming、Stage 6 shadow exports、history cleanup、ordinary-conversation Docker rerun 放到同一套汇总口径。
 103. `completed` 定义“context loading package”契约。
    - 明确 raw turns、pins、capsules、durable context、budget slots 分别属于什么层，而不是只留在分散报告里。
-104. `todo` 设计并补齐下一轮 harder eval matrix。
-   - 优先补 `cross-source`、`conflict`、`multi-step history`、`open-loop return`、高信息密度自然中文多话题切换。
+104. `completed` 设计并补齐下一轮 harder eval matrix。
+   - `cross-source`、`conflict`、`multi-step history`、`open-loop return`、高信息密度自然中文多话题切换已收成 official harder live matrix `6 / 6`。
 105. `completed` 给 context optimization 增加 formal gate 和 operator summary。
    - 让 Docker / local / replay 三条路径都能输出可比较的 thickness / latency / reduction 指标。
 106. `completed` 把 shadow exports、sidecar artifacts 和 answer-level regression 重新收成同一条 operator 视图。
@@ -320,7 +321,7 @@ Stage 6 证据：
      - `108.c completed` 重跑 OpenClaw gateway live soak。
        - working-set exports 已不再报 request-scope seam 错误，且真实宿主侧达到 captured 门槛。
      - `108.d completed` 做出 Stage 7 / Step 108 closeout 决策。
-       - 结论是：Step 108 已关闭；Stage 7 整体仍继续进行，因为 `104` 的 harder eval matrix 还未完成，Stage 9 继续保持极窄 opt-in 面。
+       - 结论是：Step 108 已关闭；之后只剩 `104` harder eval matrix，完成后 Stage 7 也已正式关闭，Stage 9 继续保持极窄 opt-in 面。
 
 ### Stage 8. Ordinary-Conversation Realtime-Write Latency Closure
 
@@ -401,9 +402,9 @@ Stage 6 证据：
 
 从这里恢复：
 
-1. 从 `104` 开始，补齐更偏 `cross-source / conflict / multi-step history / open-loop return / 高信息密度自然中文多话题切换` 的 harder eval matrix
-2. 用同一套 operator scorecard 重跑 `Context Minor GC`，确认更难 case class 下 context package 仍然更轻且 answer-level 不回退
-3. 在 `104` 为绿之前，继续保持 Stage 9 为 `default-off` / opt-in only，不扩大 guarded 面
+1. 从 `121` 开始，收 install / bootstrap / verify 的最短路径
+2. 把 package / startup / first-run 成本收进 `轻快` 证据面
+3. 继续保持 Stage 9 为 `default-off` / opt-in only，不扩大 guarded 面
 
 当前不要开始：
 

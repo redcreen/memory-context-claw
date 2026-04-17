@@ -12,6 +12,10 @@ const defaultComposeFile = path.resolve(repoRoot, "docker-compose.openclaw-eval.
 const defaultAuthProfilesPath = fs.existsSync(path.join(process.env.HOME || "", ".openclaw", "agents", "main", "agent", "auth-profiles.json"))
   ? path.join(process.env.HOME || "", ".openclaw", "agents", "main", "agent", "auth-profiles.json")
   : "";
+const defaultCodexHomePath = fs.existsSync(path.join(process.env.HOME || "", ".codex"))
+  ? path.join(process.env.HOME || "", ".codex")
+  : "";
+const fallbackEmptyCodexHomePath = path.resolve(repoRoot, ".cache", "openclaw-empty-codex-home");
 
 function resolveDefaultOpenClawImage() {
   const explicit = normalizeString(process.env.OPENCLAW_EVAL_IMAGE);
@@ -70,8 +74,10 @@ function parseArgs(argv) {
     image: resolveDefaultOpenClawImage(),
     embedModelPath: normalizeString(process.env.UMC_DOCKER_EMBED_MODEL_PATH),
     authProfilesPath: normalizeString(process.env.UMC_DOCKER_AUTH_PROFILES_PATH, defaultAuthProfilesPath),
+    codexHomePath: normalizeString(process.env.UMC_DOCKER_CODEX_HOME_PATH, defaultCodexHomePath),
     agentModel: normalizeString(process.env.UMC_EVAL_AGENT_MODEL),
     pull: true,
+    build: true,
     dryRun: false
   };
 
@@ -84,8 +90,10 @@ function parseArgs(argv) {
     else if (arg === "--image") options.image = argv[++index];
     else if (arg === "--embed-model-path") options.embedModelPath = path.resolve(process.cwd(), argv[++index]);
     else if (arg === "--auth-profiles-path") options.authProfilesPath = path.resolve(process.cwd(), argv[++index]);
+    else if (arg === "--codex-home-path") options.codexHomePath = path.resolve(process.cwd(), argv[++index]);
     else if (arg === "--agent-model") options.agentModel = argv[++index];
     else if (arg === "--no-pull") options.pull = false;
+    else if (arg === "--no-build") options.build = false;
     else if (arg === "--dry-run") options.dryRun = true;
     else if (arg === "--help" || arg === "-h") {
       console.log(
@@ -100,8 +108,10 @@ function parseArgs(argv) {
           "  --image <ref>              OpenClaw image reference (default: ghcr.io/openclaw/openclaw:<host-version>)",
           "  --embed-model-path <path>  Host GGUF mounted read-only into the container",
           "  --auth-profiles-path <path> Host OpenClaw auth-profiles.json mounted read-only into the container",
+          "  --codex-home-path <path>  Host Codex home mounted read-only as a seed home inside the container",
           "  --agent-model <id>         Optional explicit agent model id passed into the container",
           "  --no-pull                  Skip `docker pull` before running scenarios",
+          "  --no-build                 Skip `docker compose build` for the derived eval image",
           "  --dry-run                  Print the planned docker commands without running them"
         ].join("\n")
       );
@@ -120,6 +130,10 @@ function parseArgs(argv) {
     throw new Error(
       "Missing auth-profiles path. Set --auth-profiles-path or UMC_DOCKER_AUTH_PROFILES_PATH."
     );
+  }
+
+  if (!options.codexHomePath) {
+    options.codexHomePath = fallbackEmptyCodexHomePath;
   }
 
   return options;
@@ -161,6 +175,10 @@ async function runDockerCommand(dockerBin, args, env, dryRun = false) {
   });
 }
 
+function ensureDirectory(targetPath) {
+  fs.mkdirSync(targetPath, { recursive: true });
+}
+
 function buildComposeEnvFlags(env) {
   return Object.entries(env)
     .filter(([, value]) => typeof value === "string" && value.length > 0)
@@ -170,8 +188,10 @@ function buildComposeEnvFlags(env) {
 function buildScenarioEnv(scenario, options) {
   const env = {
     OPENCLAW_EVAL_IMAGE: options.image,
+    OPENCLAW_EVAL_DERIVED_IMAGE: `umc-openclaw-eval:${normalizeString(options.image).replace(/[^a-zA-Z0-9_.-]+/g, "-") || "latest"}`,
     UMC_DOCKER_EMBED_MODEL_PATH: options.embedModelPath,
     UMC_DOCKER_AUTH_PROFILES_PATH: options.authProfilesPath,
+    UMC_DOCKER_CODEX_HOME_PATH: options.codexHomePath,
     UMC_EVAL_EXECUTION_ENV: "docker",
     UMC_EVAL_DOCKER_IMAGE: options.image,
     UMC_EVAL_REPO_ROOT: "/workspace",
@@ -275,6 +295,23 @@ async function main() {
         OPENCLAW_EVAL_IMAGE: options.image,
         UMC_DOCKER_EMBED_MODEL_PATH: options.embedModelPath,
         UMC_DOCKER_AUTH_PROFILES_PATH: options.authProfilesPath
+      },
+      options.dryRun
+    );
+  }
+
+  ensureDirectory(options.codexHomePath);
+
+  if (options.build) {
+    await runDockerCommand(
+      options.dockerBin,
+      ["compose", "-f", options.composeFile, "build", "openclaw-eval"],
+      {
+        OPENCLAW_EVAL_IMAGE: options.image,
+        OPENCLAW_EVAL_DERIVED_IMAGE: `umc-openclaw-eval:${normalizeString(options.image).replace(/[^a-zA-Z0-9_.-]+/g, "-") || "latest"}`,
+        UMC_DOCKER_EMBED_MODEL_PATH: options.embedModelPath,
+        UMC_DOCKER_AUTH_PROFILES_PATH: options.authProfilesPath,
+        UMC_DOCKER_CODEX_HOME_PATH: options.codexHomePath
       },
       options.dryRun
     );

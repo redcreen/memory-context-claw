@@ -166,7 +166,27 @@ UMC_EVAL_TIMEOUT_MS=30000 npm run eval:openclaw:docker -- \
 - `openclaw-eval`
 
 它不会启动 gateway，而是直接在容器里调用 repo 内的评测脚本。
-默认镜像来自官方 `ghcr.io/openclaw/openclaw`，不再在本地 Dockerfile 里重新 `npm install -g openclaw`。
+默认仍然**以官方** `ghcr.io/openclaw/openclaw` 为 base image，但 eval 实际运行的是 repo 内派生镜像：
+
+- base image：官方 `ghcr.io/openclaw/openclaw:<host-version>`
+- derived eval image：在 base image 上额外挂载 Linux `codex` CLI
+
+原因很直接：
+
+- Stage 7 `Context Minor GC` 的 harder live matrix 需要 `codex_exec`
+- 官方 OpenClaw 镜像本身不带 `codex`
+- 因此 hermetic eval 现在统一通过 repo 内的 [Dockerfile.openclaw-eval](../../../../Dockerfile.openclaw-eval) 生成派生镜像，而不是依赖宿主 macOS 二进制
+
+另外，runner 现在还会把宿主的 `~/.codex`（或显式 `--codex-home-path`）只读挂进容器，作为 `UMC_CODEX_SEED_HOME`：
+
+- 容器内不会直接写宿主 `CODEX_HOME`
+- runtime 会从 seed home 复制 `auth.json` / `config.toml` 到临时最小 home 再执行 `codex exec`
+
+这保证了：
+
+- hermetic eval 仍然是隔离态
+- `codex_exec` 在 Linux 容器内真实可跑
+- 不需要把宿主平台二进制偷偷塞进容器
 
 ## 推荐用法
 

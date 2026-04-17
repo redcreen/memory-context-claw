@@ -161,8 +161,27 @@ There is only one default service:
 - `openclaw-eval`
 
 It does not boot a gateway. It runs the repo eval script directly inside the container.
-The default image comes from `ghcr.io/openclaw/openclaw`, so the Docker path no
-longer depends on a local `npm install -g openclaw` inside the Dockerfile.
+The runtime still starts from the official `ghcr.io/openclaw/openclaw` image, but the
+actual eval service now uses a repo-owned **derived eval image**:
+
+- base image: official `ghcr.io/openclaw/openclaw:<host-version>`
+- derived eval image: the same base image plus a Linux `codex` CLI
+
+The reason is simple:
+
+- the Stage 7 `Context Minor GC` harder live matrix needs `codex_exec`
+- the official OpenClaw image does not ship `codex`
+- so hermetic eval now builds a thin derived image from
+  [Dockerfile.openclaw-eval](../../../../Dockerfile.openclaw-eval) instead of depending on a host-only macOS binary
+
+The runner also mounts the host `~/.codex` (or an explicit `--codex-home-path`) read-only
+into the container as `UMC_CODEX_SEED_HOME`:
+
+- the container never writes to the host `CODEX_HOME`
+- runtime copies `auth.json` / `config.toml` from the seed home into a temporary minimal
+  home before running `codex exec`
+
+This keeps the eval path both hermetic and actually runnable inside Linux containers.
 
 ## Recommended Flow
 

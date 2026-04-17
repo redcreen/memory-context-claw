@@ -2,7 +2,7 @@
 
 ## Current Phase
 
-`stage7 context-minor-gc post-step108`
+`post-stage7-context-minor-gc-closeout`
 
 ## Current Results Snapshot
 
@@ -45,10 +45,10 @@
 
 ## Current Gap Order
 
-1. `轻快 / context loading optimization`
-   - 每轮 context 仍然偏厚；scorecard 已落地，但 Stage 7 closeout 还没完成
-2. `轻快 / install`
+1. `轻快 / install`
    - install / bootstrap / verify 还不够短
+2. `轻快 / context loading optimization`
+   - Stage 7 已收口；下一步主要是把这条证据面保持稳定，不再让它重新漂回未决状态
 3. `聪明`
    - bounded guarded seam 已收口，并且已有真实 live A/B；但仍然是 `default-off` / opt-in only，不是默认用户收益
 4. `省心`
@@ -118,6 +118,14 @@
   - Risks: 如果 Step 108 和 Stage 9 都关闭后还不补 harder matrix，Stage 7 会长期停在“有能力、有 live gain、但没有更硬门禁”的半收口状态
   - Validation: `104` harder eval matrix、同一套 operator scorecard 重跑、Stage 7 closeout 报告
   - Exit Condition: 更难的 case class 也能稳定说明更轻的 context package 不伤回答质量，且 Stage 7 整体可以正式关闭
+  - Status: `completed`
+
+- Slice: `prepare-stage10-adoption-simplification-and-shared-foundation-proof`
+  - Objective: Stage 7 / 8 / 9 已全部收口；当前转入 Stage 10，收 install / bootstrap / verify，并补齐 Codex / 多实例 shared-foundation product proof
+  - Dependencies: Stage 7 closeout、Docker hermetic baseline、release-preflight、canonical root policy、shared-foundation architecture docs
+  - Risks: 如果 install 简化重新破坏 replay / rollback / audit 证据面，Stage 10 会变成“更好装但更难验证”；如果 shared-foundation 继续只停留在叙事层，Stage 10 不会形成可发布证据
+  - Validation: Stage 10 plan steps `121-126`、short-path install proof、package/startup/first-run metrics、Codex / multi-instance evidence
+  - Exit Condition: adoption 更短、更稳，同时 shared-foundation proof 不再弱于 OpenClaw 主路径
   - Status: `ongoing`
 
 - Slice: `formalize-realtime-memory-intent-ingestion`
@@ -249,14 +257,14 @@
 
 ## Current Execution Line
 
-- Objective: Step 108 和 Stage 9 都已关闭；当前继续完成 `Stage 7 / context loading optimization` 的 harder matrix；ordinary-conversation Docker steady-state 已成为默认 hermetic A/B 面，之后再推进 install 和 shared-foundation proof
-- Plan Link: `design-harder-context-minor-gc-matrix`
-- Runway: context scorecard、harder replay / Docker / local evidence、bounded LLM decision contract、gateway/raw transport watch
-- Progress: `3 / 4` tasks complete
+- Objective: Stage 7 / 8 / 9 已全部收口；当前进入 Stage 10 adoption simplification and shared-foundation proof，同时保持 Docker 为默认 hermetic A/B 面
+- Plan Link: `prepare-stage10-adoption-simplification-and-shared-foundation-proof`
+- Runway: Stage 7 closeout evidence、Docker hermetic baseline、release-preflight、canonical-root policy、shared-foundation proof
+- Progress: `0 / 4` tasks complete
 - Current Critical Path:
-  - `104.a` 设计更硬的 replay / Docker / local case matrix
-  - `104.b` 用同一套 scorecard 重跑 `Context Minor GC`
-  - `104.c` 只有 harder matrix 为绿后，才判断 Stage 7 整体 closeout 与 Stage 10 进入条件
+  - `121` 收 install / bootstrap / verify 的最短路径
+  - `122` 把 package / startup / first-run 成本收进 `轻快` 证据面
+  - `123-124` 补 Codex / 多实例 shared-foundation proof
 - Stop Conditions:
   - docs remain anchored to the older history-cleanup recovery pointer instead of the next context-optimization queue
   - install simplification gets moved ahead of context loading optimization before Stage 7 closes
@@ -267,13 +275,10 @@
 
 ## Execution Tasks
 
-- [x] EL-1 define and publish the unified context optimization scorecard for Stage 7
-- [x] EL-2A define the plugin-owned `decision runner` contract for `Context Minor GC`
-- [x] EL-2B swap the working-set decision transport away from host `runtime.subagent`
-- [x] EL-2C rerun OpenClaw gateway live soak and require real-host `5 / 5` captured exports
-- [x] EL-2D only after EL-2C, decide whether Stage 7 can close and whether any host-level fallback is still needed
-- [ ] EL-3 redesign the next replay / Docker / local evidence around `cross-source`, `conflict`, `multi-step history`, `open-loop return`, and denser natural-Chinese prompts
-- [x] EL-4 isolate ordinary-conversation realtime-write latency closure from contamination discussion while keeping the bounded smart-path follow-up opt-in only
+- [ ] EL-1 shorten install / bootstrap / verify into one clear shortest operator path
+- [ ] EL-2 add package / startup / first-run cost to the `light and fast` evidence surface
+- [ ] EL-3 publish stronger Codex shared-foundation proof
+- [ ] EL-4 publish clearer multi-instance shared-memory operator proof
 
 ## Development Log Capture
 

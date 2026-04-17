@@ -1,11 +1,20 @@
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { execFile } from "node:child_process";
+import { execFile, spawn } from "node:child_process";
 import { promisify } from "node:util";
 
 const execFileAsync = promisify(execFile);
-const defaultCodexHome = path.join(os.homedir(), ".codex");
+const configuredSeedCodexHome = normalizeSeedCodexHome(process.env.UMC_CODEX_SEED_HOME);
+const defaultCodexHome = configuredSeedCodexHome || path.join(os.homedir(), ".codex");
+
+function normalizeSeedCodexHome(value) {
+  if (typeof value !== "string") {
+    return "";
+  }
+  const normalized = value.trim();
+  return normalized || "";
+}
 
 function buildSanitizedCodexEnv({
   model,
@@ -204,28 +213,109 @@ export async function runStructuredCodexPrompt({
 
   try {
     try {
-      const { stdout, stderr } = await execFileAsync(
-        "zsh",
-        [
-          "-c",
-          'codex exec --json -m "$MODEL_NAME" --ephemeral --color never --output-schema "$SCHEMA_PATH" --skip-git-repo-check -C "$WORKDIR_PATH" - < "$PROMPT_PATH"'
-        ],
-        {
-          cwd,
-          env: {
-            ...buildSanitizedCodexEnv({
+      const promptText = await fs.readFile(promptPath, "utf8");
+      const { stdout, stderr } = await new Promise((resolve, reject) => {
+        const child = spawn(
+          "codex",
+          [
+            "exec",
+            "--json",
+            "-m",
+            model,
+            "--ephemeral",
+            "--color",
+            "never",
+            "--output-schema",
+            schemaPath,
+            "--skip-git-repo-check",
+            "-C",
+            cwd,
+            "-"
+          ],
+          {
+            cwd,
+            env: buildSanitizedCodexEnv({
               model,
               reasoningEffort,
               codexHome
             }),
-            PROMPT_PATH: promptPath,
-            SCHEMA_PATH: schemaPath,
-            WORKDIR_PATH: cwd
-          },
-          maxBuffer,
-          timeout: timeoutMs
-        }
-      );
+            stdio: ["pipe", "pipe", "pipe"]
+          }
+        );
+
+        let stdout = "";
+        let stderr = "";
+        let settled = false;
+        let timedOut = false;
+        let timer = null;
+
+        const trimBuffer = (value) => {
+          if (value.length <= maxBuffer) {
+            return value;
+          }
+          return value.slice(value.length - maxBuffer);
+        };
+
+        const finish = (payload) => {
+          if (settled) {
+            return;
+          }
+          settled = true;
+          clearTimeout(timer);
+          resolve(payload);
+        };
+
+        const fail = (error) => {
+          if (settled) {
+            return;
+          }
+          settled = true;
+          clearTimeout(timer);
+          reject(error);
+        };
+
+        child.stdout.on("data", (chunk) => {
+          stdout = trimBuffer(stdout + String(chunk));
+        });
+        child.stderr.on("data", (chunk) => {
+          stderr = trimBuffer(stderr + String(chunk));
+        });
+        child.on("error", (error) => {
+          error.stdout = stdout;
+          error.stderr = stderr;
+          fail(error);
+        });
+        child.on("close", (code, signal) => {
+          if (timedOut) {
+            const error = new Error(`codex exec timed out after ${timeoutMs}ms`);
+            error.code = "ETIMEDOUT";
+            error.signal = signal || "SIGKILL";
+            error.killed = true;
+            error.stdout = stdout;
+            error.stderr = stderr;
+            fail(error);
+            return;
+          }
+          if (code !== 0) {
+            const error = new Error(`codex exec exited with code ${code}`);
+            error.code = code;
+            error.signal = signal || "";
+            error.killed = false;
+            error.stdout = stdout;
+            error.stderr = stderr;
+            fail(error);
+            return;
+          }
+          finish({ stdout, stderr });
+        });
+
+        timer = setTimeout(() => {
+          timedOut = true;
+          child.kill("SIGKILL");
+        }, timeoutMs);
+
+        child.stdin.end(promptText);
+      });
 
       const extracted = extractStructuredPayload(stdout);
 

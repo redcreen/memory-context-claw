@@ -7,11 +7,11 @@
 
 ## Current Phase
 
-`stage7 context-minor-gc post-step108`
+`post-stage7-context-minor-gc-closeout`
 
 ## Active Slice
 
-`design-harder-context-minor-gc-matrix`
+`prepare-stage10-adoption-simplification-and-shared-foundation-proof`
 
 ## Current Product Promises
 
@@ -122,11 +122,12 @@
   - Stage 7 scorecard：captured `16 / 16`，average raw reduction ratio `0.4191`，average package reduction ratio `0.1151`
   - Stage 7 isolated shadow replay：`15 / 16`
   - Stage 7 / Step 108 closeout：plugin-owned decision runner 已落地；hermetic gateway `5 / 5` captured，本机 service smoke `3 / 3` captured
+  - Stage 7 harder live matrix：captured `6 / 6`，relation `6 / 6`，reduction `6 / 6`
   - Stage 9 guarded live A/B：baseline `4 / 4`、guarded `4 / 4`
   - Stage 9 guarded path 实际 applied：`2 / 4`
   - Stage 9 activation matched：`4 / 4`
   - Stage 9 average guarded prompt reduction ratio：`0.0306`
-  - 当前结论：Stage 9 已收口；Stage 7 还没正式 closeout，剩余问题只在 `104` harder eval matrix
+  - 当前结论：Stage 7 与 Stage 9 都已正式收口；下一步转入 Stage 10 adoption simplification and shared-foundation proof
 - focused history cleanup 已收口到最新主线基线：
   - `100` case live answer-level A/B 当前可读作 current `100 / 100`、legacy `99 / 100`
   - builtin-only regression = `0`
@@ -176,7 +177,7 @@
 
 ## In Progress
 
-- docs-first review 已完成，当前恢复点保持在 `Stage 7 harder matrix`
+- docs-first review 已完成；当前恢复点切到 `Stage 10 adoption simplification and shared-foundation proof`
 - 当前 3 个用户承诺的执行顺序变成：
   - 先补 `轻快 / context loading optimization`
   - 然后再补 `轻快 / install`
@@ -203,19 +204,19 @@
 - `Context Minor GC` 的宿主 seam blocker 已关闭：
   - working-set decision transport 已收回插件内
   - OpenClaw core 不需要为 Step 108 做改动
-- 当前新的 Stage 7 开口变成：
-  - `104` harder eval matrix 还没完成
+- 当前新的边界变成：
+  - Stage 7 已关闭，不再把 harder matrix 当成未决问题
   - Stage 9 虽已收口，但仍然必须保持 `default-off` / opt-in only
-  - bounded LLM decision surface、rollback boundary 和 operator metrics 仍要继续保持在同一张 scorecard 上
+  - 下一步是 Stage 10 的 install / bootstrap / verify 与 shared-foundation proof
 - operator / planning follow-up 只剩：
   - 什么时候清理过时的 legacy root 副本
   - accepted-action Step 48-52 何时具备重开实现的前置条件
 
 ## Next 3 Actions
 
-1. 完成 `104` 的 harder eval matrix，把 `cross-source / conflict / multi-step history / open-loop return / 更密集中文多话题切换` 补成正式矩阵。
-2. 用同一套 operator scorecard 重跑 `Context Minor GC`，确认更难 case class 里仍能稳定保持更轻的 context package。
-3. 只有 harder matrix 为绿后，才继续讨论 Stage 7 整体 closeout 与 Stage 10 的进入条件。
+1. 从 `121` 开始，缩短 install / bootstrap / verify 路径。
+2. 把 package / startup / first-run 成本收进 `轻快` 证据面。
+3. 为 Codex / 多实例共享底座补更强的 shared-foundation proof，同时继续保持 Stage 9 为 `default-off` / opt-in only。
 
 ## Architecture Supervision
 - Signal: `yellow`
@@ -232,29 +233,26 @@
 
 ## Current Execution Line
 
-- Objective: Step 108 和 Stage 9 都已关闭；当前继续完成 Stage 7 的 harder eval matrix；ordinary-conversation Docker steady-state 已成为默认 hermetic A/B 面，之后再收 install 和 shared-foundation proof
-- Plan Link: `design-harder-context-minor-gc-matrix`
+- Objective: Stage 7 与 Stage 9 都已关闭；当前转入 Stage 10 adoption simplification and shared-foundation proof，同时继续保持 Docker 作为默认 hermetic A/B 面
+- Plan Link: `prepare-stage10-adoption-simplification-and-shared-foundation-proof`
 - Current Critical Path:
-  - `104.a` 设计更硬的 replay / Docker / local case matrix
-  - `104.b` 用同一套 scorecard 重跑 `Context Minor GC`
-  - `104.c` 只有 harder matrix 为绿后，才判断 Stage 7 整体 closeout 与 Stage 10 的进入条件
-- Runway: context scorecard，harder replay / Docker / local evidence，bounded LLM decision contract，shared-foundation evidence；并行守住 release-preflight 和 canonical-root policy
-- Progress: `3 / 4` tasks complete
+  - `121` 收 install / bootstrap / verify 的最短路径
+  - `122` 把 package / startup / first-run 成本收进 `轻快` 证据面
+  - `123-124` 补 Codex / 多实例 shared-foundation proof
+- Runway: Stage 7 closeout evidence、Docker hermetic baseline、release-preflight、canonical-root policy、shared-foundation proof
+- Progress: `0 / 4` tasks complete
 - Stop Conditions:
-  - active prompt mutation is discussed before docs and rollback boundaries are explicit
-  - install simplification gets moved ahead of context loading optimization before Stage 7 closes
+  - active prompt mutation is widened despite Stage 9 remaining `default-off`
+  - install simplification weakens replay / rollback / audit evidence
+  - shared-foundation proof falls back to narrative claims instead of hermetic evidence
   - bounded LLM decision work degenerates into growing hardcoded rule tables
-  - harder A/B design starts before the docs review fixes the current recovery pointer
 
 ## Execution Tasks
 
-- [x] EL-1 define and publish the unified context optimization scorecard for Stage 7
-- [x] EL-2A define the plugin-owned `decision runner` contract for `Context Minor GC`
-- [x] EL-2B swap the working-set decision transport away from host `runtime.subagent`
-- [x] EL-2C rerun OpenClaw gateway live soak and require real-host `5 / 5` captured exports
-- [x] EL-2D only after EL-2C, decide whether Stage 7 can close and whether any host-level fallback is still needed
-- [ ] EL-3 redesign the next harder replay / Docker / local evidence around `cross-source`, `conflict`, `multi-step history`, `open-loop return`, and denser natural-Chinese prompt classes
-- [x] EL-4 isolate ordinary-conversation realtime-write latency closure from contamination discussion while Stage 9 remains closed and opt-in only
+- [ ] EL-1 shorten install / bootstrap / verify into one clear shortest operator path
+- [ ] EL-2 add package / startup / first-run cost to the `light and fast` evidence surface
+- [ ] EL-3 publish stronger Codex shared-foundation proof
+- [ ] EL-4 publish clearer multi-instance shared-memory operator proof
 
 ## Development Log Capture
 

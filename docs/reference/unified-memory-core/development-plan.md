@@ -94,11 +94,11 @@ Current status:
 - `Stage 4`: completed
 - `Stage 5`: completed
 - `Stage 6`: completed
-- `Stage 7`: in progress
+- `Stage 7`: completed
 - `Stage 8`: completed
 - `Stage 9`: completed (still `default-off` / opt-in only)
-- current pointer: `104`
-- current recommendation: the Stage 7 scorecard, the Stage 8 hermetic closure, the Step 108 plugin-owned transport closeout, and the Stage 9 guarded live A/B closeout are all landed; the next step is only to finish `104` (the harder eval matrix), while keeping Stage 9 `default-off` / opt-in only instead of widening it into the default path
+- current pointer: `121`
+- current recommendation: the Stage 7 scorecard, the harder live matrix, the Step 108 plugin-owned transport closeout, and the Stage 9 guarded live A/B closeout are now all landed together; the next step is Stage 10 adoption simplification and shared-foundation proof, while Stage 9 remains `default-off` / opt-in only
 
 Already implemented in the current baseline:
 
@@ -142,7 +142,7 @@ These constraints keep the next per-turn context optimization slice measurable a
 | Stage 4 | `31-38` | connect governed learning outputs into adapter policy use | `completed` |
 | Stage 5 | `39-46` | harden product operations and split-ready execution | `completed` |
 | Stage 6 | `93-100` | validate dialogue working-set pruning in runtime shadow mode before any active prompt cutover | `completed` |
-| Stage 7 | `101-108` | turn `Context Minor GC / context loading optimization` into a formal mainline and formal gate | `in_progress` |
+| Stage 7 | `101-108` | turn `Context Minor GC / context loading optimization` into a formal mainline and formal gate | `completed` |
 | Stage 8 | `109-114` | turn the ordinary-conversation hermetic path into a trustworthy steady-state A/B surface | `completed` |
 | Stage 9 | `115-120` | start turning context optimization into user-visible value through a bounded guarded path | `completed` |
 | Stage 10 | `121-126` | shorten install / bootstrap / verify and strengthen shared-foundation product proof | `planned` |
@@ -284,6 +284,7 @@ Current evidence:
 - Stage 7 / Stage 9 summary: [../../../reports/generated/dialogue-working-set-stage7-stage9-2026-04-17.md](../../../reports/generated/dialogue-working-set-stage7-stage9-2026-04-17.md)
 - OpenClaw gateway live validation: [../../../reports/generated/openclaw-gateway-context-optimization-2026-04-17.md](../../../reports/generated/openclaw-gateway-context-optimization-2026-04-17.md)
 - Stage 7 / Step 108 closeout: [../../../reports/generated/stage7-step108-context-minor-gc-closeout-2026-04-18.md](../../../reports/generated/stage7-step108-context-minor-gc-closeout-2026-04-18.md)
+- Stage 7 closeout: [../../../reports/generated/stage7-context-minor-gc-closeout-2026-04-18.md](../../../reports/generated/stage7-context-minor-gc-closeout-2026-04-18.md)
 
 Stage complete when:
 
@@ -298,8 +299,8 @@ Stage complete when:
    - At minimum, durable-source slimming, Stage 6 shadow exports, history cleanup, and the ordinary-conversation Docker rerun should report through one aggregation view.
 103. `completed` Define the `context loading package` contract.
    - Make raw turns, pins, capsules, durable context, and budget slots explicit layers instead of leaving them spread across separate reports.
-104. `todo` Design and add the next harder eval matrix.
-   - Prioritize `cross-source`, `conflict`, `multi-step history`, `open-loop return`, and denser natural-Chinese multi-topic switches.
+104. `completed` Design and add the next harder eval matrix.
+   - The `cross-source`, `conflict`, `multi-step history`, `open-loop return`, and denser natural-Chinese multi-topic switches are now closed as an official harder live matrix `6 / 6`.
 105. `completed` Add a formal gate and operator summary for context optimization.
    - Docker / local / replay paths should all emit comparable thickness / latency / reduction metrics.
 106. `completed` Collapse shadow exports, sidecar artifacts, and answer-level regression into one operator view.
@@ -320,7 +321,7 @@ Stage complete when:
      - `108.c completed` rerun the OpenClaw gateway live soak.
        - Working-set exports no longer fail on the request-scope seam, and the real host captured green runs.
      - `108.d completed` make the Stage 7 / Step 108 closeout decision.
-       - Result: Step 108 is closed; Stage 7 as a whole remains open because `104` (the harder eval matrix) is still unfinished, and Stage 9 remains a narrow opt-in surface.
+       - Result: Step 108 is closed; only `104` remained after that, and once it turned green Stage 7 could also be closed while Stage 9 stayed a narrow opt-in surface.
 
 ### Stage 8. Ordinary-Conversation Realtime-Write Latency Closure
 
@@ -401,9 +402,9 @@ Stage complete when:
 
 Resume exactly from here:
 
-1. start from `104`, adding the harder eval matrix around `cross-source / conflict / multi-step history / open-loop return / denser natural-Chinese multi-topic switches`
-2. rerun `Context Minor GC` on the same operator scorecard and confirm that the harder case classes still keep the context package lighter without answer-level regressions
-3. keep Stage 9 `default-off` / opt-in only until `104` is green, rather than widening the guarded surface early
+1. start from `121`, shortening install / bootstrap / verify
+2. pull package / startup / first-run cost into the `light and fast` evidence surface
+3. keep Stage 9 `default-off` / opt-in only rather than widening the guarded surface early
 
 Do not start with:
 

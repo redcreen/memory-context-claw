@@ -48,7 +48,7 @@ const DEFAULT_CONFIG = {
     provider: "",
     transport: "auto",
     reasoningEffort: "low",
-    timeoutMs: 20000,
+    timeoutMs: 60000,
     maxSnippetChars: 900,
     minScoreDeltaToSkip: 0.18
   },
@@ -58,7 +58,7 @@ const DEFAULT_CONFIG = {
     provider: "",
     transport: "auto",
     reasoningEffort: "low",
-    timeoutMs: 20000,
+    timeoutMs: 60000,
     maxTurns: 12,
     minTurns: 3,
     maxCharsPerTurn: 900,

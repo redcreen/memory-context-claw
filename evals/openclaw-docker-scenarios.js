@@ -50,6 +50,17 @@ const scenarios = [
     args: ["--shard-size", "20", "--shard-count", "2"],
     writeJson: `reports/openclaw-ordinary-conversation-memory-intent-ab-${date}.json`,
     writeMarkdown: `reports/generated/openclaw-ordinary-conversation-memory-intent-ab-${date}.md`
+  },
+  {
+    id: "context-minor-gc-live",
+    description: "Stage 7 Context Minor GC harder live matrix in hermetic Docker state.",
+    script: "scripts/eval-openclaw-context-minor-gc-live.js",
+    cases: "evals/openclaw-context-minor-gc-live-cases.js",
+    agent: "main",
+    preset: "safe-local",
+    agentModel: "openai-codex/gpt-5.4-mini",
+    writeJson: `reports/openclaw-context-minor-gc-live-${date}.json`,
+    writeMarkdown: `reports/generated/openclaw-context-minor-gc-live-${date}.md`
   }
 ];
 

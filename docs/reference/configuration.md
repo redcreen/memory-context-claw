@@ -247,7 +247,7 @@ Default:
   topN: 6,
   model: "gpt-5.4",
   provider: "",
-  timeoutMs: 20000,
+  timeoutMs: 60000,
   maxSnippetChars: 900,
   minScoreDeltaToSkip: 0.18
 }
@@ -268,7 +268,7 @@ Default:
   enabled: false,
   model: "gpt-5.4",
   provider: "",
-  timeoutMs: 20000,
+  timeoutMs: 60000,
   maxTurns: 12,
   minTurns: 3,
   maxCharsPerTurn: 900,

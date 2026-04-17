@@ -72,13 +72,14 @@ Supporting evidence:
 
 - Stage 7 shadow replay: `15 / 16`
 - Stage 7 scorecard: captured `16 / 16`, average raw reduction ratio `0.4191`, average package reduction ratio `0.1151`
+- Stage 7 harder live matrix: captured `6 / 6`, relation `6 / 6`, reduction `6 / 6`
 - Stage 9 guarded live A/B: baseline `4 / 4`, guarded `4 / 4`
 - Stage 9 guarded applied: `2 / 4`
 - Stage 9 activation matched: `4 / 4`
 - Stage 9 average prompt reduction ratio: `0.0306`
 - Stage 9 applied-only prompt reduction ratio: `0.0067`
 - Stage 7 / Step 108 closeout: the plugin-owned decision runner is landed, the hermetic gateway rerun captured `5 / 5`, and the real local service smoke captured `3 / 3`
-- Interpretation: the Stage 7 operator-facing scorecard, the Stage 9 guarded live A/B, and the Step 108 plugin-owned transport closeout are all landed; the main remaining work is no longer the host seam or whether the guarded seam can run, but the harder Stage 7 eval matrix
+- Interpretation: the Stage 7 operator-facing scorecard, the harder live matrix, the Stage 9 guarded live A/B, and the Step 108 plugin-owned transport closeout are all landed; the mainline now moves to Stage 10 adoption simplification and shared-foundation proof rather than more Stage 7 seam work
 
 Supporting evidence:
 
@@ -89,6 +90,7 @@ Supporting evidence:
 - [generated/stage9-guarded-smart-path-closeout-2026-04-18.md](../reports/generated/stage9-guarded-smart-path-closeout-2026-04-18.md)
 - [generated/openclaw-gateway-context-optimization-2026-04-17.md](../reports/generated/openclaw-gateway-context-optimization-2026-04-17.md)
 - [generated/stage7-step108-context-minor-gc-closeout-2026-04-18.md](../reports/generated/stage7-step108-context-minor-gc-closeout-2026-04-18.md)
+- [generated/stage7-context-minor-gc-closeout-2026-04-18.md](../reports/generated/stage7-context-minor-gc-closeout-2026-04-18.md)
 
 ## Current Review Verdict
 
@@ -155,7 +157,7 @@ Stages 1-6 are complete, but the roadmap cannot stop at “all historical stages
 
 | Next Milestone | Status | Why Now | Exit Signal |
 | --- | --- | --- | --- |
-| Stage 7: context loading optimization closure | `in_progress` | the biggest current product gap is no longer “does the feature exist?” but “is each turn’s context package light enough?”; Stage 6 is still a measurement layer, and this mainline is now externally named `Context Minor GC` | the unified scorecard is fixed and harder replay / Docker / local evidence consistently show a lighter context package without answer-quality damage, and daily long conversations usually no longer need compat / compact as the normal way to keep going |
+| Stage 7: context loading optimization closure | `completed` | the biggest current product gap is no longer “does the feature exist?” but “is each turn’s context package light enough?”; Stage 6 is still a measurement layer, and this mainline is now externally named `Context Minor GC` | the unified scorecard is fixed and harder replay / Docker / local evidence consistently show a lighter context package without answer-quality damage, and daily long conversations usually no longer need compat / compact as the normal way to keep going |
 | Stage 8: ordinary-conversation realtime-write latency closure | `completed` | the Docker ordinary-conversation A/B has been recovered from a blanket timeout wall into a trustworthy strict closeout, while `2/4`-shard `gateway-steady` remains the fast watch lane | the clean Docker path is no longer dominated by large timeout counts and now closes at `40 / 40 vs 15 / 40` with `preCaseResetFailed = 0` |
 | Stage 9: guarded smart-path promotion | `completed` | context loading optimization is still not a user gain if it stays shadow-only forever | the bounded guarded seam now has real live A/B evidence plus an explicit rollback / operator contract; the feature remains `default-off` / opt-in only rather than drifting into the default path |
 | Stage 10: adoption simplification and shared-foundation proof | `planned` | install / bootstrap is still too manual, and Codex / multi-instance product evidence still lags | adoption is shorter and clearer, and the shared-foundation story is proven beyond architecture diagrams |
@@ -164,8 +166,8 @@ Stages 1-6 are complete, but the roadmap cannot stop at “all historical stages
 
 | Horizon | Focus | Exit Signal |
 | --- | --- | --- |
-| Now | keep closing `Stage 7 / Context Minor GC`: finish the harder eval matrix instead of returning to host-seam debate or “can the guarded seam run?” discussion | the unified scorecard, guarded live A/B, rollback boundary, and operator summary are landed; the remaining gap is the harder case matrix |
-| Next | finish `104`, rerun `Context Minor GC` on the same operator scorecard, and keep ordinary-conversation Docker steady-state as the default hermetic A/B baseline | the harder case classes also show that lighter context packages stay safe |
+| Now | Stage 7 is now formally closed; move into `Stage 10` adoption simplification and shared-foundation proof | the Context Minor GC scorecard, harder live matrix, Step 108 closeout, and guarded seam boundary are all landed |
+| Next | start with `121-123`: shorten install / bootstrap / verify and pull package / startup / first-run cost into the `light and fast` evidence surface | adoption becomes shorter and clearer without regressing the Stage 7/8/9 evidence surface |
 | Later | once Stage 7 is stable, move into Stage 10 adoption simplification and shared-foundation proof | install / bootstrap / verify and shared-foundation proof both become operator-ready |
 
 ## Current Execution Focus
@@ -193,7 +195,7 @@ When resuming work:
 | [Stage 4: policy adaptation](reference/unified-memory-core/development-plan.md#stage-4-policy-adaptation-and-multi-consumer-use) | completed | let governed learning outputs influence consumer behavior | Stage 3 | one reversible policy-adaptation loop is proven |
 | [Stage 5: product hardening](reference/unified-memory-core/development-plan.md#stage-5-product-hardening-and-independent-operation) | completed | validate split-ready and independent-product operation | Stage 4 | release boundary, reproducibility, maintenance workflows, and split rehearsal are all CLI-verifiable |
 | [Stage 6: dialogue working-set shadow integration](reference/unified-memory-core/development-plan.md#stage-6-dialogue-working-set-shadow-integration) | completed | validate and instrument hot-session working-set pruning in runtime shadow mode before any active prompt cutover | Stage 5 | runtime shadow telemetry is now landed default-off, replayable exports exist, and answer-level replay stays green enough to keep the feature shadow-only |
-| [Stage 7: context loading optimization closure](reference/unified-memory-core/development-plan.md#stage-7-context-loading-optimization-closure) | in_progress | make per-turn context loading optimization a formal mainline and formal gate instead of leaving it at shadow findings | Stage 6 | the context-optimization scorecard is stable, harder replay / Docker / local evidence align, and rollout/rollback boundaries are clear |
+| [Stage 7: context loading optimization closure](reference/unified-memory-core/development-plan.md#stage-7-context-loading-optimization-closure) | completed | make per-turn context loading optimization a formal mainline and formal gate instead of leaving it at shadow findings | Stage 6 | the context-optimization scorecard is stable, harder replay / Docker / local evidence align, and rollout/rollback boundaries are clear |
 | [Stage 8: ordinary-conversation realtime-write latency closure](reference/unified-memory-core/development-plan.md#stage-8-ordinary-conversation-realtime-write-latency-closure) | completed | recover the clean Docker write-side answer path into a trustworthy ordinary-conversation strict A/B surface | Stage 7 | the ordinary-conversation hermetic strict closeout now reports `40 / 40 vs 15 / 40` with `preCaseResetFailed = 0` |
 | [Stage 9: guarded smart-path promotion](reference/unified-memory-core/development-plan.md#stage-9-guarded-smart-path-promotion) | completed | start turning context optimization into real user-facing value without breaking rollback safety | Stage 8 | the bounded opt-in path now has live A/B evidence, an operable rollback path, and remains `default-off` / opt-in only |
 | [Stage 10: adoption simplification and shared-foundation proof](reference/unified-memory-core/development-plan.md#stage-10-adoption-simplification-and-shared-foundation-proof) | planned | lift adoption experience and cross-host product proof to the same level as core capability | Stage 9 | install / bootstrap / verify is shorter, and Codex / multi-instance reuse is more concretely proven |

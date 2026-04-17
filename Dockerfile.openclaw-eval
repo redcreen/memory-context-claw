@@ -1,0 +1,9 @@
+ARG OPENCLAW_EVAL_BASE_IMAGE=ghcr.io/openclaw/openclaw:latest
+FROM ${OPENCLAW_EVAL_BASE_IMAGE}
+
+ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
+ENV PATH=/home/node/.npm-global/bin:${PATH}
+
+RUN mkdir -p /home/node/.npm-global \
+  && npm install -g @openai/codex \
+  && codex --version

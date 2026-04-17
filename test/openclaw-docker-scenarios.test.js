@@ -30,3 +30,10 @@ test("openclaw docker scenarios include the focused ordinary-conversation A/B pa
   assert.equal(ordinary.fixtureRoot, "evals/openclaw-ordinary-conversation-fixture");
   assert.deepEqual(ordinary.args, ["--shard-size", "40", "--shard-count", "1"]);
 });
+
+test("openclaw docker scenarios include the context minor gc live matrix", () => {
+  const contextMinorGc = scenarios.find((item) => item.id === "context-minor-gc-live");
+  assert.ok(contextMinorGc);
+  assert.equal(contextMinorGc.script, "scripts/eval-openclaw-context-minor-gc-live.js");
+  assert.equal(contextMinorGc.cases, "evals/openclaw-context-minor-gc-live-cases.js");
+});
