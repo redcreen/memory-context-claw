@@ -8,8 +8,20 @@ The goal is not to copy the operator's `~/.openclaw` into a container. The goal 
 
 - every eval container starts from an in-repo fixture
 - every container writes its own temporary OpenClaw state
-- every case clones a fresh state from the indexed base state
+- every case clones a fresh state from a preconfigured base state
 - the default path does not start a gateway; it runs `memory index`, `memory search`, and `agent --local`
+
+## Default Test Policy
+
+From this point forward, A/B and CLI evaluation in this repo should default to the Docker hermetic path.
+
+The reason is straightforward:
+
+- the first job of an A/B harness is to avoid self-deception
+- Docker gives us a cleaner way to separate `legacy` and `current` into distinct state roots
+- capability conclusions only matter if the eval substrate is first reproducible and contamination-safe
+
+Host-live runs still matter, but they are now the exception rather than the default.
 
 ## Why Gateway Is Off By Default
 
@@ -71,8 +83,18 @@ This scenario is intentionally strict:
 - run the full `legacy builtin` phase first
 - delete the isolated legacy state roots
 - run the full `unified-memory-core current` phase second
-- keep one fresh temp state root per case
+- prepare one persistent template cache per mode under the repo mount
+- clone one fresh temp state root per case from that preconfigured template instead of regenerating `openclaw.json`, fixture copies, and directory scaffolding
 - apply an explicit `30s` budget to every capture / recall turn
+
+The current fast path also enables three default accelerators:
+
+- prewarmed templates:
+  each base state gets one low-signal warmup turn before being cached
+- fast-fail:
+  if capture fails or times out, the runner skips registry wait and recall
+- shard parallelism:
+  the ordinary-conversation scenario now runs in `4` shards by default
 
 That makes the result suitable both for contamination checks and for bounded-latency answer-level comparison.
 
@@ -98,6 +120,16 @@ The ordinary-conversation scenario also pins:
 - `fixtureRoot = evals/openclaw-ordinary-conversation-fixture`
 - `agentModel = openai-codex/gpt-5.4-mini`
 - `preset = safe-local`
+
+The ordinary-conversation runner now stores its reusable templates in:
+
+- `.cache/openclaw-ordinary-state-templates`
+
+That directory is excluded from git, but it lives under the repo mount, so it survives across Docker runs. To force a rebuild, pass:
+
+```bash
+--refresh-template-cache
+```
 
 ## Compose And Entry Points
 
@@ -158,17 +190,43 @@ The former is expected. The latter must stay at zero.
 
 The latest hermetic Docker rerun for the focused `40`-case suite is:
 
-- current: `3 / 40`
+- current: `0 / 40`
 - legacy: `0 / 40`
-- `UMC-only = 3`
-- `both-fail = 37`
+- `UMC-only = 0`
+- `both-fail = 40`
 
-This should not be read as “Memory Core only improved 3 cases”. The more accurate reading is:
+This should not be read as “Memory Core did not improve anything”.
+The more accurate reading is:
 
 - the hermetic isolation layer is now clean
-- under a `30s` Docker answer-level budget, latency becomes the dominant bottleneck
-- legacy timed out on `40 / 40`
-- current timed out on `36 / 40`, leaving `3` reproducible current-only wins
+- under the current `30s` fast path, the answer-level capture turn itself still does not finish
+- legacy times out on capture for `40 / 40`
+- current also times out on capture for `40 / 40`
+
+So this ordinary-conversation Docker fast path is currently an `infra/perf watch`, not the final capability ranking surface.
+
+Put more plainly:
+
+- it is now fast enough
+- it is now clean enough
+- but at this strict budget it mainly measures whether the answer path can finish at all
+- it should not replace host-live or wider-budget capability conclusions
+
+## Why This Fast Path Still Matters
+
+It already answers the questions that had to be settled first:
+
+- are cases contaminating each other: `no`
+- are `legacy` and `current` sharing state roots: `no`
+- was config regeneration the main bottleneck: `no`
+- can the full `40`-case suite finish inside a bounded wall-clock window: `yes`
+
+The current trade-off is:
+
+- this path is now suitable as an infra / perf / contamination gate
+- it is not yet suitable as the final answer-level capability benchmark for ordinary-conversation memory writing
+
+If we want to turn Docker ordinary-conversation A/B back into a capability surface, the next step is a truer steady-state runner that avoids repeated cold answer-path startup while still preserving zero contamination between cases.
 
 ## Related Files
 

@@ -18,7 +18,7 @@ The current answers are:
 - raw host `openclaw memory search` transport: still unstable, but now isolated into a watchlist instead of contaminating algorithm conclusions
 - direct live `unified-memory-core` vs builtin improvement is now split into two clearer surfaces:
   - existing-memory consumption: real but modest on the current agent/index baseline
-  - ordinary-conversation realtime writing: host-live evidence is materially in favor of Unified Memory Core, while hermetic Docker evidence shows answer-level timeout is now the dominant limiter
+  - ordinary-conversation realtime writing: host-live evidence is materially in favor of Unified Memory Core, while the latest hermetic Docker fast path shows answer-level capture timeout is now the dominant limiter
 
 ## What Was Tested
 
@@ -164,6 +164,7 @@ Interpretation:
 - compact summary: [openclaw-memory-improvement-summary-2026-04-15.md](openclaw-memory-improvement-summary-2026-04-15.md)
 - focused ordinary-conversation write-time report: [openclaw-ordinary-conversation-memory-intent-ab-2026-04-16.md](openclaw-ordinary-conversation-memory-intent-ab-2026-04-16.md)
 - focused ordinary-conversation Docker rerun summary: [openclaw-ordinary-conversation-memory-intent-docker-rerun-2026-04-17.md](openclaw-ordinary-conversation-memory-intent-docker-rerun-2026-04-17.md)
+- Docker fast-harness speedup summary: [openclaw-docker-steady-state-speedup-2026-04-17.md](openclaw-docker-steady-state-speedup-2026-04-17.md)
 - focused history cleanup rerun: [openclaw-memory-improvement-history-cleanup-2026-04-17.md](openclaw-memory-improvement-history-cleanup-2026-04-17.md)
 
 ### Topline Counts
@@ -263,18 +264,18 @@ Category split:
 Hermetic Docker rerun topline:
 
 - compared live cases: `40`
-- `unified-memory-core` current path passed: `3`
+- `unified-memory-core` current path passed: `0`
 - legacy builtin path passed: `0`
 - both passed: `0`
-- Memory Core only: `3`
+- Memory Core only: `0`
 - legacy only: `0`
-- both failed: `37`
+- both failed: `40`
 
 Hermetic Docker interpretation:
 
 - the Docker rerun does not seed host `~/.openclaw` state, uses one fresh temp state root per case, uses one unique temp registry root per current-mode case, prunes session transcripts before recall, and removes temp state roots after each case
 - OpenClaw still generates bootstrap workspace files inside each fresh temp state, but those are deterministic runtime bootstrap, not host-memory contamination
-- under the explicit Docker `30s` turn budget, legacy timed out on `40 / 40` cases and current timed out on `36 / 40` cases
+- under the explicit Docker `30s` fast-path budget, legacy timed out on capture for `40 / 40` cases and current also timed out on capture for `40 / 40` cases
 - so the hermetic rerun proves the isolation root is now trustworthy, but it also shows that answer-level latency has become the dominant limiter on this surface
 
 Interpretation:

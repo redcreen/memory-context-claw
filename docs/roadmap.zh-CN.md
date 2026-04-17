@@ -103,7 +103,7 @@
 
 | 用户承诺 | 当前已落地能力 | 当前证据面 | 下一里程碑 |
 | --- | --- | --- | --- |
-| 轻快 | fact-first assembly、runtime working-set shadow instrumentation、release-preflight、Docker hermetic eval | runtime shadow replay `16 / 16`、average reduction ratio `0.4368`、runtime answer A/B `5 / 5` vs `5 / 5`、ordinary-conversation Docker rerun `current=3 / 40`、`both-fail=37` | 先完成 context 加载优化，把 context thickness / reduction / latency 收成硬门禁；随后再收 install / bootstrap / verify |
+| 轻快 | fact-first assembly、runtime working-set shadow instrumentation、release-preflight、Docker hermetic eval | runtime shadow replay `16 / 16`、average reduction ratio `0.4368`、runtime answer A/B `5 / 5` vs `5 / 5`、ordinary-conversation Docker 快路径 `current=0 / 40`、`both-fail=40`、整轮 `40` case wall-clock `~10.1 min` | 先完成 context 加载优化，把 context thickness / reduction / latency 收成硬门禁；把 Docker 固化成默认 hermetic infra gate，再把 ordinary-conversation 的能力对比拉回更真实的 steady-state 路径 |
 | 聪明 | realtime `memory_intent` ingestion、nightly self-learning、governed promotion / decay、working-set shadow path | ordinary-conversation host-live A/B：current `38 / 40`、legacy `21 / 40`、`18` 条 UMC-only wins | 把 shadow-first 的 context decision 逐步推进到 bounded、guarded 的窄路径用户收益，并让 context 优化真正变成默认可感知收益 |
 | 省心 | add / inspect / audit / repair / replay / rollback、canonical registry root、OpenClaw / Codex adapters | 已发版级 CLI 流程与回归保护验证栈 | 持续保持 operator surface 可读、可 replay，并补强 Codex / 多实例产品证据 |
 

@@ -34,6 +34,7 @@ const scenarios = [
     fixtureRoot: "evals/openclaw-ordinary-conversation-fixture",
     preset: "safe-local",
     agentModel: "openai-codex/gpt-5.4-mini",
+    args: ["--shard-size", "10", "--shard-count", "4"],
     writeJson: `reports/openclaw-ordinary-conversation-memory-intent-ab-${date}.json`,
     writeMarkdown: `reports/generated/openclaw-ordinary-conversation-memory-intent-ab-${date}.md`
   }

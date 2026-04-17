@@ -20,7 +20,7 @@ If you want the shortest practical answer before reading the whole repo:
 - Stage 9 guarded opt-in A/B: baseline `5 / 5`, shadow `5 / 5`, guarded `5 / 5`, guarded applied `2 / 5`, average guarded prompt reduction ratio `0.0424`
 - focused ordinary-conversation write-time A/B:
   - host live: `current=38`, `legacy=21`, `UMC-only=18`
-  - Docker hermetic (`30s` turn budget): `current=3`, `legacy=0`, `UMC-only=3`, `both-fail=37`
+  - Docker hermetic fast path (`30s` turn budget): `current=0`, `legacy=0`, `UMC-only=0`, `both-fail=40`
 
 Read these first:
 
@@ -32,7 +32,7 @@ Read these first:
 - [Focused Ordinary-Conversation Realtime Write A/B](reports/generated/openclaw-ordinary-conversation-memory-intent-ab-2026-04-16.md)
 - [Docker Hermetic Ordinary-Conversation Rerun](reports/generated/openclaw-ordinary-conversation-memory-intent-docker-rerun-2026-04-17.md)
 
-The honest takeaway is now split in two: OpenClaw builtin memory is already decent on many “existing memory consumption” prompts, so the older `100`-case A/B only shows a modest gap. On the ordinary-conversation write surface, the host-live run shows a much clearer Unified Memory Core advantage, but the hermetic Docker rerun shows that the same surface is now heavily constrained by answer-level timeout pressure. In other words, UMC is not just about “remembering better” anymore; it also has to become faster and more reproducible under bounded evaluation budgets.
+The honest takeaway is now split in two: OpenClaw builtin memory is already decent on many “existing memory consumption” prompts, so the older `100`-case A/B only shows a modest gap. On the ordinary-conversation write surface, the host-live run still shows a much clearer Unified Memory Core advantage, but the latest hermetic Docker fast path shows that this surface is now dominated by answer-level capture timeout pressure under a strict `30s` budget. In other words, UMC is not just about “remembering better” anymore; it also has to become faster and more reproducible under bounded evaluation budgets.
 
 ## Three User-Facing Promises
 

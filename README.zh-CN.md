@@ -20,7 +20,7 @@
 - Stage 9 guarded opt-in A/B：baseline `5 / 5`、shadow `5 / 5`、guarded `5 / 5`，guarded applied `2 / 5`，average guarded prompt reduction ratio `0.0424`
 - 普通对话实时写记忆专项 A/B：
   - 宿主 live：`current=38`、`legacy=21`、`UMC-only=18`
-  - Docker hermetic（`30s` turn budget）：`current=3`、`legacy=0`、`UMC-only=3`、`both-fail=37`
+  - Docker hermetic 快路径（`30s` turn budget）：`current=0`、`legacy=0`、`UMC-only=0`、`both-fail=40`
 
 建议先看这两份：
 
@@ -32,7 +32,7 @@
 - [普通对话实时写记忆专项对比](reports/generated/openclaw-ordinary-conversation-memory-intent-ab-2026-04-16.md)
 - [普通对话 Docker 隔离复测总结](reports/generated/openclaw-ordinary-conversation-memory-intent-docker-rerun-2026-04-17.md)
 
-最诚实的结论是：OpenClaw 内置记忆在很多“已有记忆消费”的简单题上本来就不差，所以旧的 `100` 条 A/B 差异不大；而在“普通对话里实时写入，再跨会话召回”这条线上，宿主 live 结果显示 Unified Memory Core 有明显优势，但 Docker hermetic 复测又证明这条优势目前会被 answer-level timeout 严重吞掉。也就是说，UMC 现在不只是要“记得更好”，还要把这条写侧能力做得更快、更稳、更可复现。
+最诚实的结论是：OpenClaw 内置记忆在很多“已有记忆消费”的简单题上本来就不差，所以旧的 `100` 条 A/B 差异不大；而在“普通对话里实时写入，再跨会话召回”这条线上，宿主 live 结果显示 Unified Memory Core 有明显优势，但最新的 Docker hermetic 快路径又证明这条面现在会被 answer-level capture timeout 严重吞掉。也就是说，UMC 现在不只是要“记得更好”，还要把这条写侧能力做得更快、更稳、更可复现。
 
 ## 三个用户价值
 

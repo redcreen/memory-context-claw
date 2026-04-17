@@ -4,6 +4,7 @@ import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { spawn } from "node:child_process";
+import { createHash, randomUUID } from "node:crypto";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 import { extractJsonPayload } from "../src/retrieval.js";
@@ -14,6 +15,9 @@ const date = new Date().toISOString().slice(0, 10);
 const repoRoot = path.resolve(__dirname, "..");
 const defaultCasesPath = path.resolve(__dirname, "../evals/openclaw-ordinary-conversation-memory-intent-ab-cases.js");
 const defaultFixtureRoot = path.resolve(__dirname, "../evals/openclaw-ordinary-conversation-fixture");
+const defaultTemplateCacheRoot = path.resolve(repoRoot, ".cache", "openclaw-ordinary-state-templates");
+const ordinaryStateTemplateVersion = "v3";
+const ordinaryTemplateWarmupMessage = "What repository is this workspace for? Answer in one short sentence.";
 
 function normalizeString(value, fallback = "") {
   if (typeof value !== "string") {
@@ -33,6 +37,15 @@ function parseArgs(argv) {
     agentModel: normalizeString(process.env.UMC_EVAL_AGENT_MODEL),
     preset: normalizeString(process.env.UMC_EVAL_PRESET, "safe-local"),
     casesPath: defaultCasesPath,
+    templateCacheRoot: path.resolve(
+      repoRoot,
+      normalizeString(process.env.UMC_EVAL_TEMPLATE_CACHE_ROOT, defaultTemplateCacheRoot)
+    ),
+    refreshTemplateCache: normalizeString(process.env.UMC_EVAL_REFRESH_TEMPLATE_CACHE) === "1",
+    keepState: normalizeString(process.env.UMC_EVAL_KEEP_STATE) === "1",
+    fastFailCapture: normalizeString(process.env.UMC_EVAL_FAST_FAIL_CAPTURE, "1") !== "0",
+    shardSize: Number(normalizeString(process.env.UMC_EVAL_SHARD_SIZE, "10")) || 10,
+    shardCount: Number(normalizeString(process.env.UMC_EVAL_SHARD_COUNT, "4")) || 4,
     maxCases: 0,
     only: [],
     timeoutMs: 90_000,
@@ -52,6 +65,12 @@ function parseArgs(argv) {
     else if (arg === "--agent-model") args.agentModel = String(argv[++index] || args.agentModel);
     else if (arg === "--preset") args.preset = String(argv[++index] || args.preset);
     else if (arg === "--cases") args.casesPath = path.resolve(repoRoot, argv[++index]);
+    else if (arg === "--template-cache-root") args.templateCacheRoot = path.resolve(repoRoot, argv[++index]);
+    else if (arg === "--refresh-template-cache") args.refreshTemplateCache = true;
+    else if (arg === "--keep-state") args.keepState = true;
+    else if (arg === "--no-fast-fail-capture") args.fastFailCapture = false;
+    else if (arg === "--shard-size") args.shardSize = Number(argv[++index] || args.shardSize);
+    else if (arg === "--shard-count") args.shardCount = Number(argv[++index] || args.shardCount);
     else if (arg === "--max-cases") args.maxCases = Number(argv[++index] || 0);
     else if (arg === "--only") args.only = String(argv[++index] || "").split(",").map((item) => item.trim()).filter(Boolean);
     else if (arg === "--timeout-ms") args.timeoutMs = Number(argv[++index] || args.timeoutMs);
@@ -86,6 +105,62 @@ async function copyRecursive(sourcePath, targetPath) {
   }
   await fs.mkdir(path.dirname(targetPath), { recursive: true });
   await fs.copyFile(sourcePath, targetPath);
+}
+
+async function listRelativeFiles(rootPath) {
+  const files = [];
+
+  async function walk(currentPath) {
+    const entries = await fs.readdir(currentPath, { withFileTypes: true });
+    entries.sort((a, b) => a.name.localeCompare(b.name));
+    for (const entry of entries) {
+      const fullPath = path.join(currentPath, entry.name);
+      const relativePath = path.relative(rootPath, fullPath);
+      if (entry.isDirectory()) {
+        await walk(fullPath);
+        continue;
+      }
+      const stat = await fs.stat(fullPath);
+      files.push({
+        path: relativePath,
+        size: stat.size,
+        mtimeMs: Math.trunc(stat.mtimeMs)
+      });
+    }
+  }
+
+  await walk(rootPath);
+  return files;
+}
+
+async function buildOrdinaryTemplateCacheKey(args, includeUMC) {
+  const fixtureFiles = await listRelativeFiles(args.fixtureRoot);
+  let authSignature = null;
+  if (args.authProfilesPath) {
+    const stat = await fs.stat(args.authProfilesPath);
+    authSignature = {
+      path: path.resolve(args.authProfilesPath),
+      size: stat.size,
+      mtimeMs: Math.trunc(stat.mtimeMs)
+    };
+  }
+
+  const payload = {
+    version: ordinaryStateTemplateVersion,
+    includeUMC,
+    agentId: args.agentId,
+    preset: args.preset,
+    agentModel: args.agentModel,
+    fixtureRoot: path.resolve(args.fixtureRoot),
+    fixtureFiles,
+    authSignature,
+    pluginPath: path.resolve(args.pluginPath)
+  };
+
+  return createHash("sha1")
+    .update(JSON.stringify(payload))
+    .digest("hex")
+    .slice(0, 16);
 }
 
 function includesAny(text, patterns = []) {
@@ -207,6 +282,92 @@ function summarizeIsolation(results) {
   };
 }
 
+function createTimingBucket() {
+  return {
+    runs: 0,
+    cloneMs: 0,
+    captureMs: 0,
+    captureWaitMs: 0,
+    sessionClearMs: 0,
+    recallMs: 0,
+    cleanupMs: 0,
+    totalCaseMs: 0,
+    captureTimeouts: 0,
+    recallTimeouts: 0,
+    maxCloneMs: 0,
+    maxCaptureMs: 0,
+    maxCaptureWaitMs: 0,
+    maxSessionClearMs: 0,
+    maxRecallMs: 0,
+    maxCleanupMs: 0,
+    maxTotalCaseMs: 0
+  };
+}
+
+function applyRunTimings(bucket, run) {
+  if (!run) {
+    return;
+  }
+
+  const timings = run.timings || {};
+  bucket.runs += 1;
+
+  for (const key of [
+    "cloneMs",
+    "captureMs",
+    "captureWaitMs",
+    "sessionClearMs",
+    "recallMs",
+    "cleanupMs",
+    "totalCaseMs"
+  ]) {
+    const value = Number(timings[key] || 0);
+    bucket[key] += value;
+    const maxKey = `max${key[0].toUpperCase()}${key.slice(1)}`;
+    bucket[maxKey] = Math.max(bucket[maxKey], value);
+  }
+
+  if (String(run.captureError || "").includes("timeout")) {
+    bucket.captureTimeouts += 1;
+  }
+  if (String(run.error || "").includes("timeout")) {
+    bucket.recallTimeouts += 1;
+  }
+}
+
+function finalizeTimingBucket(bucket) {
+  const divisor = Math.max(1, bucket.runs);
+  return {
+    ...bucket,
+    avgCloneMs: Math.round(bucket.cloneMs / divisor),
+    avgCaptureMs: Math.round(bucket.captureMs / divisor),
+    avgCaptureWaitMs: Math.round(bucket.captureWaitMs / divisor),
+    avgSessionClearMs: Math.round(bucket.sessionClearMs / divisor),
+    avgRecallMs: Math.round(bucket.recallMs / divisor),
+    avgCleanupMs: Math.round(bucket.cleanupMs / divisor),
+    avgTotalCaseMs: Math.round(bucket.totalCaseMs / divisor)
+  };
+}
+
+function summarizeTimings(results, environment = {}) {
+  const legacy = createTimingBucket();
+  const current = createTimingBucket();
+
+  for (const item of results) {
+    applyRunTimings(legacy, item.legacy);
+    applyRunTimings(current, item.current);
+  }
+
+  return {
+    templatePrepMs: {
+      legacy: Number(environment.legacyBaseStatePrepMs || 0),
+      current: Number(environment.currentBaseStatePrepMs || 0)
+    },
+    legacy: finalizeTimingBucket(legacy),
+    current: finalizeTimingBucket(current)
+  };
+}
+
 function summarizeResults(results) {
   const byLanguage = {
     en: createOutcomeBucket(),
@@ -281,14 +442,23 @@ function renderMarkdown(report) {
   lines.push(`- currentCaptureObserved: \`${report.summary.captureObserved}\``);
   lines.push(`- phaseOrder: \`legacy first -> delete isolated legacy state -> current second\``);
   lines.push(`- executionEnvironment: \`${report.environment.executionEnvironment}\``);
+  lines.push(`- shardCount: \`${report.environment.shardCount}\``);
+  lines.push(`- fastFailCapture: \`${report.environment.fastFailCapture === true}\``);
   if (report.environment.dockerImage) {
     lines.push(`- dockerImage: \`${report.environment.dockerImage}\``);
+  }
+  if (report.environment.totalWallClockMs > 0) {
+    lines.push(`- totalWallClockMs: \`${report.environment.totalWallClockMs}\``);
   }
   lines.push("");
   lines.push("## Method");
   lines.push("");
   lines.push("- Each case runs a real `openclaw agent --local` capture turn, then prunes session transcripts before the recall turn.");
   lines.push("- The benchmark does not interleave systems case-by-case. It runs all `legacy builtin` cases first in isolated temp state roots, deletes those state roots, and only then runs all `current` Unified Memory Core cases in fresh isolated temp state roots.");
+  lines.push("- The runner now prebuilds one hermetic `legacy` base state and one hermetic `current` base state per benchmark run, including fixture copy, auth profile placement, and `openclaw.json` generation.");
+  lines.push("- Those base states are pre-warmed with one low-signal answer turn so later cases start from a steadier answer path without seeding durable benchmark memory.");
+  lines.push("- Each case then clones one of those preconfigured base states instead of regenerating config and directory scaffolding from scratch.");
+  lines.push("- Cases are split into shards and run in parallel inside the same hermetic Docker container, while each case still keeps its own isolated state root.");
   lines.push("- Each case still gets its own isolated state root so earlier cases cannot leak durable memory into later cases.");
   lines.push("- Ordinary-conversation Docker eval does **not** seed from host `~/.openclaw` workspaces or host memory DBs. The only mounted host inputs are the auth profiles file and model/API credentials.");
   lines.push(`- State roots are built from the repo fixture root \`${report.environment.fixtureRoot}\`, which is intentionally empty except for tracked scaffold files; no prior memory is preloaded.`);
@@ -308,6 +478,23 @@ function renderMarkdown(report) {
   lines.push(`- cleanupFailed: \`${report.summary.isolation.cleanupFailed}\``);
   lines.push(`- sessionClearOk: \`${report.summary.isolation.sessionClearOk}\``);
   lines.push(`- sessionClearFailed: \`${report.summary.isolation.sessionClearFailed}\``);
+  if (report.environment.baseStateReuse === true) {
+    lines.push(`- baseStateReuse: \`true\``);
+    lines.push(`- legacyBaseStateKey: \`${report.environment.legacyBaseStateKey}\``);
+    lines.push(`- currentBaseStateKey: \`${report.environment.currentBaseStateKey}\``);
+    lines.push(`- templateCacheRoot: \`${report.environment.templateCacheRoot}\``);
+    lines.push(`- templateCacheHits: legacy=\`${report.environment.templateCacheHits?.legacy === true}\`, current=\`${report.environment.templateCacheHits?.current === true}\``);
+  }
+  lines.push("");
+  lines.push("## Phase Timing");
+  lines.push("");
+  lines.push(`- templatePrepMs: legacy=\`${report.timing.templatePrepMs.legacy}\`, current=\`${report.timing.templatePrepMs.current}\``);
+  lines.push(`- legacy avg(ms): clone=\`${report.timing.legacy.avgCloneMs}\`, capture=\`${report.timing.legacy.avgCaptureMs}\`, wait=\`${report.timing.legacy.avgCaptureWaitMs}\`, sessionClear=\`${report.timing.legacy.avgSessionClearMs}\`, recall=\`${report.timing.legacy.avgRecallMs}\`, cleanup=\`${report.timing.legacy.avgCleanupMs}\`, total=\`${report.timing.legacy.avgTotalCaseMs}\``);
+  lines.push(`- legacy max(ms): clone=\`${report.timing.legacy.maxCloneMs}\`, capture=\`${report.timing.legacy.maxCaptureMs}\`, wait=\`${report.timing.legacy.maxCaptureWaitMs}\`, sessionClear=\`${report.timing.legacy.maxSessionClearMs}\`, recall=\`${report.timing.legacy.maxRecallMs}\`, cleanup=\`${report.timing.legacy.maxCleanupMs}\`, total=\`${report.timing.legacy.maxTotalCaseMs}\``);
+  lines.push(`- legacy timeouts: capture=\`${report.timing.legacy.captureTimeouts}\`, recall=\`${report.timing.legacy.recallTimeouts}\``);
+  lines.push(`- current avg(ms): clone=\`${report.timing.current.avgCloneMs}\`, capture=\`${report.timing.current.avgCaptureMs}\`, wait=\`${report.timing.current.avgCaptureWaitMs}\`, sessionClear=\`${report.timing.current.avgSessionClearMs}\`, recall=\`${report.timing.current.avgRecallMs}\`, cleanup=\`${report.timing.current.avgCleanupMs}\`, total=\`${report.timing.current.avgTotalCaseMs}\``);
+  lines.push(`- current max(ms): clone=\`${report.timing.current.maxCloneMs}\`, capture=\`${report.timing.current.maxCaptureMs}\`, wait=\`${report.timing.current.maxCaptureWaitMs}\`, sessionClear=\`${report.timing.current.maxSessionClearMs}\`, recall=\`${report.timing.current.maxRecallMs}\`, cleanup=\`${report.timing.current.maxCleanupMs}\`, total=\`${report.timing.current.maxTotalCaseMs}\``);
+  lines.push(`- current timeouts: capture=\`${report.timing.current.captureTimeouts}\`, recall=\`${report.timing.current.recallTimeouts}\``);
   lines.push("");
   lines.push("- Interpretation:");
   lines.push("  - `duplicateStateRoots = 0` means every legacy/current run used a distinct temp OpenClaw state root.");
@@ -355,6 +542,14 @@ function renderMarkdown(report) {
   lines.push("- This suite is intentionally different from the earlier 100-case A/B: it tests live ordinary-conversation writing and then removes session transcripts before recall.");
   lines.push("- That makes it the first direct probe of whether ordinary conversation itself can create durable recallable memory rather than merely improving consumption of an existing fixture.");
   return `${lines.join("\n")}\n`;
+}
+
+function shardCases(cases, count) {
+  const shards = Array.from({ length: count }, () => []);
+  for (let index = 0; index < cases.length; index += 1) {
+    shards[index % count].push(cases[index]);
+  }
+  return shards.filter((items) => items.length > 0);
 }
 
 async function writeText(filePath, text) {
@@ -538,6 +733,10 @@ function buildOrdinaryConfig({
 
 async function createEvalStateDir(args, includeUMC) {
   const tempRoot = await fs.mkdtemp(path.join(os.tmpdir(), includeUMC ? "umc-ordinary-current-" : "umc-ordinary-legacy-"));
+  return await materializeEvalStateDir(args, includeUMC, tempRoot);
+}
+
+async function materializeEvalStateDir(args, includeUMC, tempRoot) {
   const agentDir = path.join(tempRoot, "agents", args.agentId, "agent");
   const workspaceDir = path.join(tempRoot, "workspace");
   const registryDir = path.join(tempRoot, "registry");
@@ -568,6 +767,81 @@ async function createEvalStateDir(args, includeUMC) {
   };
 }
 
+async function cloneEvalStateDir(baseStateDir, prefix) {
+  const targetDir = path.join(os.tmpdir(), `${prefix}${randomUUID()}`);
+  await fs.cp(baseStateDir, targetDir, {
+    recursive: true,
+    force: true
+  });
+  return targetDir;
+}
+
+async function ensureCachedEvalBaseState(args, includeUMC) {
+  const cacheKey = await buildOrdinaryTemplateCacheKey(args, includeUMC);
+  const modeName = includeUMC ? "current" : "legacy";
+  const stateDir = path.join(args.templateCacheRoot, `${modeName}-${cacheKey}`);
+  const metaPath = path.join(stateDir, ".umc-template-meta.json");
+
+  if (args.refreshTemplateCache) {
+    await fs.rm(stateDir, { recursive: true, force: true }).catch(() => {});
+  }
+
+  try {
+    await fs.access(metaPath);
+    return {
+      stateDir,
+      registryDir: path.join(stateDir, "registry"),
+      baseStateRootKey: path.basename(stateDir),
+      baseRegistryRootKey: path.relative(os.tmpdir(), path.join(stateDir, "registry")),
+      cacheHit: true
+    };
+  } catch {
+    // build below
+  }
+
+  const buildDir = path.join(args.templateCacheRoot, `${modeName}-${cacheKey}.build-${randomUUID()}`);
+  await fs.mkdir(args.templateCacheRoot, { recursive: true });
+  const built = await materializeEvalStateDir(args, includeUMC, buildDir);
+  const warmup = await runAgentTurn({
+    stateDir: built.stateDir,
+    agentId: args.agentId,
+    sessionId: `template-prewarm-${modeName}`,
+    message: ordinaryTemplateWarmupMessage,
+    timeoutMs: Math.max(args.timeoutMs, 120_000)
+  });
+  await clearSessionArtifacts(built.stateDir, args.agentId);
+  if (includeUMC) {
+    await resetRegistryDir(built.registryDir);
+  }
+  await writeText(
+    metaPath.replace(stateDir, buildDir),
+    `${JSON.stringify({
+      version: ordinaryStateTemplateVersion,
+      includeUMC,
+      builtAt: new Date().toISOString(),
+      fixtureRoot: path.resolve(args.fixtureRoot),
+      pluginPath: path.resolve(args.pluginPath),
+      authProfilesPath: normalizeString(args.authProfilesPath),
+      agentModel: normalizeString(args.agentModel),
+      warmup: {
+        ok: warmup?.ok === true,
+        error: warmup?.error || "",
+        answer: warmup?.answer || ""
+      }
+    }, null, 2)}\n`
+  );
+  await fs.rm(stateDir, { recursive: true, force: true }).catch(() => {});
+  await fs.rename(buildDir, stateDir);
+
+  return {
+    stateDir,
+    registryDir: path.join(stateDir, "registry"),
+    baseStateRootKey: path.basename(stateDir),
+    baseRegistryRootKey: path.relative(os.tmpdir(), path.join(stateDir, "registry")),
+    cacheHit: false
+  };
+}
+
 async function clearSessionArtifacts(stateDir, agentId) {
   const sessionsDir = path.join(stateDir, "agents", agentId, "sessions");
   try {
@@ -589,6 +863,15 @@ async function removeStateDir(stateDir) {
   } catch {
     // best effort
   }
+}
+
+async function resetRegistryDir(registryDir) {
+  try {
+    await fs.rm(registryDir, { recursive: true, force: true });
+  } catch {
+    // best effort
+  }
+  await fs.mkdir(registryDir, { recursive: true });
 }
 
 async function pathMissing(targetPath) {
@@ -691,14 +974,27 @@ async function runAgentTurn({ stateDir, agentId, sessionId, message, timeoutMs }
   };
 }
 
-async function runCaseForMode(caseDef, args, includeUMC) {
-  const state = await createEvalStateDir(args, includeUMC);
+async function runCaseForMode(caseDef, args, includeUMC, baseState) {
+  const caseStartedAt = Date.now();
+  const cloneStartedAt = Date.now();
+  const stateDir = await cloneEvalStateDir(
+    baseState.stateDir,
+    includeUMC ? "umc-ordinary-current-case-" : "umc-ordinary-legacy-case-"
+  );
+  const cloneMs = Date.now() - cloneStartedAt;
+  const state = {
+    stateDir,
+    registryDir: path.join(stateDir, "registry"),
+    stateRootKey: path.basename(stateDir),
+    registryRootKey: path.relative(os.tmpdir(), path.join(stateDir, "registry"))
+  };
   let output = null;
 
   try {
     const recordsSizeBefore = includeUMC
       ? await fileSizeOrZero(path.join(state.registryDir, "records.jsonl"))
       : 0;
+    const captureStartedAt = Date.now();
     const capture = await runAgentTurn({
       stateDir: state.stateDir,
       agentId: args.agentId,
@@ -706,36 +1002,73 @@ async function runCaseForMode(caseDef, args, includeUMC) {
       message: caseDef.captureMessage,
       timeoutMs: args.timeoutMs
     });
-    const captureObserved = includeUMC && caseDef.category !== "one_off_instruction"
-      ? await waitForRegistryWrite(state.registryDir, recordsSizeBefore, args.capturePollMs)
-      : false;
+    const captureMs = Date.now() - captureStartedAt;
+    const captureFailed = capture.ok !== true;
+    let captureObserved = false;
+    let captureWaitMs = 0;
+    if (!captureFailed) {
+      const captureWaitStartedAt = Date.now();
+      captureObserved = includeUMC && caseDef.category !== "one_off_instruction"
+        ? await waitForRegistryWrite(state.registryDir, recordsSizeBefore, args.capturePollMs)
+        : false;
+      captureWaitMs = Date.now() - captureWaitStartedAt;
+    }
+    const sessionClearStartedAt = Date.now();
     await clearSessionArtifacts(state.stateDir, args.agentId);
+    const sessionClearMs = Date.now() - sessionClearStartedAt;
     const sessionClearOk = await pathMissing(path.join(state.stateDir, "agents", args.agentId, "sessions", `${caseDef.id}-capture.jsonl`));
-    const recall = await runAgentTurn({
-      stateDir: state.stateDir,
-      agentId: args.agentId,
-      sessionId: `${caseDef.id}-recall`,
-      message: caseDef.recallMessage,
-      timeoutMs: args.timeoutMs
-    });
+    let recall = {
+      ok: false,
+      error: "skipped_due_to_capture_failure",
+      answer: ""
+    };
+    let recallMs = 0;
+    if (!(captureFailed && args.fastFailCapture)) {
+      const recallStartedAt = Date.now();
+      recall = await runAgentTurn({
+        stateDir: state.stateDir,
+        agentId: args.agentId,
+        sessionId: `${caseDef.id}-recall`,
+        message: caseDef.recallMessage,
+        timeoutMs: args.timeoutMs
+      });
+      recallMs = Date.now() - recallStartedAt;
+    }
     const evaluation = evaluateCase(caseDef, recall);
     output = {
       ...evaluation,
       captureObserved,
       sessionClearOk,
       captureAnswer: capture.answer || "",
+      captureError: capture.error || "",
+      fastFailedAfterCapture: captureFailed && args.fastFailCapture,
       answer: recall.answer || "",
       error: recall.error || "",
       stateRootKey: state.stateRootKey,
       registryRootKey: includeUMC ? state.registryRootKey : "",
-      cleanupOk: false
+      cleanupOk: false,
+      timings: {
+        cloneMs,
+        captureMs,
+        captureWaitMs,
+        sessionClearMs,
+        recallMs,
+        cleanupMs: 0,
+        totalCaseMs: 0
+      }
     };
     return output;
   } finally {
-    await removeStateDir(state.stateDir);
-    const cleanupOk = await pathMissing(state.stateDir);
+    const cleanupStartedAt = Date.now();
+    if (!args.keepState) {
+      await removeStateDir(state.stateDir);
+    }
+    const cleanupMs = Date.now() - cleanupStartedAt;
+    const cleanupOk = args.keepState ? true : await pathMissing(state.stateDir);
     if (output) {
       output.cleanupOk = cleanupOk;
+      output.timings.cleanupMs = cleanupMs;
+      output.timings.totalCaseMs = Date.now() - caseStartedAt;
     }
   }
 }
@@ -748,26 +1081,55 @@ async function main() {
     : importedCases;
   const selectedCases = args.maxCases > 0 ? filteredCases.slice(0, args.maxCases) : filteredCases;
   const results = selectedCases.map((item) => ({ ...item }));
+  const startedAt = Date.now();
 
-  for (let index = 0; index < selectedCases.length; index += 1) {
-    const caseDef = selectedCases[index];
-    process.stderr.write(`[ordinary-ab][legacy] ${index + 1}/${selectedCases.length} start ${caseDef.id}\n`);
-    // eslint-disable-next-line no-await-in-loop
-    const legacy = await runCaseForMode(caseDef, args, false);
-    results[index].legacy = legacy;
-    process.stderr.write(`[ordinary-ab][legacy] ${index + 1}/${selectedCases.length} done ${caseDef.id} passed=${legacy.passed === true}\n`);
+  const legacyBaseStateStartedAt = Date.now();
+  const legacyBaseState = await ensureCachedEvalBaseState(args, false);
+  const legacyBaseStatePrepMs = Date.now() - legacyBaseStateStartedAt;
+  const currentBaseStateStartedAt = Date.now();
+  const currentBaseState = await ensureCachedEvalBaseState(args, true);
+  const currentBaseStatePrepMs = Date.now() - currentBaseStateStartedAt;
+  const effectiveShardCount = Math.min(
+    Math.max(1, args.shardCount),
+    Math.max(1, Math.ceil(selectedCases.length / Math.max(1, args.shardSize)))
+  );
+  const shards = shardCases(selectedCases, effectiveShardCount);
+  const resultMap = new Map(results.map((item) => [item.id, item]));
+
+  async function runShardCases(items, includeUMC, baseState) {
+    const modeName = includeUMC ? "current" : "legacy";
+    for (let index = 0; index < items.length; index += 1) {
+      const caseDef = items[index];
+      process.stderr.write(`[ordinary-ab][${modeName}] shard-case ${index + 1}/${items.length} start ${caseDef.id}\n`);
+      // eslint-disable-next-line no-await-in-loop
+      const run = await runCaseForMode(caseDef, args, includeUMC, baseState);
+      const target = resultMap.get(caseDef.id);
+      target[modeName] = run;
+      if (includeUMC) {
+        process.stderr.write(
+          `[ordinary-ab][${modeName}] shard-case ${index + 1}/${items.length} done ${caseDef.id} outcome=${classifyOutcome(target)} current=${run.passed === true} legacy=${target.legacy?.passed === true}\n`
+        );
+      } else {
+        process.stderr.write(
+          `[ordinary-ab][${modeName}] shard-case ${index + 1}/${items.length} done ${caseDef.id} passed=${run.passed === true}\n`
+        );
+      }
+    }
   }
 
-  for (let index = 0; index < selectedCases.length; index += 1) {
-    const caseDef = selectedCases[index];
-    process.stderr.write(`[ordinary-ab][current] ${index + 1}/${selectedCases.length} start ${caseDef.id}\n`);
-    // eslint-disable-next-line no-await-in-loop
-    const current = await runCaseForMode(caseDef, args, true);
-    results[index].current = current;
-    process.stderr.write(
-      `[ordinary-ab][current] ${index + 1}/${selectedCases.length} done ${caseDef.id} outcome=${classifyOutcome(results[index])} current=${current.passed === true} legacy=${results[index].legacy?.passed === true}\n`
-    );
-  }
+  await Promise.all(
+    shards.map((items, index) => {
+      process.stderr.write(`[ordinary-ab][legacy] shard ${index + 1}/${shards.length} cases=${items.length}\n`);
+      return runShardCases(items, false, legacyBaseState);
+    })
+  );
+
+  await Promise.all(
+    shards.map((items, index) => {
+      process.stderr.write(`[ordinary-ab][current] shard ${index + 1}/${shards.length} cases=${items.length}\n`);
+      return runShardCases(items, true, currentBaseState);
+    })
+  );
 
   const report = {
     generatedAt: new Date().toISOString(),
@@ -780,8 +1142,25 @@ async function main() {
       fixtureRoot: args.fixtureRoot,
       pluginPath: args.pluginPath,
       authProfilesPath: args.authProfilesPath ? "(mounted auth profiles)" : "(none)",
-      hostSeededFromHome: false
+      hostSeededFromHome: false,
+      shardCount: shards.length,
+      fastFailCapture: args.fastFailCapture,
+      totalWallClockMs: Date.now() - startedAt,
+      baseStateReuse: true,
+      legacyBaseStateKey: legacyBaseState.baseStateRootKey,
+      currentBaseStateKey: currentBaseState.baseStateRootKey,
+      templateCacheRoot: args.templateCacheRoot,
+      legacyBaseStatePrepMs,
+      currentBaseStatePrepMs,
+      templateCacheHits: {
+        legacy: legacyBaseState.cacheHit === true,
+        current: currentBaseState.cacheHit === true
+      }
     },
+    timing: summarizeTimings(results, {
+      legacyBaseStatePrepMs,
+      currentBaseStatePrepMs
+    }),
     summary: summarizeResults(results),
     results
   };

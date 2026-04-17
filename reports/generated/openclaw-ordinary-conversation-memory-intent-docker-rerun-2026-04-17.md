@@ -2,7 +2,7 @@
 
 - generatedAt: `2026-04-17`
 - scope: focused `40`-case ordinary-conversation realtime-write A/B rerun under Docker hermetic isolation
-- detailed per-case report: [openclaw-ordinary-conversation-memory-intent-ab-2026-04-16.md](openclaw-ordinary-conversation-memory-intent-ab-2026-04-16.md)
+- detailed per-case report: [openclaw-ordinary-conversation-memory-intent-ab-2026-04-17.md](openclaw-ordinary-conversation-memory-intent-ab-2026-04-17.md)
 
 ## Why This Rerun Exists
 
@@ -57,31 +57,25 @@ So the root question now has a clean answer:
 
 Focused `40`-case realtime-write result under Docker:
 
-- current: `3 / 40`
+- current: `0 / 40`
 - legacy: `0 / 40`
 - both pass: `0`
-- UMC-only: `3`
+- UMC-only: `0`
 - legacy-only: `0`
-- both fail: `37`
+- both fail: `40`
 
 Language split:
 
-- English: current `1 / 20`, legacy `0 / 20`
-- Chinese: current `2 / 20`, legacy `0 / 20`
+- English: current `0 / 20`, legacy `0 / 20`
+- Chinese: current `0 / 20`, legacy `0 / 20`
 
 Category split:
 
-- durable_rule: current `2 / 8`, legacy `0 / 8`
+- durable_rule: current `0 / 8`, legacy `0 / 8`
 - tool_routing_preference: current `0 / 8`, legacy `0 / 8`
-- user_profile_fact: current `1 / 8`, legacy `0 / 8`
+- user_profile_fact: current `0 / 8`, legacy `0 / 8`
 - session_constraint: current `0 / 8`, legacy `0 / 8`
 - one_off_instruction: current `0 / 8`, legacy `0 / 8`
-
-The three reproducible UMC-only wins were:
-
-- `ordinary-ab-en-rule-pr-comments-1`
-- `ordinary-ab-zh-rule-hotels-1`
-- `ordinary-ab-zh-seat-1`
 
 ## What Actually Failed
 
@@ -90,7 +84,7 @@ The dominant failure mode was not “wrong memory recall”.
 It was `timeout after 30000ms`:
 
 - legacy: `40 / 40` timed out
-- current: `36 / 40` timed out
+- current: `40 / 40` timed out
 
 That means this rerun changed the main diagnosis:
 
@@ -119,7 +113,7 @@ If the question is:
 
 The answer is:
 
-`Yes, but only modestly under a strict 30s turn budget: 3 cases to 0.`
+`Not on this strict fast path. Under the current 30s Docker budget, both sides now collapse into capture timeout before answer quality can be compared.`
 
 If the question is:
 

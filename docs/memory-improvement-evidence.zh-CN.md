@@ -99,13 +99,13 @@
 - 每个 case 独立 temp state / 独立 registry
 - 每个 capture / recall turn 固定 `30s` timeout budget
 
-这次的 hermetic Docker 结果是：
+这次的 hermetic Docker 快路径结果是：
 
-- current：`3 / 40`
+- current：`0 / 40`
 - legacy：`0 / 40`
-- `UMC-only = 3`
+- `UMC-only = 0`
 - `legacy-only = 0`
-- `both-fail = 37`
+- `both-fail = 40`
 
 按语言拆开：
 
@@ -124,7 +124,7 @@
 
 1. Docker hermetic 现在已经足够干净，可以当作真正的可复现基线。
 2. 在这个基线里，主瓶颈已经变成 answer-level latency，而不是串记忆。
-3. legacy `40 / 40` 都是 `30s` timeout，current `36 / 40` 也是 timeout；也就是说，这一轮 Docker 更像是在测“固定时延预算下谁还能活下来”。
+3. legacy `40 / 40` 和 current `40 / 40` 都是 capture timeout；也就是说，这一轮 Docker 快路径更像是在测“固定时延预算下 answer path 能不能跑完”。
 
 所以这组结果真正说明的是：
 

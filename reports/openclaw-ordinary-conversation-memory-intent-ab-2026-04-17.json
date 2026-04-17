@@ -1,0 +1,2922 @@
+{
+  "generatedAt": "2026-04-17T07:29:02.275Z",
+  "casesPath": "/workspace/evals/openclaw-ordinary-conversation-memory-intent-ab-cases.js",
+  "agentId": "rtab",
+  "sourceAgentId": "main",
+  "environment": {
+    "executionEnvironment": "docker",
+    "dockerImage": "ghcr.io/openclaw/openclaw:2026.4.2",
+    "fixtureRoot": "/workspace/evals/openclaw-ordinary-conversation-fixture",
+    "pluginPath": "/workspace",
+    "authProfilesPath": "(mounted auth profiles)",
+    "hostSeededFromHome": false,
+    "shardCount": 4,
+    "fastFailCapture": true,
+    "totalWallClockMs": 607825,
+    "baseStateReuse": true,
+    "legacyBaseStateKey": "legacy-f49ecaf3f81b17e0",
+    "currentBaseStateKey": "current-e03478cd940d0026",
+    "templateCacheRoot": "/workspace/.cache/openclaw-ordinary-state-templates",
+    "legacyBaseStatePrepMs": 5,
+    "currentBaseStatePrepMs": 1,
+    "templateCacheHits": {
+      "legacy": true,
+      "current": true
+    }
+  },
+  "timing": {
+    "templatePrepMs": {
+      "legacy": 5,
+      "current": 1
+    },
+    "legacy": {
+      "runs": 40,
+      "cloneMs": 6863,
+      "captureMs": 1204461,
+      "captureWaitMs": 0,
+      "sessionClearMs": 212,
+      "recallMs": 0,
+      "cleanupMs": 540,
+      "totalCaseMs": 1212146,
+      "captureTimeouts": 40,
+      "recallTimeouts": 0,
+      "maxCloneMs": 276,
+      "maxCaptureMs": 30177,
+      "maxCaptureWaitMs": 0,
+      "maxSessionClearMs": 33,
+      "maxRecallMs": 0,
+      "maxCleanupMs": 30,
+      "maxTotalCaseMs": 30471,
+      "avgCloneMs": 172,
+      "avgCaptureMs": 30112,
+      "avgCaptureWaitMs": 0,
+      "avgSessionClearMs": 5,
+      "avgRecallMs": 0,
+      "avgCleanupMs": 14,
+      "avgTotalCaseMs": 30304
+    },
+    "current": {
+      "runs": 40,
+      "cloneMs": 6711,
+      "captureMs": 1210965,
+      "captureWaitMs": 0,
+      "sessionClearMs": 471,
+      "recallMs": 0,
+      "cleanupMs": 768,
+      "totalCaseMs": 1219064,
+      "captureTimeouts": 40,
+      "recallTimeouts": 0,
+      "maxCloneMs": 317,
+      "maxCaptureMs": 31421,
+      "maxCaptureWaitMs": 0,
+      "maxSessionClearMs": 53,
+      "maxRecallMs": 0,
+      "maxCleanupMs": 130,
+      "maxTotalCaseMs": 31545,
+      "avgCloneMs": 168,
+      "avgCaptureMs": 30274,
+      "avgCaptureWaitMs": 0,
+      "avgSessionClearMs": 12,
+      "avgRecallMs": 0,
+      "avgCleanupMs": 19,
+      "avgTotalCaseMs": 30477
+    }
+  },
+  "summary": {
+    "total": 40,
+    "currentPassed": 0,
+    "legacyPassed": 0,
+    "bothPass": 0,
+    "umcOnly": 0,
+    "legacyOnly": 0,
+    "bothFail": 40,
+    "byLanguage": {
+      "en": {
+        "total": 20,
+        "currentPassed": 0,
+        "legacyPassed": 0,
+        "bothPass": 0,
+        "umcOnly": 0,
+        "legacyOnly": 0,
+        "bothFail": 20
+      },
+      "zh": {
+        "total": 20,
+        "currentPassed": 0,
+        "legacyPassed": 0,
+        "bothPass": 0,
+        "umcOnly": 0,
+        "legacyOnly": 0,
+        "bothFail": 20
+      }
+    },
+    "byCategory": {
+      "durable_rule": {
+        "total": 8,
+        "currentPassed": 0,
+        "legacyPassed": 0,
+        "bothPass": 0,
+        "umcOnly": 0,
+        "legacyOnly": 0,
+        "bothFail": 8
+      },
+      "tool_routing_preference": {
+        "total": 8,
+        "currentPassed": 0,
+        "legacyPassed": 0,
+        "bothPass": 0,
+        "umcOnly": 0,
+        "legacyOnly": 0,
+        "bothFail": 8
+      },
+      "user_profile_fact": {
+        "total": 8,
+        "currentPassed": 0,
+        "legacyPassed": 0,
+        "bothPass": 0,
+        "umcOnly": 0,
+        "legacyOnly": 0,
+        "bothFail": 8
+      },
+      "session_constraint": {
+        "total": 8,
+        "currentPassed": 0,
+        "legacyPassed": 0,
+        "bothPass": 0,
+        "umcOnly": 0,
+        "legacyOnly": 0,
+        "bothFail": 8
+      },
+      "one_off_instruction": {
+        "total": 8,
+        "currentPassed": 0,
+        "legacyPassed": 0,
+        "bothPass": 0,
+        "umcOnly": 0,
+        "legacyOnly": 0,
+        "bothFail": 8
+      }
+    },
+    "captureObserved": 0,
+    "isolation": {
+      "totalRuns": 80,
+      "uniqueStateRoots": 80,
+      "duplicateStateRoots": 0,
+      "uniqueRegistryRoots": 40,
+      "duplicateRegistryRoots": 0,
+      "cleanupOk": 80,
+      "cleanupFailed": 0,
+      "sessionClearOk": 80,
+      "sessionClearFailed": 0
+    }
+  },
+  "results": [
+    {
+      "expectedAny": [],
+      "expectedAll": [
+        "saffron-releases"
+      ],
+      "forbiddenAny": [
+        "i don't know based on current memory"
+      ],
+      "id": "ordinary-ab-en-rule-releases-1",
+      "language": "en",
+      "category": "durable_rule",
+      "designQuestion": "A user states a long-lived GitHub workflow rule and gives it the keyword `saffron-releases`; after session pruning, the agent should still recall the keyword.",
+      "expectedResult": "It should answer with the keyword `saffron-releases` rather than refusing.",
+      "captureMessage": "From now on, whenever I send a GitHub repository link, use the keyword saffron-releases to remind yourself to check the Releases tab first. Remember this as my default workflow.",
+      "recallMessage": "Based only on your memory for this agent, what keyword should you use when I send a GitHub repository link? If memory is missing, reply exactly: I don't know based on current memory.",
+      "legacy": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-legacy-case-c55fa02a-27af-4d80-b7ed-f5f6b6bd4664",
+        "registryRootKey": "",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 171,
+          "captureMs": 30094,
+          "captureWaitMs": 0,
+          "sessionClearMs": 10,
+          "recallMs": 0,
+          "cleanupMs": 9,
+          "totalCaseMs": 30287
+        }
+      },
+      "current": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-current-case-02bdd030-6347-41c5-8192-5bfd53822ce7",
+        "registryRootKey": "umc-ordinary-current-case-02bdd030-6347-41c5-8192-5bfd53822ce7/registry",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 263,
+          "captureMs": 30139,
+          "captureWaitMs": 0,
+          "sessionClearMs": 2,
+          "recallMs": 0,
+          "cleanupMs": 19,
+          "totalCaseMs": 30429
+        }
+      }
+    },
+    {
+      "expectedAny": [],
+      "expectedAll": [
+        "cedar-comments"
+      ],
+      "forbiddenAny": [
+        "i don't know based on current memory"
+      ],
+      "id": "ordinary-ab-en-rule-pr-comments-1",
+      "language": "en",
+      "category": "durable_rule",
+      "designQuestion": "A user defines a permanent pull-request review rule with the codename `cedar-comments`; recall should return the codename after the session transcript is removed.",
+      "expectedResult": "It should answer with `cedar-comments`.",
+      "captureMessage": "Going forward, any time I send a pull request link, first check unresolved review comments. The codename for that default rule is cedar-comments. Please remember it.",
+      "recallMessage": "Based only on your memory for this agent, what codename should you use for my default pull request review rule? If memory is missing, reply exactly: I don't know based on current memory.",
+      "legacy": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-legacy-case-4d38a3ee-463f-4700-8056-5ab9982ba82c",
+        "registryRootKey": "",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 174,
+          "captureMs": 30088,
+          "captureWaitMs": 0,
+          "sessionClearMs": 10,
+          "recallMs": 0,
+          "cleanupMs": 9,
+          "totalCaseMs": 30282
+        }
+      },
+      "current": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-current-case-a4152749-1137-4001-890d-598a9311a0f6",
+        "registryRootKey": "umc-ordinary-current-case-a4152749-1137-4001-890d-598a9311a0f6/registry",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 263,
+          "captureMs": 30133,
+          "captureWaitMs": 0,
+          "sessionClearMs": 2,
+          "recallMs": 0,
+          "cleanupMs": 10,
+          "totalCaseMs": 30411
+        }
+      }
+    },
+    {
+      "expectedAny": [],
+      "expectedAll": [
+        "silver-headers"
+      ],
+      "forbiddenAny": [
+        "i don't know based on current memory"
+      ],
+      "id": "ordinary-ab-en-rule-csv-1",
+      "language": "en",
+      "category": "durable_rule",
+      "designQuestion": "A user defines a durable CSV review rule with the keyword `silver-headers`; recall should preserve that named rule.",
+      "expectedResult": "It should answer with `silver-headers`.",
+      "captureMessage": "From now on, whenever I ask you to review a CSV export, first compare the column headers before anything else. The keyword for that default workflow is silver-headers. Remember this.",
+      "recallMessage": "Based only on your memory for this agent, what keyword should you use for my default CSV review workflow? If memory is missing, reply exactly: I don't know based on current memory.",
+      "legacy": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-legacy-case-3aa33fe5-ef90-4c7a-a788-e92200911614",
+        "registryRootKey": "",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 176,
+          "captureMs": 30098,
+          "captureWaitMs": 0,
+          "sessionClearMs": 3,
+          "recallMs": 0,
+          "cleanupMs": 13,
+          "totalCaseMs": 30292
+        }
+      },
+      "current": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-current-case-f8692f41-7a5f-43bb-bc15-fa9bd4bbc85e",
+        "registryRootKey": "umc-ordinary-current-case-f8692f41-7a5f-43bb-bc15-fa9bd4bbc85e/registry",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 263,
+          "captureMs": 30144,
+          "captureWaitMs": 0,
+          "sessionClearMs": 14,
+          "recallMs": 0,
+          "cleanupMs": 7,
+          "totalCaseMs": 30432
+        }
+      }
+    },
+    {
+      "expectedAny": [],
+      "expectedAll": [
+        "pine-cancel"
+      ],
+      "forbiddenAny": [
+        "i don't know based on current memory"
+      ],
+      "id": "ordinary-ab-en-rule-hotels-1",
+      "language": "en",
+      "category": "durable_rule",
+      "designQuestion": "A user defines a stable hotel-planning rule with the codename `pine-cancel`; recall should return the codename later.",
+      "expectedResult": "It should answer with `pine-cancel`.",
+      "captureMessage": "Going forward, whenever I ask for hotel options, show me the cancellation policy first. The codename for that default travel rule is pine-cancel. Remember it.",
+      "recallMessage": "Based only on your memory for this agent, what codename should you use for my default hotel-planning rule? If memory is missing, reply exactly: I don't know based on current memory.",
+      "legacy": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-legacy-case-109c622e-e572-4d85-b24b-582257f31dd2",
+        "registryRootKey": "",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 175,
+          "captureMs": 30095,
+          "captureWaitMs": 0,
+          "sessionClearMs": 3,
+          "recallMs": 0,
+          "cleanupMs": 9,
+          "totalCaseMs": 30286
+        }
+      },
+      "current": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-current-case-add08586-ff20-438b-b1d5-a1867ec10d43",
+        "registryRootKey": "umc-ordinary-current-case-add08586-ff20-438b-b1d5-a1867ec10d43/registry",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 263,
+          "captureMs": 30132,
+          "captureWaitMs": 0,
+          "sessionClearMs": 5,
+          "recallMs": 0,
+          "cleanupMs": 10,
+          "totalCaseMs": 30410
+        }
+      }
+    },
+    {
+      "expectedAny": [],
+      "expectedAll": [
+        "amber-card"
+      ],
+      "forbiddenAny": [
+        "i don't know based on current memory"
+      ],
+      "id": "ordinary-ab-en-tool-tag-1",
+      "language": "en",
+      "category": "tool_routing_preference",
+      "designQuestion": "A user gives a persistent Xiaohongshu tool-routing preference and a stable tag; later recall should return the tag.",
+      "expectedResult": "It should answer with `amber-card`.",
+      "captureMessage": "From now on, whenever I send a Xiaohongshu link, use capture_xiaohongshu_note first and tag the result with amber-card. Remember this.",
+      "recallMessage": "Based only on your memory for this agent, what tag should you use after handling one of my Xiaohongshu links? If memory is missing, reply exactly: I don't know based on current memory.",
+      "legacy": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-legacy-case-b92acdc5-9bf3-4a8b-bef8-2c34a73c5608",
+        "registryRootKey": "",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 176,
+          "captureMs": 30132,
+          "captureWaitMs": 0,
+          "sessionClearMs": 6,
+          "recallMs": 0,
+          "cleanupMs": 18,
+          "totalCaseMs": 30333
+        }
+      },
+      "current": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-current-case-7c8e7604-e1a2-4c50-9d6e-1699205a08e0",
+        "registryRootKey": "umc-ordinary-current-case-7c8e7604-e1a2-4c50-9d6e-1699205a08e0/registry",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 309,
+          "captureMs": 30203,
+          "captureWaitMs": 0,
+          "sessionClearMs": 8,
+          "recallMs": 0,
+          "cleanupMs": 8,
+          "totalCaseMs": 30529
+        }
+      }
+    },
+    {
+      "expectedAny": [],
+      "expectedAll": [
+        "olive-thread"
+      ],
+      "forbiddenAny": [
+        "i don't know based on current memory"
+      ],
+      "id": "ordinary-ab-en-tool-slack-1",
+      "language": "en",
+      "category": "tool_routing_preference",
+      "designQuestion": "A user states a durable Slack-thread routing rule with a specific tool and tag; recall should return the tag.",
+      "expectedResult": "It should answer with `olive-thread`.",
+      "captureMessage": "Going forward, whenever I send you a Slack thread URL, use summarize_slack_thread first and mark the result with olive-thread. Please remember that default routing rule.",
+      "recallMessage": "Based only on your memory for this agent, what tag should you use after handling one of my Slack thread URLs? If memory is missing, reply exactly: I don't know based on current memory.",
+      "legacy": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-legacy-case-b9bd4d1e-7064-40db-8d06-f60473c8d256",
+        "registryRootKey": "",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 172,
+          "captureMs": 30141,
+          "captureWaitMs": 0,
+          "sessionClearMs": 3,
+          "recallMs": 0,
+          "cleanupMs": 18,
+          "totalCaseMs": 30338
+        }
+      },
+      "current": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-current-case-8b0c8f82-ded7-4c7d-9de5-74f9cedf5966",
+        "registryRootKey": "umc-ordinary-current-case-8b0c8f82-ded7-4c7d-9de5-74f9cedf5966/registry",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 301,
+          "captureMs": 30106,
+          "captureWaitMs": 0,
+          "sessionClearMs": 1,
+          "recallMs": 0,
+          "cleanupMs": 130,
+          "totalCaseMs": 30539
+        }
+      }
+    },
+    {
+      "expectedAny": [],
+      "expectedAll": [
+        "extract_receipt_fields"
+      ],
+      "forbiddenAny": [
+        "i don't know based on current memory"
+      ],
+      "id": "ordinary-ab-en-tool-receipt-1",
+      "language": "en",
+      "category": "tool_routing_preference",
+      "designQuestion": "A user sets a default tool choice for receipt screenshots; recall should preserve the tool name.",
+      "expectedResult": "It should answer with `extract_receipt_fields`.",
+      "captureMessage": "From now on, whenever I send a receipt screenshot, use extract_receipt_fields first. Remember that as the default tool choice.",
+      "recallMessage": "Based only on your memory for this agent, what tool should you use first when I send a receipt screenshot? If memory is missing, reply exactly: I don't know based on current memory.",
+      "legacy": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-legacy-case-67575121-e9a6-4f3e-abeb-f09eeb4d7135",
+        "registryRootKey": "",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 214,
+          "captureMs": 30091,
+          "captureWaitMs": 0,
+          "sessionClearMs": 4,
+          "recallMs": 0,
+          "cleanupMs": 21,
+          "totalCaseMs": 30330
+        }
+      },
+      "current": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-current-case-15b363db-db6e-400f-a6ea-3a0ac96300d3",
+        "registryRootKey": "umc-ordinary-current-case-15b363db-db6e-400f-a6ea-3a0ac96300d3/registry",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 317,
+          "captureMs": 30193,
+          "captureWaitMs": 0,
+          "sessionClearMs": 6,
+          "recallMs": 0,
+          "cleanupMs": 8,
+          "totalCaseMs": 30528
+        }
+      }
+    },
+    {
+      "expectedAny": [],
+      "expectedAll": [
+        "copper-notion"
+      ],
+      "forbiddenAny": [
+        "i don't know based on current memory"
+      ],
+      "id": "ordinary-ab-en-tool-notion-1",
+      "language": "en",
+      "category": "tool_routing_preference",
+      "designQuestion": "A user defines a durable Notion-export routing rule with a tag; recall should preserve that tag.",
+      "expectedResult": "It should answer with `copper-notion`.",
+      "captureMessage": "Going forward, whenever I send a Notion export package, use parse_notion_export first and tag the result copper-notion. Remember this default workflow.",
+      "recallMessage": "Based only on your memory for this agent, what tag should you use after handling one of my Notion export packages? If memory is missing, reply exactly: I don't know based on current memory.",
+      "legacy": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-legacy-case-9bf6fe50-8bae-4757-880a-8fe69f76c60e",
+        "registryRootKey": "",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 176,
+          "captureMs": 30131,
+          "captureWaitMs": 0,
+          "sessionClearMs": 5,
+          "recallMs": 0,
+          "cleanupMs": 19,
+          "totalCaseMs": 30331
+        }
+      },
+      "current": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-current-case-7441745d-3d61-4eb9-8bcb-f9669781d4d7",
+        "registryRootKey": "umc-ordinary-current-case-7441745d-3d61-4eb9-8bcb-f9669781d4d7/registry",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 295,
+          "captureMs": 30231,
+          "captureWaitMs": 0,
+          "sessionClearMs": 6,
+          "recallMs": 0,
+          "cleanupMs": 11,
+          "totalCaseMs": 30546
+        }
+      }
+    },
+    {
+      "expectedAny": [
+        "asia/shanghai",
+        "gmt+8",
+        "gmt +8",
+        "utc+8",
+        "utc +8"
+      ],
+      "expectedAll": [],
+      "forbiddenAny": [
+        "i don't know based on current memory"
+      ],
+      "id": "ordinary-ab-en-timezone-1",
+      "language": "en",
+      "category": "user_profile_fact",
+      "designQuestion": "A user shares a durable timezone fact for future scheduling; later recall should preserve the timezone.",
+      "expectedResult": "It should answer with `Asia/Shanghai` or an equivalent GMT+8 form.",
+      "captureMessage": "My timezone is Asia/Shanghai. Remember this for future scheduling.",
+      "recallMessage": "Based only on your memory for this agent, what is the user's timezone? If memory is missing, reply exactly: I don't know based on current memory.",
+      "legacy": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-legacy-case-ce4d1f0e-ea7e-4260-a138-3c6f05a6d6a8",
+        "registryRootKey": "",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 114,
+          "captureMs": 30165,
+          "captureWaitMs": 0,
+          "sessionClearMs": 10,
+          "recallMs": 0,
+          "cleanupMs": 10,
+          "totalCaseMs": 30299
+        }
+      },
+      "current": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-current-case-2a77d589-86ad-48ed-a4e0-49fd92add64b",
+        "registryRootKey": "umc-ordinary-current-case-2a77d589-86ad-48ed-a4e0-49fd92add64b/registry",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 158,
+          "captureMs": 30178,
+          "captureWaitMs": 0,
+          "sessionClearMs": 10,
+          "recallMs": 0,
+          "cleanupMs": 24,
+          "totalCaseMs": 30370
+        }
+      }
+    },
+    {
+      "expectedAny": [
+        "oat",
+        "oat-milk",
+        "oat milk"
+      ],
+      "expectedAll": [
+        "flat white",
+        "no sugar"
+      ],
+      "forbiddenAny": [
+        "i don't know based on current memory"
+      ],
+      "id": "ordinary-ab-en-coffee-1",
+      "language": "en",
+      "category": "user_profile_fact",
+      "designQuestion": "A user shares a stable coffee preference; recall should preserve the durable preference details.",
+      "expectedResult": "It should answer with flat white, no sugar, and oat milk.",
+      "captureMessage": "I usually order an oat-milk flat white with no sugar. Remember this.",
+      "recallMessage": "Based only on your memory for this agent, what coffee order should you assume for the user? If memory is missing, reply exactly: I don't know based on current memory.",
+      "legacy": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-legacy-case-6cba27af-20fe-4baf-aa5f-fa1445081968",
+        "registryRootKey": "",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 110,
+          "captureMs": 30169,
+          "captureWaitMs": 0,
+          "sessionClearMs": 7,
+          "recallMs": 0,
+          "cleanupMs": 8,
+          "totalCaseMs": 30297
+        }
+      },
+      "current": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-current-case-03a394a1-6e6c-48f1-8337-f5d69ab9f48c",
+        "registryRootKey": "umc-ordinary-current-case-03a394a1-6e6c-48f1-8337-f5d69ab9f48c/registry",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 144,
+          "captureMs": 30215,
+          "captureWaitMs": 0,
+          "sessionClearMs": 10,
+          "recallMs": 0,
+          "cleanupMs": 15,
+          "totalCaseMs": 30385
+        }
+      }
+    },
+    {
+      "expectedAny": [],
+      "expectedAll": [
+        "async",
+        "written"
+      ],
+      "forbiddenAny": [
+        "i don't know based on current memory"
+      ],
+      "id": "ordinary-ab-en-updates-1",
+      "language": "en",
+      "category": "user_profile_fact",
+      "designQuestion": "A user states a durable communication preference; recall should preserve the preference for async written updates.",
+      "expectedResult": "It should answer with async written updates rather than calls.",
+      "captureMessage": "I prefer async written updates and do not like surprise voice calls. Please remember that preference.",
+      "recallMessage": "Based only on your memory for this agent, what update style does the user prefer? If memory is missing, reply exactly: I don't know based on current memory.",
+      "legacy": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-legacy-case-adc6524f-b360-4d8c-9884-12bd7977e139",
+        "registryRootKey": "",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 112,
+          "captureMs": 30172,
+          "captureWaitMs": 0,
+          "sessionClearMs": 2,
+          "recallMs": 0,
+          "cleanupMs": 12,
+          "totalCaseMs": 30299
+        }
+      },
+      "current": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-current-case-3a09f789-e1d9-4fd7-bcbe-15d7b38ca510",
+        "registryRootKey": "umc-ordinary-current-case-3a09f789-e1d9-4fd7-bcbe-15d7b38ca510/registry",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 156,
+          "captureMs": 30178,
+          "captureWaitMs": 0,
+          "sessionClearMs": 6,
+          "recallMs": 0,
+          "cleanupMs": 21,
+          "totalCaseMs": 30371
+        }
+      }
+    },
+    {
+      "expectedAny": [
+        "front"
+      ],
+      "expectedAll": [
+        "aisle"
+      ],
+      "forbiddenAny": [
+        "i don't know based on current memory"
+      ],
+      "id": "ordinary-ab-en-seat-1",
+      "language": "en",
+      "category": "user_profile_fact",
+      "designQuestion": "A user shares a stable travel preference; recall should preserve the seat preference details.",
+      "expectedResult": "It should answer with an aisle seat and ideally mention the front.",
+      "captureMessage": "When I fly, I prefer an aisle seat near the front. Remember that travel preference.",
+      "recallMessage": "Based only on your memory for this agent, what seat should you assume the user prefers on flights? If memory is missing, reply exactly: I don't know based on current memory.",
+      "legacy": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-legacy-case-79d3b828-86a6-4f08-b6a8-bf55835f1de0",
+        "registryRootKey": "",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 111,
+          "captureMs": 30164,
+          "captureWaitMs": 0,
+          "sessionClearMs": 13,
+          "recallMs": 0,
+          "cleanupMs": 10,
+          "totalCaseMs": 30300
+        }
+      },
+      "current": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-current-case-3b7e06f1-0e98-42e7-a4e0-a011ccf20dc7",
+        "registryRootKey": "umc-ordinary-current-case-3b7e06f1-0e98-42e7-a4e0-a011ccf20dc7/registry",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 141,
+          "captureMs": 30207,
+          "captureWaitMs": 0,
+          "sessionClearMs": 12,
+          "recallMs": 0,
+          "cleanupMs": 15,
+          "totalCaseMs": 30378
+        }
+      }
+    },
+    {
+      "expectedAny": [],
+      "expectedAll": [
+        "i don't know based on current memory"
+      ],
+      "forbiddenAny": [
+        "cobalt-ladder"
+      ],
+      "id": "ordinary-ab-en-session-negative-1",
+      "language": "en",
+      "category": "session_constraint",
+      "designQuestion": "A session-only codename should not become durable memory after transcript pruning.",
+      "expectedResult": "It should refuse and answer `I don't know based on current memory.`",
+      "captureMessage": "For this session only, call the current plan cobalt-ladder and keep replies short.",
+      "recallMessage": "Based only on your memory for this agent, what codename should you permanently use for my current plan? If memory is missing, reply exactly: I don't know based on current memory.",
+      "legacy": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-legacy-case-2304b0da-ea17-4f5b-8851-0eb4ebf72c43",
+        "registryRootKey": "",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 167,
+          "captureMs": 30062,
+          "captureWaitMs": 0,
+          "sessionClearMs": 4,
+          "recallMs": 0,
+          "cleanupMs": 9,
+          "totalCaseMs": 30247
+        }
+      },
+      "current": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-current-case-9a589239-23df-4c2e-ad42-29bc7fdeb176",
+        "registryRootKey": "umc-ordinary-current-case-9a589239-23df-4c2e-ad42-29bc7fdeb176/registry",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 112,
+          "captureMs": 31408,
+          "captureWaitMs": 0,
+          "sessionClearMs": 7,
+          "recallMs": 0,
+          "cleanupMs": 15,
+          "totalCaseMs": 31545
+        }
+      }
+    },
+    {
+      "expectedAny": [],
+      "expectedAll": [
+        "i don't know based on current memory"
+      ],
+      "forbiddenAny": [
+        "linen-board"
+      ],
+      "id": "ordinary-ab-en-session-negative-2",
+      "language": "en",
+      "category": "session_constraint",
+      "designQuestion": "A chat-local dashboard nickname should stay session-scoped and not be treated as durable memory.",
+      "expectedResult": "It should refuse and answer `I don't know based on current memory.`",
+      "captureMessage": "In this chat only, keep replies in bullets and refer to the dashboard as linen-board.",
+      "recallMessage": "Based only on your memory for this agent, what permanent nickname should you use for my dashboard? If memory is missing, reply exactly: I don't know based on current memory.",
+      "legacy": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-legacy-case-0e338c04-880a-42e5-b163-b02b3d3782d6",
+        "registryRootKey": "",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 158,
+          "captureMs": 30080,
+          "captureWaitMs": 0,
+          "sessionClearMs": 1,
+          "recallMs": 0,
+          "cleanupMs": 9,
+          "totalCaseMs": 30249
+        }
+      },
+      "current": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-current-case-c14f4a8d-a32f-4785-a3e1-e64ca7148a2d",
+        "registryRootKey": "umc-ordinary-current-case-c14f4a8d-a32f-4785-a3e1-e64ca7148a2d/registry",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 105,
+          "captureMs": 31406,
+          "captureWaitMs": 0,
+          "sessionClearMs": 6,
+          "recallMs": 0,
+          "cleanupMs": 17,
+          "totalCaseMs": 31538
+        }
+      }
+    },
+    {
+      "expectedAny": [],
+      "expectedAll": [
+        "i don't know based on current memory"
+      ],
+      "forbiddenAny": [
+        "hangzhou"
+      ],
+      "id": "ordinary-ab-en-session-negative-3",
+      "language": "en",
+      "category": "session_constraint",
+      "designQuestion": "A project-local temporary city choice should not turn into durable recallable memory.",
+      "expectedResult": "It should refuse and answer `I don't know based on current memory.`",
+      "captureMessage": "Only in this project, treat the demo city as Hangzhou and keep using that placeholder until we finish this task.",
+      "recallMessage": "Based only on your memory for this agent, what city should you permanently assume for my demos? If memory is missing, reply exactly: I don't know based on current memory.",
+      "legacy": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-legacy-case-c5a70786-0d9e-4f25-827c-2be5933edd9a",
+        "registryRootKey": "",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 156,
+          "captureMs": 30078,
+          "captureWaitMs": 0,
+          "sessionClearMs": 1,
+          "recallMs": 0,
+          "cleanupMs": 9,
+          "totalCaseMs": 30245
+        }
+      },
+      "current": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-current-case-312f35e2-deae-489d-bfc6-d789cdefd2ea",
+        "registryRootKey": "umc-ordinary-current-case-312f35e2-deae-489d-bfc6-d789cdefd2ea/registry",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 101,
+          "captureMs": 31388,
+          "captureWaitMs": 0,
+          "sessionClearMs": 30,
+          "recallMs": 0,
+          "cleanupMs": 15,
+          "totalCaseMs": 31539
+        }
+      }
+    },
+    {
+      "expectedAny": [],
+      "expectedAll": [
+        "i don't know based on current memory"
+      ],
+      "forbiddenAny": [
+        "temporary-releases"
+      ],
+      "id": "ordinary-ab-en-session-negative-4",
+      "language": "en",
+      "category": "session_constraint",
+      "designQuestion": "A session-only GitHub keyword should remain scoped to the current chat and not survive as durable memory.",
+      "expectedResult": "It should refuse and answer `I don't know based on current memory.`",
+      "captureMessage": "For this session only, when I send a GitHub repository link, use the keyword temporary-releases and keep it local to this chat.",
+      "recallMessage": "Based only on your memory for this agent, what permanent keyword should you use for my GitHub repository links? If memory is missing, reply exactly: I don't know based on current memory.",
+      "legacy": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-legacy-case-9900bfde-b361-4528-8325-f28e72012beb",
+        "registryRootKey": "",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 162,
+          "captureMs": 30057,
+          "captureWaitMs": 0,
+          "sessionClearMs": 11,
+          "recallMs": 0,
+          "cleanupMs": 13,
+          "totalCaseMs": 30245
+        }
+      },
+      "current": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-current-case-5794055d-2d97-4f0c-a0dc-150898c52b0c",
+        "registryRootKey": "umc-ordinary-current-case-5794055d-2d97-4f0c-a0dc-150898c52b0c/registry",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 105,
+          "captureMs": 31421,
+          "captureWaitMs": 0,
+          "sessionClearMs": 5,
+          "recallMs": 0,
+          "cleanupMs": 11,
+          "totalCaseMs": 31545
+        }
+      }
+    },
+    {
+      "expectedAny": [],
+      "expectedAll": [
+        "i don't know based on current memory"
+      ],
+      "forbiddenAny": [
+        "oneoff-amber"
+      ],
+      "id": "ordinary-ab-en-oneoff-negative-1",
+      "language": "en",
+      "category": "one_off_instruction",
+      "designQuestion": "A one-off Xiaohongshu routing instruction should not become durable memory.",
+      "expectedResult": "It should refuse and answer `I don't know based on current memory.`",
+      "captureMessage": "Just this once, use capture_xiaohongshu_note first and tag the result oneoff-amber. Do not remember that as my default.",
+      "recallMessage": "Based only on your memory for this agent, what tag should you permanently use after handling my Xiaohongshu links? If memory is missing, reply exactly: I don't know based on current memory.",
+      "legacy": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-legacy-case-ecb7e8d6-d7ff-4ef1-9440-e30eebe881a0",
+        "registryRootKey": "",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 141,
+          "captureMs": 30149,
+          "captureWaitMs": 0,
+          "sessionClearMs": 3,
+          "recallMs": 0,
+          "cleanupMs": 6,
+          "totalCaseMs": 30301
+        }
+      },
+      "current": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-current-case-37fa0c9a-fefd-4e38-aaaf-7e4143a67053",
+        "registryRootKey": "umc-ordinary-current-case-37fa0c9a-fefd-4e38-aaaf-7e4143a67053/registry",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 191,
+          "captureMs": 30173,
+          "captureWaitMs": 0,
+          "sessionClearMs": 3,
+          "recallMs": 0,
+          "cleanupMs": 10,
+          "totalCaseMs": 30380
+        }
+      }
+    },
+    {
+      "expectedAny": [],
+      "expectedAll": [
+        "i don't know based on current memory"
+      ],
+      "forbiddenAny": [
+        "amber-comet"
+      ],
+      "id": "ordinary-ab-en-oneoff-negative-2",
+      "language": "en",
+      "category": "one_off_instruction",
+      "designQuestion": "A single-use draft codename should not be promoted into durable memory.",
+      "expectedResult": "It should refuse and answer `I don't know based on current memory.`",
+      "captureMessage": "Only this time, call the draft amber-comet. Do not remember that codename for later.",
+      "recallMessage": "Based only on your memory for this agent, what codename should you permanently use for my draft? If memory is missing, reply exactly: I don't know based on current memory.",
+      "legacy": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-legacy-case-eb100186-a919-4e37-927b-462d86afb978",
+        "registryRootKey": "",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 143,
+          "captureMs": 30144,
+          "captureWaitMs": 0,
+          "sessionClearMs": 2,
+          "recallMs": 0,
+          "cleanupMs": 6,
+          "totalCaseMs": 30296
+        }
+      },
+      "current": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-current-case-c4e2ef57-9d43-4a94-a5f3-a928caf4592d",
+        "registryRootKey": "umc-ordinary-current-case-c4e2ef57-9d43-4a94-a5f3-a928caf4592d/registry",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 202,
+          "captureMs": 30169,
+          "captureWaitMs": 0,
+          "sessionClearMs": 2,
+          "recallMs": 0,
+          "cleanupMs": 10,
+          "totalCaseMs": 30384
+        }
+      }
+    },
+    {
+      "expectedAny": [],
+      "expectedAll": [
+        "i don't know based on current memory"
+      ],
+      "forbiddenAny": [
+        "narita",
+        "nrt"
+      ],
+      "id": "ordinary-ab-en-oneoff-negative-3",
+      "language": "en",
+      "category": "one_off_instruction",
+      "designQuestion": "A one-off travel assumption should not become a durable default airport fact.",
+      "expectedResult": "It should refuse and answer `I don't know based on current memory.`",
+      "captureMessage": "For today only, assume my default departure airport is Narita while we book this flight. Do not remember that as my usual airport.",
+      "recallMessage": "Based only on your memory for this agent, what airport should you permanently assume as the user's default departure airport? If memory is missing, reply exactly: I don't know based on current memory.",
+      "legacy": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-legacy-case-7d4f7262-2971-4b7f-a50f-2ebd6cdb8be2",
+        "registryRootKey": "",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 163,
+          "captureMs": 30130,
+          "captureWaitMs": 0,
+          "sessionClearMs": 1,
+          "recallMs": 0,
+          "cleanupMs": 8,
+          "totalCaseMs": 30303
+        }
+      },
+      "current": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-current-case-5e60171f-446f-4931-8bfd-16fa0c6628b5",
+        "registryRootKey": "umc-ordinary-current-case-5e60171f-446f-4931-8bfd-16fa0c6628b5/registry",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 200,
+          "captureMs": 30168,
+          "captureWaitMs": 0,
+          "sessionClearMs": 3,
+          "recallMs": 0,
+          "cleanupMs": 10,
+          "totalCaseMs": 30383
+        }
+      }
+    },
+    {
+      "expectedAny": [],
+      "expectedAll": [
+        "i don't know based on current memory"
+      ],
+      "forbiddenAny": [
+        "english bullets",
+        "bullets"
+      ],
+      "id": "ordinary-ab-en-oneoff-negative-4",
+      "language": "en",
+      "category": "one_off_instruction",
+      "designQuestion": "A one-off reply-format instruction should not become the default style in durable memory.",
+      "expectedResult": "It should refuse and answer `I don't know based on current memory.`",
+      "captureMessage": "Just for today, write the status update in English bullets. No need to remember that as my default style.",
+      "recallMessage": "Based only on your memory for this agent, what permanent status-update format should you assume for the user? If memory is missing, reply exactly: I don't know based on current memory.",
+      "legacy": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-legacy-case-d3c21f53-b06d-41fb-8f32-342fda00c831",
+        "registryRootKey": "",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 135,
+          "captureMs": 30122,
+          "captureWaitMs": 0,
+          "sessionClearMs": 7,
+          "recallMs": 0,
+          "cleanupMs": 28,
+          "totalCaseMs": 30293
+        }
+      },
+      "current": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-current-case-044d99e9-6697-439f-87a1-298a82598133",
+        "registryRootKey": "umc-ordinary-current-case-044d99e9-6697-439f-87a1-298a82598133/registry",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 200,
+          "captureMs": 30160,
+          "captureWaitMs": 0,
+          "sessionClearMs": 4,
+          "recallMs": 0,
+          "cleanupMs": 10,
+          "totalCaseMs": 30374
+        }
+      }
+    },
+    {
+      "expectedAny": [],
+      "expectedAll": [
+        "琥珀releases"
+      ],
+      "forbiddenAny": [
+        "i don't know based on current memory"
+      ],
+      "id": "ordinary-ab-zh-rule-releases-1",
+      "language": "zh",
+      "category": "durable_rule",
+      "designQuestion": "用户在普通对话里定义了长期 GitHub 工作流规则，并给出代号 `琥珀Releases`；跨会话后应该还能答出这个代号。",
+      "expectedResult": "应答出 `琥珀Releases`，而不是拒答。",
+      "captureMessage": "以后只要我发 GitHub 仓库链接，你先看 Releases 页面；我把这个默认规则的代号叫做琥珀Releases。记住这个默认规则。",
+      "recallMessage": "只根据当前记忆，只要我发 GitHub 仓库链接，这个默认规则的代号是什么？如果没有这条记忆，就只回答：I don't know based on current memory.",
+      "legacy": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-legacy-case-df4d17ee-22ce-4916-93c0-09e5cc7f518b",
+        "registryRootKey": "",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 135,
+          "captureMs": 30061,
+          "captureWaitMs": 0,
+          "sessionClearMs": 2,
+          "recallMs": 0,
+          "cleanupMs": 9,
+          "totalCaseMs": 30211
+        }
+      },
+      "current": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-current-case-4dbfffde-1374-44c2-aa38-deadc240be85",
+        "registryRootKey": "umc-ordinary-current-case-4dbfffde-1374-44c2-aa38-deadc240be85/registry",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 200,
+          "captureMs": 30092,
+          "captureWaitMs": 0,
+          "sessionClearMs": 7,
+          "recallMs": 0,
+          "cleanupMs": 8,
+          "totalCaseMs": 30312
+        }
+      }
+    },
+    {
+      "expectedAny": [],
+      "expectedAll": [
+        "雪松评论"
+      ],
+      "forbiddenAny": [
+        "i don't know based on current memory"
+      ],
+      "id": "ordinary-ab-zh-rule-pr-comments-1",
+      "language": "zh",
+      "category": "durable_rule",
+      "designQuestion": "用户定义了长期 PR 审阅规则，并把它命名为 `雪松评论`；跨会话后应能召回这个代号。",
+      "expectedResult": "应答出 `雪松评论`。",
+      "captureMessage": "以后只要我发 PR 链接，你先看 unresolved comments；这个默认审阅规则的代号叫做雪松评论。记住它。",
+      "recallMessage": "只根据当前记忆，我默认的 PR 审阅规则代号是什么？如果没有这条记忆，就只回答：I don't know based on current memory.",
+      "legacy": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-legacy-case-c3aadb6c-3626-4ce1-bc3e-8ca6333c85ab",
+        "registryRootKey": "",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 134,
+          "captureMs": 30058,
+          "captureWaitMs": 0,
+          "sessionClearMs": 7,
+          "recallMs": 0,
+          "cleanupMs": 7,
+          "totalCaseMs": 30206
+        }
+      },
+      "current": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-current-case-1364d4cc-42e3-42f4-8da3-b7ee5bb13886",
+        "registryRootKey": "umc-ordinary-current-case-1364d4cc-42e3-42f4-8da3-b7ee5bb13886/registry",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 205,
+          "captureMs": 30104,
+          "captureWaitMs": 0,
+          "sessionClearMs": 1,
+          "recallMs": 0,
+          "cleanupMs": 5,
+          "totalCaseMs": 30321
+        }
+      }
+    },
+    {
+      "expectedAny": [],
+      "expectedAll": [
+        "银表头"
+      ],
+      "forbiddenAny": [
+        "i don't know based on current memory"
+      ],
+      "id": "ordinary-ab-zh-rule-csv-1",
+      "language": "zh",
+      "category": "durable_rule",
+      "designQuestion": "用户定义了长期 CSV 检查规则，并给出关键词 `银表头`；跨会话后应能召回该关键词。",
+      "expectedResult": "应答出 `银表头`。",
+      "captureMessage": "以后只要我让你检查 CSV 导出，你先核对表头；这个默认流程的关键词叫银表头。记住这个规则。",
+      "recallMessage": "只根据当前记忆，我默认的 CSV 检查流程关键词是什么？如果没有这条记忆，就只回答：I don't know based on current memory.",
+      "legacy": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-legacy-case-8339af30-ea49-4a96-8604-a6cc2f671cb5",
+        "registryRootKey": "",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 154,
+          "captureMs": 30054,
+          "captureWaitMs": 0,
+          "sessionClearMs": 2,
+          "recallMs": 0,
+          "cleanupMs": 19,
+          "totalCaseMs": 30230
+        }
+      },
+      "current": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-current-case-160c20bb-a9f6-4718-95b5-7463300b1c13",
+        "registryRootKey": "umc-ordinary-current-case-160c20bb-a9f6-4718-95b5-7463300b1c13/registry",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 210,
+          "captureMs": 30093,
+          "captureWaitMs": 0,
+          "sessionClearMs": 1,
+          "recallMs": 0,
+          "cleanupMs": 6,
+          "totalCaseMs": 30318
+        }
+      }
+    },
+    {
+      "expectedAny": [],
+      "expectedAll": [
+        "松针取消"
+      ],
+      "forbiddenAny": [
+        "i don't know based on current memory"
+      ],
+      "id": "ordinary-ab-zh-rule-hotels-1",
+      "language": "zh",
+      "category": "durable_rule",
+      "designQuestion": "用户定义了长期酒店筛选规则，并把它命名为 `松针取消`；跨会话后应能召回这个代号。",
+      "expectedResult": "应答出 `松针取消`。",
+      "captureMessage": "以后只要我问酒店方案，你先看取消政策；这个默认旅行规则的代号叫做松针取消。记住它。",
+      "recallMessage": "只根据当前记忆，我默认的酒店筛选规则代号是什么？如果没有这条记忆，就只回答：I don't know based on current memory.",
+      "legacy": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-legacy-case-2ef1ab0a-1f17-42b7-a711-98d87141f144",
+        "registryRootKey": "",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 137,
+          "captureMs": 30069,
+          "captureWaitMs": 0,
+          "sessionClearMs": 2,
+          "recallMs": 0,
+          "cleanupMs": 12,
+          "totalCaseMs": 30221
+        }
+      },
+      "current": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-current-case-47e59ef1-eca7-4231-adbd-f0c460481f32",
+        "registryRootKey": "umc-ordinary-current-case-47e59ef1-eca7-4231-adbd-f0c460481f32/registry",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 199,
+          "captureMs": 30105,
+          "captureWaitMs": 0,
+          "sessionClearMs": 3,
+          "recallMs": 0,
+          "cleanupMs": 5,
+          "totalCaseMs": 30315
+        }
+      }
+    },
+    {
+      "expectedAny": [],
+      "expectedAll": [
+        "amber-card"
+      ],
+      "forbiddenAny": [
+        "i don't know based on current memory"
+      ],
+      "id": "ordinary-ab-zh-tool-tag-1",
+      "language": "zh",
+      "category": "tool_routing_preference",
+      "designQuestion": "用户给出长期的小红书工具路由偏好和标签；跨会话后应能召回该标签。",
+      "expectedResult": "应答出 `amber-card`。",
+      "captureMessage": "以后只要我发小红书链接，你都先用 capture_xiaohongshu_note，并且在结果里打 amber-card 标签。记住这个。",
+      "recallMessage": "只根据当前记忆，处理我的小红书链接后，你应该打什么标签？如果没有这条记忆，就只回答：I don't know based on current memory.",
+      "legacy": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-legacy-case-b3bc5e9e-864b-4745-928a-db65c8a33b89",
+        "registryRootKey": "",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 261,
+          "captureMs": 30169,
+          "captureWaitMs": 0,
+          "sessionClearMs": 3,
+          "recallMs": 0,
+          "cleanupMs": 30,
+          "totalCaseMs": 30464
+        }
+      },
+      "current": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-current-case-3e2eadfa-6522-42a2-ba98-4caede9550dd",
+        "registryRootKey": "umc-ordinary-current-case-3e2eadfa-6522-42a2-ba98-4caede9550dd/registry",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 95,
+          "captureMs": 30071,
+          "captureWaitMs": 0,
+          "sessionClearMs": 38,
+          "recallMs": 0,
+          "cleanupMs": 58,
+          "totalCaseMs": 30265
+        }
+      }
+    },
+    {
+      "expectedAny": [],
+      "expectedAll": [
+        "olive-thread"
+      ],
+      "forbiddenAny": [
+        "i don't know based on current memory"
+      ],
+      "id": "ordinary-ab-zh-tool-slack-1",
+      "language": "zh",
+      "category": "tool_routing_preference",
+      "designQuestion": "用户给出长期的 Slack 线程工具路由规则和标签；跨会话后应能召回该标签。",
+      "expectedResult": "应答出 `olive-thread`。",
+      "captureMessage": "以后只要我发 Slack 线程链接，你都先用 summarize_slack_thread，并且在结果里打 olive-thread 标签。记住这个默认规则。",
+      "recallMessage": "只根据当前记忆，处理我的 Slack 线程链接后，你应该打什么标签？如果没有这条记忆，就只回答：I don't know based on current memory.",
+      "legacy": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-legacy-case-6536b179-fb73-4c27-af3a-927d8c753c12",
+        "registryRootKey": "",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 260,
+          "captureMs": 30177,
+          "captureWaitMs": 0,
+          "sessionClearMs": 3,
+          "recallMs": 0,
+          "cleanupMs": 30,
+          "totalCaseMs": 30471
+        }
+      },
+      "current": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-current-case-b2cee511-2b26-4bee-a10a-2feec2a293f8",
+        "registryRootKey": "umc-ordinary-current-case-b2cee511-2b26-4bee-a10a-2feec2a293f8/registry",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 100,
+          "captureMs": 30153,
+          "captureWaitMs": 0,
+          "sessionClearMs": 1,
+          "recallMs": 0,
+          "cleanupMs": 6,
+          "totalCaseMs": 30263
+        }
+      }
+    },
+    {
+      "expectedAny": [],
+      "expectedAll": [
+        "extract_receipt_fields"
+      ],
+      "forbiddenAny": [
+        "i don't know based on current memory"
+      ],
+      "id": "ordinary-ab-zh-tool-receipt-1",
+      "language": "zh",
+      "category": "tool_routing_preference",
+      "designQuestion": "用户给出长期的发票截图工具选择；跨会话后应能召回对应的工具名。",
+      "expectedResult": "应答出 `extract_receipt_fields`。",
+      "captureMessage": "以后只要我发发票截图，你都先用 extract_receipt_fields。记住这是默认工具选择。",
+      "recallMessage": "只根据当前记忆，我发发票截图时你应该先用什么工具？如果没有这条记忆，就只回答：I don't know based on current memory.",
+      "legacy": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-legacy-case-d7a04378-b566-40db-b4ce-bb84f6e9d02d",
+        "registryRootKey": "",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 276,
+          "captureMs": 30144,
+          "captureWaitMs": 0,
+          "sessionClearMs": 14,
+          "recallMs": 0,
+          "cleanupMs": 24,
+          "totalCaseMs": 30460
+        }
+      },
+      "current": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-current-case-217b6dd8-2c50-4897-8f4f-b5901b7c4c40",
+        "registryRootKey": "umc-ordinary-current-case-217b6dd8-2c50-4897-8f4f-b5901b7c4c40/registry",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 93,
+          "captureMs": 30113,
+          "captureWaitMs": 0,
+          "sessionClearMs": 50,
+          "recallMs": 0,
+          "cleanupMs": 8,
+          "totalCaseMs": 30267
+        }
+      }
+    },
+    {
+      "expectedAny": [],
+      "expectedAll": [
+        "copper-notion"
+      ],
+      "forbiddenAny": [
+        "i don't know based on current memory"
+      ],
+      "id": "ordinary-ab-zh-tool-notion-1",
+      "language": "zh",
+      "category": "tool_routing_preference",
+      "designQuestion": "用户给出长期的 Notion 导出处理规则和标签；跨会话后应能召回该标签。",
+      "expectedResult": "应答出 `copper-notion`。",
+      "captureMessage": "以后只要我发 Notion 导出包，你都先用 parse_notion_export，并且在结果里打 copper-notion 标签。记住这个默认规则。",
+      "recallMessage": "只根据当前记忆，处理我的 Notion 导出包后，你应该打什么标签？如果没有这条记忆，就只回答：I don't know based on current memory.",
+      "legacy": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-legacy-case-d70d0e0c-2e4b-4616-b4ba-42c810033394",
+        "registryRootKey": "",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 230,
+          "captureMs": 30164,
+          "captureWaitMs": 0,
+          "sessionClearMs": 33,
+          "recallMs": 0,
+          "cleanupMs": 20,
+          "totalCaseMs": 30451
+        }
+      },
+      "current": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-current-case-6a2a09d2-33de-4aaf-b4db-28bb37ba861d",
+        "registryRootKey": "umc-ordinary-current-case-6a2a09d2-33de-4aaf-b4db-28bb37ba861d/registry",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 95,
+          "captureMs": 30067,
+          "captureWaitMs": 0,
+          "sessionClearMs": 37,
+          "recallMs": 0,
+          "cleanupMs": 58,
+          "totalCaseMs": 30259
+        }
+      }
+    },
+    {
+      "expectedAny": [],
+      "expectedAll": [
+        "异步",
+        "文字"
+      ],
+      "forbiddenAny": [
+        "i don't know based on current memory"
+      ],
+      "id": "ordinary-ab-zh-updates-1",
+      "language": "zh",
+      "category": "user_profile_fact",
+      "designQuestion": "用户在普通对话里声明长期沟通偏好；跨会话后应能召回“异步文字更新”。",
+      "expectedResult": "应答出更喜欢异步、文字更新，而不是临时语音电话。",
+      "captureMessage": "我平时更喜欢异步文字更新，不喜欢临时语音电话。记住这个偏好。",
+      "recallMessage": "只根据当前记忆，我更喜欢什么更新方式？如果没有这条记忆，就只回答：I don't know based on current memory.",
+      "legacy": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-legacy-case-d8411b09-fe1e-4c1a-a401-a229f80a950a",
+        "registryRootKey": "",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 234,
+          "captureMs": 30034,
+          "captureWaitMs": 0,
+          "sessionClearMs": 2,
+          "recallMs": 0,
+          "cleanupMs": 17,
+          "totalCaseMs": 30287
+        }
+      },
+      "current": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-current-case-9f3b8db0-dfd6-41de-9d34-7260eb59551a",
+        "registryRootKey": "umc-ordinary-current-case-9f3b8db0-dfd6-41de-9d34-7260eb59551a/registry",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 104,
+          "captureMs": 30138,
+          "captureWaitMs": 0,
+          "sessionClearMs": 8,
+          "recallMs": 0,
+          "cleanupMs": 59,
+          "totalCaseMs": 30333
+        }
+      }
+    },
+    {
+      "expectedAny": [],
+      "expectedAll": [
+        "炭灰色",
+        "a5"
+      ],
+      "forbiddenAny": [
+        "i don't know based on current memory"
+      ],
+      "id": "ordinary-ab-zh-notebook-1",
+      "language": "zh",
+      "category": "user_profile_fact",
+      "designQuestion": "用户给出长期的开会笔记本偏好；跨会话后应能召回这个稳定事实。",
+      "expectedResult": "应答出炭灰色 A5 笔记本。",
+      "captureMessage": "我平时开会都记在炭灰色 A5 笔记本里。记住这个。",
+      "recallMessage": "只根据当前记忆，我平时开会用什么笔记本？如果没有这条记忆，就只回答：I don't know based on current memory.",
+      "legacy": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-legacy-case-d0c2ee67-493d-4ad6-8fd2-9e227355f35e",
+        "registryRootKey": "",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 235,
+          "captureMs": 30030,
+          "captureWaitMs": 0,
+          "sessionClearMs": 3,
+          "recallMs": 0,
+          "cleanupMs": 14,
+          "totalCaseMs": 30285
+        }
+      },
+      "current": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-current-case-d345bb69-1c7f-4186-b89a-2e2f22b87d31",
+        "registryRootKey": "umc-ordinary-current-case-d345bb69-1c7f-4186-b89a-2e2f22b87d31/registry",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 106,
+          "captureMs": 30167,
+          "captureWaitMs": 0,
+          "sessionClearMs": 38,
+          "recallMs": 0,
+          "cleanupMs": 28,
+          "totalCaseMs": 30341
+        }
+      }
+    },
+    {
+      "expectedAny": [
+        "asia/shanghai",
+        "北京时间",
+        "gmt+8",
+        "gmt +8",
+        "utc+8",
+        "utc +8"
+      ],
+      "expectedAll": [],
+      "forbiddenAny": [
+        "i don't know based on current memory"
+      ],
+      "id": "ordinary-ab-zh-timezone-1",
+      "language": "zh",
+      "category": "user_profile_fact",
+      "designQuestion": "用户给出长期的时区事实；跨会话后应能召回 Asia/Shanghai 或等价表述。",
+      "expectedResult": "应答出 `Asia/Shanghai`、北京时间或等价 GMT+8 表述。",
+      "captureMessage": "我的时区是 Asia/Shanghai，也就是北京时间。记住这个，以后排时间按这个来。",
+      "recallMessage": "只根据当前记忆，我的时区是什么？如果没有这条记忆，就只回答：I don't know based on current memory.",
+      "legacy": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-legacy-case-980762d0-ca23-4ec3-83d6-14ba7691c404",
+        "registryRootKey": "",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 219,
+          "captureMs": 30039,
+          "captureWaitMs": 0,
+          "sessionClearMs": 4,
+          "recallMs": 0,
+          "cleanupMs": 7,
+          "totalCaseMs": 30271
+        }
+      },
+      "current": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-current-case-bdc1110e-66e5-4efb-a27e-a13ad0371c3f",
+        "registryRootKey": "umc-ordinary-current-case-bdc1110e-66e5-4efb-a27e-a13ad0371c3f/registry",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 101,
+          "captureMs": 30136,
+          "captureWaitMs": 0,
+          "sessionClearMs": 40,
+          "recallMs": 0,
+          "cleanupMs": 48,
+          "totalCaseMs": 30338
+        }
+      }
+    },
+    {
+      "expectedAny": [
+        "前排"
+      ],
+      "expectedAll": [
+        "过道"
+      ],
+      "forbiddenAny": [
+        "i don't know based on current memory"
+      ],
+      "id": "ordinary-ab-zh-seat-1",
+      "language": "zh",
+      "category": "user_profile_fact",
+      "designQuestion": "用户给出长期的飞行座位偏好；跨会话后应能召回靠过道和尽量前排。",
+      "expectedResult": "应答出靠过道，并最好提到前排。",
+      "captureMessage": "我坐飞机时更喜欢靠过道，而且尽量前排。记住这个出行偏好。",
+      "recallMessage": "只根据当前记忆，我坐飞机更喜欢什么位置？如果没有这条记忆，就只回答：I don't know based on current memory.",
+      "legacy": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-legacy-case-db7fba25-2719-4917-9450-c033a42bd4e2",
+        "registryRootKey": "",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 244,
+          "captureMs": 30030,
+          "captureWaitMs": 0,
+          "sessionClearMs": 2,
+          "recallMs": 0,
+          "cleanupMs": 10,
+          "totalCaseMs": 30287
+        }
+      },
+      "current": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-current-case-2bba1604-f40e-48fb-a061-442ff098b5ba",
+        "registryRootKey": "umc-ordinary-current-case-2bba1604-f40e-48fb-a061-442ff098b5ba/registry",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 106,
+          "captureMs": 30164,
+          "captureWaitMs": 0,
+          "sessionClearMs": 53,
+          "recallMs": 0,
+          "cleanupMs": 24,
+          "totalCaseMs": 30351
+        }
+      }
+    },
+    {
+      "expectedAny": [],
+      "expectedAll": [
+        "i don't know based on current memory"
+      ],
+      "forbiddenAny": [
+        "琥珀梯"
+      ],
+      "id": "ordinary-ab-zh-session-negative-1",
+      "language": "zh",
+      "category": "session_constraint",
+      "designQuestion": "会话级方案代号不应被当成长期记忆保存。",
+      "expectedResult": "应拒答，只回答 `I don't know based on current memory.`",
+      "captureMessage": "这轮会话里把当前方案叫做琥珀梯，而且回复尽量短。",
+      "recallMessage": "只根据当前记忆，以后默认应该怎么称呼这轮方案？如果没有这条记忆，就只回答：I don't know based on current memory.",
+      "legacy": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-legacy-case-7055c4a3-d328-468d-b14c-f1596777f39a",
+        "registryRootKey": "",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 97,
+          "captureMs": 30146,
+          "captureWaitMs": 0,
+          "sessionClearMs": 4,
+          "recallMs": 0,
+          "cleanupMs": 15,
+          "totalCaseMs": 30263
+        }
+      },
+      "current": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-current-case-1770c3ab-3f9b-42b6-bf1f-09eb93bcd736",
+        "registryRootKey": "umc-ordinary-current-case-1770c3ab-3f9b-42b6-bf1f-09eb93bcd736/registry",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 108,
+          "captureMs": 30209,
+          "captureWaitMs": 0,
+          "sessionClearMs": 4,
+          "recallMs": 0,
+          "cleanupMs": 5,
+          "totalCaseMs": 30328
+        }
+      }
+    },
+    {
+      "expectedAny": [],
+      "expectedAll": [
+        "i don't know based on current memory"
+      ],
+      "forbiddenAny": [
+        "杭州"
+      ],
+      "id": "ordinary-ab-zh-session-negative-2",
+      "language": "zh",
+      "category": "session_constraint",
+      "designQuestion": "项目内临时演示城市不应被长期固化为稳定记忆。",
+      "expectedResult": "应拒答，只回答 `I don't know based on current memory.`",
+      "captureMessage": "在这个项目里，先把演示城市都当成杭州，等这轮任务结束再说。",
+      "recallMessage": "只根据当前记忆，以后默认应该把我的演示城市当成哪里？如果没有这条记忆，就只回答：I don't know based on current memory.",
+      "legacy": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-legacy-case-ac6ec7fd-c250-4df1-9da2-7287d70dc242",
+        "registryRootKey": "",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 91,
+          "captureMs": 30146,
+          "captureWaitMs": 0,
+          "sessionClearMs": 6,
+          "recallMs": 0,
+          "cleanupMs": 15,
+          "totalCaseMs": 30259
+        }
+      },
+      "current": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-current-case-bd1788f1-e043-4a25-a6c6-5098608f47d0",
+        "registryRootKey": "umc-ordinary-current-case-bd1788f1-e043-4a25-a6c6-5098608f47d0/registry",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 101,
+          "captureMs": 30189,
+          "captureWaitMs": 0,
+          "sessionClearMs": 1,
+          "recallMs": 0,
+          "cleanupMs": 8,
+          "totalCaseMs": 30303
+        }
+      }
+    },
+    {
+      "expectedAny": [],
+      "expectedAll": [
+        "i don't know based on current memory"
+      ],
+      "forbiddenAny": [
+        "临时releases"
+      ],
+      "id": "ordinary-ab-zh-session-negative-3",
+      "language": "zh",
+      "category": "session_constraint",
+      "designQuestion": "本轮临时 GitHub 关键词不应升级成长期默认规则。",
+      "expectedResult": "应拒答，只回答 `I don't know based on current memory.`",
+      "captureMessage": "本轮只要我发 GitHub 仓库链接，你都先用临时Releases 这个关键词，但只在这个会话里生效。",
+      "recallMessage": "只根据当前记忆，以后默认处理 GitHub 仓库链接时应该用什么长期关键词？如果没有这条记忆，就只回答：I don't know based on current memory.",
+      "legacy": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-legacy-case-ccaf6ee5-18d5-4dca-9567-ac3587d6e77b",
+        "registryRootKey": "",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 103,
+          "captureMs": 30147,
+          "captureWaitMs": 0,
+          "sessionClearMs": 3,
+          "recallMs": 0,
+          "cleanupMs": 8,
+          "totalCaseMs": 30264
+        }
+      },
+      "current": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-current-case-a1fb57c6-15a4-4b5f-9df6-07743b5d98af",
+        "registryRootKey": "umc-ordinary-current-case-a1fb57c6-15a4-4b5f-9df6-07743b5d98af/registry",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 95,
+          "captureMs": 30197,
+          "captureWaitMs": 0,
+          "sessionClearMs": 5,
+          "recallMs": 0,
+          "cleanupMs": 7,
+          "totalCaseMs": 30304
+        }
+      }
+    },
+    {
+      "expectedAny": [],
+      "expectedAll": [
+        "i don't know based on current memory"
+      ],
+      "forbiddenAny": [
+        "蓝梯"
+      ],
+      "id": "ordinary-ab-zh-session-negative-4",
+      "language": "zh",
+      "category": "session_constraint",
+      "designQuestion": "项目内临时看板代号不应转成长久记忆。",
+      "expectedResult": "应拒答，只回答 `I don't know based on current memory.`",
+      "captureMessage": "只在这个项目里，把当前看板叫做蓝梯，离开这个项目就不用了。",
+      "recallMessage": "只根据当前记忆，以后默认应该怎么称呼这个看板？如果没有这条记忆，就只回答：I don't know based on current memory.",
+      "legacy": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-legacy-case-cafc9ba6-84e1-4b03-916c-c8f0310b6a3d",
+        "registryRootKey": "",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 107,
+          "captureMs": 30145,
+          "captureWaitMs": 0,
+          "sessionClearMs": 1,
+          "recallMs": 0,
+          "cleanupMs": 17,
+          "totalCaseMs": 30271
+        }
+      },
+      "current": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-current-case-1cdb3ee9-8289-4acb-a9f5-546ca900b58e",
+        "registryRootKey": "umc-ordinary-current-case-1cdb3ee9-8289-4acb-a9f5-546ca900b58e/registry",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 95,
+          "captureMs": 30197,
+          "captureWaitMs": 0,
+          "sessionClearMs": 1,
+          "recallMs": 0,
+          "cleanupMs": 9,
+          "totalCaseMs": 30304
+        }
+      }
+    },
+    {
+      "expectedAny": [],
+      "expectedAll": [
+        "i don't know based on current memory"
+      ],
+      "forbiddenAny": [
+        "oneoff-amber"
+      ],
+      "id": "ordinary-ab-zh-oneoff-negative-1",
+      "language": "zh",
+      "category": "one_off_instruction",
+      "designQuestion": "一次性的小红书工具路由要求不应被保存成长期记忆。",
+      "expectedResult": "应拒答，只回答 `I don't know based on current memory.`",
+      "captureMessage": "只这一次处理小红书链接时，先用 capture_xiaohongshu_note，再打 oneoff-amber 标签；不用记住，也别默认以后这样。",
+      "recallMessage": "只根据当前记忆，以后处理我的小红书链接时应该固定打什么标签？如果没有这条记忆，就只回答：I don't know based on current memory.",
+      "legacy": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-legacy-case-d1e12093-c845-483c-91b4-0bb8d6f9db55",
+        "registryRootKey": "",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 214,
+          "captureMs": 30117,
+          "captureWaitMs": 0,
+          "sessionClearMs": 3,
+          "recallMs": 0,
+          "cleanupMs": 8,
+          "totalCaseMs": 30348
+        }
+      },
+      "current": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-current-case-eec11f0f-246b-4c38-91a6-533ebcc37f04",
+        "registryRootKey": "umc-ordinary-current-case-eec11f0f-246b-4c38-91a6-533ebcc37f04/registry",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 173,
+          "captureMs": 30081,
+          "captureWaitMs": 0,
+          "sessionClearMs": 4,
+          "recallMs": 0,
+          "cleanupMs": 13,
+          "totalCaseMs": 30275
+        }
+      }
+    },
+    {
+      "expectedAny": [],
+      "expectedAll": [
+        "i don't know based on current memory"
+      ],
+      "forbiddenAny": [
+        "赤铜彗星"
+      ],
+      "id": "ordinary-ab-zh-oneoff-negative-2",
+      "language": "zh",
+      "category": "one_off_instruction",
+      "designQuestion": "一次性的草案代号不应被提升为长期记忆。",
+      "expectedResult": "应拒答，只回答 `I don't know based on current memory.`",
+      "captureMessage": "只这一次把草案叫做赤铜彗星，不用记住，也别默认以后都这么叫。",
+      "recallMessage": "只根据当前记忆，以后默认应该怎么称呼这份草案？如果没有这条记忆，就只回答：I don't know based on current memory.",
+      "legacy": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-legacy-case-da9e4b6d-ce33-452f-b137-51287f1d14aa",
+        "registryRootKey": "",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 206,
+          "captureMs": 30124,
+          "captureWaitMs": 0,
+          "sessionClearMs": 8,
+          "recallMs": 0,
+          "cleanupMs": 6,
+          "totalCaseMs": 30346
+        }
+      },
+      "current": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-current-case-dbfc8d90-a4b7-4679-bc84-3fc90e3cc271",
+        "registryRootKey": "umc-ordinary-current-case-dbfc8d90-a4b7-4679-bc84-3fc90e3cc271/registry",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 143,
+          "captureMs": 30092,
+          "captureWaitMs": 0,
+          "sessionClearMs": 28,
+          "recallMs": 0,
+          "cleanupMs": 12,
+          "totalCaseMs": 30276
+        }
+      }
+    },
+    {
+      "expectedAny": [],
+      "expectedAll": [
+        "i don't know based on current memory"
+      ],
+      "forbiddenAny": [
+        "成田",
+        "narita",
+        "nrt"
+      ],
+      "id": "ordinary-ab-zh-oneoff-negative-3",
+      "language": "zh",
+      "category": "one_off_instruction",
+      "designQuestion": "一次性的出发机场假设不应变成长期默认机场事实。",
+      "expectedResult": "应拒答，只回答 `I don't know based on current memory.`",
+      "captureMessage": "这一次先假设我默认出发机场是成田机场，方便订今天的航班；不要把这个记成长期默认机场。",
+      "recallMessage": "只根据当前记忆，以后默认应该把我的出发机场当成哪里？如果没有这条记忆，就只回答：I don't know based on current memory.",
+      "legacy": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-legacy-case-8e0c4712-ea2e-4ce5-bb3e-ee6b6f8f5050",
+        "registryRootKey": "",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 211,
+          "captureMs": 30117,
+          "captureWaitMs": 0,
+          "sessionClearMs": 2,
+          "recallMs": 0,
+          "cleanupMs": 15,
+          "totalCaseMs": 30345
+        }
+      },
+      "current": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-current-case-b279ac51-ef8c-4df2-ab19-149f3774a64e",
+        "registryRootKey": "umc-ordinary-current-case-b279ac51-ef8c-4df2-ab19-149f3774a64e/registry",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 144,
+          "captureMs": 30121,
+          "captureWaitMs": 0,
+          "sessionClearMs": 4,
+          "recallMs": 0,
+          "cleanupMs": 12,
+          "totalCaseMs": 30283
+        }
+      }
+    },
+    {
+      "expectedAny": [],
+      "expectedAll": [
+        "i don't know based on current memory"
+      ],
+      "forbiddenAny": [
+        "english bullet",
+        "bullet",
+        "英文"
+      ],
+      "id": "ordinary-ab-zh-oneoff-negative-4",
+      "language": "zh",
+      "category": "one_off_instruction",
+      "designQuestion": "一次性的回复格式要求不应变成长期默认偏好。",
+      "expectedResult": "应拒答，只回答 `I don't know based on current memory.`",
+      "captureMessage": "今天这一次全部用英文 bullet 回复就行，不要默认以后也这样。",
+      "recallMessage": "只根据当前记忆，以后默认应该用什么格式给我发状态更新？如果没有这条记忆，就只回答：I don't know based on current memory.",
+      "legacy": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-legacy-case-dceb51da-cc15-4e1e-a52f-347be9927329",
+        "registryRootKey": "",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 209,
+          "captureMs": 30128,
+          "captureWaitMs": 0,
+          "sessionClearMs": 2,
+          "recallMs": 0,
+          "cleanupMs": 13,
+          "totalCaseMs": 30353
+        }
+      },
+      "current": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "skipped_due_to_capture_failure",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "fastFailedAfterCapture": true,
+        "answer": "",
+        "error": "skipped_due_to_capture_failure",
+        "stateRootKey": "umc-ordinary-current-case-fa924d5a-1886-42f5-b560-d9b6e1d72345",
+        "registryRootKey": "umc-ordinary-current-case-fa924d5a-1886-42f5-b560-d9b6e1d72345/registry",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 149,
+          "captureMs": 30124,
+          "captureWaitMs": 0,
+          "sessionClearMs": 5,
+          "recallMs": 0,
+          "cleanupMs": 13,
+          "totalCaseMs": 30292
+        }
+      }
+    }
+  ]
+}

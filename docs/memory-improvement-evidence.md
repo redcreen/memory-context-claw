@@ -81,20 +81,20 @@ Host-live rerun:
 - legacy only: `1`
 - both fail: `1`
 
-Hermetic Docker rerun:
+Hermetic Docker fast path rerun:
 
-- current path: `3 / 40`
+- current path: `0 / 40`
 - legacy default path: `0 / 40`
 - both pass: `0`
-- Memory Core only: `3`
+- Memory Core only: `0`
 - legacy only: `0`
-- both fail: `37`
+- both fail: `40`
 
 The interpretation is now stricter:
 
 - the older `100`-case A/B still says “existing-memory consumption uplift is modest”
 - the host-live focused `40`-case suite says “ordinary-conversation realtime write behavior is materially better with Unified Memory Core”
-- the hermetic Docker rerun says “the isolation root is now trustworthy, but answer-level timeout pressure dominates under a `30s` turn budget”
+- the hermetic Docker rerun says “the isolation root is now trustworthy, but answer-level capture timeout pressure dominates under a `30s` fast-path budget”
 
 ## What This Round Improved
 

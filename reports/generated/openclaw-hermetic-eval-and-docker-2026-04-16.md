@@ -8,7 +8,7 @@
 
 - OpenClaw benchmark state creation now uses repo fixture only; it no longer seeds from `~/.openclaw`
 - current and legacy base states are both created as hermetic temp states
-- every answer-level case now clones a fresh state from the indexed base state
+- every answer-level case now clones a fresh state from a preconfigured base state
 - a reusable Docker eval harness was added around the same hermetic core
 - the Docker path now runs on the official `ghcr.io/openclaw/openclaw` image instead of rebuilding `openclaw` from `npm` inside a local Dockerfile
 - the Docker runner now mirrors the host `openclaw --version` tag by default, then falls back to `latest`
@@ -39,12 +39,12 @@ Hermetic answer-level findings:
 - two-case hermetic benchmark run passed `2/2`, but both were `shared-capability`
 - exact A/B wrapper initially failed because it still used a `20s` agent timeout; after aligning to `120s`, the wrapper succeeded but showed `1/2` due answer-level variance on `ab100-zh-history-editor-4`
 - ordinary-conversation hermetic Docker rerun now also completed for the full focused `40`-case suite:
-  - current: `3 / 40`
+  - current: `0 / 40`
   - legacy: `0 / 40`
-  - `UMC-only = 3`
-  - `both-fail = 37`
+  - `UMC-only = 0`
+  - `both-fail = 40`
   - dominant failure class: bounded `30s` answer-level timeouts rather than state contamination
-  - detailed report: [openclaw-ordinary-conversation-memory-intent-ab-2026-04-16.md](openclaw-ordinary-conversation-memory-intent-ab-2026-04-16.md)
+  - detailed report: [openclaw-ordinary-conversation-memory-intent-ab-2026-04-17.md](openclaw-ordinary-conversation-memory-intent-ab-2026-04-17.md)
 
 ## Interpretation
 
@@ -72,9 +72,9 @@ Hermetic answer-level findings:
 - real runner execution also succeeded with the official image for the focused `40`-case ordinary-conversation suite:
   - scenario: `ordinary-conversation-memory-intent-ab`
   - image: `ghcr.io/openclaw/openclaw:2026.4.2`
-  - result: current `3 / 40`, legacy `0 / 40`
+  - result: current `0 / 40`, legacy `0 / 40`
   - isolation: `80 / 80` distinct state roots, `40 / 40` distinct current registry roots, `80 / 80` cleanup success, `80 / 80` session-clear success
-  - interpretation: the hermetic root is now trustworthy, but the Docker answer path is substantially slower than the host path under a `30s` turn budget
+  - interpretation: the hermetic root is now trustworthy, but the Docker fast path is still dominated by answer-level capture timeout under a `30s` turn budget
 - the Docker path is now usable as a real hermetic eval workflow, not just a dry-run scaffold
 
 ## Next Recommendation

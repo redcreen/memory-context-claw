@@ -8,8 +8,20 @@
 
 - 每个评测容器都从 repo 内 fixture 启动
 - 每个容器都写自己的临时 OpenClaw state
-- 每个 case 都从 base state 再 clone 一份干净状态
+- 每个 case 都从预配置 base state 再 clone 一份干净状态
 - 默认不启动 gateway，只跑 `memory index` / `memory search` / `agent --local`
+
+## 默认测试策略
+
+从现在开始，这个仓库里的 A/B 与 CLI 评测默认先走 Docker hermetic 路径。
+
+原因很简单：
+
+- A/B 的第一要求是避免自己骗自己
+- Docker 更适合把 `legacy` 和 `current` 分到严格独立的 state root 里
+- 只有先把隔离和可复现性守住，后面的结果才有解释价值
+
+只有在明确需要“真实宿主体验”时，才应该额外跑 host live。
 
 ## 为什么默认不用 gateway
 
@@ -69,8 +81,18 @@ UMC_EVAL_TIMEOUT_MS=30000 npm run eval:openclaw:docker -- \
 - 先完整跑 `legacy builtin`
 - 删除那一整轮 legacy 的隔离状态
 - 再完整跑 `unified-memory-core current`
-- 每个 case 仍然使用独立 temp state root
+- 每个 mode 会先在 repo 挂载目录下准备一个持久化模板缓存
+- 每个 case 再从这个预配置模板直接 clone 独立 state root，而不是重新生成 `openclaw.json`、fixture copy 和目录骨架
 - 每个 capture / recall turn 都带显式 `30s` timeout budget
+
+当前快路径还有 3 个默认加速器：
+
+- 预热模板：
+  base state 会先跑一条低信号 warmup turn，再作为模板缓存下来
+- fast-fail：
+  capture 一旦超时或失败，就直接跳过 registry wait 与 recall
+- shard 并行：
+  ordinary-conversation scenario 默认按 `4` 个 shard 并行跑完整轮次
 
 这让结果同时回答两件事：
 
@@ -101,6 +123,17 @@ UMC_EVAL_TIMEOUT_MS=30000 npm run eval:openclaw:docker -- \
 - `preset = safe-local`
 
 这样做的目的，是把 host 漂移因素压到最低。
+
+当前 ordinary-conversation runner 默认会把模板缓存写到：
+
+- `.cache/openclaw-ordinary-state-templates`
+
+这个目录不会进 git，但会跟着 repo mount 进容器，所以跨 Docker run 也能复用。
+如果需要强制重建，可以传：
+
+```bash
+--refresh-template-cache
+```
 
 ## Compose 与入口
 
@@ -164,17 +197,51 @@ npm run eval:openclaw:docker -- \
 
 最新 hermetic Docker rerun 的 focused `40` case 结果是：
 
-- current: `3 / 40`
+- current: `0 / 40`
 - legacy: `0 / 40`
-- `UMC-only = 3`
-- `both-fail = 37`
+- `UMC-only = 0`
+- `both-fail = 40`
 
-这个结果不能简单读成“Memory Core 只提升了 3 条”。更准确的解释是：
+这个结果不能简单读成“Memory Core 没提升”。
+更准确的解释是：
 
 - hermetic 隔离层本身是干净的
-- 但在 Docker 下、`30s` turn budget 内，answer-level latency 已经变成主瓶颈
-- legacy `40 / 40` 都超时
-- current `36 / 40` 也超时，只剩 `3` 条 current 还能在预算内稳定答对
+- 但在 Docker 下、当前这条 `30s` 快路径里，answer-level capture turn 本身仍然跑不完
+- legacy `40 / 40` capture timeout
+- current `40 / 40` capture timeout
+
+所以这条 ordinary-conversation Docker 快路径，现在承担的是 `infra/perf watch`，不是最终的能力排序面。
+
+更直白地说：
+
+- 它现在已经足够快，也足够干净
+- 但它测到的主要是“在严格预算下，这条 answer path 还跑不跑得完”
+- 不能直接拿来替代 host live 或更宽预算下的能力结论
+
+## 为什么仍然值得保留这条快路径
+
+因为它已经解决了这几个最关键的问题：
+
+- case 之间有没有串记忆：当前证据是 `没有`
+- legacy / current 是否共用 state：当前证据是 `没有`
+- 每次重建配置是不是主要瓶颈：当前证据是 `不是`
+- 当前 40 case 是否能在可接受 wall-clock 内跑完：当前证据是 `可以`
+
+当前速度面已经可以这样理解：
+
+- 旧路径：虽然逐题逻辑简单，但 wall-clock 非常差
+- 新路径：通过模板缓存、warmup、fast-fail、4-shard 并行，把整轮 `40` case 压到约 `10` 分钟
+
+代价是：
+
+- 这条快路径现在更适合作为 infra / perf / contamination gate
+- 不再适合作为 ordinary-conversation answer-level 能力的最终定量结论
+
+如果后面要继续把 Docker ordinary-conversation A/B 收回“能力结论面”，正确方向是：
+
+- 引入真正的 steady-state 长驻运行形态
+- 避免每题都重新冷起 answer path
+- 在保证隔离为零污染的前提下，再重跑更宽预算的 ordinary-conversation 能力对比
 
 所以这条报告现在承担的是两个职责：
 
