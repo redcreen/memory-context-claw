@@ -72,6 +72,23 @@
 - `维护省心`
   - rollback boundary、operator metrics、hermetic / Docker eval 入口必须在每次推进前写清楚
 
+## 北极星驱动的当前优先级
+
+这份计划现在不再只是“docs-first review”。
+
+接下来应该按北极星缺口来排当前优先级：
+
+1. `简单`
+   - 先把 install / bootstrap / verify 路径压短，减少人工配置和人工验证
+2. `够快`
+   - 先把 hermetic ordinary-conversation 写记忆路径里的 timeout / latency 问题压下去
+3. `聪明`
+   - 在 bounded decision contract 明确后，把 shadow-first 结果推进到极窄的 guarded opt-in 路径
+4. `轻量`
+   - 为包体、启动成本、prompt thickness、runtime cost 建明确预算
+5. `共享底座`
+   - 补 OpenClaw 之外，尤其是 Codex / 多实例的产品证据
+
 ## 怎么使用这份计划
 
 把这份文档当成一条单线执行队列来看。
@@ -95,7 +112,7 @@
 - `Stage 5`：已完成
 - `Stage 6`：已完成
 - 当前指针：`92`
-- 当前建议：先做 docs-first review，把“逐轮 context 优化”收成正式恢复点；继续保持 `dialogueWorkingSetShadow` 为 `default-off` 且 shadow-only，再进入 harder A/B 与后续 experiment 设计
+- 当前建议：docs-first review 已完成；下一步按北极星缺口推进，先简化接入，再收敛速度，再推进 bounded、guarded 的聪明路径
 
 当前 baseline 已经落地：
 

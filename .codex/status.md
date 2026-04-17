@@ -7,11 +7,11 @@
 
 ## Current Phase
 
-`post-stage6 turn-by-turn context optimization planning`
+`post-stage6 north-star gap closure planning`
 
 ## Active Slice
 
-`review-and-stage-next-round-context-optimization`
+`close-north-star-gaps-after-docs-review`
 
 ## Current Product Values
 
@@ -170,9 +170,10 @@
 
 ## In Progress
 
-- 下一轮主线已转成“逐轮 context 优化”的 docs-first review：
-  - 把 roadmap、development plan、架构文档和 control surface 统一到同一个恢复点
-  - 明确 durable-source slimming、working-set pruning、harder live A/B 三条线的边界和顺序
+- docs-first review 已完成，下一轮主线改成北极星缺口收敛：
+  - 先简化 install / bootstrap / verify
+  - 再收敛 hermetic timeout / latency
+  - 再推进 bounded、guarded 的聪明路径
 - 当前 answer-level 不再是“能力是否存在”的 blocker；真正要解决的是：
   - 每一轮 prompt 还可以如何更轻
   - 如何在不改 builtin memory 行为的前提下，让 working-set decision 进入更可控的实验面
@@ -200,8 +201,8 @@
 ## Next 3 Actions
 
 1. 完成 docs-first review，把 roadmap、development plan、架构文档和 `.codex/*` 收敛到同一个“下一轮逐轮 context 优化”口径。
-2. 先定义 bounded LLM-led context decision contract、operator metrics 和 rollback boundary，再决定最小 active-path experiment 怎么切。
-3. 在 docs 收口后，重新设计更偏 `cross-source`、`conflict`、`multi-step history` 与高信息密度自然中文的 harder live A/B。
+2. 先把 install / bootstrap / verify 的复杂度压下来，并把 hermetic timeout / latency 收成更强门禁。
+3. 再定义 bounded LLM-led context decision contract、operator metrics 和 rollback boundary，然后设计更偏 `cross-source`、`conflict`、`multi-step history` 与高信息密度自然中文的 harder live A/B。
 
 ## Architecture Supervision
 - Signal: `yellow`
@@ -218,9 +219,9 @@
 
 ## Current Execution Line
 
-- Objective: 把下一轮工作重新明确成“逐轮 context 优化”的 docs-first 队列，再进入更难的 experiment 和 A/B 设计
-- Plan Link: `review-and-stage-next-round-context-optimization`
-- Runway: roadmap / plan / architecture 对齐，bounded LLM decision contract，harder A/B redesign；并行守住 release-preflight 和 canonical-root policy
+- Objective: 按北极星缺口来推进下一轮工作，先简化接入，再补速度，再推进聪明路径和 harder A/B
+- Plan Link: `close-north-star-gaps-after-docs-review`
+- Runway: install simplification，hermetic speed gate，bounded LLM decision contract，harder A/B redesign；并行守住 release-preflight 和 canonical-root policy
 - Progress: `0 / 3` tasks complete
 - Stop Conditions:
   - active prompt mutation is discussed before docs and rollback boundaries are explicit
@@ -229,9 +230,9 @@
 
 ## Execution Tasks
 
-- [ ] EL-1 review and align roadmap, development plan, architecture docs, and `.codex/*` around the next per-turn context optimization phase
-- [ ] EL-2 define the bounded LLM-led context decision contract, operator metrics, and rollback boundary
-- [ ] EL-3 redesign the next harder live A/B around `cross-source`, `conflict`, `multi-step history`, and denser natural-Chinese prompts
+- [ ] EL-1 simplify install / bootstrap / verify around the north-star `simple` goal
+- [ ] EL-2 strengthen hermetic timeout / latency gates around the north-star `fast enough` goal
+- [ ] EL-3 define the bounded LLM-led smart path and redesign the next harder live A/B around `cross-source`, `conflict`, `multi-step history`, and denser natural-Chinese prompts
 
 ## Development Log Capture
 

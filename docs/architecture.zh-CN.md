@@ -99,6 +99,27 @@ flowchart TB
 - `维护省心`
   - 所有关键行为都要留在 inspect / audit / replay / rollback 的 operator surface 里
 
+## 当前强项与薄弱点
+
+按当前架构和证据面看：
+
+- 强项：
+  - governance / operator surface 已经较完整
+  - self-learning lifecycle 已经形成主干
+  - context 优化的边界已经明确，不再漂移成 report-only 想法
+- 薄弱点：
+  - `简单` 仍然更多依赖人工安装和人工接线
+  - `够快` 还没有在 hermetic answer path 上形成足够强的默认保证
+  - `聪明` 还停留在 shadow-first，不是默认体验
+  - `轻量` 还缺少更硬的包体、启动、预算约束
+  - `共享底座` 还缺少 Codex / 多实例的更强产品证据
+
+所以架构层接下来最需要守住的是：
+
+1. 不让“更聪明”退化成“更多规则、更重调用”
+2. 不让“更强能力”破坏安装简单和主路径速度
+3. 不让 shared-core 叙事只停留在边界设计，缺少真实产品证明
+
 ## 模块清单
 
 | 模块 | 职责 | 关键接口 |

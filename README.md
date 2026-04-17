@@ -89,6 +89,40 @@ In technical and engineering terms, that means:
   - when something goes wrong, operators should be able to inspect, trace, replay, and roll back it instead of guessing
   - engineering meaning: inspect / audit / replay / repair / rollback / hermetic eval surfaces remain first-class
 
+## Current Distance From The North Star
+
+The product is already beyond “concept validation”, but it still has several clear gaps before it matches the north star.
+
+Areas that are already relatively strong:
+
+- `easy to maintain`
+  - CLI, audit, replay, repair, rollback, release-preflight, and Docker hermetic eval already behave like real operator surfaces
+- `self-learning` as a product backbone
+  - both realtime and nightly learning paths are landed, and the host-live A/B already shows real value
+- `context optimization` as a formal mainline
+  - durable-source slimming and working-set pruning are now first-class workstreams, not report-only ideas
+
+Areas that are still comparatively weak:
+
+- `simple`
+  - installation still expects manual `openclaw.json` edits and optional `PATH` changes, so first-use is not yet “obvious at a glance”
+- `fast enough`
+  - ordinary-conversation realtime write still hits heavy timeout pressure in Docker hermetic runs, so reproducible speed is not yet strong enough
+- `smart`
+  - context optimization is validated, but still shadow-only; it is not yet a default user-visible gain
+- `lightweight`
+  - lightweight is still more of a direction than a hard gate, because package size, startup cost, and default runtime overhead are not yet enforced as budgets
+- `shared foundation`
+  - the architecture is there, but the product evidence is still much stronger on OpenClaw than on Codex or multi-instance reuse
+
+So the next focus order should stay explicit:
+
+1. make `simple` real through a shorter install / bootstrap / verify path
+2. make `fast enough` real through stronger hermetic / timeout / latency gates
+3. move `smart` from a shadow measurement surface into a very narrow guarded opt-in user path
+4. turn `lightweight` into explicit package, startup, prompt-thickness, and runtime-budget targets
+5. strengthen `shared foundation` with clearer cross-OpenClaw / Codex evidence
+
 ## Who This Is For
 
 This repo is a good fit if you already use OpenClaw long memory and want better working-context quality instead of a flat retrieval dump.

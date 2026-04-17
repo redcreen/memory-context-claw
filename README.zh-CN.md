@@ -60,6 +60,8 @@
   - runtime 的目标是少给 context、少长控制层，安装包和运行负担都要尽量小
 - `够快`
   - answer path、context assembly 和日常操作必须足够快，不能让用户为了“更聪明的记忆”付出明显卡顿
+- `聪明`
+  - 系统应该会记重点、会拒绝噪音、会按需给 context，并在不确定时保持收敛
 - `易维护`
   - operator 必须能够 inspect、replay、repair、rollback，而不是去反向猜测隐藏状态
 
@@ -86,6 +88,40 @@
 - `维护省心`
   - 出问题时要能看、能查、能回放、能回退，而不是只能靠猜
   - 工程含义：inspect / audit / replay / repair / rollback / hermetic eval 这些 operator surface 必须一直是正式能力
+
+## 当前离北极星还有多远
+
+按当前证据看，这个产品已经不是“概念验证”，但离北极星还有几处明确缺口。
+
+已经比较稳的部分：
+
+- `维护省心`
+  - CLI、audit、replay、repair、rollback、release-preflight、Docker hermetic eval 这些 operator 面已经很像正式产品能力
+- `self-learning` 主干
+  - realtime + nightly 两条学习路径都已经落地，而且 host-live A/B 已经能看到真实增益
+- `context 优化` 的主线地位
+  - durable-source slimming 和 working-set pruning 都已经成为正式 workstream，不再只是 report 里的想法
+
+当前仍然偏薄弱的部分：
+
+- `简单`
+  - 安装后仍然需要手改 `openclaw.json`、可选改 `PATH`，首次接入还不够“一看就会”
+- `够快`
+  - Docker hermetic 下的普通对话实时写记忆仍然明显受 timeout 压力影响，真实可复现环境下的速度还不够稳
+- `聪明`
+  - context 优化虽然已经验证可行，但当前仍是 shadow-only，还没有变成默认用户收益
+- `轻量`
+  - 轻量目前更多还是目标和方向，包体、启动成本、默认运行负担还没被收成硬门禁
+- `共享底座`
+  - 架构上已经成立，但产品级证据目前仍明显偏 OpenClaw，Codex / 多实例这条还缺更像产品证明的案例
+
+所以接下来的重点顺序应该很明确：
+
+1. 先把 `简单` 收成更短的 install / bootstrap / verify 路径。
+2. 再把 `够快` 收成更强的 hermetic / timeout / latency gate。
+3. 然后把 `聪明` 从 shadow measurement surface 推进到极窄的 guarded opt-in 用户路径。
+4. 同时把 `轻量` 收成明确的包体、启动成本、prompt thickness 和 runtime budget 目标。
+5. 最后补强 `共享底座` 的跨 OpenClaw / Codex 证据面。
 
 ## 适用对象
 

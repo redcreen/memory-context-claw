@@ -2,7 +2,7 @@
 
 ## Current Phase
 
-`post-stage6 turn-by-turn context optimization planning`
+`post-stage6 north-star gap closure planning`
 
 ## Current Results Snapshot
 
@@ -26,7 +26,7 @@
 - Live answer-level A/B after history cleanup: current `100 / 100`, legacy `99 / 100`, `1` UMC-only, `0` builtin-only, `0` shared-fail
 - Dialogue working-set runtime shadow: replay `16 / 16`, average reduction ratio `0.4368`, runtime answer A/B baseline `5 / 5`, shadow `5 / 5`
 - Docker hermetic eval status: official-image runner landed and reusable; focused history cleanup scenario now runs through the real Docker path
-- Interpretation: the `200+` case buildout, natural-Chinese / watchlist / perf hardening, Stage 6 runtime shadow measurement, and the history-cleanup closure are complete; the next phase is a docs-first review that turns “per-turn context optimization” into the explicit mainline before any new active-path experiment
+- Interpretation: the `200+` case buildout, natural-Chinese / watchlist / perf hardening, Stage 6 runtime shadow measurement, and the history-cleanup closure are complete; the docs-first review is now done, so the next phase is north-star gap closure before any new active-path experiment
 
 ## Current Product Values
 
@@ -47,6 +47,19 @@
 - `够快`
 - `聪明`
 - `易维护`
+
+## Current Gap Order
+
+1. `简单`
+   - install / bootstrap / verify 还不够短
+2. `够快`
+   - hermetic ordinary-conversation 写记忆路径仍然 timeout-heavy
+3. `聪明`
+   - working-set 和 context optimization 仍是 shadow-first，不是默认用户收益
+4. `轻量`
+   - 包体、启动、默认运行负担还缺硬预算
+5. `共享底座`
+   - Codex / 多实例产品证据弱于 OpenClaw
 
 ## Slices
 
@@ -98,12 +111,12 @@
   - Exit Condition: 当前 regression 被关闭，且下一轮 live A/B 已明确瞄准 cross-source / conflict / history / 自然中文的净增益
   - Status: `ongoing`
 
-- Slice: `review-and-stage-next-round-context-optimization`
-  - Objective: 先把“逐轮 context 优化”的下一轮工作收敛成 docs-first 队列，再进入新的 runtime experiment 与 harder A/B 设计
+- Slice: `close-north-star-gaps-after-docs-review`
+  - Objective: docs-first review 已完成；当前要按北极星缺口顺序推进下一轮工作，先简化接入，再补速度，再推进聪明路径与 harder A/B
   - Dependencies: Stage 6 runtime shadow evidence、history cleanup closeout、roadmap / development plan / architecture docs、Docker hermetic eval path
-  - Risks: 如果还沿用上一轮“history cleanup resume”的口径，下一轮 active-path discussion 会缺少清晰边界；如果直接继续堆 hardcoded rules，会违背当前“尽量使用 LLM tool、但调用次数受控”的实现约束
-  - Validation: roadmap / development plan / architecture docs / `.codex/*` 对齐；bounded LLM decision contract、operator metrics 和 rollback boundary 被写成 durable docs
-  - Exit Condition: 维护者可以只看文档就知道下一轮先做哪条 experiment、哪些 guardrail 不能动、哪些指标决定是否 promotion
+  - Risks: 如果继续只谈 context 优化、不把 install 和 speed 收成正式缺口，后续方向会再次偏到“功能更强但产品体感没变好”；如果直接继续堆 hardcoded rules，会违背当前“尽量使用 LLM tool、但调用次数受控”的实现约束
+  - Validation: roadmap / development plan / architecture docs / `.codex/*` 对齐；北极星缺口顺序明确；bounded LLM decision contract、operator metrics 和 rollback boundary 被写成 durable docs
+  - Exit Condition: 维护者可以只看文档就知道下一轮先收哪一类产品缺口，再进入哪条 experiment、哪些 guardrail 不能动、哪些指标决定是否 promotion
   - Status: `ongoing`
 
 - Slice: `formalize-realtime-memory-intent-ingestion`
@@ -212,9 +225,10 @@
 
 ## Execution Order
 
-1. 先完成 docs-first review，把 roadmap、development plan、architecture docs 和 `.codex/*` 对齐到“逐轮 context 优化”的下一轮主线
-2. 定义 bounded LLM-led context decision contract、operator metrics 和 rollback boundary
-3. 在 docs 收口后，再重设计下一轮 live A/B，让更多 `cross-source`、`conflict`、`multi-step history` 与高信息密度自然中文场景变成 Memory Core 独占胜场
+1. 先按北极星缺口顺序推进：install / bootstrap / verify 简化优先
+2. 收敛 hermetic timeout / latency，把 `够快` 变成正式门禁
+3. 定义 bounded LLM-led context decision contract、operator metrics 和 rollback boundary
+4. 在此基础上再重设计下一轮 live A/B，让更多 `cross-source`、`conflict`、`multi-step history` 与高信息密度自然中文场景变成 Memory Core 独占胜场
 4. 继续保持 `24` 条自然中文案例、当前 raw transport watchlist 和 `2026-04-15` perf baseline 在下一轮修复中持续稳定
 5. 把更难 harder-case surface 逐步从 watch 推向更强的正式门禁候选
 6. 把 gateway/shared-session 与 raw transport 继续保持在独立 watchlist，不与算法判断混淆
@@ -234,9 +248,9 @@
 
 ## Current Execution Line
 
-- Objective: 先把“逐轮 context 优化”的下一轮工作文档化、定边界，再开始新的 experiment 与 harder A/B
-- Plan Link: `review-and-stage-next-round-context-optimization`
-- Runway: docs-first review、bounded LLM decision contract、harder A/B redesign、gateway/raw transport watch
+- Objective: 把北极星缺口转成执行顺序，先解决简单和速度，再推进聪明路径与 harder A/B
+- Plan Link: `close-north-star-gaps-after-docs-review`
+- Runway: install simplification、hermetic speed gate、bounded LLM decision contract、harder A/B redesign、gateway/raw transport watch
 - Progress: `0 / 3` tasks complete
 - Stop Conditions:
   - docs remain anchored to the older history-cleanup recovery pointer instead of the next context-optimization queue

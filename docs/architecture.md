@@ -99,6 +99,27 @@ Translated into architecture constraints:
 - `easy to maintain`
   - critical behavior stays visible through inspect / audit / replay / rollback surfaces
 
+## Current Strengths And Weak Spots
+
+Looking at the current architecture and evidence surface:
+
+- strengths:
+  - the governance / operator surface is already fairly complete
+  - the self-learning lifecycle is already a real backbone
+  - context optimization now has explicit boundaries instead of drifting as a report-only idea
+- weak spots:
+  - `simple` still depends on manual install wiring
+  - `fast enough` is not yet strong enough on hermetic answer paths
+  - `smart` is still shadow-first rather than a default experience
+  - `lightweight` still lacks harder package, startup, and budget constraints
+  - `shared foundation` still needs stronger Codex / multi-instance product evidence
+
+So the architecture-level guardrails now matter most in three ways:
+
+1. do not let “smarter” degrade into “more rules and heavier call chains”
+2. do not let stronger capability break installation simplicity or main-path speed
+3. do not leave the shared-core story at boundary design without stronger product proof
+
 ## Module Inventory
 
 | Module | Responsibility | Key Interfaces |

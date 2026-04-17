@@ -72,6 +72,23 @@ Translated into execution requirements:
 - `easy to maintain`
   - rollback boundaries, operator metrics, and hermetic / Docker eval entrypoints must be explicit before each promotion step
 
+## North-Star-Driven Current Priorities
+
+This plan is no longer only in a docs-first review state.
+
+The current priority order should now follow the north-star gaps:
+
+1. `simple`
+   - shorten install / bootstrap / verify and reduce manual setup
+2. `fast enough`
+   - push down timeout / latency pressure on the hermetic ordinary-conversation write path
+3. `smart`
+   - after the bounded decision contract is clear, move shadow-first evidence into a very narrow guarded opt-in path
+4. `lightweight`
+   - define explicit budgets for package size, startup cost, prompt thickness, and runtime cost
+5. `shared foundation`
+   - strengthen product evidence beyond OpenClaw, especially on Codex / multi-instance reuse
+
 ## How To Use This Plan
 
 Read this document as one ordered build queue.
@@ -95,7 +112,7 @@ Current status:
 - `Stage 5`: completed
 - `Stage 6`: completed
 - current pointer: `92`
-- current recommendation: run a docs-first review so “per-turn context optimization” becomes the formal recovery point; keep `dialogueWorkingSetShadow` default-off and shadow-only, then move into harder A/B and later experiment design
+- current recommendation: the docs-first review is complete; next move by north-star gap order, starting with simpler adoption, then faster hermetic performance, then a bounded guarded smart path
 
 Already implemented in the current baseline:
 

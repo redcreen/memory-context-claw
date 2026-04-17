@@ -123,12 +123,35 @@ roadmap 层的含义是：
 - `维护省心`
   - hermetic / Docker eval、rollback boundary、operator metrics 继续是一等约束
 
+## 当前缺口评估
+
+当前离北极星最近和最远的地方，需要在 roadmap 上写清楚：
+
+- 已经比较稳：
+  - `维护省心`
+  - `self-learning` 主干
+  - `context 优化` 已经成为正式主线
+- 当前最薄弱：
+  - `简单`：安装 / bootstrap / verify 仍然偏手工
+  - `够快`：hermetic 普通对话写记忆路径仍然明显受 timeout 影响
+  - `聪明`：working-set 优化还没有变成默认用户收益
+  - `轻量`：包体、启动、默认运行负担还没被收成硬预算
+  - `共享底座`：Codex / 多实例的产品证据仍弱于 OpenClaw
+
+这意味着下一轮 priority order 应该是：
+
+1. install / bootstrap / verify 简化
+2. hermetic timeout / latency 收敛
+3. shadow-only 到 guarded opt-in 的聪明路径
+4. 轻量预算化
+5. 共享底座证据补强
+
 ## 当前 / 下一步 / 更后面
 
 | 时间层级 | 重点 | 退出信号 |
 | --- | --- | --- |
-| 当前 | 做 docs-first review，把“逐轮 context 优化”从 report 结论收敛成正式执行口径 | roadmap、development plan、架构文档和 `.codex/*` 已对齐到同一个恢复点 |
-| 下一步 | 先定义 bounded LLM-led context decision contract、operator metrics 与 rollback boundary，再设计更难的 live A/B | 下一轮 harder case 设计已经显式附带 prompt-thickness / reduction / latency / rollback 指标 |
+| 当前 | 以北极星缺口为入口，开始做 gap-driven 收敛：先简化接入，再补速度，再推进聪明路径 | roadmap、development plan、架构文档和 `.codex/*` 已从 docs-first review 切到同一套 gap-driven 优先级 |
+| 下一步 | 先定义 bounded LLM-led context decision contract、operator metrics 与 rollback boundary，并把 install / timeout / lightweight 变成正式门禁 | 下一轮 harder case 设计已经显式附带 prompt-thickness / reduction / latency / rollback 指标，同时 install / latency / budget 也有明确阈值 |
 | 更后面 | 只有在更长时间的 real-session soak 后，才讨论任何 guarded active-path experiment | shadow telemetry 长期为绿，且 active-path experiment 的 promotion / rollback gate 已可操作 |
 
 ## 当前执行重点

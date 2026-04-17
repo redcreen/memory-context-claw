@@ -123,12 +123,35 @@ At roadmap level this means:
 - `easy to maintain`
   - hermetic / Docker eval, rollback boundaries, and operator metrics remain first-class constraints
 
+## Current Gap Review
+
+The roadmap should make the current distance from the north star explicit:
+
+- already relatively strong:
+  - `easy to maintain`
+  - the `self-learning` backbone
+  - `context optimization` as a formal mainline
+- currently weakest:
+  - `simple`: install / bootstrap / verify still asks too much manual setup
+  - `fast enough`: the hermetic ordinary-conversation write path is still timeout-heavy
+  - `smart`: working-set optimization is validated but not yet a default user-visible gain
+  - `lightweight`: package, startup, and default runtime budgets are not yet enforced as hard targets
+  - `shared foundation`: Codex / multi-instance product evidence still trails OpenClaw
+
+That makes the next priority order explicit:
+
+1. simplify install / bootstrap / verify
+2. reduce hermetic timeout and latency pressure
+3. move from shadow-only to a narrow guarded smart path
+4. turn lightweight goals into explicit budgets
+5. strengthen shared-foundation evidence across OpenClaw and Codex
+
 ## Now / Next / Later
 
 | Horizon | Focus | Exit Signal |
 | --- | --- | --- |
-| Now | finish the docs-first review so “per-turn context optimization” becomes the formal next recovery point instead of a report-only conclusion | roadmap, development plan, architecture docs, and `.codex/*` all point at the same next slice |
-| Next | define the bounded LLM-led context decision contract, operator metrics, and rollback boundary, then redesign the harder live A/B | the next harder-case design carries explicit prompt-thickness / reduction / latency / rollback metrics |
+| Now | shift from docs-first review into north-star gap closure: simplify adoption first, then improve speed, then advance the smart path | roadmap, development plan, architecture docs, and `.codex/*` all point at the same gap-driven priority order |
+| Next | define the bounded LLM-led context decision contract, operator metrics, and rollback boundary, while turning install / timeout / lightweight into formal gates | the next harder-case design carries explicit prompt-thickness / reduction / latency / rollback metrics, with install / latency / budget thresholds made explicit too |
 | Later | discuss any guarded active-path experiment only after a longer real-session soak | shadow telemetry stays green long enough and the promotion / rollback gate is operator-ready |
 
 ## Current Execution Focus
