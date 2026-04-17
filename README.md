@@ -21,6 +21,7 @@ If you want the shortest practical answer before reading the whole repo:
 - focused ordinary-conversation write-time A/B:
   - host live: `current=38`, `legacy=21`, `UMC-only=18`
   - Docker hermetic strict closeout: `current=40`, `legacy=15`, `UMC-only=25`, `legacy-only=0`, `both-fail=0`, `preCaseResetFailed=0`
+- Stage 10 adoption/shared-foundation proof: latest sampled package tarball `1456484 bytes`, `umc where` `154ms`, first-run `registry inspect` `80ms`, Codex shared proof `1 promoted / 1 candidate / 1 policy input`, multi-instance shared proof `2 candidates / 2 policy inputs`
 
 Read these first:
 
@@ -35,6 +36,9 @@ Read these first:
 - [Focused Ordinary-Conversation Realtime Write A/B](reports/generated/openclaw-ordinary-conversation-memory-intent-ab-2026-04-17.md)
 - [Focused Ordinary-Conversation Strict Closeout](reports/generated/openclaw-ordinary-conversation-memory-intent-closeout-2026-04-17.md)
 - [Docker Hermetic Ordinary-Conversation Rerun](reports/generated/openclaw-ordinary-conversation-memory-intent-docker-rerun-2026-04-17.md)
+- [Stage 10 Shortest Adoption Path](docs/reference/unified-memory-core/testing/adoption-shortest-path.md)
+- [Stage 10 Shared-Foundation Proof](reports/generated/stage10-adoption-and-shared-foundation-2026-04-18.md)
+- [Stage 10 Closeout](reports/generated/stage10-adoption-closeout-2026-04-18.md)
 
 The honest takeaway is now cleaner: OpenClaw builtin memory is already decent on many “existing memory consumption” prompts, so the older `100`-case A/B only shows a modest gap. On the ordinary-conversation write surface, both the host-live run and the hermetic Docker strict rerun show a material Unified Memory Core advantage. The difference is attribution quality: the host run acts as the more optimistic live upper bound, while the Docker strict lane is the official reproducible baseline. The last remaining strict shared-fail was then closed by a same-method targeted rerun, so the current closeout state of the `40`-case Docker strict matrix is now `40 / 40 vs 15 / 40`. The `2/4`-shard `gateway-steady` path remains useful, but only as fast watch/smoke rather than the final truth surface.
 
@@ -90,16 +94,16 @@ Areas that are still comparatively weak:
 - `smart`
   - context optimization is validated and now has a narrow guarded opt-in path, but the gain is still not the default user experience
 - `reassuring`
-  - the shared-foundation story is strong architecturally, but product evidence is still much stronger on OpenClaw than on Codex or multi-instance reuse
+- the shared-foundation story is now backed by explicit Stage 10 product proof; the ongoing job is to keep that operator evidence green instead of reopening the claim
 
 So the next focus order should stay explicit:
 
 1. finish the `light and fast` context-loading problem first by making context thickness, working-set reduction, budgeted assembly, and answer-level latency one formal mainline
    - the stage goal is not just “lower average tokens”; it is “keep daily long-running use alive without requiring compat / compact as the normal escape hatch”
 2. continue `light and fast` by pushing down ordinary-conversation realtime-write timeout / latency in hermetic runs
-3. then shorten install / bootstrap / verify
-4. now that Stage 9 is closed, keep the guarded opt-in gain bounded while waiting for the Stage 7 harder matrix to go green
-5. strengthen `reassuring` with clearer cross-OpenClaw / Codex evidence
+3. keep the Stage 10 shortest adoption path and shared-foundation proof green
+4. now that Stage 9 is closed, keep the guarded opt-in gain bounded while waiting for the Stage 7 harder matrix to stay green
+5. only open a new numbered stage if a new explicit product goal justifies it
 
 ## Who This Is For
 

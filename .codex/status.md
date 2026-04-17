@@ -7,20 +7,20 @@
 
 ## Current Phase
 
-`post-stage7-context-minor-gc-closeout`
+`post-stage10-adoption-closeout`
 
 ## Active Slice
 
-`prepare-stage10-adoption-simplification-and-shared-foundation-proof`
+`hold-stage10-adoption-proof-stable`
 
 ## Current Product Promises
 
 - `轻快`
-  - 当前已落地：fact-first assembly + Stage 6 runtime shadow instrumentation + release-preflight
+  - 当前已落地：fact-first assembly + Stage 6 runtime shadow instrumentation + release-preflight + Stage 10 shortest adoption path
 - `聪明`
   - 当前已落地：realtime `memory_intent` ingestion + nightly governed learning
 - `省心`
-  - 当前已落地：CLI / audit / replay / rollback operator flows + shared contracts + canonical registry root + OpenClaw / Codex adapters
+  - 当前已落地：CLI / audit / replay / rollback operator flows + shared contracts + canonical registry root + OpenClaw / Codex adapters + Codex / multi-instance shared-foundation proof
 
 ## Done
 
@@ -127,7 +127,17 @@
   - Stage 9 guarded path 实际 applied：`2 / 4`
   - Stage 9 activation matched：`4 / 4`
   - Stage 9 average guarded prompt reduction ratio：`0.0306`
-  - 当前结论：Stage 7 与 Stage 9 都已正式收口；下一步转入 Stage 10 adoption simplification and shared-foundation proof
+  - 当前结论：Stage 7 与 Stage 9 都已正式收口；Stage 10 也已经收口，当前进入维护态
+- Stage 10 adoption/shared-foundation proof 已正式落地：
+  - `npm run umc:stage10 -- --format markdown` 已成为最短维护者路径
+  - latest sampled package tarball `1456484 bytes`
+  - `umc where` `154ms`
+  - first-run `registry inspect` `80ms`
+  - Codex shared proof `1 promoted / 1 candidate / 1 policy input`
+  - multi-instance shared proof `2 candidates / 2 policy inputs`
+  - 对应报告已补齐：
+    - [reports/generated/stage10-adoption-and-shared-foundation-2026-04-18.md](../reports/generated/stage10-adoption-and-shared-foundation-2026-04-18.md)
+    - [reports/generated/stage10-adoption-closeout-2026-04-18.zh-CN.md](../reports/generated/stage10-adoption-closeout-2026-04-18.zh-CN.md)
 - focused history cleanup 已收口到最新主线基线：
   - `100` case live answer-level A/B 当前可读作 current `100 / 100`、legacy `99 / 100`
   - builtin-only regression = `0`
@@ -177,12 +187,12 @@
 
 ## In Progress
 
-- docs-first review 已完成；当前恢复点切到 `Stage 10 adoption simplification and shared-foundation proof`
-- 当前 3 个用户承诺的执行顺序变成：
-  - 先补 `轻快 / context loading optimization`
-  - 然后再补 `轻快 / install`
-  - 再推进 `聪明`
-  - 最后补 `省心` 的跨宿主证据
+- Stage 10 已完成；当前恢复点切到维护态
+- 当前 3 个用户承诺的维护顺序变成：
+  - 先保持 `轻快 / context loading optimization` 为绿
+  - 然后保持 `轻快 / install` 的 shortest path 为绿
+  - 再保持 `聪明` 的 bounded guarded seam 继续 `default-off` / opt-in only
+  - 最后保持 `省心` 的跨宿主/shared-foundation 证据为绿
 - 当前 answer-level 不再是“能力是否存在”的 blocker；真正要解决的是：
   - 每一轮 prompt 还可以如何更轻
   - 如何把 durable-source slimming、working-set pruning、budgeted assembly 和 answer latency 收成同一张 scorecard
@@ -207,21 +217,21 @@
 - 当前新的边界变成：
   - Stage 7 已关闭，不再把 harder matrix 当成未决问题
   - Stage 9 虽已收口，但仍然必须保持 `default-off` / opt-in only
-  - 下一步是 Stage 10 的 install / bootstrap / verify 与 shared-foundation proof
+  - Stage 10 已关闭，不再把 `121-126` 当成当前未完成队列
 - operator / planning follow-up 只剩：
   - 什么时候清理过时的 legacy root 副本
   - accepted-action Step 48-52 何时具备重开实现的前置条件
 
 ## Next 3 Actions
 
-1. 从 `121` 开始，缩短 install / bootstrap / verify 路径。
-2. 把 package / startup / first-run 成本收进 `轻快` 证据面。
-3. 为 Codex / 多实例共享底座补更强的 shared-foundation proof，同时继续保持 Stage 9 为 `default-off` / opt-in only。
+1. 保持 `npm run umc:stage10 -- --format markdown` 持续为绿。
+2. 保持 Docker hermetic baseline、Stage 7、Stage 8、Stage 9、Stage 10 的证据面一致。
+3. 只有在新的明确产品目标出现时，才打开新的编号阶段。
 
 ## Architecture Supervision
 - Signal: `yellow`
 - Signal Basis: open blockers or architectural risks are still recorded
-- Root Cause Hypothesis: 当前最大的风险不再是“能力没做出来”，而是文档与控制面如果继续停留在上一轮 history-cleanup 语义，会让下一轮逐轮 context 优化缺少明确边界、指标和恢复点
+- Root Cause Hypothesis: 当前最大的风险不再是“能力没做出来”，而是 Stage 10 已经完成后，如果文档与控制面继续停在 `121-126`，维护者会误以为这条线仍未完成
 - Correct Layer: roadmap, development plan, architecture docs, runtime experiment boundary, release-preflight evidence, control surface
 - Automatic Review Trigger: no automatic trigger is currently active
 - Escalation Gate: raise but continue
@@ -233,12 +243,12 @@
 
 ## Current Execution Line
 
-- Objective: Stage 7 与 Stage 9 都已关闭；当前转入 Stage 10 adoption simplification and shared-foundation proof，同时继续保持 Docker 作为默认 hermetic A/B 面
-- Plan Link: `prepare-stage10-adoption-simplification-and-shared-foundation-proof`
+- Objective: Stage 7 / 8 / 9 / 10 都已关闭；当前进入维护态，继续保持 Docker 为默认 hermetic A/B 面与 Stage 10 shortest-path/shared-foundation proof 持续为绿
+- Plan Link: `hold-stage10-adoption-proof-stable`
 - Current Critical Path:
-  - `121` 收 install / bootstrap / verify 的最短路径
-  - `122` 把 package / startup / first-run 成本收进 `轻快` 证据面
-  - `123-124` 补 Codex / 多实例 shared-foundation proof
+  - 保持 `npm run umc:stage10` 持续通过
+  - 保持 Stage 10 文档与 control surface 不漂移
+  - 保持 Docker 作为默认 hermetic A/B 面
 - Runway: Stage 7 closeout evidence、Docker hermetic baseline、release-preflight、canonical-root policy、shared-foundation proof
 - Progress: `0 / 4` tasks complete
 - Stop Conditions:

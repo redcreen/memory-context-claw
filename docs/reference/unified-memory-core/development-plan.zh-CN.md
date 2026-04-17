@@ -34,14 +34,14 @@
 当前执行计划也要直接锚定到 3 个用户承诺：
 
 1. `轻快`
-   - 已落地：fact-first assembly、Stage 6 runtime shadow instrumentation、release-preflight、Docker hermetic eval、ordinary-conversation Docker steady-state A/B
-   - 下一步：先把 `Context Minor GC / context loading optimization` 做成正式主线和正式门禁；ordinary-conversation hermetic A/B 继续保持为默认 Docker 基线；最后才是 install / bootstrap / verify
+   - 已落地：fact-first assembly、Stage 6 runtime shadow instrumentation、release-preflight、Docker hermetic eval、ordinary-conversation Docker steady-state A/B、Stage 10 最短接入路径
+   - 维护重点：继续保持 `Context Minor GC / context loading optimization` 和 Stage 10 adoption path 都为绿；ordinary-conversation hermetic A/B 继续保持为默认 Docker 基线
 2. `聪明`
    - 已落地：realtime `memory_intent` ingestion + nightly governed learning + working-set shadow path
    - 下一步：在 context optimization scorecard 稳定后，把 shadow-first 的 context decision 逐步推进到 bounded、guarded 的窄路径收益
 3. `省心`
-   - 已落地：CLI / audit / replay / rollback operator 流程、canonical registry root、OpenClaw / Codex adapters
-   - 下一步：继续保持这些流程可读、可 replay、可发版，并补强跨 Codex / 多实例的产品证据
+   - 已落地：CLI / audit / replay / rollback operator 流程、canonical registry root、OpenClaw / Codex adapters、Codex / 多实例 shared-foundation proof
+   - 维护重点：继续保持这些流程可读、可 replay、可发版，并让跨 Codex / 多实例证据持续为绿
 
 ## 产品北极星与执行解释
 
@@ -97,8 +97,9 @@
 - `Stage 7`：已完成
 - `Stage 8`：已完成
 - `Stage 9`：已完成（继续保持 `default-off` / opt-in only）
-- 当前指针：`121`
-- 当前建议：Stage 7 scorecard、harder live matrix、Step 108 的 plugin-owned transport closeout，以及 Stage 9 guarded live A/B closeout 都已一起收口；下一步转入 Stage 10 的 adoption simplification and shared-foundation proof，同时继续保持 Stage 9 为 `default-off` / opt-in only
+- `Stage 10`：已完成
+- 当前指针：`none`
+- 当前建议：Stage 7、Stage 8、Stage 9、Stage 10 都已收口；当前进入维护态，继续保持 Docker hermetic baseline、Stage 9 `default-off` 边界、Stage 10 最短接入路径和 shared-foundation proof 持续为绿
 
 当前 baseline 已经落地：
 
@@ -145,7 +146,7 @@
 | Stage 7 | `101-108` | 把 `Context Minor GC / context loading optimization` 收成正式主线与正式门禁 | `completed` |
 | Stage 8 | `109-114` | 把 ordinary-conversation hermetic 路径收成可信的 steady-state A/B 面 | `completed` |
 | Stage 9 | `115-120` | 以 bounded、guarded 方式让 context 优化开始变成用户收益 | `completed` |
-| Stage 10 | `121-126` | 收 install / bootstrap / verify，并补强共享底座产品证据 | `planned` |
+| Stage 10 | `121-126` | 收 install / bootstrap / verify，并补强共享底座产品证据 | `completed` |
 
 ## 顺序开发计划
 
@@ -389,12 +390,21 @@ Stage 6 证据：
 - 共享底座不只停留在 OpenClaw 主路径
 - Codex / 多实例证据变成公开可读的产品能力
 
-121. `todo` 收 install / bootstrap / verify 的最短路径。
-122. `todo` 把 package / startup / first-run 成本也收进 `轻快` 证据面。
-123. `todo` 为 Codex 补更完整的 shared-foundation 评测和用例。
-124. `todo` 为多实例共享底座补更明确的 operator 证据。
-125. `todo` 保持 replay / rollback / audit 与 install 简化并行不退化。
-126. `todo` 以“接入更短、共享证据更强”收口本阶段。
+121. `completed` 收 install / bootstrap / verify 的最短路径。
+122. `completed` 把 package / startup / first-run 成本也收进 `轻快` 证据面。
+123. `completed` 为 Codex 补更完整的 shared-foundation 评测和用例。
+124. `completed` 为多实例共享底座补更明确的 operator 证据。
+125. `completed` 保持 replay / rollback / audit 与 install 简化并行不退化。
+126. `completed` 以“接入更短、共享证据更强”收口本阶段。
+   - 当前 Stage 10 正式基线：
+     - 最近一次采样 package tarball `1456484 bytes`
+     - `umc where` `154ms`
+     - first-run `registry inspect` `80ms`
+     - Codex shared proof `1 promoted / 1 candidate / 1 policy input`
+     - multi-instance shared proof `2 candidates / 2 policy inputs`
+   - 对应报告：
+     - [../../../reports/generated/stage10-adoption-and-shared-foundation-2026-04-18.md](../../../reports/generated/stage10-adoption-and-shared-foundation-2026-04-18.md)
+     - [../../../reports/generated/stage10-adoption-closeout-2026-04-18.zh-CN.md](../../../reports/generated/stage10-adoption-closeout-2026-04-18.zh-CN.md)
 100. `completed` 等 Stage 6 telemetry 路径存在后，再恢复之前延后的 history cleanup 与 harder live A/B 扩面。
    - 下一条执行指针现在已经回到 `ab100-zh-history-editor-*` 清理和 harder A/B 扩面，并且可以直接挂上新的 shadow telemetry surface。
 
@@ -402,9 +412,9 @@ Stage 6 证据：
 
 从这里恢复：
 
-1. 从 `121` 开始，收 install / bootstrap / verify 的最短路径
-2. 把 package / startup / first-run 成本收进 `轻快` 证据面
-3. 继续保持 Stage 9 为 `default-off` / opt-in only，不扩大 guarded 面
+1. 保持 Stage 7、Stage 8、Stage 9、Stage 10 的证据面持续为绿
+2. 继续保持 Docker 作为默认 hermetic A/B 面
+3. 只有在出现新的明确产品目标时，才打开新的编号阶段
 
 当前不要开始：
 

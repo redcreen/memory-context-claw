@@ -79,7 +79,7 @@ Supporting evidence:
 - Stage 9 average prompt reduction ratio: `0.0306`
 - Stage 9 applied-only prompt reduction ratio: `0.0067`
 - Stage 7 / Step 108 closeout: the plugin-owned decision runner is landed, the hermetic gateway rerun captured `5 / 5`, and the real local service smoke captured `3 / 3`
-- Interpretation: the Stage 7 operator-facing scorecard, the harder live matrix, the Stage 9 guarded live A/B, and the Step 108 plugin-owned transport closeout are all landed; the mainline now moves to Stage 10 adoption simplification and shared-foundation proof rather than more Stage 7 seam work
+- Interpretation: the Stage 7 operator-facing scorecard, the harder live matrix, the Stage 9 guarded live A/B, and the Step 108 plugin-owned transport closeout are all landed; Stage 10 is now closed too, so the mainline is no longer “open the next stage” but “keep these evidence surfaces green”
 
 Supporting evidence:
 
@@ -98,11 +98,11 @@ Supporting evidence:
   - Stage 6 `dialogue working-set shadow integration` is landed in runtime and remains `default-off` + shadow-only
   - the shared-fail Chinese history cleanup is closed
   - the official-image Docker hermetic eval path is now reusable
-- Planned:
-  - make `Context Minor GC / context loading optimization` the first `light and fast` priority instead of putting installation polish first
-  - define one unified context-optimization scorecard so `prompt thickness / reduction / retrieval-assembly latency / answer latency / rollback metrics` are judged on one surface
-  - then attach the bounded LLM-led context decision contract, operator metrics, rollback boundary, and harder live A/B redesign to that scorecard
-  - make “daily sessions should not normally depend on compat / compact, and compat / compact should stay a nightly or background safety net” an explicit milestone goal
+- Current maintenance focus:
+  - keep the `Context Minor GC / context loading optimization` scorecard green
+  - keep Docker as the default hermetic A/B surface
+  - keep the Stage 9 `default-off` / opt-in only boundary intact
+  - keep the Stage 10 shortest adoption path and shared-foundation proof green
 - Explicitly not planned right now:
   - no default active prompt mutation
   - no builtin memory behavior changes
@@ -114,7 +114,7 @@ Supporting evidence:
 | --- | --- | --- | --- |
 | Light and fast | fact-first assembly, runtime working-set shadow instrumentation, release-preflight, Docker hermetic eval | runtime shadow replay `16 / 16`, average reduction ratio `0.4368`, runtime answer A/B `5 / 5` vs `5 / 5`, ordinary-conversation Docker strict closeout `current=40 / 40`, `legacy=15 / 40`, `UMC-only=25`, `preCaseResetFailed=0` | finish `Context Minor GC / context loading optimization` first by turning context-thickness / reduction / latency into hard gates; keep Docker as the default hermetic A/B surface and move the harder ordinary-conversation matrix into targeted follow-up |
 | Smart | realtime `memory_intent` ingestion, nightly self-learning, governed promotion / decay, working-set shadow path | ordinary-conversation host-live A/B current `38 / 40`, legacy `21 / 40`, `18` UMC-only wins | move the shadow-first context-decision path toward a bounded guarded narrow user gain and make context optimization feel user-visible |
-| Reassuring | add / inspect / audit / repair / replay / rollback, canonical registry root, OpenClaw / Codex adapters | shipped CLI flows and regression-protected verification stack | keep the operator surface readable and replayable while strengthening Codex / multi-instance product evidence |
+| Reassuring | add / inspect / audit / repair / replay / rollback, canonical registry root, OpenClaw / Codex adapters, Codex / multi-instance shared-foundation proof | shipped CLI flows, regression-protected verification, and Stage 10 shortest-path proof | keep the operator surface readable and replayable while the Codex / multi-instance shared proof stays green |
 
 ## Product North Star
 
@@ -138,18 +138,17 @@ The roadmap should make the current distance from the north star explicit:
   - `reassuring`
   - the `smart` self-learning backbone
   - `context optimization` as a formal mainline
-- currently weakest:
-  - `light and fast`: install / bootstrap / verify still asks too much manual setup, and the hermetic ordinary-conversation line still has a residual harder-failure set even after the Docker steady-state closure
-  - `smart`: working-set optimization is validated but not yet a default user-visible gain
-  - `reassuring`: Codex / multi-instance product evidence still trails OpenClaw
+- current remaining gaps:
+  - `light and fast`: per-turn context optimization is still not the default active-path gain
+  - `smart`: working-set optimization is still only a very narrow guarded opt-in gain, not the default experience
+  - `reassuring`: the problem is no longer “missing Stage 10 proof”; the problem is keeping the cross-host/operator evidence green over time
 
 That makes the next priority order explicit:
 
-1. `light and fast / context loading optimization`: make per-turn context thickness, working-set reduction, budgeted assembly, and answer-level latency the mainline
-   - this mainline is now explicitly named `Context Minor GC`; the target is not “compact more often”; it is “let long-running daily conversations continue without needing compact as the normal escape hatch”
-2. `light and fast / install`: once ordinary-conversation hermetic A/B is closed, shorten install / bootstrap / verify
-3. `smart`: keep the bounded guarded smart path narrow and opt-in while making the user-visible gain real
-4. `reassuring`: strengthen shared-foundation evidence across OpenClaw and Codex
+1. keep the `light and fast / context loading optimization` scorecard green
+2. keep the `light and fast / install` Stage 10 shortest adoption path green
+3. keep the `smart` bounded guarded path narrow and opt-in only
+4. keep the `reassuring` shared-foundation/operator evidence stable
 
 ## Post-Stage-6 Roadmap
 
@@ -160,29 +159,29 @@ Stages 1-6 are complete, but the roadmap cannot stop at “all historical stages
 | Stage 7: context loading optimization closure | `completed` | the biggest current product gap is no longer “does the feature exist?” but “is each turn’s context package light enough?”; Stage 6 is still a measurement layer, and this mainline is now externally named `Context Minor GC` | the unified scorecard is fixed and harder replay / Docker / local evidence consistently show a lighter context package without answer-quality damage, and daily long conversations usually no longer need compat / compact as the normal way to keep going |
 | Stage 8: ordinary-conversation realtime-write latency closure | `completed` | the Docker ordinary-conversation A/B has been recovered from a blanket timeout wall into a trustworthy strict closeout, while `2/4`-shard `gateway-steady` remains the fast watch lane | the clean Docker path is no longer dominated by large timeout counts and now closes at `40 / 40 vs 15 / 40` with `preCaseResetFailed = 0` |
 | Stage 9: guarded smart-path promotion | `completed` | context loading optimization is still not a user gain if it stays shadow-only forever | the bounded guarded seam now has real live A/B evidence plus an explicit rollback / operator contract; the feature remains `default-off` / opt-in only rather than drifting into the default path |
-| Stage 10: adoption simplification and shared-foundation proof | `planned` | install / bootstrap is still too manual, and Codex / multi-instance product evidence still lags | adoption is shorter and clearer, and the shared-foundation story is proven beyond architecture diagrams |
+| Stage 10: adoption simplification and shared-foundation proof | `completed` | install / bootstrap / verify now has a shortest maintainer path, and Codex / multi-instance shared proof is landed | `npm run umc:stage10 -- --format markdown` stays green and the shared-foundation evidence does not regress |
 
 ## Now / Next / Later
 
 | Horizon | Focus | Exit Signal |
 | --- | --- | --- |
-| Now | Stage 7 is now formally closed; move into `Stage 10` adoption simplification and shared-foundation proof | the Context Minor GC scorecard, harder live matrix, Step 108 closeout, and guarded seam boundary are all landed |
-| Next | start with `121-123`: shorten install / bootstrap / verify and pull package / startup / first-run cost into the `light and fast` evidence surface | adoption becomes shorter and clearer without regressing the Stage 7/8/9 evidence surface |
-| Later | once Stage 7 is stable, move into Stage 10 adoption simplification and shared-foundation proof | install / bootstrap / verify and shared-foundation proof both become operator-ready |
+| Now | Stage 7, Stage 8, Stage 9, and Stage 10 are all formally closed | the Docker hermetic baseline, the Stage 9 `default-off` boundary, and the Stage 10 shortest adoption/shared-foundation proof all stay green |
+| Next | stay in maintenance mode and keep the current evidence surfaces stable | no new stage opens implicitly; a new stage only opens when a new explicit product goal exists |
+| Later | define a new stage only if a new explicit user goal appears | the new goal, boundaries, operator contract, and validation surface are written first |
 
 ## Current Execution Focus
 
 The current roadmap horizon also maps to the concrete next execution work:
 
 1. keep Stage 6 runtime shadow integration `default-off` and shadow-only
-2. turn durable-source slimming, working-set pruning, harder live A/B, and the ordinary-conversation Docker rerun into one unified `context optimization scorecard`
+2. keep Docker as the default hermetic A/B surface and keep the ordinary-conversation strict baseline, Stage 7, Stage 9, and Stage 10 evidence aligned
 3. continue treating active prompt mutation as explicitly out of the default path until rollback boundaries and operator metrics are clear
-4. use the runtime export artifacts and the Docker hermetic eval path as the new replayable operator evidence surface
-5. do not move install simplification back ahead of context loading optimization while Stage 7 is still open
+4. use the runtime export artifacts and the Docker hermetic eval path as replayable operator evidence surfaces
+5. only open a new stage when a new explicit product goal exists
 
 When resuming work:
 
-- use `101` in [reference/unified-memory-core/development-plan.md](reference/unified-memory-core/development-plan.md) for the current execution order
+- use the Stage 10 closeout and maintenance guidance in [reference/unified-memory-core/development-plan.md](reference/unified-memory-core/development-plan.md) for the current execution order
 - use [../.codex/plan.md](../.codex/plan.md) and [../.codex/status.md](../.codex/status.md) for the live state
 
 ## Milestones
@@ -198,7 +197,7 @@ When resuming work:
 | [Stage 7: context loading optimization closure](reference/unified-memory-core/development-plan.md#stage-7-context-loading-optimization-closure) | completed | make per-turn context loading optimization a formal mainline and formal gate instead of leaving it at shadow findings | Stage 6 | the context-optimization scorecard is stable, harder replay / Docker / local evidence align, and rollout/rollback boundaries are clear |
 | [Stage 8: ordinary-conversation realtime-write latency closure](reference/unified-memory-core/development-plan.md#stage-8-ordinary-conversation-realtime-write-latency-closure) | completed | recover the clean Docker write-side answer path into a trustworthy ordinary-conversation strict A/B surface | Stage 7 | the ordinary-conversation hermetic strict closeout now reports `40 / 40 vs 15 / 40` with `preCaseResetFailed = 0` |
 | [Stage 9: guarded smart-path promotion](reference/unified-memory-core/development-plan.md#stage-9-guarded-smart-path-promotion) | completed | start turning context optimization into real user-facing value without breaking rollback safety | Stage 8 | the bounded opt-in path now has live A/B evidence, an operable rollback path, and remains `default-off` / opt-in only |
-| [Stage 10: adoption simplification and shared-foundation proof](reference/unified-memory-core/development-plan.md#stage-10-adoption-simplification-and-shared-foundation-proof) | planned | lift adoption experience and cross-host product proof to the same level as core capability | Stage 9 | install / bootstrap / verify is shorter, and Codex / multi-instance reuse is more concretely proven |
+| [Stage 10: adoption simplification and shared-foundation proof](reference/unified-memory-core/development-plan.md#stage-10-adoption-simplification-and-shared-foundation-proof) | completed | lift adoption experience and cross-host product proof to the same level as core capability | Stage 9 | `npm run umc:stage10 -- --format markdown` is the shortest maintainer path and Codex / multi-instance shared proof is public and reproducible |
 
 ## Milestone Flow
 

@@ -9,6 +9,7 @@
 - [stage5-acceptance.zh-CN.md](stage5-acceptance.zh-CN.md)
 - [openclaw-cli-integration.zh-CN.md](openclaw-cli-integration.zh-CN.md)
 - [openclaw-docker-hermetic-eval.zh-CN.md](openclaw-docker-hermetic-eval.zh-CN.md)
+- [adoption-shortest-path.zh-CN.md](adoption-shortest-path.zh-CN.md)
 - [openclaw-bundle-install.zh-CN.md](openclaw-bundle-install.zh-CN.md)
 - [release-preflight.zh-CN.md](release-preflight.zh-CN.md)
 - [main-path-performance-plan.zh-CN.md](main-path-performance-plan.zh-CN.md)
@@ -16,6 +17,7 @@
 推荐操作路径：
 
 - 先跑 `npm run umc:acceptance -- --format markdown`
+- 如果要走 Stage 10 的最短 adoption / shared-foundation proof，先跑 `npm run umc:stage10 -- --format markdown`
 - 如果要拿 product hardening 和 split-readiness 证据，再跑 `npm run umc:stage5 -- --format markdown`
 - 如果要确认宿主级 OpenClaw 集成，再跑 `npm run umc:openclaw-itest -- --format markdown`
 - 如果要拿到最干净的 OpenClaw hermetic benchmark 路径，再跑 `npm run eval:openclaw:docker -- --scenario memory-improvement-ab --embed-model-path <gguf>`

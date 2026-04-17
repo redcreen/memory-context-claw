@@ -34,14 +34,14 @@ Related documents:
 The execution plan should stay anchored to three user-facing promises:
 
 1. `Light and fast`
-   - already landed: fact-first assembly, Stage 6 runtime shadow instrumentation, release-preflight, Docker hermetic eval, and ordinary-conversation Docker steady-state A/B
-   - next work: first make `Context Minor GC / context loading optimization` a formal mainline and formal gate; keep ordinary-conversation hermetic A/B as the default Docker baseline; only after that shorten install / bootstrap / verify
+   - already landed: fact-first assembly, Stage 6 runtime shadow instrumentation, release-preflight, Docker hermetic eval, ordinary-conversation Docker steady-state A/B, and the Stage 10 shortest adoption path
+   - maintenance focus: keep both `Context Minor GC / context loading optimization` and the Stage 10 adoption path green, while keeping ordinary-conversation hermetic A/B as the default Docker baseline
 2. `Smart`
    - already landed: realtime `memory_intent` ingestion plus nightly governed learning plus the working-set shadow path
    - next work: once the context-optimization scorecard is stable, move the shadow-first context-decision path toward a bounded guarded narrow gain
 3. `Reassuring`
-   - already landed: CLI / audit / replay / rollback operator flows, canonical registry root, and OpenClaw / Codex adapters
-   - next work: keep those flows readable and replayable while strengthening Codex / multi-instance product evidence
+   - already landed: CLI / audit / replay / rollback operator flows, canonical registry root, OpenClaw / Codex adapters, and Codex / multi-instance shared-foundation proof
+   - maintenance focus: keep those flows readable and replayable while keeping the cross-Codex / multi-instance evidence green
 
 ## Product North Star And Execution Meaning
 
@@ -97,8 +97,9 @@ Current status:
 - `Stage 7`: completed
 - `Stage 8`: completed
 - `Stage 9`: completed (still `default-off` / opt-in only)
-- current pointer: `121`
-- current recommendation: the Stage 7 scorecard, the harder live matrix, the Step 108 plugin-owned transport closeout, and the Stage 9 guarded live A/B closeout are now all landed together; the next step is Stage 10 adoption simplification and shared-foundation proof, while Stage 9 remains `default-off` / opt-in only
+- `Stage 10`: completed
+- current pointer: `none`
+- current recommendation: Stage 7, Stage 8, Stage 9, and Stage 10 are all closed; the repo is now in maintenance mode, keeping the Docker hermetic baseline, the Stage 9 `default-off` boundary, and the Stage 10 shortest adoption/shared-foundation proof green
 
 Already implemented in the current baseline:
 
@@ -145,7 +146,7 @@ These constraints keep the next per-turn context optimization slice measurable a
 | Stage 7 | `101-108` | turn `Context Minor GC / context loading optimization` into a formal mainline and formal gate | `completed` |
 | Stage 8 | `109-114` | turn the ordinary-conversation hermetic path into a trustworthy steady-state A/B surface | `completed` |
 | Stage 9 | `115-120` | start turning context optimization into user-visible value through a bounded guarded path | `completed` |
-| Stage 10 | `121-126` | shorten install / bootstrap / verify and strengthen shared-foundation product proof | `planned` |
+| Stage 10 | `121-126` | shorten install / bootstrap / verify and strengthen shared-foundation product proof | `completed` |
 
 ## Sequential Build Plan
 
@@ -389,12 +390,21 @@ Stage complete when:
 - the shared foundation is proven beyond the OpenClaw main path
 - Codex / multi-instance evidence becomes readable product proof
 
-121. `todo` shorten the install / bootstrap / verify path.
-122. `todo` add package / startup / first-run cost to the `light and fast` evidence surface.
-123. `todo` add stronger shared-foundation evaluation and usage proof for Codex.
-124. `todo` add clearer operator proof for multi-instance shared memory.
-125. `todo` keep replay / rollback / audit strong while adoption gets simpler.
-126. `todo` close the stage when adoption is shorter and shared-foundation proof is materially stronger.
+121. `completed` shorten the install / bootstrap / verify path.
+122. `completed` add package / startup / first-run cost to the `light and fast` evidence surface.
+123. `completed` add stronger shared-foundation evaluation and usage proof for Codex.
+124. `completed` add clearer operator proof for multi-instance shared memory.
+125. `completed` keep replay / rollback / audit strong while adoption gets simpler.
+126. `completed` close the stage when adoption is shorter and shared-foundation proof is materially stronger.
+   - current Stage 10 baseline:
+     - latest sampled package tarball `1456484 bytes`
+     - `umc where` `154ms`
+     - first-run `registry inspect` `80ms`
+     - Codex shared proof `1 promoted / 1 candidate / 1 policy input`
+     - multi-instance shared proof `2 candidates / 2 policy inputs`
+   - reports:
+     - [../../../reports/generated/stage10-adoption-and-shared-foundation-2026-04-18.md](../../../reports/generated/stage10-adoption-and-shared-foundation-2026-04-18.md)
+     - [../../../reports/generated/stage10-adoption-closeout-2026-04-18.md](../../../reports/generated/stage10-adoption-closeout-2026-04-18.md)
 100. `completed` Resume the deferred history cleanup and harder live A/B expansion with Stage 6 telemetry attached.
    - The next execution pointer now returns to the deferred `ab100-zh-history-editor-*` cleanup and the harder A/B expansion, with the new shadow telemetry available as the measurement surface.
 
@@ -402,9 +412,9 @@ Stage complete when:
 
 Resume exactly from here:
 
-1. start from `121`, shortening install / bootstrap / verify
-2. pull package / startup / first-run cost into the `light and fast` evidence surface
-3. keep Stage 9 `default-off` / opt-in only rather than widening the guarded surface early
+1. keep Stage 7, Stage 8, Stage 9, and Stage 10 evidence green
+2. keep Docker as the default hermetic A/B surface
+3. only open a new numbered stage when a new explicit product goal exists
 
 Do not start with:
 

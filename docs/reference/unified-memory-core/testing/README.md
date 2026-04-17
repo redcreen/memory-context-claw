@@ -9,6 +9,7 @@ Testing planning entrypoints:
 - [stage5-acceptance.md](stage5-acceptance.md)
 - [openclaw-cli-integration.md](openclaw-cli-integration.md)
 - [openclaw-docker-hermetic-eval.md](openclaw-docker-hermetic-eval.md)
+- [adoption-shortest-path.md](adoption-shortest-path.md)
 - [openclaw-bundle-install.md](openclaw-bundle-install.md)
 - [release-preflight.md](release-preflight.md)
 - [main-path-performance-plan.md](main-path-performance-plan.md)
@@ -16,6 +17,7 @@ Testing planning entrypoints:
 Preferred operator flow:
 
 - run `npm run umc:acceptance -- --format markdown` first
+- run `npm run umc:stage10 -- --format markdown` when you want the shortest Stage 10 adoption/shared-foundation proof
 - run `npm run umc:stage5 -- --format markdown` next when you need product-hardening and split-readiness evidence
 - run `npm run umc:openclaw-itest -- --format markdown` next when you need host-level OpenClaw integration confidence
 - run `npm run eval:openclaw:docker -- --scenario memory-improvement-ab --embed-model-path <gguf>` when you want the cleanest hermetic OpenClaw benchmark path without reading `~/.openclaw`

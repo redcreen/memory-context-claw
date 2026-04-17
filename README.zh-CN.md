@@ -21,6 +21,7 @@
 - 普通对话实时写记忆专项 A/B：
   - 宿主 live：`current=38`、`legacy=21`、`UMC-only=18`
   - Docker hermetic strict closeout：`current=40`、`legacy=15`、`UMC-only=25`、`legacy-only=0`、`both-fail=0`、`preCaseResetFailed=0`
+- Stage 10 adoption/shared-foundation proof：最近一次采样 package tarball `1456484 bytes`、`umc where` `154ms`、first-run `registry inspect` `80ms`、Codex shared proof `1 promoted / 1 candidate / 1 policy input`、multi-instance shared proof `2 candidates / 2 policy inputs`
 
 建议先看这两份：
 
@@ -35,6 +36,9 @@
 - [普通对话实时写记忆专项对比](reports/generated/openclaw-ordinary-conversation-memory-intent-ab-2026-04-17.md)
 - [普通对话 strict 收口报告](reports/generated/openclaw-ordinary-conversation-memory-intent-closeout-2026-04-17.md)
 - [普通对话 Docker 隔离复测总结](reports/generated/openclaw-ordinary-conversation-memory-intent-docker-rerun-2026-04-17.md)
+- [Stage 10 最短接入路径](docs/reference/unified-memory-core/testing/adoption-shortest-path.zh-CN.md)
+- [Stage 10 shared-foundation 详细证明](reports/generated/stage10-adoption-and-shared-foundation-2026-04-18.md)
+- [Stage 10 closeout 报告](reports/generated/stage10-adoption-closeout-2026-04-18.zh-CN.md)
 
 最诚实的结论是：OpenClaw 内置记忆在很多“已有记忆消费”的简单题上本来就不差，所以旧的 `100` 条 A/B 差异不大；而在“普通对话里实时写入，再跨会话召回”这条线上，宿主 live 和 Docker hermetic strict baseline 都显示 Unified Memory Core 有明显优势。区别只在于：宿主结果更像真实上限，Docker strict 结果更像严格隔离后的官方可信基线；`2/4 shard gateway-steady` 现在只保留为 fast watch，不再当正式能力结论面。最后剩下的 `1` 条 strict shared-fail 也已经通过同方法 targeted strict rerun 收掉，所以当前 `40` 条 Docker strict closeout 状态已经是 `40 / 40 vs 15 / 40`。
 
@@ -46,7 +50,7 @@
    - 装得简单，接入轻，包体和运行负担尽量小，主路径尽量快
    - 当前已落地：fact-first assembly、runtime working-set shadow instrumentation、release-preflight、独立 Docker hermetic eval
    - 当前这条逐轮 context 优化主线，对外工作名统一为：`Context Minor GC`
-   - 当前最大缺口：每轮 context 加载优化还没有收成正式主线和正式门禁；与此同时，普通对话实时写记忆在 hermetic 环境下仍然明显受 timeout 压力影响。日常目标也已经明确成“尽量不靠 compat / compact 才能继续对话”，而是靠更轻的逐轮 context 管理维持热路径可持续；compat / compact 只保留为夜间或后台 safety net
+- 当前最大缺口：逐轮 context 优化仍然没有扩大成默认 active-path 收益；compat / compact 继续只保留为夜间或后台 safety net；Stage 10 最短接入路径已经收口，当前重点变成保持这条路径持续为绿
 2. `聪明`
    - 该记的记住，不该记的不乱记；该给的 context 才给，不确定时尽量收敛
    - 当前已落地：realtime `memory_intent` ingestion、nightly self-learning、durable-source slimming 方向、working-set pruning shadow 路径
@@ -54,7 +58,7 @@
 3. `省心`
    - 可查、可管、可回放、可回退，也能跨 OpenClaw / Codex / 多实例复用
    - 当前已落地：`umc` CLI、inspect / audit / replay / repair / rollback、canonical registry root、OpenClaw / Codex adapters
-   - 当前最大缺口：跨 Codex / 多实例的产品证据还弱于 OpenClaw 主路径
+- 当前最大缺口：不是“有没有共享底座证据”，而是继续保持这些 cross-host 证据与 operator 面长期为绿
 
 ## 产品北极星
 
@@ -86,20 +90,20 @@
 当前仍然偏薄弱的部分：
 
 - `轻快`
-  - 当前最先要补的不是安装，而是每轮 context 仍然偏厚、Stage 6 还停留在 shadow measurement、hermetic 普通对话写记忆路径也还明显受 timeout 影响
+  - 当前最先要补的不是 adoption proof，而是继续把 per-turn context 压薄，并决定未来是否扩大 guarded smart path
 - `聪明`
   - context 优化虽然已经从 shadow-only 推进到极窄的 guarded opt-in 路径，但还没有变成默认用户收益
 - `省心`
-  - 共享底座的架构已经成立，但 Codex / 多实例的产品证据还不够强
+- 共享底座的架构和 Stage 10 proof 都已经成立，当前更重要的是保持 operator 证据面持续为绿
 
 所以接下来的重点顺序应该很明确：
 
 1. 先把 `轻快` 里的 `context 加载优化` 做完：把 context thickness、working-set reduction、budgeted assembly 和 answer-level latency 收成一条正式主线。
    - 这条线的阶段目标不只是“让平均 token 更低”，而是让日常使用尽量不再需要 compat / compact 才能继续长对话。
 2. 再继续收 `轻快`：把 ordinary-conversation realtime-write 的 hermetic timeout / latency 压下去。
-3. 然后再回到 install / bootstrap / verify 的接入体验。
-4. 在 Stage 9 已收口后，继续把 guarded opt-in 收益保持可控，并等待 Stage 7 harder matrix 为绿。
-5. 最后补强 `省心` 这条在 Codex / 多实例上的产品证据。
+3. 继续保持 Stage 10 的最短接入路径和 shared-foundation proof 不回退。
+4. 在 Stage 9 已收口后，继续把 guarded opt-in 收益保持可控，不扩大到默认路径。
+5. 只有在出现新的明确目标时，再打开新的主线阶段。
 
 ## 适用对象
 
