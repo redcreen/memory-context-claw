@@ -167,8 +167,7 @@ const DURABLE_FUTURE_MARKERS = [
 ];
 
 const TOOL_ROUTING_MARKERS = [
-  /\buse\s+(?:the\s+)?[a-z0-9]+_[a-z0-9_]+\b/i,
-  /\bcapture_[a-z0-9_]+\b/i,
+  /\b(?:use|run|call|invoke|route(?:\s+it)?\s+through|handle(?:\s+it)?\s+with)\s+(?:the\s+)?[a-z][a-z0-9]*_[a-z0-9_]+\b/i,
   /\btool\b/i,
   /工具/u
 ];
@@ -188,11 +187,125 @@ const PROFILE_FACT_MARKERS = [
   /\bi usually\b/i,
   /\bdefault to chinese\b/i,
   /\bprefer chinese\b/i,
+  /\bdefault to\b/i,
+  /\bprefer .*updates?\b/i,
   /我平时/u,
   /默认优先给我中文/u,
+  /都用中文回复/u,
   /北京时间/u,
   /时区/u
 ];
+
+function inferTriggerDescriptor(text) {
+  const normalized = normalizeText(text);
+  if (!normalized) {
+    return null;
+  }
+
+  const domains = [];
+  let contentKind = "";
+  let label = "";
+
+  const patterns = [
+    {
+      test: /小红书|xiaohongshu|xhslink/i,
+      contentKind: "xiaohongshu_link",
+      labelEn: "a Xiaohongshu link",
+      labelZh: "小红书链接",
+      domains: ["xhslink.com", "xiaohongshu.com"]
+    },
+    {
+      test: /\bpull request\b|\bpr link\b|PR 链接/u,
+      contentKind: "pull_request_link",
+      labelEn: "a pull request link",
+      labelZh: "PR 链接",
+      domains: ["github.com"]
+    },
+    {
+      test: /github/i,
+      contentKind: "github_repo_link",
+      labelEn: "a GitHub repository link",
+      labelZh: "GitHub 仓库链接",
+      domains: ["github.com"]
+    },
+    {
+      test: /slack thread|Slack 线程/u,
+      contentKind: "slack_thread",
+      labelEn: "a Slack thread URL",
+      labelZh: "Slack 线程链接",
+      domains: []
+    },
+    {
+      test: /notion export|Notion 导出/u,
+      contentKind: "notion_export",
+      labelEn: "a Notion export package",
+      labelZh: "Notion 导出包",
+      domains: []
+    },
+    {
+      test: /receipt screenshot|发票截图/u,
+      contentKind: "receipt_screenshot",
+      labelEn: "a receipt screenshot",
+      labelZh: "发票截图",
+      domains: []
+    },
+    {
+      test: /csv export|CSV 导出/u,
+      contentKind: "csv_export",
+      labelEn: "a CSV export",
+      labelZh: "CSV 导出",
+      domains: []
+    },
+    {
+      test: /hotel options|酒店方案/u,
+      contentKind: "hotel_options",
+      labelEn: "hotel options",
+      labelZh: "酒店方案",
+      domains: []
+    }
+  ];
+
+  for (const pattern of patterns) {
+    if (!pattern.test.test(normalized)) {
+      continue;
+    }
+    contentKind = pattern.contentKind;
+    label = hasChineseText(normalized) ? pattern.labelZh : pattern.labelEn;
+    domains.push(...pattern.domains);
+    break;
+  }
+
+  if (!contentKind && !domains.length && !label) {
+    return null;
+  }
+
+  return {
+    content_kind: contentKind,
+    domains,
+    label
+  };
+}
+
+function extractToolName(text = "") {
+  const normalized = normalizeText(text);
+  if (!normalized) {
+    return "";
+  }
+
+  const patterns = [
+    /\b(?:use|run|call|invoke|route(?:\s+it)?\s+through|handle(?:\s+it)?\s+with)\s+(?:the\s+)?([a-z][a-z0-9]*_[a-z0-9_]+)\b/i,
+    /(?:用|调用|走|先用|优先用|先跑|优先跑)\s*([a-z][a-z0-9]*_[a-z0-9_]+)\b/u
+  ];
+
+  for (const pattern of patterns) {
+    const value = normalizeString(normalized.match(pattern)?.[1]);
+    if (value) {
+      return value;
+    }
+  }
+
+  return "";
+}
 
 function inferStructuredRule(text) {
   const normalized = normalizeText(text);
@@ -200,32 +313,21 @@ function inferStructuredRule(text) {
     return null;
   }
 
-  const toolMatch = normalized.match(/\b(capture_[a-z0-9_]+)\b/i);
-  const domains = [];
-  if (/xiaohongshu|小红书|xhslink/i.test(normalized)) {
-    domains.push("xhslink.com", "xiaohongshu.com");
-  }
-  if (/github/i.test(normalized)) {
-    domains.push("github.com");
-  }
+  const triggerDescriptor = inferTriggerDescriptor(normalized);
+  const toolName = extractToolName(normalized);
 
-  const contentKind = /小红书|xiaohongshu|xhslink/i.test(normalized)
-    ? "xiaohongshu_link"
-    : /github/i.test(normalized)
-      ? "github_repo_link"
-      : "";
-
-  if (!toolMatch && !domains.length && !contentKind) {
+  if (!toolName && !triggerDescriptor) {
     return null;
   }
 
   return {
     trigger: {
-      content_kind: contentKind,
-      domains
+      content_kind: normalizeString(triggerDescriptor?.content_kind),
+      domains: Array.isArray(triggerDescriptor?.domains) ? triggerDescriptor.domains : [],
+      label: normalizeString(triggerDescriptor?.label)
     },
     action: {
-      tool: toolMatch ? toolMatch[1] : ""
+      tool: toolName
     }
   };
 }
@@ -259,6 +361,36 @@ function extractNamedMemoryCue(text = "") {
   return null;
 }
 
+function extractPriorityActionClause(text = "", isChinese = false) {
+  const normalized = normalizeText(text);
+  if (!normalized) {
+    return "";
+  }
+
+  if (isChinese) {
+    const match = normalized.match(/(先[^。；;，,]+)/u);
+    return normalizeString(match?.[1]);
+  }
+
+  const patterns = [
+    /\b(first\s+[^.;,]+)/i,
+    /\b(check\s+[^.;,]*?\bfirst)\b/i,
+    /\b(compare\s+[^.;,]*?\bfirst)\b/i,
+    /\b(show\s+[^.;,]*?\bfirst)\b/i,
+    /\b(use\s+[^.;,]*?\bfirst)\b/i
+  ];
+
+  for (const pattern of patterns) {
+    const match = normalized.match(pattern);
+    const clause = normalizeString(match?.[1]);
+    if (clause) {
+      return clause;
+    }
+  }
+
+  return "";
+}
+
 function buildOrdinaryConversationSummary({
   userMessage = "",
   category = "",
@@ -273,36 +405,38 @@ function buildOrdinaryConversationSummary({
   const isChinese = hasChineseText(userText);
   const trigger = structuredRule?.trigger || {};
   const action = structuredRule?.action || {};
-  const contentKind = normalizeString(trigger.content_kind);
-  const domains = Array.isArray(trigger.domains) ? trigger.domains : [];
+  const triggerLabel = normalizeString(trigger.label);
   const actionTool = normalizeString(action.tool);
   const cueValue = normalizeString(namedCue?.value);
-  const mentionsReleases = /\breleases\b/i.test(userText);
-  const isGitHubRule = contentKind === "github_repo_link" || domains.includes("github.com") || /github/i.test(userText);
-  const isXiaohongshuRule = contentKind === "xiaohongshu_link" || /小红书|xiaohongshu|xhslink/i.test(userText);
+  const priorityClause = extractPriorityActionClause(userText, isChinese);
 
-  if ((category === "durable_rule" || category === "tool_routing_preference") && isGitHubRule && mentionsReleases) {
-    if (cueValue) {
-      return isChinese
-        ? `只要用户发 GitHub 仓库链接，默认规则代号是 ${cueValue}，并先看 Releases 页面。`
-        : `When the user sends a GitHub repository link, use keyword ${cueValue} and check the Releases tab first.`;
-    }
-    return isChinese
-      ? "只要用户发 GitHub 仓库链接，先看 Releases 页面。"
-      : "When the user sends a GitHub repository link, check the Releases tab first.";
-  }
-
-  if (category === "tool_routing_preference" && isXiaohongshuRule) {
+  if ((category === "durable_rule" || category === "tool_routing_preference") && triggerLabel) {
     if (actionTool && cueValue) {
       return isChinese
-        ? `只要用户发小红书链接，先用 ${actionTool}，并打 ${cueValue} 标签。`
-        : `When the user sends a Xiaohongshu link, use ${actionTool} first and tag the result ${cueValue}.`;
+        ? `只要用户发${triggerLabel}，先用 ${actionTool}，并使用 ${cueValue}${namedCue?.kind === "标签" || namedCue?.kind === "tag" ? " 标签" : namedCue?.kind === "关键词" || namedCue?.kind === "keyword" ? " 关键词" : " 代号"}。`
+        : `When the user sends ${triggerLabel}, use ${actionTool} first and use ${namedCue?.kind === "tag" ? "tag" : namedCue?.kind === "keyword" ? "keyword" : "codename"} ${cueValue}.`;
+    }
+    if (cueValue) {
+      if (priorityClause) {
+        return isChinese
+          ? `只要用户发${triggerLabel}，${priorityClause}，默认规则${namedCue?.kind === "关键词" || namedCue?.kind === "keyword" ? "关键词" : "代号"}是 ${cueValue}。`
+          : `When the user sends ${triggerLabel}, ${priorityClause}, and the default rule ${namedCue?.kind === "keyword" ? "keyword" : "codename"} is ${cueValue}.`;
+      }
+      return isChinese
+        ? `只要用户发${triggerLabel}，默认规则${namedCue?.kind === "关键词" || namedCue?.kind === "keyword" ? "关键词" : "代号"}是 ${cueValue}。`
+        : `When the user sends ${triggerLabel}, the default rule ${namedCue?.kind === "keyword" ? "keyword" : "codename"} is ${cueValue}.`;
     }
     if (actionTool) {
       return isChinese
-        ? `只要用户发小红书链接，先用 ${actionTool}。`
-        : `When the user sends a Xiaohongshu link, use ${actionTool} first.`;
+        ? `只要用户发${triggerLabel}，先用 ${actionTool}。`
+        : `When the user sends ${triggerLabel}, use ${actionTool} first.`;
     }
+  }
+
+  if (cueValue && (category === "durable_rule" || category === "tool_routing_preference")) {
+    return isChinese
+      ? `默认规则${namedCue?.kind === "关键词" || namedCue?.kind === "keyword" ? "关键词" : "代号"}是 ${cueValue}。`
+      : `The default rule ${namedCue?.kind === "keyword" ? "keyword" : "codename"} is ${cueValue}.`;
   }
 
   return userText;
@@ -320,9 +454,11 @@ export function classifyOrdinaryConversationMemoryIntent({ userMessage = "", ass
   const sessionScoped = matchesAny(userText, SESSION_MARKERS);
   const oneOff = matchesAny(userText, ONE_OFF_MARKERS);
   const durableFuture = matchesAny(userText, DURABLE_FUTURE_MARKERS);
-  const toolRouting = matchesAny(userText, TOOL_ROUTING_MARKERS);
   const replyStyle = matchesAny(userText, REPLY_STYLE_MARKERS);
   const profileFact = matchesAny(userText, PROFILE_FACT_MARKERS);
+  const structuredRule = inferStructuredRule(userText);
+  const namedCue = extractNamedMemoryCue(userText);
+  const toolRouting = matchesAny(userText, TOOL_ROUTING_MARKERS) || Boolean(structuredRule?.action?.tool);
   const likelySmallTalk = /堵|哈哈|随便聊|just chatting|traffic/i.test(userText);
 
   if (likelySmallTalk && !durableFuture && !profileFact && !toolRouting) {
@@ -333,10 +469,7 @@ export function classifyOrdinaryConversationMemoryIntent({ userMessage = "", ass
     return null;
   }
 
-  const structuredRule = inferStructuredRule(userText);
-  const namedCue = extractNamedMemoryCue(userText);
-
-  if (sessionScoped || replyStyle) {
+  if (sessionScoped || (replyStyle && !durableFuture && !profileFact && !toolRouting)) {
     return {
       should_write_memory: true,
       category: "session_constraint",
