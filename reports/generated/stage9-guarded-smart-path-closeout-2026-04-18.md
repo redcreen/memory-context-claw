@@ -86,6 +86,6 @@ The stage-exit criteria are now satisfied:
 
 With Stage 9 closed, the remaining mainline is:
 
-1. finish `Stage 7 / 104` (the harder eval matrix)
-2. rerun `Context Minor GC` on the same operator scorecard
-3. do not widen the guarded opt-in surface until `104` is done
+1. `Stage 7 / 104` is now closed and should no longer be treated as the current blocker
+2. keep the guarded seam `default-off` / opt-in only rather than widening the default path
+3. move the next maintenance focus to adoption / shared-foundation proof and deeper realtime memory-intent contracts

@@ -21,6 +21,14 @@ function normalizeString(value, fallback = "") {
   return normalized || fallback;
 }
 
+export function buildHermeticOpenClawEnv(extraEnv = {}) {
+  return {
+    ...process.env,
+    NODE_LLAMA_CPP_GPU: "false",
+    ...extraEnv
+  };
+}
+
 export async function copyRecursive(sourcePath, targetPath) {
   const stat = await fs.stat(sourcePath);
   if (stat.isDirectory()) {
@@ -146,7 +154,8 @@ export function buildHermeticOpenClawConfig({
   pluginPath,
   preset = "safe-local",
   includeUMC = true,
-  agentModel = ""
+  agentModel = "",
+  disableMemorySearchWatch = true
 }) {
   const baseConfig = {
     commands: {},
@@ -178,6 +187,14 @@ export function buildHermeticOpenClawConfig({
     preset
   });
 
+  if (disableMemorySearchWatch) {
+    for (const agent of merged?.agents?.list || []) {
+      if (agent?.memorySearch?.sync && typeof agent.memorySearch.sync === "object") {
+        agent.memorySearch.sync.watch = false;
+      }
+    }
+  }
+
   return includeUMC ? merged : stripUnifiedMemoryCoreHostConfig(merged);
 }
 
@@ -185,10 +202,9 @@ async function runOpenClawCommand(openclawBin, args, stateDir) {
   try {
     const result = await execFileAsync(openclawBin, args, {
       cwd: repoRoot,
-      env: {
-        ...process.env,
+      env: buildHermeticOpenClawEnv({
         OPENCLAW_STATE_DIR: stateDir
-      },
+      }),
       maxBuffer: 16 * 1024 * 1024
     });
     return {

@@ -23,7 +23,7 @@ const cases = [
     ],
     expectedAll: ["aisle"],
     forbiddenAny: ["window", "i don't know"],
-    expectedRelations: ["switch", "continue"],
+    expectedRelations: ["branch", "switch", "continue", "resolve"],
     minRawReductionRatio: 0.15
   },
   {
@@ -36,7 +36,7 @@ const cases = [
     ],
     expectedAll: ["summary", "scorecard", "rollback"],
     forbiddenAny: ["i don't know"],
-    expectedRelations: ["branch", "continue"],
+    expectedRelations: ["branch", "switch", "continue"],
     minRawReductionRatio: 0.08
   },
   {

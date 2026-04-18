@@ -7,8 +7,10 @@ import { spawn } from "node:child_process";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 import { evaluateAnswer, includesAny } from "../src/dialogue-working-set-answer-ab.js";
+import { pickDialogueWorkingSetShadowEvent } from "../src/dialogue-working-set-shadow-event-selection.js";
 import { extractJsonPayload } from "../src/retrieval.js";
 import {
+  buildHermeticOpenClawEnv,
   buildHermeticOpenClawConfig,
   cleanupHermeticOpenClawState,
   cloneHermeticOpenClawState,
@@ -198,7 +200,7 @@ async function runAgentTurn({ stateDir, agentId, sessionId, message, timeoutMs }
       message
     ], {
       cwd: repoRoot,
-      env: { ...process.env, OPENCLAW_STATE_DIR: stateDir },
+      env: buildHermeticOpenClawEnv({ OPENCLAW_STATE_DIR: stateDir }),
       stdio: ["ignore", "pipe", "pipe"],
       detached: true
     });
@@ -306,44 +308,44 @@ async function clearSessions(stateDir, agentId) {
   await fs.writeFile(path.join(sessionsDir, "sessions.json"), "{}\n", "utf8");
 }
 
-async function readLatestShadowEvent(outputDir, sessionKey) {
+async function readShadowEvents(outputDir) {
   const exportsDir = path.join(outputDir, "exports");
   if (!(await pathExists(exportsDir))) {
-    return null;
+    return [];
   }
   const files = (await fs.readdir(exportsDir))
     .filter((item) => item.endsWith(".json"))
     .sort();
-  const matched = [];
-  const fallback = [];
+  const events = [];
   for (const fileName of files) {
     const fullPath = path.join(exportsDir, fileName);
     const payload = JSON.parse(await fs.readFile(fullPath, "utf8"));
-    const event = {
+    events.push({
       ...payload,
       exportPath: fullPath
-    };
-    fallback.push(event);
-    if (payload?.session_key === sessionKey) {
-      matched.push(event);
-    }
+    });
   }
-  const sortByGeneratedAt = (left, right) => String(left.generated_at).localeCompare(String(right.generated_at));
-  matched.sort(sortByGeneratedAt);
-  fallback.sort(sortByGeneratedAt);
-  return matched.at(-1) || fallback.at(-1) || null;
+  return events;
 }
 
-async function waitForShadowEvent(outputDir, sessionKey, timeoutMs) {
+async function waitForShadowEvent(outputDir, { sessionKey, query }, timeoutMs) {
   const startedAt = Date.now();
+  let lastCandidate = null;
   while (Date.now() - startedAt < timeoutMs) {
-    const event = await readLatestShadowEvent(outputDir, sessionKey);
-    if (event) {
-      return event;
+    const events = await readShadowEvents(outputDir);
+    const candidate = pickDialogueWorkingSetShadowEvent(events, {
+      sessionKey,
+      query
+    });
+    if (candidate) {
+      lastCandidate = candidate;
+      if (String(candidate.status || "") === "captured") {
+        return candidate;
+      }
     }
     await new Promise((resolve) => setTimeout(resolve, 500));
   }
-  return null;
+  return lastCandidate;
 }
 
 function extractPromptTokens(payload) {
@@ -504,7 +506,10 @@ async function runCase({
     const finalTurn = turnResults.at(-1) || { ok: false, error: "missing_final_turn", answer: "" };
     const answerText = normalizeString(finalTurn.answer);
     const answerEval = evaluateAnswer(caseDef, answerText);
-    const event = await waitForShadowEvent(outputDir, sessionKey, 15_000);
+    const event = await waitForShadowEvent(outputDir, {
+      sessionKey,
+      query: caseDef.turns.at(-1)
+    }, 15_000);
     const relationEval = evaluateRelation(caseDef, event);
     const reductionEval = evaluateReduction(caseDef, event);
     const promptTokens = extractPromptTokens(finalTurn.payload);

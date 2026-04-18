@@ -13,7 +13,7 @@
 ## 本轮新增证据
 
 - harder live matrix：
-  - [openclaw-context-minor-gc-live-2026-04-17.md](openclaw-context-minor-gc-live-2026-04-17.md)
+  - [openclaw-context-minor-gc-live-2026-04-18.md](openclaw-context-minor-gc-live-2026-04-18.md)
 - Step 108 closeout：
   - [stage7-step108-context-minor-gc-closeout-2026-04-18.zh-CN.md](stage7-step108-context-minor-gc-closeout-2026-04-18.zh-CN.md)
 - Stage 7 shadow replay：
@@ -40,11 +40,11 @@
 - relationPassed：`6 / 6`
 - reductionPassed：`6 / 6`
 - passed：`6 / 6`
-- averagePromptTokens：`13126`
-- averageDurationMs：`33616`
-- averageRawReductionRatio：`0.5794`
-- averagePackageReductionRatio：`0.3643`
-- relationCounts：`switch = 5`，`continue = 1`
+- averagePromptTokens：`14517`
+- averageDurationMs：`37548`
+- averageRawReductionRatio：`0.6556`
+- averagePackageReductionRatio：`0.4657`
+- relationCounts：`resolve = 1`，`switch = 4`，`continue = 1`
 
 覆盖的 harder case class：
 
@@ -68,8 +68,8 @@ Stage 7 现在可以正式关闭。
 
 从这里开始，不再继续追问“Stage 7 有没有站稳”。
 
-下一条主线切到 Stage 10：
+Stage 9 / Stage 10 也已经在后续轮次完成；当前真实边界是维护态：
 
-1. 收 install / bootstrap / verify 的最短路径
-2. 把 package / startup / first-run 成本收进 `轻快` 证据面
-3. 为 Codex / 多实例共享底座补更强的产品证据
+1. 持续保持 `Context Minor GC` / context-loading operator scorecard 为绿
+2. 继续保持 guarded seam `default-off` / opt-in only
+3. 把后续重点切到 adoption / shared-foundation 维护面，以及更深的 realtime memory-intent 契约

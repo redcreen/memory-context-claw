@@ -27,6 +27,7 @@ test("buildHermeticOpenClawConfig binds unified-memory-core for hermetic current
   assert.equal(config.agents.list[0].workspace, "/tmp/agent");
   assert.equal(config.agents.list[0].agentDir, "/tmp/agent");
   assert.equal(config.agents.list[0].memorySearch.local.modelPath, "/tmp/embed.gguf");
+  assert.equal(config.agents.list[0].memorySearch.sync.watch, false);
   assert.equal(config.agents.list[0].model.primary, "openai-codex/gpt-5.4-mini");
 });
 

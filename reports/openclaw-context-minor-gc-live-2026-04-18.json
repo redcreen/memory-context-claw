@@ -1,0 +1,2408 @@
+{
+  "generatedAt": "2026-04-18T02:59:44.124Z",
+  "agentId": "main",
+  "agentModel": "openai-codex/gpt-5.4-mini",
+  "shadowModel": "gpt-5.4-mini",
+  "reasoningEffort": "low",
+  "transport": "codex_exec",
+  "timeoutMs": 120000,
+  "outputRoot": "/Users/redcreen/Project/unified-memory-core/reports/generated/openclaw-context-minor-gc-live-2026-04-18",
+  "summary": {
+    "total": 6,
+    "captured": 6,
+    "answerPassed": 6,
+    "relationPassed": 6,
+    "reductionPassed": 6,
+    "passed": 6,
+    "failed": 0,
+    "averagePromptTokens": 14517,
+    "averageDurationMs": 37548,
+    "averageRawReductionRatio": 0.6556,
+    "averagePackageReductionRatio": 0.4657,
+    "relationCounts": {
+      "resolve": 1,
+      "switch": 4,
+      "continue": 1
+    }
+  },
+  "results": [
+    {
+      "id": "cmgc-live-zh-language-after-code-detour",
+      "description": "A durable Chinese-language preference should survive a code detour and come back as the latest answer.",
+      "designQuestion": "先不说代码了。我刚才要求你默认用什么语言回复？",
+      "expected": "expected_all=[\"中文\"]; forbidden_any=[\"英文\",\"不知道\"]; relations=[\"switch\",\"resolve\",\"continue\"]; min_raw_reduction=0.12",
+      "ok": true,
+      "answer": "中文，尽量一句话。",
+      "error": "",
+      "turnsCompleted": 4,
+      "promptTokens": 13518,
+      "durationMs": 31145,
+      "event": {
+        "schema_version": "umc.dialogue-working-set-shadow.v1",
+        "event_id": "shadow-1776480524306-dzkuat",
+        "generated_at": "2026-04-18T02:48:44.306Z",
+        "session_key": "agent:main:main",
+        "agent_id": "main",
+        "query": "先不说代码了。我刚才要求你默认用什么语言回复？",
+        "status": "captured",
+        "reason": "",
+        "sampling": {
+          "max_turns": 12,
+          "min_turns": 3,
+          "max_chars_per_turn": 900
+        },
+        "transcript": [
+          {
+            "id": "t1",
+            "role": "user",
+            "content": "以后默认给我中文回复，尽量一句话。"
+          },
+          {
+            "id": "t2",
+            "role": "assistant",
+            "content": "好，之后默认中文回复，尽量一句话。"
+          },
+          {
+            "id": "t3",
+            "role": "user",
+            "content": "先切到代码：这轮先别改 OpenClaw core，只能走插件内 overlay。"
+          },
+          {
+            "id": "t4",
+            "role": "assistant",
+            "content": "收到，这轮只在插件内 overlay 动手，不碰 OpenClaw core。"
+          },
+          {
+            "id": "t5",
+            "role": "user",
+            "content": "再切一下：Stage 7 closeout 里 operator scorecard 还要保留。"
+          },
+          {
+            "id": "t6",
+            "role": "assistant",
+            "content": "收到，Stage 7 closeout 里 operator scorecard 会保留。"
+          }
+        ],
+        "decision": {
+          "relation": "resolve",
+          "confidence": 0.96,
+          "evict_turn_ids": [
+            "t1",
+            "t2",
+            "t3",
+            "t4",
+            "t5",
+            "t6"
+          ],
+          "pin_turn_ids": [
+            "t1"
+          ],
+          "archive_summary": "Default response preference: Chinese, preferably one sentence.",
+          "reasoning_summary": "The latest user turn asks about an earlier durable preference, while the code-topic instructions are resolved and irrelevant. Keep the language/style preference as a compact pin; evict the rest to shrink the next-turn prompt."
+        },
+        "decision_transport": "codex_exec",
+        "snapshot": {
+          "applied": {
+            "relation": "resolve",
+            "confidence": 0.96,
+            "archiveSummary": "Default response preference: Chinese, preferably one sentence.",
+            "reasoningSummary": "The latest user turn asks about an earlier durable preference, while the code-topic instructions are resolved and irrelevant. Keep the language/style preference as a compact pin; evict the rest to shrink the next-turn prompt.",
+            "latestUserTurnId": "t5",
+            "pinTurnIds": [
+              "t1"
+            ],
+            "pinnedOnlyTurnIds": [
+              "t1"
+            ],
+            "requestedEvictTurnIds": [
+              "t1",
+              "t2",
+              "t3",
+              "t4",
+              "t5",
+              "t6"
+            ],
+            "blockedEvictTurnIds": [
+              "t5"
+            ],
+            "appliedEvictTurnIds": [
+              "t1",
+              "t2",
+              "t3",
+              "t4",
+              "t6"
+            ],
+            "keepTurnIds": [
+              "t5"
+            ],
+            "baselineTokens": 55,
+            "keptTokens": 12,
+            "prunedTokens": 43,
+            "reductionRatio": 0.7818181818181819,
+            "keepTurns": [
+              {
+                "id": "t5",
+                "role": "user",
+                "content": "再切一下：Stage 7 closeout 里 operator scorecard 还要保留。",
+                "tokenEstimate": 12
+              }
+            ],
+            "evictedTurns": [
+              {
+                "id": "t1",
+                "role": "user",
+                "content": "以后默认给我中文回复，尽量一句话。",
+                "tokenEstimate": 5
+              },
+              {
+                "id": "t2",
+                "role": "assistant",
+                "content": "好，之后默认中文回复，尽量一句话。",
+                "tokenEstimate": 5
+              },
+              {
+                "id": "t3",
+                "role": "user",
+                "content": "先切到代码：这轮先别改 OpenClaw core，只能走插件内 overlay。",
+                "tokenEstimate": 11
+              },
+              {
+                "id": "t4",
+                "role": "assistant",
+                "content": "收到，这轮只在插件内 overlay 动手，不碰 OpenClaw core。",
+                "tokenEstimate": 10
+              },
+              {
+                "id": "t6",
+                "role": "assistant",
+                "content": "收到，Stage 7 closeout 里 operator scorecard 会保留。",
+                "tokenEstimate": 12
+              }
+            ]
+          },
+          "baselineRawTranscript": "t1 user: 以后默认给我中文回复，尽量一句话。\nt2 assistant: 好，之后默认中文回复，尽量一句话。\nt3 user: 先切到代码：这轮先别改 OpenClaw core，只能走插件内 overlay。\nt4 assistant: 收到，这轮只在插件内 overlay 动手，不碰 OpenClaw core。\nt5 user: 再切一下：Stage 7 closeout 里 operator scorecard 还要保留。\nt6 assistant: 收到，Stage 7 closeout 里 operator scorecard 会保留。",
+          "shadowRawTranscript": "t5 user: 再切一下：Stage 7 closeout 里 operator scorecard 还要保留。",
+          "semanticPinNotes": [
+            "user: 以后默认给我中文回复，尽量一句话。"
+          ],
+          "archiveSummary": "Default response preference: Chinese, preferably one sentence.",
+          "injectedArchiveSummary": "",
+          "baselinePromptEstimate": 71,
+          "shadowRawPromptEstimate": 15,
+          "shadowPackageEstimate": 29,
+          "shadowPackageText": "Active raw turns:\nt5 user: 再切一下：Stage 7 closeout 里 operator scorecard 还要保留。\n\nSemantic pins:\nuser: 以后默认给我中文回复，尽量一句话。"
+        },
+        "scorecard": {
+          "relation": "resolve",
+          "baselineTurnCount": 6,
+          "keptTurnCount": 1,
+          "evictedTurnCount": 5,
+          "pinCount": 1,
+          "baselinePromptEstimate": 71,
+          "shadowRawPromptEstimate": 15,
+          "shadowPackageEstimate": 29,
+          "rawReductionRatio": 0.7818,
+          "packageReductionRatio": 0.5915,
+          "candidateLoadElapsedMs": 12,
+          "assemblyBuildElapsedMs": 0,
+          "decisionElapsedMs": 21422,
+          "totalElapsedMs": 21444,
+          "guardedEnabled": false,
+          "guardedApplied": false,
+          "guardedReason": "feature_disabled",
+          "guardedMessageCount": 6,
+          "guardedCarryForwardEstimate": 0,
+          "guardedFilteredMessageEstimate": 55
+        },
+        "guarded": {
+          "enabled": false,
+          "applied": false,
+          "reason": "feature_disabled",
+          "filteredMessages": [
+            {
+              "role": "user",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "以后默认给我中文回复，尽量一句话。"
+                }
+              ],
+              "timestamp": 1776480448359
+            },
+            {
+              "role": "assistant",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "好，之后默认中文回复，尽量一句话。",
+                  "textSignature": "{\"v\":1,\"id\":\"msg_0ca70fd0605191e20169e2f0c6e610819181b5277f75bc184b\",\"phase\":\"final_answer\"}"
+                }
+              ],
+              "api": "openai-codex-responses",
+              "provider": "openai-codex",
+              "model": "gpt-5.4-mini",
+              "usage": {
+                "input": 8246,
+                "output": 16,
+                "cacheRead": 5120,
+                "cacheWrite": 0,
+                "totalTokens": 13382,
+                "cost": {
+                  "input": 0.0061845,
+                  "output": 0.000072,
+                  "cacheRead": 0.000384,
+                  "cacheWrite": 0,
+                  "total": 0.0066405
+                }
+              },
+              "stopReason": "stop",
+              "timestamp": 1776480448363,
+              "responseId": "resp_0ca70fd0605191e20169e2f0c6629881918ab91994db9240e7"
+            },
+            {
+              "role": "user",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "先切到代码：这轮先别改 OpenClaw core，只能走插件内 overlay。"
+                }
+              ],
+              "timestamp": 1776480466899
+            },
+            {
+              "role": "assistant",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "收到，这轮只在插件内 overlay 动手，不碰 OpenClaw core。",
+                  "textSignature": "{\"v\":1,\"id\":\"msg_0ca70fd0605191e20169e2f0d8a3648191a8b9a4d16793d4a6\",\"phase\":\"final_answer\"}"
+                }
+              ],
+              "api": "openai-codex-responses",
+              "provider": "openai-codex",
+              "model": "gpt-5.4-mini",
+              "usage": {
+                "input": 8602,
+                "output": 21,
+                "cacheRead": 5120,
+                "cacheWrite": 0,
+                "totalTokens": 13743,
+                "cost": {
+                  "input": 0.0064515,
+                  "output": 0.0000945,
+                  "cacheRead": 0.000384,
+                  "cacheWrite": 0,
+                  "total": 0.0069299999999999995
+                }
+              },
+              "stopReason": "stop",
+              "timestamp": 1776480466909,
+              "responseId": "resp_0ca70fd0605191e20169e2f0d7e68881918f50b2af83a81c9c"
+            },
+            {
+              "role": "user",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "再切一下：Stage 7 closeout 里 operator scorecard 还要保留。"
+                }
+              ],
+              "timestamp": 1776480508985
+            },
+            {
+              "role": "assistant",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "收到，Stage 7 closeout 里 operator scorecard 会保留。",
+                  "textSignature": "{\"v\":1,\"id\":\"msg_0ca70fd0605191e20169e2f100ec788191983e6e275f2c2c9b\",\"phase\":\"final_answer\"}"
+                }
+              ],
+              "api": "openai-codex-responses",
+              "provider": "openai-codex",
+              "model": "gpt-5.4-mini",
+              "usage": {
+                "input": 8574,
+                "output": 20,
+                "cacheRead": 5120,
+                "cacheWrite": 0,
+                "totalTokens": 13714,
+                "cost": {
+                  "input": 0.0064305000000000005,
+                  "output": 0.00009,
+                  "cacheRead": 0.000384,
+                  "cacheWrite": 0,
+                  "total": 0.0069045
+                }
+              },
+              "stopReason": "stop",
+              "timestamp": 1776480508992,
+              "responseId": "resp_0ca70fd0605191e20169e2f10013e08191aece3bbcc8b28cdf"
+            }
+          ],
+          "filteredMessageCount": 6,
+          "filteredMessageTokenEstimate": 55,
+          "carryForwardText": "",
+          "carryForwardEstimate": 0,
+          "evictedSourceIndices": []
+        },
+        "timings": {
+          "totalElapsedMs": 21444,
+          "decisionElapsedMs": 21422
+        },
+        "exportPath": "/Users/redcreen/Project/unified-memory-core/reports/generated/openclaw-context-minor-gc-live-2026-04-18/cmgc-live-zh-language-after-code-detour/exports/agent-main-main-shadow-1776480524306-dzkuat.json"
+      },
+      "answerEval": {
+        "passed": true,
+        "checks": [
+          {
+            "name": "expected_any",
+            "passed": true,
+            "expected": [],
+            "actual": "中文，尽量一句话。"
+          },
+          {
+            "name": "expected_all",
+            "passed": true,
+            "expected": [
+              "中文"
+            ],
+            "actual": "中文，尽量一句话。"
+          },
+          {
+            "name": "forbidden_any",
+            "passed": true,
+            "expected": [
+              "英文",
+              "不知道"
+            ],
+            "actual": "中文，尽量一句话。"
+          }
+        ]
+      },
+      "relationEval": {
+        "relation": "resolve",
+        "passed": true,
+        "expected": [
+          "switch",
+          "resolve",
+          "continue"
+        ]
+      },
+      "reductionEval": {
+        "actual": 0.7818,
+        "min": 0.12,
+        "passed": true
+      },
+      "passed": true
+    },
+    {
+      "id": "cmgc-live-en-seat-after-project-switch",
+      "description": "A durable travel preference should survive a project-report detour and return correctly.",
+      "designQuestion": "Leave the report topic. What seat do I usually prefer on flights?",
+      "expected": "expected_all=[\"aisle\"]; forbidden_any=[\"window\",\"i don't know\"]; relations=[\"branch\",\"switch\",\"continue\",\"resolve\"]; min_raw_reduction=0.15",
+      "ok": true,
+      "answer": "Aisle seat.",
+      "error": "",
+      "turnsCompleted": 3,
+      "promptTokens": 15297,
+      "durationMs": 49401,
+      "event": {
+        "schema_version": "umc.dialogue-working-set-shadow.v1",
+        "event_id": "shadow-1776480603415-g2fblw",
+        "generated_at": "2026-04-18T02:50:03.415Z",
+        "session_key": "agent:main:main",
+        "agent_id": "main",
+        "query": "Leave the report topic. What seat do I usually prefer on flights?",
+        "status": "captured",
+        "reason": "",
+        "sampling": {
+          "max_turns": 12,
+          "min_turns": 3,
+          "max_chars_per_turn": 900
+        },
+        "transcript": [
+          {
+            "id": "t1",
+            "role": "user",
+            "content": "Remember this durable preference: I prefer aisle seats on flights."
+          },
+          {
+            "id": "t2",
+            "role": "assistant",
+            "content": "I already have that in memory, but I’ll keep it confirmed. Got it — aisle seats on flights."
+          },
+          {
+            "id": "t3",
+            "role": "user",
+            "content": "Now switch topics. Stage 7 closeout should keep the operator scorecard and the rollback boundary visible."
+          },
+          {
+            "id": "t4",
+            "role": "assistant",
+            "content": "Understood. I’ll keep the operator scorecard and the rollback boundary visible for Stage 7 closeout."
+          }
+        ],
+        "decision": {
+          "relation": "switch",
+          "confidence": 0.92,
+          "evict_turn_ids": [
+            "t2",
+            "t3",
+            "t4"
+          ],
+          "pin_turn_ids": [
+            "t1"
+          ],
+          "archive_summary": "User preference: aisle seats on flights.",
+          "reasoning_summary": "The active topic has switched from flight-seat preference confirmation to the Stage 7 report closeout, and that report block can leave the next-turn prompt. The durable flight-seat preference should survive as a compact pin, while the confirmation and report-topic turns are no longer needed as raw context."
+        },
+        "decision_transport": "codex_exec",
+        "snapshot": {
+          "applied": {
+            "relation": "switch",
+            "confidence": 0.92,
+            "archiveSummary": "User preference: aisle seats on flights.",
+            "reasoningSummary": "The active topic has switched from flight-seat preference confirmation to the Stage 7 report closeout, and that report block can leave the next-turn prompt. The durable flight-seat preference should survive as a compact pin, while the confirmation and report-topic turns are no longer needed as raw context.",
+            "latestUserTurnId": "t3",
+            "pinTurnIds": [
+              "t1"
+            ],
+            "pinnedOnlyTurnIds": [],
+            "requestedEvictTurnIds": [
+              "t2",
+              "t3",
+              "t4"
+            ],
+            "blockedEvictTurnIds": [
+              "t3"
+            ],
+            "appliedEvictTurnIds": [
+              "t2",
+              "t4"
+            ],
+            "keepTurnIds": [
+              "t1",
+              "t3"
+            ],
+            "baselineTokens": 92,
+            "keptTokens": 44,
+            "prunedTokens": 48,
+            "reductionRatio": 0.5217391304347826,
+            "keepTurns": [
+              {
+                "id": "t1",
+                "role": "user",
+                "content": "Remember this durable preference: I prefer aisle seats on flights.",
+                "tokenEstimate": 17
+              },
+              {
+                "id": "t3",
+                "role": "user",
+                "content": "Now switch topics. Stage 7 closeout should keep the operator scorecard and the rollback boundary visible.",
+                "tokenEstimate": 27
+              }
+            ],
+            "evictedTurns": [
+              {
+                "id": "t2",
+                "role": "assistant",
+                "content": "I already have that in memory, but I’ll keep it confirmed. Got it — aisle seats on flights.",
+                "tokenEstimate": 23
+              },
+              {
+                "id": "t4",
+                "role": "assistant",
+                "content": "Understood. I’ll keep the operator scorecard and the rollback boundary visible for Stage 7 closeout.",
+                "tokenEstimate": 25
+              }
+            ]
+          },
+          "baselineRawTranscript": "t1 user: Remember this durable preference: I prefer aisle seats on flights.\nt2 assistant: I already have that in memory, but I’ll keep it confirmed. Got it — aisle seats on flights.\nt3 user: Now switch topics. Stage 7 closeout should keep the operator scorecard and the rollback boundary visible.\nt4 assistant: Understood. I’ll keep the operator scorecard and the rollback boundary visible for Stage 7 closeout.",
+          "shadowRawTranscript": "t1 user: Remember this durable preference: I prefer aisle seats on flights.\nt3 user: Now switch topics. Stage 7 closeout should keep the operator scorecard and the rollback boundary visible.",
+          "semanticPinNotes": [],
+          "archiveSummary": "User preference: aisle seats on flights.",
+          "injectedArchiveSummary": "User preference: aisle seats on flights...",
+          "baselinePromptEstimate": 103,
+          "shadowRawPromptEstimate": 48,
+          "shadowPackageEstimate": 68,
+          "shadowPackageText": "Active raw turns:\nt1 user: Remember this durable preference: I prefer aisle seats on flights.\nt3 user: Now switch topics. Stage 7 closeout should keep the operator scorecard and the rollback boundary visible.\n\nArchived summary:\nUser preference: aisle seats on flights..."
+        },
+        "scorecard": {
+          "relation": "switch",
+          "baselineTurnCount": 4,
+          "keptTurnCount": 2,
+          "evictedTurnCount": 2,
+          "pinCount": 1,
+          "baselinePromptEstimate": 103,
+          "shadowRawPromptEstimate": 48,
+          "shadowPackageEstimate": 68,
+          "rawReductionRatio": 0.5217,
+          "packageReductionRatio": 0.3398,
+          "candidateLoadElapsedMs": 16,
+          "assemblyBuildElapsedMs": 0,
+          "decisionElapsedMs": 22886,
+          "totalElapsedMs": 22895,
+          "guardedEnabled": false,
+          "guardedApplied": false,
+          "guardedReason": "feature_disabled",
+          "guardedMessageCount": 4,
+          "guardedCarryForwardEstimate": 0,
+          "guardedFilteredMessageEstimate": 92
+        },
+        "guarded": {
+          "enabled": false,
+          "applied": false,
+          "reason": "feature_disabled",
+          "filteredMessages": [
+            {
+              "role": "user",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Remember this durable preference: I prefer aisle seats on flights."
+                }
+              ],
+              "timestamp": 1776480562844
+            },
+            {
+              "role": "assistant",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "I already have that in memory, but I’ll keep it confirmed.",
+                  "textSignature": "{\"v\":1,\"id\":\"msg_04f44c4bc6a00bcb0169e2f137c32c81919855ddce51c34b84\",\"phase\":\"commentary\"}"
+                },
+                {
+                  "type": "text",
+                  "text": "Got it — aisle seats on flights.",
+                  "textSignature": "{\"v\":1,\"id\":\"msg_04f44c4bc6a00bcb0169e2f137f0f88191954a5da115deff30\",\"phase\":\"final_answer\"}"
+                }
+              ],
+              "api": "openai-codex-responses",
+              "provider": "openai-codex",
+              "model": "gpt-5.4-mini",
+              "usage": {
+                "input": 8873,
+                "output": 33,
+                "cacheRead": 5120,
+                "cacheWrite": 0,
+                "totalTokens": 14026,
+                "cost": {
+                  "input": 0.00665475,
+                  "output": 0.0001485,
+                  "cacheRead": 0.000384,
+                  "cacheWrite": 0,
+                  "total": 0.00718725
+                }
+              },
+              "stopReason": "stop",
+              "timestamp": 1776480562851,
+              "responseId": "resp_04f44c4bc6a00bcb0169e2f13727248191ae0a3646d9466f3b"
+            },
+            {
+              "role": "user",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Now switch topics. Stage 7 closeout should keep the operator scorecard and the rollback boundary visible."
+                }
+              ],
+              "timestamp": 1776480585768
+            },
+            {
+              "role": "assistant",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Understood. I’ll keep the operator scorecard and the rollback boundary visible for Stage 7 closeout.",
+                  "textSignature": "{\"v\":1,\"id\":\"msg_04f44c4bc6a00bcb0169e2f14eecb4819185f907676eda2cda\",\"phase\":\"final_answer\"}"
+                }
+              ],
+              "api": "openai-codex-responses",
+              "provider": "openai-codex",
+              "model": "gpt-5.4-mini",
+              "usage": {
+                "input": 8944,
+                "output": 26,
+                "cacheRead": 5120,
+                "cacheWrite": 0,
+                "totalTokens": 14090,
+                "cost": {
+                  "input": 0.006708,
+                  "output": 0.000117,
+                  "cacheRead": 0.000384,
+                  "cacheWrite": 0,
+                  "total": 0.007209
+                }
+              },
+              "stopReason": "stop",
+              "timestamp": 1776480585775,
+              "responseId": "resp_04f44c4bc6a00bcb0169e2f14e345881918a9d769fc7c342cb"
+            }
+          ],
+          "filteredMessageCount": 4,
+          "filteredMessageTokenEstimate": 92,
+          "carryForwardText": "",
+          "carryForwardEstimate": 0,
+          "evictedSourceIndices": []
+        },
+        "timings": {
+          "totalElapsedMs": 22901,
+          "decisionElapsedMs": 22886
+        },
+        "exportPath": "/Users/redcreen/Project/unified-memory-core/reports/generated/openclaw-context-minor-gc-live-2026-04-18/cmgc-live-en-seat-after-project-switch/exports/agent-main-main-shadow-1776480603415-g2fblw.json"
+      },
+      "answerEval": {
+        "passed": true,
+        "checks": [
+          {
+            "name": "expected_any",
+            "passed": true,
+            "expected": [],
+            "actual": "Aisle seat."
+          },
+          {
+            "name": "expected_all",
+            "passed": true,
+            "expected": [
+              "aisle"
+            ],
+            "actual": "Aisle seat."
+          },
+          {
+            "name": "forbidden_any",
+            "passed": true,
+            "expected": [
+              "window",
+              "i don't know"
+            ],
+            "actual": "Aisle seat."
+          }
+        ]
+      },
+      "relationEval": {
+        "relation": "switch",
+        "passed": true,
+        "expected": [
+          "branch",
+          "switch",
+          "continue",
+          "resolve"
+        ]
+      },
+      "reductionEval": {
+        "actual": 0.5217,
+        "min": 0.15,
+        "passed": true
+      },
+      "passed": true
+    },
+    {
+      "id": "cmgc-live-en-open-loop-return-stage7",
+      "description": "An unfinished Stage 7 planning thread should survive a side question and then resume cleanly.",
+      "designQuestion": "Return to the earlier Stage 7 split. Which three parts did I ask for?",
+      "expected": "expected_all=[\"summary\",\"scorecard\",\"rollback\"]; forbidden_any=[\"i don't know\"]; relations=[\"branch\",\"switch\",\"continue\"]; min_raw_reduction=0.08",
+      "ok": true,
+      "answer": "You asked for:\n\n- Summary\n- Operator scorecard\n- Rollback boundary",
+      "error": "",
+      "turnsCompleted": 3,
+      "promptTokens": 16586,
+      "durationMs": 41640,
+      "event": {
+        "schema_version": "umc.dialogue-working-set-shadow.v1",
+        "event_id": "shadow-1776480750144-nqq1qy",
+        "generated_at": "2026-04-18T02:52:30.144Z",
+        "session_key": "agent:main:main",
+        "agent_id": "main",
+        "query": "Return to the earlier Stage 7 split. Which three parts did I ask for?",
+        "status": "captured",
+        "reason": "",
+        "sampling": {
+          "max_turns": 12,
+          "min_turns": 3,
+          "max_chars_per_turn": 900
+        },
+        "transcript": [
+          {
+            "id": "t1",
+            "role": "user",
+            "content": "Split the Stage 7 closeout into three parts: summary, operator scorecard, and rollback boundary."
+          },
+          {
+            "id": "t2",
+            "role": "assistant",
+            "content": "I’ll update the Stage 7 closeout structure into those three parts. First I’ll inspect the relevant project docs to find the current closeout text."
+          },
+          {
+            "id": "t3",
+            "role": "assistant",
+            "content": "I didn’t find any Stage 7 closeout text in the loaded project notes, so I’m going to patch the likely project doc structure by adding the three-part breakdown in `notes/project-lantern.md`."
+          },
+          {
+            "id": "t4",
+            "role": "assistant",
+            "content": "Done — I split the Stage 7 closeout into: - Summary - Operator scorecard - Rollback boundary I added the structure to `notes/project-lantern.md`. If you want, I can also turn those three headings into a cleaner template with prompts under each one."
+          },
+          {
+            "id": "t5",
+            "role": "user",
+            "content": "Before you expand it, answer this side question: what does `umc registry migrate` do?"
+          },
+          {
+            "id": "t6",
+            "role": "assistant",
+            "content": "I couldn’t verify a `umc registry migrate` subcommand from the local OpenClaw CLI help, so I need to avoid guessing. The closest honest answer is: I don’t know what that command does from the available docs, and it doesn’t appear in the installed `openclaw` command set I checked. If you want, I can look for it in the docs or in the repo once you point me to where `umc` lives. I can’t confirm what `umc registry migrate` does from the local OpenClaw docs/CLI I checked. What I found: - `openclaw --help` has no `umc` command or `registry migrate` subcommand. - So I’d be guessing if I described its behavior. If you want, I can keep digging in the repo/docs for the `umc` CLI specifically."
+          }
+        ],
+        "decision": {
+          "relation": "continue",
+          "confidence": 0.97,
+          "evict_turn_ids": [
+            "t2",
+            "t3",
+            "t4",
+            "t5",
+            "t6"
+          ],
+          "pin_turn_ids": [],
+          "archive_summary": "Stage 7 closeout was split into three parts: summary, operator scorecard, and rollback boundary.",
+          "reasoning_summary": "The latest user turn returns to the unresolved Stage 7 split topic and depends directly on the original request in t1. The later assistant expansion and the unrelated `umc registry migrate` side question are resolved and can leave the next-turn prompt. No durable pin is needed beyond the retained raw request."
+        },
+        "decision_transport": "codex_exec",
+        "snapshot": {
+          "applied": {
+            "relation": "continue",
+            "confidence": 0.97,
+            "archiveSummary": "Stage 7 closeout was split into three parts: summary, operator scorecard, and rollback boundary.",
+            "reasoningSummary": "The latest user turn returns to the unresolved Stage 7 split topic and depends directly on the original request in t1. The later assistant expansion and the unrelated `umc registry migrate` side question are resolved and can leave the next-turn prompt. No durable pin is needed beyond the retained raw request.",
+            "latestUserTurnId": "t5",
+            "pinTurnIds": [],
+            "pinnedOnlyTurnIds": [],
+            "requestedEvictTurnIds": [
+              "t2",
+              "t3",
+              "t4",
+              "t5",
+              "t6"
+            ],
+            "blockedEvictTurnIds": [
+              "t5"
+            ],
+            "appliedEvictTurnIds": [
+              "t2",
+              "t3",
+              "t4",
+              "t6"
+            ],
+            "keepTurnIds": [
+              "t1",
+              "t5"
+            ],
+            "baselineTokens": 366,
+            "keptTokens": 46,
+            "prunedTokens": 320,
+            "reductionRatio": 0.8743169398907104,
+            "keepTurns": [
+              {
+                "id": "t1",
+                "role": "user",
+                "content": "Split the Stage 7 closeout into three parts: summary, operator scorecard, and rollback boundary.",
+                "tokenEstimate": 24
+              },
+              {
+                "id": "t5",
+                "role": "user",
+                "content": "Before you expand it, answer this side question: what does `umc registry migrate` do?",
+                "tokenEstimate": 22
+              }
+            ],
+            "evictedTurns": [
+              {
+                "id": "t2",
+                "role": "assistant",
+                "content": "I’ll update the Stage 7 closeout structure into those three parts. First I’ll inspect the relevant project docs to find the current closeout text.",
+                "tokenEstimate": 37
+              },
+              {
+                "id": "t3",
+                "role": "assistant",
+                "content": "I didn’t find any Stage 7 closeout text in the loaded project notes, so I’m going to patch the likely project doc structure by adding the three-part breakdown in `notes/project-lantern.md`.",
+                "tokenEstimate": 48
+              },
+              {
+                "id": "t4",
+                "role": "assistant",
+                "content": "Done — I split the Stage 7 closeout into: - Summary - Operator scorecard - Rollback boundary I added the structure to `notes/project-lantern.md`. If you want, I can also turn those three headings into a cleaner template with prompts under each one.",
+                "tokenEstimate": 62
+              },
+              {
+                "id": "t6",
+                "role": "assistant",
+                "content": "I couldn’t verify a `umc registry migrate` subcommand from the local OpenClaw CLI help, so I need to avoid guessing. The closest honest answer is: I don’t know what that command does from the available docs, and it doesn’t appear in the installed `openclaw` command set I checked. If you want, I can look for it in the docs or in the repo once you point me to where `umc` lives. I can’t confirm what `umc registry migrate` does from the local OpenClaw docs/CLI I checked. What I found: - `openclaw --help` has no `umc` command or `registry migrate` subcommand. - So I’d be guessing if I described its behavior. If you want, I can keep digging in the repo/docs for the `umc` CLI specifically.",
+                "tokenEstimate": 173
+              }
+            ]
+          },
+          "baselineRawTranscript": "t1 user: Split the Stage 7 closeout into three parts: summary, operator scorecard, and rollback boundary.\nt2 assistant: I’ll update the Stage 7 closeout structure into those three parts. First I’ll inspect the relevant project docs to find the current closeout text.\nt3 assistant: I didn’t find any Stage 7 closeout text in the loaded project notes, so I’m going to patch the likely project doc structure by adding the three-part breakdown in `notes/project-lantern.md`.\nt4 assistant: Done — I split the Stage 7 closeout into: - Summary - Operator scorecard - Rollback boundary I added the structure to `notes/project-lantern.md`. If you want, I can also turn those three headings into a cleaner template with prompts under each one.\nt5 user: Before you expand it, answer this side question: what does `umc registry migrate` do?\nt6 assistant: I couldn’t verify a `umc registry migrate` subcommand from the local OpenClaw CLI help, so I need to avoid guessing. The closest honest answer is: I don’t know what that command does from the available docs, and it doesn’t appear in the installed `openclaw` command set I checked. If you want, I can look for it in the docs or in the repo once you point me to where `umc` lives. I can’t confirm what `umc registry migrate` does from the local OpenClaw docs/CLI I checked. What I found: - `openclaw --help` has no `umc` command or `registry migrate` subcommand. - So I’d be guessing if I described its behavior. If you want, I can keep digging in the repo/docs for the `umc` CLI specifically.",
+          "shadowRawTranscript": "t1 user: Split the Stage 7 closeout into three parts: summary, operator scorecard, and rollback boundary.\nt5 user: Before you expand it, answer this side question: what does `umc registry migrate` do?",
+          "semanticPinNotes": [],
+          "archiveSummary": "Stage 7 closeout was split into three parts: summary, operator scorecard, and rollback boundary.",
+          "injectedArchiveSummary": "",
+          "baselinePromptEstimate": 384,
+          "shadowRawPromptEstimate": 50,
+          "shadowPackageEstimate": 55,
+          "shadowPackageText": "Active raw turns:\nt1 user: Split the Stage 7 closeout into three parts: summary, operator scorecard, and rollback boundary.\nt5 user: Before you expand it, answer this side question: what does `umc registry migrate` do?"
+        },
+        "scorecard": {
+          "relation": "continue",
+          "baselineTurnCount": 6,
+          "keptTurnCount": 2,
+          "evictedTurnCount": 4,
+          "pinCount": 0,
+          "baselinePromptEstimate": 384,
+          "shadowRawPromptEstimate": 50,
+          "shadowPackageEstimate": 55,
+          "rawReductionRatio": 0.8743,
+          "packageReductionRatio": 0.8568,
+          "candidateLoadElapsedMs": 12,
+          "assemblyBuildElapsedMs": 0,
+          "decisionElapsedMs": 26524,
+          "totalElapsedMs": 26529,
+          "guardedEnabled": false,
+          "guardedApplied": false,
+          "guardedReason": "feature_disabled",
+          "guardedMessageCount": 14,
+          "guardedCarryForwardEstimate": 0,
+          "guardedFilteredMessageEstimate": 1977
+        },
+        "guarded": {
+          "enabled": false,
+          "applied": false,
+          "reason": "feature_disabled",
+          "filteredMessages": [
+            {
+              "role": "user",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Split the Stage 7 closeout into three parts: summary, operator scorecard, and rollback boundary."
+                }
+              ],
+              "timestamp": 1776480660582
+            },
+            {
+              "role": "assistant",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "I’ll update the Stage 7 closeout structure into those three parts. First I’ll inspect the relevant project docs to find the current closeout text.",
+                  "textSignature": "{\"v\":1,\"id\":\"msg_0f5be892496f99550169e2f19927f88191a819d6238e0d5ecd\",\"phase\":\"commentary\"}"
+                },
+                {
+                  "type": "toolCall",
+                  "id": "call_EDQ8gGvKG7l5JgdbDD2zsdej",
+                  "name": "read",
+                  "arguments": {
+                    "path": "README.md"
+                  },
+                  "partialJson": "{\"path\":\"README.md\"}"
+                },
+                {
+                  "type": "toolCall",
+                  "id": "call_r9Cz5zjOA250uqfuJ78R0HfW",
+                  "name": "read",
+                  "arguments": {
+                    "path": "notes/project-lantern.md"
+                  },
+                  "partialJson": "{\"path\":\"notes/project-lantern.md\"}"
+                },
+                {
+                  "type": "toolCall",
+                  "id": "call_JlAUlg2UBIoIKxfwbZ2A21UW",
+                  "name": "read",
+                  "arguments": {
+                    "path": "memory/2026-04-12.md"
+                  },
+                  "partialJson": "{\"path\":\"memory/2026-04-12.md\"}"
+                },
+                {
+                  "type": "toolCall",
+                  "id": "call_P90AYJj6cwXoZh1DifuXsPHk",
+                  "name": "read",
+                  "arguments": {
+                    "path": "memory/2026-04-10.md"
+                  },
+                  "partialJson": "{\"path\":\"memory/2026-04-10.md\"}"
+                }
+              ],
+              "api": "openai-codex-responses",
+              "provider": "openai-codex",
+              "model": "gpt-5.4-mini",
+              "usage": {
+                "input": 8854,
+                "output": 132,
+                "cacheRead": 5120,
+                "cacheWrite": 0,
+                "totalTokens": 14106,
+                "cost": {
+                  "input": 0.006640500000000001,
+                  "output": 0.000594,
+                  "cacheRead": 0.000384,
+                  "cacheWrite": 0,
+                  "total": 0.0076185
+                }
+              },
+              "stopReason": "toolUse",
+              "timestamp": 1776480660587,
+              "responseId": "resp_0f5be892496f99550169e2f198a7788191964c2d1484cae5bd"
+            },
+            {
+              "role": "toolResult",
+              "toolCallId": "call_EDQ8gGvKG7l5JgdbDD2zsdej",
+              "toolName": "read",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "# OpenClaw CLI Memory Benchmark Fixture\n\nThis fixture is the source-of-truth workspace used by the hermetic OpenClaw CLI benchmark.\n\nIt exists for four reasons:\n\n1. keep the benchmark facts reviewable in-repo\n2. make the benchmark matrix readable without digging through session logs\n3. document which facts are meant to exercise bootstrap, ordinary retrieval, temporal override, and abstention\n4. provide a stable workspace snapshot that can be copied into isolated host temp states or Docker containers\n\nThe hermetic benchmark no longer seeds from `~/.openclaw`.\nInstead, the runner copies this fixture into a fresh OpenClaw state, indexes it there, and then clones a clean state per case.\n\nThat same fixture is also the intended input for the Docker-based OpenClaw eval harness.\n\nFiles:\n\n- `MEMORY.md`: stable identity, preferences, and rules\n- `notes/personal-profile.md`: ordinary retrieval facts that should not rely only on bootstrap\n- `notes/project-lantern.md`: project knowledge retrieval\n- `memory/2026-04-10.md`: older state\n- `memory/2026-04-12.md`: current superseding state\n"
+                }
+              ],
+              "isError": false,
+              "timestamp": 1776480666777
+            },
+            {
+              "role": "toolResult",
+              "toolCallId": "call_r9Cz5zjOA250uqfuJ78R0HfW",
+              "toolName": "read",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "# Project Lantern\n\nProject Lantern is a B2B analytics assistant for clinic managers.\n\nCurrent facts:\n\n- Codename: Lantern.\n- Current milestone: Stage 2 pilot.\n- Primary KPI: weekly active clinics.\n- Support SLA for pilot customers: respond within 4 business hours.\n- Design partner: Northwind Health.\n- Reporting cadence: send the pilot summary every Friday.\n- Launch city for the pilot: Singapore.\n"
+                }
+              ],
+              "isError": false,
+              "timestamp": 1776480666778
+            },
+            {
+              "role": "toolResult",
+              "toolCallId": "call_JlAUlg2UBIoIKxfwbZ2A21UW",
+              "toolName": "read",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "# Daily Memory 2026-04-12\n\n- Confirmed update: Maya switched the main editor from Vim to Zed last week.\n- Confirmed update: the clinic demo moved to next Tuesday at 15:00 Shanghai time.\n- Confirmed update: the deploy region decision is now `eu-west-1`; the older `us-east-1` draft should be ignored.\n- Current keyboard preference: tactile switches over linear red switches.\n- Current notebook for meetings: the charcoal A5 notebook, not the old blue pocket notebook.\n"
+                }
+              ],
+              "isError": false,
+              "timestamp": 1776480666778
+            },
+            {
+              "role": "toolResult",
+              "toolCallId": "call_P90AYJj6cwXoZh1DifuXsPHk",
+              "toolName": "read",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "# Daily Memory 2026-04-10\n\n- At that point Maya was still using Vim as the main editor.\n- The clinic demo was still planned for next Tuesday at 10:00 Shanghai time.\n- A draft note said the default deployment region might be `us-east-1`, but it was not finalized.\n"
+                }
+              ],
+              "isError": false,
+              "timestamp": 1776480666779
+            },
+            {
+              "role": "assistant",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "I didn’t find any Stage 7 closeout text in the loaded project notes, so I’m going to patch the likely project doc structure by adding the three-part breakdown in `notes/project-lantern.md`.",
+                  "textSignature": "{\"v\":1,\"id\":\"msg_0f5be892496f99550169e2f19fbd9c819184ac8ca835cac1cc\",\"phase\":\"commentary\"}"
+                },
+                {
+                  "type": "toolCall",
+                  "id": "call_xxNoE3Ap5O74Gcctyplx23wX",
+                  "name": "edit",
+                  "arguments": {
+                    "path": "notes/project-lantern.md",
+                    "edits": [
+                      {
+                        "oldText": "# Project Lantern\n\nProject Lantern is a B2B analytics assistant for clinic managers.\n\nCurrent facts:\n\n- Codename: Lantern.\n- Current milestone: Stage 2 pilot.\n- Primary KPI: weekly active clinics.\n- Support SLA for pilot customers: respond within 4 business hours.\n- Design partner: Northwind Health.\n- Reporting cadence: send the pilot summary every Friday.\n- Launch city for the pilot: Singapore.\n",
+                        "newText": "# Project Lantern\n\nProject Lantern is a B2B analytics assistant for clinic managers.\n\nCurrent facts:\n\n- Codename: Lantern.\n- Current milestone: Stage 2 pilot.\n- Primary KPI: weekly active clinics.\n- Support SLA for pilot customers: respond within 4 business hours.\n- Design partner: Northwind Health.\n- Reporting cadence: send the pilot summary every Friday.\n- Launch city for the pilot: Singapore.\n\nStage 7 closeout:\n\n1. Summary\n- High-level outcome, what shipped, and what changed.\n\n2. Operator scorecard\n- What the operator should review: reliability, support load, user impact, and any open issues.\n\n3. Rollback boundary\n- Exact conditions where rollback is still safe, plus what is out of bounds.\n"
+                      }
+                    ]
+                  },
+                  "partialJson": "{\"path\":\"notes/project-lantern.md\",\"edits\":[{\"oldText\":\"# Project Lantern\\n\\nProject Lantern is a B2B analytics assistant for clinic managers.\\n\\nCurrent facts:\\n\\n- Codename: Lantern.\\n- Current milestone: Stage 2 pilot.\\n- Primary KPI: weekly active clinics.\\n- Support SLA for pilot customers: respond within 4 business hours.\\n- Design partner: Northwind Health.\\n- Reporting cadence: send the pilot summary every Friday.\\n- Launch city for the pilot: Singapore.\\n\",\"newText\":\"# Project Lantern\\n\\nProject Lantern is a B2B analytics assistant for clinic managers.\\n\\nCurrent facts:\\n\\n- Codename: Lantern.\\n- Current milestone: Stage 2 pilot.\\n- Primary KPI: weekly active clinics.\\n- Support SLA for pilot customers: respond within 4 business hours.\\n- Design partner: Northwind Health.\\n- Reporting cadence: send the pilot summary every Friday.\\n- Launch city for the pilot: Singapore.\\n\\nStage 7 closeout:\\n\\n1. Summary\\n- High-level outcome, what shipped, and what changed.\\n\\n2. Operator scorecard\\n- What the operator should review: reliability, support load, user impact, and any open issues.\\n\\n3. Rollback boundary\\n- Exact conditions where rollback is still safe, plus what is out of bounds.\\n\"}]}"
+                }
+              ],
+              "api": "openai-codex-responses",
+              "provider": "openai-codex",
+              "model": "gpt-5.4-mini",
+              "usage": {
+                "input": 819,
+                "output": 357,
+                "cacheRead": 13824,
+                "cacheWrite": 0,
+                "totalTokens": 15000,
+                "cost": {
+                  "input": 0.00061425,
+                  "output": 0.0016065,
+                  "cacheRead": 0.0010368,
+                  "cacheWrite": 0,
+                  "total": 0.00325755
+                }
+              },
+              "stopReason": "toolUse",
+              "timestamp": 1776480666782,
+              "responseId": "resp_0f5be892496f99550169e2f19f2ddc8191b940aa35d97985e4"
+            },
+            {
+              "role": "toolResult",
+              "toolCallId": "call_xxNoE3Ap5O74Gcctyplx23wX",
+              "toolName": "edit",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Successfully replaced 1 block(s) in notes/project-lantern.md."
+                }
+              ],
+              "isError": false,
+              "timestamp": 1776480674653
+            },
+            {
+              "role": "assistant",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Done — I split the Stage 7 closeout into:\n\n- Summary\n- Operator scorecard\n- Rollback boundary\n\nI added the structure to `notes/project-lantern.md`. If you want, I can also turn those three headings into a cleaner template with prompts under each one.",
+                  "textSignature": "{\"v\":1,\"id\":\"msg_0f5be892496f99550169e2f1a879988191ad98530ee9e7b9fc\",\"phase\":\"final_answer\"}"
+                }
+              ],
+              "api": "openai-codex-responses",
+              "provider": "openai-codex",
+              "model": "gpt-5.4-mini",
+              "usage": {
+                "input": 177,
+                "output": 63,
+                "cacheRead": 14848,
+                "cacheWrite": 0,
+                "totalTokens": 15088,
+                "cost": {
+                  "input": 0.00013275,
+                  "output": 0.0002835,
+                  "cacheRead": 0.0011136,
+                  "cacheWrite": 0,
+                  "total": 0.00152985
+                }
+              },
+              "stopReason": "stop",
+              "timestamp": 1776480674655,
+              "responseId": "resp_0f5be892496f99550169e2f1a7a4c88191928a6dc23c7aff6a"
+            },
+            {
+              "role": "user",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Before you expand it, answer this side question: what does `umc registry migrate` do?"
+                }
+              ],
+              "timestamp": 1776480711659
+            },
+            {
+              "role": "assistant",
+              "content": [
+                {
+                  "type": "toolCall",
+                  "id": "call_g52zK6qKaqYPcrxetHphcZGh",
+                  "name": "web_search",
+                  "arguments": {
+                    "query": "site:docs.openclaw.ai \"umc registry migrate\"",
+                    "count": 5,
+                    "region": "us-en",
+                    "safeSearch": "moderate"
+                  },
+                  "partialJson": "{\"query\":\"site:docs.openclaw.ai \\\"umc registry migrate\\\"\",\"count\":5,\"region\":\"us-en\",\"safeSearch\":\"moderate\"}"
+                },
+                {
+                  "type": "toolCall",
+                  "id": "call_n1lsvTOas1rXm4LtYn1u9PmO",
+                  "name": "exec",
+                  "arguments": {
+                    "command": "openclaw --help | sed -n '1,220p'",
+                    "workdir": "/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-cmgc-live-Z7dPQr/agents/main/agent",
+                    "yieldMs": 4000,
+                    "timeout": 10
+                  },
+                  "partialJson": "{\"command\":\"openclaw --help | sed -n '1,220p'\",\"workdir\":\"/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-cmgc-live-Z7dPQr/agents/main/agent\",\"yieldMs\":4000,\"timeout\":10}"
+                }
+              ],
+              "api": "openai-codex-responses",
+              "provider": "openai-codex",
+              "model": "gpt-5.4-mini",
+              "usage": {
+                "input": 9998,
+                "output": 144,
+                "cacheRead": 5120,
+                "cacheWrite": 0,
+                "totalTokens": 15262,
+                "cost": {
+                  "input": 0.0074985,
+                  "output": 0.000648,
+                  "cacheRead": 0.000384,
+                  "cacheWrite": 0,
+                  "total": 0.0085305
+                }
+              },
+              "stopReason": "toolUse",
+              "timestamp": 1776480711669,
+              "responseId": "resp_0f5be892496f99550169e2f1cdd3ac81918d547d6b4b6f42ad"
+            },
+            {
+              "role": "toolResult",
+              "toolCallId": "call_g52zK6qKaqYPcrxetHphcZGh",
+              "toolName": "web_search",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "{\n  \"status\": \"error\",\n  \"tool\": \"web_search\",\n  \"error\": \"fetch failed\"\n}"
+                }
+              ],
+              "isError": false,
+              "timestamp": 1776480725673
+            },
+            {
+              "role": "toolResult",
+              "toolCallId": "call_n1lsvTOas1rXm4LtYn1u9PmO",
+              "toolName": "exec",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "🦞 OpenClaw 2026.4.2 (d74a122) — WhatsApp automation without the \"please accept our new privacy policy\".\n\nUsage: openclaw [options] [command]\n\nOptions:\n  --container <name>   Run the CLI inside a running Podman/Docker container\n                       named <name> (default: env OPENCLAW_CONTAINER)\n  --dev                Dev profile: isolate state under ~/.openclaw-dev, default\n                       gateway port 19001, and shift derived ports\n                       (browser/canvas)\n  -h, --help           Display help for command\n  --log-level <level>  Global log level override for file + console\n                       (silent|fatal|error|warn|info|debug|trace)\n  --no-color           Disable ANSI colors\n  --profile <name>     Use a named profile (isolates\n                       OPENCLAW_STATE_DIR/OPENCLAW_CONFIG_PATH under\n                       ~/.openclaw-<name>)\n  -V, --version        output the version number\n\nCommands:\n  Hint: commands suffixed with * have subcommands. Run <command> --help for details.\n  acp *                Agent Control Protocol tools\n  agent                Run one agent turn via the Gateway\n  agents *             Manage isolated agents (workspaces, auth, routing)\n  approvals *          Manage exec approvals (gateway or node host)\n  backup *             Create and verify local backup archives for OpenClaw\n                       state\n  channels *           Manage connected chat channels (Telegram, Discord, etc.)\n  clawbot *            Legacy clawbot command aliases\n  completion           Generate shell completion script\n  config *             Non-interactive config helpers\n                       (get/set/unset/file/validate). Default: starts guided\n                       setup.\n  configure            Interactive configuration for credentials, channels,\n                       gateway, and agent defaults\n  cron *               Manage cron jobs via the Gateway scheduler\n  daemon *             Gateway service (legacy alias)\n  dashboard            Open the Control UI with your current token\n  devices *            Device pairing + token management\n  directory *          Lookup contact and group IDs (self, peers, groups) for\n                       supported chat channels\n  dns *                DNS helpers for wide-area discovery (Tailscale + CoreDNS)\n  docs                 Search the live OpenClaw docs\n  doctor               Health checks + quick fixes for the gateway and channels\n  gateway *            Run, inspect, and query the WebSocket Gateway\n  health               Fetch health from the running gateway\n  help                 Display help for command\n  hooks *              Manage internal agent hooks\n  logs                 Tail gateway file logs via RPC\n  memory               Search, inspect, and reindex memory files\n  message *            Send, read, and manage messages\n  models *             Discover, scan, and configure models\n  node *               Run and manage the headless node host service\n  nodes *              Manage gateway-owned node pairing and node commands\n  onboard              Interactive onboarding for gateway, workspace, and skills\n  pairing *            Secure DM pairing (approve inbound requests)\n  plugins *            Manage OpenClaw plugins and extensions\n  qr                   Generate iOS pairing QR/setup code\n  reset                Reset local config/state (keeps the CLI installed)\n  sandbox *            Manage sandbox containers for agent isolation\n  secrets *            Secrets runtime reload controls\n  security *           Security tools and local config audits\n  sessions *           List stored conversation sessions\n  setup                Initialize local config and agent workspace\n  skills *             List and inspect available skills\n  status               Show channel health and recent session recipients\n  system *             System events, heartbeat, and presence\n  tasks *              Inspect durable background task state\n  tui                  Open a terminal UI connected to the Gateway\n  uninstall            Uninstall the gateway service + local data (CLI remains)\n  update *             Update OpenClaw and inspect update channel status\n  webhooks *           Webhook helpers and integrations\n\nExamples:\n  openclaw models --help\n    Show detailed help for the models command.\n  openclaw channels login --verbose\n    Link personal WhatsApp Web and show QR + connection logs.\n  openclaw message send --target +15555550123 --message \"Hi\" --json\n    Send via your web session and print JSON result.\n  openclaw gateway --port 18789\n    Run the WebSocket Gateway locally.\n  openclaw --dev gateway\n    Run a dev Gateway (isolated state/config) on ws://127.0.0.1:19001.\n  openclaw gateway --force\n    Kill anything bound to the default gateway port, then start it.\n  openclaw gateway ...\n    Gateway control via WebSocket.\n  openclaw agent --to +15555550123 --message \"Run summary\" --deliver\n    Talk directly to the agent using the Gateway; optionally send the WhatsApp reply.\n  openclaw message send --channel telegram --target @mychat --message \"Hi\"\n    Send via your Telegram bot.\n\nDocs: https://docs.openclaw.ai/cli"
+                }
+              ],
+              "isError": false,
+              "timestamp": 1776480725674
+            },
+            {
+              "role": "assistant",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "I couldn’t verify a `umc registry migrate` subcommand from the local OpenClaw CLI help, so I need to avoid guessing. The closest honest answer is: I don’t know what that command does from the available docs, and it doesn’t appear in the installed `openclaw` command set I checked.\n\nIf you want, I can look for it in the docs or in the repo once you point me to where `umc` lives.",
+                  "textSignature": "{\"v\":1,\"id\":\"msg_0f5be892496f99550169e2f1db51248191b786515474ecf76c\",\"phase\":\"commentary\"}"
+                },
+                {
+                  "type": "text",
+                  "text": "I can’t confirm what `umc registry migrate` does from the local OpenClaw docs/CLI I checked.\n\nWhat I found:\n- `openclaw --help` has no `umc` command or `registry migrate` subcommand.\n- So I’d be guessing if I described its behavior.\n\nIf you want, I can keep digging in the repo/docs for the `umc` CLI specifically.",
+                  "textSignature": "{\"v\":1,\"id\":\"msg_0f5be892496f99550169e2f1dc170c81918cd36bc2511172cd\",\"phase\":\"final_answer\"}"
+                }
+              ],
+              "api": "openai-codex-responses",
+              "provider": "openai-codex",
+              "model": "gpt-5.4-mini",
+              "usage": {
+                "input": 1514,
+                "output": 189,
+                "cacheRead": 14848,
+                "cacheWrite": 0,
+                "totalTokens": 16551,
+                "cost": {
+                  "input": 0.0011355,
+                  "output": 0.0008505,
+                  "cacheRead": 0.0011136,
+                  "cacheWrite": 0,
+                  "total": 0.0030996
+                }
+              },
+              "stopReason": "stop",
+              "timestamp": 1776480725676,
+              "responseId": "resp_0f5be892496f99550169e2f1daa3e48191942f19af08694dae"
+            }
+          ],
+          "filteredMessageCount": 14,
+          "filteredMessageTokenEstimate": 1977,
+          "carryForwardText": "",
+          "carryForwardEstimate": 0,
+          "evictedSourceIndices": []
+        },
+        "timings": {
+          "totalElapsedMs": 26529,
+          "decisionElapsedMs": 26524
+        },
+        "exportPath": "/Users/redcreen/Project/unified-memory-core/reports/generated/openclaw-context-minor-gc-live-2026-04-18/cmgc-live-en-open-loop-return-stage7/exports/agent-main-main-shadow-1776480750144-nqq1qy.json"
+      },
+      "answerEval": {
+        "passed": true,
+        "checks": [
+          {
+            "name": "expected_any",
+            "passed": true,
+            "expected": [],
+            "actual": "You asked for:\n\n- Summary\n- Operator scorecard\n- Rollback boundary"
+          },
+          {
+            "name": "expected_all",
+            "passed": true,
+            "expected": [
+              "summary",
+              "scorecard",
+              "rollback"
+            ],
+            "actual": "You asked for:\n\n- Summary\n- Operator scorecard\n- Rollback boundary"
+          },
+          {
+            "name": "forbidden_any",
+            "passed": true,
+            "expected": [
+              "i don't know"
+            ],
+            "actual": "You asked for:\n\n- Summary\n- Operator scorecard\n- Rollback boundary"
+          }
+        ]
+      },
+      "relationEval": {
+        "relation": "continue",
+        "passed": true,
+        "expected": [
+          "branch",
+          "switch",
+          "continue"
+        ]
+      },
+      "reductionEval": {
+        "actual": 0.8743,
+        "min": 0.08,
+        "passed": true
+      },
+      "passed": true
+    },
+    {
+      "id": "cmgc-live-en-current-editor-conflict",
+      "description": "A newer current-state fact should win after an unrelated detour.",
+      "designQuestion": "Back to the editor fact. What is my current default editor now?",
+      "expected": "expected_all=[\"zed\"]; forbidden_any=[\"i don't know\"]; relations=[\"switch\",\"continue\",\"resolve\"]; min_raw_reduction=0.1",
+      "ok": true,
+      "answer": "Zed.",
+      "error": "",
+      "turnsCompleted": 4,
+      "promptTokens": 14398,
+      "durationMs": 40263,
+      "event": {
+        "schema_version": "umc.dialogue-working-set-shadow.v1",
+        "event_id": "shadow-1776480917971-2gw416",
+        "generated_at": "2026-04-18T02:55:17.971Z",
+        "session_key": "agent:main:main",
+        "agent_id": "main",
+        "query": "Back to the editor fact. What is my current default editor now?",
+        "status": "captured",
+        "reason": "",
+        "sampling": {
+          "max_turns": 12,
+          "min_turns": 3,
+          "max_chars_per_turn": 900
+        },
+        "transcript": [
+          {
+            "id": "t1",
+            "role": "user",
+            "content": "Remember this old preference: my default editor used to be Vim."
+          },
+          {
+            "id": "t2",
+            "role": "assistant",
+            "content": "Saved."
+          },
+          {
+            "id": "t3",
+            "role": "user",
+            "content": "Update it now: my current default editor is Zed."
+          },
+          {
+            "id": "t4",
+            "role": "assistant",
+            "content": "Updated."
+          },
+          {
+            "id": "t5",
+            "role": "user",
+            "content": "Switch topics. Give me one short sentence on why shadow mode stays default-off."
+          },
+          {
+            "id": "t6",
+            "role": "assistant",
+            "content": "Shadow mode stays default-off because it can quietly add risk and complexity before you’ve proven it’s safe and useful."
+          }
+        ],
+        "decision": {
+          "relation": "switch",
+          "confidence": 0.96,
+          "evict_turn_ids": [
+            "t1",
+            "t2",
+            "t3",
+            "t4"
+          ],
+          "pin_turn_ids": [
+            "t3"
+          ],
+          "archive_summary": "User’s current default editor is Zed; Vim was the previous default.",
+          "reasoning_summary": "The shadow-mode detour is resolved and can be dropped. The only durable context needed going forward is the editor preference capsule: current default editor = Zed, overriding the older Vim preference."
+        },
+        "decision_transport": "codex_exec",
+        "snapshot": {
+          "applied": {
+            "relation": "switch",
+            "confidence": 0.96,
+            "archiveSummary": "User’s current default editor is Zed; Vim was the previous default.",
+            "reasoningSummary": "The shadow-mode detour is resolved and can be dropped. The only durable context needed going forward is the editor preference capsule: current default editor = Zed, overriding the older Vim preference.",
+            "latestUserTurnId": "t5",
+            "pinTurnIds": [
+              "t3"
+            ],
+            "pinnedOnlyTurnIds": [
+              "t3"
+            ],
+            "requestedEvictTurnIds": [
+              "t1",
+              "t2",
+              "t3",
+              "t4"
+            ],
+            "blockedEvictTurnIds": [],
+            "appliedEvictTurnIds": [
+              "t1",
+              "t2",
+              "t3",
+              "t4"
+            ],
+            "keepTurnIds": [
+              "t5",
+              "t6"
+            ],
+            "baselineTokens": 82,
+            "keptTokens": 50,
+            "prunedTokens": 32,
+            "reductionRatio": 0.3902439024390244,
+            "keepTurns": [
+              {
+                "id": "t5",
+                "role": "user",
+                "content": "Switch topics. Give me one short sentence on why shadow mode stays default-off.",
+                "tokenEstimate": 20
+              },
+              {
+                "id": "t6",
+                "role": "assistant",
+                "content": "Shadow mode stays default-off because it can quietly add risk and complexity before you’ve proven it’s safe and useful.",
+                "tokenEstimate": 30
+              }
+            ],
+            "evictedTurns": [
+              {
+                "id": "t1",
+                "role": "user",
+                "content": "Remember this old preference: my default editor used to be Vim.",
+                "tokenEstimate": 16
+              },
+              {
+                "id": "t2",
+                "role": "assistant",
+                "content": "Saved.",
+                "tokenEstimate": 2
+              },
+              {
+                "id": "t3",
+                "role": "user",
+                "content": "Update it now: my current default editor is Zed.",
+                "tokenEstimate": 12
+              },
+              {
+                "id": "t4",
+                "role": "assistant",
+                "content": "Updated.",
+                "tokenEstimate": 2
+              }
+            ]
+          },
+          "baselineRawTranscript": "t1 user: Remember this old preference: my default editor used to be Vim.\nt2 assistant: Saved.\nt3 user: Update it now: my current default editor is Zed.\nt4 assistant: Updated.\nt5 user: Switch topics. Give me one short sentence on why shadow mode stays default-off.\nt6 assistant: Shadow mode stays default-off because it can quietly add risk and complexity before you’ve proven it’s safe and useful.",
+          "shadowRawTranscript": "t5 user: Switch topics. Give me one short sentence on why shadow mode stays default-off.\nt6 assistant: Shadow mode stays default-off because it can quietly add risk and complexity before you’ve proven it’s safe and useful.",
+          "semanticPinNotes": [
+            "user: Update it now: my current default editor is Zed."
+          ],
+          "archiveSummary": "User’s current default editor is Zed; Vim was the previous default.",
+          "injectedArchiveSummary": "",
+          "baselinePromptEstimate": 100,
+          "shadowRawPromptEstimate": 56,
+          "shadowPackageEstimate": 78,
+          "shadowPackageText": "Active raw turns:\nt5 user: Switch topics. Give me one short sentence on why shadow mode stays default-off.\nt6 assistant: Shadow mode stays default-off because it can quietly add risk and complexity before you’ve proven it’s safe and useful.\n\nSemantic pins:\nuser: Update it now: my current default editor is Zed."
+        },
+        "scorecard": {
+          "relation": "switch",
+          "baselineTurnCount": 6,
+          "keptTurnCount": 2,
+          "evictedTurnCount": 4,
+          "pinCount": 1,
+          "baselinePromptEstimate": 100,
+          "shadowRawPromptEstimate": 56,
+          "shadowPackageEstimate": 78,
+          "rawReductionRatio": 0.3902,
+          "packageReductionRatio": 0.22,
+          "candidateLoadElapsedMs": 14,
+          "assemblyBuildElapsedMs": 0,
+          "decisionElapsedMs": 28209,
+          "totalElapsedMs": 28214,
+          "guardedEnabled": false,
+          "guardedApplied": false,
+          "guardedReason": "feature_disabled",
+          "guardedMessageCount": 10,
+          "guardedCarryForwardEstimate": 0,
+          "guardedFilteredMessageEstimate": 110
+        },
+        "guarded": {
+          "enabled": false,
+          "applied": false,
+          "reason": "feature_disabled",
+          "filteredMessages": [
+            {
+              "role": "user",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Remember this old preference: my default editor used to be Vim."
+                }
+              ],
+              "timestamp": 1776480800253
+            },
+            {
+              "role": "assistant",
+              "content": [
+                {
+                  "type": "toolCall",
+                  "id": "call_rEJ0zC1COAADv9GAYBpZGXf1",
+                  "name": "write",
+                  "arguments": {
+                    "path": "memory/2026-04-12.md",
+                    "content": "# Daily Memory 2026-04-12\n\n- Confirmed update: Maya switched the main editor from Vim to Zed last week.\n- Confirmed update: the clinic demo moved to next Tuesday at 15:00 Shanghai time.\n- Confirmed update: the deploy region decision is now `eu-west-1`; the older `us-east-1` draft should be ignored.\n- Current keyboard preference: tactile switches over linear red switches.\n- Current notebook for meetings: the charcoal A5 notebook, not the old blue pocket notebook.\n- Old preference: default editor used to be Vim.\n"
+                  },
+                  "partialJson": "{\"path\":\"memory/2026-04-12.md\",\"content\":\"# Daily Memory 2026-04-12\\n\\n- Confirmed update: Maya switched the main editor from Vim to Zed last week.\\n- Confirmed update: the clinic demo moved to next Tuesday at 15:00 Shanghai time.\\n- Confirmed update: the deploy region decision is now `eu-west-1`; the older `us-east-1` draft should be ignored.\\n- Current keyboard preference: tactile switches over linear red switches.\\n- Current notebook for meetings: the charcoal A5 notebook, not the old blue pocket notebook.\\n- Old preference: default editor used to be Vim.\\n\"}"
+                }
+              ],
+              "api": "openai-codex-responses",
+              "provider": "openai-codex",
+              "model": "gpt-5.4-mini",
+              "usage": {
+                "input": 8868,
+                "output": 156,
+                "cacheRead": 5120,
+                "cacheWrite": 0,
+                "totalTokens": 14144,
+                "cost": {
+                  "input": 0.006651,
+                  "output": 0.000702,
+                  "cacheRead": 0.000384,
+                  "cacheWrite": 0,
+                  "total": 0.007737
+                }
+              },
+              "stopReason": "toolUse",
+              "timestamp": 1776480800268,
+              "responseId": "resp_0d070379da00f9520169e2f22a9c60819183b9157bbbbdfdda"
+            },
+            {
+              "role": "toolResult",
+              "toolCallId": "call_rEJ0zC1COAADv9GAYBpZGXf1",
+              "toolName": "write",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Successfully wrote 516 bytes to memory/2026-04-12.md"
+                }
+              ],
+              "isError": false,
+              "timestamp": 1776480820811
+            },
+            {
+              "role": "assistant",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Saved.",
+                  "textSignature": "{\"v\":1,\"id\":\"msg_0c92e5795ff16f0f0169e2f2416e9881918863aec12492544a\",\"phase\":\"final_answer\"}"
+                }
+              ],
+              "api": "openai-codex-responses",
+              "provider": "openai-codex",
+              "model": "gpt-5.4-mini",
+              "usage": {
+                "input": 345,
+                "output": 6,
+                "cacheRead": 13824,
+                "cacheWrite": 0,
+                "totalTokens": 14175,
+                "cost": {
+                  "input": 0.00025875000000000003,
+                  "output": 0.000027,
+                  "cacheRead": 0.0010368,
+                  "cacheWrite": 0,
+                  "total": 0.00132255
+                }
+              },
+              "stopReason": "stop",
+              "timestamp": 1776480820814,
+              "responseId": "resp_0c92e5795ff16f0f0169e2f240dc448191a5c15406608dbf72"
+            },
+            {
+              "role": "user",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Update it now: my current default editor is Zed."
+                }
+              ],
+              "timestamp": 1776480845758
+            },
+            {
+              "role": "assistant",
+              "content": [
+                {
+                  "type": "toolCall",
+                  "id": "call_ArgtGc38xpk8RdJn8CvZlZCn",
+                  "name": "edit",
+                  "arguments": {
+                    "path": "memory/2026-04-12.md",
+                    "edits": [
+                      {
+                        "oldText": "- Old preference: default editor used to be Vim.\n",
+                        "newText": "- Old preference: default editor used to be Vim.\n- Current default editor: Zed.\n"
+                      }
+                    ]
+                  },
+                  "partialJson": "{\"path\":\"memory/2026-04-12.md\",\"edits\":[{\"oldText\":\"- Old preference: default editor used to be Vim.\\n\",\"newText\":\"- Old preference: default editor used to be Vim.\\n- Current default editor: Zed.\\n\"}]}"
+                }
+              ],
+              "api": "openai-codex-responses",
+              "provider": "openai-codex",
+              "model": "gpt-5.4-mini",
+              "usage": {
+                "input": 9039,
+                "output": 71,
+                "cacheRead": 5120,
+                "cacheWrite": 0,
+                "totalTokens": 14230,
+                "cost": {
+                  "input": 0.0067792500000000006,
+                  "output": 0.0003195,
+                  "cacheRead": 0.000384,
+                  "cacheWrite": 0,
+                  "total": 0.007482750000000001
+                }
+              },
+              "stopReason": "toolUse",
+              "timestamp": 1776480845764,
+              "responseId": "resp_0c92e5795ff16f0f0169e2f255bed8819189f7c5666a6fbfa0"
+            },
+            {
+              "role": "toolResult",
+              "toolCallId": "call_ArgtGc38xpk8RdJn8CvZlZCn",
+              "toolName": "edit",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Successfully replaced 1 block(s) in memory/2026-04-12.md."
+                }
+              ],
+              "isError": false,
+              "timestamp": 1776480855530
+            },
+            {
+              "role": "assistant",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Updated.",
+                  "textSignature": "{\"v\":1,\"id\":\"msg_0c92e5795ff16f0f0169e2f25c6a5c8191ac8ff29b05a703cd\",\"phase\":\"final_answer\"}"
+                }
+              ],
+              "api": "openai-codex-responses",
+              "provider": "openai-codex",
+              "model": "gpt-5.4-mini",
+              "usage": {
+                "input": 434,
+                "output": 6,
+                "cacheRead": 13824,
+                "cacheWrite": 0,
+                "totalTokens": 14264,
+                "cost": {
+                  "input": 0.0003255,
+                  "output": 0.000027,
+                  "cacheRead": 0.0010368,
+                  "cacheWrite": 0,
+                  "total": 0.0013893
+                }
+              },
+              "stopReason": "stop",
+              "timestamp": 1776480855532,
+              "responseId": "resp_0c92e5795ff16f0f0169e2f25b5d7c819195fcd560637941e2"
+            },
+            {
+              "role": "user",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Switch topics. Give me one short sentence on why shadow mode stays default-off."
+                }
+              ],
+              "timestamp": 1776480897383
+            },
+            {
+              "role": "assistant",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Shadow mode stays default-off because it can quietly add risk and complexity before you’ve proven it’s safe and useful.",
+                  "textSignature": "{\"v\":1,\"id\":\"msg_0c92e5795ff16f0f0169e2f2871eb8819185c1c3e0209282b8\",\"phase\":\"final_answer\"}"
+                }
+              ],
+              "api": "openai-codex-responses",
+              "provider": "openai-codex",
+              "model": "gpt-5.4-mini",
+              "usage": {
+                "input": 9148,
+                "output": 27,
+                "cacheRead": 5120,
+                "cacheWrite": 0,
+                "totalTokens": 14295,
+                "cost": {
+                  "input": 0.006861,
+                  "output": 0.0001215,
+                  "cacheRead": 0.000384,
+                  "cacheWrite": 0,
+                  "total": 0.0073665
+                }
+              },
+              "stopReason": "stop",
+              "timestamp": 1776480897389,
+              "responseId": "resp_0c92e5795ff16f0f0169e2f286753c8191b15b07b62159580f"
+            }
+          ],
+          "filteredMessageCount": 10,
+          "filteredMessageTokenEstimate": 110,
+          "carryForwardText": "",
+          "carryForwardEstimate": 0,
+          "evictedSourceIndices": []
+        },
+        "timings": {
+          "totalElapsedMs": 28214,
+          "decisionElapsedMs": 28209
+        },
+        "exportPath": "/Users/redcreen/Project/unified-memory-core/reports/generated/openclaw-context-minor-gc-live-2026-04-18/cmgc-live-en-current-editor-conflict/exports/agent-main-main-shadow-1776480917971-2gw416.json"
+      },
+      "answerEval": {
+        "passed": true,
+        "checks": [
+          {
+            "name": "expected_any",
+            "passed": true,
+            "expected": [],
+            "actual": "Zed."
+          },
+          {
+            "name": "expected_all",
+            "passed": true,
+            "expected": [
+              "zed"
+            ],
+            "actual": "Zed."
+          },
+          {
+            "name": "forbidden_any",
+            "passed": true,
+            "expected": [
+              "i don't know"
+            ],
+            "actual": "Zed."
+          }
+        ]
+      },
+      "relationEval": {
+        "relation": "switch",
+        "passed": true,
+        "expected": [
+          "switch",
+          "continue",
+          "resolve"
+        ]
+      },
+      "reductionEval": {
+        "actual": 0.3902,
+        "min": 0.1,
+        "passed": true
+      },
+      "passed": true
+    },
+    {
+      "id": "cmgc-live-zh-release-rule-after-detour",
+      "description": "A durable release-note rule should survive an unrelated detour and remain answerable.",
+      "designQuestion": "再回到刚才那条规则：以后做 release note，第一步默认先看哪里？",
+      "expected": "expected_all=[\"github\",\"release\"]; forbidden_any=[\"不知道\"]; relations=[\"switch\",\"continue\",\"resolve\"]; min_raw_reduction=0.12",
+      "ok": true,
+      "answer": "GitHub Releases 页面。",
+      "error": "",
+      "turnsCompleted": 3,
+      "promptTokens": 13576,
+      "durationMs": 31989,
+      "event": {
+        "schema_version": "umc.dialogue-working-set-shadow.v1",
+        "event_id": "shadow-1776481010572-rahhtk",
+        "generated_at": "2026-04-18T02:56:50.572Z",
+        "session_key": "agent:main:main",
+        "agent_id": "main",
+        "query": "再回到刚才那条规则：以后做 release note，第一步默认先看哪里？",
+        "status": "captured",
+        "reason": "",
+        "sampling": {
+          "max_turns": 12,
+          "min_turns": 3,
+          "max_chars_per_turn": 900
+        },
+        "transcript": [
+          {
+            "id": "t1",
+            "role": "user",
+            "content": "以后涉及 release note，默认先看 GitHub Releases 页面。"
+          },
+          {
+            "id": "t2",
+            "role": "assistant",
+            "content": "收到。以后涉及 release note，我会默认先看 GitHub Releases 页面。"
+          },
+          {
+            "id": "t3",
+            "role": "user",
+            "content": "现在换个话题，给我 3 个高蛋白早餐。"
+          },
+          {
+            "id": "t4",
+            "role": "assistant",
+            "content": "- 希腊酸奶碗：无糖希腊酸奶 + 燕麦 + 奇亚籽 + 一把坚果 + 蓝莓 - 鸡蛋吐司：2–3 个鸡蛋做炒蛋/煎蛋 + 全麦吐司 + 牛油果 - 高蛋白燕麦：燕麦用牛奶煮，加一勺蛋白粉或配一杯无糖豆浆，再放花生酱/香蕉"
+          }
+        ],
+        "decision": {
+          "relation": "switch",
+          "confidence": 0.92,
+          "evict_turn_ids": [
+            "t2",
+            "t3",
+            "t4"
+          ],
+          "pin_turn_ids": [
+            "t1"
+          ],
+          "archive_summary": "Pinned the durable release-note preference: default first step is to check GitHub Releases. Removed the resolved breakfast side topic and the assistant acknowledgement from the raw working set.",
+          "reasoning_summary": "The conversation has shifted back from a resolved side topic to a durable rule that should survive as a semantic pin. The off-topic breakfast exchange is complete and can be evicted; the user’s original preference should remain pinned for future release-note tasks."
+        },
+        "decision_transport": "codex_exec",
+        "snapshot": {
+          "applied": {
+            "relation": "switch",
+            "confidence": 0.92,
+            "archiveSummary": "Pinned the durable release-note preference: default first step is to check GitHub Releases. Removed the resolved breakfast side topic and the assistant acknowledgement from the raw working set.",
+            "reasoningSummary": "The conversation has shifted back from a resolved side topic to a durable rule that should survive as a semantic pin. The off-topic breakfast exchange is complete and can be evicted; the user’s original preference should remain pinned for future release-note tasks.",
+            "latestUserTurnId": "t3",
+            "pinTurnIds": [
+              "t1"
+            ],
+            "pinnedOnlyTurnIds": [],
+            "requestedEvictTurnIds": [
+              "t2",
+              "t3",
+              "t4"
+            ],
+            "blockedEvictTurnIds": [
+              "t3"
+            ],
+            "appliedEvictTurnIds": [
+              "t2",
+              "t4"
+            ],
+            "keepTurnIds": [
+              "t1",
+              "t3"
+            ],
+            "baselineTokens": 56,
+            "keptTokens": 16,
+            "prunedTokens": 40,
+            "reductionRatio": 0.7142857142857143,
+            "keepTurns": [
+              {
+                "id": "t1",
+                "role": "user",
+                "content": "以后涉及 release note，默认先看 GitHub Releases 页面。",
+                "tokenEstimate": 11
+              },
+              {
+                "id": "t3",
+                "role": "user",
+                "content": "现在换个话题，给我 3 个高蛋白早餐。",
+                "tokenEstimate": 5
+              }
+            ],
+            "evictedTurns": [
+              {
+                "id": "t2",
+                "role": "assistant",
+                "content": "收到。以后涉及 release note，我会默认先看 GitHub Releases 页面。",
+                "tokenEstimate": 12
+              },
+              {
+                "id": "t4",
+                "role": "assistant",
+                "content": "- 希腊酸奶碗：无糖希腊酸奶 + 燕麦 + 奇亚籽 + 一把坚果 + 蓝莓 - 鸡蛋吐司：2–3 个鸡蛋做炒蛋/煎蛋 + 全麦吐司 + 牛油果 - 高蛋白燕麦：燕麦用牛奶煮，加一勺蛋白粉或配一杯无糖豆浆，再放花生酱/香蕉",
+                "tokenEstimate": 28
+              }
+            ]
+          },
+          "baselineRawTranscript": "t1 user: 以后涉及 release note，默认先看 GitHub Releases 页面。\nt2 assistant: 收到。以后涉及 release note，我会默认先看 GitHub Releases 页面。\nt3 user: 现在换个话题，给我 3 个高蛋白早餐。\nt4 assistant: - 希腊酸奶碗：无糖希腊酸奶 + 燕麦 + 奇亚籽 + 一把坚果 + 蓝莓 - 鸡蛋吐司：2–3 个鸡蛋做炒蛋/煎蛋 + 全麦吐司 + 牛油果 - 高蛋白燕麦：燕麦用牛奶煮，加一勺蛋白粉或配一杯无糖豆浆，再放花生酱/香蕉",
+          "shadowRawTranscript": "t1 user: 以后涉及 release note，默认先看 GitHub Releases 页面。\nt3 user: 现在换个话题，给我 3 个高蛋白早餐。",
+          "semanticPinNotes": [],
+          "archiveSummary": "Pinned the durable release-note preference: default first step is to check GitHub Releases. Removed the resolved breakfast side topic and the assistant acknowledgement from the raw working set.",
+          "injectedArchiveSummary": "Pinned the durable release-note preference: default first step is to check GitHub Releases. Remo...",
+          "baselinePromptEstimate": 67,
+          "shadowRawPromptEstimate": 20,
+          "shadowPackageEstimate": 54,
+          "shadowPackageText": "Active raw turns:\nt1 user: 以后涉及 release note，默认先看 GitHub Releases 页面。\nt3 user: 现在换个话题，给我 3 个高蛋白早餐。\n\nArchived summary:\nPinned the durable release-note preference: default first step is to check GitHub Releases. Remo..."
+        },
+        "scorecard": {
+          "relation": "switch",
+          "baselineTurnCount": 4,
+          "keptTurnCount": 2,
+          "evictedTurnCount": 2,
+          "pinCount": 1,
+          "baselinePromptEstimate": 67,
+          "shadowRawPromptEstimate": 20,
+          "shadowPackageEstimate": 54,
+          "rawReductionRatio": 0.7143,
+          "packageReductionRatio": 0.194,
+          "candidateLoadElapsedMs": 10,
+          "assemblyBuildElapsedMs": 0,
+          "decisionElapsedMs": 22101,
+          "totalElapsedMs": 22106,
+          "guardedEnabled": false,
+          "guardedApplied": false,
+          "guardedReason": "feature_disabled",
+          "guardedMessageCount": 4,
+          "guardedCarryForwardEstimate": 0,
+          "guardedFilteredMessageEstimate": 56
+        },
+        "guarded": {
+          "enabled": false,
+          "applied": false,
+          "reason": "feature_disabled",
+          "filteredMessages": [
+            {
+              "role": "user",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "以后涉及 release note，默认先看 GitHub Releases 页面。"
+                }
+              ],
+              "timestamp": 1776480965065
+            },
+            {
+              "role": "assistant",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "收到。以后涉及 release note，我会默认先看 GitHub Releases 页面。",
+                  "textSignature": "{\"v\":1,\"id\":\"msg_08d57a8ac97204930169e2f2cb8b7c8191b15f264547edb047\",\"phase\":\"final_answer\"}"
+                }
+              ],
+              "api": "openai-codex-responses",
+              "provider": "openai-codex",
+              "model": "gpt-5.4-mini",
+              "usage": {
+                "input": 8685,
+                "output": 20,
+                "cacheRead": 5120,
+                "cacheWrite": 0,
+                "totalTokens": 13825,
+                "cost": {
+                  "input": 0.0065137500000000004,
+                  "output": 0.00009,
+                  "cacheRead": 0.000384,
+                  "cacheWrite": 0,
+                  "total": 0.00698775
+                }
+              },
+              "stopReason": "stop",
+              "timestamp": 1776480965081,
+              "responseId": "resp_08d57a8ac97204930169e2f2cb10788191af092b05a1a03842"
+            },
+            {
+              "role": "user",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "现在换个话题，给我 3 个高蛋白早餐。"
+                }
+              ],
+              "timestamp": 1776480987577
+            },
+            {
+              "role": "assistant",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "- 希腊酸奶碗：无糖希腊酸奶 + 燕麦 + 奇亚籽 + 一把坚果 + 蓝莓  \n- 鸡蛋吐司：2–3 个鸡蛋做炒蛋/煎蛋 + 全麦吐司 + 牛油果  \n- 高蛋白燕麦：燕麦用牛奶煮，加一勺蛋白粉或配一杯无糖豆浆，再放花生酱/香蕉",
+                  "textSignature": "{\"v\":1,\"id\":\"msg_08d57a8ac97204930169e2f2e1c68c8191a96d8a0d78962b3f\",\"phase\":\"final_answer\"}"
+                }
+              ],
+              "api": "openai-codex-responses",
+              "provider": "openai-codex",
+              "model": "gpt-5.4-mini",
+              "usage": {
+                "input": 8377,
+                "output": 106,
+                "cacheRead": 5120,
+                "cacheWrite": 0,
+                "totalTokens": 13603,
+                "cost": {
+                  "input": 0.00628275,
+                  "output": 0.000477,
+                  "cacheRead": 0.000384,
+                  "cacheWrite": 0,
+                  "total": 0.00714375
+                }
+              },
+              "stopReason": "stop",
+              "timestamp": 1776480987582,
+              "responseId": "resp_08d57a8ac97204930169e2f2e1227481919a66cfd3434bd97a"
+            }
+          ],
+          "filteredMessageCount": 4,
+          "filteredMessageTokenEstimate": 56,
+          "carryForwardText": "",
+          "carryForwardEstimate": 0,
+          "evictedSourceIndices": []
+        },
+        "timings": {
+          "totalElapsedMs": 22107,
+          "decisionElapsedMs": 22101
+        },
+        "exportPath": "/Users/redcreen/Project/unified-memory-core/reports/generated/openclaw-context-minor-gc-live-2026-04-18/cmgc-live-zh-release-rule-after-detour/exports/agent-main-main-shadow-1776481010572-rahhtk.json"
+      },
+      "answerEval": {
+        "passed": true,
+        "checks": [
+          {
+            "name": "expected_any",
+            "passed": true,
+            "expected": [],
+            "actual": "GitHub Releases 页面。"
+          },
+          {
+            "name": "expected_all",
+            "passed": true,
+            "expected": [
+              "github",
+              "release"
+            ],
+            "actual": "GitHub Releases 页面。"
+          },
+          {
+            "name": "forbidden_any",
+            "passed": true,
+            "expected": [
+              "不知道"
+            ],
+            "actual": "GitHub Releases 页面。"
+          }
+        ]
+      },
+      "relationEval": {
+        "relation": "switch",
+        "passed": true,
+        "expected": [
+          "switch",
+          "continue",
+          "resolve"
+        ]
+      },
+      "reductionEval": {
+        "actual": 0.7143,
+        "min": 0.12,
+        "passed": true
+      },
+      "passed": true
+    },
+    {
+      "id": "cmgc-live-zh-dense-multitopic-return",
+      "description": "A denser natural-Chinese multi-topic switch should still return to the right travel fact.",
+      "designQuestion": "先不聊代码了。刚才旅行那段里，我更想住哪座城市？",
+      "expected": "expected_all=[\"京都\"]; forbidden_any=[\"大阪\",\"不知道\"]; relations=[\"switch\",\"resolve\",\"continue\"]; min_raw_reduction=0.18",
+      "ok": true,
+      "answer": "京都",
+      "error": "",
+      "turnsCompleted": 4,
+      "promptTokens": 13726,
+      "durationMs": 30851,
+      "event": {
+        "schema_version": "umc.dialogue-working-set-shadow.v1",
+        "event_id": "shadow-1776481155002-kmkrvw",
+        "generated_at": "2026-04-18T02:59:15.002Z",
+        "session_key": "agent:main:main",
+        "agent_id": "main",
+        "query": "先不聊代码了。刚才旅行那段里，我更想住哪座城市？",
+        "status": "captured",
+        "reason": "",
+        "sampling": {
+          "max_turns": 12,
+          "min_turns": 3,
+          "max_chars_per_turn": 900
+        },
+        "transcript": [
+          {
+            "id": "t1",
+            "role": "user",
+            "content": "我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。"
+          },
+          {
+            "id": "t2",
+            "role": "assistant",
+            "content": "我记住了：旅行预算 2 万元；你更想住京都，最好靠近地铁站。 记住了：预算 2 万元，更想住京都，最好靠近地铁站。"
+          },
+          {
+            "id": "t3",
+            "role": "user",
+            "content": "现在切到代码：给我一个 Python 正则，提取 foo123bar 里的数字。"
+          },
+          {
+            "id": "t4",
+            "role": "assistant",
+            "content": "`r'foo(\\d+)bar'` 如果你只想从完整字符串里提取数字： ```python import re s = \"foo123bar\" m = re.search(r'foo(\\d+)bar', s) num = m.group(1) if m else None ``` 返回：`\"123\"`"
+          },
+          {
+            "id": "t5",
+            "role": "user",
+            "content": "继续代码：如果只取第一个数字分组，写法怎么更短？"
+          },
+          {
+            "id": "t6",
+            "role": "assistant",
+            "content": "`re.search(r'\\d+', s).group(0)`"
+          }
+        ],
+        "decision": {
+          "relation": "switch",
+          "confidence": 0.98,
+          "evict_turn_ids": [
+            "t3",
+            "t4",
+            "t5",
+            "t6"
+          ],
+          "pin_turn_ids": [
+            "t1",
+            "t2"
+          ],
+          "archive_summary": "旅行偏好已明确：预算 2 万元，更想住京都，且最好靠近地铁站。代码分支已切走，可从下一轮原始上下文中移除。",
+          "reasoning_summary": "最新用户转回旅行话题，询问的是先前已表达过的住宿城市偏好；当前应保留旅行偏好作为原始上下文或语义 pin，同时将已完成且不相关的代码段从工作集里移除。"
+        },
+        "decision_transport": "codex_exec",
+        "snapshot": {
+          "applied": {
+            "relation": "switch",
+            "confidence": 0.98,
+            "archiveSummary": "旅行偏好已明确：预算 2 万元，更想住京都，且最好靠近地铁站。代码分支已切走，可从下一轮原始上下文中移除。",
+            "reasoningSummary": "最新用户转回旅行话题，询问的是先前已表达过的住宿城市偏好；当前应保留旅行偏好作为原始上下文或语义 pin，同时将已完成且不相关的代码段从工作集里移除。",
+            "latestUserTurnId": "t5",
+            "pinTurnIds": [
+              "t1",
+              "t2"
+            ],
+            "pinnedOnlyTurnIds": [],
+            "requestedEvictTurnIds": [
+              "t3",
+              "t4",
+              "t5",
+              "t6"
+            ],
+            "blockedEvictTurnIds": [
+              "t5"
+            ],
+            "appliedEvictTurnIds": [
+              "t3",
+              "t4",
+              "t6"
+            ],
+            "keepTurnIds": [
+              "t1",
+              "t2",
+              "t5"
+            ],
+            "baselineTokens": 86,
+            "keptTokens": 30,
+            "prunedTokens": 56,
+            "reductionRatio": 0.6511627906976745,
+            "keepTurns": [
+              {
+                "id": "t1",
+                "role": "user",
+                "content": "我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。",
+                "tokenEstimate": 9
+              },
+              {
+                "id": "t2",
+                "role": "assistant",
+                "content": "我记住了：旅行预算 2 万元；你更想住京都，最好靠近地铁站。 记住了：预算 2 万元，更想住京都，最好靠近地铁站。",
+                "tokenEstimate": 15
+              },
+              {
+                "id": "t5",
+                "role": "user",
+                "content": "继续代码：如果只取第一个数字分组，写法怎么更短？",
+                "tokenEstimate": 6
+              }
+            ],
+            "evictedTurns": [
+              {
+                "id": "t3",
+                "role": "user",
+                "content": "现在切到代码：给我一个 Python 正则，提取 foo123bar 里的数字。",
+                "tokenEstimate": 10
+              },
+              {
+                "id": "t4",
+                "role": "assistant",
+                "content": "`r'foo(\\d+)bar'` 如果你只想从完整字符串里提取数字： ```python import re s = \"foo123bar\" m = re.search(r'foo(\\d+)bar', s) num = m.group(1) if m else None ``` 返回：`\"123\"`",
+                "tokenEstimate": 38
+              },
+              {
+                "id": "t6",
+                "role": "assistant",
+                "content": "`re.search(r'\\d+', s).group(0)`",
+                "tokenEstimate": 8
+              }
+            ]
+          },
+          "baselineRawTranscript": "t1 user: 我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。\nt2 assistant: 我记住了：旅行预算 2 万元；你更想住京都，最好靠近地铁站。 记住了：预算 2 万元，更想住京都，最好靠近地铁站。\nt3 user: 现在切到代码：给我一个 Python 正则，提取 foo123bar 里的数字。\nt4 assistant: `r'foo(\\d+)bar'` 如果你只想从完整字符串里提取数字： ```python import re s = \"foo123bar\" m = re.search(r'foo(\\d+)bar', s) num = m.group(1) if m else None ``` 返回：`\"123\"`\nt5 user: 继续代码：如果只取第一个数字分组，写法怎么更短？\nt6 assistant: `re.search(r'\\d+', s).group(0)`",
+          "shadowRawTranscript": "t1 user: 我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。\nt2 assistant: 我记住了：旅行预算 2 万元；你更想住京都，最好靠近地铁站。 记住了：预算 2 万元，更想住京都，最好靠近地铁站。\nt5 user: 继续代码：如果只取第一个数字分组，写法怎么更短？",
+          "semanticPinNotes": [],
+          "archiveSummary": "旅行偏好已明确：预算 2 万元，更想住京都，且最好靠近地铁站。代码分支已切走，可从下一轮原始上下文中移除。",
+          "injectedArchiveSummary": "",
+          "baselinePromptEstimate": 103,
+          "shadowRawPromptEstimate": 37,
+          "shadowPackageEstimate": 42,
+          "shadowPackageText": "Active raw turns:\nt1 user: 我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。\nt2 assistant: 我记住了：旅行预算 2 万元；你更想住京都，最好靠近地铁站。 记住了：预算 2 万元，更想住京都，最好靠近地铁站。\nt5 user: 继续代码：如果只取第一个数字分组，写法怎么更短？"
+        },
+        "scorecard": {
+          "relation": "switch",
+          "baselineTurnCount": 6,
+          "keptTurnCount": 3,
+          "evictedTurnCount": 3,
+          "pinCount": 2,
+          "baselinePromptEstimate": 103,
+          "shadowRawPromptEstimate": 37,
+          "shadowPackageEstimate": 42,
+          "rawReductionRatio": 0.6512,
+          "packageReductionRatio": 0.5922,
+          "candidateLoadElapsedMs": 23,
+          "assemblyBuildElapsedMs": 0,
+          "decisionElapsedMs": 21638,
+          "totalElapsedMs": 21642,
+          "guardedEnabled": false,
+          "guardedApplied": false,
+          "guardedReason": "feature_disabled",
+          "guardedMessageCount": 6,
+          "guardedCarryForwardEstimate": 0,
+          "guardedFilteredMessageEstimate": 86
+        },
+        "guarded": {
+          "enabled": false,
+          "applied": false,
+          "reason": "feature_disabled",
+          "filteredMessages": [
+            {
+              "role": "user",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。"
+                }
+              ],
+              "timestamp": 1776481051387
+            },
+            {
+              "role": "assistant",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "我记住了：旅行预算 2 万元；你更想住京都，最好靠近地铁站。",
+                  "textSignature": "{\"v\":1,\"id\":\"msg_0f3a595a8eda4b1b0169e2f3227c088191b09975a789706b1d\",\"phase\":\"commentary\"}"
+                },
+                {
+                  "type": "text",
+                  "text": "记住了：预算 2 万元，更想住京都，最好靠近地铁站。",
+                  "textSignature": "{\"v\":1,\"id\":\"msg_0f3a595a8eda4b1b0169e2f322cd088191bce34bd398036469\",\"phase\":\"final_answer\"}"
+                }
+              ],
+              "api": "openai-codex-responses",
+              "provider": "openai-codex",
+              "model": "gpt-5.4-mini",
+              "usage": {
+                "input": 8364,
+                "output": 57,
+                "cacheRead": 5120,
+                "cacheWrite": 0,
+                "totalTokens": 13541,
+                "cost": {
+                  "input": 0.006273,
+                  "output": 0.0002565,
+                  "cacheRead": 0.000384,
+                  "cacheWrite": 0,
+                  "total": 0.0069134999999999995
+                }
+              },
+              "stopReason": "stop",
+              "timestamp": 1776481051392,
+              "responseId": "resp_0f3a595a8eda4b1b0169e2f321c8ec81919ac7c1fe9c9844a8"
+            },
+            {
+              "role": "user",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "现在切到代码：给我一个 Python 正则，提取 foo123bar 里的数字。"
+                }
+              ],
+              "timestamp": 1776481074164
+            },
+            {
+              "role": "assistant",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "`r'foo(\\d+)bar'`\n\n如果你只想从完整字符串里提取数字：\n\n```python\nimport re\n\ns = \"foo123bar\"\nm = re.search(r'foo(\\d+)bar', s)\nnum = m.group(1) if m else None\n```\n\n返回：`\"123\"`",
+                  "textSignature": "{\"v\":1,\"id\":\"msg_0f3a595a8eda4b1b0169e2f339d70081918cffaed48b4075c3\",\"phase\":\"final_answer\"}"
+                }
+              ],
+              "api": "openai-codex-responses",
+              "provider": "openai-codex",
+              "model": "gpt-5.4-mini",
+              "usage": {
+                "input": 8473,
+                "output": 73,
+                "cacheRead": 5120,
+                "cacheWrite": 0,
+                "totalTokens": 13666,
+                "cost": {
+                  "input": 0.00635475,
+                  "output": 0.0003285,
+                  "cacheRead": 0.000384,
+                  "cacheWrite": 0,
+                  "total": 0.00706725
+                }
+              },
+              "stopReason": "stop",
+              "timestamp": 1776481074171,
+              "responseId": "resp_0f3a595a8eda4b1b0169e2f33880e881918dbe21e0b0227c02"
+            },
+            {
+              "role": "user",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "继续代码：如果只取第一个数字分组，写法怎么更短？"
+                }
+              ],
+              "timestamp": 1776481127899
+            },
+            {
+              "role": "assistant",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "`re.search(r'\\d+', s).group(0)`",
+                  "textSignature": "{\"v\":1,\"id\":\"msg_0f3a595a8eda4b1b0169e2f37545a48191bbf5c4b8b531a4ca\",\"phase\":\"final_answer\"}"
+                }
+              ],
+              "api": "openai-codex-responses",
+              "provider": "openai-codex",
+              "model": "gpt-5.4-mini",
+              "usage": {
+                "input": 8600,
+                "output": 17,
+                "cacheRead": 5120,
+                "cacheWrite": 0,
+                "totalTokens": 13737,
+                "cost": {
+                  "input": 0.00645,
+                  "output": 0.0000765,
+                  "cacheRead": 0.000384,
+                  "cacheWrite": 0,
+                  "total": 0.0069105
+                }
+              },
+              "stopReason": "stop",
+              "timestamp": 1776481127913,
+              "responseId": "resp_0f3a595a8eda4b1b0169e2f374b2808191939f8006acb2b1e7"
+            }
+          ],
+          "filteredMessageCount": 6,
+          "filteredMessageTokenEstimate": 86,
+          "carryForwardText": "",
+          "carryForwardEstimate": 0,
+          "evictedSourceIndices": []
+        },
+        "timings": {
+          "totalElapsedMs": 21642,
+          "decisionElapsedMs": 21638
+        },
+        "exportPath": "/Users/redcreen/Project/unified-memory-core/reports/generated/openclaw-context-minor-gc-live-2026-04-18/cmgc-live-zh-dense-multitopic-return/exports/agent-main-main-shadow-1776481155002-kmkrvw.json"
+      },
+      "answerEval": {
+        "passed": true,
+        "checks": [
+          {
+            "name": "expected_any",
+            "passed": true,
+            "expected": [],
+            "actual": "京都"
+          },
+          {
+            "name": "expected_all",
+            "passed": true,
+            "expected": [
+              "京都"
+            ],
+            "actual": "京都"
+          },
+          {
+            "name": "forbidden_any",
+            "passed": true,
+            "expected": [
+              "大阪",
+              "不知道"
+            ],
+            "actual": "京都"
+          }
+        ]
+      },
+      "relationEval": {
+        "relation": "switch",
+        "passed": true,
+        "expected": [
+          "switch",
+          "resolve",
+          "continue"
+        ]
+      },
+      "reductionEval": {
+        "actual": 0.6512,
+        "min": 0.18,
+        "passed": true
+      },
+      "passed": true
+    }
+  ]
+}

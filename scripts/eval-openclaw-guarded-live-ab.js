@@ -9,6 +9,7 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import { evaluateAnswer } from "../src/dialogue-working-set-answer-ab.js";
 import { extractJsonPayload } from "../src/retrieval.js";
 import {
+  buildHermeticOpenClawEnv,
   cleanupHermeticOpenClawState,
   cloneHermeticOpenClawState,
   createHermeticOpenClawState
@@ -177,7 +178,7 @@ async function runAgentTurn({ stateDir, agentId, sessionId, message, timeoutMs }
       message
     ], {
       cwd: repoRoot,
-      env: { ...process.env, OPENCLAW_STATE_DIR: stateDir },
+      env: buildHermeticOpenClawEnv({ OPENCLAW_STATE_DIR: stateDir }),
       stdio: ["ignore", "pipe", "pipe"],
       detached: true
     });

@@ -13,7 +13,7 @@ Formally close Stage 7 `Context Minor GC / context loading optimization`:
 ## New Evidence In This Round
 
 - harder live matrix:
-  - [openclaw-context-minor-gc-live-2026-04-17.md](openclaw-context-minor-gc-live-2026-04-17.md)
+  - [openclaw-context-minor-gc-live-2026-04-18.md](openclaw-context-minor-gc-live-2026-04-18.md)
 - Step 108 closeout:
   - [stage7-step108-context-minor-gc-closeout-2026-04-18.md](stage7-step108-context-minor-gc-closeout-2026-04-18.md)
 - Stage 7 shadow replay:
@@ -40,11 +40,11 @@ Formally close Stage 7 `Context Minor GC / context loading optimization`:
 - relationPassed: `6 / 6`
 - reductionPassed: `6 / 6`
 - passed: `6 / 6`
-- averagePromptTokens: `13126`
-- averageDurationMs: `33616`
-- averageRawReductionRatio: `0.5794`
-- averagePackageReductionRatio: `0.3643`
-- relationCounts: `switch = 5`, `continue = 1`
+- averagePromptTokens: `14517`
+- averageDurationMs: `37548`
+- averageRawReductionRatio: `0.6556`
+- averagePackageReductionRatio: `0.4657`
+- relationCounts: `resolve = 1`, `switch = 4`, `continue = 1`
 
 The harder case classes now covered are:
 
@@ -68,8 +68,8 @@ This closeout means:
 
 From here, the repo should stop treating “is Stage 7 really stable?” as the first question.
 
-The next mainline becomes Stage 10:
+Stage 9 and Stage 10 have since closed as well; the real current boundary is maintenance mode:
 
-1. shorten install / bootstrap / verify
-2. pull package / startup / first-run cost into the `light and fast` evidence surface
-3. strengthen product proof for Codex / multi-instance shared foundation
+1. keep the `Context Minor GC` / context-loading operator scorecard green
+2. keep the guarded seam `default-off` / opt-in only
+3. shift follow-up attention to adoption / shared-foundation maintenance and deeper realtime memory-intent contracts

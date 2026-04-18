@@ -86,6 +86,6 @@
 
 Stage 9 关闭后，当前主线只剩：
 
-1. 继续完成 `Stage 7 / 104` 的 harder eval matrix
-2. 用同一套 operator scorecard 复测 `Context Minor GC`
-3. 在 `104` 完成前，不扩大 guarded opt-in 面
+1. `Stage 7 / 104` 的 harder eval matrix 现已完成，可以不再把它视为当前 blocker
+2. 继续保持 guarded seam `default-off` / opt-in only，不扩大默认面
+3. 后续重点切到 adoption / shared-foundation 维护态与更深的 realtime memory-intent 契约
