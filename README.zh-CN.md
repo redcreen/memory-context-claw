@@ -31,6 +31,7 @@
 - [Context Minor GC](docs/reference/unified-memory-core/architecture/context-minor-gc.zh-CN.md)
 - [对话 Working-Set 裁剪](docs/reference/unified-memory-core/architecture/dialogue-working-set-pruning.zh-CN.md)
 - [插件内自托管 Context Decision Overlay](docs/reference/unified-memory-core/architecture/plugin-owned-context-decision-overlay.zh-CN.md)
+- [Stage 7 `Context Minor GC` 收口报告](reports/generated/stage7-context-minor-gc-closeout-2026-04-18.zh-CN.md)
 - [OpenClaw Guarded Live A/B](reports/generated/openclaw-guarded-live-ab-2026-04-18.md)
 - [Stage 9 收口报告](reports/generated/stage9-guarded-smart-path-closeout-2026-04-18.zh-CN.md)
 - [普通对话实时写记忆专项对比](reports/generated/openclaw-ordinary-conversation-memory-intent-ab-2026-04-17.md)
@@ -50,15 +51,15 @@
    - 装得简单，接入轻，包体和运行负担尽量小，主路径尽量快
    - 当前已落地：fact-first assembly、runtime working-set shadow instrumentation、release-preflight、独立 Docker hermetic eval
    - 当前这条逐轮 context 优化主线，对外工作名统一为：`Context Minor GC`
-- 当前最大缺口：逐轮 context 优化仍然没有扩大成默认 active-path 收益；compat / compact 继续只保留为夜间或后台 safety net；Stage 10 最短接入路径已经收口，当前重点变成保持这条路径持续为绿
+   - 当前最大缺口：`Context Minor GC` 已收口，但还没有扩大成默认 active-path 收益；compat / compact 继续只保留为夜间或后台 safety net；当前重点是保持 operator scorecard、Docker hermetic 基线和 Stage 10 最短接入路径持续为绿
 2. `聪明`
    - 该记的记住，不该记的不乱记；该给的 context 才给，不确定时尽量收敛
    - 当前已落地：realtime `memory_intent` ingestion、nightly self-learning、durable-source slimming 方向、working-set pruning shadow 路径
-   - 当前最大缺口：working-set 优化现在已经有了极窄的 guarded opt-in 用户收益，但还没有变成默认体验；Stage 7 的 harder matrix 也还没收口
+   - 当前最大缺口：working-set 优化现在已经有了极窄的 guarded opt-in 用户收益，但继续保持 `default-off` / opt-in only；下一条真正的新工作已经转向 `memory_extraction` / governed realtime ingest，而不是继续补 Minor GC 收口
 3. `省心`
    - 可查、可管、可回放、可回退，也能跨 OpenClaw / Codex / 多实例复用
    - 当前已落地：`umc` CLI、inspect / audit / replay / repair / rollback、canonical registry root、OpenClaw / Codex adapters
-- 当前最大缺口：不是“有没有共享底座证据”，而是继续保持这些 cross-host 证据与 operator 面长期为绿
+   - 当前最大缺口：不是“有没有共享底座证据”，而是继续保持这些 cross-host 证据与 operator 面长期为绿
 
 ## 产品北极星
 
@@ -90,20 +91,18 @@
 当前仍然偏薄弱的部分：
 
 - `轻快`
-  - 当前最先要补的不是 adoption proof，而是继续把 per-turn context 压薄，并决定未来是否扩大 guarded smart path
+  - `Context Minor GC` 已经正式收口，但还没有扩大成默认用户收益；当前弱点不再是“能不能跑通”，而是“怎样长期保持轻快证据为绿”
 - `聪明`
-  - context 优化虽然已经从 shadow-only 推进到极窄的 guarded opt-in 路径，但还没有变成默认用户收益
+  - context 优化虽然已经从 shadow-only 推进到极窄的 guarded opt-in 路径，但仍然不是默认体验；是否扩大默认路径，必须是未来单独的产品决策
 - `省心`
-- 共享底座的架构和 Stage 10 proof 都已经成立，当前更重要的是保持 operator 证据面持续为绿
+  - 共享底座的架构和 Stage 10 proof 都已经成立，当前更重要的是保持 operator 证据面持续为绿
 
 所以接下来的重点顺序应该很明确：
 
-1. 先把 `轻快` 里的 `context 加载优化` 做完：把 context thickness、working-set reduction、budgeted assembly 和 answer-level latency 收成一条正式主线。
-   - 这条线的阶段目标不只是“让平均 token 更低”，而是让日常使用尽量不再需要 compat / compact 才能继续长对话。
-2. 再继续收 `轻快`：把 ordinary-conversation realtime-write 的 hermetic timeout / latency 压下去。
+1. 保持 `Context Minor GC` 的 scorecard、harder matrix 和 guarded 边界长期为绿，不让 Stage 7 / 9 漂回未决状态。
+2. 把“主回复 + `memory_extraction`”收成正式产品契约，补上 ordinary-conversation rule 的实时 governed ingest 入口。
 3. 继续保持 Stage 10 的最短接入路径和 shared-foundation proof 不回退。
-4. 在 Stage 9 已收口后，继续把 guarded opt-in 收益保持可控，不扩大到默认路径。
-5. 只有在出现新的明确目标时，再打开新的主线阶段。
+4. 只有在出现新的明确产品目标时，才重新打开更宽的 `Minor GC` 默认路径推广、`Stage 0 Router` 或更激进的 task-state 结构化扩展。
 
 ## 适用对象
 

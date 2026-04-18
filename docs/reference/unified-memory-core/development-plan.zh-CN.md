@@ -29,7 +29,7 @@
 | 总体进度 | 4 / 4 execution tasks 完成 |
 | 当前阶段 | `post-stage10-adoption-closeout` |
 | 当前切片 | `hold-stage10-adoption-proof-stable` |
-| 当前目标 | Stage 7 / 8 / 9 / 10 已全部收口；当前进入维护态，继续保持 Docker 为默认 hermetic A/B 面与 Stage 10 shortest-path/shared-foundation proof 持续为绿 |
+| 当前目标 | Stage 7 / 8 / 9 / 10 已全部收口；`Context Minor GC` 不再是当前 blocker；当前进入维护态，继续保持 Docker 为默认 hermetic A/B 面与 Stage 10 shortest-path/shared-foundation proof 持续为绿 |
 | 当前切片退出条件 | Stage 10 证据面长期稳定，且任何新阶段都不会隐式破坏 shortest-path / shared-foundation proof |
 | 明确下一步动作 | 当前 execution tasks 已完成，转向下一切片 |
 | 下一候选切片 | `formalize-realtime-memory-intent-ingestion` |
@@ -41,7 +41,24 @@
 | 当前阶段 | `post-stage10-adoption-closeout` | 当前维护阶段 |
 | 当前切片 | `hold-stage10-adoption-proof-stable` | 当前执行线绑定的切片 |
 | 当前执行线 | Stage 7 / 8 / 9 / 10 已全部收口；当前进入维护态，继续保持 Docker 为默认 hermetic A/B 面与 Stage 10 shortest-path/shared-foundation proof 持续为绿 | 当前真正要收口的工作 |
-| 当前验证 | roadmap / development plan / architecture docs、harder-case design note、formal-gate promotion decision、`npm run umc:release-preflight`、full regression、CLI use cases、main-path perf baseline、memory-improvement A/B summary、`npm run umc:cli -- registry inspect --format markdown | 这条线继续前需要保持为真的验证入口 |
+| 当前验证 | roadmap / development plan / architecture docs、harder-case design note、formal-gate promotion decision、`npm run umc:release-preflight`、full regression、CLI use cases、main-path perf baseline、memory-improvement A/B summary、`npm run umc:cli -- registry inspect --format markdown` | 这条线继续前需要保持为真的验证入口 |
+
+## Minor GC 速览
+
+如果你只关心 `Context Minor GC`，先记住这 4 句：
+
+1. Stage 7 / Step 108 已收口。
+2. Stage 7 / `104` harder eval matrix 已收口，live matrix `6 / 6`。
+3. Stage 9 guarded smart path 已收口，但继续保持 `default-off` / opt-in only。
+4. 当前真正的下一条工作已经不是 `Minor GC` 本身，而是 `formalize-realtime-memory-intent-ingestion`。
+
+推荐阅读顺序：
+
+1. [../../roadmap.zh-CN.md](../../roadmap.zh-CN.md)
+2. [architecture/context-minor-gc.zh-CN.md](architecture/context-minor-gc.zh-CN.md)
+3. [../../../../reports/generated/stage7-step108-context-minor-gc-closeout-2026-04-18.zh-CN.md](../../../../reports/generated/stage7-step108-context-minor-gc-closeout-2026-04-18.zh-CN.md)
+4. [../../../../reports/generated/stage7-context-minor-gc-closeout-2026-04-18.zh-CN.md](../../../../reports/generated/stage7-context-minor-gc-closeout-2026-04-18.zh-CN.md)
+5. [../../../../reports/generated/stage9-guarded-smart-path-closeout-2026-04-18.zh-CN.md](../../../../reports/generated/stage9-guarded-smart-path-closeout-2026-04-18.zh-CN.md)
 
 ## 执行任务进度
 
@@ -54,7 +71,8 @@
 
 ## 阶段总览
 
-| 阶段 | 状态 | 目标 | 依赖 | 退出条件 |\n| --- | --- | --- | --- | --- |
+| 阶段 | 状态 | 目标 | 依赖 | 退出条件 |
+| --- | --- | --- | --- | --- |
 
 ## 顺序执行队列
 
@@ -66,10 +84,10 @@
 | 4 | `expand-answer-level-formal-gate-after-natural-zh-hardening` | 较早切片 | 在自然中文覆盖、raw transport watchlist 和 main-path perf baseline 已重新稳定的前提下，把 isolated local answer-level formal gate 从 `6` 条代表性样本继续扩成更大的稳定矩阵 | 更大的 isolated local answer-level gate 报告、与 raw transport watchlist 分离的归因、中文 answer-level 子矩阵持续为绿、main-path perf baseline 重跑 |
 | 5 | `deepen-answer-level-gate-beyond-12-case-baseline` | 较早切片 | 在 `12 / 12` isolated local answer-level formal gate 已稳定的基础上，继续补强 cross-source、conflict、multi-step history 和更深的自然中文 answer-level coverage | 更深 answer-level gate 报告、control-surface 更新、与 transport watchlist 分离的结论、main-path perf baseline refresh |
 | 6 | `convert-100-case-ab-from-mostly-shared-wins-into-clearer-umc-gains` | 较早切片 | shared-fail history cleanup 已完成；下一步把更多 harder cases 推成 Memory Core 独占胜场 | builtin-only regression fix、shared-fail history closure、下一轮 live A/B 设计、full regression / perf / A/B rerun |
-| 7 | `finish-context-loading-optimization-first` | 较早切片 | docs-first review 已完成；当前先完成 `轻快 / context loading optimization` 的 closeout；Stage 9 已收口但继续保持 `default-off` / opt-in only；ordinary-conversation hermetic A/B 已经收口为默认 Docker 基线，之后再收 `轻快 / install | roadmap / development plan / architecture docs / `.codex/*` 对齐；Stage 7 context-optimization scorecard、operator metrics 和 rollback boundary 被写成 durable docs |
-| 8 | `design-harder-context-minor-gc-matrix` | 较早切片 | Step 108 和 Stage 9 都已关闭；当前把 `Context Minor GC` 的 harder eval matrix 补成正式执行面 | 104` harder eval matrix、同一套 operator scorecard 重跑、Stage 7 closeout 报告 |
-| 9 | `prepare-stage10-adoption-simplification-and-shared-foundation-proof` | 较早切片 | Stage 7 / 8 / 9 已全部收口；当前转入 Stage 10，收 install / bootstrap / verify，并补齐 Codex / 多实例 shared-foundation product proof | Stage 10 plan steps `121-126`、short-path install proof、package/startup/first-run metrics、Codex / multi-instance evidence |
-| 10 | `hold-stage10-adoption-proof-stable` | 刚完成 | 保持 Stage 10 最短接入路径、package/startup/first-run 证据面，以及 Codex / 多实例 shared-foundation proof 持续为绿 | npm run umc:stage10 -- --format markdown`、README / roadmap / development plan / `.codex/*`、Stage 10 closeout reports |
+| 7 | `finish-context-loading-optimization-first` | 历史已收口 | 历史切片：完成 `轻快 / context loading optimization` closeout，并把 Stage 7 context-optimization scorecard、operator metrics、rollback boundary 写成 durable docs | Stage 7 scorecard、Stage 7 closeout 报告、roadmap / development plan / architecture docs 对齐 |
+| 8 | `design-harder-context-minor-gc-matrix` | 历史已收口 | 历史切片：完成 `Context Minor GC` 的 harder eval matrix，并正式关闭 Stage 7 | `104` harder eval matrix、同一套 operator scorecard 重跑、Stage 7 closeout 报告 |
+| 9 | `prepare-stage10-adoption-simplification-and-shared-foundation-proof` | 历史已收口 | 历史切片：完成 Stage 10 adoption / bootstrap / verify / shared-foundation proof | Stage 10 plan steps `121-126`、short-path install proof、package/startup/first-run metrics、Codex / multi-instance evidence |
+| 10 | `hold-stage10-adoption-proof-stable` | 当前维护切片 | 保持 Stage 10 最短接入路径、package/startup/first-run 证据面，以及 Codex / 多实例 shared-foundation proof 持续为绿；同时保持 `Context Minor GC` 与 guarded seam 的证据面不回退 | `npm run umc:stage10 -- --format markdown`、README / roadmap / development plan / `.codex/*`、Stage 10 closeout reports |
 | 11 | `formalize-realtime-memory-intent-ingestion` | 下一步 / 已排队 | 把“主回复 + `memory_extraction`”从局部 runtime seam 收口成正式产品契约，补上 ordinary conversation rule 的实时 governed ingest 入口 | replay suite、Codex adapter tests、architecture docs、development plan、control-surface state |
 | 12 | `attribute-memory-capability-sources` | 下一步 / 已排队 | 对同一批核心案例做 `legacy / unified / bootstrap / retrieval` 对照，明确答案来源和扩展增益边界 | A/B 对照报告、关键案例证据、来源分类说明 |
 | 13 | `turn-failures-into-algorithm-iterations` | 下一步 / 已排队 | 把 benchmark 失败案例转成 retrieval / assembly / policy 算法问题清单，并按轮次修复、复测、提交 | 每轮失败清单、对应修复、复测结果、GitHub commit |

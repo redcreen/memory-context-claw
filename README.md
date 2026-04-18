@@ -31,6 +31,7 @@ Read these first:
 - [Context Minor GC](docs/reference/unified-memory-core/architecture/context-minor-gc.md)
 - [Dialogue Working-Set Pruning](docs/reference/unified-memory-core/architecture/dialogue-working-set-pruning.md)
 - [Plugin-Owned Context Decision Overlay](docs/reference/unified-memory-core/architecture/plugin-owned-context-decision-overlay.md)
+- [Stage 7 `Context Minor GC` Closeout](reports/generated/stage7-context-minor-gc-closeout-2026-04-18.md)
 - [OpenClaw Guarded Live A/B](reports/generated/openclaw-guarded-live-ab-2026-04-18.md)
 - [Stage 9 Closeout](reports/generated/stage9-guarded-smart-path-closeout-2026-04-18.md)
 - [Focused Ordinary-Conversation Realtime Write A/B](reports/generated/openclaw-ordinary-conversation-memory-intent-ab-2026-04-17.md)
@@ -50,11 +51,11 @@ From a user perspective, this product should collapse to three promises:
    - simple to install, low-friction to adopt, small in footprint, and fast enough on the main path
    - already landed: fact-first assembly, runtime working-set shadow instrumentation, release-preflight, and reproducible Docker hermetic eval
    - the public workstream name for this turn-by-turn context path is now: `Context Minor GC`
-   - biggest current gap: per-turn context loading optimization is not yet a formal mainline and formal gate; ordinary-conversation hermetic A/B has already been recovered into a trustworthy steady-state surface, so the next gap is shrinking the remaining harder misses and keeping wall-clock down. The daily-use target is also now explicit: normal sessions should stay usable through lighter per-turn context management instead of depending on compat / compact to survive, while compat / compact remains a nightly or background safety net
+   - biggest current gap: `Context Minor GC` itself is already closed, but it has not been widened into a default active-path gain; compat / compact stays nightly or background-only, and the current job is to keep the scorecard, Docker hermetic baseline, and Stage 10 shortest path green
 2. `Smart`
    - remember what matters, avoid writing noise, send only the right context, and stay conservative when uncertain
    - already landed: realtime `memory_intent` ingestion, nightly self-learning, durable-source slimming direction, and the working-set pruning shadow path
-   - biggest current gap: working-set optimization now has a very narrow guarded opt-in user gain, but it is still not the default experience, and the Stage 7 harder matrix is still open
+   - biggest current gap: working-set optimization now has a very narrow guarded opt-in gain, but it remains `default-off` / opt-in only; the real next work has already moved to `memory_extraction` / governed realtime ingest instead of more Minor GC closeout
 3. `Reassuring`
    - inspectable, governable, replayable, rollback-friendly, and reusable across OpenClaw, Codex, and future consumers
    - already landed: `umc` CLI, inspect / audit / replay / repair / rollback surfaces, canonical registry root, and OpenClaw / Codex adapters
@@ -90,20 +91,18 @@ Areas that are already relatively strong:
 Areas that are still comparatively weak:
 
 - `light and fast`
-  - the first gap to close is not installation polish but the fact that per-turn context is still thicker than it should be, Stage 6 is still only a shadow measurement layer, and hermetic ordinary-conversation realtime write still hits heavy timeout pressure
+  - `Context Minor GC` is already formally closed, but it still has not become a default user-visible gain; the weak point is no longer “can it run?” but “can the light-and-fast evidence stay green over time?”
 - `smart`
-  - context optimization is validated and now has a narrow guarded opt-in path, but the gain is still not the default user experience
+  - context optimization is validated and now has a narrow guarded opt-in path, but it is still not the default user experience; widening that path would be a future product decision
 - `reassuring`
-- the shared-foundation story is now backed by explicit Stage 10 product proof; the ongoing job is to keep that operator evidence green instead of reopening the claim
+  - the shared-foundation story is now backed by explicit Stage 10 product proof; the ongoing job is to keep that operator evidence green instead of reopening the claim
 
 So the next focus order should stay explicit:
 
-1. finish the `light and fast` context-loading problem first by making context thickness, working-set reduction, budgeted assembly, and answer-level latency one formal mainline
-   - the stage goal is not just “lower average tokens”; it is “keep daily long-running use alive without requiring compat / compact as the normal escape hatch”
-2. continue `light and fast` by pushing down ordinary-conversation realtime-write timeout / latency in hermetic runs
+1. keep the `Context Minor GC` scorecard, harder matrix, and guarded boundary green so Stage 7 / 9 do not drift back into an unresolved state
+2. turn “main reply + `memory_extraction`” into a formal product contract and add governed realtime ingest for ordinary-conversation rules
 3. keep the Stage 10 shortest adoption path and shared-foundation proof green
-4. now that Stage 9 is closed, keep the guarded opt-in gain bounded while waiting for the Stage 7 harder matrix to stay green
-5. only open a new numbered stage if a new explicit product goal justifies it
+4. only reopen broader Minor GC rollout, `Stage 0 Router`, or deeper task-state structure if a new explicit product goal justifies it
 
 ## Who This Is For
 

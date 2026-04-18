@@ -8,7 +8,11 @@
 
 - `Context Minor GC`
 
-它是在复盘外部 `Compact GC` 思路、结合当前 `Unified Memory Core` 的 Stage 6 / 7 / 9 证据后，对现有设计做的一次收敛说明。
+它不是新的阶段计划，而是把已经完成的 Stage 6 / Stage 7 / Step 108 / Stage 9 收成一条统一主线，并明确：
+
+- 它已经完成到哪
+- 现在还剩什么
+- 应该按什么顺序阅读相关文档
 
 相关文档：
 
@@ -18,9 +22,40 @@
 - [../development-plan.zh-CN.md](../development-plan.zh-CN.md)
 - [../../../roadmap.zh-CN.md](../../../roadmap.zh-CN.md)
 
-## 最短结论
+## 当前状态
 
-`Context Minor GC` 可以作为当前这条主线的正式工作名，而且总体思路是可行的。
+先看这一节，不要先去翻旧报告。
+
+| 项目 | 当前状态 |
+| --- | --- |
+| Stage 6 shadow runtime | 已完成，保持 `default-off` + shadow-only |
+| Stage 7 / Step 108 | 已完成，不改 OpenClaw core 也能跑通 decision transport |
+| Stage 7 / `104` harder eval matrix | 已完成，live matrix `6 / 6` |
+| Stage 9 guarded smart path | 已完成，但继续保持 `default-off` / opt-in only |
+| `Context Minor GC` 本身 | 已收口，不再是当前 blocker |
+| 当前未完成的不是它本身 | 默认 active-path 用户收益、后续更激进的 router / task-state 扩展，仍然是未来增强队列 |
+
+一句话：
+
+`Context Minor GC` 这条线已经完成“可跑、可测、可回退、可收口”。
+它没有被推进成默认路径，但那是产品边界，不是“还没做完”。
+
+## 阅读顺序
+
+如果你现在只想看清 `Minor GC` 的进展和后续工作，按这个顺序看：
+
+1. 当前这页
+   先看概念边界、已完成项、未完成项。
+2. [Stage 7 / Step 108 收口报告](../../../../reports/generated/stage7-step108-context-minor-gc-closeout-2026-04-18.zh-CN.md)
+   看“不改 OpenClaw core，怎么把 decision transport 打通”。
+3. [Stage 7 `Context Minor GC` 收口报告](../../../../reports/generated/stage7-context-minor-gc-closeout-2026-04-18.zh-CN.md)
+   看 `Minor GC` 为什么已经能正式关闭。
+4. [Stage 9 收口报告](../../../../reports/generated/stage9-guarded-smart-path-closeout-2026-04-18.zh-CN.md)
+   看 guarded smart path 为什么也已经关闭，但仍然保持 `default-off`。
+5. [开发计划](../development-plan.zh-CN.md)
+   看 `Minor GC` 收口后，仓库真正排队的下一条工作是什么。
+
+## 最短结论
 
 这里的 `GC` 不是字面意义上的“销毁记忆”，而是：
 
@@ -32,12 +67,11 @@
 - 让日常长对话尽量不需要依赖 `compact / compat`
 - 靠更轻的逐轮 context 管理，让会话自己持续下去
 
-如果保持“不修改 OpenClaw 宿主”这个约束，那么当前最合理的落地路线就是：
+当前已经成立的结论是：
 
-- OpenClaw 继续当宿主外壳
-- UMC 插件自托管 `memory + context decision`
-- `Context Minor GC` 作为热路径控制面
-- `compact / compat` 只留在夜间或后台
+- `Context Minor GC` 可以作为这条主线的正式工作名
+- 在“不修改 OpenClaw 宿主”的约束下，这条路已经打通并收口
+- `compact / compat` 继续只保留为夜间或后台 safety net
 
 ## 命名定义
 
@@ -55,7 +89,7 @@
 1. 它能把“热路径逐轮裁剪”和“后台低频整理”明确拆开。  
 2. 它能提醒我们：日常路径应该优先做 `minor`，而不是一遇到压力就 `full compact`。  
 3. 它能迫使系统把 `task state` 和“聊天摘要”分开，不再靠一份越来越厚的 summary 续命。  
-4. 它能帮助产品目标对齐到一句更清楚的话：  
+4. 它能把产品目标压成一句更清楚的话：
    `平时靠 Context Minor GC 维持长对话，compact / compat 只做后台保底。`
 
 这个类比也有边界：
@@ -71,18 +105,18 @@
 
 | 概念层 | UMC 对应层 | 当前状态 |
 | --- | --- | --- |
-| `L0 Hot Window` | recent raw turns / active working set | 已有 shadow / guarded path 和 replay 证据 |
-| `L1 Warm Topic Cache` | task-state ledger / current topic summary / carry-forward pins | 还需要从“聊天摘要”中进一步剥离成显式结构层 |
-| `L2 Cold Topic Archive` | thread capsules / archived topic summaries | 已有 pins / capsules 方向，但还没成为正式热路径组件 |
+| `L0 Hot Window` | recent raw turns / active working set | 已落地；Stage 6 / Stage 7 / Stage 9 都已有证据 |
+| `L1 Warm Topic Cache` | task-state ledger / current topic summary / carry-forward pins | 仍可继续结构化，但已经不是 `Minor GC` 收口 blocker |
+| `L2 Cold Topic Archive` | thread capsules / archived topic summaries | 方向成立；未来可增强，不影响当前 closeout |
 | `L3 Durable Memory` | governed registry / stable cards / rule cards | 已落地 |
-| `Minor GC` | 每轮 working-set pruning + local completion | 已验证方向，尚未成为默认用户收益 |
-| `Full Compact` | 夜间或后台 compat / compact / archive refresh | 应继续保留，但只做低频 safety net |
+| `Minor GC` | 每轮 working-set pruning + bounded local completion | 已收口；保持 `default-off` / bounded rollout |
+| `Full Compact` | 夜间或后台 compat / compact / archive refresh | 继续保留，但只做低频 safety net |
 
-## 当前热路径应该长什么样
+## 热路径应该长什么样
 
 `Context Minor GC` 最理想的热路径，不应该是“所有请求都走一次完整 compact”。
 
-它应该先经过一个很轻的 Stage 0 Router：
+长期更合理的目标形态仍然是：
 
 - `direct`
   - 当前话题连续、任务状态简单、working set 本身够轻
@@ -106,17 +140,17 @@ flowchart LR
     B["background only"] --> C["full compact / compat / archive refresh"]
 ```
 
-这张图里真正的重点是：
+注意：
 
-- `minor gc` 是热路径控制面
-- `full compact` 是后台工作
-- 两者不是一回事
+- 这张图描述的是**长期理想形态**
+- 不是说 `Stage 0 Router` 已经成为当前 closeout 的必需项
+- 当前 closeout 已经完成；router / task-state 结构层属于未来增强，不是必须补完才算 Minor GC 完成
 
-## 当前为什么还没完全打通
+## 曾经的主要 blocker，现在已关闭
 
-当前已经证明，问题不在“LLM 会不会判断 topic / working set”，而在调用 seam。
+此前真正卡住的不是“LLM 会不会判断 topic / working set”，而是调用 seam。
 
-现在的失败调用栈本质上是：
+当时的失败调用栈是：
 
 ```text
 OpenClaw run
@@ -128,26 +162,28 @@ OpenClaw run
               -> throw
 ```
 
-也就是说：
+这个问题现在已经通过 `plugin-owned decision runner` 关闭：
 
-- `Context Minor GC` 想进真实热路径
-- 但当前 decision transport 还绑在宿主 `runtime.subagent`
-- 这条 seam 在 `contextEngine.assemble()` 里并不稳定可用
+- `Context Minor GC` 的 decision transport 不再依赖宿主 `runtime.subagent`
+- `Step 108` 已经正式关闭
+- OpenClaw core 不需要为这条链路再补一个强制改动
 
-这也是为什么：
+所以现在不该再继续问：
 
-- 不能只继续堆规则
-- 也不能继续假设“高层 hook 再往上挪一层就够了”
-- 而必须把 transport 问题单独拆出来
+- `Minor GC` 能不能在不改 OpenClaw 的前提下跑通
 
-## 推荐实现形态
+这个问题已经有了明确答案：**能，而且已经收口。**
 
-当前更稳的推荐形态是：
+## 当前采用的实现形态
+
+当前更稳、也已经落地的形态是：
 
 - `Context Minor GC` 负责热路径 working-set control plane
 - `plugin-owned context decision overlay` 负责把 decision transport 从宿主 seam 上解开
+- `guarded smart path` 提供极窄的 opt-in 用户收益
+- `compact / compat` 继续只留在夜间或后台
 
-目标调用栈应该收成：
+它对应的调用栈已经收成：
 
 ```text
 OpenClaw run
@@ -155,11 +191,11 @@ OpenClaw run
      -> routeContextAssembly()
         -> direct | local_complete | full_assembly
      -> pluginOwnedDecisionRunner.run()
-     -> session cache / task-state ledger / capsules
+     -> shadow / guarded decision
      -> assemble prompt package
 ```
 
-这里的模块边界很关键：
+这里的模块边界是：
 
 - `dialogue-working-set-pruning`
   - 定义 raw turns 怎样离开下一轮 prompt
@@ -167,10 +203,6 @@ OpenClaw run
   - 解决 decision transport 不再依赖宿主 `subagent`
 - `context-slimming-and-budgeted-assembly`
   - 控制 durable-source 如何按预算进场
-
-换句话说：
-
-> `Context Minor GC` 不是替代这三份文档，而是把它们收成一个对外可理解、对内可执行的统一主线。
 
 ## 与现有文档的关系
 
@@ -180,58 +212,57 @@ OpenClaw run
 | [dialogue-working-set-pruning.zh-CN.md](dialogue-working-set-pruning.zh-CN.md) | hot-session raw-turn 半边：回答“哪些近期原始轮次可以出去” |
 | [plugin-owned-context-decision-overlay.zh-CN.md](plugin-owned-context-decision-overlay.zh-CN.md) | transport / seam 半边：回答“怎样不改 OpenClaw 也能把这条链路跑通” |
 
-## 可行性判断
+## 已有证据
 
-这条路线现在不是空想，而是已经有一部分证据：
+这条路线现在不是方向判断，而是已经有正式 closeout 证据：
 
 - Stage 6 runtime shadow replay：`16 / 16`
-- runtime shadow average reduction ratio：`0.4368`
+- Stage 6 runtime shadow average reduction ratio：`0.4368`
 - Stage 7 scorecard：captured `16 / 16`
 - Stage 7 average raw reduction ratio：`0.4191`
-- Stage 9 guarded A/B：baseline `5 / 5`、guarded `5 / 5`
+- Stage 7 / Step 108 hermetic gateway：`5 / 5` captured
+- Stage 7 / Step 108 本机 service smoke：`3 / 3` captured
+- Stage 7 / `104` harder live matrix：`6 / 6`
+- Stage 9 guarded live A/B：baseline `4 / 4`、guarded `4 / 4`
+- Stage 9 guarded applied：`2 / 4`
+- Stage 9 activation matched：`4 / 4`
+- Stage 9 false activations：`0`
+- Stage 9 missed activations：`0`
 
-这些数字说明：
+这些数字的意思是：
 
-- `Context Minor GC` 方向本身是对的
-- working-set decision 不是不可做
-- 当前主要缺口是 transport、router、task-state 结构层，而不是再多写一堆规则
+- `Context Minor GC` 方向本身已经站稳
+- 最困难的“不改 OpenClaw core 还能不能打通 transport”也已经站稳
+- `Minor GC` 现在剩下的不是收口问题，而是产品边界和后续增强问题
 
-如果按之前已经估过的工程量来算，这条线大致还是：
+## 现在还剩什么
 
-- 最小 spike：`500-800 LOC`
-- 第一版可用：`900-1400 LOC`
+剩下的工作，不应该再写成“继续做 Minor GC 收口”。
 
-## 下一步应该做什么
+真正剩下的是：
 
-按照当前约束，最合理的顺序是：
+1. 保持 `Context Minor GC` operator scorecard 长期为绿
+2. 保持 guarded seam `default-off` / opt-in only
+3. 只有在新的显式产品目标出现时，才重新打开以下增强项：
+   - `task-state ledger + session cache`
+   - `Stage 0 Router`
+   - 更宽的 default-path rollout
 
-1. 先实现插件内自托管 `decision runner`
-2. 再补 `task-state ledger + session cache`
-3. 再落 `Stage 0 Router`
-   - `direct`
-   - `local_complete`
-   - `full_assembly`
-4. 最后才考虑把 guarded path 从极窄 opt-in 往前推进
+所以如果你现在在看 roadmap / plan：
 
-在这条顺序下：
-
-- `compact / compat` 仍然存在
-- 但它们不再是默认热路径
-- `Context Minor GC` 才是日常长对话的第一生存机制
+- 不要再把 Stage 7 / Step 108 / Stage 9 当成“正在进行”
+- 它们都已经是**历史已收口链路**
+- 当前真正的“下一步”已经切到别的切片了
 
 ## 最终判断
 
-这条思路总体可行，而且现在值得正式命名成：
+这条思路总体可行，而且当前状态可以压成一句更准确的话：
 
-- `Context Minor GC`
+- `Context Minor GC` 已收口
+- 默认 active-path 推广还没有开启
+- `compact / compat` 继续只做低频后台保底
 
-最关键的原因不是“GC 类比很好听”，而是它把目标钉死了：
+也就是说：
 
-- 平时靠逐轮 context 管理维持长对话
-- compat / compact 只做低频后台保底
-
-如果后续继续按“不改 OpenClaw”的路线走，那么 `Context Minor GC` 的首选实现方式仍然应该是：
-
-- `plugin-owned memory + context decision overlay`
-
-而不是继续把希望押在宿主 seam 上。
+`Minor GC` 已经做完。
+现在还没做的是“要不要把它进一步扩大成默认用户收益”，这属于下一轮产品决策，不属于本轮收口。
