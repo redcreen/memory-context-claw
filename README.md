@@ -55,7 +55,7 @@ From a user perspective, this product should collapse to three promises:
 2. `Smart`
    - remember what matters, avoid writing noise, send only the right context, and stay conservative when uncertain
    - already landed: realtime `memory_intent` ingestion, nightly self-learning, durable-source slimming direction, and the working-set pruning shadow path
-   - biggest current gap: working-set optimization now has a very narrow guarded opt-in gain, but it remains `default-off` / opt-in only; the real next work has already moved to `memory_extraction` / governed realtime ingest instead of more Minor GC closeout
+   - biggest current gap: working-set optimization now has a very narrow guarded opt-in gain, but it remains `default-off` / opt-in only; the remaining Minor GC work is now unified inside `Stage 11`, and the most important new item is the `Codex` context bridge
 3. `Reassuring`
    - inspectable, governable, replayable, rollback-friendly, and reusable across OpenClaw, Codex, and future consumers
    - already landed: `umc` CLI, inspect / audit / replay / repair / rollback surfaces, canonical registry root, and OpenClaw / Codex adapters
@@ -99,10 +99,11 @@ Areas that are still comparatively weak:
 
 So the next focus order should stay explicit:
 
-1. keep the `Context Minor GC` scorecard, harder matrix, and guarded boundary green so Stage 7 / 9 do not drift back into an unresolved state
-2. turn “main reply + `memory_extraction`” into a formal product contract and add governed realtime ingest for ordinary-conversation rules
-3. keep the Stage 10 shortest adoption path and shared-foundation proof green
-4. only reopen broader Minor GC rollout, `Stage 0 Router`, or deeper task-state structure if a new explicit product goal justifies it
+1. enter `Stage 11`: put all remaining Minor GC work and the `Codex` bridge into one umbrella stage
+2. keep the OpenClaw-side `Context Minor GC` scorecard, harder matrix, and guarded boundary green
+3. connect the same context decision / shadow / guarded / scorecard model to the `Codex` adapter
+4. keep the Stage 10 shortest adoption path and shared-foundation proof green
+5. only discuss broader default-path rollout under a new explicit product goal
 
 ## Who This Is For
 

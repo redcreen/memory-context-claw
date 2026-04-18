@@ -2,107 +2,115 @@
 
 [English](roadmap.md) | [中文](roadmap.zh-CN.md)
 
-## Scope
+## How To Read This Page
 
-This page is the stable roadmap wrapper for the repo. It answers:
+This page does only three jobs:
 
-- where the current mainline actually landed
-- how to read `Context Minor GC` in order
-- what remains after Minor GC closeout
+1. preserve the full stage order instead of deleting older stages
+2. state which large stage is current now
+3. link the latest stage directly to the concrete [development plan](reference/unified-memory-core/development-plan.md)
 
-Live execution state still belongs to:
+The status meaning is fixed:
 
-- [../.codex/status.md](../.codex/status.md)
-- [../.codex/plan.md](../.codex/plan.md)
+- `completed` = that stage is actually closed and the same work is not continued under another top-level stage
+- `current large stage` = all remaining work for the current theme belongs here instead of being scattered across multiple umbrellas
 
-Detailed queues live here:
+If you only care about `Context Minor GC`, start here:
 
-- [reference/unified-memory-core/development-plan.md](reference/unified-memory-core/development-plan.md)
+- [Stage 11: Context Minor GC And Codex Integration](#stage-11-context-minor-gc-and-codex-integration)
+- [Stage 11 detailed plan](reference/unified-memory-core/development-plan.md#stage-11-context-minor-gc-and-codex-integration)
+- [Context Minor GC architecture page](reference/unified-memory-core/architecture/context-minor-gc.md)
 
-## Current Truth
+## Current One-Line Truth
 
-| Item | Current State |
-| --- | --- |
-| `Context Minor GC` | closed; no longer the current blocker |
-| Stage 7 / Step 108 | completed: the plugin-owned decision runner landed without modifying OpenClaw core |
-| Stage 7 / `104` harder eval matrix | completed: live matrix `6 / 6` |
-| Stage 9 guarded smart path | completed: live A/B baseline `4 / 4`, guarded `4 / 4`, while staying `default-off` / opt-in only |
-| Current phase | `post-stage10-adoption-closeout` |
-| Active slice | `hold-stage10-adoption-proof-stable` |
-| Current objective | keep Docker hermetic baseline, Stage 10 shortest-path / shared-foundation proof, and the `Context Minor GC` operator scorecard green |
-| Next candidate slice | `formalize-realtime-memory-intent-ingestion` |
+The repo is no longer in a “Stage 7 / 9 closeout” state. It has moved into a new umbrella stage:
 
-Short version:
+- `Stage 11: Context Minor GC And Codex Integration`
 
-`Minor GC` is already past capability closeout. What remains is not “can it run?” but “keep it stable, keep the guarded boundary intact, and move to the next product slice.”
+That does not mean Stage 7 / 9 failed to close. It means:
 
-## If You Only Care About Minor GC, Read In This Order
+- the already-finished Stage 7 / 9 themes remain preserved as historical stages
+- all remaining Minor GC work is now grouped under one readable large stage
+- the same context-decision / scorecard / rollback model now needs to be brought to Codex
+- broader default-path rollout remains deferred until cross-host evidence is complete
 
-1. [Context Minor GC architecture page](reference/unified-memory-core/architecture/context-minor-gc.md)
-   - concept boundaries, what is done, and what remains
-2. [Stage 7 / Step 108 closeout](../reports/generated/stage7-step108-context-minor-gc-closeout-2026-04-18.md)
-   - how the decision transport was untied without modifying OpenClaw core
-3. [Stage 7 `Context Minor GC` closeout](../reports/generated/stage7-context-minor-gc-closeout-2026-04-18.md)
-   - why Stage 7 is formally closed
-4. [Stage 9 closeout](../reports/generated/stage9-guarded-smart-path-closeout-2026-04-18.md)
-   - why guarded smart path is closed while still remaining `default-off`
-5. [Development plan](reference/unified-memory-core/development-plan.md)
-   - what is actually next after Minor GC
+## Stage Timeline
 
-## Context Minor GC Status
+| Stage | Status | Theme | Meaning |
+| --- | --- | --- | --- |
+| Stage 1 | completed | design baseline | product boundaries, doc stack, and testing surfaces |
+| Stage 2 | completed | local-first baseline | governed local-first baseline |
+| Stage 3 | completed | self-learning lifecycle baseline | promotion / decay / learning governance |
+| Stage 4 | completed | policy adaptation | governed learning starts affecting consumption behavior |
+| Stage 5 | completed | product hardening | independent operation / split / reproducibility / release boundary |
+| Stage 6 | completed | dialogue working-set shadow integration | runtime shadow measurement surface |
+| Stage 7 | completed | context loading optimization closure | `Context Minor GC` formally entered the mainline and closed out |
+| Stage 8 | completed | ordinary-conversation realtime-write latency closure | ordinary-conversation strict Docker A/B closed |
+| Stage 9 | completed | guarded smart-path promotion | bounded opt-in active path closed while staying `default-off` |
+| Stage 10 | completed | adoption simplification and shared-foundation proof | shortest adoption path and Codex / multi-instance shared proof |
+| Stage 11 | current umbrella stage | Context Minor GC and Codex integration | all remaining Minor GC work is regrouped here and Codex integration becomes part of the formal plan |
 
-- Stage 6 `dialogue working-set shadow`: completed, still `default-off` + shadow-only
-- Stage 7 scorecard: captured `16 / 16`
-- Stage 7 average raw reduction ratio: `0.4191`
-- Stage 7 / Step 108: completed
-  - hermetic gateway captured `5 / 5`
-  - local service smoke captured `3 / 3`
-- Stage 7 / `104` harder live matrix: `6 / 6`
-  - captured `6 / 6`
-  - relation `6 / 6`
-  - reduction `6 / 6`
-- Stage 9 guarded live A/B: completed
-  - baseline `4 / 4`
-  - guarded `4 / 4`
-  - guarded applied `2 / 4`
-  - activation matched `4 / 4`
-  - false activations `0`
-  - missed activations `0`
+## Stage 11: Context Minor GC And Codex Integration
 
-Interpretation:
+Stage 11 is the current large stage. It is split into four groups:
 
-- the Minor GC capability loop is closed
-- it was not widened into a default active path
-- that is a deliberate product boundary, not an unfinished closeout
+| Group | Status | Goal | Detailed Plan |
+| --- | --- | --- | --- |
+| 11A `foundation-reframe` | completed | regroup Stage 6 / 7 / 9 Minor GC history into one readable stage narrative | [Plan: 11A](reference/unified-memory-core/development-plan.md#group-11a-foundation-reframe) |
+| 11B `openclaw-baseline-hold` | current | keep the OpenClaw-side `Context Minor GC` scorecard, harder matrix, and guarded boundary green over time | [Plan: 11B](reference/unified-memory-core/development-plan.md#group-11b-openclaw-baseline-hold) |
+| 11C `codex-context-bridge` | next | bring the same context decision / shadow / guarded / scorecard model into the Codex adapter | [Plan: 11C](reference/unified-memory-core/development-plan.md#group-11c-codex-context-bridge) |
+| 11D `cross-host-rollout-decision` | later | discuss broader default-path rollout only after OpenClaw + Codex evidence is both strong enough | [Plan: 11D](reference/unified-memory-core/development-plan.md#group-11d-cross-host-rollout-decision) |
+
+### What Is Already Closed Inside Stage 11
+
+These are no longer blockers:
+
+- Stage 6 runtime shadow integration
+- Stage 7 / Step 108
+- Stage 7 / `104` harder live matrix
+- Stage 9 guarded smart path
+
+Supporting reports:
+
+- [Stage 7 / Step 108 closeout](../reports/generated/stage7-step108-context-minor-gc-closeout-2026-04-18.md)
+- [Stage 7 `Context Minor GC` closeout](../reports/generated/stage7-context-minor-gc-closeout-2026-04-18.md)
+- [Stage 9 closeout](../reports/generated/stage9-guarded-smart-path-closeout-2026-04-18.md)
+
+### What Stage 11 Is Actually Doing Now
+
+The current focus is no longer “prove Minor GC can run at all”. It is:
+
+1. keep the OpenClaw `Context Minor GC` evidence green
+2. move `Codex` integration into the same large stage instead of leaving it buried inside Stage 10 proof
+3. keep broader rollout decisions explicitly deferred until cross-host evidence exists
+
+## If You Only Want To Know “What Remains For Minor GC”
+
+The shortest answer is:
+
+- the OpenClaw-side Minor GC capability loop is already complete
+- what remains is not “Minor GC itself is unfinished”
+- what remains is:
+  - Stage 11B: hold the OpenClaw operator baseline
+  - Stage 11C: complete the Codex context bridge
+  - Stage 11D: make a cross-host rollout decision
 
 ## Current / Next / Later
 
-| Time Horizon | Focus | Exit Signal |
+| Horizon | Focus | Exit Signal |
 | --- | --- | --- |
-| Current | maintenance mode: keep Docker hermetic baseline, Stage 10 shortest-path adoption, shared-foundation proof, and `Context Minor GC` scorecard green | new changes do not regress Stage 7 / 9 / 10 evidence |
-| Next | turn “main reply + `memory_extraction`” into a formal product contract and add a governed realtime ingest path for ordinary-conversation rules | replay gates, admission routing, adapter tests, and docs all align |
-| Later | run `legacy / unified / bootstrap / retrieval` attribution on the same core case set | users can clearly see which gains come from native behavior, which from the extension, and which from bootstrap inputs |
+| Current | Stage 11B: keep OpenClaw-side `Context Minor GC` and guarded baseline green | scorecard, harder matrix, and guarded live A/B do not regress |
+| Next | Stage 11C: connect the Codex bridge to the same decision contract / shadow / guarded / scorecard | Codex adapter replay, tests, and cross-host report all align |
+| Later | Stage 11D: decide whether any broader default-path rollout is justified | a formal rollout ADR / report exists instead of implicit widening |
 
-## Current Review Verdict
+## Reading Order
 
-- Done:
-  - Stage 7 `Context Minor GC` is closed
-  - Step 108 is closed
-  - Stage 9 guarded smart path is closed
-  - Stage 10 adoption / shared-foundation proof is closed
-- Keep steady:
-  - `Context Minor GC` operator scorecard stays green
-  - Docker remains the default hermetic A/B surface
-  - guarded seam remains `default-off` / opt-in only
-- Not being pursued right now:
-  - widening guarded path into default active prompt mutation
-  - changing OpenClaw builtin memory behavior
-  - reopening “can Minor GC run at all?”
+If you want to read in order, do not bounce between old reports first:
 
-## Three User-Facing Promises And Current Milestones
-
-| Promise | Already Landed | Current Evidence Surface | What Actually Remains |
-| --- | --- | --- | --- |
-| `Light and fast` | fact-first assembly, runtime shadow, `Context Minor GC` closeout, Docker hermetic eval | Stage 7 closeout, harder matrix `6 / 6`, Stage 9 live A/B | keep “light and fast” green instead of reopening Stage 7; any broader default-path rollout must be a new explicit product decision |
-| `Smart` | realtime / nightly learning, working-set pruning, guarded smart path | ordinary-conversation strict closeout, Stage 9 closeout | the real next work is `memory_extraction` / governed ingest, not backfilling Minor GC basics |
-| `Reassuring` | `umc` CLI, inspect / audit / replay / rollback, shared foundation | Stage 10 closeout, release-preflight, Docker hermetic baseline | keep the operator surface readable, runnable, and replayable |
+1. read this page and confirm the current umbrella stage is `Stage 11`
+2. then read the [Stage 11 detailed plan](reference/unified-memory-core/development-plan.md#stage-11-context-minor-gc-and-codex-integration)
+3. then read the [Context Minor GC architecture page](reference/unified-memory-core/architecture/context-minor-gc.md)
+4. only then drop into historical reports when needed:
+   - [Step 108 closeout](../reports/generated/stage7-step108-context-minor-gc-closeout-2026-04-18.md)
+   - [Stage 7 closeout](../reports/generated/stage7-context-minor-gc-closeout-2026-04-18.md)
+   - [Stage 9 closeout](../reports/generated/stage9-guarded-smart-path-closeout-2026-04-18.md)

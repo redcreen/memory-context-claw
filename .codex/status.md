@@ -7,11 +7,11 @@
 
 ## Current Phase
 
-`post-stage10-adoption-closeout`
+`stage11-context-minor-gc-and-codex-integration`
 
 ## Active Slice
 
-`hold-stage10-adoption-proof-stable`
+`group-11b-openclaw-baseline-hold`
 
 ## Current Product Promises
 
@@ -21,6 +21,18 @@
   - 当前已落地：realtime `memory_intent` ingestion + nightly governed learning
 - `省心`
   - 当前已落地：CLI / audit / replay / rollback operator flows + shared contracts + canonical registry root + OpenClaw / Codex adapters + Codex / multi-instance shared-foundation proof
+
+## Stage 11 Snapshot
+
+- Stage 11 定义：把所有剩余的 `Context Minor GC` 工作和 `Codex` 对接收进同一个大阶段
+- 11A `foundation-reframe`：已完成
+- 11B `openclaw-baseline-hold`：当前进行
+- 11C `codex-context-bridge`：下一步
+- 11D `cross-host-rollout-decision`：后续
+- 当前最重要的边界：
+  - Stage 7 / Step 108 / Stage 9 继续保持“已完成”的历史事实
+  - `default-off` / opt-in only 继续保持
+  - 当前不会隐式扩大默认 active path
 
 ## Done
 
@@ -243,26 +255,26 @@
 
 ## Current Execution Line
 
-- Objective: Stage 7 / 8 / 9 / 10 都已关闭；当前进入维护态，继续保持 Docker 为默认 hermetic A/B 面与 Stage 10 shortest-path/shared-foundation proof 持续为绿
-- Plan Link: `hold-stage10-adoption-proof-stable`
+- Objective: 进入 `Stage 11`，把所有剩余的 `Context Minor GC` 工作和 `Codex` 对接收进同一个大阶段；当前先保持 OpenClaw baseline 为绿
+- Plan Link: `stage11-context-minor-gc-and-codex-integration / group-11b-openclaw-baseline-hold`
 - Current Critical Path:
-  - 保持 `npm run umc:stage10` 持续通过
-  - 保持 Stage 10 文档与 control surface 不漂移
-  - 保持 Docker 作为默认 hermetic A/B 面
-- Runway: Stage 7 closeout evidence、Docker hermetic baseline、release-preflight、canonical-root policy、shared-foundation proof
-- Progress: `0 / 4` tasks complete
+  - 保持 Stage 7 scorecard、Step 108、`104` harder matrix、Stage 9 live A/B 不回退
+  - 把 `Codex` context bridge 作为下一条明确工作，而不是继续散落在别的主题下
+  - 保持 Docker 与 Stage 10 shortest-path/shared-foundation proof 持续为绿
+- Runway: Stage 7 closeout evidence、Stage 9 closeout evidence、Docker hermetic baseline、release-preflight、canonical-root policy、shared-foundation proof
+- Progress: `1 / 4` groups complete
 - Stop Conditions:
   - active prompt mutation is widened despite Stage 9 remaining `default-off`
-  - install simplification weakens replay / rollback / audit evidence
-  - shared-foundation proof falls back to narrative claims instead of hermetic evidence
+  - the remaining Minor GC work gets scattered across multiple umbrella stages again
+  - Codex integration remains only narrative and never gets a real decision contract / scorecard surface
   - bounded LLM decision work degenerates into growing hardcoded rule tables
 
-## Execution Tasks
+## Stage 11 Groups
 
-- [ ] EL-1 shorten install / bootstrap / verify into one clear shortest operator path
-- [ ] EL-2 add package / startup / first-run cost to the `light and fast` evidence surface
-- [ ] EL-3 publish stronger Codex shared-foundation proof
-- [ ] EL-4 publish clearer multi-instance shared-memory operator proof
+- [x] 11A foundation-reframe
+- [ ] 11B openclaw-baseline-hold
+- [ ] 11C codex-context-bridge
+- [ ] 11D cross-host-rollout-decision
 
 ## Development Log Capture
 

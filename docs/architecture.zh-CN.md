@@ -37,6 +37,16 @@ flowchart TB
 
 第二条现在已经是一等主线，不再只是 adapter 内的局部修补。
 
+并且从路线图角度，它现在已经进入一个新的大阶段：
+
+- `Stage 11: Context Minor GC And Codex Integration`
+
+这个大阶段的边界要明确：
+
+- Stage 6 / 7 / 9 这些 OpenClaw 侧主题仍然保持“已完成”的历史状态
+- `Stage 11` 只承接 **剩余的** context / Minor GC 工作
+- 最关键的新项是 `Codex` 对接，而不是重新回头定义 OpenClaw 侧基础能力
+
 `context 优化` 当前明确分成几条互补的架构面：
 
 - durable source 的瘦身与预算化组装
@@ -55,8 +65,8 @@ flowchart TB
 - Stage 6 继续保持 `default-off` 和 shadow-only，作为测量面
 - Stage 9 guarded smart-path 已收口，但继续保持 `default-off` / opt-in only
 - 这条逐轮 context 优化主线，对外工作名现在统一收成 `Context Minor GC`
-- 下一轮要先完成 `context loading optimization`：先把 bounded LLM-led decision contract、operator metrics、rollback boundary、harder A/B 设计和统一 scorecard 写清楚，再讨论任何默认 prompt-path 改动
-- 当前推荐实施线不是修改 OpenClaw，而是优先把 `memory + context decision` 的 decision transport 收回插件层
+- 当前最新的大阶段是 `Stage 11`：保 OpenClaw baseline 为绿，并把同一套 context decision contract 接到 Codex
+- 当前推荐实施线不是修改 OpenClaw，而是优先把 `memory + context decision` 的 decision transport / scorecard / guarded seam 做成跨宿主一致契约
 - 日常产品目标已经明确：平时尽量靠逐轮 context 管理保持可持续，不把 compat / compact 当成日常热路径依赖；compat / compact 只保留为夜间或后台 safety net
 
 ## 当前产品承诺与架构映射

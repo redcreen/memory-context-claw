@@ -8,10 +8,20 @@
 
 - `Context Minor GC`
 
-它不是新的阶段计划，而是把已经完成的 Stage 6 / Stage 7 / Step 108 / Stage 9 收成一条统一主线，并明确：
+它现在对应一个新的大阶段：
+
+- `Stage 11: Context Minor GC And Codex Integration`
+
+但要注意：
+
+- Stage 7 / Step 108 / Stage 9 这些 **OpenClaw 侧基础能力** 仍然保持各自“已完成”的历史事实
+- `Stage 11` 只承接 **剩余的 Minor GC 工作**：OpenClaw baseline 持续守绿、Codex 对接、以及跨宿主 rollout 决策
+
+所以这份文档现在既解释 OpenClaw 侧已经完成了什么，也解释为什么当前还有一个新的总阶段：
 
 - 它已经完成到哪
 - 现在还剩什么
+- 它在 Stage 11 里的位置是什么
 - 应该按什么顺序阅读相关文档
 
 相关文档：
@@ -32,13 +42,14 @@
 | Stage 7 / Step 108 | 已完成，不改 OpenClaw core 也能跑通 decision transport |
 | Stage 7 / `104` harder eval matrix | 已完成，live matrix `6 / 6` |
 | Stage 9 guarded smart path | 已完成，但继续保持 `default-off` / opt-in only |
-| `Context Minor GC` 本身 | 已收口，不再是当前 blocker |
-| 当前未完成的不是它本身 | 默认 active-path 用户收益、后续更激进的 router / task-state 扩展，仍然是未来增强队列 |
+| OpenClaw 侧 `Context Minor GC` 基础能力 | 已收口 |
+| Stage 11 | 当前大阶段 |
+| Stage 11 的范围 | 只承接剩余的 Minor GC 工作：OpenClaw baseline 守绿、Codex 对接、跨宿主 rollout 决策 |
 
 一句话：
 
-`Context Minor GC` 这条线已经完成“可跑、可测、可回退、可收口”。
-它没有被推进成默认路径，但那是产品边界，不是“还没做完”。
+OpenClaw 侧的 `Context Minor GC` 已经完成“可跑、可测、可回退、可收口”。
+但 `Minor GC` 的剩余工作还没有结束，因为 `Codex` 对接和跨宿主 rollout 决策现在被收进了 `Stage 11`。
 
 ## 阅读顺序
 
@@ -53,7 +64,7 @@
 4. [Stage 9 收口报告](../../../../reports/generated/stage9-guarded-smart-path-closeout-2026-04-18.zh-CN.md)
    看 guarded smart path 为什么也已经关闭，但仍然保持 `default-off`。
 5. [开发计划](../development-plan.zh-CN.md)
-   看 `Minor GC` 收口后，仓库真正排队的下一条工作是什么。
+   看 `Stage 11` 的 4 个分组，以及 `Codex` 对接具体排在哪。
 
 ## 最短结论
 
@@ -72,6 +83,23 @@
 - `Context Minor GC` 可以作为这条主线的正式工作名
 - 在“不修改 OpenClaw 宿主”的约束下，这条路已经打通并收口
 - `compact / compat` 继续只保留为夜间或后台 safety net
+- 当前剩余的问题空间已经被放进 `Stage 11`：要不要把同一套能力带到 Codex，以及未来是否做跨宿主 rollout
+
+## 在 Stage 11 里的位置
+
+`Stage 11` 下面，`Context Minor GC` 现在分成 4 组理解：
+
+| 组 | 当前状态 | 这份文档对应什么 |
+| --- | --- | --- |
+| 11A `foundation-reframe` | 已完成 | 收拢文档与阅读顺序，不再把同一项工作挂到多个大项里 |
+| 11B `openclaw-baseline-hold` | 当前进行 | 只负责 OpenClaw 侧 baseline 持续守绿 |
+| 11C `codex-context-bridge` | 下一步 | 只负责 Codex 对接 |
+| 11D `cross-host-rollout-decision` | 后续 | 只负责是否放量的决策 |
+
+所以这份文档现在主要回答两件事：
+
+1. OpenClaw 侧 `Minor GC` 已经做完到哪里
+2. 为什么它现在进入了一个新的、但主题更单一的 Stage 11
 
 ## 命名定义
 
@@ -233,7 +261,8 @@ OpenClaw run
 
 - `Context Minor GC` 方向本身已经站稳
 - 最困难的“不改 OpenClaw core 还能不能打通 transport”也已经站稳
-- `Minor GC` 现在剩下的不是收口问题，而是产品边界和后续增强问题
+- OpenClaw 侧 `Minor GC` 已经不是 blocker
+- 当前剩下的是 Stage 11 的 Codex 对接和跨宿主 rollout 决策
 
 ## 现在还剩什么
 
@@ -241,28 +270,32 @@ OpenClaw run
 
 真正剩下的是：
 
-1. 保持 `Context Minor GC` operator scorecard 长期为绿
-2. 保持 guarded seam `default-off` / opt-in only
-3. 只有在新的显式产品目标出现时，才重新打开以下增强项：
+1. Stage 11B：保持 OpenClaw 侧 `Context Minor GC` operator scorecard 长期为绿
+2. Stage 11C：把同一套 shadow / guarded / scorecard 接到 Codex adapter
+3. Stage 11D：只有跨宿主证据足够后，才讨论默认路径 rollout
+4. 更深的增强项，例如：
    - `task-state ledger + session cache`
    - `Stage 0 Router`
    - 更宽的 default-path rollout
+   这些都不再是当前 closeout blocker，而是未来增强项
 
 所以如果你现在在看 roadmap / plan：
 
 - 不要再把 Stage 7 / Step 108 / Stage 9 当成“正在进行”
-- 它们都已经是**历史已收口链路**
-- 当前真正的“下一步”已经切到别的切片了
+- 它们都已经是 **Stage 11 的历史基础部分**
+- 当前真正的“下一步”是 Stage 11C 的 Codex context bridge
 
 ## 最终判断
 
 这条思路总体可行，而且当前状态可以压成一句更准确的话：
 
-- `Context Minor GC` 已收口
+- OpenClaw 侧 `Context Minor GC` 已收口
+- `Stage 11` 还在继续，因为 Codex 对接与跨宿主 rollout 决策还没做完
 - 默认 active-path 推广还没有开启
 - `compact / compat` 继续只做低频后台保底
 
 也就是说：
 
-`Minor GC` 已经做完。
-现在还没做的是“要不要把它进一步扩大成默认用户收益”，这属于下一轮产品决策，不属于本轮收口。
+`Minor GC` 作为 OpenClaw 侧基础能力，已经做完。
+但 `Minor GC` 的剩余跨宿主工作还没有做完。
+现在真正剩下的是：OpenClaw baseline 守绿、`Codex` 对接，以及后续明确的跨宿主 rollout 决策。

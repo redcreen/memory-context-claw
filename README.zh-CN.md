@@ -55,7 +55,7 @@
 2. `聪明`
    - 该记的记住，不该记的不乱记；该给的 context 才给，不确定时尽量收敛
    - 当前已落地：realtime `memory_intent` ingestion、nightly self-learning、durable-source slimming 方向、working-set pruning shadow 路径
-   - 当前最大缺口：working-set 优化现在已经有了极窄的 guarded opt-in 用户收益，但继续保持 `default-off` / opt-in only；下一条真正的新工作已经转向 `memory_extraction` / governed realtime ingest，而不是继续补 Minor GC 收口
+   - 当前最大缺口：working-set 优化现在已经有了极窄的 guarded opt-in 用户收益，但继续保持 `default-off` / opt-in only；`Minor GC` 剩余工作现在被统一收进 `Stage 11`，当前真正的新项是 `Codex` context bridge
 3. `省心`
    - 可查、可管、可回放、可回退，也能跨 OpenClaw / Codex / 多实例复用
    - 当前已落地：`umc` CLI、inspect / audit / replay / repair / rollback、canonical registry root、OpenClaw / Codex adapters
@@ -99,10 +99,11 @@
 
 所以接下来的重点顺序应该很明确：
 
-1. 保持 `Context Minor GC` 的 scorecard、harder matrix 和 guarded 边界长期为绿，不让 Stage 7 / 9 漂回未决状态。
-2. 把“主回复 + `memory_extraction`”收成正式产品契约，补上 ordinary-conversation rule 的实时 governed ingest 入口。
-3. 继续保持 Stage 10 的最短接入路径和 shared-foundation proof 不回退。
-4. 只有在出现新的明确产品目标时，才重新打开更宽的 `Minor GC` 默认路径推广、`Stage 0 Router` 或更激进的 task-state 结构化扩展。
+1. 进入 `Stage 11`：把所有剩余的 `Minor GC` 工作和 `Codex` 对接收进一个统一大阶段。
+2. 保持 OpenClaw 侧 `Context Minor GC` 的 scorecard、harder matrix 和 guarded 边界长期为绿。
+3. 把同一套 context decision / shadow / guarded / scorecard 接到 `Codex` adapter。
+4. 继续保持 Stage 10 的最短接入路径和 shared-foundation proof 不回退。
+5. 只有在出现新的明确产品目标时，才讨论更宽的默认路径 rollout。
 
 ## 适用对象
 

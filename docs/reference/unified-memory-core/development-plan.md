@@ -22,26 +22,32 @@ It answers one practical question:
 2. Read `Overall Progress`, `Execution Task Progress`, and `Ordered Execution Queue` here to know where to resume.
 3. Only drop into the internal control docs when you are maintaining the automation itself.
 
+This document follows the same rule as the roadmap:
+
+- a roadmap stage marked `completed` is actually closed
+- the development plan does not continue the same theme under another top-level stage
+- if work remains, it moves into a new umbrella stage with an explicit boundary against the historical stages
+
 ## Overall Progress
 
 | Item | Current Value |
 | --- | --- |
-| Overall Progress | 4 / 4 execution tasks complete |
-| Current Phase | `post-stage10-adoption-closeout` |
-| Active Slice | `hold-stage10-adoption-proof-stable` |
-| Current Objective | Stage 7 / 8 / 9 / 10 are all closed; `Context Minor GC` is no longer the current blocker; stay in maintenance mode and keep Docker as the default hermetic A/B surface together with Stage 10 shortest-path/shared-foundation proof |
-| Active Slice Exit Signal | Stage 10 证据面长期稳定，且任何新阶段都不会隐式破坏 shortest-path / shared-foundation proof |
-| Clear Next Move | Current execution tasks are complete; move to the next slice |
-| Next Candidate Slice | `formalize-realtime-memory-intent-ingestion` |
+| Current Umbrella Stage | `stage11-context-minor-gc-and-codex-integration` |
+| Current Group | `group-11b-openclaw-baseline-hold` |
+| Stage Progress | `1 / 4` groups completed |
+| Current Objective | regroup all remaining `Context Minor GC` work under one readable stage and bring Codex integration into the formal plan |
+| Current Constraint | do not change OpenClaw builtin memory behavior; keep the guarded seam `default-off` / opt-in only |
+| Stage Transition Signal | the OpenClaw-side baseline remains green and the Codex bridge design/validation surface is explicit |
+| Next Group | `group-11c-codex-context-bridge` |
 
 ## Current Position
 
 | Item | Current Value | Meaning |
 | --- | --- | --- |
-| Current Phase | `post-stage10-adoption-closeout` | Current maintainer-facing phase |
-| Active Slice | `hold-stage10-adoption-proof-stable` | The slice tied to the current execution line |
-| Current Execution Line | Stage 7 / 8 / 9 / 10 are all closed; stay in maintenance mode and keep Docker as the default hermetic A/B surface together with Stage 10 shortest-path/shared-foundation proof | What the repo is trying to finish now |
-| Validation | roadmap / development plan / architecture docs, harder-case design note, formal-gate promotion decision, `npm run umc:release-preflight`, full regression, CLI use cases, main-path perf baseline, memory-improvement A/B summary, and `npm run umc:cli -- registry inspect --format markdown` | The checks that must stay true before moving on |
+| Current Phase | `Stage 11` | Current umbrella stage |
+| Current Group | `11B openclaw-baseline-hold` | The group that is active now |
+| Current Execution Line | keep the OpenClaw-side `Context Minor GC` scorecard, harder matrix, and guarded live A/B green while finishing the docs-first Codex bridge design | What the repo is actually doing now |
+| Validation | Stage 7 scorecard, Step 108 closeout, Stage 7 / `104` harder matrix, Stage 9 guarded live A/B, Docker hermetic baseline, and Stage 10 shortest-path/shared-foundation proof | The evidence that must remain true |
 
 ## Minor GC Quick Truth
 
@@ -50,7 +56,7 @@ If you only care about `Context Minor GC`, keep these four facts in mind:
 1. Stage 7 / Step 108 is closed.
 2. Stage 7 / `104` harder eval matrix is closed, with live matrix `6 / 6`.
 3. Stage 9 guarded smart path is closed, while still staying `default-off` / opt-in only.
-4. The real next work is no longer Minor GC itself; it is `formalize-realtime-memory-intent-ingestion`.
+4. The real new work is to put the remaining Minor GC work into `Stage 11` and bring Codex integration into the same stage plan.
 
 Recommended reading order:
 
@@ -60,14 +66,14 @@ Recommended reading order:
 4. [../../../../reports/generated/stage7-context-minor-gc-closeout-2026-04-18.md](../../../../reports/generated/stage7-context-minor-gc-closeout-2026-04-18.md)
 5. [../../../../reports/generated/stage9-guarded-smart-path-closeout-2026-04-18.md](../../../../reports/generated/stage9-guarded-smart-path-closeout-2026-04-18.md)
 
-## Execution Task Progress
+## Stage 11 Group Progress
 
-| Order | Task | Status |
-| --- | --- | --- |
-| 1 | EL-1 shorten install / bootstrap / verify into one clear shortest operator path | done |
-| 2 | EL-2 add package / startup / first-run cost to the `light and fast` evidence surface | done |
-| 3 | EL-3 publish stronger Codex shared-foundation proof | done |
-| 4 | EL-4 publish clearer multi-instance shared-memory operator proof | done |
+| Group | Status | Goal | Validation |
+| --- | --- | --- | --- |
+| 11A `foundation-reframe` | completed | regroup Stage 6 / 7 / 9 Minor GC history into one readable umbrella-stage narrative | roadmap / development plan / minor-gc docs aligned |
+| 11B `openclaw-baseline-hold` | current | keep the OpenClaw-side `Context Minor GC` scorecard, harder matrix, and guarded live A/B green over time | Stage 7 scorecard, Step 108, `104` harder matrix, Stage 9 live A/B |
+| 11C `codex-context-bridge` | next | connect the same decision contract / shadow / guarded / scorecard model to the Codex adapter | Codex adapter design, replay suite, tests, cross-host report |
+| 11D `cross-host-rollout-decision` | later | discuss any broader default-path rollout only after OpenClaw + Codex evidence is strong enough | rollout ADR / report, rollback boundary, operator decision |
 
 ## Milestone Overview
 
@@ -83,6 +89,66 @@ Recommended reading order:
 | Stage 8: ordinary-conversation realtime-write latency closure | completed | recover the clean Docker write-side answer path into a trustworthy ordinary-conversation strict A/B surface | Stage 7 | the ordinary-conversation hermetic strict closeout now reports `40 / 40 vs 15 / 40` with `preCaseResetFailed = 0` |
 | Stage 9: guarded smart-path promotion | completed | start turning context optimization into real user-facing value without breaking rollback safety | Stage 8 | the bounded opt-in path now has live A/B evidence, an operable rollback path, and remains `default-off` / opt-in only |
 | Stage 10: adoption simplification and shared-foundation proof | completed | lift adoption experience and cross-host product proof to the same level as core capability | Stage 9 | `npm run umc:stage10 -- --format markdown` is the shortest maintainer path and Codex / multi-instance shared proof is public and reproducible |
+| Stage 11: Context Minor GC and Codex integration | current umbrella stage | regroup all Minor GC work into one stage, preserve OpenClaw-side closure, and make Codex integration part of the formal mainline | Stage 10 | OpenClaw baseline remains green, Codex bridge is explicit, and any broader rollout decision stays explicit instead of implicit |
+
+## Stage 11: Context Minor GC And Codex Integration
+
+This is the current umbrella stage. Three ideas define it:
+
+1. Stage 6 / 7 / 9 Minor GC history remains preserved, and each of those stages keeps its own completed historical meaning.
+2. The current work is no longer “prove Minor GC can run at all” but “put all remaining Minor GC work into one umbrella stage: hold the OpenClaw baseline and add the Codex bridge”.
+3. Any broader default-path rollout stays deferred until cross-host evidence exists.
+
+### Group 11A: Foundation Reframe
+
+- Status: completed
+- Goal: turn the previously scattered Minor GC work into one readable umbrella-stage narrative
+- Done:
+  - roadmap / development plan / minor-gc docs now point to the same reading order
+  - `Context Minor GC` is now documented as “closed core capability + later cross-host expansion”
+- Exit criteria: maintainers no longer need to guess current state from old reports
+
+### Group 11B: OpenClaw Baseline Hold
+
+- Status: current
+- Goal: keep the OpenClaw-side `Context Minor GC` baseline green
+- Evidence:
+  - Stage 7 scorecard
+  - Step 108 closeout
+  - Stage 7 / `104` harder live matrix
+  - Stage 9 guarded live A/B
+- Exit criteria:
+  - new changes do not regress these evidence surfaces
+  - the `default-off` / opt-in only boundary remains explicit
+
+### Group 11C: Codex Context Bridge
+
+- Status: next
+- Goal: bring the OpenClaw-proven context decision contract into the Codex adapter
+- Scope:
+  - Codex-side shadow / guarded / scorecard contract
+  - mapping between Codex transcript/task boundaries and `Context Minor GC`
+  - cross-host comparison report
+- Validation:
+  - Codex adapter design docs
+  - replay suite
+  - adapter tests
+  - cross-host report
+- Exit criteria: Codex becomes part of the same Minor GC mainline instead of only appearing inside Stage 10 shared-foundation proof
+
+### Group 11D: Cross-Host Rollout Decision
+
+- Status: later
+- Goal: discuss broader default-path rollout only after OpenClaw + Codex evidence is both strong
+- Required conditions:
+  - OpenClaw baseline stays green
+  - Codex bridge has formal evidence
+  - rollback boundary and operator decision surface are explicit
+- Exit criteria: a real rollout ADR / report exists instead of implicit widening
+
+## Historical Slices And Backlog
+
+The long queue below is preserved as history and backlog. It is no longer the best place for a human to start reading.
 
 ## Ordered Execution Queue
 
@@ -97,8 +163,8 @@ Recommended reading order:
 | 7 | `finish-context-loading-optimization-first` | historical closed slice | historical slice: finish the `light and fast / context loading optimization` closeout and write Stage 7 scorecard, operator metrics, and rollback boundary into durable docs | Stage 7 scorecard, Stage 7 closeout report, roadmap / development plan / architecture docs aligned |
 | 8 | `design-harder-context-minor-gc-matrix` | historical closed slice | historical slice: complete the `Context Minor GC` harder eval matrix and formally close Stage 7 | `104` harder eval matrix, rerun the same operator scorecard, Stage 7 closeout report |
 | 9 | `prepare-stage10-adoption-simplification-and-shared-foundation-proof` | historical closed slice | historical slice: complete Stage 10 adoption / bootstrap / verify / shared-foundation proof | Stage 10 plan steps `121-126`, shortest-path install proof, package/startup/first-run metrics, Codex / multi-instance evidence |
-| 10 | `hold-stage10-adoption-proof-stable` | current maintenance slice | keep the Stage 10 shortest operator path, package/startup/first-run evidence, and Codex / multi-instance shared-foundation proof green; also keep `Context Minor GC` and guarded seam evidence from regressing | `npm run umc:stage10 -- --format markdown`, README / roadmap / development plan / `.codex/*`, Stage 10 closeout reports |
-| 11 | `formalize-realtime-memory-intent-ingestion` | next / queued | 把“主回复 + `memory_extraction`”从局部 runtime seam 收口成正式产品契约，补上 ordinary conversation rule 的实时 governed ingest 入口 | replay suite、Codex adapter tests、architecture docs、development plan、control-surface state |
+| 10 | `hold-stage10-adoption-proof-stable` | historical maintenance slice | keep the Stage 10 shortest operator path, package/startup/first-run evidence, and Codex / multi-instance shared-foundation proof green; also keep `Context Minor GC` and guarded seam evidence from regressing | `npm run umc:stage10 -- --format markdown`, README / roadmap / development plan / `.codex/*`, Stage 10 closeout reports |
+| 11 | `formalize-realtime-memory-intent-ingestion` | later backlog | turn “main reply + `memory_extraction`” into a formal product contract and add governed realtime ingest for ordinary-conversation rules | replay suite, Codex adapter tests, architecture docs, development plan, control-surface state |
 | 12 | `attribute-memory-capability-sources` | next / queued | 对同一批核心案例做 `legacy / unified / bootstrap / retrieval` 对照，明确答案来源和扩展增益边界 | A/B 对照报告、关键案例证据、来源分类说明 |
 | 13 | `turn-failures-into-algorithm-iterations` | next / queued | 把 benchmark 失败案例转成 retrieval / assembly / policy 算法问题清单，并按轮次修复、复测、提交 | 每轮失败清单、对应修复、复测结果、GitHub commit |
 | 14 | `close-stage5-product-hardening-and-independent-operation` | next / queued | 一口气收掉 `Step 39-46`，把 source hardening、maintenance、reproducibility、release-boundary、split rehearsal、independent review 全部接到 CLI-first 证据面 | Stage 5 targeted tests、`npm run umc:stage5`、`npm run umc:cli -- maintenance run`、`npm run umc:cli -- export reproducibility`、`npm run umc:cli -- review split-rehearsal |
@@ -208,4 +274,4 @@ Recommended reading order:
 
 | Next Move | Why |
 | --- | --- |
-| Current execution tasks are complete; move to the next slice or release decision | The current execution tasks are complete, so the next move is to enter the next slice or release decision. |
+| Continue `Stage 11 / Group 11B` and start the `Stage 11 / Group 11C` Codex context bridge design and validation work | Because the remaining Minor GC work is now unified inside `Stage 11`; the next move is no longer an old slice jump, but OpenClaw baseline hold -> Codex bridge -> rollout decision. |

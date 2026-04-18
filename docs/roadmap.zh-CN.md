@@ -2,109 +2,115 @@
 
 [English](roadmap.md) | [中文](roadmap.zh-CN.md)
 
-## 范围
+## 这页怎么读
 
-这页是仓库的稳定路线图包装层。它负责回答：
+这页只做 3 件事：
 
-- 当前主线已经做到哪
-- 如果只关心 `Context Minor GC`，应该按什么顺序看
-- `Minor GC` 收口后，真正剩下的工作是什么
+1. 保留完整的阶段顺序，不删除历史阶段
+2. 明确告诉你“当前最新的大阶段是什么”
+3. 把最新阶段直接链接到 [development plan](reference/unified-memory-core/development-plan.zh-CN.md) 的具体执行组
 
-实时执行状态仍以这些控制面为准：
+这里的状态语义固定不变：
 
-- [../.codex/status.md](../.codex/status.md)
-- [../.codex/plan.md](../.codex/plan.md)
+- `已完成` = 这一项真的已经完整关闭，不会再把同一项工作拆到别的顶层 Stage 继续做
+- `当前大阶段` = 当前所有剩余工作都应当挂在这里，而不是分散到多个大项
 
-详细执行队列看这里：
+如果你现在最关心的是 `Context Minor GC`，先看：
 
-- [reference/unified-memory-core/development-plan.zh-CN.md](reference/unified-memory-core/development-plan.zh-CN.md)
+- [Stage 11: Context Minor GC And Codex Integration](#stage-11-context-minor-gc-and-codex-integration)
+- [Stage 11 具体计划](reference/unified-memory-core/development-plan.zh-CN.md#stage-11-context-minor-gc-and-codex-integration)
+- [Context Minor GC 架构页](reference/unified-memory-core/architecture/context-minor-gc.zh-CN.md)
 
-## 当前真相
+## 当前一句话
 
-| 项目 | 当前状态 |
-| --- | --- |
-| `Context Minor GC` | 已收口，不再是当前 blocker |
-| Stage 7 / Step 108 | 已完成：插件内自托管 decision runner 已落地，不需要修改 OpenClaw core |
-| Stage 7 / `104` harder eval matrix | 已完成：live matrix `6 / 6` |
-| Stage 9 guarded smart path | 已完成：live A/B baseline `4 / 4`、guarded `4 / 4`，但继续保持 `default-off` / opt-in only |
-| 当前阶段 | `post-stage10-adoption-closeout` |
-| 当前切片 | `hold-stage10-adoption-proof-stable` |
-| 当前主目标 | 保持 Docker hermetic 基线、Stage 10 shortest-path / shared-foundation proof、以及 `Context Minor GC` operator scorecard 长期为绿 |
-| 下一候选切片 | `formalize-realtime-memory-intent-ingestion` |
+现在仓库不再处于“Stage 7 / 9 收口期”，而是进入了一个新的总阶段：
 
-一句话总结：
+- `Stage 11: Context Minor GC And Codex Integration`
 
-`Minor GC` 这条线已经做完“可用性收口”，现在剩下的不是“继续证明它能不能跑”，而是“保持它稳定、保持 guarded 边界、以及转向下一条产品主线”。
+这个总阶段的意思不是“Stage 7 / 9 没做完”，而是：
 
-## 如果只关心 Minor GC，按这个顺序看
+- 保留 Stage 7 / 9 这些已经完成的历史主题
+- 把 **剩余的 `Minor GC` 工作** 收进一个统一的大阶段
+- 把同一套 context decision / scorecard / rollback boundary 正式扩到 Codex
+- 在跨宿主证据出来之前，不做默认路径放量
 
-1. [Context Minor GC 架构页](reference/unified-memory-core/architecture/context-minor-gc.zh-CN.md)
-   - 先看概念边界、已完成什么、还剩什么
-2. [Stage 7 / Step 108 收口报告](../reports/generated/stage7-step108-context-minor-gc-closeout-2026-04-18.zh-CN.md)
-   - 看“不改 OpenClaw core，如何打通 decision transport”
-3. [Stage 7 `Context Minor GC` 收口报告](../reports/generated/stage7-context-minor-gc-closeout-2026-04-18.zh-CN.md)
-   - 看 Stage 7 为什么已经能正式关闭
-4. [Stage 9 收口报告](../reports/generated/stage9-guarded-smart-path-closeout-2026-04-18.zh-CN.md)
-   - 看 guarded smart path 为什么已收口，但仍然保持 `default-off`
-5. [开发计划](reference/unified-memory-core/development-plan.zh-CN.md)
-   - 看 Minor GC 之后真正排队的下一条工作
+## 阶段时间线
 
-## Context Minor GC 当前状态
+| 阶段 | 状态 | 主题 | 说明 |
+| --- | --- | --- | --- |
+| Stage 1 | 已完成 | design baseline | 定义产品边界、文档结构、测试面 |
+| Stage 2 | 已完成 | local-first baseline | 跑通 governed local-first baseline |
+| Stage 3 | 已完成 | self-learning lifecycle baseline | promotion / decay / learning governance 收口 |
+| Stage 4 | 已完成 | policy adaptation | 让 governed learning 影响消费行为 |
+| Stage 5 | 已完成 | product hardening | independent operation / split / reproducibility / release boundary 收口 |
+| Stage 6 | 已完成 | dialogue working-set shadow integration | runtime shadow measurement 面落地 |
+| Stage 7 | 已完成 | context loading optimization closure | `Context Minor GC` 正式进入主线并收口 |
+| Stage 8 | 已完成 | ordinary-conversation realtime-write latency closure | ordinary-conversation strict Docker A/B 收口 |
+| Stage 9 | 已完成 | guarded smart-path promotion | bounded opt-in active path 收口，但继续 `default-off` |
+| Stage 10 | 已完成 | adoption simplification and shared-foundation proof | 最短接入路径、Codex / 多实例 shared proof 收口 |
+| Stage 11 | 当前大阶段 | Context Minor GC and Codex integration | 把所有剩余的 Minor GC 工作收成统一大阶段，并把 Codex 对接纳入正式计划 |
 
-这块单独列出来，是为了避免 `roadmap / plan / 架构页 / 报告` 各说各话。
+## Stage 11: Context Minor GC And Codex Integration
 
-- Stage 6 `dialogue working-set shadow`：已完成，保持 `default-off` + shadow-only
-- Stage 7 scorecard：captured `16 / 16`
-- Stage 7 average raw reduction ratio：`0.4191`
-- Stage 7 / Step 108：已完成
-  - hermetic gateway captured `5 / 5`
-  - 本机 service smoke captured `3 / 3`
-- Stage 7 / `104` harder live matrix：`6 / 6`
-  - captured `6 / 6`
-  - relation `6 / 6`
-  - reduction `6 / 6`
-- Stage 9 guarded live A/B：已完成
-  - baseline `4 / 4`
-  - guarded `4 / 4`
-  - guarded applied `2 / 4`
-  - activation matched `4 / 4`
-  - false activations `0`
-  - missed activations `0`
+Stage 11 是当前最新的大阶段。它下面不是一条线到底，而是 4 个分组：
 
-解释：
+| 分组 | 状态 | 目标 | 具体计划 |
+| --- | --- | --- | --- |
+| 11A `foundation-reframe` | 已完成 | 把 Stage 6 / 7 / 9 的 `Minor GC` 历史成果收成一个可读的大阶段叙事 | [Plan: 11A](reference/unified-memory-core/development-plan.zh-CN.md#group-11a-foundation-reframe) |
+| 11B `openclaw-baseline-hold` | 当前进行 | 保持 OpenClaw 侧 `Context Minor GC` scorecard、harder matrix、guarded 边界长期为绿 | [Plan: 11B](reference/unified-memory-core/development-plan.zh-CN.md#group-11b-openclaw-baseline-hold) |
+| 11C `codex-context-bridge` | 下一步 | 把同一套 context decision / shadow / guarded / scorecard 接到 Codex adapter | [Plan: 11C](reference/unified-memory-core/development-plan.zh-CN.md#group-11c-codex-context-bridge) |
+| 11D `cross-host-rollout-decision` | 后续 | 只有 OpenClaw + Codex 两侧证据都够硬后，才讨论是否扩大默认路径 | [Plan: 11D](reference/unified-memory-core/development-plan.zh-CN.md#group-11d-cross-host-rollout-decision) |
 
-- `Minor GC` 的能力闭环已经完成
-- 它没有被推进成默认 active-path
-- 这不是“没做完”，而是刻意保留的产品边界
+### Stage 11 已完成的基础部分
+
+这些已经不是 blocker：
+
+- Stage 6 runtime shadow integration
+- Stage 7 / Step 108
+- Stage 7 / `104` harder live matrix
+- Stage 9 guarded smart path
+
+对应报告：
+
+- [Stage 7 / Step 108 收口报告](../reports/generated/stage7-step108-context-minor-gc-closeout-2026-04-18.zh-CN.md)
+- [Stage 7 `Context Minor GC` 收口报告](../reports/generated/stage7-context-minor-gc-closeout-2026-04-18.zh-CN.md)
+- [Stage 9 收口报告](../reports/generated/stage9-guarded-smart-path-closeout-2026-04-18.zh-CN.md)
+
+### Stage 11 当前真正正在做什么
+
+当前重点不再是“继续证明 Minor GC 能不能跑通”，而是：
+
+1. 保持 OpenClaw 侧 `Context Minor GC` 证据面长期为绿
+2. 把 `Codex` 对接纳入同一个大阶段，而不是继续散落在 Stage 10 证明里
+3. 把默认路径放量决策明确延后，直到跨宿主证据完整
+
+## 如果你只想知道“Minor GC 还剩什么”
+
+最短答案：
+
+- `Minor GC` 的 OpenClaw 基础能力闭环已经完成
+- 当前还剩下的，不是“Minor GC 本身没做完”
+- 当前剩下的是：
+  - Stage 11B：保持 OpenClaw 侧 operator baseline
+  - Stage 11C：完成 Codex context bridge
+  - Stage 11D：做跨宿主 rollout 决策
 
 ## 当前 / 下一步 / 更后面
 
 | 时间层级 | 重点 | 退出信号 |
 | --- | --- | --- |
-| 当前 | 维护态：保持 Docker hermetic、Stage 10 最短接入路径、shared-foundation proof、`Context Minor GC` scorecard 持续为绿 | 新改动不会把 Stage 7 / 9 / 10 的证据面打回红色 |
-| 下一步 | 把“主回复 + `memory_extraction`”收成正式产品契约，补上 ordinary-conversation rule 的实时 governed ingest 入口 | replay gate、admission routing、adapter tests、架构文档全部对齐 |
-| 更后面 | 对同一批核心案例做 `legacy / unified / bootstrap / retrieval` 对照，明确答案来源和增益边界 | 用户能直接看懂哪些能力来自原生、哪些来自扩展、哪些只是 bootstrap 输入 |
+| 当前 | Stage 11B：保持 OpenClaw 侧 `Context Minor GC` 与 guarded baseline 长期为绿 | scorecard、harder matrix、guarded live A/B 不回退 |
+| 下一步 | Stage 11C：把 Codex context bridge 接进同一套 decision contract / shadow / guarded / scorecard | Codex adapter replay、tests、cross-host report 全部对齐 |
+| 更后面 | Stage 11D：是否扩大默认路径，必须在跨宿主证据下单独决策 | 有正式 rollout ADR / report，而不是隐式放量 |
 
-## 当前评估结论
+## 阅读顺序
 
-- 已完成：
-  - Stage 7 `Context Minor GC` 已关闭
-  - Step 108 已关闭
-  - Stage 9 `guarded smart path` 已关闭
-  - Stage 10 adoption / shared-foundation proof 已关闭
-- 继续保持：
-  - `Context Minor GC` operator scorecard 为绿
-  - Docker 为默认 hermetic A/B 面
-  - guarded seam 继续 `default-off` / opt-in only
-- 现在不做：
-  - 不把 guarded path 扩成默认 active prompt mutation
-  - 不修改 OpenClaw builtin memory 行为
-  - 不重新打开“Minor GC 到底能不能跑通”这个问题
+如果你现在要顺着看，不要再在旧报告之间跳：
 
-## 三个用户价值与当前里程碑
-
-| 用户价值 | 已落地 | 当前证据面 | 现在真正剩下的 |
-| --- | --- | --- | --- |
-| `轻快` | fact-first assembly、runtime shadow、`Context Minor GC` closeout、Docker hermetic eval | Stage 7 closeout、harder matrix `6 / 6`、Stage 9 live A/B | 让“轻快”持续为绿，而不是重新打开 Stage 7；未来是否扩大默认路径，必须是新的显式产品决策 |
-| `聪明` | realtime / nightly 学习链路、working-set pruning、guarded smart path | ordinary-conversation strict closeout、Stage 9 closeout | 下一条真正的新工作是 `memory_extraction` / governed ingest，而不是回头补 Minor GC 基础能力 |
-| `省心` | `umc` CLI、inspect / audit / replay / rollback、shared foundation | Stage 10 closeout、release-preflight、Docker hermetic baseline | 保持 operator 证据面可读、可跑、可回放 |
+1. 先看当前这页，确认现在处于 `Stage 11`
+2. 再看 [Stage 11 具体计划](reference/unified-memory-core/development-plan.zh-CN.md#stage-11-context-minor-gc-and-codex-integration)
+3. 再看 [Context Minor GC 架构页](reference/unified-memory-core/architecture/context-minor-gc.zh-CN.md)
+4. 需要核对历史证据时，再看：
+   - [Step 108 收口报告](../reports/generated/stage7-step108-context-minor-gc-closeout-2026-04-18.zh-CN.md)
+   - [Stage 7 收口报告](../reports/generated/stage7-context-minor-gc-closeout-2026-04-18.zh-CN.md)
+   - [Stage 9 收口报告](../reports/generated/stage9-guarded-smart-path-closeout-2026-04-18.zh-CN.md)

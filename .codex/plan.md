@@ -2,7 +2,7 @@
 
 ## Current Phase
 
-`post-stage10-adoption-closeout`
+`stage11-context-minor-gc-and-codex-integration`
 
 ## Current Results Snapshot
 
@@ -33,7 +33,17 @@
 - Stage 9 average guarded prompt reduction ratio: `0.0306`; applied-only prompt reduction ratio: `0.0067`; applied-only raw reduction ratio: `0.7422`
 - Docker hermetic eval status: official-image runner, proxy rewrite, cloned-state path rewrite, warmed template cache, strict ordinary benchmark, and `gateway-steady` fast-watch ordinary benchmark are all landed; Docker is now the default trustworthy hermetic A/B base for this repo
 - Stage 10 adoption/shared-foundation proof: latest sampled package tarball `1456484 bytes`, `umc where` `154ms`, first-run `registry inspect` `80ms`, Codex shared proof `1 promoted / 1 candidate / 1 policy input`, multi-instance shared proof `2 candidates / 2 policy inputs`
-- Interpretation: the `200+` case buildout, natural-Chinese / watchlist / perf hardening, Stage 6/7/8/9 closure, and the Stage 10 shortest-path/shared-foundation proof are all complete; the repo is now in maintenance mode until a new explicit product goal opens a new stage
+- Interpretation: the `200+` case buildout, natural-Chinese / watchlist / perf hardening, Stage 6/7/8/9 closure, and the Stage 10 shortest-path/shared-foundation proof are all complete; the repo has now opened `Stage 11` to group all remaining Minor GC work together with the Codex bridge
+
+## Stage 11 Focus
+
+- 11A `foundation-reframe`: completed
+- 11B `openclaw-baseline-hold`: current
+- 11C `codex-context-bridge`: next
+- 11D `cross-host-rollout-decision`: later
+- Rule:
+  - Stage 7 / Step 108 / Stage 9 stay closed
+  - remaining Minor GC work should not be scattered across multiple umbrella stages again
 
 ## Current Product Promises
 
@@ -46,14 +56,14 @@
 
 ## Current Gap Order
 
-1. `轻快 / context loading optimization`
-   - 继续保持 unified scorecard 为绿，不让 Stage 7 漂回未决状态
-2. `轻快 / install`
-   - 继续保持 Stage 10 最短接入路径为绿，不让 adoption proof 退回成手工流程
-3. `聪明`
-   - bounded guarded seam 已收口，但继续保持 `default-off` / opt-in only
-4. `省心`
-   - 共享底座证据已经成立，当前重点是让 Codex / 多实例 proof 长期保持为绿
+1. `Stage 11B / OpenClaw baseline hold`
+   - keep the OpenClaw-side scorecard, harder matrix, and guarded boundary green
+2. `Stage 11C / Codex context bridge`
+   - connect the same decision contract / shadow / guarded / scorecard model to Codex
+3. `Stage 10 hold`
+   - keep shortest adoption path and shared-foundation proof green
+4. `Stage 11D / rollout decision`
+   - do not widen the default path implicitly
 
 ## Slices
 
@@ -266,28 +276,28 @@
 
 ## Current Execution Line
 
-- Objective: Stage 7 / 8 / 9 / 10 已全部收口；当前进入维护态，继续保持 Docker 为默认 hermetic A/B 面与 Stage 10 shortest-path/shared-foundation proof 持续为绿
-- Plan Link: `hold-stage10-adoption-proof-stable`
-- Runway: Stage 7/8/9/10 closeout evidence、Docker hermetic baseline、release-preflight、canonical-root policy、shared-foundation proof
-- Progress: `4 / 4` tasks complete
+- Objective: 进入 `Stage 11`，把所有剩余的 `Context Minor GC` 工作和 `Codex` 对接收进同一个大阶段；当前先保持 OpenClaw baseline 为绿
+- Plan Link: `stage11-context-minor-gc-and-codex-integration / group-11b-openclaw-baseline-hold`
+- Runway: Stage 7/8/9 closeout evidence、Docker hermetic baseline、release-preflight、canonical-root policy、shared-foundation proof
+- Progress: `1 / 4` groups complete
 - Current Critical Path:
-  - 保持 `npm run umc:stage10` 持续通过
-  - 保持 Stage 10 文档与 control surface 不漂移
-  - 保持 Docker 作为默认 hermetic A/B 面
+  - 保持 Stage 7 scorecard、Step 108、`104` harder matrix、Stage 9 live A/B 不回退
+  - 把 `Codex` context bridge 作为下一条明确工作，而不是继续散落在别的主题下
+  - 保持 Stage 10 shortest-path/shared-foundation proof 持续为绿
 - Stop Conditions:
-  - docs remain anchored to the older history-cleanup recovery pointer instead of the next context-optimization queue
-  - install simplification gets moved ahead of context loading optimization before Stage 7 closes
+  - remaining Minor GC work gets scattered across multiple umbrella stages again
+  - Codex integration remains only narrative and never gets a real decision contract / scorecard surface
   - bounded LLM decision work turns into growing hardcoded rule tables
-  - active prompt mutation is discussed before rollback and operator metrics are explicit
-  - Stage 5 evidence regresses while this planning work is ongoing
-- Validation: roadmap / development plan / architecture docs、harder-case design note、formal-gate promotion decision、`npm run umc:release-preflight`、full regression、CLI use cases、main-path perf baseline、memory-improvement A/B summary、`npm run umc:cli -- registry inspect --format markdown`
+  - active prompt mutation is discussed before cross-host evidence and rollback boundaries are explicit
+  - Stage 10 proof regresses while this stage planning is ongoing
+- Validation: roadmap / development plan / architecture docs、Stage 7 closeout reports、Stage 9 closeout report、`npm run umc:release-preflight`、Docker hermetic baseline、Stage 10 proof、`npm run umc:cli -- registry inspect --format markdown`
 
-## Execution Tasks
+## Stage 11 Groups
 
-- [x] EL-1 shorten install / bootstrap / verify into one clear shortest operator path
-- [x] EL-2 add package / startup / first-run cost to the `light and fast` evidence surface
-- [x] EL-3 publish stronger Codex shared-foundation proof
-- [x] EL-4 publish clearer multi-instance shared-memory operator proof
+- [x] 11A foundation-reframe
+- [ ] 11B openclaw-baseline-hold
+- [ ] 11C codex-context-bridge
+- [ ] 11D cross-host-rollout-decision
 
 ## Development Log Capture
 

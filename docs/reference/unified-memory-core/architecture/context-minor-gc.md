@@ -8,10 +8,20 @@ This document turns the per-turn context optimization line into one explicit pro
 
 - `Context Minor GC`
 
-It is not a new stage plan. It is the convergence page that explains the already-completed Stage 6 / Stage 7 / Step 108 / Stage 9 chain:
+It now maps to a larger umbrella stage:
+
+- `Stage 11: Context Minor GC And Codex Integration`
+
+Important boundary:
+
+- Stage 6 / 7 / 9 remain completed historical OpenClaw-side themes
+- `Stage 11` owns only the remaining Minor GC work
+
+So this page now explains both the historical OpenClaw-side closeout and the remaining cross-host work:
 
 - what is already done
 - what is still left
+- where it now sits inside Stage 11
 - which document to read first
 
 Related documents:
@@ -32,13 +42,14 @@ Read this section first.
 | Stage 7 / Step 108 | completed; decision transport runs without modifying OpenClaw core |
 | Stage 7 / `104` harder eval matrix | completed; live matrix `6 / 6` |
 | Stage 9 guarded smart path | completed; still `default-off` / opt-in only |
-| `Context Minor GC` itself | closed; no longer the current blocker |
-| What is not finished | broader default active-path rollout and more aggressive router / task-state expansions remain future enhancements |
+| OpenClaw-side `Context Minor GC` core capability | closed |
+| Current umbrella stage | `Stage 11: Context Minor GC And Codex Integration` |
+| What is still unfinished | Codex context bridge, cross-host rollout decision, and broader default-path rollout remain later groups |
 
 Short version:
 
-`Context Minor GC` already completed the “can run, can be measured, can roll back, can close out” loop.
-It was not widened into the default path, but that is a deliberate product boundary, not an unfinished closeout.
+OpenClaw-side `Context Minor GC` already completed the “can run, can be measured, can roll back, can close out” loop.
+But the remaining Minor GC work is not finished, because Codex integration and cross-host rollout decisions now belong to Stage 11.
 
 ## Reading Order
 
@@ -67,6 +78,18 @@ What is already true now:
 - `Context Minor GC` is the right public name for this workstream
 - under the “do not modify OpenClaw host code” constraint, this route is already unblocked and closed
 - `compact / compat` stays nightly or background-only
+- the remaining open question now lives inside `Stage 11`: how to bring the same capability to Codex, and whether cross-host rollout should ever widen
+
+## Position Inside Stage 11
+
+Inside `Stage 11`, `Context Minor GC` is now split into four groups:
+
+| Group | Status | What This Page Covers |
+| --- | --- | --- |
+| 11A `foundation-reframe` | completed | turns Stage 6 / 7 / 9 into one readable narrative |
+| 11B `openclaw-baseline-hold` | current | keeps the OpenClaw-side scorecard, harder matrix, and guarded boundary green |
+| 11C `codex-context-bridge` | next | brings the same decision contract / shadow / guarded path into the Codex adapter |
+| 11D `cross-host-rollout-decision` | later | only after strong cross-host evidence exists |
 
 ## Naming Definition
 
@@ -185,7 +208,8 @@ Meaning:
 
 - the Minor GC direction is already stable
 - the hardest “no OpenClaw core modification” transport question is already stable
-- what remains is product-boundary work and future enhancement work, not closeout work
+- OpenClaw-side Minor GC is no longer the blocker
+- what remains is Stage 11 Codex bridge work and a later cross-host rollout decision
 
 ## What Still Remains
 
@@ -193,22 +217,21 @@ What remains should no longer be written as “finish Minor GC closeout”.
 
 The real remaining work is:
 
-1. keep the `Context Minor GC` operator scorecard green
-2. keep the guarded seam `default-off` / opt-in only
-3. only reopen these items under a new explicit product objective:
-   - `task-state ledger + session cache`
-   - `Stage 0 Router`
-   - broader default-path rollout
+1. Stage 11B: keep the OpenClaw-side `Context Minor GC` operator scorecard green
+2. Stage 11C: connect the same shadow / guarded / scorecard model to the Codex adapter
+3. Stage 11D: only discuss broader default-path rollout after strong cross-host evidence exists
+4. deeper enhancements such as `task-state ledger`, `Stage 0 Router`, and broader default-path rollout remain future enhancement items rather than current blockers
 
 ## Final Verdict
 
 The precise current verdict is:
 
-- `Context Minor GC` is closed
+- OpenClaw-side `Context Minor GC` is closed
+- the wider Stage 11 umbrella is still open because Codex integration and cross-host rollout decisions are not done yet
 - broader default active-path rollout is not opened
 - `compact / compat` stays a low-frequency background fallback
 
 In other words:
 
-Minor GC is done.
-What is not done is the decision to widen it into default user-facing behavior, and that belongs to a later product decision, not this closeout.
+Minor GC as an OpenClaw-side core capability is done.
+What is not done is the Codex bridge and the later cross-host rollout decision.

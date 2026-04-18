@@ -37,6 +37,16 @@ At this point the repo has two top-priority milestone tracks:
 
 The second track is now first-class. It is not just an adapter polish item.
 
+From the roadmap perspective, it now lives inside a new umbrella stage:
+
+- `Stage 11: Context Minor GC And Codex Integration`
+
+That boundary matters:
+
+- Stage 6 / 7 / 9 remain completed historical OpenClaw-side themes
+- `Stage 11` owns only the remaining context / Minor GC work
+- the most important new item is the `Codex` bridge, not reopening OpenClaw-side baseline design
+
 Context optimization currently means several coordinated architecture surfaces:
 
 - durable-source slimming and budgeted assembly
@@ -55,8 +65,8 @@ Current state:
 - Stage 6 remains `default-off` and shadow-only as the measurement surface
 - Stage 9 guarded smart-path is also closed, but stays `default-off` / opt-in only
 - the public workstream name for this turn-by-turn context path is now `Context Minor GC`
-- the next round starts by finishing `context loading optimization`: clarify the bounded LLM-led decision contract, operator metrics, rollback boundary, harder A/B design, and one unified scorecard before any default prompt-path change
-- the preferred implementation path is no longer an OpenClaw patch first; it is to pull the `memory + context decision` transport back into the plugin layer first
+- the new umbrella stage is `Stage 11`: keep the OpenClaw baseline green and bring the same context decision contract into Codex
+- the preferred implementation path is no longer an OpenClaw patch first; it is to turn the `memory + context decision` transport / scorecard / guarded seam into a cross-host contract
 - the daily-product target is now explicit: normal sessions should stay sustainable through per-turn context management instead of treating compat / compact as a normal hot-path dependency; compat / compact remains only a nightly or background safety net
 
 ## Current Product Promises
