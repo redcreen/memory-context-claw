@@ -31,9 +31,11 @@
 - [Context Minor GC](docs/reference/unified-memory-core/architecture/context-minor-gc.zh-CN.md)
 - [对话 Working-Set 裁剪](docs/reference/unified-memory-core/architecture/dialogue-working-set-pruning.zh-CN.md)
 - [插件内自托管 Context Decision Overlay](docs/reference/unified-memory-core/architecture/plugin-owned-context-decision-overlay.zh-CN.md)
+- [Codex Context Minor GC Live Matrix](reports/generated/codex-context-minor-gc-live-2026-04-18/report.md)
 - [Stage 7 `Context Minor GC` 收口报告](reports/generated/stage7-context-minor-gc-closeout-2026-04-18.zh-CN.md)
 - [OpenClaw Guarded Live A/B](reports/generated/openclaw-guarded-live-ab-2026-04-18.md)
 - [Stage 9 收口报告](reports/generated/stage9-guarded-smart-path-closeout-2026-04-18.zh-CN.md)
+- [Stage 11 收口报告](reports/generated/stage11-context-minor-gc-and-codex-integration-closeout-2026-04-18.zh-CN.md)
 - [普通对话实时写记忆专项对比](reports/generated/openclaw-ordinary-conversation-memory-intent-ab-2026-04-17.md)
 - [普通对话 strict 收口报告](reports/generated/openclaw-ordinary-conversation-memory-intent-closeout-2026-04-17.md)
 - [普通对话 Docker 隔离复测总结](reports/generated/openclaw-ordinary-conversation-memory-intent-docker-rerun-2026-04-17.md)
@@ -51,15 +53,15 @@
    - 装得简单，接入轻，包体和运行负担尽量小，主路径尽量快
    - 当前已落地：fact-first assembly、runtime working-set shadow instrumentation、release-preflight、独立 Docker hermetic eval
    - 当前这条逐轮 context 优化主线，对外工作名统一为：`Context Minor GC`
-   - 当前最大缺口：`Context Minor GC` 已收口，但还没有扩大成默认 active-path 收益；compat / compact 继续只保留为夜间或后台 safety net；当前重点是保持 operator scorecard、Docker hermetic 基线和 Stage 10 最短接入路径持续为绿
+   - 当前最新状态：`Context Minor GC` 已在 OpenClaw + Codex 两侧收口，正例上已经有明确用户收益；compat / compact 继续只保留为夜间或后台 safety net
 2. `聪明`
    - 该记的记住，不该记的不乱记；该给的 context 才给，不确定时尽量收敛
    - 当前已落地：realtime `memory_intent` ingestion、nightly self-learning、durable-source slimming 方向、working-set pruning shadow 路径
-   - 当前最大缺口：working-set 优化现在已经有了极窄的 guarded opt-in 用户收益，但继续保持 `default-off` / opt-in only；`Minor GC` 剩余工作现在被统一收进 `Stage 11`，当前真正的新项是 `Codex` context bridge
+   - 当前最大缺口：`Minor GC` 本身已经完成；当前真正的新项是 realtime governed memory intake 的产品化，要把 `memory_intent` / `memory_extraction` / accepted-action 收成统一产品面
 3. `省心`
    - 可查、可管、可回放、可回退，也能跨 OpenClaw / Codex / 多实例复用
    - 当前已落地：`umc` CLI、inspect / audit / replay / repair / rollback、canonical registry root、OpenClaw / Codex adapters
-   - 当前最大缺口：不是“有没有共享底座证据”，而是继续保持这些 cross-host 证据与 operator 面长期为绿
+   - 当前最大缺口：不是“有没有共享底座证据”，而是把 realtime governed memory intake 也纳入同一套 operator surface，而不是只停留在 baseline 能力
 
 ## 产品北极星
 
@@ -91,7 +93,7 @@
 当前仍然偏薄弱的部分：
 
 - `轻快`
-  - `Context Minor GC` 已经正式收口，但还没有扩大成默认用户收益；当前弱点不再是“能不能跑通”，而是“怎样长期保持轻快证据为绿”
+  - `Context Minor GC` 已经正式收口，并且跨 OpenClaw + Codex 可用；当前弱点不再是“能不能跑通”，而是“怎样长期保持轻快证据为绿，以及未来是否放量”
 - `聪明`
   - context 优化虽然已经从 shadow-only 推进到极窄的 guarded opt-in 路径，但仍然不是默认体验；是否扩大默认路径，必须是未来单独的产品决策
 - `省心`
@@ -99,9 +101,9 @@
 
 所以接下来的重点顺序应该很明确：
 
-1. 进入 `Stage 11`：把所有剩余的 `Minor GC` 工作和 `Codex` 对接收进一个统一大阶段。
-2. 保持 OpenClaw 侧 `Context Minor GC` 的 scorecard、harder matrix 和 guarded 边界长期为绿。
-3. 把同一套 context decision / shadow / guarded / scorecard 接到 `Codex` adapter。
+1. `Stage 11` 已关闭：`Context Minor GC` 现在已经是可用能力，不再是当前 blocker。
+2. 当前进入 `Stage 12`：把 realtime `memory_intent` / `memory_extraction` / accepted-action 收成统一的 governed product surface。
+3. 继续保持 OpenClaw / Codex 两侧 `Context Minor GC` 的 scorecard、harder matrix 和 guarded 边界长期为绿。
 4. 继续保持 Stage 10 的最短接入路径和 shared-foundation proof 不回退。
 5. 只有在出现新的明确产品目标时，才讨论更宽的默认路径 rollout。
 

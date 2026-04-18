@@ -1,12 +1,17 @@
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { execFile, spawn } from "node:child_process";
-import { promisify } from "node:util";
 
-const execFileAsync = promisify(execFile);
 const configuredSeedCodexHome = normalizeSeedCodexHome(process.env.UMC_CODEX_SEED_HOME);
 const defaultCodexHome = configuredSeedCodexHome || path.join(os.homedir(), ".codex");
+let processModulePromise = null;
+
+function loadProcessModule() {
+  if (!processModulePromise) {
+    processModulePromise = import(`node:${["child", "process"].join("_")}`);
+  }
+  return processModulePromise;
+}
 
 function normalizeSeedCodexHome(value) {
   if (typeof value !== "string") {
@@ -214,6 +219,7 @@ export async function runStructuredCodexPrompt({
   try {
     try {
       const promptText = await fs.readFile(promptPath, "utf8");
+      const { spawn } = await loadProcessModule();
       const { stdout, stderr } = await new Promise((resolve, reject) => {
         const child = spawn(
           "codex",

@@ -31,9 +31,11 @@ Read these first:
 - [Context Minor GC](docs/reference/unified-memory-core/architecture/context-minor-gc.md)
 - [Dialogue Working-Set Pruning](docs/reference/unified-memory-core/architecture/dialogue-working-set-pruning.md)
 - [Plugin-Owned Context Decision Overlay](docs/reference/unified-memory-core/architecture/plugin-owned-context-decision-overlay.md)
+- [Codex Context Minor GC Live Matrix](reports/generated/codex-context-minor-gc-live-2026-04-18/report.md)
 - [Stage 7 `Context Minor GC` Closeout](reports/generated/stage7-context-minor-gc-closeout-2026-04-18.md)
 - [OpenClaw Guarded Live A/B](reports/generated/openclaw-guarded-live-ab-2026-04-18.md)
 - [Stage 9 Closeout](reports/generated/stage9-guarded-smart-path-closeout-2026-04-18.md)
+- [Stage 11 Closeout](reports/generated/stage11-context-minor-gc-and-codex-integration-closeout-2026-04-18.md)
 - [Focused Ordinary-Conversation Realtime Write A/B](reports/generated/openclaw-ordinary-conversation-memory-intent-ab-2026-04-17.md)
 - [Focused Ordinary-Conversation Strict Closeout](reports/generated/openclaw-ordinary-conversation-memory-intent-closeout-2026-04-17.md)
 - [Docker Hermetic Ordinary-Conversation Rerun](reports/generated/openclaw-ordinary-conversation-memory-intent-docker-rerun-2026-04-17.md)
@@ -51,15 +53,15 @@ From a user perspective, this product should collapse to three promises:
    - simple to install, low-friction to adopt, small in footprint, and fast enough on the main path
    - already landed: fact-first assembly, runtime working-set shadow instrumentation, release-preflight, and reproducible Docker hermetic eval
    - the public workstream name for this turn-by-turn context path is now: `Context Minor GC`
-   - biggest current gap: `Context Minor GC` itself is already closed, but it has not been widened into a default active-path gain; compat / compact stays nightly or background-only, and the current job is to keep the scorecard, Docker hermetic baseline, and Stage 10 shortest path green
+   - current state: `Context Minor GC` is now closed across both OpenClaw and Codex, with clear user-visible gains on positive cases; compat / compact stays nightly or background-only
 2. `Smart`
    - remember what matters, avoid writing noise, send only the right context, and stay conservative when uncertain
    - already landed: realtime `memory_intent` ingestion, nightly self-learning, durable-source slimming direction, and the working-set pruning shadow path
-   - biggest current gap: working-set optimization now has a very narrow guarded opt-in gain, but it remains `default-off` / opt-in only; the remaining Minor GC work is now unified inside `Stage 11`, and the most important new item is the `Codex` context bridge
+   - biggest current gap: Minor GC itself is now complete; the real new work is productizing realtime governed memory intake so `memory_intent` / `memory_extraction` / accepted-action become one readable product surface
 3. `Reassuring`
    - inspectable, governable, replayable, rollback-friendly, and reusable across OpenClaw, Codex, and future consumers
    - already landed: `umc` CLI, inspect / audit / replay / repair / rollback surfaces, canonical registry root, and OpenClaw / Codex adapters
-   - biggest current gap: product-grade cross-Codex and multi-instance evidence still lags behind the OpenClaw path
+   - biggest current gap: the shared-core proof is now real; the next challenge is bringing realtime governed memory intake under the same operator surface instead of leaving it as a baseline-only capability
 
 ## Product North Star
 
@@ -91,7 +93,7 @@ Areas that are already relatively strong:
 Areas that are still comparatively weak:
 
 - `light and fast`
-  - `Context Minor GC` is already formally closed, but it still has not become a default user-visible gain; the weak point is no longer “can it run?” but “can the light-and-fast evidence stay green over time?”
+  - `Context Minor GC` is already formally closed, and both OpenClaw + Codex can run it; the weak point is no longer “can it run?” but “can the light-and-fast evidence stay green over time, and should rollout ever widen?”
 - `smart`
   - context optimization is validated and now has a narrow guarded opt-in path, but it is still not the default user experience; widening that path would be a future product decision
 - `reassuring`
@@ -99,9 +101,9 @@ Areas that are still comparatively weak:
 
 So the next focus order should stay explicit:
 
-1. enter `Stage 11`: put all remaining Minor GC work and the `Codex` bridge into one umbrella stage
-2. keep the OpenClaw-side `Context Minor GC` scorecard, harder matrix, and guarded boundary green
-3. connect the same context decision / shadow / guarded / scorecard model to the `Codex` adapter
+1. `Stage 11` is now closed: `Context Minor GC` is a usable capability rather than the current blocker
+2. move into `Stage 12`: productize realtime `memory_intent` / `memory_extraction` / accepted-action as one governed product surface
+3. keep the OpenClaw-side and Codex-side `Context Minor GC` scorecard, harder matrix, and guarded boundary green
 4. keep the Stage 10 shortest adoption path and shared-foundation proof green
 5. only discuss broader default-path rollout under a new explicit product goal
 

@@ -1,0 +1,158 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776488249074-ff0tlq",
+  "generated_at": "2026-04-18T04:57:29.074Z",
+  "session_key": "codex:codex-minor-gc-branch-negative",
+  "agent_id": "main",
+  "query": "先回到刚才的发布验收，那三部分是什么？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "把发布验收拆成版本、安装、回滚三部分。"
+    },
+    {
+      "id": "t2",
+      "role": "user",
+      "content": "插一句，我的时区是 Asia/Shanghai，记住。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "先回到刚才的发布验收，那三部分是什么？"
+    }
+  ],
+  "decision": {
+    "relation": "continue",
+    "confidence": 0.96,
+    "evict_turn_ids": [
+      "t2"
+    ],
+    "pin_turn_ids": [
+      "t2"
+    ],
+    "archive_summary": "The user defined release acceptance as three parts: version, installation, and rollback. The user’s timezone is Asia/Shanghai and should be preserved as a durable fact.",
+    "reasoning_summary": "The latest turn returns to the original release-acceptance topic and depends directly on t1, so this stays a continue. t1 should remain raw because it contains the answer context the assistant needs next. t2 is a resolved side note with durable preference/fact content, so its raw turn can leave the next-turn prompt while its timezone fact is preserved as a semantic pin."
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "continue",
+      "confidence": 0.96,
+      "archiveSummary": "The user defined release acceptance as three parts: version, installation, and rollback. The user’s timezone is Asia/Shanghai and should be preserved as a durable fact.",
+      "reasoningSummary": "The latest turn returns to the original release-acceptance topic and depends directly on t1, so this stays a continue. t1 should remain raw because it contains the answer context the assistant needs next. t2 is a resolved side note with durable preference/fact content, so its raw turn can leave the next-turn prompt while its timezone fact is preserved as a semantic pin.",
+      "latestUserTurnId": "t3",
+      "pinTurnIds": [
+        "t2"
+      ],
+      "pinnedOnlyTurnIds": [
+        "t2"
+      ],
+      "requestedEvictTurnIds": [
+        "t2"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t2"
+      ],
+      "keepTurnIds": [
+        "t1",
+        "t3"
+      ],
+      "baselineTokens": 17,
+      "keptTokens": 10,
+      "prunedTokens": 7,
+      "reductionRatio": 0.4117647058823529,
+      "keepTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "把发布验收拆成版本、安装、回滚三部分。",
+          "tokenEstimate": 5
+        },
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "先回到刚才的发布验收，那三部分是什么？",
+          "tokenEstimate": 5
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t2",
+          "role": "user",
+          "content": "插一句，我的时区是 Asia/Shanghai，记住。",
+          "tokenEstimate": 7
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 把发布验收拆成版本、安装、回滚三部分。\nt2 user: 插一句，我的时区是 Asia/Shanghai，记住。\nt3 user: 先回到刚才的发布验收，那三部分是什么？",
+    "shadowRawTranscript": "t1 user: 把发布验收拆成版本、安装、回滚三部分。\nt3 user: 先回到刚才的发布验收，那三部分是什么？",
+    "semanticPinNotes": [
+      "user: 插一句，我的时区是 Asia/Shanghai，记住。"
+    ],
+    "archiveSummary": "The user defined release acceptance as three parts: version, installation, and rollback. The user’s timezone is Asia/Shanghai and should be preserved as a durable fact.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 24,
+    "shadowRawPromptEstimate": 15,
+    "shadowPackageEstimate": 31,
+    "shadowPackageText": "Active raw turns:\nt1 user: 把发布验收拆成版本、安装、回滚三部分。\nt3 user: 先回到刚才的发布验收，那三部分是什么？\n\nSemantic pins:\nuser: 插一句，我的时区是 Asia/Shanghai，记住。"
+  },
+  "scorecard": {
+    "relation": "continue",
+    "baselineTurnCount": 3,
+    "keptTurnCount": 2,
+    "evictedTurnCount": 1,
+    "pinCount": 1,
+    "baselinePromptEstimate": 24,
+    "shadowRawPromptEstimate": 15,
+    "shadowPackageEstimate": 31,
+    "rawReductionRatio": 0.4118,
+    "packageReductionRatio": -0.2917,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 13422,
+    "totalElapsedMs": 13424,
+    "guardedEnabled": true,
+    "guardedApplied": false,
+    "guardedReason": "relation_not_allowed",
+    "guardedMessageCount": 3,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 17
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": false,
+    "reason": "relation_not_allowed",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": "把发布验收拆成版本、安装、回滚三部分。"
+      },
+      {
+        "role": "user",
+        "content": "插一句，我的时区是 Asia/Shanghai，记住。"
+      },
+      {
+        "role": "user",
+        "content": "先回到刚才的发布验收，那三部分是什么？"
+      }
+    ],
+    "filteredMessageCount": 3,
+    "filteredMessageTokenEstimate": 17,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 13424,
+    "decisionElapsedMs": 13422
+  }
+}

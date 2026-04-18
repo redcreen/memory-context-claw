@@ -22,6 +22,12 @@ import {
   SHARED_CONTRACT_VERSION
 } from "./unified-memory-core/index.js";
 import { ingestDeclaredSourceToCandidate } from "./unified-memory-core/pipeline.js";
+import {
+  buildCodexContextMinorGcPackage,
+  mergeCodexPromptBlocks,
+  resolveCodexContextMinorGcConfig
+} from "./codex-context-minor-gc.js";
+import { estimateTokenCountFromText } from "./utils.js";
 
 function normalizeString(value, fallback = "") {
   if (typeof value !== "string") {
@@ -214,6 +220,7 @@ export function resolveCodexAdapterConfig(raw = {}) {
     allowedStates: normalizeStringList(raw.allowedStates, ["stable"]),
     maxItems: Number.isFinite(raw.maxItems) ? Math.max(1, Math.min(20, Number(raw.maxItems))) : 6,
     writeBackVisibility: normalizeString(raw.writeBackVisibility, "workspace"),
+    contextMinorGc: resolveCodexContextMinorGcConfig(raw.contextMinorGc),
     policyAdaptation: {
       enabled: raw.policyAdaptation?.enabled !== false,
       maxPolicyInputs: Number.isFinite(raw.policyAdaptation?.maxPolicyInputs)
@@ -572,8 +579,7 @@ export function createCodexAdapterRuntime(options = {}) {
       maxPolicyInputs: config.policyAdaptation.maxPolicyInputs,
       rollbackOnError: config.policyAdaptation.rollbackOnError
     });
-
-    return mapCodexExportToTaskMemory(exportResult, {
+    const memoryPackage = mapCodexExportToTaskMemory(exportResult, {
       taskPrompt: input.taskPrompt || input.prompt || "",
       maxItems,
       policyContext: config.policyAdaptation.enabled
@@ -590,6 +596,75 @@ export function createCodexAdapterRuntime(options = {}) {
             }
           }
     });
+    const taskPrompt = input.taskPrompt || input.prompt || "";
+    const conversationMessages = (
+      input.recentMessages
+      || input.dialogueMessages
+      || input.conversationMessages
+      || input.messages
+      || []
+    );
+    const inputContextMinorGc = input.contextMinorGc && typeof input.contextMinorGc === "object" && !Array.isArray(input.contextMinorGc)
+      ? input.contextMinorGc
+      : {};
+    const contextMinorGcConfig = resolveCodexContextMinorGcConfig({
+      ...config.contextMinorGc,
+      ...inputContextMinorGc,
+      shadow: {
+        ...(config.contextMinorGc?.shadow || {}),
+        ...(inputContextMinorGc.shadow && typeof inputContextMinorGc.shadow === "object" ? inputContextMinorGc.shadow : {})
+      },
+      guarded: {
+        ...(config.contextMinorGc?.guarded || {}),
+        ...(inputContextMinorGc.guarded && typeof inputContextMinorGc.guarded === "object" ? inputContextMinorGc.guarded : {})
+      }
+    });
+    const contextMinorGc = await buildCodexContextMinorGcPackage({
+      logger,
+      config: contextMinorGcConfig,
+      sessionKey: normalizeString(
+        input.contextMinorGcSessionKey,
+        `${contextMinorGcConfig.sessionKeyPrefix}:${namespacePlan.primaryNamespace.key}`
+      ),
+      query: taskPrompt,
+      messages: conversationMessages,
+      decisionRunner: typeof input.contextMinorGcDecisionRunner === "function"
+        ? input.contextMinorGcDecisionRunner
+        : typeof inputContextMinorGc.decisionRunner === "function"
+          ? inputContextMinorGc.decisionRunner
+          : null
+    });
+    const memoryPromptBlock = memoryPackage.prompt_block || "";
+    const baselinePromptBlock = mergeCodexPromptBlocks(
+      contextMinorGc.baselineContextBlock,
+      memoryPromptBlock
+    );
+    const optimizedPromptBlock = mergeCodexPromptBlocks(
+      contextMinorGc.optimizedContextBlock,
+      memoryPromptBlock
+    );
+    const effectivePromptBlock = mergeCodexPromptBlocks(
+      contextMinorGc.effectiveContextBlock,
+      memoryPromptBlock
+    );
+
+    return {
+      ...memoryPackage,
+      memory_prompt_block: memoryPromptBlock,
+      baseline_prompt_block: baselinePromptBlock,
+      optimized_prompt_block: optimizedPromptBlock,
+      conversation_prompt_block: contextMinorGc.baselineContextBlock,
+      prompt_block: effectivePromptBlock,
+      context_minor_gc: {
+        ...contextMinorGc,
+        baselinePromptBlock,
+        optimizedPromptBlock,
+        effectivePromptBlock,
+        baselinePromptEstimate: estimateTokenCountFromText(baselinePromptBlock),
+        optimizedPromptEstimate: estimateTokenCountFromText(optimizedPromptBlock),
+        effectivePromptEstimate: estimateTokenCountFromText(effectivePromptBlock)
+      }
+    };
   }
 
   async function withNamespaceWriteLock(namespace, task) {

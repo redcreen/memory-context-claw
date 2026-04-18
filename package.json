@@ -20,6 +20,7 @@
     "eval:memory-search:cases": "node scripts/eval-memory-search-cases.js",
     "eval:memory-search:governance": "node scripts/run-memory-search-governance.js",
     "eval:openclaw:benchmark": "node scripts/eval-openclaw-cli-memory-benchmark.js",
+    "eval:codex:context-minor-gc": "node scripts/eval-codex-context-minor-gc-live.js",
     "eval:openclaw:docker": "node scripts/run-openclaw-docker-eval.js",
     "eval:openclaw:guarded-live-ab": "node scripts/eval-openclaw-guarded-live-ab.js",
     "eval:openclaw:agent-matrix": "node scripts/eval-openclaw-cli-agent-answer-matrix.js",

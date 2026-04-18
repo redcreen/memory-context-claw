@@ -8,21 +8,17 @@ This document turns the per-turn context optimization line into one explicit pro
 
 - `Context Minor GC`
 
-It now maps to a larger umbrella stage:
+It also makes one status change explicit:
 
-- `Stage 11: Context Minor GC And Codex Integration`
+- `Stage 11: Context Minor GC And Codex Integration` is now complete
 
-Important boundary:
+So this page no longer answers “what is still unfinished inside Minor GC?”
+It now answers:
 
-- Stage 6 / 7 / 9 remain completed historical OpenClaw-side themes
-- `Stage 11` owns only the remaining Minor GC work
-
-So this page now explains both the historical OpenClaw-side closeout and the remaining cross-host work:
-
-- what is already done
-- what is still left
-- where it now sits inside Stage 11
-- which document to read first
+1. what `Context Minor GC` actually finished
+2. why it can now be treated as closed
+3. how it differs from `compact / compat`
+4. why the next stage has moved elsewhere
 
 Related documents:
 
@@ -38,28 +34,47 @@ Read this section first.
 
 | Item | Current State |
 | --- | --- |
-| Stage 6 shadow runtime | completed; still `default-off` + shadow-only |
+| Stage 6 shadow runtime | completed; stays `default-off` + shadow-only |
 | Stage 7 / Step 108 | completed; decision transport runs without modifying OpenClaw core |
 | Stage 7 / `104` harder eval matrix | completed; live matrix `6 / 6` |
-| Stage 9 guarded smart path | completed; still `default-off` / opt-in only |
-| OpenClaw-side `Context Minor GC` core capability | closed |
-| Current umbrella stage | `Stage 11: Context Minor GC And Codex Integration` |
-| What is still unfinished | Codex context bridge, cross-host rollout decision, and broader default-path rollout remain later groups |
+| Stage 9 guarded smart path | completed; stays `default-off` / opt-in only |
+| Codex Context Minor GC live matrix | completed; `4 / 4` |
+| `Context Minor GC` | closed |
+| Stage 11 | completed |
+| Current stage | `Stage 12: Realtime Memory Intent Productization` |
 
 Short version:
 
-OpenClaw-side `Context Minor GC` already completed the “can run, can be measured, can roll back, can close out” loop.
-But the remaining Minor GC work is not finished, because Codex integration and cross-host rollout decisions now belong to Stage 11.
+`Context Minor GC` now completed the “can run, can be measured, can roll back, can close out” loop across both OpenClaw and Codex.
+
+## Why Stage 11 Can Close
+
+The new closeout bar for `Stage 11` is simple:
+
+1. the full GC path is usable
+2. users can see a clear benefit
+3. rollback boundaries remain explicit
+
+Current result:
+
+| Bar | Result |
+| --- | --- |
+| GC is usable | OpenClaw + Codex both consume the same decision contract / shadow / guarded seam |
+| User benefit is visible | OpenClaw positive cases reached average package reduction ratio `0.4657`; Codex positive cases reached prompt reduction ratios `0.4355` / `0.1522` |
+| Rollback boundary stays explicit | guarded remains `default-off` / opt-in only |
+
+That is why `Stage 11` is now closed instead of still being current.
 
 ## Reading Order
 
-If you only want to understand Minor GC progress and what remains, read in this order:
+If you only want to understand Minor GC progress and the final answer, read in this order:
 
 1. this page
 2. [Stage 7 / Step 108 closeout](../../../../reports/generated/stage7-step108-context-minor-gc-closeout-2026-04-18.md)
 3. [Stage 7 `Context Minor GC` closeout](../../../../reports/generated/stage7-context-minor-gc-closeout-2026-04-18.md)
 4. [Stage 9 closeout](../../../../reports/generated/stage9-guarded-smart-path-closeout-2026-04-18.md)
-5. [development plan](../development-plan.md)
+5. [Codex Context Minor GC Live Matrix](../../../../reports/generated/codex-context-minor-gc-live-2026-04-18/report.md)
+6. [Stage 11 closeout report](../../../../reports/generated/stage11-context-minor-gc-and-codex-integration-closeout-2026-04-18.md)
 
 ## Short Conclusion
 
@@ -68,28 +83,10 @@ The `GC` here is not literal memory destruction. It means:
 - reclaim raw context that no longer deserves prompt space on the hot path
 - keep archive refresh / full compact / compat as low-frequency background safety nets
 
-The goal is not to make the system compact more often. The goal is the opposite:
+The goal is not to compact more often. It is the opposite:
 
-- keep normal long sessions alive without depending on `compact / compat`
-- rely on lighter per-turn context management instead
-
-What is already true now:
-
-- `Context Minor GC` is the right public name for this workstream
-- under the “do not modify OpenClaw host code” constraint, this route is already unblocked and closed
-- `compact / compat` stays nightly or background-only
-- the remaining open question now lives inside `Stage 11`: how to bring the same capability to Codex, and whether cross-host rollout should ever widen
-
-## Position Inside Stage 11
-
-Inside `Stage 11`, `Context Minor GC` is now split into four groups:
-
-| Group | Status | What This Page Covers |
-| --- | --- | --- |
-| 11A `foundation-reframe` | completed | turns Stage 6 / 7 / 9 into one readable narrative |
-| 11B `openclaw-baseline-hold` | current | keeps the OpenClaw-side scorecard, harder matrix, and guarded boundary green |
-| 11C `codex-context-bridge` | next | brings the same decision contract / shadow / guarded path into the Codex adapter |
-| 11D `cross-host-rollout-decision` | later | only after strong cross-host evidence exists |
+- normal long sessions should not depend on `compact / compat`
+- lighter per-turn context management should keep them alive
 
 ## Naming Definition
 
@@ -107,25 +104,19 @@ The analogy is useful because it:
 1. separates per-turn hot-path pruning from low-frequency background cleanup
 2. keeps the system focused on `minor` instead of jumping to `full compact` under pressure
 3. forces `task state` to become a first-class layer instead of hiding inside bloated summaries
-4. compresses the product goal into one sentence: normal sessions should survive through Context Minor GC, while compact / compat stays in the background
-
-Hard boundary:
-
-- this is an analogy for working-set management only
-- not an analogy for destroying objects
-- raw turns may leave the prompt while the session log stays
-- durable-memory governance still belongs to a different lifecycle
+4. compresses the product goal into one sentence:
+   `normal sessions should survive through Context Minor GC while compact / compat stays in the background`
 
 ## Layer Mapping
 
 | Concept Layer | UMC Mapping | Current Status |
 | --- | --- | --- |
-| `L0 Hot Window` | recent raw turns / active working set | landed; Stage 6 / 7 / 9 all have evidence |
-| `L1 Warm Topic Cache` | task-state ledger / current-topic summary / carry-forward pins | can still become more structured, but is no longer a Minor GC closeout blocker |
-| `L2 Cold Topic Archive` | thread capsules / archived topic summaries | direction is valid; future enhancement, not a current blocker |
+| `L0 Hot Window` | recent raw turns / active working set | landed |
+| `L1 Warm Topic Cache` | task-state ledger / current-topic summary / carry-forward pins | can still evolve, but no longer blocks closeout |
+| `L2 Cold Topic Archive` | thread capsules / archived topic summaries | valid future enhancement |
 | `L3 Durable Memory` | governed registry / stable cards / rule cards | landed |
-| `Minor GC` | per-turn working-set pruning + bounded local completion | closed; kept bounded and `default-off` |
-| `Full Compact` | nightly or background compat / compact / archive refresh | kept as low-frequency safety net |
+| `Minor GC` | per-turn working-set pruning + bounded local completion | closed |
+| `Full Compact` | nightly or background compat / compact / archive refresh | retained as low-frequency safety net |
 
 ## What The Hot Path Should Look Like
 
@@ -153,12 +144,12 @@ flowchart LR
 Important:
 
 - this is the long-term target shape
-- it is not required for the already-finished Minor GC closeout
-- router / task-state expansion is a future enhancement queue item
+- it is not required for the already-finished closeout
+- router / task-state expansion is still future work
 
 ## The Former Main Blocker Is Closed
 
-The hard blocker used to be transport and seam stability:
+The hard blocker used to be decision transport and seam stability:
 
 ```text
 OpenClaw run
@@ -174,64 +165,56 @@ That blocker is now closed through the plugin-owned decision runner:
 
 - decision transport no longer depends on host `runtime.subagent`
 - Step 108 is closed
-- OpenClaw core no longer needs a forced change for this line
+- OpenClaw core does not need a forced change for this line
 
-So the question “can Minor GC run without modifying OpenClaw core?” is already answered: yes.
+So the question “can Minor GC run without modifying OpenClaw core?” is already answered:
+yes.
 
 ## Adopted Shape
 
-The current landed shape is:
+The landed shape is:
 
 - `Context Minor GC` owns the hot-path working-set control plane
 - `plugin-owned context decision overlay` unties decision transport from the host seam
-- `guarded smart path` provides a very narrow opt-in user benefit
+- `guarded smart path` provides a very narrow opt-in user gain
 - `compact / compat` stays in the background
 
 ## Evidence
 
-This route is backed by closeout evidence:
+This route now has formal closeout evidence:
 
 - Stage 6 runtime shadow replay: `16 / 16`
-- Stage 6 runtime shadow average reduction ratio: `0.4368`
 - Stage 7 scorecard: captured `16 / 16`
-- Stage 7 average raw reduction ratio: `0.4191`
-- Stage 7 / Step 108 hermetic gateway: `5 / 5` captured
-- Stage 7 / Step 108 local service smoke: `3 / 3` captured
+- Stage 7 / Step 108 hermetic gateway: `5 / 5`
+- Stage 7 / Step 108 local service smoke: `3 / 3`
 - Stage 7 / `104` harder live matrix: `6 / 6`
 - Stage 9 guarded live A/B: baseline `4 / 4`, guarded `4 / 4`
 - Stage 9 guarded applied: `2 / 4`
-- Stage 9 activation matched: `4 / 4`
-- Stage 9 false activations: `0`
-- Stage 9 missed activations: `0`
+- Codex live matrix: baseline `4 / 4`, minor-gc `4 / 4`
+- Codex guarded applied: `2`
+- Codex applied-only prompt reduction ratio: `0.2939`
 
-Meaning:
+Together these numbers mean:
 
-- the Minor GC direction is already stable
-- the hardest “no OpenClaw core modification” transport question is already stable
-- OpenClaw-side Minor GC is no longer the blocker
-- what remains is Stage 11 Codex bridge work and a later cross-host rollout decision
+- the Minor GC direction is stable
+- the OpenClaw side is no longer a blocker
+- the Codex bridge is no longer a blocker
+- `Stage 11` can close
 
 ## What Still Remains
 
-What remains should no longer be written as “finish Minor GC closeout”.
+What remains should no longer be written as “finish Minor GC”.
 
 The real remaining work is:
 
-1. Stage 11B: keep the OpenClaw-side `Context Minor GC` operator scorecard green
-2. Stage 11C: connect the same shadow / guarded / scorecard model to the Codex adapter
-3. Stage 11D: only discuss broader default-path rollout after strong cross-host evidence exists
-4. deeper enhancements such as `task-state ledger`, `Stage 0 Router`, and broader default-path rollout remain future enhancement items rather than current blockers
+1. keep the OpenClaw-side and Codex-side `Context Minor GC` evidence green
+2. keep the guarded seam `default-off` / opt-in only
+3. move the genuinely new work into `Stage 12`: realtime memory intent productization
 
-## Final Verdict
+## Final Judgment
 
-The precise current verdict is:
+The shortest judgment is:
 
-- OpenClaw-side `Context Minor GC` is closed
-- the wider Stage 11 umbrella is still open because Codex integration and cross-host rollout decisions are not done yet
-- broader default active-path rollout is not opened
-- `compact / compat` stays a low-frequency background fallback
-
-In other words:
-
-Minor GC as an OpenClaw-side core capability is done.
-What is not done is the Codex bridge and the later cross-host rollout decision.
+- `Context Minor GC` as a capability is done
+- `Stage 11` as an umbrella stage is also done
+- the line is now in hold-green maintenance, not the current feature stage

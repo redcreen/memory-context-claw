@@ -32,31 +32,31 @@
 
 | 项目 | 当前值 |
 | --- | --- |
-| 当前总阶段 | `stage11-context-minor-gc-and-codex-integration` |
-| 当前分组 | `group-11b-openclaw-baseline-hold` |
-| 总阶段进度 | `1 / 4` 分组已完成 |
-| 当前目标 | 把所有剩余的 `Context Minor GC` 工作收进一个统一大阶段，并把 Codex 对接纳入正式计划 |
-| 当前约束 | 不改 OpenClaw builtin memory 行为；guarded seam 继续保持 `default-off` / opt-in only |
-| 当前切换条件 | OpenClaw 侧 baseline 长期为绿，且 Codex bridge 的设计与验证面已明确 |
-| 下一分组 | `group-11c-codex-context-bridge` |
+| 当前总阶段 | `stage12-realtime-memory-intent-productization` |
+| 当前分组 | `group-12a-contract-and-replay-hold` |
+| 总阶段进度 | `0 / 3` 分组已完成 |
+| 当前目标 | 把 realtime governed memory intake 从 baseline 能力推进成清晰产品面与 operator 面 |
+| 当前约束 | `Context Minor GC` 已完成，继续保持 guarded seam `default-off` / opt-in only；不改 OpenClaw builtin memory 行为 |
+| 当前切换条件 | realtime contract、runtime ingest 和 operator surface 都收成统一产品面 |
+| 下一分组 | `group-12b-ordinary-conversation-runtime-ingest` |
 
 ## 当前位置
 
 | 项目 | 当前值 | 说明 |
 | --- | --- | --- |
-| 当前阶段 | `Stage 11` | 当前大阶段 |
-| 当前分组 | `11B openclaw-baseline-hold` | 当前真正正在做的组 |
-| 当前执行线 | 保持 OpenClaw 侧 `Context Minor GC` scorecard、harder matrix、guarded live A/B 长期为绿，同时为 Codex 对接做 docs-first 设计收口 | 当前真正正在推进的工作 |
-| 当前验证 | Stage 7 scorecard、Step 108 closeout、Stage 7 / `104` harder matrix、Stage 9 guarded live A/B、Docker hermetic baseline、Stage 10 shortest-path/shared-foundation proof | 当前执行线必须保持为真的证据面 |
+| 当前阶段 | `Stage 12` | 当前大阶段 |
+| 当前分组 | `12A contract-and-replay-hold` | 当前真正正在做的组 |
+| 当前执行线 | 把 realtime `memory_intent` / `memory_extraction` / accepted-action 的契约、回放面和 operator 语言收成统一产品面，同时保持 `Context Minor GC` 证据长期为绿 | 当前真正正在推进的工作 |
+| 当前验证 | `Context Minor GC` Stage 11 closeout、memory-intent replay suite、Codex / OpenClaw adapters、Docker hermetic baseline、Stage 10 shortest-path/shared-foundation proof | 当前执行线必须保持为真的证据面 |
 
 ## Minor GC 速览
 
 如果你只关心 `Context Minor GC`，先记住这 4 句：
 
-1. Stage 7 / Step 108 已收口。
-2. Stage 7 / `104` harder eval matrix 已收口，live matrix `6 / 6`。
-3. Stage 9 guarded smart path 已收口，但继续保持 `default-off` / opt-in only。
-4. 当前真正的新工作，是把剩余的 `Minor GC` 工作收进 `Stage 11`，并把 Codex 对接纳入同一套计划。
+1. `Stage 11` 已收口。
+2. OpenClaw 侧 live matrix `6 / 6`，Codex 侧 live matrix `4 / 4`。
+3. 正例上已经有明确 prompt/context 缩减，guarded 继续保持 `default-off` / opt-in only。
+4. `Minor GC` 现在不再是当前开发阶段，而是进入维护态；当前真正的新工作是 `Stage 12` 的 realtime memory intent productization。
 
 推荐阅读顺序：
 
@@ -65,15 +65,25 @@
 3. [../../../../reports/generated/stage7-step108-context-minor-gc-closeout-2026-04-18.zh-CN.md](../../../../reports/generated/stage7-step108-context-minor-gc-closeout-2026-04-18.zh-CN.md)
 4. [../../../../reports/generated/stage7-context-minor-gc-closeout-2026-04-18.zh-CN.md](../../../../reports/generated/stage7-context-minor-gc-closeout-2026-04-18.zh-CN.md)
 5. [../../../../reports/generated/stage9-guarded-smart-path-closeout-2026-04-18.zh-CN.md](../../../../reports/generated/stage9-guarded-smart-path-closeout-2026-04-18.zh-CN.md)
+6. [../../../../reports/generated/codex-context-minor-gc-live-2026-04-18/report.md](../../../../reports/generated/codex-context-minor-gc-live-2026-04-18/report.md)
+7. [../../../../reports/generated/stage11-context-minor-gc-and-codex-integration-closeout-2026-04-18.zh-CN.md](../../../../reports/generated/stage11-context-minor-gc-and-codex-integration-closeout-2026-04-18.zh-CN.md)
 
-## Stage 11 分组进度
+## Stage 11 分组最终状态
 
 | 分组 | 状态 | 目标 | 验证 |
 | --- | --- | --- | --- |
 | 11A `foundation-reframe` | 已完成 | 把 Stage 6 / 7 / 9 的 `Minor GC` 历史成果收成一个统一大阶段，并整理 roadmap / plan / minor-gc docs 的阅读顺序 | roadmap / development plan / minor-gc 架构页对齐 |
-| 11B `openclaw-baseline-hold` | 当前进行 | 保持 OpenClaw 侧 `Context Minor GC` scorecard、harder matrix、guarded live A/B 长期为绿 | Stage 7 scorecard、Step 108、`104` harder matrix、Stage 9 live A/B |
-| 11C `codex-context-bridge` | 下一步 | 把同一套 decision contract / shadow / guarded / scorecard 接到 Codex adapter | Codex adapter design、replay suite、tests、cross-host report |
-| 11D `cross-host-rollout-decision` | 后续 | 只有 OpenClaw + Codex 证据都足够后，才讨论是否扩大默认路径 | rollout ADR / report、rollback boundary、operator decision |
+| 11B `openclaw-baseline-hold` | 已完成 | 保持 OpenClaw 侧 `Context Minor GC` scorecard、harder matrix、guarded live A/B 为绿，并补齐 closeout 证据 | Stage 7 scorecard、Step 108、`104` harder matrix、Stage 9 live A/B |
+| 11C `codex-context-bridge` | 已完成 | 把同一套 decision contract / shadow / guarded / scorecard 接到 Codex adapter | Codex adapter tests、live matrix、cross-host report |
+| 11D `cross-host-rollout-decision` | 已完成 | 明确决策：GC 已可用且有收益，但 guarded 继续保持 `default-off` / opt-in only | Stage 11 closeout report、rollback boundary、operator decision |
+
+## Stage 12 分组进度
+
+| 分组 | 状态 | 目标 | 验证 |
+| --- | --- | --- | --- |
+| 12A `contract-and-replay-hold` | 当前进行 | 把 `memory_intent` / `memory_extraction` / accepted-action 的实时契约、回放面和产品语言收成一套 | replay suite、architecture docs、adapter tests、operator wording |
+| 12B `ordinary-conversation-runtime-ingest` | 下一步 | 把普通对话与运行时 rule ingestion 接到同一套 governed realtime path | live A/B、runtime hooks、普通对话回归 |
+| 12C `operator-surface-and-rollout` | 后续 | 把 inspect / audit / replay / rollback 与 rollout boundary 收成正式 operator 面 | CLI / docs / rollout report |
 
 ## 阶段总览
 
@@ -89,15 +99,16 @@
 | Stage 8 | 已完成 | ordinary-conversation realtime-write latency closure | Stage 7 | ordinary-conversation strict Docker A/B 收口 |
 | Stage 9 | 已完成 | guarded smart-path promotion | Stage 8 | bounded opt-in active path 收口并保持 `default-off` |
 | Stage 10 | 已完成 | adoption simplification and shared-foundation proof | Stage 9 | 最短接入路径与 cross-host proof 收口 |
-| Stage 11 | 当前大阶段 | Context Minor GC 与 Codex 对接总阶段 | Stage 10 | OpenClaw baseline 稳定、Codex bridge 明确、跨宿主 rollout 决策显式化 |
+| Stage 11 | 已完成 | Context Minor GC 与 Codex 对接总阶段 | Stage 10 | OpenClaw + Codex 两侧 GC 可用，且用户侧有明确收益，rollback boundary 仍清楚 |
+| Stage 12 | 当前大阶段 | realtime memory intent productization | Stage 11 | realtime governed memory intake 的契约、runtime path、operator surface 都收成统一产品面 |
 
 ## Stage 11: Context Minor GC And Codex Integration
 
-这是当前最新的大阶段。要点只有 3 个：
+`Stage 11` 已经关闭。要点只有 3 个：
 
 1. Stage 6 / 7 / 9 的 `Minor GC` 历史成果不删除，但它们继续保持各自“已完成”的历史阶段地位。
-2. 当前真正的工作不是继续补 OpenClaw 基础能力，而是把剩余的 `Minor GC` 工作收进一个统一总阶段：保持 OpenClaw baseline，并把 Codex 对接补齐。
-3. 默认路径放量不再隐式发生，必须作为 Stage 11D 的单独决策。
+2. `Stage 11` 已经把 OpenClaw baseline、Codex bridge 和跨宿主决策收成同一个完整主题。
+3. 默认路径放量没有隐式发生，而是被显式收成“继续保持 `default-off` / opt-in only”的决策。
 
 ### Group 11A: Foundation Reframe
 
@@ -110,46 +121,77 @@
 
 ### Group 11B: OpenClaw Baseline Hold
 
-- 状态：当前进行
+- 状态：已完成
 - 目标：保持 OpenClaw 侧 `Context Minor GC` baseline 长期为绿
 - 关键证据：
   - Stage 7 scorecard
   - Step 108 closeout
   - Stage 7 / `104` harder live matrix
   - Stage 9 guarded live A/B
-- 退出条件：
-  - 新改动不会把上述证据面打回红色
-  - `default-off` / opt-in only 边界继续清晰
+- 退出条件：已满足
 
 ### Group 11C: Codex Context Bridge
 
-- 状态：下一步
+- 状态：已完成
 - 目标：把 OpenClaw 侧已经验证过的 context decision contract 接到 Codex adapter
 - 范围：
   - Codex 侧 shadow / guarded / scorecard 契约
   - Codex transcript / task 边界与 `Context Minor GC` 的映射
   - cross-host 对照报告
 - 验证：
-  - Codex adapter design docs
-  - replay suite
-  - adapter tests
-  - cross-host report
-- 退出条件：Codex 也能纳入同一套 `Minor GC` 主线，而不是只停留在 shared-foundation 证明里
+  - Codex adapter tests
+  - live matrix `4 / 4`
+  - cross-host closeout report
+- 退出条件：已满足
 
 ### Group 11D: Cross-Host Rollout Decision
 
+- 状态：已完成
+- 目标：在 OpenClaw + Codex 两侧证据齐备后，给出显式跨宿主决策
+- 决策：
+  - `Context Minor GC` 现在视为可用能力
+  - Stage 11 关闭
+  - guarded seam 继续保持 `default-off` / opt-in only
+- 退出条件：已满足
+
+## Stage 12: Realtime Memory Intent Productization
+
+这是当前最新的大阶段。主题只保留一件事：
+
+- 把 realtime governed memory intake 从 baseline 能力推进成清晰产品面与 operator 面
+
+### Group 12A: Contract And Replay Hold
+
+- 状态：当前进行
+- 目标：把 `memory_intent` / `memory_extraction` / accepted-action 的实时契约、回放面和 operator 语言收成同一条产品线
+- 验证：
+  - replay suite
+  - architecture docs
+  - adapter tests
+  - clear operator wording
+
+### Group 12B: Ordinary Conversation Runtime Ingest
+
+- 状态：下一步
+- 目标：把普通对话与运行时 rule ingestion 接到同一套 governed realtime path
+- 验证：
+  - ordinary-conversation live A/B
+  - runtime hook regression
+  - governed ingest report
+
+### Group 12C: Operator Surface And Rollout
+
 - 状态：后续
-- 目标：只有 OpenClaw + Codex 两侧证据都足够时，才讨论是否扩大默认路径
-- 必要条件：
-  - OpenClaw baseline 持续为绿
-  - Codex bridge 已有正式证据
-  - rollback boundary 和 operator decision surface 都清楚
-- 退出条件：形成明确 rollout ADR / report，而不是在代码里隐式扩大默认面
+- 目标：把 inspect / audit / replay / rollback 与 rollout boundary 收成正式 operator 面
+- 验证：
+  - CLI surface
+  - docs
+  - rollout report
 
 ## 历史切片与后续 backlog
 
 下面这张长表保留历史规划和 backlog，不再代表“当前人类应该从这里开始看”。
-当前应该先看上面的 `Stage 11` 和 4 个分组。
+当前应该先看上面的 `Stage 12`，以及 `Stage 11` 的收口结论。
 
 ## 顺序执行队列
 
@@ -165,7 +207,7 @@
 | 8 | `design-harder-context-minor-gc-matrix` | 历史已收口 | 历史切片：完成 `Context Minor GC` 的 harder eval matrix，并正式关闭 Stage 7 | `104` harder eval matrix、同一套 operator scorecard 重跑、Stage 7 closeout 报告 |
 | 9 | `prepare-stage10-adoption-simplification-and-shared-foundation-proof` | 历史已收口 | 历史切片：完成 Stage 10 adoption / bootstrap / verify / shared-foundation proof | Stage 10 plan steps `121-126`、short-path install proof、package/startup/first-run metrics、Codex / multi-instance evidence |
 | 10 | `hold-stage10-adoption-proof-stable` | 历史维护切片 | 保持 Stage 10 最短接入路径、package/startup/first-run 证据面，以及 Codex / 多实例 shared-foundation proof 持续为绿；同时保持 `Context Minor GC` 与 guarded seam 的证据面不回退 | `npm run umc:stage10 -- --format markdown`、README / roadmap / development plan / `.codex/*`、Stage 10 closeout reports |
-| 11 | `formalize-realtime-memory-intent-ingestion` | 后续 backlog | 把“主回复 + `memory_extraction`”从局部 runtime seam 收口成正式产品契约，补上 ordinary conversation rule 的实时 governed ingest 入口 | replay suite、Codex adapter tests、architecture docs、development plan、control-surface state |
+| 11 | `formalize-realtime-memory-intent-ingestion` | 当前 Stage 12 主题的历史前置切片 | 把“主回复 + `memory_extraction`”从局部 runtime seam 收口成正式产品契约，补上 ordinary conversation rule 的实时 governed ingest 入口 | replay suite、Codex adapter tests、architecture docs、development plan、control-surface state |
 | 12 | `attribute-memory-capability-sources` | 下一步 / 已排队 | 对同一批核心案例做 `legacy / unified / bootstrap / retrieval` 对照，明确答案来源和扩展增益边界 | A/B 对照报告、关键案例证据、来源分类说明 |
 | 13 | `turn-failures-into-algorithm-iterations` | 下一步 / 已排队 | 把 benchmark 失败案例转成 retrieval / assembly / policy 算法问题清单，并按轮次修复、复测、提交 | 每轮失败清单、对应修复、复测结果、GitHub commit |
 | 14 | `close-stage5-product-hardening-and-independent-operation` | 下一步 / 已排队 | 一口气收掉 `Step 39-46`，把 source hardening、maintenance、reproducibility、release-boundary、split rehearsal、independent review 全部接到 CLI-first 证据面 | Stage 5 targeted tests、`npm run umc:stage5`、`npm run umc:cli -- maintenance run`、`npm run umc:cli -- export reproducibility`、`npm run umc:cli -- review split-rehearsal |
@@ -187,4 +229,4 @@
 
 | 下一步 | 为什么做 |
 | --- | --- |
-| 继续执行 `Stage 11 / Group 11B`，并开始 `Stage 11 / Group 11C` 的 Codex context bridge 设计与验证 | 因为 `Minor GC` 剩余工作现在已经统一归到 `Stage 11`，下一步不该再回到旧切片，而是按 OpenClaw baseline -> Codex bridge -> rollout decision 的顺序推进。 |
+| 继续执行 `Stage 12 / Group 12A`，并为 `12B` 的 ordinary-conversation runtime ingest 做 docs-first 收口 | 因为 `Stage 11` 已关闭；当前真正的新主题，已经切到 realtime governed memory intake 的产品化，而不再是继续把 `Minor GC` 做完。 |

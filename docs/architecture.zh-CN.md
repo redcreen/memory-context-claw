@@ -37,15 +37,15 @@ flowchart TB
 
 第二条现在已经是一等主线，不再只是 adapter 内的局部修补。
 
-并且从路线图角度，它现在已经进入一个新的大阶段：
+并且从路线图角度，这条线已经完成 `Stage 11`，当前进入：
 
-- `Stage 11: Context Minor GC And Codex Integration`
+- `Stage 12: Realtime Memory Intent Productization`
 
 这个大阶段的边界要明确：
 
 - Stage 6 / 7 / 9 这些 OpenClaw 侧主题仍然保持“已完成”的历史状态
-- `Stage 11` 只承接 **剩余的** context / Minor GC 工作
-- 最关键的新项是 `Codex` 对接，而不是重新回头定义 OpenClaw 侧基础能力
+- `Stage 11` 已经把 `Context Minor GC` 在 OpenClaw + Codex 两侧收口
+- 当前最关键的新项不再是 `Codex` context bridge，而是 realtime governed memory intake 的产品化
 
 `context 优化` 当前明确分成几条互补的架构面：
 
@@ -65,7 +65,8 @@ flowchart TB
 - Stage 6 继续保持 `default-off` 和 shadow-only，作为测量面
 - Stage 9 guarded smart-path 已收口，但继续保持 `default-off` / opt-in only
 - 这条逐轮 context 优化主线，对外工作名现在统一收成 `Context Minor GC`
-- 当前最新的大阶段是 `Stage 11`：保 OpenClaw baseline 为绿，并把同一套 context decision contract 接到 Codex
+- `Stage 11` 现在已经关闭：GC 可用，用户端已有明确收益
+- 当前最新的大阶段是 `Stage 12`：把 realtime `memory_intent` / `memory_extraction` / accepted-action 收成统一产品面
 - 当前推荐实施线不是修改 OpenClaw，而是优先把 `memory + context decision` 的 decision transport / scorecard / guarded seam 做成跨宿主一致契约
 - 日常产品目标已经明确：平时尽量靠逐轮 context 管理保持可持续，不把 compat / compact 当成日常热路径依赖；compat / compact 只保留为夜间或后台 safety net
 

@@ -7,11 +7,11 @@
 
 ## Current Phase
 
-`stage11-context-minor-gc-and-codex-integration`
+`stage12-realtime-memory-intent-productization`
 
 ## Active Slice
 
-`group-11b-openclaw-baseline-hold`
+`group-12a-contract-and-replay-hold`
 
 ## Current Product Promises
 
@@ -24,15 +24,22 @@
 
 ## Stage 11 Snapshot
 
-- Stage 11 定义：把所有剩余的 `Context Minor GC` 工作和 `Codex` 对接收进同一个大阶段
+- Stage 11 定义：把 `Context Minor GC` 在 OpenClaw + Codex 两侧收口，并给出显式跨宿主决策
 - 11A `foundation-reframe`：已完成
-- 11B `openclaw-baseline-hold`：当前进行
-- 11C `codex-context-bridge`：下一步
-- 11D `cross-host-rollout-decision`：后续
+- 11B `openclaw-baseline-hold`：已完成
+- 11C `codex-context-bridge`：已完成
+- 11D `cross-host-rollout-decision`：已完成
 - 当前最重要的边界：
-  - Stage 7 / Step 108 / Stage 9 继续保持“已完成”的历史事实
-  - `default-off` / opt-in only 继续保持
+  - `Context Minor GC` 现在已经视为可用能力
+  - guarded seam 继续保持 `default-off` / opt-in only
   - 当前不会隐式扩大默认 active path
+
+## Stage 12 Snapshot
+
+- Stage 12 定义：把 realtime governed memory intake 从 baseline 能力推进成清晰产品面与 operator 面
+- 12A `contract-and-replay-hold`：当前进行
+- 12B `ordinary-conversation-runtime-ingest`：下一步
+- 12C `operator-surface-and-rollout`：后续
 
 ## Done
 
@@ -139,7 +146,13 @@
   - Stage 9 guarded path 实际 applied：`2 / 4`
   - Stage 9 activation matched：`4 / 4`
   - Stage 9 average guarded prompt reduction ratio：`0.0306`
-  - 当前结论：Stage 7 与 Stage 9 都已正式收口；Stage 10 也已经收口，当前进入维护态
+  - 当前结论：Stage 7、Stage 9、Stage 11 都已正式收口；`Context Minor GC` 进入维护态
+- Stage 11 closeout 已正式成立：
+  - Codex Context Minor GC live matrix：`4 / 4`
+  - Codex guarded applied：`2`
+  - Codex activation matched：`4 / 4`
+  - Codex average prompt reduction ratio：`0.1469`
+  - Codex applied-only prompt reduction ratio：`0.2939`
 - Stage 10 adoption/shared-foundation proof 已正式落地：
   - `npm run umc:stage10 -- --format markdown` 已成为最短维护者路径
   - latest sampled package tarball `1456484 bytes`
@@ -199,12 +212,16 @@
 
 ## In Progress
 
-- Stage 10 已完成；当前恢复点切到维护态
+- Stage 11 已完成；当前恢复点切到 Stage 12
 - 当前 3 个用户承诺的维护顺序变成：
   - 先保持 `轻快 / context loading optimization` 为绿
   - 然后保持 `轻快 / install` 的 shortest path 为绿
   - 再保持 `聪明` 的 bounded guarded seam 继续 `default-off` / opt-in only
   - 最后保持 `省心` 的跨宿主/shared-foundation 证据为绿
+- 当前真正的新主题：
+  - 把 realtime `memory_intent` / `memory_extraction` / accepted-action 的契约、回放面和 operator 语言收成同一条产品线
+  - 把 ordinary-conversation runtime ingest 接到同一套 governed realtime path
+  - 把 inspect / audit / replay / rollback 与 rollout boundary 收成正式 operator surface
 - 当前 answer-level 不再是“能力是否存在”的 blocker；真正要解决的是：
   - 每一轮 prompt 还可以如何更轻
   - 如何把 durable-source slimming、working-set pruning、budgeted assembly 和 answer latency 收成同一张 scorecard
@@ -255,26 +272,25 @@
 
 ## Current Execution Line
 
-- Objective: 进入 `Stage 11`，把所有剩余的 `Context Minor GC` 工作和 `Codex` 对接收进同一个大阶段；当前先保持 OpenClaw baseline 为绿
-- Plan Link: `stage11-context-minor-gc-and-codex-integration / group-11b-openclaw-baseline-hold`
+- Objective: 进入 `Stage 12`，把 realtime `memory_intent` / `memory_extraction` / accepted-action 收成统一的 governed product surface
+- Plan Link: `stage12-realtime-memory-intent-productization / group-12a-contract-and-replay-hold`
 - Current Critical Path:
-  - 保持 Stage 7 scorecard、Step 108、`104` harder matrix、Stage 9 live A/B 不回退
-  - 把 `Codex` context bridge 作为下一条明确工作，而不是继续散落在别的主题下
-  - 保持 Docker 与 Stage 10 shortest-path/shared-foundation proof 持续为绿
-- Runway: Stage 7 closeout evidence、Stage 9 closeout evidence、Docker hermetic baseline、release-preflight、canonical-root policy、shared-foundation proof
-- Progress: `1 / 4` groups complete
+  - 把 realtime `memory_intent` / `memory_extraction` / accepted-action 的 contract、replay、operator wording 收成统一主线
+  - 让 ordinary-conversation runtime ingest 接到同一套 governed realtime path
+  - 保持 `Context Minor GC` 与 Stage 10 shortest-path/shared-foundation proof 持续为绿
+- Runway: Stage 11 closeout evidence、memory-intent replay suite、Docker hermetic baseline、release-preflight、canonical-root policy、shared-foundation proof
+- Progress: `0 / 3` groups complete
 - Stop Conditions:
-  - active prompt mutation is widened despite Stage 9 remaining `default-off`
-  - the remaining Minor GC work gets scattered across multiple umbrella stages again
-  - Codex integration remains only narrative and never gets a real decision contract / scorecard surface
-  - bounded LLM decision work degenerates into growing hardcoded rule tables
+  - realtime governed intake stays fragmented across multiple contracts
+  - ordinary-conversation runtime ingest remains outside the governed path
+  - operator surface remains baseline-only and never becomes a clear product surface
+  - `Context Minor GC` evidence regresses while Stage 12 is ongoing
 
-## Stage 11 Groups
+## Stage 12 Groups
 
-- [x] 11A foundation-reframe
-- [ ] 11B openclaw-baseline-hold
-- [ ] 11C codex-context-bridge
-- [ ] 11D cross-host-rollout-decision
+- [ ] 12A contract-and-replay-hold
+- [ ] 12B ordinary-conversation-runtime-ingest
+- [ ] 12C operator-surface-and-rollout
 
 ## Development Log Capture
 

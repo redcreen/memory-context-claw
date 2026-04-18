@@ -332,6 +332,94 @@ test("codex adapter exposes governed task defaults from policy inputs", async ()
   assert.match(memoryPackage.policy_block, /concise progress reports/i);
 });
 
+test("codex adapter projects recent conversation into the baseline prompt block", async () => {
+  const registryRoot = await fs.mkdtemp(path.join(os.tmpdir(), "umc-codex-conversation-"));
+  const clock = () => new Date("2026-04-20T00:00:00.000Z");
+  const adapter = createCodexAdapterRuntime({
+    clock,
+    config: {
+      registryDir: registryRoot,
+      projectPath: "/tmp/unified-memory-core",
+      userId: "codex-user"
+    }
+  });
+
+  const memoryPackage = await adapter.readBeforeTask({
+    taskPrompt: "我们当前新任务是什么？",
+    recentMessages: [
+      { role: "user", content: "默认中文。" },
+      { role: "assistant", content: "记住了。" },
+      { role: "user", content: "当前新任务是写 shadow mode 报告。" },
+      { role: "assistant", content: "收到，当前新任务是写 shadow mode 报告。" },
+      { role: "user", content: "我们当前新任务是什么？" }
+    ]
+  });
+
+  assert.equal(memoryPackage.context_minor_gc.enabled, false);
+  assert.equal(memoryPackage.context_minor_gc.status, "baseline_only");
+  assert.match(memoryPackage.conversation_prompt_block, /Recent Conversation Context/);
+  assert.match(memoryPackage.prompt_block, /shadow mode 报告/);
+  assert.equal(
+    memoryPackage.context_minor_gc.baselinePromptEstimate,
+    memoryPackage.context_minor_gc.effectivePromptEstimate
+  );
+});
+
+test("codex adapter can apply guarded Context Minor GC to recent conversation context", async () => {
+  const registryRoot = await fs.mkdtemp(path.join(os.tmpdir(), "umc-codex-minor-gc-"));
+  const clock = () => new Date("2026-04-20T00:00:00.000Z");
+  const adapter = createCodexAdapterRuntime({
+    clock,
+    logger: { warn() {}, info() {} },
+    config: {
+      registryDir: registryRoot,
+      projectPath: "/tmp/unified-memory-core",
+      userId: "codex-user",
+      contextMinorGc: {
+        enabled: true,
+        transport: "inline",
+        guarded: {
+          enabled: true
+        }
+      }
+    }
+  });
+
+  const memoryPackage = await adapter.readBeforeTask({
+    taskPrompt: "我坐飞机喜欢什么位置？",
+    recentMessages: [
+      { role: "user", content: "以后默认给我中文，结论优先。" },
+      { role: "assistant", content: "记住了。" },
+      { role: "user", content: "再记一下：我坐飞机喜欢靠过道。" },
+      { role: "assistant", content: "记住了，你坐飞机偏好靠过道。" },
+      { role: "user", content: "家庭偏好先到这。现在说代码：我们这轮先不改现有记忆系统。" },
+      { role: "assistant", content: "好，先 shadow，再决定是否接管主路径。" },
+      { role: "user", content: "代码先放一边。刚才说过，我坐飞机喜欢什么位置？" }
+    ],
+    contextMinorGcDecisionRunner: async () => ({
+      relation: "switch",
+      confidence: 0.93,
+      evict_turn_ids: ["t5", "t6"],
+      pin_turn_ids: ["t3", "t4"],
+      archive_summary: "代码话题先冻结，旧 detour 不必继续占用下一轮 prompt。",
+      reasoning_summary: "当前问题回到稳定偏好，代码 detour 可以离开热路径。"
+    })
+  });
+
+  assert.equal(memoryPackage.context_minor_gc.enabled, true);
+  assert.equal(memoryPackage.context_minor_gc.status, "captured");
+  assert.equal(memoryPackage.context_minor_gc.applied, true);
+  assert.equal(memoryPackage.context_minor_gc.relation, "switch");
+  assert.match(memoryPackage.optimized_prompt_block, /Context Minor GC Working Set/);
+  assert.match(memoryPackage.prompt_block, /靠过道/);
+  assert.doesNotMatch(memoryPackage.prompt_block, /不改现有记忆系统/);
+  assert.ok(memoryPackage.context_minor_gc.promptReductionRatio > 0);
+  assert.ok(
+    memoryPackage.context_minor_gc.effectivePromptEstimate
+    < memoryPackage.context_minor_gc.baselinePromptEstimate
+  );
+});
+
 test("createCodexWriteBackEvent validates summary and maps task metadata", () => {
   const event = createCodexWriteBackEvent(
     {
