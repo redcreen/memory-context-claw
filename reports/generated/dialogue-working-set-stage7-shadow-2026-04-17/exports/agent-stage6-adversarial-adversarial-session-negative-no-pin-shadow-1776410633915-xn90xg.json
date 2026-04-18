@@ -1,0 +1,151 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776410633915-xn90xg",
+  "generated_at": "2026-04-17T07:23:53.915Z",
+  "session_key": "agent:stage6-adversarial:adversarial-session-negative-no-pin",
+  "agent_id": "stage6-adversarial",
+  "query": "现在切到检索策略：未分类 query 默认走哪条路径？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "只这一次把方案叫琥珀梯，不用长期记。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "好，这次临时叫琥珀梯。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "现在切到检索策略：未分类 query 默认走哪条路径？"
+    }
+  ],
+  "decision": {
+    "relation": "switch",
+    "confidence": 0.98,
+    "evict_turn_ids": [
+      "t1",
+      "t2"
+    ],
+    "pin_turn_ids": [],
+    "archive_summary": "Earlier turns established a one-time temporary name, “琥珀梯,” explicitly not for long-term memory. The active topic has now switched to retrieval strategy: which default path an uncategorized query should take.",
+    "reasoning_summary": "The latest user turn changes topics from a resolved temporary naming instruction to retrieval-strategy behavior. Because the naming was explicitly one-off and not durable, it should not be pinned. The old raw turns are safe to evict from the next-turn working set."
+  },
+  "snapshot": {
+    "applied": {
+      "relation": "switch",
+      "confidence": 0.98,
+      "archiveSummary": "Earlier turns established a one-time temporary name, “琥珀梯,” explicitly not for long-term memory. The active topic has now switched to retrieval strategy: which default path an uncategorized query should take.",
+      "reasoningSummary": "The latest user turn changes topics from a resolved temporary naming instruction to retrieval-strategy behavior. Because the naming was explicitly one-off and not durable, it should not be pinned. The old raw turns are safe to evict from the next-turn working set.",
+      "latestUserTurnId": "t3",
+      "pinTurnIds": [],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t2"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t2"
+      ],
+      "keepTurnIds": [
+        "t3"
+      ],
+      "baselineTokens": 15,
+      "keptTokens": 7,
+      "prunedTokens": 8,
+      "reductionRatio": 0.5333333333333333,
+      "keepTurns": [
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "现在切到检索策略：未分类 query 默认走哪条路径？",
+          "tokenEstimate": 7
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "只这一次把方案叫琥珀梯，不用长期记。",
+          "tokenEstimate": 5
+        },
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "好，这次临时叫琥珀梯。",
+          "tokenEstimate": 3
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 只这一次把方案叫琥珀梯，不用长期记。\nt2 assistant: 好，这次临时叫琥珀梯。\nt3 user: 现在切到检索策略：未分类 query 默认走哪条路径？",
+    "shadowRawTranscript": "t3 user: 现在切到检索策略：未分类 query 默认走哪条路径？",
+    "semanticPinNotes": [],
+    "archiveSummary": "Earlier turns established a one-time temporary name, “琥珀梯,” explicitly not for long-term memory. The active topic has now switched to retrieval strategy: which default path an uncategorized query should take.",
+    "injectedArchiveSummary": "Earlier turns established a one-time temporary name, “琥珀梯,” explicitly not for long-term memory...",
+    "baselinePromptEstimate": 23,
+    "shadowRawPromptEstimate": 9,
+    "shadowPackageEstimate": 43,
+    "shadowPackageText": "Active raw turns:\nt3 user: 现在切到检索策略：未分类 query 默认走哪条路径？\n\nArchived summary:\nEarlier turns established a one-time temporary name, “琥珀梯,” explicitly not for long-term memory..."
+  },
+  "scorecard": {
+    "relation": "switch",
+    "baselineTurnCount": 3,
+    "keptTurnCount": 1,
+    "evictedTurnCount": 2,
+    "pinCount": 0,
+    "baselinePromptEstimate": 23,
+    "shadowRawPromptEstimate": 9,
+    "shadowPackageEstimate": 43,
+    "rawReductionRatio": 0.5333,
+    "packageReductionRatio": -0.8696,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 12379,
+    "totalElapsedMs": 12379,
+    "guardedEnabled": false,
+    "guardedApplied": false,
+    "guardedReason": "feature_disabled",
+    "guardedMessageCount": 3,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 15
+  },
+  "guarded": {
+    "enabled": false,
+    "applied": false,
+    "reason": "feature_disabled",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": "只这一次把方案叫琥珀梯，不用长期记。"
+      },
+      {
+        "role": "assistant",
+        "content": "好，这次临时叫琥珀梯。"
+      },
+      {
+        "role": "user",
+        "content": "现在切到检索策略：未分类 query 默认走哪条路径？"
+      }
+    ],
+    "filteredMessageCount": 3,
+    "filteredMessageTokenEstimate": 15,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 12379,
+    "decisionElapsedMs": 12379
+  }
+}

@@ -1,0 +1,143 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776410453853-pffw8b",
+  "generated_at": "2026-04-17T07:20:53.853Z",
+  "session_key": "agent:stage9-guarded-answer-ab:answer-ab-session-negative",
+  "agent_id": "stage9-guarded-answer-ab",
+  "query": "现在切到文档。以后默认这个方案应该怎么称呼？如果没有长期默认，就直说没有。",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "只这一次把这轮方案叫琥珀梯，不用长期记。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "明白，这次临时叫琥珀梯。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "现在切到文档。以后默认这个方案应该怎么称呼？如果没有长期默认，就直说没有。"
+    }
+  ],
+  "decision": {
+    "relation": "continue",
+    "confidence": 0.98,
+    "evict_turn_ids": [],
+    "pin_turn_ids": [],
+    "archive_summary": "本轮仅有一次性命名约定：用户要求“只这一次”把方案叫“琥珀梯”，并明确“不用长期记”。随后转到文档语境，询问以后默认应如何称呼；若没有长期默认，应直接说明没有。",
+    "reasoning_summary": "最新问题直接依赖较早回合中的一次性命名约束，属于同一活动话题的延续，应保留相关原始回合作为当前证据而不是降级成 pin。不存在需要长期保留的默认命名偏好，因为用户明确否定了长期记忆。"
+  },
+  "snapshot": {
+    "applied": {
+      "relation": "continue",
+      "confidence": 0.98,
+      "archiveSummary": "本轮仅有一次性命名约定：用户要求“只这一次”把方案叫“琥珀梯”，并明确“不用长期记”。随后转到文档语境，询问以后默认应如何称呼；若没有长期默认，应直接说明没有。",
+      "reasoningSummary": "最新问题直接依赖较早回合中的一次性命名约束，属于同一活动话题的延续，应保留相关原始回合作为当前证据而不是降级成 pin。不存在需要长期保留的默认命名偏好，因为用户明确否定了长期记忆。",
+      "latestUserTurnId": "t3",
+      "pinTurnIds": [],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [],
+      "keepTurnIds": [
+        "t1",
+        "t2",
+        "t3"
+      ],
+      "baselineTokens": 18,
+      "keptTokens": 18,
+      "prunedTokens": 0,
+      "reductionRatio": 0,
+      "keepTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "只这一次把这轮方案叫琥珀梯，不用长期记。",
+          "tokenEstimate": 5
+        },
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "明白，这次临时叫琥珀梯。",
+          "tokenEstimate": 3
+        },
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "现在切到文档。以后默认这个方案应该怎么称呼？如果没有长期默认，就直说没有。",
+          "tokenEstimate": 10
+        }
+      ],
+      "evictedTurns": []
+    },
+    "baselineRawTranscript": "t1 user: 只这一次把这轮方案叫琥珀梯，不用长期记。\nt2 assistant: 明白，这次临时叫琥珀梯。\nt3 user: 现在切到文档。以后默认这个方案应该怎么称呼？如果没有长期默认，就直说没有。",
+    "shadowRawTranscript": "t1 user: 只这一次把这轮方案叫琥珀梯，不用长期记。\nt2 assistant: 明白，这次临时叫琥珀梯。\nt3 user: 现在切到文档。以后默认这个方案应该怎么称呼？如果没有长期默认，就直说没有。",
+    "semanticPinNotes": [],
+    "archiveSummary": "本轮仅有一次性命名约定：用户要求“只这一次”把方案叫“琥珀梯”，并明确“不用长期记”。随后转到文档语境，询问以后默认应如何称呼；若没有长期默认，应直接说明没有。",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 26,
+    "shadowRawPromptEstimate": 26,
+    "shadowPackageEstimate": 31,
+    "shadowPackageText": "Active raw turns:\nt1 user: 只这一次把这轮方案叫琥珀梯，不用长期记。\nt2 assistant: 明白，这次临时叫琥珀梯。\nt3 user: 现在切到文档。以后默认这个方案应该怎么称呼？如果没有长期默认，就直说没有。"
+  },
+  "scorecard": {
+    "relation": "continue",
+    "baselineTurnCount": 3,
+    "keptTurnCount": 3,
+    "evictedTurnCount": 0,
+    "pinCount": 0,
+    "baselinePromptEstimate": 26,
+    "shadowRawPromptEstimate": 26,
+    "shadowPackageEstimate": 31,
+    "rawReductionRatio": 0,
+    "packageReductionRatio": -0.1923,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 14247,
+    "totalElapsedMs": 14247,
+    "guardedEnabled": true,
+    "guardedApplied": false,
+    "guardedReason": "relation_not_allowed",
+    "guardedMessageCount": 3,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 18
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": false,
+    "reason": "relation_not_allowed",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": "只这一次把这轮方案叫琥珀梯，不用长期记。"
+      },
+      {
+        "role": "assistant",
+        "content": "明白，这次临时叫琥珀梯。"
+      },
+      {
+        "role": "user",
+        "content": "现在切到文档。以后默认这个方案应该怎么称呼？如果没有长期默认，就直说没有。"
+      }
+    ],
+    "filteredMessageCount": 3,
+    "filteredMessageTokenEstimate": 18,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 14247,
+    "decisionElapsedMs": 14247
+  }
+}

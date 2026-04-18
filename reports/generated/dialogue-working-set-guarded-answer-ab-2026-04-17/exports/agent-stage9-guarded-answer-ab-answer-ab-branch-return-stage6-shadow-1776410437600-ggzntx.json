@@ -1,0 +1,195 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776410437600-ggzntx",
+  "generated_at": "2026-04-17T07:20:37.600Z",
+  "session_key": "agent:stage9-guarded-answer-ab:answer-ab-branch-return-stage6",
+  "agent_id": "stage9-guarded-answer-ab",
+  "query": "先回到刚才的发布验收，那三部分是什么？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "把发布验收拆成版本、安装、回滚三部分。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "可以，先拆成版本正确性、安装验证、回滚安全。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "插一句，我的时区是 Asia/Shanghai，记住。"
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "记住了，你的时区是 Asia/Shanghai。"
+    },
+    {
+      "id": "t5",
+      "role": "user",
+      "content": "先回到刚才的发布验收，那三部分是什么？"
+    }
+  ],
+  "decision": {
+    "relation": "branch",
+    "confidence": 0.97,
+    "evict_turn_ids": [
+      "t3",
+      "t4"
+    ],
+    "pin_turn_ids": [
+      "t3",
+      "t4"
+    ],
+    "archive_summary": "Main task remains the release-acceptance breakdown: version correctness, installation validation, and rollback safety from t1-t2. Side note captured as a durable user fact: user's timezone is Asia/Shanghai.",
+    "reasoning_summary": "The latest turn returns to the earlier unfinished release-acceptance topic, so this is a branch rather than a switch. t1-t2 must stay raw because the answer directly depends on that wording. t3-t4 are resolved side-context and can leave the next-turn prompt, with their semantic content preserved as a pin."
+  },
+  "snapshot": {
+    "applied": {
+      "relation": "branch",
+      "confidence": 0.97,
+      "archiveSummary": "Main task remains the release-acceptance breakdown: version correctness, installation validation, and rollback safety from t1-t2. Side note captured as a durable user fact: user's timezone is Asia/Shanghai.",
+      "reasoningSummary": "The latest turn returns to the earlier unfinished release-acceptance topic, so this is a branch rather than a switch. t1-t2 must stay raw because the answer directly depends on that wording. t3-t4 are resolved side-context and can leave the next-turn prompt, with their semantic content preserved as a pin.",
+      "latestUserTurnId": "t5",
+      "pinTurnIds": [
+        "t3",
+        "t4"
+      ],
+      "pinnedOnlyTurnIds": [
+        "t3",
+        "t4"
+      ],
+      "requestedEvictTurnIds": [
+        "t3",
+        "t4"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t3",
+        "t4"
+      ],
+      "keepTurnIds": [
+        "t1",
+        "t2",
+        "t5"
+      ],
+      "baselineTokens": 29,
+      "keptTokens": 16,
+      "prunedTokens": 13,
+      "reductionRatio": 0.4482758620689655,
+      "keepTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "把发布验收拆成版本、安装、回滚三部分。",
+          "tokenEstimate": 5
+        },
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "可以，先拆成版本正确性、安装验证、回滚安全。",
+          "tokenEstimate": 6
+        },
+        {
+          "id": "t5",
+          "role": "user",
+          "content": "先回到刚才的发布验收，那三部分是什么？",
+          "tokenEstimate": 5
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "插一句，我的时区是 Asia/Shanghai，记住。",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t4",
+          "role": "assistant",
+          "content": "记住了，你的时区是 Asia/Shanghai。",
+          "tokenEstimate": 6
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 把发布验收拆成版本、安装、回滚三部分。\nt2 assistant: 可以，先拆成版本正确性、安装验证、回滚安全。\nt3 user: 插一句，我的时区是 Asia/Shanghai，记住。\nt4 assistant: 记住了，你的时区是 Asia/Shanghai。\nt5 user: 先回到刚才的发布验收，那三部分是什么？",
+    "shadowRawTranscript": "t1 user: 把发布验收拆成版本、安装、回滚三部分。\nt2 assistant: 可以，先拆成版本正确性、安装验证、回滚安全。\nt5 user: 先回到刚才的发布验收，那三部分是什么？",
+    "semanticPinNotes": [
+      "user: 插一句，我的时区是 Asia/Shanghai，记住。",
+      "assistant: 记住了，你的时区是 Asia/Shanghai。"
+    ],
+    "archiveSummary": "Main task remains the release-acceptance breakdown: version correctness, installation validation, and rollback safety from t1-t2. Side note captured as a durable user fact: user's timezone is Asia/Shanghai.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 43,
+    "shadowRawPromptEstimate": 24,
+    "shadowPackageEstimate": 50,
+    "shadowPackageText": "Active raw turns:\nt1 user: 把发布验收拆成版本、安装、回滚三部分。\nt2 assistant: 可以，先拆成版本正确性、安装验证、回滚安全。\nt5 user: 先回到刚才的发布验收，那三部分是什么？\n\nSemantic pins:\nuser: 插一句，我的时区是 Asia/Shanghai，记住。\nassistant: 记住了，你的时区是 Asia/Shanghai。"
+  },
+  "scorecard": {
+    "relation": "branch",
+    "baselineTurnCount": 5,
+    "keptTurnCount": 3,
+    "evictedTurnCount": 2,
+    "pinCount": 2,
+    "baselinePromptEstimate": 43,
+    "shadowRawPromptEstimate": 24,
+    "shadowPackageEstimate": 50,
+    "rawReductionRatio": 0.4483,
+    "packageReductionRatio": -0.1628,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 16251,
+    "totalElapsedMs": 16252,
+    "guardedEnabled": true,
+    "guardedApplied": false,
+    "guardedReason": "relation_not_allowed",
+    "guardedMessageCount": 5,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 29
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": false,
+    "reason": "relation_not_allowed",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": "把发布验收拆成版本、安装、回滚三部分。"
+      },
+      {
+        "role": "assistant",
+        "content": "可以，先拆成版本正确性、安装验证、回滚安全。"
+      },
+      {
+        "role": "user",
+        "content": "插一句，我的时区是 Asia/Shanghai，记住。"
+      },
+      {
+        "role": "assistant",
+        "content": "记住了，你的时区是 Asia/Shanghai。"
+      },
+      {
+        "role": "user",
+        "content": "先回到刚才的发布验收，那三部分是什么？"
+      }
+    ],
+    "filteredMessageCount": 5,
+    "filteredMessageTokenEstimate": 29,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 16252,
+    "decisionElapsedMs": 16251
+  }
+}

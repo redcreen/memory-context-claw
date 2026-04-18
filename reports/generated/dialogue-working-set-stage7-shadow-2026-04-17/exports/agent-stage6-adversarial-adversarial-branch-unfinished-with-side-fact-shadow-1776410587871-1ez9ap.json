@@ -1,0 +1,147 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776410587871-1ez9ap",
+  "generated_at": "2026-04-17T07:23:07.871Z",
+  "session_key": "agent:stage6-adversarial:adversarial-branch-unfinished-with-side-fact",
+  "agent_id": "stage6-adversarial",
+  "query": "插一句，记一下：我在上海时区。",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "帮我把 Stage 6 验收拆成 3 个部分。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "可以，先拆成：功能正确性、回退安全、宿主集成验证。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "插一句，记一下：我在上海时区。"
+    }
+  ],
+  "decision": {
+    "relation": "branch",
+    "confidence": 0.97,
+    "evict_turn_ids": [],
+    "pin_turn_ids": [
+      "t3"
+    ],
+    "archive_summary": "Main task remains active: user asked to split Stage 6 acceptance into 3 parts, and assistant proposed function correctness, rollback safety, and host integration validation. Durable user fact captured: user is in the Asia/Shanghai time zone.",
+    "reasoning_summary": "The latest turn is a side note adding a durable preference/fact, not replacing the unfinished Stage 6 task. Use branch so the earlier task stays raw in the next-turn prompt. Pin t3 because the Shanghai time zone is durable context that should survive even if the raw turn is later evicted."
+  },
+  "snapshot": {
+    "applied": {
+      "relation": "branch",
+      "confidence": 0.97,
+      "archiveSummary": "Main task remains active: user asked to split Stage 6 acceptance into 3 parts, and assistant proposed function correctness, rollback safety, and host integration validation. Durable user fact captured: user is in the Asia/Shanghai time zone.",
+      "reasoningSummary": "The latest turn is a side note adding a durable preference/fact, not replacing the unfinished Stage 6 task. Use branch so the earlier task stays raw in the next-turn prompt. Pin t3 because the Shanghai time zone is durable context that should survive even if the raw turn is later evicted.",
+      "latestUserTurnId": "t3",
+      "pinTurnIds": [
+        "t3"
+      ],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [],
+      "keepTurnIds": [
+        "t1",
+        "t2",
+        "t3"
+      ],
+      "baselineTokens": 17,
+      "keptTokens": 17,
+      "prunedTokens": 0,
+      "reductionRatio": 0,
+      "keepTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "帮我把 Stage 6 验收拆成 3 个部分。",
+          "tokenEstimate": 6
+        },
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "可以，先拆成：功能正确性、回退安全、宿主集成验证。",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "插一句，记一下：我在上海时区。",
+          "tokenEstimate": 4
+        }
+      ],
+      "evictedTurns": []
+    },
+    "baselineRawTranscript": "t1 user: 帮我把 Stage 6 验收拆成 3 个部分。\nt2 assistant: 可以，先拆成：功能正确性、回退安全、宿主集成验证。\nt3 user: 插一句，记一下：我在上海时区。",
+    "shadowRawTranscript": "t1 user: 帮我把 Stage 6 验收拆成 3 个部分。\nt2 assistant: 可以，先拆成：功能正确性、回退安全、宿主集成验证。\nt3 user: 插一句，记一下：我在上海时区。",
+    "semanticPinNotes": [],
+    "archiveSummary": "Main task remains active: user asked to split Stage 6 acceptance into 3 parts, and assistant proposed function correctness, rollback safety, and host integration validation. Durable user fact captured: user is in the Asia/Shanghai time zone.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 25,
+    "shadowRawPromptEstimate": 25,
+    "shadowPackageEstimate": 29,
+    "shadowPackageText": "Active raw turns:\nt1 user: 帮我把 Stage 6 验收拆成 3 个部分。\nt2 assistant: 可以，先拆成：功能正确性、回退安全、宿主集成验证。\nt3 user: 插一句，记一下：我在上海时区。"
+  },
+  "scorecard": {
+    "relation": "branch",
+    "baselineTurnCount": 3,
+    "keptTurnCount": 3,
+    "evictedTurnCount": 0,
+    "pinCount": 1,
+    "baselinePromptEstimate": 25,
+    "shadowRawPromptEstimate": 25,
+    "shadowPackageEstimate": 29,
+    "rawReductionRatio": 0,
+    "packageReductionRatio": -0.16,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 13217,
+    "totalElapsedMs": 13217,
+    "guardedEnabled": false,
+    "guardedApplied": false,
+    "guardedReason": "feature_disabled",
+    "guardedMessageCount": 3,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 17
+  },
+  "guarded": {
+    "enabled": false,
+    "applied": false,
+    "reason": "feature_disabled",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": "帮我把 Stage 6 验收拆成 3 个部分。"
+      },
+      {
+        "role": "assistant",
+        "content": "可以，先拆成：功能正确性、回退安全、宿主集成验证。"
+      },
+      {
+        "role": "user",
+        "content": "插一句，记一下：我在上海时区。"
+      }
+    ],
+    "filteredMessageCount": 3,
+    "filteredMessageTokenEstimate": 17,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 13217,
+    "decisionElapsedMs": 13217
+  }
+}

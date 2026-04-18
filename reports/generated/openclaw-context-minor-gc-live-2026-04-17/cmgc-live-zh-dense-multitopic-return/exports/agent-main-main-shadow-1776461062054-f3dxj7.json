@@ -1,0 +1,54 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776461062054-f3dxj7",
+  "generated_at": "2026-04-17T21:24:22.054Z",
+  "session_key": "agent:main:main",
+  "agent_id": "main",
+  "query": "我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。",
+  "status": "skipped",
+  "reason": "not_enough_turns",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [],
+  "decision": null,
+  "decision_transport": "",
+  "snapshot": null,
+  "scorecard": {
+    "relation": "",
+    "baselineTurnCount": 0,
+    "keptTurnCount": 0,
+    "evictedTurnCount": 0,
+    "pinCount": 0,
+    "baselinePromptEstimate": 0,
+    "shadowRawPromptEstimate": 0,
+    "shadowPackageEstimate": 0,
+    "rawReductionRatio": 0,
+    "packageReductionRatio": 0,
+    "candidateLoadElapsedMs": 16,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 0,
+    "totalElapsedMs": 0,
+    "guardedEnabled": false,
+    "guardedApplied": false,
+    "guardedReason": "feature_disabled",
+    "guardedMessageCount": 0,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 0
+  },
+  "guarded": {
+    "enabled": false,
+    "applied": false,
+    "reason": "feature_disabled",
+    "filteredMessageCount": 0,
+    "filteredMessageTokenEstimate": 0,
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 0,
+    "decisionElapsedMs": 0
+  }
+}

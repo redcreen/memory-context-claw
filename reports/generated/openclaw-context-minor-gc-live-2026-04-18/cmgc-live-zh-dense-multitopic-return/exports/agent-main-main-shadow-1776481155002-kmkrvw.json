@@ -1,0 +1,313 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776481155002-kmkrvw",
+  "generated_at": "2026-04-18T02:59:15.002Z",
+  "session_key": "agent:main:main",
+  "agent_id": "main",
+  "query": "先不聊代码了。刚才旅行那段里，我更想住哪座城市？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "我记住了：旅行预算 2 万元；你更想住京都，最好靠近地铁站。 记住了：预算 2 万元，更想住京都，最好靠近地铁站。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "现在切到代码：给我一个 Python 正则，提取 foo123bar 里的数字。"
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "`r'foo(\\d+)bar'` 如果你只想从完整字符串里提取数字： ```python import re s = \"foo123bar\" m = re.search(r'foo(\\d+)bar', s) num = m.group(1) if m else None ``` 返回：`\"123\"`"
+    },
+    {
+      "id": "t5",
+      "role": "user",
+      "content": "继续代码：如果只取第一个数字分组，写法怎么更短？"
+    },
+    {
+      "id": "t6",
+      "role": "assistant",
+      "content": "`re.search(r'\\d+', s).group(0)`"
+    }
+  ],
+  "decision": {
+    "relation": "switch",
+    "confidence": 0.98,
+    "evict_turn_ids": [
+      "t3",
+      "t4",
+      "t5",
+      "t6"
+    ],
+    "pin_turn_ids": [
+      "t1",
+      "t2"
+    ],
+    "archive_summary": "旅行偏好已明确：预算 2 万元，更想住京都，且最好靠近地铁站。代码分支已切走，可从下一轮原始上下文中移除。",
+    "reasoning_summary": "最新用户转回旅行话题，询问的是先前已表达过的住宿城市偏好；当前应保留旅行偏好作为原始上下文或语义 pin，同时将已完成且不相关的代码段从工作集里移除。"
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "switch",
+      "confidence": 0.98,
+      "archiveSummary": "旅行偏好已明确：预算 2 万元，更想住京都，且最好靠近地铁站。代码分支已切走，可从下一轮原始上下文中移除。",
+      "reasoningSummary": "最新用户转回旅行话题，询问的是先前已表达过的住宿城市偏好；当前应保留旅行偏好作为原始上下文或语义 pin，同时将已完成且不相关的代码段从工作集里移除。",
+      "latestUserTurnId": "t5",
+      "pinTurnIds": [
+        "t1",
+        "t2"
+      ],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t3",
+        "t4",
+        "t5",
+        "t6"
+      ],
+      "blockedEvictTurnIds": [
+        "t5"
+      ],
+      "appliedEvictTurnIds": [
+        "t3",
+        "t4",
+        "t6"
+      ],
+      "keepTurnIds": [
+        "t1",
+        "t2",
+        "t5"
+      ],
+      "baselineTokens": 86,
+      "keptTokens": 30,
+      "prunedTokens": 56,
+      "reductionRatio": 0.6511627906976745,
+      "keepTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。",
+          "tokenEstimate": 9
+        },
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "我记住了：旅行预算 2 万元；你更想住京都，最好靠近地铁站。 记住了：预算 2 万元，更想住京都，最好靠近地铁站。",
+          "tokenEstimate": 15
+        },
+        {
+          "id": "t5",
+          "role": "user",
+          "content": "继续代码：如果只取第一个数字分组，写法怎么更短？",
+          "tokenEstimate": 6
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "现在切到代码：给我一个 Python 正则，提取 foo123bar 里的数字。",
+          "tokenEstimate": 10
+        },
+        {
+          "id": "t4",
+          "role": "assistant",
+          "content": "`r'foo(\\d+)bar'` 如果你只想从完整字符串里提取数字： ```python import re s = \"foo123bar\" m = re.search(r'foo(\\d+)bar', s) num = m.group(1) if m else None ``` 返回：`\"123\"`",
+          "tokenEstimate": 38
+        },
+        {
+          "id": "t6",
+          "role": "assistant",
+          "content": "`re.search(r'\\d+', s).group(0)`",
+          "tokenEstimate": 8
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。\nt2 assistant: 我记住了：旅行预算 2 万元；你更想住京都，最好靠近地铁站。 记住了：预算 2 万元，更想住京都，最好靠近地铁站。\nt3 user: 现在切到代码：给我一个 Python 正则，提取 foo123bar 里的数字。\nt4 assistant: `r'foo(\\d+)bar'` 如果你只想从完整字符串里提取数字： ```python import re s = \"foo123bar\" m = re.search(r'foo(\\d+)bar', s) num = m.group(1) if m else None ``` 返回：`\"123\"`\nt5 user: 继续代码：如果只取第一个数字分组，写法怎么更短？\nt6 assistant: `re.search(r'\\d+', s).group(0)`",
+    "shadowRawTranscript": "t1 user: 我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。\nt2 assistant: 我记住了：旅行预算 2 万元；你更想住京都，最好靠近地铁站。 记住了：预算 2 万元，更想住京都，最好靠近地铁站。\nt5 user: 继续代码：如果只取第一个数字分组，写法怎么更短？",
+    "semanticPinNotes": [],
+    "archiveSummary": "旅行偏好已明确：预算 2 万元，更想住京都，且最好靠近地铁站。代码分支已切走，可从下一轮原始上下文中移除。",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 103,
+    "shadowRawPromptEstimate": 37,
+    "shadowPackageEstimate": 42,
+    "shadowPackageText": "Active raw turns:\nt1 user: 我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。\nt2 assistant: 我记住了：旅行预算 2 万元；你更想住京都，最好靠近地铁站。 记住了：预算 2 万元，更想住京都，最好靠近地铁站。\nt5 user: 继续代码：如果只取第一个数字分组，写法怎么更短？"
+  },
+  "scorecard": {
+    "relation": "switch",
+    "baselineTurnCount": 6,
+    "keptTurnCount": 3,
+    "evictedTurnCount": 3,
+    "pinCount": 2,
+    "baselinePromptEstimate": 103,
+    "shadowRawPromptEstimate": 37,
+    "shadowPackageEstimate": 42,
+    "rawReductionRatio": 0.6512,
+    "packageReductionRatio": 0.5922,
+    "candidateLoadElapsedMs": 23,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 21638,
+    "totalElapsedMs": 21642,
+    "guardedEnabled": false,
+    "guardedApplied": false,
+    "guardedReason": "feature_disabled",
+    "guardedMessageCount": 6,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 86
+  },
+  "guarded": {
+    "enabled": false,
+    "applied": false,
+    "reason": "feature_disabled",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。"
+          }
+        ],
+        "timestamp": 1776481051387
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "我记住了：旅行预算 2 万元；你更想住京都，最好靠近地铁站。",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0f3a595a8eda4b1b0169e2f3227c088191b09975a789706b1d\",\"phase\":\"commentary\"}"
+          },
+          {
+            "type": "text",
+            "text": "记住了：预算 2 万元，更想住京都，最好靠近地铁站。",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0f3a595a8eda4b1b0169e2f322cd088191bce34bd398036469\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 8364,
+          "output": 57,
+          "cacheRead": 5120,
+          "cacheWrite": 0,
+          "totalTokens": 13541,
+          "cost": {
+            "input": 0.006273,
+            "output": 0.0002565,
+            "cacheRead": 0.000384,
+            "cacheWrite": 0,
+            "total": 0.0069134999999999995
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776481051392,
+        "responseId": "resp_0f3a595a8eda4b1b0169e2f321c8ec81919ac7c1fe9c9844a8"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "现在切到代码：给我一个 Python 正则，提取 foo123bar 里的数字。"
+          }
+        ],
+        "timestamp": 1776481074164
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "`r'foo(\\d+)bar'`\n\n如果你只想从完整字符串里提取数字：\n\n```python\nimport re\n\ns = \"foo123bar\"\nm = re.search(r'foo(\\d+)bar', s)\nnum = m.group(1) if m else None\n```\n\n返回：`\"123\"`",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0f3a595a8eda4b1b0169e2f339d70081918cffaed48b4075c3\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 8473,
+          "output": 73,
+          "cacheRead": 5120,
+          "cacheWrite": 0,
+          "totalTokens": 13666,
+          "cost": {
+            "input": 0.00635475,
+            "output": 0.0003285,
+            "cacheRead": 0.000384,
+            "cacheWrite": 0,
+            "total": 0.00706725
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776481074171,
+        "responseId": "resp_0f3a595a8eda4b1b0169e2f33880e881918dbe21e0b0227c02"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "继续代码：如果只取第一个数字分组，写法怎么更短？"
+          }
+        ],
+        "timestamp": 1776481127899
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "`re.search(r'\\d+', s).group(0)`",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0f3a595a8eda4b1b0169e2f37545a48191bbf5c4b8b531a4ca\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 8600,
+          "output": 17,
+          "cacheRead": 5120,
+          "cacheWrite": 0,
+          "totalTokens": 13737,
+          "cost": {
+            "input": 0.00645,
+            "output": 0.0000765,
+            "cacheRead": 0.000384,
+            "cacheWrite": 0,
+            "total": 0.0069105
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776481127913,
+        "responseId": "resp_0f3a595a8eda4b1b0169e2f374b2808191939f8006acb2b1e7"
+      }
+    ],
+    "filteredMessageCount": 6,
+    "filteredMessageTokenEstimate": 86,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 21642,
+    "decisionElapsedMs": 21638
+  }
+}

@@ -6,7 +6,7 @@
 
 - 项目名：`unified-memory-core`
 - 工作区路径：`/Users/redcreen/Project/unified-memory-core`
-- 最近匹配会话：`查看项目助手进展'}}**}**}** (019d84b0-f13f-7311-8e93-a904923b2b28)`
+- 最近匹配会话：`评估上下文瘦身双写并行切换可行性}】 (019d93e3-8a09-75a0-88ea-d09749a873fb)`
 
 如果当前线程上下文和上面的项目信息不一致，优先以上面的工作区路径为准。
 
@@ -18,8 +18,8 @@
 
 ## 当前连续性
 
-- 当前 checkpoint：`one stable-maintenance slice covering roadmap summary、smoke baselines、memory-search governance snapshot、registry inspect、release-preflight、control-surface freshness`
-- 下一动作：`在真实 OpenClaw 会话里完成一次最终人类 sanity check，并确认稳定安装示例与 \`v0.2.1\` 一致。`
+- 当前 checkpoint：`Stage 7 closeout evidence、Docker hermetic baseline、release-preflight、canonical-root policy、shared-foundation proof`
+- 下一动作：`保持 \`npm run umc:stage10 -- --format markdown\` 持续为绿。`
 - 下一动作来源：`status.next-3`
 
 收到这些恢复材料后，默认直接从“下一动作”切入，而不是重新开始一轮 resume 问答。

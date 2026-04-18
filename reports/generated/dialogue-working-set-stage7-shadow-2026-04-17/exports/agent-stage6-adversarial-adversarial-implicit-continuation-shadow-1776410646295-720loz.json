@@ -1,0 +1,143 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776410646295-720loz",
+  "generated_at": "2026-04-17T07:24:06.295Z",
+  "session_key": "agent:stage6-adversarial:adversarial-implicit-continuation",
+  "agent_id": "stage6-adversarial",
+  "query": "第二阶段具体是什么意思？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "把三阶段 rollout 说一下。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "先 shadow，后 gated active，最后再 default active。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "第二阶段具体是什么意思？"
+    }
+  ],
+  "decision": {
+    "relation": "continue",
+    "confidence": 0.99,
+    "evict_turn_ids": [],
+    "pin_turn_ids": [],
+    "archive_summary": "Active topic is the three-stage rollout plan: stage 1 shadow, stage 2 gated active, stage 3 default active. The latest user turn asks for clarification of stage 2, so prior turns remain directly relevant context.",
+    "reasoning_summary": "The latest question explicitly refers to '第二阶段' from the immediately preceding exchange, so this is the same active topic and depends on the raw wording in t1-t2. No earlier turns are resolved or irrelevant yet, so nothing should be evicted or converted to pins."
+  },
+  "snapshot": {
+    "applied": {
+      "relation": "continue",
+      "confidence": 0.99,
+      "archiveSummary": "Active topic is the three-stage rollout plan: stage 1 shadow, stage 2 gated active, stage 3 default active. The latest user turn asks for clarification of stage 2, so prior turns remain directly relevant context.",
+      "reasoningSummary": "The latest question explicitly refers to '第二阶段' from the immediately preceding exchange, so this is the same active topic and depends on the raw wording in t1-t2. No earlier turns are resolved or irrelevant yet, so nothing should be evicted or converted to pins.",
+      "latestUserTurnId": "t3",
+      "pinTurnIds": [],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [],
+      "keepTurnIds": [
+        "t1",
+        "t2",
+        "t3"
+      ],
+      "baselineTokens": 19,
+      "keptTokens": 19,
+      "prunedTokens": 0,
+      "reductionRatio": 0,
+      "keepTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "把三阶段 rollout 说一下。",
+          "tokenEstimate": 5
+        },
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "先 shadow，后 gated active，最后再 default active。",
+          "tokenEstimate": 11
+        },
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "第二阶段具体是什么意思？",
+          "tokenEstimate": 3
+        }
+      ],
+      "evictedTurns": []
+    },
+    "baselineRawTranscript": "t1 user: 把三阶段 rollout 说一下。\nt2 assistant: 先 shadow，后 gated active，最后再 default active。\nt3 user: 第二阶段具体是什么意思？",
+    "shadowRawTranscript": "t1 user: 把三阶段 rollout 说一下。\nt2 assistant: 先 shadow，后 gated active，最后再 default active。\nt3 user: 第二阶段具体是什么意思？",
+    "semanticPinNotes": [],
+    "archiveSummary": "Active topic is the three-stage rollout plan: stage 1 shadow, stage 2 gated active, stage 3 default active. The latest user turn asks for clarification of stage 2, so prior turns remain directly relevant context.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 27,
+    "shadowRawPromptEstimate": 27,
+    "shadowPackageEstimate": 31,
+    "shadowPackageText": "Active raw turns:\nt1 user: 把三阶段 rollout 说一下。\nt2 assistant: 先 shadow，后 gated active，最后再 default active。\nt3 user: 第二阶段具体是什么意思？"
+  },
+  "scorecard": {
+    "relation": "continue",
+    "baselineTurnCount": 3,
+    "keptTurnCount": 3,
+    "evictedTurnCount": 0,
+    "pinCount": 0,
+    "baselinePromptEstimate": 27,
+    "shadowRawPromptEstimate": 27,
+    "shadowPackageEstimate": 31,
+    "rawReductionRatio": 0,
+    "packageReductionRatio": -0.1481,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 13988,
+    "totalElapsedMs": 13988,
+    "guardedEnabled": false,
+    "guardedApplied": false,
+    "guardedReason": "feature_disabled",
+    "guardedMessageCount": 3,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 19
+  },
+  "guarded": {
+    "enabled": false,
+    "applied": false,
+    "reason": "feature_disabled",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": "把三阶段 rollout 说一下。"
+      },
+      {
+        "role": "assistant",
+        "content": "先 shadow，后 gated active，最后再 default active。"
+      },
+      {
+        "role": "user",
+        "content": "第二阶段具体是什么意思？"
+      }
+    ],
+    "filteredMessageCount": 3,
+    "filteredMessageTokenEstimate": 19,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 13988,
+    "decisionElapsedMs": 13988
+  }
+}

@@ -1,0 +1,314 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776480524306-dzkuat",
+  "generated_at": "2026-04-18T02:48:44.306Z",
+  "session_key": "agent:main:main",
+  "agent_id": "main",
+  "query": "先不说代码了。我刚才要求你默认用什么语言回复？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "以后默认给我中文回复，尽量一句话。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "好，之后默认中文回复，尽量一句话。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "先切到代码：这轮先别改 OpenClaw core，只能走插件内 overlay。"
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "收到，这轮只在插件内 overlay 动手，不碰 OpenClaw core。"
+    },
+    {
+      "id": "t5",
+      "role": "user",
+      "content": "再切一下：Stage 7 closeout 里 operator scorecard 还要保留。"
+    },
+    {
+      "id": "t6",
+      "role": "assistant",
+      "content": "收到，Stage 7 closeout 里 operator scorecard 会保留。"
+    }
+  ],
+  "decision": {
+    "relation": "resolve",
+    "confidence": 0.96,
+    "evict_turn_ids": [
+      "t1",
+      "t2",
+      "t3",
+      "t4",
+      "t5",
+      "t6"
+    ],
+    "pin_turn_ids": [
+      "t1"
+    ],
+    "archive_summary": "Default response preference: Chinese, preferably one sentence.",
+    "reasoning_summary": "The latest user turn asks about an earlier durable preference, while the code-topic instructions are resolved and irrelevant. Keep the language/style preference as a compact pin; evict the rest to shrink the next-turn prompt."
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "resolve",
+      "confidence": 0.96,
+      "archiveSummary": "Default response preference: Chinese, preferably one sentence.",
+      "reasoningSummary": "The latest user turn asks about an earlier durable preference, while the code-topic instructions are resolved and irrelevant. Keep the language/style preference as a compact pin; evict the rest to shrink the next-turn prompt.",
+      "latestUserTurnId": "t5",
+      "pinTurnIds": [
+        "t1"
+      ],
+      "pinnedOnlyTurnIds": [
+        "t1"
+      ],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6"
+      ],
+      "blockedEvictTurnIds": [
+        "t5"
+      ],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t6"
+      ],
+      "keepTurnIds": [
+        "t5"
+      ],
+      "baselineTokens": 55,
+      "keptTokens": 12,
+      "prunedTokens": 43,
+      "reductionRatio": 0.7818181818181819,
+      "keepTurns": [
+        {
+          "id": "t5",
+          "role": "user",
+          "content": "再切一下：Stage 7 closeout 里 operator scorecard 还要保留。",
+          "tokenEstimate": 12
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "以后默认给我中文回复，尽量一句话。",
+          "tokenEstimate": 5
+        },
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "好，之后默认中文回复，尽量一句话。",
+          "tokenEstimate": 5
+        },
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "先切到代码：这轮先别改 OpenClaw core，只能走插件内 overlay。",
+          "tokenEstimate": 11
+        },
+        {
+          "id": "t4",
+          "role": "assistant",
+          "content": "收到，这轮只在插件内 overlay 动手，不碰 OpenClaw core。",
+          "tokenEstimate": 10
+        },
+        {
+          "id": "t6",
+          "role": "assistant",
+          "content": "收到，Stage 7 closeout 里 operator scorecard 会保留。",
+          "tokenEstimate": 12
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 以后默认给我中文回复，尽量一句话。\nt2 assistant: 好，之后默认中文回复，尽量一句话。\nt3 user: 先切到代码：这轮先别改 OpenClaw core，只能走插件内 overlay。\nt4 assistant: 收到，这轮只在插件内 overlay 动手，不碰 OpenClaw core。\nt5 user: 再切一下：Stage 7 closeout 里 operator scorecard 还要保留。\nt6 assistant: 收到，Stage 7 closeout 里 operator scorecard 会保留。",
+    "shadowRawTranscript": "t5 user: 再切一下：Stage 7 closeout 里 operator scorecard 还要保留。",
+    "semanticPinNotes": [
+      "user: 以后默认给我中文回复，尽量一句话。"
+    ],
+    "archiveSummary": "Default response preference: Chinese, preferably one sentence.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 71,
+    "shadowRawPromptEstimate": 15,
+    "shadowPackageEstimate": 29,
+    "shadowPackageText": "Active raw turns:\nt5 user: 再切一下：Stage 7 closeout 里 operator scorecard 还要保留。\n\nSemantic pins:\nuser: 以后默认给我中文回复，尽量一句话。"
+  },
+  "scorecard": {
+    "relation": "resolve",
+    "baselineTurnCount": 6,
+    "keptTurnCount": 1,
+    "evictedTurnCount": 5,
+    "pinCount": 1,
+    "baselinePromptEstimate": 71,
+    "shadowRawPromptEstimate": 15,
+    "shadowPackageEstimate": 29,
+    "rawReductionRatio": 0.7818,
+    "packageReductionRatio": 0.5915,
+    "candidateLoadElapsedMs": 12,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 21422,
+    "totalElapsedMs": 21444,
+    "guardedEnabled": false,
+    "guardedApplied": false,
+    "guardedReason": "feature_disabled",
+    "guardedMessageCount": 6,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 55
+  },
+  "guarded": {
+    "enabled": false,
+    "applied": false,
+    "reason": "feature_disabled",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "以后默认给我中文回复，尽量一句话。"
+          }
+        ],
+        "timestamp": 1776480448359
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "好，之后默认中文回复，尽量一句话。",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0ca70fd0605191e20169e2f0c6e610819181b5277f75bc184b\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 8246,
+          "output": 16,
+          "cacheRead": 5120,
+          "cacheWrite": 0,
+          "totalTokens": 13382,
+          "cost": {
+            "input": 0.0061845,
+            "output": 0.000072,
+            "cacheRead": 0.000384,
+            "cacheWrite": 0,
+            "total": 0.0066405
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776480448363,
+        "responseId": "resp_0ca70fd0605191e20169e2f0c6629881918ab91994db9240e7"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "先切到代码：这轮先别改 OpenClaw core，只能走插件内 overlay。"
+          }
+        ],
+        "timestamp": 1776480466899
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "收到，这轮只在插件内 overlay 动手，不碰 OpenClaw core。",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0ca70fd0605191e20169e2f0d8a3648191a8b9a4d16793d4a6\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 8602,
+          "output": 21,
+          "cacheRead": 5120,
+          "cacheWrite": 0,
+          "totalTokens": 13743,
+          "cost": {
+            "input": 0.0064515,
+            "output": 0.0000945,
+            "cacheRead": 0.000384,
+            "cacheWrite": 0,
+            "total": 0.0069299999999999995
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776480466909,
+        "responseId": "resp_0ca70fd0605191e20169e2f0d7e68881918f50b2af83a81c9c"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "再切一下：Stage 7 closeout 里 operator scorecard 还要保留。"
+          }
+        ],
+        "timestamp": 1776480508985
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "收到，Stage 7 closeout 里 operator scorecard 会保留。",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0ca70fd0605191e20169e2f100ec788191983e6e275f2c2c9b\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 8574,
+          "output": 20,
+          "cacheRead": 5120,
+          "cacheWrite": 0,
+          "totalTokens": 13714,
+          "cost": {
+            "input": 0.0064305000000000005,
+            "output": 0.00009,
+            "cacheRead": 0.000384,
+            "cacheWrite": 0,
+            "total": 0.0069045
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776480508992,
+        "responseId": "resp_0ca70fd0605191e20169e2f10013e08191aece3bbcc8b28cdf"
+      }
+    ],
+    "filteredMessageCount": 6,
+    "filteredMessageTokenEstimate": 55,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 21444,
+    "decisionElapsedMs": 21422
+  }
+}

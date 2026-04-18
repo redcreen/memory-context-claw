@@ -1,0 +1,114 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776412397383-q2cjad",
+  "generated_at": "2026-04-17T07:53:17.383Z",
+  "session_key": "agent:main:main",
+  "agent_id": "main",
+  "query": "Continue where you left off. The previous model attempt failed or timed out.",
+  "status": "error",
+  "reason": "Error: Plugin runtime subagent methods are only available during a gateway request.",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "assistant",
+      "content": "你好，我是你的AI助手。根据系统提示，我需要先读取一些必要的文件来了解我们之间的背景和设置。 让我先读取这些文件，然后向你问好。<|tool_calls_section_begin|><|tool_call_begin|>functions.read:0<|tool_call_argument_begin|>{\"file_path\": \"/Users/redcreen/.openclaw/workspace/SOUL.md\"}<|tool_call_end|><|tool_call_begin|>functions.read:1<|tool_call_argument_begin|>{\"file_path\": \"/Users/redcreen/.openclaw/workspace/USER.md\"}<|tool_call_end|><|tool_call_begin|>functions.read:2<|tool_call_argument_begin|>{\"file_path\": \"/Users/redcreen/.openclaw/workspace/IDENTITY.md\"}<|tool_call_end|><|tool_calls_section_end|> 🦞 OpenClaw 2026.4.2 (d74a122) 🧠 Model: openai-codex/gpt-5.4-mini · 🔑 oauth (openai-codex:67560691@qq.com (67560691@qq.com)) ↪️ Fallback: kimi/kimi-code · 🔑 api-key (kimi:default) (auth) 🧮 Tokens: 16k in / 0 out · 💵 Cost: $0.0000 📚 Context: 16k/262k (6%) · 🧹 Compactions: 0 🧵 Session: agent:main:main • updated just now 📌 Tasks: 2 active · 7 tot..."
+    },
+    {
+      "id": "t2",
+      "role": "user",
+      "content": "task-system planning runtime context: - current_session_key: agent:main:main - current_task_id: task_e819466d805a4690a2bb6f7775e4ea13 - planning_mode: tool-first-after-first-ack - if you need a future follow-up, use task-system tools in this order: 1. ts_attach_promise_guard 2. ts_create_followup_plan 3. ts_schedule_followup_from_plan 4. ts_finalize_planned_followup - for future-first requests, default to main_user_content_mode=none - runtime decides whether this turn sends no business content, a short summary, or a full answer - if main_user_content_mode=immediate-summary, keep the user-visible summary to one short business-facing line (about 120 chars max) - legacy structured user-content blocks may appear, but they are compatibility-only and must not leak to users - do not put scheduling status, promise state, or tool-chain state in the user-visible answer - provide followup_summar..."
+    },
+    {
+      "id": "t3",
+      "role": "assistant",
+      "content": "当前工作模型是 **openai-codex/gpt-5.4-mini**（通过 OAuth 授权）。 备用模型是 kimi/kimi-code。"
+    },
+    {
+      "id": "t4",
+      "role": "user",
+      "content": "task-system planning runtime context: - current_session_key: agent:main:main - current_task_id: task_b6bade80fd914e41bead0ddf2768f3b1 - planning_mode: tool-first-after-first-ack - if you need a future follow-up, use task-system tools in this order: 1. ts_attach_promise_guard 2. ts_create_followup_plan 3. ts_schedule_followup_from_plan 4. ts_finalize_planned_followup - for future-first requests, default to main_user_content_mode=none - runtime decides whether this turn sends no business content, a short summary, or a full answer - if main_user_content_mode=immediate-summary, keep the user-visible summary to one short business-facing line (about 120 chars max) - legacy structured user-content blocks may appear, but they are compatibility-only and must not leak to users - do not put scheduling status, promise state, or tool-chain state in the user-visible answer - provide followup_summar..."
+    },
+    {
+      "id": "t5",
+      "role": "assistant",
+      "content": "DONE"
+    },
+    {
+      "id": "t6",
+      "role": "user",
+      "content": "task-system planning runtime context: - current_session_key: agent:main:main - current_task_id: unknown - planning_mode: tool-first-after-first-ack - if you need a future follow-up, use task-system tools in this order: 1. ts_attach_promise_guard 2. ts_create_followup_plan 3. ts_schedule_followup_from_plan 4. ts_finalize_planned_followup - for future-first requests, default to main_user_content_mode=none - runtime decides whether this turn sends no business content, a short summary, or a full answer - if main_user_content_mode=immediate-summary, keep the user-visible summary to one short business-facing line (about 120 chars max) - legacy structured user-content blocks may appear, but they are compatibility-only and must not leak to users - do not put scheduling status, promise state, or tool-chain state in the user-visible answer - provide followup_summary so runtime can send a meanin..."
+    },
+    {
+      "id": "t7",
+      "role": "assistant",
+      "content": "DONE"
+    },
+    {
+      "id": "t8",
+      "role": "user",
+      "content": "task-system runtime context: - session: agent:main:main - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded 只回复OK"
+    },
+    {
+      "id": "t9",
+      "role": "assistant",
+      "content": "OK"
+    },
+    {
+      "id": "t10",
+      "role": "user",
+      "content": "task-system runtime context: - session: agent:main:main - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded 我们先聊日本旅行。记住预算2万元，偏好住地铁附近。只回复确认。"
+    },
+    {
+      "id": "t11",
+      "role": "assistant",
+      "content": "确认"
+    },
+    {
+      "id": "t12",
+      "role": "user",
+      "content": "task-system runtime context: - session: agent:main:main - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded 我们先聊日本旅行。记住预算2万元，偏好住地铁附近。只回复确认。"
+    }
+  ],
+  "decision": null,
+  "snapshot": null,
+  "scorecard": {
+    "relation": "",
+    "baselineTurnCount": 12,
+    "keptTurnCount": 0,
+    "evictedTurnCount": 0,
+    "pinCount": 0,
+    "baselinePromptEstimate": 0,
+    "shadowRawPromptEstimate": 0,
+    "shadowPackageEstimate": 0,
+    "rawReductionRatio": 0,
+    "packageReductionRatio": 0,
+    "candidateLoadElapsedMs": 962,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 0,
+    "totalElapsedMs": 3,
+    "guardedEnabled": true,
+    "guardedApplied": false,
+    "guardedReason": "not_evaluated",
+    "guardedMessageCount": 16,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 0
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": false,
+    "reason": "not_evaluated",
+    "filteredMessageCount": 16,
+    "filteredMessageTokenEstimate": 0,
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 3,
+    "decisionElapsedMs": 0
+  }
+}

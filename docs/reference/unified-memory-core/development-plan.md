@@ -1,575 +1,194 @@
-# Unified Memory Core Development Plan
+# unified-memory-core Development Plan
 
 [English](development-plan.md) | [中文](development-plan.zh-CN.md)
 
 ## Purpose
 
-This document is the execution queue for `Unified Memory Core`.
+This document is the durable maintainer-facing execution plan that sits below `docs/roadmap.md` and above the AI control surfaces.
 
-It should answer one practical question clearly:
+It answers one practical question:
 
-`what do we build next, in what exact order, and where should work resume today?`
+`what should happen next, where should maintainers resume, and what detail sits underneath each roadmap milestone?`
 
-Related documents:
+## Related Documents
 
 - [../../roadmap.md](../../roadmap.md)
 - [../../architecture.md](../../architecture.md)
-- [deployment-topology.md](deployment-topology.md)
-- [architecture/README.md](architecture/README.md)
-- [roadmaps/README.md](roadmaps/README.md)
-- [blueprints/README.md](blueprints/README.md)
-- [testing/README.md](testing/README.md)
-
-## Final Target
-
-`Unified Memory Core` should become:
-
-- a governed shared-memory foundation
-- a reusable product core for OpenClaw, Codex, and future tools
-- a multi-adapter system with explicit namespaces, visibility rules, and repairable artifacts
-- a product that can run in embedded mode and standalone mode
-
-## Current Product Promise Mapping
-
-The execution plan should stay anchored to three user-facing promises:
-
-1. `Light and fast`
-   - already landed: fact-first assembly, Stage 6 runtime shadow instrumentation, release-preflight, Docker hermetic eval, ordinary-conversation Docker steady-state A/B, and the Stage 10 shortest adoption path
-   - maintenance focus: keep both `Context Minor GC / context loading optimization` and the Stage 10 adoption path green, while keeping ordinary-conversation hermetic A/B as the default Docker baseline
-2. `Smart`
-   - already landed: realtime `memory_intent` ingestion plus nightly governed learning plus the working-set shadow path
-   - next work: once the context-optimization scorecard is stable, move the shadow-first context-decision path toward a bounded guarded narrow gain
-3. `Reassuring`
-   - already landed: CLI / audit / replay / rollback operator flows, canonical registry root, OpenClaw / Codex adapters, and Codex / multi-instance shared-foundation proof
-   - maintenance focus: keep those flows readable and replayable while keeping the cross-Codex / multi-instance evidence green
-
-## Product North Star And Execution Meaning
-
-> Simple to install, smooth to use, light and fast to run, smart to remember, easy to maintain.
-
-Translated into execution requirements:
-
-- `light and fast`
-  - install, default config, first verification, prompt-thickness, latency, and runtime cost all stay inside the gate
-  - the public name for this hot-path program is now `Context Minor GC`
-- `smart`
-  - bounded decision contracts, self-learning, working-set pruning, and budgeted assembly should all improve judgment quality together
-- `reassuring`
-  - rollback boundaries, operator metrics, hermetic / Docker eval, and shared-registry entrypoints must be explicit before each promotion step
-
-## North-Star-Driven Current Priorities
-
-This plan is no longer only in a docs-first review state.
-
-The current priority order should now follow the three promises:
-
-1. `light and fast / context loading optimization`
-   - make per-turn context thickness, working-set reduction, budgeted assembly, and answer-level latency the mainline
-2. `light and fast / install`
-   - only after that, shorten install / bootstrap / verify
-3. `smart`
-   - once the bounded decision contract is clear, move shadow-first evidence into a very narrow guarded opt-in path
-4. `reassuring`
-   - strengthen product evidence beyond OpenClaw, especially on Codex / multi-instance reuse, while keeping rollback / replay strong
+- [../../test-plan.md](../../test-plan.md)
 
 ## How To Use This Plan
 
-Read this document as one ordered build queue.
+1. Read the roadmap first to understand overall progress and the next stage.
+2. Read `Overall Progress`, `Execution Task Progress`, and `Ordered Execution Queue` here to know where to resume.
+3. Only drop into the internal control docs when you are maintaining the automation itself.
 
-Rules:
+## Overall Progress
 
-1. finish the current stage before starting the next stage
-2. execute steps in numeric order
-3. if a step is marked `completed`, do not reopen it unless a bug forces it
-4. if a step is marked `next`, that is the exact place to resume work
-5. anything outside the current stage stays deferred
+| Item | Current Value |
+| --- | --- |
+| Overall Progress | 4 / 4 execution tasks complete |
+| Current Phase | `post-stage10-adoption-closeout` |
+| Active Slice | `hold-stage10-adoption-proof-stable` |
+| Current Objective | Stage 7 / 8 / 9 / 10 已全部收口；当前进入维护态，继续保持 Docker 为默认 hermetic A/B 面与 Stage 10 shortest-path/shared-foundation proof 持续为绿 |
+| Active Slice Exit Signal | Stage 10 证据面长期稳定，且任何新阶段都不会隐式破坏 shortest-path / shared-foundation proof |
+| Clear Next Move | Current execution tasks are complete; move to the next slice |
+| Next Candidate Slice | `formalize-realtime-memory-intent-ingestion` |
 
 ## Current Position
 
-Current status:
-
-- `Stage 1`: completed
-- `Stage 2`: completed
-- `Stage 3`: completed
-- `Stage 4`: completed
-- `Stage 5`: completed
-- `Stage 6`: completed
-- `Stage 7`: completed
-- `Stage 8`: completed
-- `Stage 9`: completed (still `default-off` / opt-in only)
-- `Stage 10`: completed
-- current pointer: `none`
-- current recommendation: Stage 7, Stage 8, Stage 9, and Stage 10 are all closed; the repo is now in maintenance mode, keeping the Docker hermetic baseline, the Stage 9 `default-off` boundary, and the Stage 10 shortest adoption/shared-foundation proof green
-
-Already implemented in the current baseline:
-
-- shared contracts
-- `Source System` MVP
-- structured `accepted_action` source intake
-- `Memory Registry` MVP
-- local `source -> candidate` pipeline
-- `Projection System` MVP
-- `Governance System` MVP
-- OpenClaw adapter runtime integration
-- Codex adapter runtime integration
-- reflection / daily learning baseline
-- standalone runtime / CLI baseline
-- audit / repair / replay / export inspect baseline
-- independent execution review baseline
-
-Execution constraints that still apply:
-
-- keep the implementation `local-first`
-- keep the implementation `network-ready`, not `network-required`
-- do not jump ahead of the current step pointer
-
-## Next-round Design Constraints
-
-These constraints keep the next per-turn context optimization slice measurable and reversible:
-
-- keep `dialogueWorkingSetShadow` `default-off` and shadow-only until the promotion / rollback gate is explicit
-- do not modify builtin memory behavior or treat builtin-memory rewrites as the current mainline
-- do not let the long-term design drift into a wider hardcoded rule table; the preferred next direction is a bounded, structured LLM-led context decision contract
-- keep LLM tool call count bounded; prefer one structured decision surface over multiple helper calls inside the same turn
-- do not start any active-path experiment without operator metrics, a rollback boundary, and hermetic / Docker reproduction coverage
-
-## Stage Map
-
-| Stage | Step Range | Goal | Status |
-| --- | --- | --- | --- |
-| Stage 1 | `1-10` | freeze product shape and documentation baseline | `completed` |
-| Stage 2 | `11-20` | complete the first local-first implementation baseline | `completed` |
-| Stage 3 | `21-30` | complete the self-learning lifecycle baseline | `completed` |
-| Stage 4 | `31-38` | connect governed learning outputs into adapter policy use | `completed` |
-| Stage 5 | `39-46` | harden product operations and split-ready execution | `completed` |
-| Stage 6 | `93-100` | validate dialogue working-set pruning in runtime shadow mode before any active prompt cutover | `completed` |
-| Stage 7 | `101-108` | turn `Context Minor GC / context loading optimization` into a formal mainline and formal gate | `completed` |
-| Stage 8 | `109-114` | turn the ordinary-conversation hermetic path into a trustworthy steady-state A/B surface | `completed` |
-| Stage 9 | `115-120` | start turning context optimization into user-visible value through a bounded guarded path | `completed` |
-| Stage 10 | `121-126` | shorten install / bootstrap / verify and strengthen shared-foundation product proof | `completed` |
-
-## Sequential Build Plan
-
-### Stage 1. Design And Documentation Baseline
-
-Stage complete when:
-
-- product shape is explicit
-- documents are aligned
-- testing surfaces are defined
-
-1. `completed` Freeze product naming, boundary, and repo direction.
-2. `completed` Align top-level architecture and master roadmap.
-3. `completed` Define first-class module boundaries.
-4. `completed` Complete module architecture documents.
-5. `completed` Complete module roadmaps, blueprints, and todo pages.
-6. `completed` Define testing surfaces and case matrix.
-7. `completed` Define deployment topology and multi-runtime model.
-8. `completed` Define shared contracts for artifacts, namespace, visibility, and exports.
-9. `completed` Define OpenClaw and Codex adapter boundaries.
-10. `completed` Define self-learning, standalone mode, and independent-execution boundaries.
-
-### Stage 2. Local-First Implementation Baseline
-
-Stage complete when:
-
-- one local-first product loop works end to end
-- adapters consume governed exports
-- standalone mode is usable
-
-11. `completed` Implement shared contracts and contract tests.
-12. `completed` Implement `Source System` MVP.
-13. `completed` Implement `Memory Registry` MVP.
-14. `completed` Implement the local `source -> candidate` pipeline and registry tests.
-15. `completed` Implement `Projection System` MVP.
-16. `completed` Implement `Governance System` MVP with audit / repair / replay primitives.
-17. `completed` Implement OpenClaw adapter runtime integration.
-18. `completed` Implement Codex adapter runtime integration.
-19. `completed` Implement `Reflection System` MVP and the daily reflection baseline.
-20. `completed` Implement standalone CLI, export / audit / repair / replay surfaces, and independent-execution review.
-
-### Stage 3. Self-Learning Lifecycle Baseline
-
-Stage complete when:
-
-- observation candidates can move through a governed lifecycle
-- promotion and decay are explicit
-- learning-specific governance is testable
-
-21. `completed` Implement promotion rules for learning candidates.
-22. `completed` Implement decay and expiry rules for weak or stale signals.
-23. `completed` Implement conflict detection and conflict reporting for learned artifacts.
-24. `completed` Implement stable registry update rules for promoted learning artifacts.
-25. `completed` Add learning-specific audit reports.
-26. `completed` Add learning-specific replay and repair paths.
-27. `completed` Add time-window comparison reports for learning outcomes.
-28. `completed` Add regression coverage for the learning lifecycle.
-29. `completed` Validate OpenClaw consumption of promoted learning artifacts.
-30. `completed` Close the stage with one governed `observation -> stable` loop running locally end to end.
-
-### Stage 4. Policy Adaptation And Multi-Consumer Use
-
-Stage complete when:
-
-- governed learning outputs can influence consumer behavior explicitly
-- adapter-side policy use stays reversible and testable
-
-31. `completed` Define the `policy-input artifact` contract.
-32. `completed` Implement policy-input projections from promoted learning artifacts.
-33. `completed` Adapt OpenClaw retrieval / assembly behavior from governed learning signals.
-34. `completed` Adapt Codex task-side consumption from governed learning signals.
-35. `completed` Add policy adaptation tests and rollback protections.
-36. `completed` Add consumer-specific export compatibility reports.
-37. `completed` Validate namespace and visibility behavior across adapters for learned artifacts.
-38. `completed` Close the stage with one reproducible policy-adaptation loop.
-
-### Stage 5. Product Hardening And Independent Operation
-
-Stage complete when:
-
-- the product is operationally maintainable
-- split-ready execution is validated
-- future service mode can be discussed from a stable base
-
-39. `completed` Harden standalone source adapters for file / directory / URL / image inputs.
-40. `completed` Add scheduled-job-friendly workflows for reflection and governance runs.
-41. `completed` Add self-learning maintenance workflow docs and CLI support.
-42. `completed` Add release-boundary validation checks.
-43. `completed` Add migration and repo-split rehearsal.
-44. `completed` Add reproducibility and rollback checks for learning exports.
-45. `completed` Review prerequisites for runtime API or network service mode.
-46. `completed` Close the stage with an independent-product readiness review.
-
-### Stage 6. Dialogue Working-Set Shadow Integration
-
-Stage complete when:
-
-- runtime shadow instrumentation exists and stays `default-off`
-- the runtime records `relation / evict / pins / reduction ratio` without mutating the final prompt
-- real-session shadow telemetry is green enough to decide whether an active-path experiment should even be allowed
-
-Stage 6 evidence:
-
-- runtime replay report: [../../../reports/generated/dialogue-working-set-runtime-shadow-2026-04-16.md](../../../reports/generated/dialogue-working-set-runtime-shadow-2026-04-16.md)
-- runtime answer A/B report: [../../../reports/generated/dialogue-working-set-runtime-answer-ab-2026-04-16.md](../../../reports/generated/dialogue-working-set-runtime-answer-ab-2026-04-16.md)
-- runtime shadow summary: [../../../reports/generated/dialogue-working-set-runtime-shadow-summary-2026-04-16.md](../../../reports/generated/dialogue-working-set-runtime-shadow-summary-2026-04-16.md)
-- Stage 6 closeout report: [../../../reports/generated/dialogue-working-set-stage6-2026-04-16.md](../../../reports/generated/dialogue-working-set-stage6-2026-04-16.md)
-
-93. `completed` Keep this slice docs-first and review-gated before runtime work.
-   - The roadmap, development plan, and architecture references were aligned first so Stage 6 started from a reviewed queue instead of report-only evidence.
-94. `completed` Define the Stage 6 runtime shadow contract before implementation.
-   - The runtime surface now emits `relation / evict / pins / reduction ratio`, writes replayable export artifacts, and keeps the feature `default-off`.
-95. `completed` Implement the minimum runtime shadow instrumentation path.
-   - `ContextAssemblyEngine.assemble()` now records runtime shadow decisions on real assembled sessions without mutating the final prompt or builtin memory behavior.
-96. `completed` Add real-session shadow reports and replayable exports.
-   - Sidecar exports now capture the transcript prefix, decision payload, snapshot, token estimates, and operator-facing summary lines.
-97. `completed` Attach answer-level regression measurement to the shadow path.
-   - Runtime answer A/B now reuses the real shadow exports instead of isolated helper snapshots only.
-98. `completed` Define the active-path promotion gate and rollback boundary.
-   - Rollback is configuration-only via `dialogueWorkingSetShadow.enabled=false`, and promotion remains gated behind longer real-session soak plus explicit regression thresholds.
-99. `completed` Decide whether to open any active prompt experiment only after the Stage 6 shadow gate stays green.
-   - Current decision: do not open active prompt mutation yet; keep the feature shadow-only.
-100. `completed` Close Stage 6 around one consistent recovery point in docs, control surfaces, and reports.
-   - The repo now explicitly treats Stage 6 as “measurement landed”, not “default path switched”.
-
-### Stage 7. Context Loading Optimization Closure
-
-The public workstream name for this stage is now:
-
-- `Context Minor GC`
-
-Current evidence:
-
-- Stage 7 shadow replay: [../../../reports/generated/dialogue-working-set-stage7-shadow-2026-04-17.md](../../../reports/generated/dialogue-working-set-stage7-shadow-2026-04-17.md)
-- Stage 7 scorecard: [../../../reports/generated/dialogue-working-set-scorecard-2026-04-17.md](../../../reports/generated/dialogue-working-set-scorecard-2026-04-17.md)
-- Stage 7 / Stage 9 summary: [../../../reports/generated/dialogue-working-set-stage7-stage9-2026-04-17.md](../../../reports/generated/dialogue-working-set-stage7-stage9-2026-04-17.md)
-- OpenClaw gateway live validation: [../../../reports/generated/openclaw-gateway-context-optimization-2026-04-17.md](../../../reports/generated/openclaw-gateway-context-optimization-2026-04-17.md)
-- Stage 7 / Step 108 closeout: [../../../reports/generated/stage7-step108-context-minor-gc-closeout-2026-04-18.md](../../../reports/generated/stage7-step108-context-minor-gc-closeout-2026-04-18.md)
-- Stage 7 closeout: [../../../reports/generated/stage7-context-minor-gc-closeout-2026-04-18.md](../../../reports/generated/stage7-context-minor-gc-closeout-2026-04-18.md)
-
-Stage complete when:
-
-- context optimization is no longer just “some shadow reports” and becomes one formal mainline with one scorecard
-- durable-source slimming, budgeted assembly, working-set pruning, and harder replay / Docker / local evidence can be judged on one surface
-- rollout / rollback boundaries, operator metrics, and harder-case coverage are strong enough to support the next phase
-- daily long conversations usually no longer need compat / compact as the normal way to keep going; compat / compact remains a nightly or background safety net
-
-101. `completed` Define one unified context-optimization scorecard.
-   - It must include at least `prompt thickness`, `reduction ratio`, `retrieval / assembly latency`, `answer latency`, `rollback boundary`, and `case class`.
-102. `completed` Map the existing evidence surfaces onto that scorecard.
-   - At minimum, durable-source slimming, Stage 6 shadow exports, history cleanup, and the ordinary-conversation Docker rerun should report through one aggregation view.
-103. `completed` Define the `context loading package` contract.
-   - Make raw turns, pins, capsules, durable context, and budget slots explicit layers instead of leaving them spread across separate reports.
-104. `completed` Design and add the next harder eval matrix.
-   - The `cross-source`, `conflict`, `multi-step history`, `open-loop return`, and denser natural-Chinese multi-topic switches are now closed as an official harder live matrix `6 / 6`.
-105. `completed` Add a formal gate and operator summary for context optimization.
-   - Docker / local / replay paths should all emit comparable thickness / latency / reduction metrics.
-106. `completed` Collapse shadow exports, sidecar artifacts, and answer-level regression into one operator view.
-   - The system should be able to answer “is the lighter context package actually better?” directly.
-107. `completed` Define one very narrow guarded experiment seam without turning it on by default.
-   - Rollback must stay configuration-only, and builtin memory behavior must stay unchanged.
-108. `completed` Use harder replay / Docker / local evidence to make the Stage 7 / Step 108 closeout decision.
-   - The decision is not “ship now”; it is “now that Stage 8 is closed, is Stage 7 stable enough to stand on its own while Stage 9 remains a very narrow opt-in path?”
-   - Decision: the `Context Minor GC` working-set decision transport is now plugin-owned and no longer depends on host `runtime.subagent`; OpenClaw core changes are not required.
-   - Live validation:
-     - hermetic gateway: `5 / 5` captured
-     - real local service smoke: `3 / 3` captured
-   - The explicit 4-step critical path is now complete:
-     - `108.a completed` define the plugin-owned `decision runner` contract.
-       - The input / output shape, runner entrypoint, failure fallback, config-only rollback, and sidecar artifact contract are now fixed.
-     - `108.b completed` replace the `Context Minor GC` working-set decision transport.
-       - The shadow / guarded decision path no longer depends on host `runtime.subagent`.
-     - `108.c completed` rerun the OpenClaw gateway live soak.
-       - Working-set exports no longer fail on the request-scope seam, and the real host captured green runs.
-     - `108.d completed` make the Stage 7 / Step 108 closeout decision.
-       - Result: Step 108 is closed; only `104` remained after that, and once it turned green Stage 7 could also be closed while Stage 9 stayed a narrow opt-in surface.
-
-### Stage 8. Ordinary-Conversation Realtime-Write Latency Closure
-
-Current evidence:
-
-- detailed Docker steady-state A/B: [../../../reports/generated/openclaw-ordinary-conversation-memory-intent-ab-2026-04-17.md](../../../reports/generated/openclaw-ordinary-conversation-memory-intent-ab-2026-04-17.md)
-- Docker rerun summary: [../../../reports/generated/openclaw-ordinary-conversation-memory-intent-docker-rerun-2026-04-17.md](../../../reports/generated/openclaw-ordinary-conversation-memory-intent-docker-rerun-2026-04-17.md)
-- Docker speedup summary: [../../../reports/generated/openclaw-docker-steady-state-speedup-2026-04-17.md](../../../reports/generated/openclaw-docker-steady-state-speedup-2026-04-17.md)
-- Docker proxy/provider root cause: [../../../reports/generated/openclaw-docker-proxy-and-provider-root-cause-2026-04-17.md](../../../reports/generated/openclaw-docker-proxy-and-provider-root-cause-2026-04-17.md)
-
-Stage complete when:
-
-- the ordinary-conversation hermetic path is no longer dominated by timeouts
-- the clean Docker path becomes a trustworthy regular A/B surface
-- timeout root causes are separated clearly instead of blending into “the feature is weak”
-
-109. `completed` Treat the ordinary-conversation realtime-write path as its own latency-closure program.
-   - It is tightly coupled to context loading optimization, but should no longer be mixed together with contamination investigation.
-110. `completed` separate capture, governed ingest, retrieval, and answer-generation latency layers.
-111. `completed` run targeted fixes and reruns against the timeout-heavy case classes.
-112. `completed` lock down the ordinary-conversation Docker hermetic report entrypoint and thresholds.
-113. `completed` rerun the focused A/B and compare it cleanly against the host-live result.
-114. `completed` close the stage only when the clean path stops being dominated by timeout failures.
-   - Current strict hermetic full sweep: current `39 / 40`, legacy `15 / 40`, `UMC-only = 24`, `legacy-only = 0`, `both-fail = 1`, `preCaseResetFailed = 0`
-   - Last residual shared-fail is now closed by same-method targeted strict rerun; current closeout state: current `40 / 40`, legacy `15 / 40`, `UMC-only = 25`, `legacy-only = 0`, `both-fail = 0`
-
-### Stage 9. Guarded Smart-Path Promotion
-
-Current evidence:
-
-- Stage 9 guarded answer A/B: [../../../reports/generated/dialogue-working-set-guarded-answer-ab-2026-04-17.md](../../../reports/generated/dialogue-working-set-guarded-answer-ab-2026-04-17.md)
-- OpenClaw guarded live A/B: [../../../reports/generated/openclaw-guarded-live-ab-2026-04-18.md](../../../reports/generated/openclaw-guarded-live-ab-2026-04-18.md)
-- Stage 9 closeout: [../../../reports/generated/stage9-guarded-smart-path-closeout-2026-04-18.md](../../../reports/generated/stage9-guarded-smart-path-closeout-2026-04-18.md)
-- Stage 7 / Stage 9 summary: [../../../reports/generated/dialogue-working-set-stage7-stage9-2026-04-17.md](../../../reports/generated/dialogue-working-set-stage7-stage9-2026-04-17.md)
-- OpenClaw gateway live validation: [../../../reports/generated/openclaw-gateway-context-optimization-2026-04-17.md](../../../reports/generated/openclaw-gateway-context-optimization-2026-04-17.md)
-
-Stage complete when:
-
-- context optimization starts becoming a real user gain instead of shadow telemetry only
-- the bounded guarded experiment seam has a clear rollout / rollback contract
-- the active-path experiment stays narrow and does not drift into a default-path switch
-- the guarded smart path still serves the goal of “daily use should avoid depending on compat / compact”, rather than making compat / compact a more frequent main-path habit
-- the OpenClaw live runtime seam is open, so guarded / shadow decisions no longer fail on the real host because of missing runtime capability
-
-115. `completed` define the promotion contract for the bounded smart path.
-116. `completed` choose one very narrow opt-in active-path experiment surface.
-117. `completed` bind operator metrics, rollback boundaries, and regression gates to that surface.
-118. `completed` run guarded opt-in A/B on fixed case classes.
-119. `completed` decide to keep the feature opt-in only for now.
-120. `completed` close the stage when users can feel the gain and operators still stay in control.
-   - Real OpenClaw live A/B now proves:
-     - baseline `4 / 4`
-     - guarded `4 / 4`
-     - guarded applied `2 / 4`
-     - activation matched `4 / 4`
-     - false activations `0`
-     - missed activations `0`
-   - The guarded gain is no longer just an offline answer A/B artifact; it is a real-host observable narrow gain, while the feature still remains `default-off` / opt-in only instead of becoming a default path.
-
-### Stage 10. Adoption Simplification And Shared-Foundation Proof
-
-Stage complete when:
-
-- install / bootstrap / verify is clearly shorter
-- the shared foundation is proven beyond the OpenClaw main path
-- Codex / multi-instance evidence becomes readable product proof
-
-121. `completed` shorten the install / bootstrap / verify path.
-122. `completed` add package / startup / first-run cost to the `light and fast` evidence surface.
-123. `completed` add stronger shared-foundation evaluation and usage proof for Codex.
-124. `completed` add clearer operator proof for multi-instance shared memory.
-125. `completed` keep replay / rollback / audit strong while adoption gets simpler.
-126. `completed` close the stage when adoption is shorter and shared-foundation proof is materially stronger.
-   - current Stage 10 baseline:
-     - latest sampled package tarball `1456484 bytes`
-     - `umc where` `154ms`
-     - first-run `registry inspect` `80ms`
-     - Codex shared proof `1 promoted / 1 candidate / 1 policy input`
-     - multi-instance shared proof `2 candidates / 2 policy inputs`
-   - reports:
-     - [../../../reports/generated/stage10-adoption-and-shared-foundation-2026-04-18.md](../../../reports/generated/stage10-adoption-and-shared-foundation-2026-04-18.md)
-     - [../../../reports/generated/stage10-adoption-closeout-2026-04-18.md](../../../reports/generated/stage10-adoption-closeout-2026-04-18.md)
-100. `completed` Resume the deferred history cleanup and harder live A/B expansion with Stage 6 telemetry attached.
-   - The next execution pointer now returns to the deferred `ab100-zh-history-editor-*` cleanup and the harder A/B expansion, with the new shadow telemetry available as the measurement surface.
-
-## Current Next Build
-
-Resume exactly from here:
-
-1. keep Stage 7, Stage 8, Stage 9, and Stage 10 evidence green
-2. keep Docker as the default hermetic A/B surface
-3. only open a new numbered stage when a new explicit product goal exists
-
-Do not start with:
-
-- runtime API
-- multi-host network service
-- advanced network-required architecture
-- repo split execution work beyond what is already documented
-
-## Post-Stage-5 Evaluation-Driven Optimization Queue
-
-This queue is the new mainline after Stage 5.
-
-The goal is not to reopen baseline contract work. The goal is to:
-
-- grow the OpenClaw CLI memory evaluation into a `100+` case benchmark
-- use `legacy / unified / bootstrap / retrieval` comparisons to explain where answers come from
-- use failing cases to drive assembly / retrieval / policy algorithm iterations
-
-53. `completed` Define the `100+` case benchmark design and coverage matrix.
-   - It must at least cover: stable facts, ordinary retrieval, current-state overrides, abstention, conflicting facts, repeated updates, multi-turn history, rule extraction, project knowledge, and cross-source attribution.
-   - Every case must specify: evaluation entrypoint, expected answer, acceptable variance, capability tags, and whether A/B comparison is required.
-54. `completed` Expand the current `20` cases into a reproducible `100+` OpenClaw CLI benchmark.
-   - Prefer real `openclaw memory search` / `openclaw agent` entrypoints by default.
-   - Avoid claiming success from internal registry state alone.
-55. `completed` Add `legacy / unified / bootstrap / retrieval` attribution reports for the benchmark.
-   - The point is not just to compare scores, but to explain where answers came from and which capabilities are extension gains.
-56. `completed` Turn benchmark failures into an explicit algorithm work queue and prioritize fixes.
-   - Prioritize: current-state override failures, stale-value leakage, incorrect abstention, wrong source attribution, and retrieval misses.
-57. `completed` Rerun the benchmark after each meaningful algorithm change, update the reports, refresh the control surface, and push the iteration to GitHub.
-58. `completed` Decide whether to open runtime API / service-mode work only after the `100+` benchmark and the attribution reports stabilize.
-   - The current answer is still no: keep runtime API / service-mode closed until the answer-level path, transport watchlist, and broader benchmark planning are stable.
-
-## Next-stage Planning Queue
-
-59. `completed` Review the current benchmark coverage and plan a broader `200`-case matrix.
-   - The goal is coverage breadth, not raw count chasing.
-   - Explicitly cover cross-source mixes, conflicting facts, supersede/current-vs-history cases, multi-step history, abstention, and the answer-level host path.
-60. `completed` Plan the next benchmark so Chinese cases account for at least `50%`.
-   - Chinese coverage should include real Chinese phrasings, current-state questions, rule questions, and mixed Chinese-English prompts.
-61. `completed` Bring the live `openclaw agent` answer-level matrix and the raw transport watchlist into the next formal gate.
-   - The answer-level red path must stay separate from raw transport instability.
-62. `completed` Define a dedicated performance plan for the retrieval / assembly / answer-level main path.
-   - At minimum define baseline commands, measurement dimensions, slow-path layers, and performance regression gates.
-63. `completed` Capture the first main-path performance baseline and attribute the slowest paths across retrieval, assembly, host answer-level, and transport.
-64. `completed` Only schedule the next execution round after both the `200`-case coverage plan and the main-path performance baseline are clear.
-
-## Next Execution Queue
-
-65. `completed` Expand the benchmark from `187` to a coverage-first `200+` cases and fill blind spots instead of padding with rewrites.
-   - The runnable matrix is now `392` cases, with `262` retrieval-heavy and `130` answer-level cases.
-66. `completed` Turn Chinese coverage into at least `50%` of the real runnable matrix across retrieval, answer-level, and abstention surfaces.
-   - The current zh-bearing runnable matrix is `211 / 392 = 53.83%`.
-67. `completed` Promote the answer-level host path and the raw transport watchlist into the formal benchmark gate with pass rate, abstention rate, and watchlist reporting.
-   - retrieval-heavy gate: `250/250`
-   - answer-level formal gate: `12/12` via `openclaw agent --local` with isolated eval agent `umceval65`
-   - transport watchlist: `3/8 raw ok`; the rest are `4` host transport `missing_json_payload` failures and `1` `empty_results`
-68. `completed` Triage and fix the live `openclaw agent` answer-level red path until it no longer systemically returns `I don't know` or times out.
-   - Root causes are now separated: gateway/session-lock noise, agent main-session reuse contamination, and CLI `--local` JSON emitted on stderr.
-   - The formal gate now uses the isolated local answer path; the gateway path stays on the watchlist instead of polluting algorithm judgments.
-69. `completed` Use the main-path performance baseline to optimize the slowest layer, prioritizing host answer-level first, raw transport second, and only then retrieval / assembly if needed.
-   - Latest main-path baseline: retrieval / assembly avg `16ms`; raw transport avg `8061ms`; isolated local answer-level avg `11200ms` with `3/3` passing.
-70. `completed` Rerun the `200+` benchmark, answer-level gate, transport watchlist, and main-path perf baseline, then use that evidence to decide whether later enhancement planning can open.
-   - Conclusion: continue benchmark / perf / transport work, but do not misclassify raw transport or gateway noise as retrieval / answer-level algorithm regressions.
-71. `done` Establish a formal memory-intent replay regression surface covering durable rules, tool-routing preferences, session constraints, task-only instructions, user-profile facts, and no-memory noise.
-72. `done` Add the minimum real-time `reply + memory_extraction` ingest loop to the Codex runtime write-back path so ordinary conversation rules no longer have to wait for nightly self-learning.
-73. `done` Promote the `memory_extraction` output schema into a formal product contract instead of keeping it as a local runtime seam only.
-   - Add the shared `memory_intent` contract and source type with explicit category, durability, confidence, admission route, and structured rule fields.
-74. `done` Define admission routing for `session_constraint`, `task_instruction`, `durable_rule`, and `tool_routing_preference` instead of flattening everything into `manual` source text first.
-   - durable rule / tool-routing cases now route into promotable candidates, while session / task-local cases stay in observation and `none` / false-write cases skip ingest.
-75. `done` Add richer reflection, dedupe, supersede, negative-path handling, and governance regression coverage for real-time memory-intent ingestion.
-   - `memory_intent` now runs through reflection + lifecycle governance with contract/source/reflection/runtime/CLI regression coverage.
-76. `done` Bring the replay suite into the formal gate so future prompt or schema drift cannot quietly push explicit rules back into the nightly funnel.
-   - `npm run verify:memory-intent` is now the formal gate for this slice.
-
-## Current Execution Queue
-
-77. `completed` Expand the isolated local answer-level formal gate beyond the current `6` representative samples into a larger stable matrix.
-   - The repo-default isolated local formal gate now runs `12/12` via `npm run eval:openclaw:agent-matrix`.
-   - The current stable `12`-case matrix covers profile, project, preference, rule, temporal current, history, zh, zh-natural, and negative surfaces.
-78. `completed` Push Chinese coverage beyond "more than half" into more natural, higher-information real Chinese prompts.
-   - The matrix now includes `24` `[zh-natural]` cases (`12` retrieval + `12` answer-level) with a representative retrieval slice of `5/5` and a representative answer-level slice of `6/6`.
-79. `completed` Keep gateway/session-lock behavior and raw `openclaw memory search` transport on explicit watchlists.
-   - The latest raw transport watchlist is `3/8 raw ok`; the rest are `4` `missing_json_payload` failures and `1` `empty_results`; this watchlist tracks host instability, not retrieval / answer-level algorithm regressions.
-80. `completed` Continue optimizing the slowest layer from the main-path performance baseline and rerun the formal gates after each meaningful change.
-   - The current priority remains isolated local answer-level first and raw transport second; the latest perf baseline is now retrieval / assembly `16ms`, raw transport `8061ms`, isolated local answer-level `11200ms`.
-81. `completed` Turn the larger isolated local answer-level formal gate into a repo-default entry instead of relying on hand-built `--only` commands.
-   - `scripts/eval-openclaw-cli-agent-answer-matrix.js` now defaults to isolated eval agent `umceval65`, `--agent-local`, `--skip-legacy`, and a fixed `12`-case formal gate matrix.
-82. `completed` Rerun the larger answer-level formal gate and publish a new `2026-04-15` formal report.
-   - New formal report: [reports/generated/openclaw-cli-agent-answer-matrix-2026-04-15.md](../../../reports/generated/openclaw-cli-agent-answer-matrix-2026-04-15.md)
-   - Latest result: `12 / 12`
-83. `completed` Sync the larger answer-level formal gate result back into the roadmap, development plan, and control surface, then reset the next execution pointer.
-   - The roadmap, control surface, and development plan no longer describe the answer-level formal gate as just `6/6`.
-84. `in_progress` Deepen the current `12`-case stable answer-level formal gate with cross-source, conflict, multi-step history, and deeper natural-Chinese coverage.
-   - A deeper `18`-case watch matrix now exists with added cross-source, history, conflict, and denser natural-Chinese answer-level coverage.
-- Current watch result: `14 / 18`; the remaining `4` failures have been narrowed down to a smaller harder set, so this matrix remains a watch surface instead of replacing the repo-default formal gate.
-   - Reference report: [reports/generated/openclaw-cli-agent-answer-watch-2026-04-15.md](../../../reports/generated/openclaw-cli-agent-answer-watch-2026-04-15.md)
-85. `completed` Increase the natural-Chinese share inside the answer-level formal gate itself, not just the global runnable matrix.
-   - The repo-default formal gate now runs with `6 / 12` zh-bearing cases, including `5 / 12` `zh-natural` cases.
-86. `completed` Revisit the main-path perf baseline and A/B attribution after the deeper answer-level watch is in place so the larger surface does not quietly re-mix host noise into the conclusions.
-   - The perf baseline, raw transport watchlist, memory-improvement A/B summary, and full regression pass have all been rerun. The current conclusion is that the stable formal gate is healthy, while the deeper watch is improved but not yet promotable.
-
-87. `completed` Finish the harder-failure attribution pass without prematurely promoting the deeper watch into a larger formal gate.
-   - This round prioritized the broader rerun surface instead: full regression, CLI use cases, perf baseline, transport watchlist, and a `100`-case live A/B.
-   - The new conclusion is no longer just “close four deeper-watch failures”, but “explain and then close why Memory Core still does not clearly outpace builtin memory in the larger live A/B”.
-88. `completed` Re-evaluate the promotion boundary on the broader evidence surface instead of using only the `18`-case deeper watch.
-   - The stable formal gate remains `12 / 12`; the deeper watch remains `14 / 18` and is still not promoted.
-   - The new `100`-case live A/B now lands at `97` shared wins, `1` Memory Core-only win, `0` builtin-only wins, and `2` shared failures.
-89. `completed` Rerun full regression, CLI use cases, perf baseline, and the memory-improvement A/B suite, then publish the next round report.
-   - `npm test = 403 / 403`
-   - `verify:memory-intent = pass`
-   - retrieval-heavy CLI benchmark = `262 / 262`
-   - isolated local answer-level formal gate = `12 / 12`
-   - raw transport watchlist = `3 / 8 raw ok`
-   - main-path perf baseline = retrieval / assembly `16ms`, raw transport `8061ms`, answer-level `11200ms`
-   - memory-improvement A/B = `100` cases, `98` UMC pass, `97` builtin pass
-
-90. `completed` Remove the earlier builtin-only regression reading from the `100`-case live A/B: `ab100-zh-negative-4`.
-   - The birthday prompt is no longer counted as a plain negative because it behaves more like an identity-conflict / birthday-guardrail probe.
-   - After replacing it with a true unknown-fact abstention prompt, `ab100-zh-negative-4` is now a shared abstention pass and the `100`-case live A/B no longer has a builtin-only win.
-   - The follow-up round expanded the focused ordinary-conversation realtime-write suite from `10` to `40` cases and reran it in builtin-first, clean-state, then current order; the current result is `38 / 40` for Unified Memory Core versus `21 / 40` for legacy, with `18` UMC-only wins, `1` legacy-only win, and `1` shared fail.
-91. `completed` Remove the two shared-fail Chinese history cases in the `100`-case live A/B: `ab100-zh-history-editor-2` and `ab100-zh-history-editor-4`.
-   - The fix was not “add more memory”, but repair the history-versus-current-state boundary so Chinese history prompts stop triggering current-state assembly and query rewrites.
-   - Focused hermetic cleanup rerun report: [openclaw-memory-improvement-history-cleanup-2026-04-17.md](../../../reports/generated/openclaw-memory-improvement-history-cleanup-2026-04-17.md)
-   - Current focused rerun outcome: `ab100-zh-history-editor-2 = unified-gain`, `ab100-zh-history-editor-4 = shared-capability`
-   - The stable high-level read is now current `100 / 100`, legacy `99 / 100`, `UMC-only = 1`, `builtin-only = 0`, `both-fail = 0`
-92. `next` After the shared-fail history cases close, first complete a docs-first review so the roadmap, development plan, architecture docs, and `.codex/*` all point at the next “per-turn context optimization” recovery point; then redesign the next live A/B around `cross-source`, `conflict`, `multi-step history`, and denser natural-Chinese prompts.
-   - This queue now resumes with Stage 6 shadow telemetry attached as a new measurement surface.
-   - Next-round design constraints:
-     - prefer a bounded, structured LLM-led context decision contract instead of expanding hardcoded rules
-     - make operator metrics, rollback boundaries, and Docker / hermetic eval entrypoints explicit
-     - keep active prompt mutation out of the default path
-
-## Deferred Enhancement Queue
-
-These items are intentionally `todo`, not the current active stage.
-
-They exist so the next enhancement phase can start from a clear queue instead of reconstructing intent from session history.
-
-47. `done` Split `accepted_action` extraction into reusable target facts, operating rules, and one-off outcome artifacts.
-   - `accepted_action` source normalization now emits field descriptors for targets, artifact paths, and output references.
-   - reflection now expands successful accepted-action events into field-aware `target_fact`, `operating_rule`, and `outcome_artifact` candidates instead of flattening everything into one summary.
-   - CLI and lifecycle validation now prove reusable targets can promote independently while one-off outcomes stay in observation state.
-   - runtime/task hook coverage now includes Codex `writeAfterTask(...)` and OpenClaw async `after_tool_call` when structured accepted-action payloads are present.
-48. `todo` Add accepted-action admission routing across `session`, `daily`, `observation`, and stable-candidate layers.
-49. `todo` Add richer accepted-action evidence weighting using acceptance, execution success, later reuse, contradiction, and citation signals together.
-50. `todo` Add negative / partial accepted-action handling so rejected or failed actions become audit or observation inputs instead of stable facts.
-51. `todo` Add accepted-action-specific dedupe, supersede, and conflict rules plus replay / audit coverage.
-52. `todo` Reopen implementation of this queue only after the post-Stage-5 operator baseline stays green long enough to justify a later enhancement slice.
-
-## Review Checklist
-
-Review this document with these questions:
-
-1. Is the current pointer obvious enough?
-2. Is every stage closed before the next one starts?
-3. Is any step still too large and worth splitting again?
-4. Is anything listed too early?
-5. Can a maintainer resume from the step number alone?
+| Item | Current Value | Meaning |
+| --- | --- | --- |
+| Current Phase | `post-stage10-adoption-closeout` | Current maintainer-facing phase |
+| Active Slice | `hold-stage10-adoption-proof-stable` | The slice tied to the current execution line |
+| Current Execution Line | Stage 7 / 8 / 9 / 10 已全部收口；当前进入维护态，继续保持 Docker 为默认 hermetic A/B 面与 Stage 10 shortest-path/shared-foundation proof 持续为绿 | What the repo is trying to finish now |
+| Validation | roadmap / development plan / architecture docs、harder-case design note、formal-gate promotion decision、`npm run umc:release-preflight`、full regression、CLI use cases、main-path perf baseline、memory-improvement A/B summary、`npm run umc:cli -- registry inspect --format markdown | The checks that must stay true before moving on |
+
+## Execution Task Progress
+
+| Order | Task | Status |
+| --- | --- | --- |
+| 1 | EL-1 shorten install / bootstrap / verify into one clear shortest operator path | done |
+| 2 | EL-2 add package / startup / first-run cost to the `light and fast` evidence surface | done |
+| 3 | EL-3 publish stronger Codex shared-foundation proof | done |
+| 4 | EL-4 publish clearer multi-instance shared-memory operator proof | done |
+
+## Milestone Overview
+
+| Milestone | Status | Goal | Depends On | Exit Criteria |
+| --- | --- | --- | --- | --- |
+| Stage 1: design baseline | completed | freeze product naming, boundaries, and document stack | none | architecture, module boundaries, and testing surfaces are aligned |
+| Stage 2: local-first baseline | completed | ship one governed local-first end-to-end baseline | Stage 1 | core modules, adapters, standalone CLI, and governance all run |
+| Stage 3: self-learning lifecycle baseline | completed | turn the already-implemented reflection baseline into an explicit lifecycle with promotion, decay, and learning-specific governance | Stage 2 | promotion / decay expectations, learning governance, OpenClaw validation, and local governed loop are all implemented and regression-protected |
+| Stage 4: policy adaptation | completed | let governed learning outputs influence consumer behavior | Stage 3 | one reversible policy-adaptation loop is proven |
+| Stage 5: product hardening | completed | validate split-ready and independent-product operation | Stage 4 | release boundary, reproducibility, maintenance workflows, and split rehearsal are all CLI-verifiable |
+| Stage 6: dialogue working-set shadow integration | completed | validate and instrument hot-session working-set pruning in runtime shadow mode before any active prompt cutover | Stage 5 | runtime shadow telemetry is now landed default-off, replayable exports exist, and answer-level replay stays green enough to keep the feature shadow-only |
+| Stage 7: context loading optimization closure | completed | make per-turn context loading optimization a formal mainline and formal gate instead of leaving it at shadow findings | Stage 6 | the context-optimization scorecard is stable, harder replay / Docker / local evidence align, and rollout/rollback boundaries are clear |
+| Stage 8: ordinary-conversation realtime-write latency closure | completed | recover the clean Docker write-side answer path into a trustworthy ordinary-conversation strict A/B surface | Stage 7 | the ordinary-conversation hermetic strict closeout now reports `40 / 40 vs 15 / 40` with `preCaseResetFailed = 0` |
+| Stage 9: guarded smart-path promotion | completed | start turning context optimization into real user-facing value without breaking rollback safety | Stage 8 | the bounded opt-in path now has live A/B evidence, an operable rollback path, and remains `default-off` / opt-in only |
+| Stage 10: adoption simplification and shared-foundation proof | completed | lift adoption experience and cross-host product proof to the same level as core capability | Stage 9 | `npm run umc:stage10 -- --format markdown` is the shortest maintainer path and Codex / multi-instance shared proof is public and reproducible |
+
+## Ordered Execution Queue
+
+| Order | Slice | Status | Objective | Validation |
+| --- | --- | --- | --- | --- |
+| 1 | `build-openclaw-cli-100-case-benchmark` | earlier slice | 把当前 `20` 案例扩展成 `100+` OpenClaw CLI benchmark，覆盖稳定事实、普通检索、当前态覆盖、负向拒答、冲突事实、连续更新和跨来源归因 | 100+` 案例定义文档、机器可读结果、人工可读报告、可重复运行入口 |
+| 2 | `plan-200-case-benchmark-and-main-path-performance` | earlier slice | 把当前 `187` case 评测面 review 成更全面的 `200` case 计划，并为 retrieval / assembly / answer-level 主链路建立性能专项计划 | roadmap / development plan / control surface 同步，明确中文案例 `>= 50%`、coverage review 方法、主链路 perf baseline 入口 |
+| 3 | `execute-200-case-benchmark-and-answer-path-triage` | earlier slice | 把 benchmark 从 `187` 扩成 coverage-first 的 `200+` case，真正把中文做到 `50%`，并把 answer-level host path red line 与 transport watchlist 变成正式门禁 | 200+` case 定义、中文案例实际占比统计、answer-level gate 报告、transport watchlist 报告、main-path perf baseline refresh |
+| 4 | `expand-answer-level-formal-gate-after-natural-zh-hardening` | earlier slice | 在自然中文覆盖、raw transport watchlist 和 main-path perf baseline 已重新稳定的前提下，把 isolated local answer-level formal gate 从 `6` 条代表性样本继续扩成更大的稳定矩阵 | 更大的 isolated local answer-level gate 报告、与 raw transport watchlist 分离的归因、中文 answer-level 子矩阵持续为绿、main-path perf baseline 重跑 |
+| 5 | `deepen-answer-level-gate-beyond-12-case-baseline` | earlier slice | 在 `12 / 12` isolated local answer-level formal gate 已稳定的基础上，继续补强 cross-source、conflict、multi-step history 和更深的自然中文 answer-level coverage | 更深 answer-level gate 报告、control-surface 更新、与 transport watchlist 分离的结论、main-path perf baseline refresh |
+| 6 | `convert-100-case-ab-from-mostly-shared-wins-into-clearer-umc-gains` | earlier slice | shared-fail history cleanup 已完成；下一步把更多 harder cases 推成 Memory Core 独占胜场 | builtin-only regression fix、shared-fail history closure、下一轮 live A/B 设计、full regression / perf / A/B rerun |
+| 7 | `finish-context-loading-optimization-first` | earlier slice | docs-first review 已完成；当前先完成 `轻快 / context loading optimization` 的 closeout；Stage 9 已收口但继续保持 `default-off` / opt-in only；ordinary-conversation hermetic A/B 已经收口为默认 Docker 基线，之后再收 `轻快 / install | roadmap / development plan / architecture docs / `.codex/*` 对齐；Stage 7 context-optimization scorecard、operator metrics 和 rollback boundary 被写成 durable docs |
+| 8 | `design-harder-context-minor-gc-matrix` | earlier slice | Step 108 和 Stage 9 都已关闭；当前把 `Context Minor GC` 的 harder eval matrix 补成正式执行面 | 104` harder eval matrix、同一套 operator scorecard 重跑、Stage 7 closeout 报告 |
+| 9 | `prepare-stage10-adoption-simplification-and-shared-foundation-proof` | earlier slice | Stage 7 / 8 / 9 已全部收口；当前转入 Stage 10，收 install / bootstrap / verify，并补齐 Codex / 多实例 shared-foundation product proof | Stage 10 plan steps `121-126`、short-path install proof、package/startup/first-run metrics、Codex / multi-instance evidence |
+| 10 | `hold-stage10-adoption-proof-stable` | just completed | 保持 Stage 10 最短接入路径、package/startup/first-run 证据面，以及 Codex / 多实例 shared-foundation proof 持续为绿 | npm run umc:stage10 -- --format markdown`、README / roadmap / development plan / `.codex/*`、Stage 10 closeout reports |
+| 11 | `formalize-realtime-memory-intent-ingestion` | next / queued | 把“主回复 + `memory_extraction`”从局部 runtime seam 收口成正式产品契约，补上 ordinary conversation rule 的实时 governed ingest 入口 | replay suite、Codex adapter tests、architecture docs、development plan、control-surface state |
+| 12 | `attribute-memory-capability-sources` | next / queued | 对同一批核心案例做 `legacy / unified / bootstrap / retrieval` 对照，明确答案来源和扩展增益边界 | A/B 对照报告、关键案例证据、来源分类说明 |
+| 13 | `turn-failures-into-algorithm-iterations` | next / queued | 把 benchmark 失败案例转成 retrieval / assembly / policy 算法问题清单，并按轮次修复、复测、提交 | 每轮失败清单、对应修复、复测结果、GitHub commit |
+| 14 | `close-stage5-product-hardening-and-independent-operation` | next / queued | 一口气收掉 `Step 39-46`，把 source hardening、maintenance、reproducibility、release-boundary、split rehearsal、independent review 全部接到 CLI-first 证据面 | Stage 5 targeted tests、`npm run umc:stage5`、`npm run umc:cli -- maintenance run`、`npm run umc:cli -- export reproducibility`、`npm run umc:cli -- review split-rehearsal |
+| 15 | `hold-stage5-product-hardening-stable` | next / queued | 保持 Stage 5 acceptance、maintenance、reproducibility、split rehearsal 证据面持续稳定 | npm run umc:stage5`、`npm run umc:acceptance`、`npm run umc:openclaw-itest`、full `npm test |
+| 16 | `close-release-preflight-cli-and-deployment-verification` | next / queued | 把真实 bundle install、deployment verification、release-preflight 一键门禁全部 CLI 化，并把仓库状态推进到“只等人类验收” | npm run umc:build-bundle`、`npm run umc:openclaw-install-verify`、`npm run umc:release-preflight`、`npm run umc:cli -- verify openclaw-install |
+| 17 | `hold-release-preflight-evidence-stable` | next / queued | 保持 release-preflight、bundle install、host smoke、Stage 5 acceptance 证据持续为绿 | npm run umc:release-preflight`、`npm run umc:openclaw-install-verify`、`npm run umc:openclaw-itest`、`npm run umc:stage5 |
+| 18 | `close-host-neutral-root-cutover-gate-policy` | next / queued | 基于 live topology、migration recommendation 和 split rehearsal，把 canonical root cutover 与 gate rule 写成显式 operator policy | npm run umc:cli -- registry inspect --format markdown`、`npm run umc:cli -- registry migrate --format markdown`、`npm run umc:cli -- review split-rehearsal --format markdown |
+| 19 | `hold-host-neutral-root-policy-stable` | next / queued | 保持 canonical root adoption 规则稳定，不让 later changes 把 legacy divergence 重新包装成 hard gate | npm run umc:cli -- registry inspect --format markdown`、configuration docs、control-surface status |
+| 20 | `hold-post-stage5-roadmap-state-aligned` | next / queued | 保持 project/workstream roadmap 摘要、Stage 5 closeout 证据和 later-phase gate 在同一条 operator baseline 上 | npm run smoke:eval -- --format markdown`、`npm run smoke:eval:critical -- --format markdown`、`npm run eval:memory-search:cases -- --skip-builtin --format json`、project/workstream roadmap、control-surface status |
+| 21 | `define-deeper-accepted-action-extraction-todo` | next / queued | 把 accepted-action 的更深抽取规则、分层准入、负向路径和治理覆盖明确写成 deferred enhancement queue，而不是继续隐含在聊天里 | self-learning architecture / roadmap / development plan 与 `.codex/*` 对齐；TODO 只定义后续实现，不误报成当前 baseline 已完成 |
+| 22 | `implement-step47-field-aware-accepted-action-extraction` | next / queued | 落地 deferred queue 的 Step 47，让 accepted_action 基于结构化字段拆出 `target_fact`、显式 `operating_rule`、`outcome_artifact` 候选，而不是继续只产出一条保守摘要 | accepted_action source/reflection/CLI tests、`npm test`、`npm run verify`、`npm run umc:cli -- reflect run ... --source-type accepted_action`、`npm run umc:cli -- learn lifecycle-run ... --source-type accepted_action |
+| 23 | `hook-openclaw-after-tool-call-into-accepted-action-learning` | next / queued | 把 OpenClaw 侧真正可用的异步 runtime seam 接上 governed accepted-action intake，让显式结构化 tool result 能直接进入 source -> reflection -> promotion 闭环 | OpenClaw hook regression tests、full `npm test`、`npm run verify`、本机部署后宿主侧 after_tool_call 模拟 |
+
+## Milestone Details
+
+### Stage 1: design baseline
+
+| Item | Current Value |
+| --- | --- |
+| Status | completed |
+| Goal | freeze product naming, boundaries, and document stack |
+| Depends On | none |
+| Exit Criteria | architecture, module boundaries, and testing surfaces are aligned |
+
+### Stage 2: local-first baseline
+
+| Item | Current Value |
+| --- | --- |
+| Status | completed |
+| Goal | ship one governed local-first end-to-end baseline |
+| Depends On | Stage 1 |
+| Exit Criteria | core modules, adapters, standalone CLI, and governance all run |
+
+### Stage 3: self-learning lifecycle baseline
+
+| Item | Current Value |
+| --- | --- |
+| Status | completed |
+| Goal | turn the already-implemented reflection baseline into an explicit lifecycle with promotion, decay, and learning-specific governance |
+| Depends On | Stage 2 |
+| Exit Criteria | promotion / decay expectations, learning governance, OpenClaw validation, and local governed loop are all implemented and regression-protected |
+
+### Stage 4: policy adaptation
+
+| Item | Current Value |
+| --- | --- |
+| Status | completed |
+| Goal | let governed learning outputs influence consumer behavior |
+| Depends On | Stage 3 |
+| Exit Criteria | one reversible policy-adaptation loop is proven |
+
+### Stage 5: product hardening
+
+| Item | Current Value |
+| --- | --- |
+| Status | completed |
+| Goal | validate split-ready and independent-product operation |
+| Depends On | Stage 4 |
+| Exit Criteria | release boundary, reproducibility, maintenance workflows, and split rehearsal are all CLI-verifiable |
+
+### Stage 6: dialogue working-set shadow integration
+
+| Item | Current Value |
+| --- | --- |
+| Status | completed |
+| Goal | validate and instrument hot-session working-set pruning in runtime shadow mode before any active prompt cutover |
+| Depends On | Stage 5 |
+| Exit Criteria | runtime shadow telemetry is now landed default-off, replayable exports exist, and answer-level replay stays green enough to keep the feature shadow-only |
+
+### Stage 7: context loading optimization closure
+
+| Item | Current Value |
+| --- | --- |
+| Status | completed |
+| Goal | make per-turn context loading optimization a formal mainline and formal gate instead of leaving it at shadow findings |
+| Depends On | Stage 6 |
+| Exit Criteria | the context-optimization scorecard is stable, harder replay / Docker / local evidence align, and rollout/rollback boundaries are clear |
+
+### Stage 8: ordinary-conversation realtime-write latency closure
+
+| Item | Current Value |
+| --- | --- |
+| Status | completed |
+| Goal | recover the clean Docker write-side answer path into a trustworthy ordinary-conversation strict A/B surface |
+| Depends On | Stage 7 |
+| Exit Criteria | the ordinary-conversation hermetic strict closeout now reports `40 / 40 vs 15 / 40` with `preCaseResetFailed = 0` |
+
+### Stage 9: guarded smart-path promotion
+
+| Item | Current Value |
+| --- | --- |
+| Status | completed |
+| Goal | start turning context optimization into real user-facing value without breaking rollback safety |
+| Depends On | Stage 8 |
+| Exit Criteria | the bounded opt-in path now has live A/B evidence, an operable rollback path, and remains `default-off` / opt-in only |
+
+### Stage 10: adoption simplification and shared-foundation proof
+
+| Item | Current Value |
+| --- | --- |
+| Status | completed |
+| Goal | lift adoption experience and cross-host product proof to the same level as core capability |
+| Depends On | Stage 9 |
+| Exit Criteria | `npm run umc:stage10 -- --format markdown` is the shortest maintainer path and Codex / multi-instance shared proof is public and reproducible |
+
+## Current Next Step
+
+| Next Move | Why |
+| --- | --- |
+| Current execution tasks are complete; move to the next slice or release decision | The current execution tasks are complete, so the next move is to enter the next slice or release decision. |

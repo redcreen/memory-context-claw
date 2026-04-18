@@ -1,0 +1,195 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776410601089-z6e8uu",
+  "generated_at": "2026-04-17T07:23:21.089Z",
+  "session_key": "agent:stage6-adversarial:adversarial-return-old-topic-after-code-switch",
+  "agent_id": "stage6-adversarial",
+  "query": "代码先放一边。刚才说过，我坐飞机喜欢什么位置？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "记一下：我坐飞机喜欢靠过道。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "记住了，你坐飞机偏好靠过道。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "现在说代码，这轮先别改 builtin memory。"
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "好，这轮先不改 builtin memory。"
+    },
+    {
+      "id": "t5",
+      "role": "user",
+      "content": "代码先放一边。刚才说过，我坐飞机喜欢什么位置？"
+    }
+  ],
+  "decision": {
+    "relation": "switch",
+    "confidence": 0.96,
+    "evict_turn_ids": [
+      "t1",
+      "t2",
+      "t3",
+      "t4"
+    ],
+    "pin_turn_ids": [
+      "t1"
+    ],
+    "archive_summary": "User fact established and acknowledged: the user prefers an aisle seat on airplanes. A brief code-topic detour followed with an instruction not to modify builtin memory in that round; no concrete unresolved coding task remained. The latest turn returns to the earlier airplane-seat preference question.",
+    "reasoning_summary": "The active topic changed away from the temporary code detour and back to recalling a durable user preference. The code block is resolved/irrelevant for the next turn, so its raw turns can leave. The airplane-seat preference should persist as a semantic pin rather than keeping the old raw exchange, since the fact is durable and sufficient for answering the latest turn."
+  },
+  "snapshot": {
+    "applied": {
+      "relation": "switch",
+      "confidence": 0.96,
+      "archiveSummary": "User fact established and acknowledged: the user prefers an aisle seat on airplanes. A brief code-topic detour followed with an instruction not to modify builtin memory in that round; no concrete unresolved coding task remained. The latest turn returns to the earlier airplane-seat preference question.",
+      "reasoningSummary": "The active topic changed away from the temporary code detour and back to recalling a durable user preference. The code block is resolved/irrelevant for the next turn, so its raw turns can leave. The airplane-seat preference should persist as a semantic pin rather than keeping the old raw exchange, since the fact is durable and sufficient for answering the latest turn.",
+      "latestUserTurnId": "t5",
+      "pinTurnIds": [
+        "t1"
+      ],
+      "pinnedOnlyTurnIds": [
+        "t1"
+      ],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ],
+      "keepTurnIds": [
+        "t5"
+      ],
+      "baselineTokens": 27,
+      "keptTokens": 6,
+      "prunedTokens": 21,
+      "reductionRatio": 0.7777777777777778,
+      "keepTurns": [
+        {
+          "id": "t5",
+          "role": "user",
+          "content": "代码先放一边。刚才说过，我坐飞机喜欢什么位置？",
+          "tokenEstimate": 6
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "记一下：我坐飞机喜欢靠过道。",
+          "tokenEstimate": 4
+        },
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "记住了，你坐飞机偏好靠过道。",
+          "tokenEstimate": 4
+        },
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "现在说代码，这轮先别改 builtin memory。",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t4",
+          "role": "assistant",
+          "content": "好，这轮先不改 builtin memory。",
+          "tokenEstimate": 6
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 记一下：我坐飞机喜欢靠过道。\nt2 assistant: 记住了，你坐飞机偏好靠过道。\nt3 user: 现在说代码，这轮先别改 builtin memory。\nt4 assistant: 好，这轮先不改 builtin memory。\nt5 user: 代码先放一边。刚才说过，我坐飞机喜欢什么位置？",
+    "shadowRawTranscript": "t5 user: 代码先放一边。刚才说过，我坐飞机喜欢什么位置？",
+    "semanticPinNotes": [
+      "user: 记一下：我坐飞机喜欢靠过道。"
+    ],
+    "archiveSummary": "User fact established and acknowledged: the user prefers an aisle seat on airplanes. A brief code-topic detour followed with an instruction not to modify builtin memory in that round; no concrete unresolved coding task remained. The latest turn returns to the earlier airplane-seat preference question.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 40,
+    "shadowRawPromptEstimate": 8,
+    "shadowPackageEstimate": 22,
+    "shadowPackageText": "Active raw turns:\nt5 user: 代码先放一边。刚才说过，我坐飞机喜欢什么位置？\n\nSemantic pins:\nuser: 记一下：我坐飞机喜欢靠过道。"
+  },
+  "scorecard": {
+    "relation": "switch",
+    "baselineTurnCount": 5,
+    "keptTurnCount": 1,
+    "evictedTurnCount": 4,
+    "pinCount": 1,
+    "baselinePromptEstimate": 40,
+    "shadowRawPromptEstimate": 8,
+    "shadowPackageEstimate": 22,
+    "rawReductionRatio": 0.7778,
+    "packageReductionRatio": 0.45,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 19519,
+    "totalElapsedMs": 19519,
+    "guardedEnabled": false,
+    "guardedApplied": false,
+    "guardedReason": "feature_disabled",
+    "guardedMessageCount": 5,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 27
+  },
+  "guarded": {
+    "enabled": false,
+    "applied": false,
+    "reason": "feature_disabled",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": "记一下：我坐飞机喜欢靠过道。"
+      },
+      {
+        "role": "assistant",
+        "content": "记住了，你坐飞机偏好靠过道。"
+      },
+      {
+        "role": "user",
+        "content": "现在说代码，这轮先别改 builtin memory。"
+      },
+      {
+        "role": "assistant",
+        "content": "好，这轮先不改 builtin memory。"
+      },
+      {
+        "role": "user",
+        "content": "代码先放一边。刚才说过，我坐飞机喜欢什么位置？"
+      }
+    ],
+    "filteredMessageCount": 5,
+    "filteredMessageTokenEstimate": 27,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 19519,
+    "decisionElapsedMs": 19519
+  }
+}

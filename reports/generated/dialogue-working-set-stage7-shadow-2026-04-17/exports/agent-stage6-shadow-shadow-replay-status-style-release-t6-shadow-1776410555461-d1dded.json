@@ -1,0 +1,213 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776410555461-d1dded",
+  "generated_at": "2026-04-17T07:22:35.461Z",
+  "session_key": "agent:stage6-shadow:shadow-replay-status-style-release:t6",
+  "agent_id": "stage6-shadow",
+  "query": "再切一步：如果要写 release note，第一段应该先说什么？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "assistant",
+      "content": "当前状态：OpenClaw 版本 2026.3.31，当前模型 openai-codex/gpt-5.4，上下文占用 158k / 272k，缓存命中率 99%。"
+    },
+    {
+      "id": "t2",
+      "role": "user",
+      "content": "以后默认先给我结论，再展开细节。"
+    },
+    {
+      "id": "t3",
+      "role": "assistant",
+      "content": "记住了，以后默认先给结论。"
+    },
+    {
+      "id": "t4",
+      "role": "user",
+      "content": "现在说 retrieval policy：未分类 query 默认走哪条路径？"
+    },
+    {
+      "id": "t5",
+      "role": "assistant",
+      "content": "先走 fast path，不够再补 formal memory。"
+    },
+    {
+      "id": "t6",
+      "role": "user",
+      "content": "再切一步：如果要写 release note，第一段应该先说什么？"
+    }
+  ],
+  "decision": {
+    "relation": "switch",
+    "confidence": 0.93,
+    "evict_turn_ids": [
+      "t1",
+      "t2",
+      "t3",
+      "t4",
+      "t5"
+    ],
+    "pin_turn_ids": [
+      "t2"
+    ],
+    "archive_summary": "Resolved prior topics: status snapshot reported OpenClaw 2026.3.31 with model openai-codex/gpt-5.4 and high context/cache metrics; retrieval-policy question was answered with default route = fast path first, then formal memory if needed. Durable user preference: default to giving the conclusion first, then details.",
+    "reasoning_summary": "The latest user turn changes topic from retrieval policy to release-note writing, so this is a switch. Earlier turns are resolved and not needed as raw prompt context. The only durable instruction worth preserving semantically is the user's response style preference in t2. The runtime already keeps the latest user turn, so no raw prior turns need to remain."
+  },
+  "snapshot": {
+    "applied": {
+      "relation": "switch",
+      "confidence": 0.93,
+      "archiveSummary": "Resolved prior topics: status snapshot reported OpenClaw 2026.3.31 with model openai-codex/gpt-5.4 and high context/cache metrics; retrieval-policy question was answered with default route = fast path first, then formal memory if needed. Durable user preference: default to giving the conclusion first, then details.",
+      "reasoningSummary": "The latest user turn changes topic from retrieval policy to release-note writing, so this is a switch. Earlier turns are resolved and not needed as raw prompt context. The only durable instruction worth preserving semantically is the user's response style preference in t2. The runtime already keeps the latest user turn, so no raw prior turns need to remain.",
+      "latestUserTurnId": "t6",
+      "pinTurnIds": [
+        "t2"
+      ],
+      "pinnedOnlyTurnIds": [
+        "t2"
+      ],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5"
+      ],
+      "keepTurnIds": [
+        "t6"
+      ],
+      "baselineTokens": 56,
+      "keptTokens": 9,
+      "prunedTokens": 47,
+      "reductionRatio": 0.8392857142857143,
+      "keepTurns": [
+        {
+          "id": "t6",
+          "role": "user",
+          "content": "再切一步：如果要写 release note，第一段应该先说什么？",
+          "tokenEstimate": 9
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "assistant",
+          "content": "当前状态：OpenClaw 版本 2026.3.31，当前模型 openai-codex/gpt-5.4，上下文占用 158k / 272k，缓存命中率 99%。",
+          "tokenEstimate": 21
+        },
+        {
+          "id": "t2",
+          "role": "user",
+          "content": "以后默认先给我结论，再展开细节。",
+          "tokenEstimate": 4
+        },
+        {
+          "id": "t3",
+          "role": "assistant",
+          "content": "记住了，以后默认先给结论。",
+          "tokenEstimate": 4
+        },
+        {
+          "id": "t4",
+          "role": "user",
+          "content": "现在说 retrieval policy：未分类 query 默认走哪条路径？",
+          "tokenEstimate": 10
+        },
+        {
+          "id": "t5",
+          "role": "assistant",
+          "content": "先走 fast path，不够再补 formal memory。",
+          "tokenEstimate": 8
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 assistant: 当前状态：OpenClaw 版本 2026.3.31，当前模型 openai-codex/gpt-5.4，上下文占用 158k / 272k，缓存命中率 99%。\nt2 user: 以后默认先给我结论，再展开细节。\nt3 assistant: 记住了，以后默认先给结论。\nt4 user: 现在说 retrieval policy：未分类 query 默认走哪条路径？\nt5 assistant: 先走 fast path，不够再补 formal memory。\nt6 user: 再切一步：如果要写 release note，第一段应该先说什么？",
+    "shadowRawTranscript": "t6 user: 再切一步：如果要写 release note，第一段应该先说什么？",
+    "semanticPinNotes": [
+      "user: 以后默认先给我结论，再展开细节。"
+    ],
+    "archiveSummary": "Resolved prior topics: status snapshot reported OpenClaw 2026.3.31 with model openai-codex/gpt-5.4 and high context/cache metrics; retrieval-policy question was answered with default route = fast path first, then formal memory if needed. Durable user preference: default to giving the conclusion first, then details.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 72,
+    "shadowRawPromptEstimate": 11,
+    "shadowPackageEstimate": 25,
+    "shadowPackageText": "Active raw turns:\nt6 user: 再切一步：如果要写 release note，第一段应该先说什么？\n\nSemantic pins:\nuser: 以后默认先给我结论，再展开细节。"
+  },
+  "scorecard": {
+    "relation": "switch",
+    "baselineTurnCount": 6,
+    "keptTurnCount": 1,
+    "evictedTurnCount": 5,
+    "pinCount": 1,
+    "baselinePromptEstimate": 72,
+    "shadowRawPromptEstimate": 11,
+    "shadowPackageEstimate": 25,
+    "rawReductionRatio": 0.8393,
+    "packageReductionRatio": 0.6528,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 18567,
+    "totalElapsedMs": 18567,
+    "guardedEnabled": false,
+    "guardedApplied": false,
+    "guardedReason": "feature_disabled",
+    "guardedMessageCount": 6,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 56
+  },
+  "guarded": {
+    "enabled": false,
+    "applied": false,
+    "reason": "feature_disabled",
+    "filteredMessages": [
+      {
+        "role": "assistant",
+        "content": "当前状态：OpenClaw 版本 2026.3.31，当前模型 openai-codex/gpt-5.4，上下文占用 158k / 272k，缓存命中率 99%。"
+      },
+      {
+        "role": "user",
+        "content": "以后默认先给我结论，再展开细节。"
+      },
+      {
+        "role": "assistant",
+        "content": "记住了，以后默认先给结论。"
+      },
+      {
+        "role": "user",
+        "content": "现在说 retrieval policy：未分类 query 默认走哪条路径？"
+      },
+      {
+        "role": "assistant",
+        "content": "先走 fast path，不够再补 formal memory。"
+      },
+      {
+        "role": "user",
+        "content": "再切一步：如果要写 release note，第一段应该先说什么？"
+      }
+    ],
+    "filteredMessageCount": 6,
+    "filteredMessageTokenEstimate": 56,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 18567,
+    "decisionElapsedMs": 18567
+  }
+}

@@ -1,0 +1,238 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776461011640-4n57a8",
+  "generated_at": "2026-04-17T21:23:31.640Z",
+  "session_key": "agent:main:main",
+  "agent_id": "main",
+  "query": "再回到刚才那条规则：以后做 release note，第一步默认先看哪里？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "以后涉及 release note，默认先看 GitHub Releases 页面。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "记住了：以后涉及 release note，我会默认先看 GitHub Releases 页面。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "现在换个话题，给我 3 个高蛋白早餐。"
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "- 希腊酸奶碗：希腊酸奶 + 燕麦 + 坚果 + 莓果，蛋白质高，5 分钟搞定 - 鸡蛋全麦三明治：2–3 个鸡蛋 + 全麦面包 + 生菜/番茄 + 奶酪，顶饱 - 豆腐蔬菜炒蛋替代版：嫩豆腐 + 鸡蛋 + 菠菜/蘑菇，咸口也很适合早上"
+    }
+  ],
+  "decision": {
+    "relation": "switch",
+    "confidence": 0.97,
+    "evict_turn_ids": [
+      "t3",
+      "t4"
+    ],
+    "pin_turn_ids": [
+      "t1"
+    ],
+    "archive_summary": "保留 release note 规则：以后涉及 release note，默认第一步先看 GitHub Releases 页面。早餐建议话题已解决，可从下一轮工作集移除。",
+    "reasoning_summary": "最新用户在回到旧规则主题，当前需要保留与 release note 规则直接相关的原始上下文；中间的高蛋白早餐问答是已完成的旁支，可安全淘汰。将 release note 的默认查看来源压缩为语义 pin，以便后续继续沿用。"
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "switch",
+      "confidence": 0.97,
+      "archiveSummary": "保留 release note 规则：以后涉及 release note，默认第一步先看 GitHub Releases 页面。早餐建议话题已解决，可从下一轮工作集移除。",
+      "reasoningSummary": "最新用户在回到旧规则主题，当前需要保留与 release note 规则直接相关的原始上下文；中间的高蛋白早餐问答是已完成的旁支，可安全淘汰。将 release note 的默认查看来源压缩为语义 pin，以便后续继续沿用。",
+      "latestUserTurnId": "t3",
+      "pinTurnIds": [
+        "t1"
+      ],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t3",
+        "t4"
+      ],
+      "blockedEvictTurnIds": [
+        "t3"
+      ],
+      "appliedEvictTurnIds": [
+        "t4"
+      ],
+      "keepTurnIds": [
+        "t1",
+        "t2",
+        "t3"
+      ],
+      "baselineTokens": 58,
+      "keptTokens": 28,
+      "prunedTokens": 30,
+      "reductionRatio": 0.5172413793103449,
+      "keepTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "以后涉及 release note，默认先看 GitHub Releases 页面。",
+          "tokenEstimate": 11
+        },
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "记住了：以后涉及 release note，我会默认先看 GitHub Releases 页面。",
+          "tokenEstimate": 12
+        },
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "现在换个话题，给我 3 个高蛋白早餐。",
+          "tokenEstimate": 5
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t4",
+          "role": "assistant",
+          "content": "- 希腊酸奶碗：希腊酸奶 + 燕麦 + 坚果 + 莓果，蛋白质高，5 分钟搞定 - 鸡蛋全麦三明治：2–3 个鸡蛋 + 全麦面包 + 生菜/番茄 + 奶酪，顶饱 - 豆腐蔬菜炒蛋替代版：嫩豆腐 + 鸡蛋 + 菠菜/蘑菇，咸口也很适合早上",
+          "tokenEstimate": 30
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 以后涉及 release note，默认先看 GitHub Releases 页面。\nt2 assistant: 记住了：以后涉及 release note，我会默认先看 GitHub Releases 页面。\nt3 user: 现在换个话题，给我 3 个高蛋白早餐。\nt4 assistant: - 希腊酸奶碗：希腊酸奶 + 燕麦 + 坚果 + 莓果，蛋白质高，5 分钟搞定 - 鸡蛋全麦三明治：2–3 个鸡蛋 + 全麦面包 + 生菜/番茄 + 奶酪，顶饱 - 豆腐蔬菜炒蛋替代版：嫩豆腐 + 鸡蛋 + 菠菜/蘑菇，咸口也很适合早上",
+    "shadowRawTranscript": "t1 user: 以后涉及 release note，默认先看 GitHub Releases 页面。\nt2 assistant: 记住了：以后涉及 release note，我会默认先看 GitHub Releases 页面。\nt3 user: 现在换个话题，给我 3 个高蛋白早餐。",
+    "semanticPinNotes": [],
+    "archiveSummary": "保留 release note 规则：以后涉及 release note，默认第一步先看 GitHub Releases 页面。早餐建议话题已解决，可从下一轮工作集移除。",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 69,
+    "shadowRawPromptEstimate": 36,
+    "shadowPackageEstimate": 41,
+    "shadowPackageText": "Active raw turns:\nt1 user: 以后涉及 release note，默认先看 GitHub Releases 页面。\nt2 assistant: 记住了：以后涉及 release note，我会默认先看 GitHub Releases 页面。\nt3 user: 现在换个话题，给我 3 个高蛋白早餐。"
+  },
+  "scorecard": {
+    "relation": "switch",
+    "baselineTurnCount": 4,
+    "keptTurnCount": 3,
+    "evictedTurnCount": 1,
+    "pinCount": 1,
+    "baselinePromptEstimate": 69,
+    "shadowRawPromptEstimate": 36,
+    "shadowPackageEstimate": 41,
+    "rawReductionRatio": 0.5172,
+    "packageReductionRatio": 0.4058,
+    "candidateLoadElapsedMs": 28,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 21296,
+    "totalElapsedMs": 21302,
+    "guardedEnabled": false,
+    "guardedApplied": false,
+    "guardedReason": "feature_disabled",
+    "guardedMessageCount": 4,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 58
+  },
+  "guarded": {
+    "enabled": false,
+    "applied": false,
+    "reason": "feature_disabled",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "以后涉及 release note，默认先看 GitHub Releases 页面。"
+          }
+        ],
+        "timestamp": 1776460952274
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "记住了：以后涉及 release note，我会默认先看 GitHub Releases 页面。",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0e0cbcdab8d1f3cc0169e2a49b24308191917d2634a7184772\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 7720,
+          "output": 22,
+          "cacheRead": 5120,
+          "cacheWrite": 0,
+          "totalTokens": 12862,
+          "cost": {
+            "input": 0.00579,
+            "output": 0.00009900000000000001,
+            "cacheRead": 0.000384,
+            "cacheWrite": 0,
+            "total": 0.006273
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776460952284,
+        "responseId": "resp_0e0cbcdab8d1f3cc0169e2a49a8b448191839fb77437934a9e"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "现在换个话题，给我 3 个高蛋白早餐。"
+          }
+        ],
+        "timestamp": 1776460981086
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "- 希腊酸奶碗：希腊酸奶 + 燕麦 + 坚果 + 莓果，蛋白质高，5 分钟搞定  \n- 鸡蛋全麦三明治：2–3 个鸡蛋 + 全麦面包 + 生菜/番茄 + 奶酪，顶饱  \n- 豆腐蔬菜炒蛋替代版：嫩豆腐 + 鸡蛋 + 菠菜/蘑菇，咸口也很适合早上",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0e0cbcdab8d1f3cc0169e2a4b913848191a8c922cebbfe9e91\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 7333,
+          "output": 118,
+          "cacheRead": 5120,
+          "cacheWrite": 0,
+          "totalTokens": 12571,
+          "cost": {
+            "input": 0.00549975,
+            "output": 0.000531,
+            "cacheRead": 0.000384,
+            "cacheWrite": 0,
+            "total": 0.00641475
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776460981101,
+        "responseId": "resp_0e0cbcdab8d1f3cc0169e2a4b758b08191af61fb34a21ddc5b"
+      }
+    ],
+    "filteredMessageCount": 4,
+    "filteredMessageTokenEstimate": 58,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 21302,
+    "decisionElapsedMs": 21296
+  }
+}

@@ -1,0 +1,240 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776481010572-rahhtk",
+  "generated_at": "2026-04-18T02:56:50.572Z",
+  "session_key": "agent:main:main",
+  "agent_id": "main",
+  "query": "再回到刚才那条规则：以后做 release note，第一步默认先看哪里？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "以后涉及 release note，默认先看 GitHub Releases 页面。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "收到。以后涉及 release note，我会默认先看 GitHub Releases 页面。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "现在换个话题，给我 3 个高蛋白早餐。"
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "- 希腊酸奶碗：无糖希腊酸奶 + 燕麦 + 奇亚籽 + 一把坚果 + 蓝莓 - 鸡蛋吐司：2–3 个鸡蛋做炒蛋/煎蛋 + 全麦吐司 + 牛油果 - 高蛋白燕麦：燕麦用牛奶煮，加一勺蛋白粉或配一杯无糖豆浆，再放花生酱/香蕉"
+    }
+  ],
+  "decision": {
+    "relation": "switch",
+    "confidence": 0.92,
+    "evict_turn_ids": [
+      "t2",
+      "t3",
+      "t4"
+    ],
+    "pin_turn_ids": [
+      "t1"
+    ],
+    "archive_summary": "Pinned the durable release-note preference: default first step is to check GitHub Releases. Removed the resolved breakfast side topic and the assistant acknowledgement from the raw working set.",
+    "reasoning_summary": "The conversation has shifted back from a resolved side topic to a durable rule that should survive as a semantic pin. The off-topic breakfast exchange is complete and can be evicted; the user’s original preference should remain pinned for future release-note tasks."
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "switch",
+      "confidence": 0.92,
+      "archiveSummary": "Pinned the durable release-note preference: default first step is to check GitHub Releases. Removed the resolved breakfast side topic and the assistant acknowledgement from the raw working set.",
+      "reasoningSummary": "The conversation has shifted back from a resolved side topic to a durable rule that should survive as a semantic pin. The off-topic breakfast exchange is complete and can be evicted; the user’s original preference should remain pinned for future release-note tasks.",
+      "latestUserTurnId": "t3",
+      "pinTurnIds": [
+        "t1"
+      ],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t2",
+        "t3",
+        "t4"
+      ],
+      "blockedEvictTurnIds": [
+        "t3"
+      ],
+      "appliedEvictTurnIds": [
+        "t2",
+        "t4"
+      ],
+      "keepTurnIds": [
+        "t1",
+        "t3"
+      ],
+      "baselineTokens": 56,
+      "keptTokens": 16,
+      "prunedTokens": 40,
+      "reductionRatio": 0.7142857142857143,
+      "keepTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "以后涉及 release note，默认先看 GitHub Releases 页面。",
+          "tokenEstimate": 11
+        },
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "现在换个话题，给我 3 个高蛋白早餐。",
+          "tokenEstimate": 5
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "收到。以后涉及 release note，我会默认先看 GitHub Releases 页面。",
+          "tokenEstimate": 12
+        },
+        {
+          "id": "t4",
+          "role": "assistant",
+          "content": "- 希腊酸奶碗：无糖希腊酸奶 + 燕麦 + 奇亚籽 + 一把坚果 + 蓝莓 - 鸡蛋吐司：2–3 个鸡蛋做炒蛋/煎蛋 + 全麦吐司 + 牛油果 - 高蛋白燕麦：燕麦用牛奶煮，加一勺蛋白粉或配一杯无糖豆浆，再放花生酱/香蕉",
+          "tokenEstimate": 28
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 以后涉及 release note，默认先看 GitHub Releases 页面。\nt2 assistant: 收到。以后涉及 release note，我会默认先看 GitHub Releases 页面。\nt3 user: 现在换个话题，给我 3 个高蛋白早餐。\nt4 assistant: - 希腊酸奶碗：无糖希腊酸奶 + 燕麦 + 奇亚籽 + 一把坚果 + 蓝莓 - 鸡蛋吐司：2–3 个鸡蛋做炒蛋/煎蛋 + 全麦吐司 + 牛油果 - 高蛋白燕麦：燕麦用牛奶煮，加一勺蛋白粉或配一杯无糖豆浆，再放花生酱/香蕉",
+    "shadowRawTranscript": "t1 user: 以后涉及 release note，默认先看 GitHub Releases 页面。\nt3 user: 现在换个话题，给我 3 个高蛋白早餐。",
+    "semanticPinNotes": [],
+    "archiveSummary": "Pinned the durable release-note preference: default first step is to check GitHub Releases. Removed the resolved breakfast side topic and the assistant acknowledgement from the raw working set.",
+    "injectedArchiveSummary": "Pinned the durable release-note preference: default first step is to check GitHub Releases. Remo...",
+    "baselinePromptEstimate": 67,
+    "shadowRawPromptEstimate": 20,
+    "shadowPackageEstimate": 54,
+    "shadowPackageText": "Active raw turns:\nt1 user: 以后涉及 release note，默认先看 GitHub Releases 页面。\nt3 user: 现在换个话题，给我 3 个高蛋白早餐。\n\nArchived summary:\nPinned the durable release-note preference: default first step is to check GitHub Releases. Remo..."
+  },
+  "scorecard": {
+    "relation": "switch",
+    "baselineTurnCount": 4,
+    "keptTurnCount": 2,
+    "evictedTurnCount": 2,
+    "pinCount": 1,
+    "baselinePromptEstimate": 67,
+    "shadowRawPromptEstimate": 20,
+    "shadowPackageEstimate": 54,
+    "rawReductionRatio": 0.7143,
+    "packageReductionRatio": 0.194,
+    "candidateLoadElapsedMs": 10,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 22101,
+    "totalElapsedMs": 22106,
+    "guardedEnabled": false,
+    "guardedApplied": false,
+    "guardedReason": "feature_disabled",
+    "guardedMessageCount": 4,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 56
+  },
+  "guarded": {
+    "enabled": false,
+    "applied": false,
+    "reason": "feature_disabled",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "以后涉及 release note，默认先看 GitHub Releases 页面。"
+          }
+        ],
+        "timestamp": 1776480965065
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "收到。以后涉及 release note，我会默认先看 GitHub Releases 页面。",
+            "textSignature": "{\"v\":1,\"id\":\"msg_08d57a8ac97204930169e2f2cb8b7c8191b15f264547edb047\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 8685,
+          "output": 20,
+          "cacheRead": 5120,
+          "cacheWrite": 0,
+          "totalTokens": 13825,
+          "cost": {
+            "input": 0.0065137500000000004,
+            "output": 0.00009,
+            "cacheRead": 0.000384,
+            "cacheWrite": 0,
+            "total": 0.00698775
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776480965081,
+        "responseId": "resp_08d57a8ac97204930169e2f2cb10788191af092b05a1a03842"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "现在换个话题，给我 3 个高蛋白早餐。"
+          }
+        ],
+        "timestamp": 1776480987577
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "- 希腊酸奶碗：无糖希腊酸奶 + 燕麦 + 奇亚籽 + 一把坚果 + 蓝莓  \n- 鸡蛋吐司：2–3 个鸡蛋做炒蛋/煎蛋 + 全麦吐司 + 牛油果  \n- 高蛋白燕麦：燕麦用牛奶煮，加一勺蛋白粉或配一杯无糖豆浆，再放花生酱/香蕉",
+            "textSignature": "{\"v\":1,\"id\":\"msg_08d57a8ac97204930169e2f2e1c68c8191a96d8a0d78962b3f\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 8377,
+          "output": 106,
+          "cacheRead": 5120,
+          "cacheWrite": 0,
+          "totalTokens": 13603,
+          "cost": {
+            "input": 0.00628275,
+            "output": 0.000477,
+            "cacheRead": 0.000384,
+            "cacheWrite": 0,
+            "total": 0.00714375
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776480987582,
+        "responseId": "resp_08d57a8ac97204930169e2f2e1227481919a66cfd3434bd97a"
+      }
+    ],
+    "filteredMessageCount": 4,
+    "filteredMessageTokenEstimate": 56,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 22107,
+    "decisionElapsedMs": 22101
+  }
+}

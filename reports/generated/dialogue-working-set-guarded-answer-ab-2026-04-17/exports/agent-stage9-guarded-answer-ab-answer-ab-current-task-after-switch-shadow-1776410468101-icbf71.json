@@ -1,0 +1,221 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776410468101-icbf71",
+  "generated_at": "2026-04-17T07:21:08.101Z",
+  "session_key": "agent:stage9-guarded-answer-ab:answer-ab-current-task-after-switch",
+  "agent_id": "stage9-guarded-answer-ab",
+  "query": "我们当前新任务是什么？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "默认中文。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "记住了。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "Project Lantern 是做真实场景 AI 记忆治理的。"
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "明白了。"
+    },
+    {
+      "id": "t5",
+      "role": "user",
+      "content": "这块先到这。当前新任务是写 shadow mode 报告。"
+    },
+    {
+      "id": "t6",
+      "role": "assistant",
+      "content": "收到，当前新任务是写 shadow mode 报告。"
+    },
+    {
+      "id": "t7",
+      "role": "user",
+      "content": "我们当前新任务是什么？"
+    }
+  ],
+  "decision": {
+    "relation": "continue",
+    "confidence": 0.99,
+    "evict_turn_ids": [
+      "t2",
+      "t4"
+    ],
+    "pin_turn_ids": [
+      "t1",
+      "t3"
+    ],
+    "archive_summary": "用户偏好默认使用中文；用户提供了背景事实：Project Lantern 是做真实场景 AI 记忆治理的。此前话题已收束。当前活跃任务在 t5/t6 已切换并明确为“写 shadow mode 报告”。",
+    "reasoning_summary": "最新问题直接询问当前新任务，仍依赖 t5/t6 的原始上下文来回答，因此属于同一活跃话题的延续，用 continue。t5 是任务定义，t6 是最近确认，都应保留为原始上下文。t1 是稳定语言偏好，应转为语义 pin；t3 是项目背景事实，也适合 pin。t2、t4 只是确认性回复，可从下一轮原始提示中移除。最新用户 turn t7 按规则默认保留，不列入 evict_turn_ids。"
+  },
+  "snapshot": {
+    "applied": {
+      "relation": "continue",
+      "confidence": 0.99,
+      "archiveSummary": "用户偏好默认使用中文；用户提供了背景事实：Project Lantern 是做真实场景 AI 记忆治理的。此前话题已收束。当前活跃任务在 t5/t6 已切换并明确为“写 shadow mode 报告”。",
+      "reasoningSummary": "最新问题直接询问当前新任务，仍依赖 t5/t6 的原始上下文来回答，因此属于同一活跃话题的延续，用 continue。t5 是任务定义，t6 是最近确认，都应保留为原始上下文。t1 是稳定语言偏好，应转为语义 pin；t3 是项目背景事实，也适合 pin。t2、t4 只是确认性回复，可从下一轮原始提示中移除。最新用户 turn t7 按规则默认保留，不列入 evict_turn_ids。",
+      "latestUserTurnId": "t7",
+      "pinTurnIds": [
+        "t1",
+        "t3"
+      ],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t2",
+        "t4"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t2",
+        "t4"
+      ],
+      "keepTurnIds": [
+        "t1",
+        "t3",
+        "t5",
+        "t6",
+        "t7"
+      ],
+      "baselineTokens": 30,
+      "keptTokens": 28,
+      "prunedTokens": 2,
+      "reductionRatio": 0.06666666666666667,
+      "keepTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "默认中文。",
+          "tokenEstimate": 2
+        },
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "Project Lantern 是做真实场景 AI 记忆治理的。",
+          "tokenEstimate": 8
+        },
+        {
+          "id": "t5",
+          "role": "user",
+          "content": "这块先到这。当前新任务是写 shadow mode 报告。",
+          "tokenEstimate": 8
+        },
+        {
+          "id": "t6",
+          "role": "assistant",
+          "content": "收到，当前新任务是写 shadow mode 报告。",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t7",
+          "role": "user",
+          "content": "我们当前新任务是什么？",
+          "tokenEstimate": 3
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "记住了。",
+          "tokenEstimate": 1
+        },
+        {
+          "id": "t4",
+          "role": "assistant",
+          "content": "明白了。",
+          "tokenEstimate": 1
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 默认中文。\nt2 assistant: 记住了。\nt3 user: Project Lantern 是做真实场景 AI 记忆治理的。\nt4 assistant: 明白了。\nt5 user: 这块先到这。当前新任务是写 shadow mode 报告。\nt6 assistant: 收到，当前新任务是写 shadow mode 报告。\nt7 user: 我们当前新任务是什么？",
+    "shadowRawTranscript": "t1 user: 默认中文。\nt3 user: Project Lantern 是做真实场景 AI 记忆治理的。\nt5 user: 这块先到这。当前新任务是写 shadow mode 报告。\nt6 assistant: 收到，当前新任务是写 shadow mode 报告。\nt7 user: 我们当前新任务是什么？",
+    "semanticPinNotes": [],
+    "archiveSummary": "用户偏好默认使用中文；用户提供了背景事实：Project Lantern 是做真实场景 AI 记忆治理的。此前话题已收束。当前活跃任务在 t5/t6 已切换并明确为“写 shadow mode 报告”。",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 49,
+    "shadowRawPromptEstimate": 40,
+    "shadowPackageEstimate": 44,
+    "shadowPackageText": "Active raw turns:\nt1 user: 默认中文。\nt3 user: Project Lantern 是做真实场景 AI 记忆治理的。\nt5 user: 这块先到这。当前新任务是写 shadow mode 报告。\nt6 assistant: 收到，当前新任务是写 shadow mode 报告。\nt7 user: 我们当前新任务是什么？"
+  },
+  "scorecard": {
+    "relation": "continue",
+    "baselineTurnCount": 7,
+    "keptTurnCount": 5,
+    "evictedTurnCount": 2,
+    "pinCount": 2,
+    "baselinePromptEstimate": 49,
+    "shadowRawPromptEstimate": 40,
+    "shadowPackageEstimate": 44,
+    "rawReductionRatio": 0.0667,
+    "packageReductionRatio": 0.102,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 12319,
+    "totalElapsedMs": 12319,
+    "guardedEnabled": true,
+    "guardedApplied": false,
+    "guardedReason": "relation_not_allowed",
+    "guardedMessageCount": 7,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 30
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": false,
+    "reason": "relation_not_allowed",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": "默认中文。"
+      },
+      {
+        "role": "assistant",
+        "content": "记住了。"
+      },
+      {
+        "role": "user",
+        "content": "Project Lantern 是做真实场景 AI 记忆治理的。"
+      },
+      {
+        "role": "assistant",
+        "content": "明白了。"
+      },
+      {
+        "role": "user",
+        "content": "这块先到这。当前新任务是写 shadow mode 报告。"
+      },
+      {
+        "role": "assistant",
+        "content": "收到，当前新任务是写 shadow mode 报告。"
+      },
+      {
+        "role": "user",
+        "content": "我们当前新任务是什么？"
+      }
+    ],
+    "filteredMessageCount": 7,
+    "filteredMessageTokenEstimate": 30,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 12319,
+    "decisionElapsedMs": 12319
+  }
+}

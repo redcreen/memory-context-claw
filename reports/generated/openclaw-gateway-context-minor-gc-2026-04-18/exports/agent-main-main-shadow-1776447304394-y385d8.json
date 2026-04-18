@@ -1,0 +1,1344 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776447304394-y385d8",
+  "generated_at": "2026-04-17T17:35:04.394Z",
+  "session_key": "agent:main:main",
+  "agent_id": "main",
+  "query": "[Sat 2026-04-18 01:34 GMT+8] 以后默认用中文回复，尽量一句话。",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "task-system runtime context: - session: agent:main:main - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded [Fri 2026-04-17 21:30 GMT+8] 现在切换话题，我要写一个 Python 正则，把 foo123bar 里的数字提取出来。给最短答案。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "`re.search(r'foo(\\d+)bar', s).group(1)`"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "task-system runtime context: - session: agent:main:main - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded [Fri 2026-04-17 21:31 GMT+8] 继续这个 Python 话题，再给一个只返回第一个数字分组的写法。给最短答案。"
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "`re.search(r'\\d+', s).group(0)`"
+    },
+    {
+      "id": "t5",
+      "role": "user",
+      "content": "task-system runtime context: - session: agent:main:main - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded [Fri 2026-04-17 21:31 GMT+8] 现在又换话题，帮我想一个两人份低油晚餐。只给三个菜名。"
+    },
+    {
+      "id": "t6",
+      "role": "assistant",
+      "content": "清蒸鲈鱼 蒜蓉西兰花 番茄豆腐汤"
+    },
+    {
+      "id": "t7",
+      "role": "user",
+      "content": "task-system runtime context: - session: agent:main:main - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded [Sat 2026-04-18 00:24 GMT+8] 只回复确认。"
+    },
+    {
+      "id": "t8",
+      "role": "assistant",
+      "content": "确认"
+    },
+    {
+      "id": "t9",
+      "role": "user",
+      "content": "task-system runtime context: - session: agent:main:main - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded [Sat 2026-04-18 00:29 GMT+8] 只回复确认。"
+    },
+    {
+      "id": "t10",
+      "role": "assistant",
+      "content": "确认"
+    },
+    {
+      "id": "t11",
+      "role": "user",
+      "content": "task-system runtime context: - session: agent:main:main - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded [Sat 2026-04-18 00:34 GMT+8] 只回复确认。"
+    },
+    {
+      "id": "t12",
+      "role": "assistant",
+      "content": "确认"
+    }
+  ],
+  "decision": {
+    "relation": "continue",
+    "confidence": 0,
+    "evict_turn_ids": [],
+    "pin_turn_ids": [],
+    "archive_summary": "",
+    "reasoning_summary": ""
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "continue",
+      "confidence": 0,
+      "archiveSummary": "",
+      "reasoningSummary": "",
+      "latestUserTurnId": "t11",
+      "pinTurnIds": [],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [],
+      "keepTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8",
+        "t9",
+        "t10",
+        "t11",
+        "t12"
+      ],
+      "baselineTokens": 1117,
+      "keptTokens": 1117,
+      "prunedTokens": 0,
+      "reductionRatio": 0,
+      "keepTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "task-system runtime context: - session: agent:main:main - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded [Fri 2026-04-17 21:30 GMT+8] 现在切换话题，我要写一个 Python 正则，把 foo123bar 里的数字提取出来。给最短答案。",
+          "tokenEstimate": 189
+        },
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "`re.search(r'foo(\\d+)bar', s).group(1)`",
+          "tokenEstimate": 10
+        },
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "task-system runtime context: - session: agent:main:main - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded [Fri 2026-04-17 21:31 GMT+8] 继续这个 Python 话题，再给一个只返回第一个数字分组的写法。给最短答案。",
+          "tokenEstimate": 186
+        },
+        {
+          "id": "t4",
+          "role": "assistant",
+          "content": "`re.search(r'\\d+', s).group(0)`",
+          "tokenEstimate": 8
+        },
+        {
+          "id": "t5",
+          "role": "user",
+          "content": "task-system runtime context: - session: agent:main:main - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded [Fri 2026-04-17 21:31 GMT+8] 现在又换话题，帮我想一个两人份低油晚餐。只给三个菜名。",
+          "tokenEstimate": 183
+        },
+        {
+          "id": "t6",
+          "role": "assistant",
+          "content": "清蒸鲈鱼 蒜蓉西兰花 番茄豆腐汤",
+          "tokenEstimate": 4
+        },
+        {
+          "id": "t7",
+          "role": "user",
+          "content": "task-system runtime context: - session: agent:main:main - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded [Sat 2026-04-18 00:24 GMT+8] 只回复确认。",
+          "tokenEstimate": 178
+        },
+        {
+          "id": "t8",
+          "role": "assistant",
+          "content": "确认",
+          "tokenEstimate": 1
+        },
+        {
+          "id": "t9",
+          "role": "user",
+          "content": "task-system runtime context: - session: agent:main:main - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded [Sat 2026-04-18 00:29 GMT+8] 只回复确认。",
+          "tokenEstimate": 178
+        },
+        {
+          "id": "t10",
+          "role": "assistant",
+          "content": "确认",
+          "tokenEstimate": 1
+        },
+        {
+          "id": "t11",
+          "role": "user",
+          "content": "task-system runtime context: - session: agent:main:main - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded [Sat 2026-04-18 00:34 GMT+8] 只回复确认。",
+          "tokenEstimate": 178
+        },
+        {
+          "id": "t12",
+          "role": "assistant",
+          "content": "确认",
+          "tokenEstimate": 1
+        }
+      ],
+      "evictedTurns": []
+    },
+    "baselineRawTranscript": "t1 user: task-system runtime context: - session: agent:main:main - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded [Fri 2026-04-17 21:30 GMT+8] 现在切换话题，我要写一个 Python 正则，把 foo123bar 里的数字提取出来。给最短答案。\nt2 assistant: `re.search(r'foo(\\d+)bar', s).group(1)`\nt3 user: task-system runtime context: - session: agent:main:main - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded [Fri 2026-04-17 21:31 GMT+8] 继续这个 Python 话题，再给一个只返回第一个数字分组的写法。给最短答案。\nt4 assistant: `re.search(r'\\d+', s).group(0)`\nt5 user: task-system runtime context: - session: agent:main:main - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded [Fri 2026-04-17 21:31 GMT+8] 现在又换话题，帮我想一个两人份低油晚餐。只给三个菜名。\nt6 assistant: 清蒸鲈鱼 蒜蓉西兰花 番茄豆腐汤\nt7 user: task-system runtime context: - session: agent:main:main - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded [Sat 2026-04-18 00:24 GMT+8] 只回复确认。\nt8 assistant: 确认\nt9 user: task-system runtime context: - session: agent:main:main - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded [Sat 2026-04-18 00:29 GMT+8] 只回复确认。\nt10 assistant: 确认\nt11 user: task-system runtime context: - session: agent:main:main - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded [Sat 2026-04-18 00:34 GMT+8] 只回复确认。\nt12 assistant: 确认",
+    "shadowRawTranscript": "t1 user: task-system runtime context: - session: agent:main:main - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded [Fri 2026-04-17 21:30 GMT+8] 现在切换话题，我要写一个 Python 正则，把 foo123bar 里的数字提取出来。给最短答案。\nt2 assistant: `re.search(r'foo(\\d+)bar', s).group(1)`\nt3 user: task-system runtime context: - session: agent:main:main - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded [Fri 2026-04-17 21:31 GMT+8] 继续这个 Python 话题，再给一个只返回第一个数字分组的写法。给最短答案。\nt4 assistant: `re.search(r'\\d+', s).group(0)`\nt5 user: task-system runtime context: - session: agent:main:main - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded [Fri 2026-04-17 21:31 GMT+8] 现在又换话题，帮我想一个两人份低油晚餐。只给三个菜名。\nt6 assistant: 清蒸鲈鱼 蒜蓉西兰花 番茄豆腐汤\nt7 user: task-system runtime context: - session: agent:main:main - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded [Sat 2026-04-18 00:24 GMT+8] 只回复确认。\nt8 assistant: 确认\nt9 user: task-system runtime context: - session: agent:main:main - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded [Sat 2026-04-18 00:29 GMT+8] 只回复确认。\nt10 assistant: 确认\nt11 user: task-system runtime context: - session: agent:main:main - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded [Sat 2026-04-18 00:34 GMT+8] 只回复确认。\nt12 assistant: 确认",
+    "semanticPinNotes": [],
+    "archiveSummary": "",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 1149,
+    "shadowRawPromptEstimate": 1149,
+    "shadowPackageEstimate": 1154,
+    "shadowPackageText": "Active raw turns:\nt1 user: task-system runtime context: - session: agent:main:main - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded [Fri 2026-04-17 21:30 GMT+8] 现在切换话题，我要写一个 Python 正则，把 foo123bar 里的数字提取出来。给最短答案。\nt2 assistant: `re.search(r'foo(\\d+)bar', s).group(1)`\nt3 user: task-system runtime context: - session: agent:main:main - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded [Fri 2026-04-17 21:31 GMT+8] 继续这个 Python 话题，再给一个只返回第一个数字分组的写法。给最短答案。\nt4 assistant: `re.search(r'\\d+', s).group(0)`\nt5 user: task-system runtime context: - session: agent:main:main - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded [Fri 2026-04-17 21:31 GMT+8] 现在又换话题，帮我想一个两人份低油晚餐。只给三个菜名。\nt6 assistant: 清蒸鲈鱼 蒜蓉西兰花 番茄豆腐汤\nt7 user: task-system runtime context: - session: agent:main:main - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded [Sat 2026-04-18 00:24 GMT+8] 只回复确认。\nt8 assistant: 确认\nt9 user: task-system runtime context: - session: agent:main:main - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded [Sat 2026-04-18 00:29 GMT+8] 只回复确认。\nt10 assistant: 确认\nt11 user: task-system runtime context: - session: agent:main:main - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded [Sat 2026-04-18 00:34 GMT+8] 只回复确认。\nt12 assistant: 确认"
+  },
+  "scorecard": {
+    "relation": "continue",
+    "baselineTurnCount": 12,
+    "keptTurnCount": 12,
+    "evictedTurnCount": 0,
+    "pinCount": 0,
+    "baselinePromptEstimate": 1149,
+    "shadowRawPromptEstimate": 1149,
+    "shadowPackageEstimate": 1154,
+    "rawReductionRatio": 0,
+    "packageReductionRatio": -0.0044,
+    "candidateLoadElapsedMs": 43,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 20007,
+    "totalElapsedMs": 20017,
+    "guardedEnabled": false,
+    "guardedApplied": false,
+    "guardedReason": "feature_disabled",
+    "guardedMessageCount": 54,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 5488
+  },
+  "guarded": {
+    "enabled": false,
+    "applied": false,
+    "reason": "feature_disabled",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "task-system planning runtime context:\n- current_session_key: agent:main:main\n- current_task_id: task_b6bade80fd914e41bead0ddf2768f3b1\n- planning_mode: tool-first-after-first-ack\n- if you need a future follow-up, use task-system tools in this order:\n  1. ts_attach_promise_guard\n  2. ts_create_followup_plan\n  3. ts_schedule_followup_from_plan\n  4. ts_finalize_planned_followup\n- for future-first requests, default to main_user_content_mode=none\n- runtime decides whether this turn sends no business content, a short summary, or a full answer\n- if main_user_content_mode=immediate-summary, keep the user-visible summary to one short business-facing line (about 120 chars max)\n- legacy structured user-content blocks may appear, but they are compatibility-only and must not leak to users\n- do not put scheduling status, promise state, or tool-chain state in the user-visible answer\n- provide followup_summary so runtime can send a meaningful wd scheduling confirmation\n- use followup_due_at as an absolute RFC3339 time\n- if scheduling is overdue, still schedule and tell the user it is being recovered\n- never promise a future reply without a successful task-system tool result\n\nA new session was started via /new or /reset. Run your Session Startup sequence - read the required files before responding to the user. Then greet the user in your configured persona, if one is provided. Be yourself - use your defined voice, mannerisms, and mood. Keep it to 1-3 sentences and ask what they want to do. If the runtime model differs from default_model in the system prompt, mention the default model. Do not mention internal steps, files, tools, or reasoning.\nCurrent time: Tuesday, April 14th, 2026 — 5:58 PM (Asia/Shanghai) / 2026-04-14 09:58 UTC"
+          }
+        ],
+        "timestamp": 1776160694181
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "你好，我是你的AI助手。根据系统提示，我需要先读取一些必要的文件来了解我们之间的背景和设置。\n\n让我先读取这些文件，然后向你问好。<|tool_calls_section_begin|><|tool_call_begin|>functions.read:0<|tool_call_argument_begin|>{\"file_path\": \"/Users/redcreen/.openclaw/workspace/SOUL.md\"}<|tool_call_end|><|tool_call_begin|>functions.read:1<|tool_call_argument_begin|>{\"file_path\": \"/Users/redcreen/.openclaw/workspace/USER.md\"}<|tool_call_end|><|tool_call_begin|>functions.read:2<|tool_call_argument_begin|>{\"file_path\": \"/Users/redcreen/.openclaw/workspace/IDENTITY.md\"}<|tool_call_end|><|tool_calls_section_end|>"
+          }
+        ],
+        "api": "anthropic-messages",
+        "provider": "kimi",
+        "model": "kimi-code",
+        "usage": {
+          "input": 15801,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "totalTokens": 15801,
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "cacheWrite": 0,
+            "total": 0
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776160694187,
+        "responseId": "msg_N3d74pwbdXnKxH1KMEZrvC0P"
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "🦞 OpenClaw 2026.4.2 (d74a122)\n🧠 Model: openai-codex/gpt-5.4-mini · 🔑 oauth (openai-codex:67560691@qq.com (67560691@qq.com))\n↪️ Fallback: kimi/kimi-code · 🔑 api-key (kimi:default) (auth)\n🧮 Tokens: 16k in / 0 out · 💵 Cost: $0.0000\n📚 Context: 16k/262k (6%) · 🧹 Compactions: 0\n🧵 Session: agent:main:main • updated just now\n📌 Tasks: 2 active · 7 total · cli · [Sun 2026-04-05 11:25 GMT+8] 我爱吃什么？\n⚙️ Runtime: direct · Think: off\n🪢 Queue: collect (depth 0)"
+          }
+        ],
+        "timestamp": 1776160705476,
+        "stopReason": "stop",
+        "usage": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "totalTokens": 0,
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "cacheWrite": 0,
+            "total": 0
+          }
+        },
+        "api": "openai-responses",
+        "provider": "openclaw",
+        "model": "gateway-injected"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "task-system planning runtime context:\n- current_session_key: agent:main:main\n- current_task_id: task_e819466d805a4690a2bb6f7775e4ea13\n- planning_mode: tool-first-after-first-ack\n- if you need a future follow-up, use task-system tools in this order:\n  1. ts_attach_promise_guard\n  2. ts_create_followup_plan\n  3. ts_schedule_followup_from_plan\n  4. ts_finalize_planned_followup\n- for future-first requests, default to main_user_content_mode=none\n- runtime decides whether this turn sends no business content, a short summary, or a full answer\n- if main_user_content_mode=immediate-summary, keep the user-visible summary to one short business-facing line (about 120 chars max)\n- legacy structured user-content blocks may appear, but they are compatibility-only and must not leak to users\n- do not put scheduling status, promise state, or tool-chain state in the user-visible answer\n- provide followup_summary so runtime can send a meaningful wd scheduling confirmation\n- use followup_due_at as an absolute RFC3339 time\n- if scheduling is overdue, still schedule and tell the user it is being recovered\n- never promise a future reply without a successful task-system tool result\n\nSender (untrusted metadata):\n```json\n{\n  \"label\": \"openclaw-control-ui\",\n  \"id\": \"openclaw-control-ui\"\n}\n```\n\n[Tue 2026-04-14 17:59 GMT+8] 现在是哪个模型在工作？"
+          }
+        ],
+        "timestamp": 1776160845152
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "当前工作模型是 **openai-codex/gpt-5.4-mini**（通过 OAuth 授权）。\n\n备用模型是 kimi/kimi-code。"
+          }
+        ],
+        "api": "anthropic-messages",
+        "provider": "kimi",
+        "model": "kimi-code",
+        "usage": {
+          "input": 16750,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "totalTokens": 16750,
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "cacheWrite": 0,
+            "total": 0
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776160845824,
+        "responseId": "msg_zWVeq9hcsXiH7rXvceJFaUXG"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "task-system planning runtime context:\n- current_session_key: agent:main:main\n- current_task_id: task_b6bade80fd914e41bead0ddf2768f3b1\n- planning_mode: tool-first-after-first-ack\n- if you need a future follow-up, use task-system tools in this order:\n  1. ts_attach_promise_guard\n  2. ts_create_followup_plan\n  3. ts_schedule_followup_from_plan\n  4. ts_finalize_planned_followup\n- for future-first requests, default to main_user_content_mode=none\n- runtime decides whether this turn sends no business content, a short summary, or a full answer\n- if main_user_content_mode=immediate-summary, keep the user-visible summary to one short business-facing line (about 120 chars max)\n- legacy structured user-content blocks may appear, but they are compatibility-only and must not leak to users\n- do not put scheduling status, promise state, or tool-chain state in the user-visible answer\n- provide followup_summary so runtime can send a meaningful wd scheduling confirmation\n- use followup_due_at as an absolute RFC3339 time\n- if scheduling is overdue, still schedule and tell the user it is being recovered\n- never promise a future reply without a successful task-system tool result\n\nCall capture_xiaohongshu_note exactly once with url=https://www.xiaohongshu.com/explore/umc-host-canary-1776219555, fixturePath=/Users/redcreen/Project/style engine/tests/fixtures/xiaohongshu_note_fixture.json, adapter=fixture. After the tool returns, reply only with DONE."
+          }
+        ],
+        "timestamp": 1776219589200
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "toolCall",
+            "id": "call_S91FHygGHSyKoXna6Oe6Ga8W",
+            "name": "capture_xiaohongshu_note",
+            "arguments": {
+              "url": "https://www.xiaohongshu.com/explore/umc-host-canary-1776219555",
+              "fixturePath": "/Users/redcreen/Project/style engine/tests/fixtures/xiaohongshu_note_fixture.json",
+              "adapter": "fixture"
+            },
+            "partialJson": "{\"url\":\"https://www.xiaohongshu.com/explore/umc-host-canary-1776219555\",\"fixturePath\":\"/Users/redcreen/Project/style engine/tests/fixtures/xiaohongshu_note_fixture.json\",\"adapter\":\"fixture\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 37864,
+          "output": 71,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "totalTokens": 37935,
+          "cost": {
+            "input": 0.028398,
+            "output": 0.0003195,
+            "cacheRead": 0,
+            "cacheWrite": 0,
+            "total": 0.0287175
+          }
+        },
+        "stopReason": "toolUse",
+        "timestamp": 1776219589216,
+        "responseId": "resp_06fa92714f4abfc30169def5c86b548193a82b2dcdab8b5163"
+      },
+      {
+        "role": "toolResult",
+        "toolCallId": "call_S91FHygGHSyKoXna6Oe6Ga8W",
+        "toolName": "capture_xiaohongshu_note",
+        "content": [
+          {
+            "type": "text",
+            "text": "已抓取《奶油感小熊配色》（作者：测试用户A，发布日期：2026-04-13）。保存内容：2 张图片, 0 个视频, 0 张视频封面, 1 个 Markdown, 1 个 JSON。互动数据：点赞 1234 / 收藏 456 / 评论 78。保存目录：/Users/redcreen/Project/style engine/workspace/sytle-images/小红书/测试用户A/2026-04-13 - xhs-fixture-001"
+          }
+        ],
+        "isError": false,
+        "timestamp": 1776219594301
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "DONE",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0af1d022eb61e6c30169def5ccd6748195ae47b4d27a3366a3\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 686,
+          "output": 5,
+          "cacheRead": 37376,
+          "cacheWrite": 0,
+          "totalTokens": 38067,
+          "cost": {
+            "input": 0.0005145,
+            "output": 0.0000225,
+            "cacheRead": 0.0028032,
+            "cacheWrite": 0,
+            "total": 0.0033401999999999998
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776219594307,
+        "responseId": "resp_0af1d022eb61e6c30169def5cbb31481958ac8cf101083638a"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "task-system planning runtime context:\n- current_session_key: agent:main:main\n- current_task_id: unknown\n- planning_mode: tool-first-after-first-ack\n- if you need a future follow-up, use task-system tools in this order:\n  1. ts_attach_promise_guard\n  2. ts_create_followup_plan\n  3. ts_schedule_followup_from_plan\n  4. ts_finalize_planned_followup\n- for future-first requests, default to main_user_content_mode=none\n- runtime decides whether this turn sends no business content, a short summary, or a full answer\n- if main_user_content_mode=immediate-summary, keep the user-visible summary to one short business-facing line (about 120 chars max)\n- legacy structured user-content blocks may appear, but they are compatibility-only and must not leak to users\n- do not put scheduling status, promise state, or tool-chain state in the user-visible answer\n- provide followup_summary so runtime can send a meaningful wd scheduling confirmation\n- use followup_due_at as an absolute RFC3339 time\n- if scheduling is overdue, still schedule and tell the user it is being recovered\n- never promise a future reply without a successful task-system tool result\n\nCall umc_emit_accepted_action_canary exactly once with canary_id=\"umc-host-canary-1776220410\", target=\"https://example.invalid/umc-canary/umc-host-canary-1776220410\", artifact=\"artifacts/umc-host-canary-1776220410.txt\", summary=\"UMC host canary umc-host-canary-1776220410 validated real after_tool_call capture.\", reply_text=\"accepted_action canary emitted for umc-host-canary-1776220410\". After the tool returns, reply only with DONE."
+          }
+        ],
+        "timestamp": 1776220459452
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "DONE",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0af1d022eb61e6c30169def933e6188195985fc2cb6f2eea31\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 449,
+          "output": 5,
+          "cacheRead": 37888,
+          "cacheWrite": 0,
+          "totalTokens": 38342,
+          "cost": {
+            "input": 0.00033675,
+            "output": 0.0000225,
+            "cacheRead": 0.0028415999999999997,
+            "cacheWrite": 0,
+            "total": 0.00320085
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776220464811,
+        "responseId": "resp_0af1d022eb61e6c30169def9323c94819581e384d7b8b0e6f2"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "task-system runtime context:\n- session: agent:main:main\n- task: unknown\n- mode: tool-first-after-first-ack\n- follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup\n- future-first default: main_user_content_mode=none\n- runtime chooses none / immediate-summary / full-answer for current-turn business content\n- immediate-summary must be one short business-facing line\n- never expose scheduling, promise, or tool-chain state to users\n- include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work\n- never promise a future reply unless task-system tools succeeded\n\n只回复OK"
+          }
+        ],
+        "timestamp": 1776411845782
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "OK",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0af1d022eb61e6c30169e1e4caa2fc81959a933eb472316617\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 37286,
+          "output": 5,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "totalTokens": 37291,
+          "cost": {
+            "input": 0.0279645,
+            "output": 0.0000225,
+            "cacheRead": 0,
+            "cacheWrite": 0,
+            "total": 0.027987
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776411845798,
+        "responseId": "resp_0af1d022eb61e6c30169e1e4c9449c8195907dc4ce54b36fc8"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "task-system runtime context:\n- session: agent:main:main\n- task: unknown\n- mode: tool-first-after-first-ack\n- follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup\n- future-first default: main_user_content_mode=none\n- runtime chooses none / immediate-summary / full-answer for current-turn business content\n- immediate-summary must be one short business-facing line\n- never expose scheduling, promise, or tool-chain state to users\n- include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work\n- never promise a future reply unless task-system tools succeeded\n\n我们先聊日本旅行。记住预算2万元，偏好住地铁附近。只回复确认。"
+          }
+        ],
+        "timestamp": 1776412175376
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "确认",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0af1d022eb61e6c30169e1e615f61c8195a48899ee64158e73\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 18731,
+          "output": 5,
+          "cacheRead": 18432,
+          "cacheWrite": 0,
+          "totalTokens": 37168,
+          "cost": {
+            "input": 0.01404825,
+            "output": 0.0000225,
+            "cacheRead": 0.0013824,
+            "cacheWrite": 0,
+            "total": 0.01545315
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776412175390,
+        "responseId": "resp_0af1d022eb61e6c30169e1e61369288195b8f2000f193925d2"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "task-system runtime context:\n- session: agent:main:main\n- task: unknown\n- mode: tool-first-after-first-ack\n- follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup\n- future-first default: main_user_content_mode=none\n- runtime chooses none / immediate-summary / full-answer for current-turn business content\n- immediate-summary must be one short business-facing line\n- never expose scheduling, promise, or tool-chain state to users\n- include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work\n- never promise a future reply unless task-system tools succeeded\n\n我们先聊日本旅行。记住预算2万元，偏好住地铁附近。只回复确认。"
+          }
+        ],
+        "timestamp": 1776412262045
+      },
+      {
+        "role": "assistant",
+        "content": [],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "totalTokens": 0,
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "cacheWrite": 0,
+            "total": 0
+          }
+        },
+        "stopReason": "error",
+        "timestamp": 1776412262052,
+        "errorMessage": "fetch failed"
+      },
+      {
+        "role": "assistant",
+        "content": [],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "totalTokens": 0,
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "cacheWrite": 0,
+            "total": 0
+          }
+        },
+        "stopReason": "error",
+        "timestamp": 1776412290866,
+        "errorMessage": "fetch failed"
+      },
+      {
+        "role": "assistant",
+        "content": [],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "totalTokens": 0,
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "cacheWrite": 0,
+            "total": 0
+          }
+        },
+        "stopReason": "error",
+        "timestamp": 1776412329650,
+        "errorMessage": "fetch failed"
+      },
+      {
+        "role": "assistant",
+        "content": [],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "totalTokens": 0,
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "cacheWrite": 0,
+            "total": 0
+          }
+        },
+        "stopReason": "error",
+        "timestamp": 1776412364365,
+        "errorMessage": "fetch failed"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "task-system runtime context:\n- session: agent:main:main\n- task: unknown\n- mode: tool-first-after-first-ack\n- follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup\n- future-first default: main_user_content_mode=none\n- runtime chooses none / immediate-summary / full-answer for current-turn business content\n- immediate-summary must be one short business-facing line\n- never expose scheduling, promise, or tool-chain state to users\n- include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work\n- never promise a future reply unless task-system tools succeeded\n\nContinue where you left off. The previous model attempt failed or timed out."
+          }
+        ],
+        "timestamp": 1776412397755
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "确认"
+          }
+        ],
+        "api": "openai-completions",
+        "provider": "moonshot",
+        "model": "kimi-k2.5",
+        "usage": {
+          "input": 37397,
+          "output": 4,
+          "cacheRead": 4096,
+          "cacheWrite": 0,
+          "totalTokens": 41497,
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "cacheWrite": 0,
+            "total": 0
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776412397869,
+        "responseId": "chatcmpl-69e1e6eeb8c068b3e55345fb"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "task-system runtime context:\n- session: agent:main:main\n- task: unknown\n- mode: tool-first-after-first-ack\n- follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup\n- future-first default: main_user_content_mode=none\n- runtime chooses none / immediate-summary / full-answer for current-turn business content\n- immediate-summary must be one short business-facing line\n- never expose scheduling, promise, or tool-chain state to users\n- include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work\n- never promise a future reply unless task-system tools succeeded\n\n再补充，我更想住京都不是大阪。只回复确认。"
+          }
+        ],
+        "timestamp": 1776412453124
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "确认",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0af1d022eb61e6c30169e1e728c7bc81959fcd61e5690f3680\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 20997,
+          "output": 5,
+          "cacheRead": 18432,
+          "cacheWrite": 0,
+          "totalTokens": 39434,
+          "cost": {
+            "input": 0.01574775,
+            "output": 0.0000225,
+            "cacheRead": 0.0013824,
+            "cacheWrite": 0,
+            "total": 0.017152650000000002
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776412453139,
+        "responseId": "resp_0af1d022eb61e6c30169e1e727d36c8195919ab3b362df32be"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "task-system runtime context:\n- session: agent:main:main\n- task: unknown\n- mode: tool-first-after-first-ack\n- follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup\n- future-first default: main_user_content_mode=none\n- runtime chooses none / immediate-summary / full-answer for current-turn business content\n- immediate-summary must be one short business-facing line\n- never expose scheduling, promise, or tool-chain state to users\n- include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work\n- never promise a future reply unless task-system tools succeeded\n\n现在切换话题，我要写一个 Python 正则，把 foo123bar 里的数字提取出来。给最短答案。"
+          }
+        ],
+        "timestamp": 1776412487383
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "`re.search(r'foo(\\d+)bar', s).group(1)`",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0af1d022eb61e6c30169e1e74b4e108195a3bc9b40336f698c\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 21375,
+          "output": 21,
+          "cacheRead": 18432,
+          "cacheWrite": 0,
+          "totalTokens": 39828,
+          "cost": {
+            "input": 0.01603125,
+            "output": 0.0000945,
+            "cacheRead": 0.0013824,
+            "cacheWrite": 0,
+            "total": 0.01750815
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776412487404,
+        "responseId": "resp_0af1d022eb61e6c30169e1e7490cec8195bd552a2eb716d2f1"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "task-system runtime context:\n- session: agent:main:main\n- task: unknown\n- mode: tool-first-after-first-ack\n- follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup\n- future-first default: main_user_content_mode=none\n- runtime chooses none / immediate-summary / full-answer for current-turn business content\n- immediate-summary must be one short business-facing line\n- never expose scheduling, promise, or tool-chain state to users\n- include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work\n- never promise a future reply unless task-system tools succeeded\n\n继续这个 Python 话题，再给一个只返回第一个数字分组的写法。给最短答案。"
+          }
+        ],
+        "timestamp": 1776412520869
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "`re.search(r'\\d+', s).group(0)`",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0af1d022eb61e6c30169e1e76b2df081958380b90829d892a5\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 21250,
+          "output": 17,
+          "cacheRead": 18432,
+          "cacheWrite": 0,
+          "totalTokens": 39699,
+          "cost": {
+            "input": 0.0159375,
+            "output": 0.0000765,
+            "cacheRead": 0.0013824,
+            "cacheWrite": 0,
+            "total": 0.0173964
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776412520880,
+        "responseId": "resp_0af1d022eb61e6c30169e1e76a4a948195a930a297f136adbf"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "task-system runtime context:\n- session: agent:main:main\n- task: unknown\n- mode: tool-first-after-first-ack\n- follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup\n- future-first default: main_user_content_mode=none\n- runtime chooses none / immediate-summary / full-answer for current-turn business content\n- immediate-summary must be one short business-facing line\n- never expose scheduling, promise, or tool-chain state to users\n- include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work\n- never promise a future reply unless task-system tools succeeded\n\n现在又换话题，帮我想一个两人份低油晚餐。只给三个菜名。"
+          }
+        ],
+        "timestamp": 1776412553675
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "清蒸鲈鱼  \n蒜蓉西兰花  \n番茄豆腐汤",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0af1d022eb61e6c30169e1e78c8e788195adc5b00d83e476e9\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 21508,
+          "output": 25,
+          "cacheRead": 18432,
+          "cacheWrite": 0,
+          "totalTokens": 39965,
+          "cost": {
+            "input": 0.016131,
+            "output": 0.0001125,
+            "cacheRead": 0.0013824,
+            "cacheWrite": 0,
+            "total": 0.0176259
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776412553687,
+        "responseId": "resp_0af1d022eb61e6c30169e1e78b19c08195bcea8d296893a7ad"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "task-system runtime context:\n- session: agent:main:main\n- task: unknown\n- mode: tool-first-after-first-ack\n- follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup\n- future-first default: main_user_content_mode=none\n- runtime chooses none / immediate-summary / full-answer for current-turn business content\n- immediate-summary must be one short business-facing line\n- never expose scheduling, promise, or tool-chain state to users\n- include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work\n- never promise a future reply unless task-system tools succeeded\n\n[Fri 2026-04-17 21:24 GMT+8] 只回复OK"
+          }
+        ],
+        "timestamp": 1776432280414
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "OK",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0af1d022eb61e6c30169e2349bd11881958f08d78bb4fbf0a7\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 38402,
+          "output": 5,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "totalTokens": 38407,
+          "cost": {
+            "input": 0.0288015,
+            "output": 0.0000225,
+            "cacheRead": 0,
+            "cacheWrite": 0,
+            "total": 0.028824000000000002
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776432280489,
+        "responseId": "resp_0af1d022eb61e6c30169e23499dfdc8195a0d222920ba0120d"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "task-system runtime context:\n- session: agent:main:main\n- task: unknown\n- mode: tool-first-after-first-ack\n- follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup\n- future-first default: main_user_content_mode=none\n- runtime chooses none / immediate-summary / full-answer for current-turn business content\n- immediate-summary must be one short business-facing line\n- never expose scheduling, promise, or tool-chain state to users\n- include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work\n- never promise a future reply unless task-system tools succeeded\n\n我们先聊日本旅行。记住预算2万元，偏好住地铁附近。只回复确认。"
+          }
+        ],
+        "timestamp": 1776432363393
+      },
+      {
+        "role": "assistant",
+        "content": [],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "totalTokens": 0,
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "cacheWrite": 0,
+            "total": 0
+          }
+        },
+        "stopReason": "error",
+        "errorMessage": "Cannot find module '/Users/redcreen/.local/lib/node_modules/openclaw/node_modules/@mariozechner/pi-ai/dist/providers/openai-codex-responses.js' imported from /Users/redcreen/.local/lib/node_modules/openclaw/node_modules/@mariozechner/pi-ai/dist/providers/register-builtins.js",
+        "timestamp": 1776432363414
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "task-system runtime context:\n- session: agent:main:main\n- task: unknown\n- mode: tool-first-after-first-ack\n- follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup\n- future-first default: main_user_content_mode=none\n- runtime chooses none / immediate-summary / full-answer for current-turn business content\n- immediate-summary must be one short business-facing line\n- never expose scheduling, promise, or tool-chain state to users\n- include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work\n- never promise a future reply unless task-system tools succeeded\n\n[Fri 2026-04-17 21:27 GMT+8] 只回复确认"
+          }
+        ],
+        "timestamp": 1776432484031
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "确认",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0af1d022eb61e6c30169e23569b5108195aecef912ead9332c\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 20144,
+          "output": 5,
+          "cacheRead": 18432,
+          "cacheWrite": 0,
+          "totalTokens": 38581,
+          "cost": {
+            "input": 0.015108,
+            "output": 0.0000225,
+            "cacheRead": 0.0013824,
+            "cacheWrite": 0,
+            "total": 0.0165129
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776432484057,
+        "responseId": "resp_0af1d022eb61e6c30169e235670984819594474efc0446d069"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "task-system runtime context:\n- session: agent:main:main\n- task: unknown\n- mode: tool-first-after-first-ack\n- follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup\n- future-first default: main_user_content_mode=none\n- runtime chooses none / immediate-summary / full-answer for current-turn business content\n- immediate-summary must be one short business-facing line\n- never expose scheduling, promise, or tool-chain state to users\n- include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work\n- never promise a future reply unless task-system tools succeeded\n\n[Fri 2026-04-17 21:28 GMT+8] 再回复确认"
+          }
+        ],
+        "timestamp": 1776432520020
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "确认",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0af1d022eb61e6c30169e2358cb20481958ab1ac31784bb964\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 20233,
+          "output": 5,
+          "cacheRead": 18432,
+          "cacheWrite": 0,
+          "totalTokens": 38670,
+          "cost": {
+            "input": 0.01517475,
+            "output": 0.0000225,
+            "cacheRead": 0.0013824,
+            "cacheWrite": 0,
+            "total": 0.01657965
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776432520035,
+        "responseId": "resp_0af1d022eb61e6c30169e2358ab2b48195b51fdd7cd56cab75"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "task-system runtime context:\n- session: agent:main:main\n- task: unknown\n- mode: tool-first-after-first-ack\n- follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup\n- future-first default: main_user_content_mode=none\n- runtime chooses none / immediate-summary / full-answer for current-turn business content\n- immediate-summary must be one short business-facing line\n- never expose scheduling, promise, or tool-chain state to users\n- include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work\n- never promise a future reply unless task-system tools succeeded\n\n[Fri 2026-04-17 21:29 GMT+8] 我们先聊日本旅行。记住预算2万元，偏好住地铁附近。只回复确认。"
+          }
+        ],
+        "timestamp": 1776432592633
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "确认",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0af1d022eb61e6c30169e235d701ec8195a9246e3dd64f94bb\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 20431,
+          "output": 5,
+          "cacheRead": 18432,
+          "cacheWrite": 0,
+          "totalTokens": 38868,
+          "cost": {
+            "input": 0.01532325,
+            "output": 0.0000225,
+            "cacheRead": 0.0013824,
+            "cacheWrite": 0,
+            "total": 0.01672815
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776432592636,
+        "responseId": "resp_0af1d022eb61e6c30169e235d3a1ac81959481c3cfb870ff05"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "task-system runtime context:\n- session: agent:main:main\n- task: unknown\n- mode: tool-first-after-first-ack\n- follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup\n- future-first default: main_user_content_mode=none\n- runtime chooses none / immediate-summary / full-answer for current-turn business content\n- immediate-summary must be one short business-facing line\n- never expose scheduling, promise, or tool-chain state to users\n- include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work\n- never promise a future reply unless task-system tools succeeded\n\n[Fri 2026-04-17 21:30 GMT+8] 再补充，我更想住京都不是大阪。只回复确认。"
+          }
+        ],
+        "timestamp": 1776432624178
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "确认",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0af1d022eb61e6c30169e235f56d348195bcc0ca67dd4d7090\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 20728,
+          "output": 5,
+          "cacheRead": 18432,
+          "cacheWrite": 0,
+          "totalTokens": 39165,
+          "cost": {
+            "input": 0.015546,
+            "output": 0.0000225,
+            "cacheRead": 0.0013824,
+            "cacheWrite": 0,
+            "total": 0.0169509
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776432624183,
+        "responseId": "resp_0af1d022eb61e6c30169e235f3e40c8195a982fe2dc6d1a7bf"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "task-system runtime context:\n- session: agent:main:main\n- task: unknown\n- mode: tool-first-after-first-ack\n- follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup\n- future-first default: main_user_content_mode=none\n- runtime chooses none / immediate-summary / full-answer for current-turn business content\n- immediate-summary must be one short business-facing line\n- never expose scheduling, promise, or tool-chain state to users\n- include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work\n- never promise a future reply unless task-system tools succeeded\n\n[Fri 2026-04-17 21:30 GMT+8] 现在切换话题，我要写一个 Python 正则，把 foo123bar 里的数字提取出来。给最短答案。"
+          }
+        ],
+        "timestamp": 1776432656224
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "`re.search(r'foo(\\d+)bar', s).group(1)`",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0af1d022eb61e6c30169e23617bb1481958e483a1efee0afad\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 20835,
+          "output": 21,
+          "cacheRead": 18432,
+          "cacheWrite": 0,
+          "totalTokens": 39288,
+          "cost": {
+            "input": 0.01562625,
+            "output": 0.0000945,
+            "cacheRead": 0.0013824,
+            "cacheWrite": 0,
+            "total": 0.01710315
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776432656254,
+        "responseId": "resp_0af1d022eb61e6c30169e23615f2c88195968e144991074b44"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "task-system runtime context:\n- session: agent:main:main\n- task: unknown\n- mode: tool-first-after-first-ack\n- follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup\n- future-first default: main_user_content_mode=none\n- runtime chooses none / immediate-summary / full-answer for current-turn business content\n- immediate-summary must be one short business-facing line\n- never expose scheduling, promise, or tool-chain state to users\n- include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work\n- never promise a future reply unless task-system tools succeeded\n\n[Fri 2026-04-17 21:31 GMT+8] 继续这个 Python 话题，再给一个只返回第一个数字分组的写法。给最短答案。"
+          }
+        ],
+        "timestamp": 1776432687169
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "`re.search(r'\\d+', s).group(0)`",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0af1d022eb61e6c30169e23635d3f48195ad8ccb212fcebf51\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 21064,
+          "output": 17,
+          "cacheRead": 18432,
+          "cacheWrite": 0,
+          "totalTokens": 39513,
+          "cost": {
+            "input": 0.015798,
+            "output": 0.0000765,
+            "cacheRead": 0.0013824,
+            "cacheWrite": 0,
+            "total": 0.0172569
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776432687172,
+        "responseId": "resp_0af1d022eb61e6c30169e23631f25081959849a8a1491820ec"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "task-system runtime context:\n- session: agent:main:main\n- task: unknown\n- mode: tool-first-after-first-ack\n- follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup\n- future-first default: main_user_content_mode=none\n- runtime chooses none / immediate-summary / full-answer for current-turn business content\n- immediate-summary must be one short business-facing line\n- never expose scheduling, promise, or tool-chain state to users\n- include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work\n- never promise a future reply unless task-system tools succeeded\n\n[Fri 2026-04-17 21:31 GMT+8] 现在又换话题，帮我想一个两人份低油晚餐。只给三个菜名。"
+          }
+        ],
+        "timestamp": 1776432716511
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "清蒸鲈鱼  \n蒜蓉西兰花  \n番茄豆腐汤",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0af1d022eb61e6c30169e23652883481958e1a1197af54385a\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 21272,
+          "output": 25,
+          "cacheRead": 18432,
+          "cacheWrite": 0,
+          "totalTokens": 39729,
+          "cost": {
+            "input": 0.015954,
+            "output": 0.0001125,
+            "cacheRead": 0.0013824,
+            "cacheWrite": 0,
+            "total": 0.0174489
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776432716515,
+        "responseId": "resp_0af1d022eb61e6c30169e2364fba748195891c71abe80eddae"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "task-system runtime context:\n- session: agent:main:main\n- task: unknown\n- mode: tool-first-after-first-ack\n- follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup\n- future-first default: main_user_content_mode=none\n- runtime chooses none / immediate-summary / full-answer for current-turn business content\n- immediate-summary must be one short business-facing line\n- never expose scheduling, promise, or tool-chain state to users\n- include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work\n- never promise a future reply unless task-system tools succeeded\n\n[Sat 2026-04-18 00:24 GMT+8] 只回复确认。"
+          }
+        ],
+        "timestamp": 1776443117252
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "确认",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0af1d022eb61e6c30169e25ef508c08195904ac1cec9cdf181\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 39902,
+          "output": 5,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "totalTokens": 39907,
+          "cost": {
+            "input": 0.0299265,
+            "output": 0.0000225,
+            "cacheRead": 0,
+            "cacheWrite": 0,
+            "total": 0.029949000000000003
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776443117277,
+        "responseId": "resp_0af1d022eb61e6c30169e25ef3c0d8819596cef0368a8b3bc1"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "task-system runtime context:\n- session: agent:main:main\n- task: unknown\n- mode: tool-first-after-first-ack\n- follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup\n- future-first default: main_user_content_mode=none\n- runtime chooses none / immediate-summary / full-answer for current-turn business content\n- immediate-summary must be one short business-facing line\n- never expose scheduling, promise, or tool-chain state to users\n- include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work\n- never promise a future reply unless task-system tools succeeded\n\n[Sat 2026-04-18 00:29 GMT+8] 只回复确认。"
+          }
+        ],
+        "timestamp": 1776443414962
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "thinkingSignature": "{\"id\":\"rs_0af1d022eb61e6c30169e26021e41c8195b107a8710dd8fb49\",\"type\":\"reasoning\",\"encrypted_content\":\"gAAAAABp4mAiEk8mxxhVzeI1ZpcheuJp4BmvRxar1iDr5KcoJ0XjGJXaOsOY-mJxvYQRpVuavMvAwJG-GrpAMWHl0k6vaosamnALcx03FIksWo_xB6LgMVPkZnRrafIcl68yrXM8T5IPJirfFjXAXBPnHgSTuCyL4J3RtLLFtaeU5NtcUZHp-4Ud8yHhV5uu08keciCBIObJZAosXoffDOqYoCRb84idTkpAGZmfQTxVRe49znvlkPdxOWsXRoFPZ5IbR0tTE8MHITNrmjWY1NWGsH3nPSph9w3ev2Obrodw6ueK55wJnbfolO43olrjfDT6PunpbetPdDsqC9Xr8ODfx-xbddzv_7yXilquLaXYqhsYfXW7ZVZK0SHSrbD58e7s-q5TH9kbBZ68KATFI8YU_AVxihAIJi6n4TSC_0nTYcs8DPfzBajKX17_pgP8RWU2A4xmSqm-XZsjwnZ8KZfCl34t6Ky5lfbYtG2A_QEs-dxX6eB6XV0xjUrvpDjmoLu_yosZI2cH2Akt3tAI06zcggWsSazuNsPjr1uapk6qVb7fq5oSGQy14Lfe3i3XHB3uuqFtolaTt1iolP3nXdAAy0lpPiq7sozDfogBM9Rq7mASHZzammfK0U41p16huDw5eK7WRrAIm6lUY-DgLGTMYInYE56jSL5DLrO0TDqTU4CmgVPRMhWRwJPvthnGtGzFUucFGPRZCBbtYc8BI8ZrvOsXWuWuNDfD-F4Ids74ct-IJgP-aJV7larJ1Q7cfEwelqhadecBwT2xT_T-nK9NF9LXClesZ6Cbd5ctbGtllFv_PdZZPhpjOJeqy-xOrJMxu22y8x_qq-_IjztYT3IiC44bm5_plS_pVdiSezSYiwFf1IHCccVqofNEybAxbMyUyOWxOkV4_GQQ-WaBvgqQGLiRTJaG6l7iGcqxHzCQuWeqrHJU5bcETpXkkA_Eio8WtR-BfUP2G4ylCFMEA32vG4yc3M6SYH6QFO1fO9JdSp8n_E3_meI=\",\"summary\":[]}"
+          },
+          {
+            "type": "text",
+            "text": "确认",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0af1d022eb61e6c30169e2602242e0819596f68d03f1b26b9b\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 40190,
+          "output": 17,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "totalTokens": 40207,
+          "cost": {
+            "input": 0.0301425,
+            "output": 0.0000765,
+            "cacheRead": 0,
+            "cacheWrite": 0,
+            "total": 0.030219
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776443414979,
+        "responseId": "resp_0af1d022eb61e6c30169e2601e70548195ba32874a451d526e"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "task-system runtime context:\n- session: agent:main:main\n- task: unknown\n- mode: tool-first-after-first-ack\n- follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup\n- future-first default: main_user_content_mode=none\n- runtime chooses none / immediate-summary / full-answer for current-turn business content\n- immediate-summary must be one short business-facing line\n- never expose scheduling, promise, or tool-chain state to users\n- include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work\n- never promise a future reply unless task-system tools succeeded\n\n[Sat 2026-04-18 00:34 GMT+8] 只回复确认。"
+          }
+        ],
+        "timestamp": 1776443695660
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "thinkingSignature": "{\"id\":\"rs_0af1d022eb61e6c30169e26138af90819585da11b0bc95cdad\",\"type\":\"reasoning\",\"encrypted_content\":\"gAAAAABp4mE5H5Ky1OYZx7IN1Ma9STsjsUdiC2-V73rrYLAGU_Ue4kML6rD6Qh96bCu9RvqU2N2Cy7ofccxLosNUAazFZifOArNLpG1sDo3XsDetONw2zbdOQ8wqgref1yw2R8PxcnOKmHdcB03lNyJgeE6hNUdNYhFQpjCj7BARJ70XFI7oAm004Fa-ZBLOn4_aOvYPFc8hv81ObGhKkGm_Wbqtrsesc_9i2kkIMxP4y6grZI24nOSXvG9m5TmW9YY5Tl92jgqkdwC_vp0rwaOvByYImISYcwmoEBn4u_3JNqrO_JpS1JQBaG5EZKFHysNPtb8WyBqXdr2PVhzj2HC-UajzVGLGHpnvGdS-8iOFwmMzGyj_te6z1arQ4FLWa9_nNJVdEsse-5CjfZBGavIVZRCx5fJqOBqZkXoIBbPOa2QN21JXtZ-RRE24edsO2XZJCH2osEGJrXb2YgFKHUyquJrHnwX1LPTEcDmHOfd9w7FdqaGbjmvsWTtxIJFB2eCmdybdPCc3skW4ucySXo_vFbwwhc1KrUOd6o8vfU4gKjI2ayY4vZ0Q6jhvGoxA83Bs5m2vMAYm8jOd-ndTP-yadOunvIRGb7tD14yl3DDuYqNyXW_cnPiLvXg17oUZZX_qkE-UqBganxOD0QPTZCGRHbpJIB_4lZAJHBlZFh4sjYdP-y13fFVLAjfuhf-TLrx4ziu3Xfjlm_2s4oHMKIgf3zUHAkaYcj277J4dsFGswJJsl6rQDiCpUSq_Cpr4j7kGDL7-rWnABQVKv_j76w5VGMlI2g1skWFuTjw6OAI8VtME_hIN6AK-iRQx9tBQFpT9l7-FuEg2dM6JNASudQgEZqwTWMw5SAIeg6LdVvpK_1C12mzp6EwQoSH1Z-8f_0I7xkhm0W0ky0jvNqcxo7i6Blqc1tMDNLT3LaVqO6p3-sUNn0CARs6DD7LhxfdgUcMek16gHgclUzopuv_hYrWEHG43nOh1eA==\",\"summary\":[]}"
+          },
+          {
+            "type": "text",
+            "text": "确认",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0af1d022eb61e6c30169e26139ad38819593fc477d6378ea29\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 21808,
+          "output": 17,
+          "cacheRead": 18432,
+          "cacheWrite": 0,
+          "totalTokens": 40257,
+          "cost": {
+            "input": 0.016356,
+            "output": 0.0000765,
+            "cacheRead": 0.0013824,
+            "cacheWrite": 0,
+            "total": 0.017814899999999998
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776443695727,
+        "responseId": "resp_0af1d022eb61e6c30169e26137cc988195ae3f765626a3e4e4"
+      }
+    ],
+    "filteredMessageCount": 54,
+    "filteredMessageTokenEstimate": 5488,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 20017,
+    "decisionElapsedMs": 20007
+  }
+}

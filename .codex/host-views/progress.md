@@ -5,22 +5,22 @@
 | --- | --- |
 | 项目 | `Unified Memory Core` |
 | 层级 | `大型` |
-| 当前判断 | 收口阶段 / Stage 5 已完成 已进入执行；当前主战场是 来源系统，正在推进 保持 post-Stage-5 路线图状态对齐。 |
-| 当前阶段 | 收口阶段 / Stage 5 已完成 |
+| 当前判断 | post-stage10-adoption-closeout 已进入执行；当前主战场是 来源系统，正在推进 hold-stage10-adoption-proof-stable。 |
+| 当前阶段 | post-stage10-adoption-closeout |
 | 当前主战场 | `来源系统` |
-| 当前切片 | 保持 post-Stage-5 路线图状态对齐 |
-| 当前执行线 | 保持 post-Stage-5 的 operator baseline、project/workstream roadmap 摘要和 canonical-root policy 同时稳定 |
-| 执行进度 | `6 / 6` |
+| 当前切片 | hold-stage10-adoption-proof-stable |
+| 当前执行线 | Stage 7 / 8 / 9 / 10 都已关闭；当前进入维护态，继续保持 Docker 为默认 hermetic A/B 面与 Stage 10 shortest-path/shared-foundation proof 持续为绿 |
+| 执行进度 | `0 / 4` |
 | 架构信号 | `黄色` |
 | 直接价值 | 让输入来源更稳定进入系统，而不是散落在各处。 |
-| 当前主要风险 | 实现层当前无 blocker |
+| 当前主要风险 | raw `openclaw memory search` transport 仍是显式 watchlist：`3/8 raw ok`，其余为 `4` 条 `missing_json_payload` 与 `1` 条 `empty_results` |
 
 ## 当前定位
 | 项目位置 | 当前值 | 说明 | 链接 |
 | --- | --- | --- | --- |
-| 当前阶段 | 收口阶段 / Stage 5 已完成 | 当前所处的大阶段 | [路线图当前阶段](/Users/redcreen/Project/unified-memory-core/docs/roadmap.zh-CN.md:35) |
-| 当前切片 | 保持 post-Stage-5 路线图状态对齐 | 当前真正推进的工作单元 | [当前切片对应位置](/Users/redcreen/Project/unified-memory-core/docs/workstreams/project/roadmap.zh-CN.md:23) |
-| 当前执行线 | 保持 post-Stage-5 的 operator baseline、project/workstream roadmap 摘要和 canonical-root policy 同时稳定 | 这一轮长任务的人话说明 | 暂无 |
+| 当前阶段 | post-stage10-adoption-closeout | 当前所处的大阶段 | [路线图当前阶段](/Users/redcreen/Project/unified-memory-core/docs/roadmap.zh-CN.md:7) |
+| 当前切片 | hold-stage10-adoption-proof-stable | 当前真正推进的工作单元 | [当前切片对应位置](/Users/redcreen/Project/unified-memory-core/docs/workstreams/project/roadmap.zh-CN.md:23) |
+| 当前执行线 | Stage 7 / 8 / 9 / 10 都已关闭；当前进入维护态，继续保持 Docker 为默认 hermetic A/B 面与 Stage 10 shortest-path/shared-foundation proof 持续为绿 | 这一轮长任务的人话说明 | 暂无 |
 | 当前模块 | `来源系统` | 当前主战场 | 暂无 |
 | 总路线图 | `docs/roadmap` | 项目总阶段和 now/next/later | [docs/roadmap](/Users/redcreen/Project/unified-memory-core/docs/roadmap.zh-CN.md) |
 | 工作流路线图 | `project roadmap` | 当前工作流与焦点位置 | [project roadmap](/Users/redcreen/Project/unified-memory-core/docs/workstreams/project/roadmap.zh-CN.md) |
@@ -28,34 +28,32 @@
 ## 全局视角
 | 区域 | 当前状态 | 当前焦点 | 退出条件 |
 | --- | --- | --- | --- |
-| 项目整体 | 收口阶段 / Stage 5 已完成 | 保持 post-Stage-5 路线图状态对齐 | 在不丢失模块视角和治理清晰度的前提下推进当前切片 |
+| 项目整体 | post-stage10-adoption-closeout | hold-stage10-adoption-proof-stable | 在不丢失模块视角和治理清晰度的前提下推进当前切片 |
 
 ## 当前长任务
 | 项目 | 当前值 |
 | --- | --- |
-| 长任务名称 | 保持 post-Stage-5 路线图状态对齐 |
-| 长任务目标 | 保持 post-Stage-5 的 operator baseline、project/workstream roadmap 摘要和 canonical-root policy 同时稳定 |
-| 执行进度 | `6 / 6` |
+| 长任务名称 | hold-stage10-adoption-proof-stable |
+| 长任务目标 | Stage 7 / 8 / 9 / 10 都已关闭；当前进入维护态，继续保持 Docker 为默认 hermetic A/B 面与 Stage 10 shortest-path/shared-foundation proof 持续为绿 |
+| 执行进度 | `0 / 4` |
 | 当前结论 | 当前切片已经推进到当前检查点 |
-| 是否存在 blocker | 实现层当前无 blocker |
-| 下一步性质 | 在真实 OpenClaw 会话里完成一次最终人类 sanity check，并确认稳定安装示例与 `v0.2.1` 一致。 |
+| 是否存在 blocker | raw `openclaw memory search` transport 仍是显式 watchlist：`3/8 raw ok`，其余为 `4` 条 `missing_json_payload` 与 `1` 条 `empty_results` |
+| 下一步性质 | 保持 `npm run umc:stage10 -- --format markdown` 持续为绿。 |
 
 ## 当前任务板
 | 任务 ID | 类型 | 状态 | 任务内容 |
 | --- | --- | --- | --- |
-| EL-1 | 主线 | 已完成 | 把 project/workstream roadmap 摘要对齐到当前 Stage 5 收口基线 |
-| EL-2 | 主线 | 已完成 | 刷新可见项目状态里的 smoke 与 memory-search governance 快照 |
-| EL-3 | 主线 | 已完成 | 保持 `registry inspect`、release-preflight 与公开文档和当前 operator baseline 一致 |
-| EL-4 | 主线 | 已完成 | define deeper accepted-action extraction as an explicit deferred enhancement queue |
-| EL-5 | 主线 | 已完成 | implement Step 47 field-aware accepted-action extraction with CLI / lifecycle coverage |
-| EL-6 | 主线 | 已完成 | 在 runtime API 前提稳定之前，继续把后续 enhancement planning 挂起，不提前重开下一阶段 |
+| EL-1 | 主线 | 待完成 | shorten install / bootstrap / verify into one clear shortest operator path |
+| EL-2 | 主线 | 待完成 | add package / startup / first-run cost to the `light and fast` evidence surface |
+| EL-3 | 主线 | 待完成 | publish stronger Codex shared-foundation proof |
+| EL-4 | 主线 | 待完成 | publish clearer multi-instance shared-memory operator proof |
 
 ## 架构监督
 | 项目 | 当前值 |
 | --- | --- |
 | 信号 | `黄色` |
-| 根因假设 | 后续真正的风险不再是“cutover 未决”，而是 evidence / roadmap drift 让维护者误判当前阶段，或在 Step 47 已完成后继续把 Step 48-52 过早并进当前 closeout baseline |
-| 正确落层 | release preflight evidence, governance evidence, registry-root operator policy, project/workstream roadmap, control surface |
+| 根因假设 | 当前最大的风险不再是“能力没做出来”，而是 Stage 10 已经完成后，如果文档与控制面继续停在 `121-126`，维护者会误以为这条线仍未完成 |
+| 正确落层 | roadmap, development plan, architecture docs, runtime experiment boundary, release-preflight evidence, control surface |
 | 信号依据 | 当前仍记录着 blocker 或架构风险 |
 | 自动触发 | 当前没有自动触发 |
 | 升级门 | `提醒后继续` |
@@ -142,15 +140,15 @@
 | 能力 / 结论 | 当前状态 | 来源 |
 | --- | --- | --- |
 | 面向高价值记忆问题的事实优先上下文组装 | 已可直接使用 | [README](/Users/redcreen/Project/unified-memory-core/README.zh-CN.md) |
+| 把 durable source 瘦身和长对话 working-set 裁剪收成“逐轮 context 优化”主线 | 已可直接使用 | [README](/Users/redcreen/Project/unified-memory-core/README.zh-CN.md) |
 | 对规则、身份、偏好等稳定信号的优先级控制 | 已可直接使用 | [README](/Users/redcreen/Project/unified-memory-core/README.zh-CN.md) |
 | 以治理和策略代替“所有召回结果一视同仁” | 已可直接使用 | [README](/Users/redcreen/Project/unified-memory-core/README.zh-CN.md) |
 | 一条已经落地基线的受治理 self-learning 路径，覆盖 声明式来源、reflection、候选升级 和 export / audit 面 | 已可直接使用 | [README](/Users/redcreen/Project/unified-memory-core/README.zh-CN.md) |
 | 面向 OpenClaw、Codex 和后续消费者的 export / projection 层 | 已可直接使用 | [README](/Users/redcreen/Project/unified-memory-core/README.zh-CN.md) |
-| 面向维护者的 audit、repair、replay 和回归工具 | 已可直接使用 | [README](/Users/redcreen/Project/unified-memory-core/README.zh-CN.md) |
-| 通过 `manual`、`file`、`directory`、`conversation` 这些 声明式来源 接入学习输入 | 当前阶段已落地 | [README / 当前阶段基线](/Users/redcreen/Project/unified-memory-core/README.zh-CN.md:157) |
-| 结构化的 reflection / daily reflection 管线，会产出 候选 artifacts | 当前阶段已落地 | [README / 当前阶段基线](/Users/redcreen/Project/unified-memory-core/README.zh-CN.md:157) |
-| 重复信号 和显式 `remember this / 记住这个` 检测 | 当前阶段已落地 | [README / 当前阶段基线](/Users/redcreen/Project/unified-memory-core/README.zh-CN.md:157) |
-| candidate -> stable 的升级基线，以及对应 决策轨迹 | 当前阶段已落地 | [README / 当前阶段基线](/Users/redcreen/Project/unified-memory-core/README.zh-CN.md:157) |
+| 通过 `manual`、`file`、`directory`、`conversation` 这些 声明式来源 接入学习输入 | 当前阶段已落地 | [README / 当前阶段基线](/Users/redcreen/Project/unified-memory-core/README.zh-CN.md:300) |
+| 结构化的 reflection / daily reflection 管线，会产出 候选 artifacts | 当前阶段已落地 | [README / 当前阶段基线](/Users/redcreen/Project/unified-memory-core/README.zh-CN.md:300) |
+| 重复信号 和显式 `remember this / 记住这个` 检测 | 当前阶段已落地 | [README / 当前阶段基线](/Users/redcreen/Project/unified-memory-core/README.zh-CN.md:300) |
+| candidate -> stable 的升级基线，以及对应 决策轨迹 | 当前阶段已落地 | [README / 当前阶段基线](/Users/redcreen/Project/unified-memory-core/README.zh-CN.md:300) |
 
 ## 项目控制能力
 | 能力 | 状态 |
@@ -220,7 +218,7 @@ flowchart TB
 ## 接下来要做什么
 | 下一步 | 为什么做 | 对应入口 |
 | --- | --- | --- |
-| 在真实 OpenClaw 会话里完成一次最终人类 sanity check，并确认稳定安装示例与 `v0.2.1` 一致。 | 保持当前阶段继续收敛 | [状态](/Users/redcreen/Project/unified-memory-core/.codex/status.md) |
-| 做最终 operator review，确认 `registry inspect` 的 `operatorPolicy` 不回退、project/workstream roadmap 不漂移。 | 避免方向漂移并保持验证同步 | [状态](/Users/redcreen/Project/unified-memory-core/.codex/status.md) |
-| 如果上述两项继续为绿，就创建并推送 `v0.2.1` tag；否则先处理漂移项，再讨论新的 enhancement plan 或 legacy root cleanup 窗口。 | 在继续扩展前先确认门禁与治理决策 | [状态](/Users/redcreen/Project/unified-memory-core/.codex/status.md) |
+| 保持 `npm run umc:stage10 -- --format markdown` 持续为绿。 | 保持当前阶段继续收敛 | [状态](/Users/redcreen/Project/unified-memory-core/.codex/status.md) |
+| 保持 Docker hermetic baseline、Stage 7、Stage 8、Stage 9、Stage 10 的证据面一致。 | 避免方向漂移并保持验证同步 | [状态](/Users/redcreen/Project/unified-memory-core/.codex/status.md) |
+| 只有在新的明确产品目标出现时，才打开新的编号阶段。 | 在继续扩展前先确认门禁与治理决策 | [状态](/Users/redcreen/Project/unified-memory-core/.codex/status.md) |
 | 如果要看完整全局视图 | 当前已经是完整项目进展面板 | `项目助手 进展` |

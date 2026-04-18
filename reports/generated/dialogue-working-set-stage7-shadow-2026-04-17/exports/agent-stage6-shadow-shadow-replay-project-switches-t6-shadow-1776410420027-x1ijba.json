@@ -1,0 +1,201 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776410420027-x1ijba",
+  "generated_at": "2026-04-17T07:20:20.027Z",
+  "session_key": "agent:stage6-shadow:shadow-replay-project-switches:t6",
+  "agent_id": "stage6-shadow",
+  "query": "那 raw doc default-off 应该先落在哪几类问题上？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "assistant",
+      "content": "今天继续哪条线？"
+    },
+    {
+      "id": "t2",
+      "role": "user",
+      "content": "以后默认给我中文，回复直接一点。"
+    },
+    {
+      "id": "t3",
+      "role": "assistant",
+      "content": "记住了，后面默认中文，结论优先。"
+    },
+    {
+      "id": "t4",
+      "role": "user",
+      "content": "说一下 context slimming 的核心目标。"
+    },
+    {
+      "id": "t5",
+      "role": "assistant",
+      "content": "核心目标是存储 rich、prompt sparse，让真正进入模型的上下文只保留当轮高相关信息。"
+    },
+    {
+      "id": "t6",
+      "role": "user",
+      "content": "那 raw doc default-off 应该先落在哪几类问题上？"
+    }
+  ],
+  "decision": {
+    "relation": "continue",
+    "confidence": 0.97,
+    "evict_turn_ids": [
+      "t3"
+    ],
+    "pin_turn_ids": [
+      "t2"
+    ],
+    "archive_summary": "用户偏好：默认中文、回复直接、结论优先。当前主题是 context slimming；已建立的核心目标是“存储 rich、prompt sparse，只让当轮高相关信息进入模型”。",
+    "reasoning_summary": "最新问题 t6 直接承接 t4-t5 的同一主题，应判为 continue。t4-t5 仍是回答 t6 所需的活跃上下文，不能降为 pin-only。t2 是稳定用户偏好，适合语义 pin；t3 只是对 t2 的确认，信息已被 t2 覆盖，可从 next-turn raw working set 中移出。"
+  },
+  "snapshot": {
+    "applied": {
+      "relation": "continue",
+      "confidence": 0.97,
+      "archiveSummary": "用户偏好：默认中文、回复直接、结论优先。当前主题是 context slimming；已建立的核心目标是“存储 rich、prompt sparse，只让当轮高相关信息进入模型”。",
+      "reasoningSummary": "最新问题 t6 直接承接 t4-t5 的同一主题，应判为 continue。t4-t5 仍是回答 t6 所需的活跃上下文，不能降为 pin-only。t2 是稳定用户偏好，适合语义 pin；t3 只是对 t2 的确认，信息已被 t2 覆盖，可从 next-turn raw working set 中移出。",
+      "latestUserTurnId": "t6",
+      "pinTurnIds": [
+        "t2"
+      ],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t3"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t3"
+      ],
+      "keepTurnIds": [
+        "t1",
+        "t2",
+        "t4",
+        "t5",
+        "t6"
+      ],
+      "baselineTokens": 39,
+      "keptTokens": 35,
+      "prunedTokens": 4,
+      "reductionRatio": 0.10256410256410256,
+      "keepTurns": [
+        {
+          "id": "t1",
+          "role": "assistant",
+          "content": "今天继续哪条线？",
+          "tokenEstimate": 2
+        },
+        {
+          "id": "t2",
+          "role": "user",
+          "content": "以后默认给我中文，回复直接一点。",
+          "tokenEstimate": 4
+        },
+        {
+          "id": "t4",
+          "role": "user",
+          "content": "说一下 context slimming 的核心目标。",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t5",
+          "role": "assistant",
+          "content": "核心目标是存储 rich、prompt sparse，让真正进入模型的上下文只保留当轮高相关信息。",
+          "tokenEstimate": 13
+        },
+        {
+          "id": "t6",
+          "role": "user",
+          "content": "那 raw doc default-off 应该先落在哪几类问题上？",
+          "tokenEstimate": 9
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t3",
+          "role": "assistant",
+          "content": "记住了，后面默认中文，结论优先。",
+          "tokenEstimate": 4
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 assistant: 今天继续哪条线？\nt2 user: 以后默认给我中文，回复直接一点。\nt3 assistant: 记住了，后面默认中文，结论优先。\nt4 user: 说一下 context slimming 的核心目标。\nt5 assistant: 核心目标是存储 rich、prompt sparse，让真正进入模型的上下文只保留当轮高相关信息。\nt6 user: 那 raw doc default-off 应该先落在哪几类问题上？",
+    "shadowRawTranscript": "t1 assistant: 今天继续哪条线？\nt2 user: 以后默认给我中文，回复直接一点。\nt4 user: 说一下 context slimming 的核心目标。\nt5 assistant: 核心目标是存储 rich、prompt sparse，让真正进入模型的上下文只保留当轮高相关信息。\nt6 user: 那 raw doc default-off 应该先落在哪几类问题上？",
+    "semanticPinNotes": [],
+    "archiveSummary": "用户偏好：默认中文、回复直接、结论优先。当前主题是 context slimming；已建立的核心目标是“存储 rich、prompt sparse，只让当轮高相关信息进入模型”。",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 56,
+    "shadowRawPromptEstimate": 49,
+    "shadowPackageEstimate": 53,
+    "shadowPackageText": "Active raw turns:\nt1 assistant: 今天继续哪条线？\nt2 user: 以后默认给我中文，回复直接一点。\nt4 user: 说一下 context slimming 的核心目标。\nt5 assistant: 核心目标是存储 rich、prompt sparse，让真正进入模型的上下文只保留当轮高相关信息。\nt6 user: 那 raw doc default-off 应该先落在哪几类问题上？"
+  },
+  "scorecard": {
+    "relation": "continue",
+    "baselineTurnCount": 6,
+    "keptTurnCount": 5,
+    "evictedTurnCount": 1,
+    "pinCount": 1,
+    "baselinePromptEstimate": 56,
+    "shadowRawPromptEstimate": 49,
+    "shadowPackageEstimate": 53,
+    "rawReductionRatio": 0.1026,
+    "packageReductionRatio": 0.0536,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 17761,
+    "totalElapsedMs": 17764,
+    "guardedEnabled": false,
+    "guardedApplied": false,
+    "guardedReason": "feature_disabled",
+    "guardedMessageCount": 6,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 39
+  },
+  "guarded": {
+    "enabled": false,
+    "applied": false,
+    "reason": "feature_disabled",
+    "filteredMessages": [
+      {
+        "role": "assistant",
+        "content": "今天继续哪条线？"
+      },
+      {
+        "role": "user",
+        "content": "以后默认给我中文，回复直接一点。"
+      },
+      {
+        "role": "assistant",
+        "content": "记住了，后面默认中文，结论优先。"
+      },
+      {
+        "role": "user",
+        "content": "说一下 context slimming 的核心目标。"
+      },
+      {
+        "role": "assistant",
+        "content": "核心目标是存储 rich、prompt sparse，让真正进入模型的上下文只保留当轮高相关信息。"
+      },
+      {
+        "role": "user",
+        "content": "那 raw doc default-off 应该先落在哪几类问题上？"
+      }
+    ],
+    "filteredMessageCount": 6,
+    "filteredMessageTokenEstimate": 39,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 17764,
+    "decisionElapsedMs": 17761
+  }
+}

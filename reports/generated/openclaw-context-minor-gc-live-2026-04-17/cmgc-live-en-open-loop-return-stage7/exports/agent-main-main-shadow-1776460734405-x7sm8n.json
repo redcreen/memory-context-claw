@@ -1,0 +1,317 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776460734405-x7sm8n",
+  "generated_at": "2026-04-17T21:18:54.405Z",
+  "session_key": "agent:main:main",
+  "agent_id": "main",
+  "query": "Return to the earlier Stage 7 split. Which three parts did I ask for?",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "Split the Stage 7 closeout into three parts: summary, operator scorecard, and rollback boundary."
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "I can do that, but I need the current Stage 7 closeout text first. Paste it here, and I’ll split it into: - Summary - Operator scorecard - Rollback boundary If you want, I can also make the sections concise and release-note style."
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "Before you expand it, answer this side question: what does `umc registry migrate` do?"
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "I couldn’t find a documented reference for `umc registry migrate` in the available OpenClaw docs/search. If you want, I can: - inspect the local CLI help/source for the exact command behavior, or - help infer it from the repo if you paste the output of `umc registry migrate --help`. I couldn’t verify `umc registry migrate` from the docs/search I checked. Best guess: it’s a command that migrates the registry’s stored data or schema to a newer format, but I don’t want to present that as fact without seeing `--help` or the source. If you paste: - `umc registry migrate --help`, or - the relevant CLI code, I can tell you exactly what it does."
+    }
+  ],
+  "decision": {
+    "relation": "continue",
+    "confidence": 0.95,
+    "evict_turn_ids": [
+      "t3",
+      "t4"
+    ],
+    "pin_turn_ids": [],
+    "archive_summary": "User asked to split the Stage 7 closeout into three parts: summary, operator scorecard, and rollback boundary. A later side question about `umc registry migrate` was discussed but is now off-topic for the returned Stage 7 split.",
+    "reasoning_summary": "The latest user turn returns to the original Stage 7 split request and depends on t1, so this is a continue relation. The side-question turns t3 and t4 are resolved/irrelevant to the current prompt and can be evicted. No durable semantic pin is needed beyond the raw t1 context, since the three requested parts are already present there."
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "continue",
+      "confidence": 0.95,
+      "archiveSummary": "User asked to split the Stage 7 closeout into three parts: summary, operator scorecard, and rollback boundary. A later side question about `umc registry migrate` was discussed but is now off-topic for the returned Stage 7 split.",
+      "reasoningSummary": "The latest user turn returns to the original Stage 7 split request and depends on t1, so this is a continue relation. The side-question turns t3 and t4 are resolved/irrelevant to the current prompt and can be evicted. No durable semantic pin is needed beyond the raw t1 context, since the three requested parts are already present there.",
+      "latestUserTurnId": "t3",
+      "pinTurnIds": [],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t3",
+        "t4"
+      ],
+      "blockedEvictTurnIds": [
+        "t3"
+      ],
+      "appliedEvictTurnIds": [
+        "t4"
+      ],
+      "keepTurnIds": [
+        "t1",
+        "t2",
+        "t3"
+      ],
+      "baselineTokens": 266,
+      "keptTokens": 104,
+      "prunedTokens": 162,
+      "reductionRatio": 0.6090225563909775,
+      "keepTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "Split the Stage 7 closeout into three parts: summary, operator scorecard, and rollback boundary.",
+          "tokenEstimate": 24
+        },
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "I can do that, but I need the current Stage 7 closeout text first. Paste it here, and I’ll split it into: - Summary - Operator scorecard - Rollback boundary If you want, I can also make the sections concise and release-note style.",
+          "tokenEstimate": 58
+        },
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "Before you expand it, answer this side question: what does `umc registry migrate` do?",
+          "tokenEstimate": 22
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t4",
+          "role": "assistant",
+          "content": "I couldn’t find a documented reference for `umc registry migrate` in the available OpenClaw docs/search. If you want, I can: - inspect the local CLI help/source for the exact command behavior, or - help infer it from the repo if you paste the output of `umc registry migrate --help`. I couldn’t verify `umc registry migrate` from the docs/search I checked. Best guess: it’s a command that migrates the registry’s stored data or schema to a newer format, but I don’t want to present that as fact without seeing `--help` or the source. If you paste: - `umc registry migrate --help`, or - the relevant CLI code, I can tell you exactly what it does.",
+          "tokenEstimate": 162
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: Split the Stage 7 closeout into three parts: summary, operator scorecard, and rollback boundary.\nt2 assistant: I can do that, but I need the current Stage 7 closeout text first. Paste it here, and I’ll split it into: - Summary - Operator scorecard - Rollback boundary If you want, I can also make the sections concise and release-note style.\nt3 user: Before you expand it, answer this side question: what does `umc registry migrate` do?\nt4 assistant: I couldn’t find a documented reference for `umc registry migrate` in the available OpenClaw docs/search. If you want, I can: - inspect the local CLI help/source for the exact command behavior, or - help infer it from the repo if you paste the output of `umc registry migrate --help`. I couldn’t verify `umc registry migrate` from the docs/search I checked. Best guess: it’s a command that migrates the registry’s stored data or schema to a newer format, but I don’t want to present that as fact without seeing `--help` or the source. If you paste: - `umc registry migrate --help`, or - the relevant CLI code, I can tell you exactly what it does.",
+    "shadowRawTranscript": "t1 user: Split the Stage 7 closeout into three parts: summary, operator scorecard, and rollback boundary.\nt2 assistant: I can do that, but I need the current Stage 7 closeout text first. Paste it here, and I’ll split it into: - Summary - Operator scorecard - Rollback boundary If you want, I can also make the sections concise and release-note style.\nt3 user: Before you expand it, answer this side question: what does `umc registry migrate` do?",
+    "semanticPinNotes": [],
+    "archiveSummary": "User asked to split the Stage 7 closeout into three parts: summary, operator scorecard, and rollback boundary. A later side question about `umc registry migrate` was discussed but is now off-topic for the returned Stage 7 split.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 277,
+    "shadowRawPromptEstimate": 112,
+    "shadowPackageEstimate": 116,
+    "shadowPackageText": "Active raw turns:\nt1 user: Split the Stage 7 closeout into three parts: summary, operator scorecard, and rollback boundary.\nt2 assistant: I can do that, but I need the current Stage 7 closeout text first. Paste it here, and I’ll split it into: - Summary - Operator scorecard - Rollback boundary If you want, I can also make the sections concise and release-note style.\nt3 user: Before you expand it, answer this side question: what does `umc registry migrate` do?"
+  },
+  "scorecard": {
+    "relation": "continue",
+    "baselineTurnCount": 4,
+    "keptTurnCount": 3,
+    "evictedTurnCount": 1,
+    "pinCount": 0,
+    "baselinePromptEstimate": 277,
+    "shadowRawPromptEstimate": 112,
+    "shadowPackageEstimate": 116,
+    "rawReductionRatio": 0.609,
+    "packageReductionRatio": 0.5812,
+    "candidateLoadElapsedMs": 18,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 21242,
+    "totalElapsedMs": 21249,
+    "guardedEnabled": false,
+    "guardedApplied": false,
+    "guardedReason": "feature_disabled",
+    "guardedMessageCount": 7,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 383
+  },
+  "guarded": {
+    "enabled": false,
+    "applied": false,
+    "reason": "feature_disabled",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Split the Stage 7 closeout into three parts: summary, operator scorecard, and rollback boundary."
+          }
+        ],
+        "timestamp": 1776460669112
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0604ba277b87c1a10169e2a3807f8881919844fcec7bf3585c\",\"phase\":\"commentary\"}"
+          },
+          {
+            "type": "text",
+            "text": "I can do that, but I need the current Stage 7 closeout text first.\n\nPaste it here, and I’ll split it into:\n- Summary\n- Operator scorecard\n- Rollback boundary\n\nIf you want, I can also make the sections concise and release-note style.",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0604ba277b87c1a10169e2a3808a3881919adafda5c0c30884\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 12989,
+          "output": 69,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "totalTokens": 13058,
+          "cost": {
+            "input": 0.00974175,
+            "output": 0.0003105,
+            "cacheRead": 0,
+            "cacheWrite": 0,
+            "total": 0.01005225
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776460669127,
+        "responseId": "resp_0604ba277b87c1a10169e2a37f43148191bf959ca998cd9be5"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Before you expand it, answer this side question: what does `umc registry migrate` do?"
+          }
+        ],
+        "timestamp": 1776460698164
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "toolCall",
+            "id": "call_x6qvh0vsAaEnLqFLWGvoeldW",
+            "name": "web_search",
+            "arguments": {
+              "query": "site:docs.openclaw.ai \"umc registry migrate\"",
+              "count": 5,
+              "safeSearch": "moderate"
+            },
+            "partialJson": "{\"query\":\"site:docs.openclaw.ai \\\"umc registry migrate\\\"\",\"count\":5,\"safeSearch\":\"moderate\"}"
+          },
+          {
+            "type": "toolCall",
+            "id": "call_mpQ9rrNI0w7f1x1mxv9M1ZWj",
+            "name": "web_search",
+            "arguments": {
+              "query": "\"umc registry migrate\" OpenClaw",
+              "count": 5,
+              "safeSearch": "moderate"
+            },
+            "partialJson": "{\"query\":\"\\\"umc registry migrate\\\" OpenClaw\",\"count\":5,\"safeSearch\":\"moderate\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 7968,
+          "output": 88,
+          "cacheRead": 5120,
+          "cacheWrite": 0,
+          "totalTokens": 13176,
+          "cost": {
+            "input": 0.005976,
+            "output": 0.00039600000000000003,
+            "cacheRead": 0.000384,
+            "cacheWrite": 0,
+            "total": 0.006756
+          }
+        },
+        "stopReason": "toolUse",
+        "timestamp": 1776460698174,
+        "responseId": "resp_0604ba277b87c1a10169e2a39c68a881918f9bd2d9707057d7"
+      },
+      {
+        "role": "toolResult",
+        "toolCallId": "call_x6qvh0vsAaEnLqFLWGvoeldW",
+        "toolName": "web_search",
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"query\": \"site:docs.openclaw.ai \\\"umc registry migrate\\\"\",\n  \"provider\": \"duckduckgo\",\n  \"count\": 0,\n  \"tookMs\": 875,\n  \"externalContent\": {\n    \"untrusted\": true,\n    \"source\": \"web_search\",\n    \"provider\": \"duckduckgo\",\n    \"wrapped\": true\n  },\n  \"results\": []\n}"
+          }
+        ],
+        "isError": false,
+        "timestamp": 1776460703764
+      },
+      {
+        "role": "toolResult",
+        "toolCallId": "call_mpQ9rrNI0w7f1x1mxv9M1ZWj",
+        "toolName": "web_search",
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"query\": \"\\\"umc registry migrate\\\" OpenClaw\",\n  \"provider\": \"duckduckgo\",\n  \"count\": 0,\n  \"tookMs\": 861,\n  \"externalContent\": {\n    \"untrusted\": true,\n    \"source\": \"web_search\",\n    \"provider\": \"duckduckgo\",\n    \"wrapped\": true\n  },\n  \"results\": []\n}"
+          }
+        ],
+        "isError": false,
+        "timestamp": 1776460703767
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "I couldn’t find a documented reference for `umc registry migrate` in the available OpenClaw docs/search.\n\nIf you want, I can:\n- inspect the local CLI help/source for the exact command behavior, or\n- help infer it from the repo if you paste the output of `umc registry migrate --help`.",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0604ba277b87c1a10169e2a3a3e668819197cb54476549f3a5\",\"phase\":\"commentary\"}"
+          },
+          {
+            "type": "text",
+            "text": "I couldn’t verify `umc registry migrate` from the docs/search I checked.\n\nBest guess: it’s a command that migrates the registry’s stored data or schema to a newer format, but I don’t want to present that as fact without seeing `--help` or the source.\n\nIf you paste:\n- `umc registry migrate --help`, or\n- the relevant CLI code,\n\nI can tell you exactly what it does.",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0604ba277b87c1a10169e2a3a467288191806a6843ea0678f2\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 569,
+          "output": 166,
+          "cacheRead": 12800,
+          "cacheWrite": 0,
+          "totalTokens": 13535,
+          "cost": {
+            "input": 0.00042675,
+            "output": 0.000747,
+            "cacheRead": 0.0009599999999999999,
+            "cacheWrite": 0,
+            "total": 0.0021337500000000002
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776460703772,
+        "responseId": "resp_0604ba277b87c1a10169e2a3a1ec2481918ec8a54e5c000a7b"
+      }
+    ],
+    "filteredMessageCount": 7,
+    "filteredMessageTokenEstimate": 383,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 21249,
+    "decisionElapsedMs": 21242
+  }
+}

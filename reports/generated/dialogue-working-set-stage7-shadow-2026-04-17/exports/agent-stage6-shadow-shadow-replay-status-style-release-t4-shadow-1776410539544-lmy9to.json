@@ -1,0 +1,181 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776410539544-lmy9to",
+  "generated_at": "2026-04-17T07:22:19.544Z",
+  "session_key": "agent:stage6-shadow:shadow-replay-status-style-release:t4",
+  "agent_id": "stage6-shadow",
+  "query": "现在说 retrieval policy：未分类 query 默认走哪条路径？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "assistant",
+      "content": "当前状态：OpenClaw 版本 2026.3.31，当前模型 openai-codex/gpt-5.4，上下文占用 158k / 272k，缓存命中率 99%。"
+    },
+    {
+      "id": "t2",
+      "role": "user",
+      "content": "以后默认先给我结论，再展开细节。"
+    },
+    {
+      "id": "t3",
+      "role": "assistant",
+      "content": "记住了，以后默认先给结论。"
+    },
+    {
+      "id": "t4",
+      "role": "user",
+      "content": "现在说 retrieval policy：未分类 query 默认走哪条路径？"
+    }
+  ],
+  "decision": {
+    "relation": "switch",
+    "confidence": 0.97,
+    "evict_turn_ids": [
+      "t1",
+      "t2",
+      "t3"
+    ],
+    "pin_turn_ids": [
+      "t2",
+      "t3"
+    ],
+    "archive_summary": "Earlier context contained a transient runtime status snapshot and a durable response-style preference. The status snapshot is not relevant to the new retrieval-policy topic. Preserve the user's preference to receive conclusions first, with details after if needed.",
+    "reasoning_summary": "The active topic shifted from a solved/ephemeral status update to a new question about retrieval policy, so `switch` fits. The status turn is safe to evict. The user's formatting preference is durable and should survive as a compact pin rather than staying in the raw prompt."
+  },
+  "snapshot": {
+    "applied": {
+      "relation": "switch",
+      "confidence": 0.97,
+      "archiveSummary": "Earlier context contained a transient runtime status snapshot and a durable response-style preference. The status snapshot is not relevant to the new retrieval-policy topic. Preserve the user's preference to receive conclusions first, with details after if needed.",
+      "reasoningSummary": "The active topic shifted from a solved/ephemeral status update to a new question about retrieval policy, so `switch` fits. The status turn is safe to evict. The user's formatting preference is durable and should survive as a compact pin rather than staying in the raw prompt.",
+      "latestUserTurnId": "t4",
+      "pinTurnIds": [
+        "t2",
+        "t3"
+      ],
+      "pinnedOnlyTurnIds": [
+        "t2",
+        "t3"
+      ],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3"
+      ],
+      "keepTurnIds": [
+        "t4"
+      ],
+      "baselineTokens": 39,
+      "keptTokens": 10,
+      "prunedTokens": 29,
+      "reductionRatio": 0.7435897435897436,
+      "keepTurns": [
+        {
+          "id": "t4",
+          "role": "user",
+          "content": "现在说 retrieval policy：未分类 query 默认走哪条路径？",
+          "tokenEstimate": 10
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "assistant",
+          "content": "当前状态：OpenClaw 版本 2026.3.31，当前模型 openai-codex/gpt-5.4，上下文占用 158k / 272k，缓存命中率 99%。",
+          "tokenEstimate": 21
+        },
+        {
+          "id": "t2",
+          "role": "user",
+          "content": "以后默认先给我结论，再展开细节。",
+          "tokenEstimate": 4
+        },
+        {
+          "id": "t3",
+          "role": "assistant",
+          "content": "记住了，以后默认先给结论。",
+          "tokenEstimate": 4
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 assistant: 当前状态：OpenClaw 版本 2026.3.31，当前模型 openai-codex/gpt-5.4，上下文占用 158k / 272k，缓存命中率 99%。\nt2 user: 以后默认先给我结论，再展开细节。\nt3 assistant: 记住了，以后默认先给结论。\nt4 user: 现在说 retrieval policy：未分类 query 默认走哪条路径？",
+    "shadowRawTranscript": "t4 user: 现在说 retrieval policy：未分类 query 默认走哪条路径？",
+    "semanticPinNotes": [
+      "user: 以后默认先给我结论，再展开细节。",
+      "assistant: 记住了，以后默认先给结论。"
+    ],
+    "archiveSummary": "Earlier context contained a transient runtime status snapshot and a durable response-style preference. The status snapshot is not relevant to the new retrieval-policy topic. Preserve the user's preference to receive conclusions first, with details after if needed.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 50,
+    "shadowRawPromptEstimate": 12,
+    "shadowPackageEstimate": 33,
+    "shadowPackageText": "Active raw turns:\nt4 user: 现在说 retrieval policy：未分类 query 默认走哪条路径？\n\nSemantic pins:\nuser: 以后默认先给我结论，再展开细节。\nassistant: 记住了，以后默认先给结论。"
+  },
+  "scorecard": {
+    "relation": "switch",
+    "baselineTurnCount": 4,
+    "keptTurnCount": 1,
+    "evictedTurnCount": 3,
+    "pinCount": 2,
+    "baselinePromptEstimate": 50,
+    "shadowRawPromptEstimate": 12,
+    "shadowPackageEstimate": 33,
+    "rawReductionRatio": 0.7436,
+    "packageReductionRatio": 0.34,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 15916,
+    "totalElapsedMs": 15916,
+    "guardedEnabled": false,
+    "guardedApplied": false,
+    "guardedReason": "feature_disabled",
+    "guardedMessageCount": 4,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 39
+  },
+  "guarded": {
+    "enabled": false,
+    "applied": false,
+    "reason": "feature_disabled",
+    "filteredMessages": [
+      {
+        "role": "assistant",
+        "content": "当前状态：OpenClaw 版本 2026.3.31，当前模型 openai-codex/gpt-5.4，上下文占用 158k / 272k，缓存命中率 99%。"
+      },
+      {
+        "role": "user",
+        "content": "以后默认先给我结论，再展开细节。"
+      },
+      {
+        "role": "assistant",
+        "content": "记住了，以后默认先给结论。"
+      },
+      {
+        "role": "user",
+        "content": "现在说 retrieval policy：未分类 query 默认走哪条路径？"
+      }
+    ],
+    "filteredMessageCount": 4,
+    "filteredMessageTokenEstimate": 39,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 15916,
+    "decisionElapsedMs": 15916
+  }
+}

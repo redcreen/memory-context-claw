@@ -2,13 +2,13 @@
 
 - Workspace: `/Users/redcreen/Project/unified-memory-core`
 - Ready to continue: `not yet`
-- Current stage: `stage closeout / Stage 5 complete`
-- Current slice: `hold-post-stage5-roadmap-state-aligned`
-- Current checkpoint: `one stable-maintenance slice covering roadmap summary、smoke baselines、memory-search governance snapshot、registry inspect、release-preflight、control-surface freshness`
-- Next action: `在真实 OpenClaw 会话里完成一次最终人类 sanity check，并确认稳定安装示例与 \`v0.2.1\` 一致。`
+- Current stage: `post-stage10-adoption-closeout`
+- Current slice: `hold-stage10-adoption-proof-stable`
+- Current checkpoint: `Stage 7 closeout evidence、Docker hermetic baseline、release-preflight、canonical-root policy、shared-foundation proof`
+- Next action: `保持 \`npm run umc:stage10 -- --format markdown\` 持续为绿。`
 - Next action source: `status.next-3`
-- Queue: `0 waiting · 0 running · 0 done`
-- Recent session: `查看项目助手进展'}}**}**}** (019d84b0-f13f-7311-8e93-a904923b2b28)`
+- Queue: `0 waiting · 0 running · 3 done`
+- Recent session: `评估上下文瘦身双写并行切换可行性}】 (019d93e3-8a09-75a0-88ea-d09749a873fb)`
 
 ## Continue Contract
 
@@ -18,8 +18,8 @@ Do not restart repo-wide discovery unless the durable control surface conflicts 
 
 ## Execution Continuity
 
-- Current checkpoint: `one stable-maintenance slice covering roadmap summary、smoke baselines、memory-search governance snapshot、registry inspect、release-preflight、control-surface freshness`
-- Next action: `在真实 OpenClaw 会话里完成一次最终人类 sanity check，并确认稳定安装示例与 \`v0.2.1\` 一致。`
+- Current checkpoint: `Stage 7 closeout evidence、Docker hermetic baseline、release-preflight、canonical-root policy、shared-foundation proof`
+- Next action: `保持 \`npm run umc:stage10 -- --format markdown\` 持续为绿。`
 
 Treat that checkpoint as already-established truth and move straight into the next action.
 
@@ -41,6 +41,6 @@ Unless I explicitly say `做完手上工作停止`, keep going by default.
 ## Suggested First Move
 
 1. Read `continue.md` and `.codex/status.md`.
-2. Continue from checkpoint: `one stable-maintenance slice covering roadmap summary、smoke baselines、memory-search governance snapshot、registry inspect、release-preflight、control-surface freshness`.
-3. Start with next action: `在真实 OpenClaw 会话里完成一次最终人类 sanity check，并确认稳定安装示例与 \`v0.2.1\` 一致。`.
+2. Continue from checkpoint: `Stage 7 closeout evidence、Docker hermetic baseline、release-preflight、canonical-root policy、shared-foundation proof`.
+3. Start with next action: `保持 \`npm run umc:stage10 -- --format markdown\` 持续为绿。`.
 4. Continue implementation instead of asking for another manual resume prompt.

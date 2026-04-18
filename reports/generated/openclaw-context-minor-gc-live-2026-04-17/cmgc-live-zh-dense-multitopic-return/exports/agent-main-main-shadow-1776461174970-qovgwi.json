@@ -1,0 +1,384 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776461174970-qovgwi",
+  "generated_at": "2026-04-17T21:26:14.970Z",
+  "session_key": "agent:main:main",
+  "agent_id": "main",
+  "query": "先不聊代码了。刚才旅行那段里，我更想住哪座城市？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "记下了：预算 2 万元，优先住京都，最好靠近地铁站。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "现在切到代码：给我一个 Python 正则，提取 foo123bar 里的数字。"
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "`r'\\d+'` 如果你要完整示例： ```python import re s = \"foo123bar\" m = re.search(r'\\d+', s) print(m.group()) # 123 ```"
+    },
+    {
+      "id": "t5",
+      "role": "user",
+      "content": "继续代码：如果只取第一个数字分组，写法怎么更短？"
+    },
+    {
+      "id": "t6",
+      "role": "assistant",
+      "content": "`re.search(r'(\\d+)', s).group(1)`"
+    }
+  ],
+  "decision": {
+    "relation": "switch",
+    "confidence": 0.94,
+    "evict_turn_ids": [
+      "t2",
+      "t3",
+      "t4",
+      "t5",
+      "t6"
+    ],
+    "pin_turn_ids": [
+      "t1"
+    ],
+    "archive_summary": "User stated travel preferences: budget is 20,000 RMB, prefers Kyoto, and wants to stay near a subway station.",
+    "reasoning_summary": "The conversation has switched back from the resolved code topic to the earlier travel topic. The code turns are off-topic and can be removed from the next-turn prompt. The travel preference facts from t1 are durable and should be preserved as a semantic pin so the user’s current question about the preferred city can still be answered without keeping the full raw travel block."
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "switch",
+      "confidence": 0.94,
+      "archiveSummary": "User stated travel preferences: budget is 20,000 RMB, prefers Kyoto, and wants to stay near a subway station.",
+      "reasoningSummary": "The conversation has switched back from the resolved code topic to the earlier travel topic. The code turns are off-topic and can be removed from the next-turn prompt. The travel preference facts from t1 are durable and should be preserved as a semantic pin so the user’s current question about the preferred city can still be answered without keeping the full raw travel block.",
+      "latestUserTurnId": "t5",
+      "pinTurnIds": [
+        "t1"
+      ],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6"
+      ],
+      "blockedEvictTurnIds": [
+        "t5"
+      ],
+      "appliedEvictTurnIds": [
+        "t2",
+        "t3",
+        "t4",
+        "t6"
+      ],
+      "keepTurnIds": [
+        "t1",
+        "t5"
+      ],
+      "baselineTokens": 68,
+      "keptTokens": 15,
+      "prunedTokens": 53,
+      "reductionRatio": 0.7794117647058824,
+      "keepTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。",
+          "tokenEstimate": 9
+        },
+        {
+          "id": "t5",
+          "role": "user",
+          "content": "继续代码：如果只取第一个数字分组，写法怎么更短？",
+          "tokenEstimate": 6
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "记下了：预算 2 万元，优先住京都，最好靠近地铁站。",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "现在切到代码：给我一个 Python 正则，提取 foo123bar 里的数字。",
+          "tokenEstimate": 10
+        },
+        {
+          "id": "t4",
+          "role": "assistant",
+          "content": "`r'\\d+'` 如果你要完整示例： ```python import re s = \"foo123bar\" m = re.search(r'\\d+', s) print(m.group()) # 123 ```",
+          "tokenEstimate": 27
+        },
+        {
+          "id": "t6",
+          "role": "assistant",
+          "content": "`re.search(r'(\\d+)', s).group(1)`",
+          "tokenEstimate": 9
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。\nt2 assistant: 记下了：预算 2 万元，优先住京都，最好靠近地铁站。\nt3 user: 现在切到代码：给我一个 Python 正则，提取 foo123bar 里的数字。\nt4 assistant: `r'\\d+'` 如果你要完整示例： ```python import re s = \"foo123bar\" m = re.search(r'\\d+', s) print(m.group()) # 123 ```\nt5 user: 继续代码：如果只取第一个数字分组，写法怎么更短？\nt6 assistant: `re.search(r'(\\d+)', s).group(1)`",
+    "shadowRawTranscript": "t1 user: 我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。\nt5 user: 继续代码：如果只取第一个数字分组，写法怎么更短？",
+    "semanticPinNotes": [],
+    "archiveSummary": "User stated travel preferences: budget is 20,000 RMB, prefers Kyoto, and wants to stay near a subway station.",
+    "injectedArchiveSummary": "User stated travel preferences: budget is 20,000 RMB, prefers Kyoto, and wants to stay near a su...",
+    "baselinePromptEstimate": 84,
+    "shadowRawPromptEstimate": 19,
+    "shadowPackageEstimate": 53,
+    "shadowPackageText": "Active raw turns:\nt1 user: 我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。\nt5 user: 继续代码：如果只取第一个数字分组，写法怎么更短？\n\nArchived summary:\nUser stated travel preferences: budget is 20,000 RMB, prefers Kyoto, and wants to stay near a su..."
+  },
+  "scorecard": {
+    "relation": "switch",
+    "baselineTurnCount": 6,
+    "keptTurnCount": 2,
+    "evictedTurnCount": 4,
+    "pinCount": 1,
+    "baselinePromptEstimate": 84,
+    "shadowRawPromptEstimate": 19,
+    "shadowPackageEstimate": 53,
+    "rawReductionRatio": 0.7794,
+    "packageReductionRatio": 0.369,
+    "candidateLoadElapsedMs": 18,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 23858,
+    "totalElapsedMs": 23866,
+    "guardedEnabled": false,
+    "guardedApplied": false,
+    "guardedReason": "feature_disabled",
+    "guardedMessageCount": 9,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 93
+  },
+  "guarded": {
+    "enabled": false,
+    "applied": false,
+    "reason": "feature_disabled",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。"
+          }
+        ],
+        "timestamp": 1776461062062
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "toolCall",
+            "id": "call_qxBMFcONAOVl53kAQ9TTUOSd",
+            "name": "write",
+            "arguments": {
+              "path": "memory/2025-02-14.md",
+              "content": "# 2025-02-14\n\n- User wants to talk about travel planning.\n- Travel budget: 20,000 CNY.\n- Preference: stay in Kyoto.\n- Preference: near a subway/metro station.\n"
+            },
+            "partialJson": "{\"path\":\"memory/2025-02-14.md\",\"content\":\"# 2025-02-14\\n\\n- User wants to talk about travel planning.\\n- Travel budget: 20,000 CNY.\\n- Preference: stay in Kyoto.\\n- Preference: near a subway/metro station.\\n\"}"
+          },
+          {
+            "type": "toolCall",
+            "id": "call_91y4m83M7ugGiik9oUxmlG56",
+            "name": "edit",
+            "arguments": {
+              "path": "MEMORY.md",
+              "edits": [
+                {
+                  "oldText": "- If memory is missing or conflicting and no current answer is clear, do not guess.\n",
+                  "newText": "- If memory is missing or conflicting and no current answer is clear, do not guess.\n- Travel preference: budget 20,000 CNY; prefers staying in Kyoto near a subway/metro station.\n"
+                }
+              ]
+            },
+            "partialJson": "{\"path\":\"MEMORY.md\",\"edits\":[{\"oldText\":\"- If memory is missing or conflicting and no current answer is clear, do not guess.\\n\",\"newText\":\"- If memory is missing or conflicting and no current answer is clear, do not guess.\\n- Travel preference: budget 20,000 CNY; prefers staying in Kyoto near a subway/metro station.\\n\"}]}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 7278,
+          "output": 186,
+          "cacheRead": 5120,
+          "cacheWrite": 0,
+          "totalTokens": 12584,
+          "cost": {
+            "input": 0.0054585,
+            "output": 0.0008370000000000001,
+            "cacheRead": 0.000384,
+            "cacheWrite": 0,
+            "total": 0.0066795
+          }
+        },
+        "stopReason": "toolUse",
+        "timestamp": 1776461062072,
+        "responseId": "resp_043db2132b5028a40169e2a5084de88191b900ed6ccb322571"
+      },
+      {
+        "role": "toolResult",
+        "toolCallId": "call_qxBMFcONAOVl53kAQ9TTUOSd",
+        "toolName": "write",
+        "content": [
+          {
+            "type": "text",
+            "text": "Successfully wrote 159 bytes to memory/2025-02-14.md"
+          }
+        ],
+        "isError": false,
+        "timestamp": 1776461066340
+      },
+      {
+        "role": "toolResult",
+        "toolCallId": "call_91y4m83M7ugGiik9oUxmlG56",
+        "toolName": "edit",
+        "content": [
+          {
+            "type": "text",
+            "text": "Successfully replaced 1 block(s) in MEMORY.md."
+          }
+        ],
+        "isError": false,
+        "timestamp": 1776461066345
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "记下了：预算 2 万元，优先住京都，最好靠近地铁站。",
+            "textSignature": "{\"v\":1,\"id\":\"msg_03be05108e1303400169e2a50e77ac81918439ba84b0752e58\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 7508,
+          "output": 26,
+          "cacheRead": 5120,
+          "cacheWrite": 0,
+          "totalTokens": 12654,
+          "cost": {
+            "input": 0.005631,
+            "output": 0.000117,
+            "cacheRead": 0.000384,
+            "cacheWrite": 0,
+            "total": 0.006131999999999999
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776461066347,
+        "responseId": "resp_03be05108e1303400169e2a50c6d648191baed405a6df29a20"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "现在切到代码：给我一个 Python 正则，提取 foo123bar 里的数字。"
+          }
+        ],
+        "timestamp": 1776461096221
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "`r'\\d+'`\n\n如果你要完整示例：\n\n```python\nimport re\n\ns = \"foo123bar\"\nm = re.search(r'\\d+', s)\nprint(m.group())  # 123\n```",
+            "textSignature": "{\"v\":1,\"id\":\"msg_03be05108e1303400169e2a52ae44c8191aa927bbc53a3a552\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 7609,
+          "output": 50,
+          "cacheRead": 5120,
+          "cacheWrite": 0,
+          "totalTokens": 12779,
+          "cost": {
+            "input": 0.00570675,
+            "output": 0.000225,
+            "cacheRead": 0.000384,
+            "cacheWrite": 0,
+            "total": 0.00631575
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776461096231,
+        "responseId": "resp_03be05108e1303400169e2a52a6b3c81919f7f8b684baf746d"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "继续代码：如果只取第一个数字分组，写法怎么更短？"
+          }
+        ],
+        "timestamp": 1776461145102
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "`re.search(r'(\\d+)', s).group(1)`",
+            "textSignature": "{\"v\":1,\"id\":\"msg_03be05108e1303400169e2a55d33108191985dd05f5ae25fbe\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 7713,
+          "output": 19,
+          "cacheRead": 5120,
+          "cacheWrite": 0,
+          "totalTokens": 12852,
+          "cost": {
+            "input": 0.00578475,
+            "output": 0.0000855,
+            "cacheRead": 0.000384,
+            "cacheWrite": 0,
+            "total": 0.006254249999999999
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776461145115,
+        "responseId": "resp_03be05108e1303400169e2a55c89508191be39940caf30aeb9"
+      }
+    ],
+    "filteredMessageCount": 9,
+    "filteredMessageTokenEstimate": 93,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 23866,
+    "decisionElapsedMs": 23858
+  }
+}

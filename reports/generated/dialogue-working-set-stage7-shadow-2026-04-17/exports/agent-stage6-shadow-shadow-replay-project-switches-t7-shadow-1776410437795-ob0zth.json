@@ -1,0 +1,219 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776410437795-ob0zth",
+  "generated_at": "2026-04-17T07:20:37.795Z",
+  "session_key": "agent:stage6-shadow:shadow-replay-project-switches:t7",
+  "agent_id": "stage6-shadow",
+  "query": "现在切到配置：unified-memory-core 的最小 contextEngine 配置怎么写？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "assistant",
+      "content": "今天继续哪条线？"
+    },
+    {
+      "id": "t2",
+      "role": "user",
+      "content": "以后默认给我中文，回复直接一点。"
+    },
+    {
+      "id": "t3",
+      "role": "assistant",
+      "content": "记住了，后面默认中文，结论优先。"
+    },
+    {
+      "id": "t4",
+      "role": "user",
+      "content": "说一下 context slimming 的核心目标。"
+    },
+    {
+      "id": "t5",
+      "role": "assistant",
+      "content": "核心目标是存储 rich、prompt sparse，让真正进入模型的上下文只保留当轮高相关信息。"
+    },
+    {
+      "id": "t6",
+      "role": "user",
+      "content": "那 raw doc default-off 应该先落在哪几类问题上？"
+    },
+    {
+      "id": "t7",
+      "role": "user",
+      "content": "现在切到配置：unified-memory-core 的最小 contextEngine 配置怎么写？"
+    }
+  ],
+  "decision": {
+    "relation": "branch",
+    "confidence": 0.91,
+    "evict_turn_ids": [
+      "t1",
+      "t3"
+    ],
+    "pin_turn_ids": [
+      "t2"
+    ],
+    "archive_summary": "用户偏好：默认中文，回复直接、结论优先。先前主线在讨论 context slimming：核心目标是“存储 rich、prompt sparse”，并追问 raw doc default-off 应优先落地的题型分类；该问题尚未回答，仍属未完成主线。当前最新一问切到 unified-memory-core 的最小 contextEngine 配置写法，属于并行分支。",
+    "reasoning_summary": "最新用户消息明确切到新话题，但上一条 t6 仍是未解决问题，因此应判为 branch 而不是 switch/resolve。为缩小下一轮工作集，可移除寒暄与确认类原始回合 t1、t3；保留未完成主线相关原始上下文 t4、t5、t6。用户语言与风格偏好来自 t2，适合做语义 pin。"
+  },
+  "snapshot": {
+    "applied": {
+      "relation": "branch",
+      "confidence": 0.91,
+      "archiveSummary": "用户偏好：默认中文，回复直接、结论优先。先前主线在讨论 context slimming：核心目标是“存储 rich、prompt sparse”，并追问 raw doc default-off 应优先落地的题型分类；该问题尚未回答，仍属未完成主线。当前最新一问切到 unified-memory-core 的最小 contextEngine 配置写法，属于并行分支。",
+      "reasoningSummary": "最新用户消息明确切到新话题，但上一条 t6 仍是未解决问题，因此应判为 branch 而不是 switch/resolve。为缩小下一轮工作集，可移除寒暄与确认类原始回合 t1、t3；保留未完成主线相关原始上下文 t4、t5、t6。用户语言与风格偏好来自 t2，适合做语义 pin。",
+      "latestUserTurnId": "t7",
+      "pinTurnIds": [
+        "t2"
+      ],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t3"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t3"
+      ],
+      "keepTurnIds": [
+        "t2",
+        "t4",
+        "t5",
+        "t6",
+        "t7"
+      ],
+      "baselineTokens": 52,
+      "keptTokens": 46,
+      "prunedTokens": 6,
+      "reductionRatio": 0.11538461538461539,
+      "keepTurns": [
+        {
+          "id": "t2",
+          "role": "user",
+          "content": "以后默认给我中文，回复直接一点。",
+          "tokenEstimate": 4
+        },
+        {
+          "id": "t4",
+          "role": "user",
+          "content": "说一下 context slimming 的核心目标。",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t5",
+          "role": "assistant",
+          "content": "核心目标是存储 rich、prompt sparse，让真正进入模型的上下文只保留当轮高相关信息。",
+          "tokenEstimate": 13
+        },
+        {
+          "id": "t6",
+          "role": "user",
+          "content": "那 raw doc default-off 应该先落在哪几类问题上？",
+          "tokenEstimate": 9
+        },
+        {
+          "id": "t7",
+          "role": "user",
+          "content": "现在切到配置：unified-memory-core 的最小 contextEngine 配置怎么写？",
+          "tokenEstimate": 13
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "assistant",
+          "content": "今天继续哪条线？",
+          "tokenEstimate": 2
+        },
+        {
+          "id": "t3",
+          "role": "assistant",
+          "content": "记住了，后面默认中文，结论优先。",
+          "tokenEstimate": 4
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 assistant: 今天继续哪条线？\nt2 user: 以后默认给我中文，回复直接一点。\nt3 assistant: 记住了，后面默认中文，结论优先。\nt4 user: 说一下 context slimming 的核心目标。\nt5 assistant: 核心目标是存储 rich、prompt sparse，让真正进入模型的上下文只保留当轮高相关信息。\nt6 user: 那 raw doc default-off 应该先落在哪几类问题上？\nt7 user: 现在切到配置：unified-memory-core 的最小 contextEngine 配置怎么写？",
+    "shadowRawTranscript": "t2 user: 以后默认给我中文，回复直接一点。\nt4 user: 说一下 context slimming 的核心目标。\nt5 assistant: 核心目标是存储 rich、prompt sparse，让真正进入模型的上下文只保留当轮高相关信息。\nt6 user: 那 raw doc default-off 应该先落在哪几类问题上？\nt7 user: 现在切到配置：unified-memory-core 的最小 contextEngine 配置怎么写？",
+    "semanticPinNotes": [],
+    "archiveSummary": "用户偏好：默认中文，回复直接、结论优先。先前主线在讨论 context slimming：核心目标是“存储 rich、prompt sparse”，并追问 raw doc default-off 应优先落地的题型分类；该问题尚未回答，仍属未完成主线。当前最新一问切到 unified-memory-core 的最小 contextEngine 配置写法，属于并行分支。",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 72,
+    "shadowRawPromptEstimate": 58,
+    "shadowPackageEstimate": 63,
+    "shadowPackageText": "Active raw turns:\nt2 user: 以后默认给我中文，回复直接一点。\nt4 user: 说一下 context slimming 的核心目标。\nt5 assistant: 核心目标是存储 rich、prompt sparse，让真正进入模型的上下文只保留当轮高相关信息。\nt6 user: 那 raw doc default-off 应该先落在哪几类问题上？\nt7 user: 现在切到配置：unified-memory-core 的最小 contextEngine 配置怎么写？"
+  },
+  "scorecard": {
+    "relation": "branch",
+    "baselineTurnCount": 7,
+    "keptTurnCount": 5,
+    "evictedTurnCount": 2,
+    "pinCount": 1,
+    "baselinePromptEstimate": 72,
+    "shadowRawPromptEstimate": 58,
+    "shadowPackageEstimate": 63,
+    "rawReductionRatio": 0.1154,
+    "packageReductionRatio": 0.125,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 19194,
+    "totalElapsedMs": 19196,
+    "guardedEnabled": false,
+    "guardedApplied": false,
+    "guardedReason": "feature_disabled",
+    "guardedMessageCount": 7,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 52
+  },
+  "guarded": {
+    "enabled": false,
+    "applied": false,
+    "reason": "feature_disabled",
+    "filteredMessages": [
+      {
+        "role": "assistant",
+        "content": "今天继续哪条线？"
+      },
+      {
+        "role": "user",
+        "content": "以后默认给我中文，回复直接一点。"
+      },
+      {
+        "role": "assistant",
+        "content": "记住了，后面默认中文，结论优先。"
+      },
+      {
+        "role": "user",
+        "content": "说一下 context slimming 的核心目标。"
+      },
+      {
+        "role": "assistant",
+        "content": "核心目标是存储 rich、prompt sparse，让真正进入模型的上下文只保留当轮高相关信息。"
+      },
+      {
+        "role": "user",
+        "content": "那 raw doc default-off 应该先落在哪几类问题上？"
+      },
+      {
+        "role": "user",
+        "content": "现在切到配置：unified-memory-core 的最小 contextEngine 配置怎么写？"
+      }
+    ],
+    "filteredMessageCount": 7,
+    "filteredMessageTokenEstimate": 52,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 19196,
+    "decisionElapsedMs": 19194
+  }
+}

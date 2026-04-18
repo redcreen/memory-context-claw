@@ -1,0 +1,199 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776410505525-bunzku",
+  "generated_at": "2026-04-17T07:21:45.525Z",
+  "session_key": "agent:stage6-shadow:shadow-replay-family-code-family:t5",
+  "agent_id": "stage6-shadow",
+  "query": "家庭这块先这样。现在说代码：这轮先别改 builtin memory。",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "记一下：我爱吃牛排。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "记住了，你爱吃牛排。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "再记一下：我坐飞机喜欢靠过道。"
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "记住了，你坐飞机偏好靠过道。"
+    },
+    {
+      "id": "t5",
+      "role": "user",
+      "content": "家庭这块先这样。现在说代码：这轮先别改 builtin memory。"
+    }
+  ],
+  "decision": {
+    "relation": "switch",
+    "confidence": 0.98,
+    "evict_turn_ids": [
+      "t1",
+      "t2",
+      "t3",
+      "t4"
+    ],
+    "pin_turn_ids": [
+      "t1",
+      "t3"
+    ],
+    "archive_summary": "User shared durable preferences: likes steak and prefers an aisle seat when flying. The earlier family topic is paused/closed for now. Active topic has switched to code, with the current constraint from the latest user turn: do not modify builtin memory in this round.",
+    "reasoning_summary": "The latest turn changes topic from personal/family context to code, so this is a switch. The steak and aisle-seat preferences are durable user facts worth preserving as semantic pins while their raw turns can leave the next-turn prompt. The assistant acknowledgement turns are redundant and safe to evict. The latest user turn remains raw automatically and should not be listed for eviction."
+  },
+  "snapshot": {
+    "applied": {
+      "relation": "switch",
+      "confidence": 0.98,
+      "archiveSummary": "User shared durable preferences: likes steak and prefers an aisle seat when flying. The earlier family topic is paused/closed for now. Active topic has switched to code, with the current constraint from the latest user turn: do not modify builtin memory in this round.",
+      "reasoningSummary": "The latest turn changes topic from personal/family context to code, so this is a switch. The steak and aisle-seat preferences are durable user facts worth preserving as semantic pins while their raw turns can leave the next-turn prompt. The assistant acknowledgement turns are redundant and safe to evict. The latest user turn remains raw automatically and should not be listed for eviction.",
+      "latestUserTurnId": "t5",
+      "pinTurnIds": [
+        "t1",
+        "t3"
+      ],
+      "pinnedOnlyTurnIds": [
+        "t1",
+        "t3"
+      ],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ],
+      "keepTurnIds": [
+        "t5"
+      ],
+      "baselineTokens": 23,
+      "keptTokens": 9,
+      "prunedTokens": 14,
+      "reductionRatio": 0.6086956521739131,
+      "keepTurns": [
+        {
+          "id": "t5",
+          "role": "user",
+          "content": "家庭这块先这样。现在说代码：这轮先别改 builtin memory。",
+          "tokenEstimate": 9
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "记一下：我爱吃牛排。",
+          "tokenEstimate": 3
+        },
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "记住了，你爱吃牛排。",
+          "tokenEstimate": 3
+        },
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "再记一下：我坐飞机喜欢靠过道。",
+          "tokenEstimate": 4
+        },
+        {
+          "id": "t4",
+          "role": "assistant",
+          "content": "记住了，你坐飞机偏好靠过道。",
+          "tokenEstimate": 4
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 记一下：我爱吃牛排。\nt2 assistant: 记住了，你爱吃牛排。\nt3 user: 再记一下：我坐飞机喜欢靠过道。\nt4 assistant: 记住了，你坐飞机偏好靠过道。\nt5 user: 家庭这块先这样。现在说代码：这轮先别改 builtin memory。",
+    "shadowRawTranscript": "t5 user: 家庭这块先这样。现在说代码：这轮先别改 builtin memory。",
+    "semanticPinNotes": [
+      "user: 记一下：我爱吃牛排。",
+      "user: 再记一下：我坐飞机喜欢靠过道。"
+    ],
+    "archiveSummary": "User shared durable preferences: likes steak and prefers an aisle seat when flying. The earlier family topic is paused/closed for now. Active topic has switched to code, with the current constraint from the latest user turn: do not modify builtin memory in this round.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 36,
+    "shadowRawPromptEstimate": 11,
+    "shadowPackageEstimate": 29,
+    "shadowPackageText": "Active raw turns:\nt5 user: 家庭这块先这样。现在说代码：这轮先别改 builtin memory。\n\nSemantic pins:\nuser: 记一下：我爱吃牛排。\nuser: 再记一下：我坐飞机喜欢靠过道。"
+  },
+  "scorecard": {
+    "relation": "switch",
+    "baselineTurnCount": 5,
+    "keptTurnCount": 1,
+    "evictedTurnCount": 4,
+    "pinCount": 2,
+    "baselinePromptEstimate": 36,
+    "shadowRawPromptEstimate": 11,
+    "shadowPackageEstimate": 29,
+    "rawReductionRatio": 0.6087,
+    "packageReductionRatio": 0.1944,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 13954,
+    "totalElapsedMs": 13955,
+    "guardedEnabled": false,
+    "guardedApplied": false,
+    "guardedReason": "feature_disabled",
+    "guardedMessageCount": 5,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 23
+  },
+  "guarded": {
+    "enabled": false,
+    "applied": false,
+    "reason": "feature_disabled",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": "记一下：我爱吃牛排。"
+      },
+      {
+        "role": "assistant",
+        "content": "记住了，你爱吃牛排。"
+      },
+      {
+        "role": "user",
+        "content": "再记一下：我坐飞机喜欢靠过道。"
+      },
+      {
+        "role": "assistant",
+        "content": "记住了，你坐飞机偏好靠过道。"
+      },
+      {
+        "role": "user",
+        "content": "家庭这块先这样。现在说代码：这轮先别改 builtin memory。"
+      }
+    ],
+    "filteredMessageCount": 5,
+    "filteredMessageTokenEstimate": 23,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 13955,
+    "decisionElapsedMs": 13954
+  }
+}

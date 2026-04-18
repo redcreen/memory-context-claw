@@ -1,0 +1,240 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776460456454-rdj6uu",
+  "generated_at": "2026-04-17T21:14:16.454Z",
+  "session_key": "agent:main:main",
+  "agent_id": "main",
+  "query": "再切一下：Stage 7 closeout 里 operator scorecard 还要保留。",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "以后默认给我中文回复，尽量一句话。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "收到，之后默认中文，尽量一句话。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "先切到代码：这轮先别改 OpenClaw core，只能走插件内 overlay。"
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "好，这轮只在插件里做 overlay，不动 OpenClaw core。"
+    }
+  ],
+  "decision": {
+    "relation": "switch",
+    "confidence": 0.93,
+    "evict_turn_ids": [
+      "t2",
+      "t3",
+      "t4"
+    ],
+    "pin_turn_ids": [
+      "t1"
+    ],
+    "archive_summary": "Pinned the durable user preference for Chinese replies and brevity. Evicted the prior code-overlay instruction block because the conversation has switched to a Stage 7 closeout note that operator scorecard content must still be preserved, while the latest user turn remains in the live prompt by default.",
+    "reasoning_summary": "The latest user turn introduces a new topic-specific constraint for Stage 7 closeout, so the active topic has changed. The earlier overlay directive is no longer needed in the next-turn working set, while the user’s language/style preference is durable and should survive as a compact pin."
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "switch",
+      "confidence": 0.93,
+      "archiveSummary": "Pinned the durable user preference for Chinese replies and brevity. Evicted the prior code-overlay instruction block because the conversation has switched to a Stage 7 closeout note that operator scorecard content must still be preserved, while the latest user turn remains in the live prompt by default.",
+      "reasoningSummary": "The latest user turn introduces a new topic-specific constraint for Stage 7 closeout, so the active topic has changed. The earlier overlay directive is no longer needed in the next-turn working set, while the user’s language/style preference is durable and should survive as a compact pin.",
+      "latestUserTurnId": "t3",
+      "pinTurnIds": [
+        "t1"
+      ],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t2",
+        "t3",
+        "t4"
+      ],
+      "blockedEvictTurnIds": [
+        "t3"
+      ],
+      "appliedEvictTurnIds": [
+        "t2",
+        "t4"
+      ],
+      "keepTurnIds": [
+        "t1",
+        "t3"
+      ],
+      "baselineTokens": 29,
+      "keptTokens": 16,
+      "prunedTokens": 13,
+      "reductionRatio": 0.4482758620689655,
+      "keepTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "以后默认给我中文回复，尽量一句话。",
+          "tokenEstimate": 5
+        },
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "先切到代码：这轮先别改 OpenClaw core，只能走插件内 overlay。",
+          "tokenEstimate": 11
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "收到，之后默认中文，尽量一句话。",
+          "tokenEstimate": 4
+        },
+        {
+          "id": "t4",
+          "role": "assistant",
+          "content": "好，这轮只在插件里做 overlay，不动 OpenClaw core。",
+          "tokenEstimate": 9
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 以后默认给我中文回复，尽量一句话。\nt2 assistant: 收到，之后默认中文，尽量一句话。\nt3 user: 先切到代码：这轮先别改 OpenClaw core，只能走插件内 overlay。\nt4 assistant: 好，这轮只在插件里做 overlay，不动 OpenClaw core。",
+    "shadowRawTranscript": "t1 user: 以后默认给我中文回复，尽量一句话。\nt3 user: 先切到代码：这轮先别改 OpenClaw core，只能走插件内 overlay。",
+    "semanticPinNotes": [],
+    "archiveSummary": "Pinned the durable user preference for Chinese replies and brevity. Evicted the prior code-overlay instruction block because the conversation has switched to a Stage 7 closeout note that operator scorecard content must still be preserved, while the latest user turn remains in the live prompt by default.",
+    "injectedArchiveSummary": "Pinned the durable user preference for Chinese replies and brevity. Evicted the prior code-overl...",
+    "baselinePromptEstimate": 40,
+    "shadowRawPromptEstimate": 20,
+    "shadowPackageEstimate": 54,
+    "shadowPackageText": "Active raw turns:\nt1 user: 以后默认给我中文回复，尽量一句话。\nt3 user: 先切到代码：这轮先别改 OpenClaw core，只能走插件内 overlay。\n\nArchived summary:\nPinned the durable user preference for Chinese replies and brevity. Evicted the prior code-overl..."
+  },
+  "scorecard": {
+    "relation": "switch",
+    "baselineTurnCount": 4,
+    "keptTurnCount": 2,
+    "evictedTurnCount": 2,
+    "pinCount": 1,
+    "baselinePromptEstimate": 40,
+    "shadowRawPromptEstimate": 20,
+    "shadowPackageEstimate": 54,
+    "rawReductionRatio": 0.4483,
+    "packageReductionRatio": -0.35,
+    "candidateLoadElapsedMs": 19,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 22697,
+    "totalElapsedMs": 22710,
+    "guardedEnabled": false,
+    "guardedApplied": false,
+    "guardedReason": "feature_disabled",
+    "guardedMessageCount": 4,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 29
+  },
+  "guarded": {
+    "enabled": false,
+    "applied": false,
+    "reason": "feature_disabled",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "以后默认给我中文回复，尽量一句话。"
+          }
+        ],
+        "timestamp": 1776460397385
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "收到，之后默认中文，尽量一句话。",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0a338a001083ac680169e2a2712cbc81918206fc0ee2debd97\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 7323,
+          "output": 15,
+          "cacheRead": 5120,
+          "cacheWrite": 0,
+          "totalTokens": 12458,
+          "cost": {
+            "input": 0.00549225,
+            "output": 0.0000675,
+            "cacheRead": 0.000384,
+            "cacheWrite": 0,
+            "total": 0.005943749999999999
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776460397397,
+        "responseId": "resp_0a338a001083ac680169e2a26f8ad081918fa23234f85e7593"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "先切到代码：这轮先别改 OpenClaw core，只能走插件内 overlay。"
+          }
+        ],
+        "timestamp": 1776460426946
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "好，这轮只在插件里做 overlay，不动 OpenClaw core。",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0a338a001083ac680169e2a28dc1c08191b7f2571accc46065\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 7606,
+          "output": 20,
+          "cacheRead": 5120,
+          "cacheWrite": 0,
+          "totalTokens": 12746,
+          "cost": {
+            "input": 0.0057045,
+            "output": 0.00009,
+            "cacheRead": 0.000384,
+            "cacheWrite": 0,
+            "total": 0.0061785
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776460426957,
+        "responseId": "resp_0a338a001083ac680169e2a28d34b081919c47d81b244876d2"
+      }
+    ],
+    "filteredMessageCount": 4,
+    "filteredMessageTokenEstimate": 29,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 22710,
+    "decisionElapsedMs": 22697
+  }
+}

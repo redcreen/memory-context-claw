@@ -1,0 +1,65 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776479902091-ltbgmn",
+  "generated_at": "2026-04-18T02:38:22.091Z",
+  "session_key": "agent:health:feishu:direct:ou_9494ebadf9329adf57debffdad74a398",
+  "agent_id": "health",
+  "query": "[media attached: /Users/redcreen/.openclaw/media/inbound/cf51d452-0251-41f8-86a3-28d5253ae34f.jpg (image/jpeg) | /Users/redcreen/.openclaw/media/inbound/cf51d452-0251-41f8-86a3-28d5253ae34f.jpg]\nTo send an image back, prefer the message tool (media/path/filePath). If you must inline, use MEDIA:https://example.com/image.jpg (spaces ok, quote if needed) or a safe relative path like MEDIA:./image.jpg. Avoid absolute paths (MEDIA:/...) and ~ paths — they are blocked for security. Keep caption in the text body.\nSystem: [2026-04-18 10:38:18 GMT+8] Feishu[feishu5-health] DM | 刘超 (ou_9494ebadf9329adf57debffdad74a398) [msg:om_x100b511aa74164a8c4d382396ff2c6f, image, 1 attachment(s)]\n\nConversation info (untrusted metadata):\n```json\n{\n  \"message_id\": \"om_x100b511aa74164a8c4d382396ff2c6f\",\n  \"sender_id\": \"ou_9494ebadf9329adf57debffdad74a398\",\n  \"sender\": \"刘超\",\n  \"timestamp\": \"Sat 2026-04-18 10:38 GMT+8\"\n}\n```\n\nSender (untrusted metadata):\n```json\n{\n  \"label\": \"刘超 (ou_9494ebadf9329adf57debffdad74a398)\",\n  \"id\": \"ou_9494ebadf9329adf57debffdad74a398\",\n  \"name\": \"刘超\"\n}\n```\n\n/Users/redcreen/.openclaw/media/inbound/cf51d452-0251-41f8-86a3-28d5253ae34f.jpg",
+  "status": "skipped",
+  "reason": "not_enough_turns",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "task-system runtime context: - session: agent:health:feishu:direct:ou_9494ebadf9329adf57debffdad74a398 - task: task_87332cc746ac438082e58fd37ebc709c - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded System: [2026-04-18 10:37:26 GMT+8] Feishu[feishu5-health] DM | 刘超 (ou_9494ebadf9329adf57debffdad74a398) [msg:om_x100b511aa89dfca0c10ed900b6e697c]..."
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "在。"
+    }
+  ],
+  "decision": null,
+  "decision_transport": "",
+  "snapshot": null,
+  "scorecard": {
+    "relation": "",
+    "baselineTurnCount": 2,
+    "keptTurnCount": 0,
+    "evictedTurnCount": 0,
+    "pinCount": 0,
+    "baselinePromptEstimate": 0,
+    "shadowRawPromptEstimate": 0,
+    "shadowPackageEstimate": 0,
+    "rawReductionRatio": 0,
+    "packageReductionRatio": 0,
+    "candidateLoadElapsedMs": 20,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 0,
+    "totalElapsedMs": 0,
+    "guardedEnabled": false,
+    "guardedApplied": false,
+    "guardedReason": "feature_disabled",
+    "guardedMessageCount": 2,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 0
+  },
+  "guarded": {
+    "enabled": false,
+    "applied": false,
+    "reason": "feature_disabled",
+    "filteredMessageCount": 2,
+    "filteredMessageTokenEstimate": 0,
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 0,
+    "decisionElapsedMs": 0
+  }
+}

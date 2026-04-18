@@ -1,0 +1,252 @@
+{
+  "generatedAt": "2026-04-17T05:44:11.742Z",
+  "casesPath": "/workspace/evals/openclaw-ordinary-conversation-memory-intent-ab-cases.js",
+  "agentId": "rtab",
+  "sourceAgentId": "main",
+  "environment": {
+    "executionEnvironment": "docker",
+    "dockerImage": "ghcr.io/openclaw/openclaw:2026.4.2",
+    "fixtureRoot": "/workspace/evals/openclaw-ordinary-conversation-fixture",
+    "pluginPath": "/workspace",
+    "authProfilesPath": "(mounted auth profiles)",
+    "hostSeededFromHome": false,
+    "baseStateReuse": true,
+    "legacyBaseStateKey": "legacy-0c28dcbc3c7dbf5d",
+    "currentBaseStateKey": "current-d0d90e2ef76bcc7a",
+    "templateCacheRoot": "/workspace/.cache/openclaw-ordinary-state-templates",
+    "templateCacheHits": {
+      "legacy": false,
+      "current": false
+    }
+  },
+  "summary": {
+    "total": 3,
+    "currentPassed": 0,
+    "legacyPassed": 0,
+    "bothPass": 0,
+    "umcOnly": 0,
+    "legacyOnly": 0,
+    "bothFail": 3,
+    "byLanguage": {
+      "en": {
+        "total": 1,
+        "currentPassed": 0,
+        "legacyPassed": 0,
+        "bothPass": 0,
+        "umcOnly": 0,
+        "legacyOnly": 0,
+        "bothFail": 1
+      },
+      "zh": {
+        "total": 2,
+        "currentPassed": 0,
+        "legacyPassed": 0,
+        "bothPass": 0,
+        "umcOnly": 0,
+        "legacyOnly": 0,
+        "bothFail": 2
+      }
+    },
+    "byCategory": {
+      "durable_rule": {
+        "total": 2,
+        "currentPassed": 0,
+        "legacyPassed": 0,
+        "bothPass": 0,
+        "umcOnly": 0,
+        "legacyOnly": 0,
+        "bothFail": 2
+      },
+      "tool_routing_preference": {
+        "total": 0,
+        "currentPassed": 0,
+        "legacyPassed": 0,
+        "bothPass": 0,
+        "umcOnly": 0,
+        "legacyOnly": 0,
+        "bothFail": 0
+      },
+      "user_profile_fact": {
+        "total": 1,
+        "currentPassed": 0,
+        "legacyPassed": 0,
+        "bothPass": 0,
+        "umcOnly": 0,
+        "legacyOnly": 0,
+        "bothFail": 1
+      },
+      "session_constraint": {
+        "total": 0,
+        "currentPassed": 0,
+        "legacyPassed": 0,
+        "bothPass": 0,
+        "umcOnly": 0,
+        "legacyOnly": 0,
+        "bothFail": 0
+      },
+      "one_off_instruction": {
+        "total": 0,
+        "currentPassed": 0,
+        "legacyPassed": 0,
+        "bothPass": 0,
+        "umcOnly": 0,
+        "legacyOnly": 0,
+        "bothFail": 0
+      }
+    },
+    "captureObserved": 0,
+    "isolation": {
+      "totalRuns": 6,
+      "uniqueStateRoots": 6,
+      "duplicateStateRoots": 0,
+      "uniqueRegistryRoots": 3,
+      "duplicateRegistryRoots": 0,
+      "cleanupOk": 6,
+      "cleanupFailed": 0,
+      "sessionClearOk": 6,
+      "sessionClearFailed": 0
+    }
+  },
+  "results": [
+    {
+      "expectedAny": [],
+      "expectedAll": [
+        "cedar-comments"
+      ],
+      "forbiddenAny": [
+        "i don't know based on current memory"
+      ],
+      "id": "ordinary-ab-en-rule-pr-comments-1",
+      "language": "en",
+      "category": "durable_rule",
+      "designQuestion": "A user defines a permanent pull-request review rule with the codename `cedar-comments`; recall should return the codename after the session transcript is removed.",
+      "expectedResult": "It should answer with `cedar-comments`.",
+      "captureMessage": "Going forward, any time I send a pull request link, first check unresolved review comments. The codename for that default rule is cedar-comments. Please remember it.",
+      "recallMessage": "Based only on your memory for this agent, what codename should you use for my default pull request review rule? If memory is missing, reply exactly: I don't know based on current memory.",
+      "legacy": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "timeout after 30000ms",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "answer": "",
+        "error": "timeout after 30000ms",
+        "stateRootKey": "umc-ordinary-legacy-case-518cb0d3-6deb-4bb6-b6e5-81c6cea8c672",
+        "registryRootKey": "",
+        "cleanupOk": true
+      },
+      "current": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "timeout after 30000ms",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "answer": "",
+        "error": "timeout after 30000ms",
+        "stateRootKey": "umc-ordinary-current-case-b09fb463-5c1c-4062-8a44-e68e5c3a2acd",
+        "registryRootKey": "umc-ordinary-current-case-b09fb463-5c1c-4062-8a44-e68e5c3a2acd/registry",
+        "cleanupOk": true
+      }
+    },
+    {
+      "expectedAny": [],
+      "expectedAll": [
+        "松针取消"
+      ],
+      "forbiddenAny": [
+        "i don't know based on current memory"
+      ],
+      "id": "ordinary-ab-zh-rule-hotels-1",
+      "language": "zh",
+      "category": "durable_rule",
+      "designQuestion": "用户定义了长期酒店筛选规则，并把它命名为 `松针取消`；跨会话后应能召回这个代号。",
+      "expectedResult": "应答出 `松针取消`。",
+      "captureMessage": "以后只要我问酒店方案，你先看取消政策；这个默认旅行规则的代号叫做松针取消。记住它。",
+      "recallMessage": "只根据当前记忆，我默认的酒店筛选规则代号是什么？如果没有这条记忆，就只回答：I don't know based on current memory.",
+      "legacy": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "timeout after 30000ms",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "answer": "",
+        "error": "timeout after 30000ms",
+        "stateRootKey": "umc-ordinary-legacy-case-deb791f2-8960-493f-ae7d-0811427d3ef4",
+        "registryRootKey": "",
+        "cleanupOk": true
+      },
+      "current": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "timeout after 30000ms",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "answer": "",
+        "error": "timeout after 30000ms",
+        "stateRootKey": "umc-ordinary-current-case-dd3feb68-7cf0-4bd4-a465-810b7b06f476",
+        "registryRootKey": "umc-ordinary-current-case-dd3feb68-7cf0-4bd4-a465-810b7b06f476/registry",
+        "cleanupOk": true
+      }
+    },
+    {
+      "expectedAny": [
+        "前排"
+      ],
+      "expectedAll": [
+        "过道"
+      ],
+      "forbiddenAny": [
+        "i don't know based on current memory"
+      ],
+      "id": "ordinary-ab-zh-seat-1",
+      "language": "zh",
+      "category": "user_profile_fact",
+      "designQuestion": "用户给出长期的飞行座位偏好；跨会话后应能召回靠过道和尽量前排。",
+      "expectedResult": "应答出靠过道，并最好提到前排。",
+      "captureMessage": "我坐飞机时更喜欢靠过道，而且尽量前排。记住这个出行偏好。",
+      "recallMessage": "只根据当前记忆，我坐飞机更喜欢什么位置？如果没有这条记忆，就只回答：I don't know based on current memory.",
+      "legacy": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "timeout after 30000ms",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "answer": "",
+        "error": "timeout after 30000ms",
+        "stateRootKey": "umc-ordinary-legacy-case-59357ad4-0f55-4c22-8ea3-939840d2b7c1",
+        "registryRootKey": "",
+        "cleanupOk": true
+      },
+      "current": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "timeout after 30000ms",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "answer": "",
+        "error": "timeout after 30000ms",
+        "stateRootKey": "umc-ordinary-current-case-bedd4358-f4d5-4c9b-8aa7-d6d482e20dcc",
+        "registryRootKey": "umc-ordinary-current-case-bedd4358-f4d5-4c9b-8aa7-d6d482e20dcc/registry",
+        "cleanupOk": true
+      }
+    }
+  ]
+}

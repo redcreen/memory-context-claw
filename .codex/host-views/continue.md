@@ -4,11 +4,11 @@
 | 项目 | 当前值 |
 | --- | --- |
 | 层级 | `大型` |
-| 当前判断 | 收口阶段 / Stage 5 已完成 |
-| 当前阶段 | 收口阶段 / Stage 5 已完成 |
-| 当前切片 | 保持 post-Stage-5 路线图状态对齐 |
-| 当前执行线 | 保持 post-Stage-5 的 operator baseline、project/workstream roadmap 摘要和 canonical-root policy 同时稳定 |
-| 执行进度 | `6 / 6` |
+| 当前判断 | post-stage10-adoption-closeout |
+| 当前阶段 | post-stage10-adoption-closeout |
+| 当前切片 | hold-stage10-adoption-proof-stable |
+| 当前执行线 | Stage 7 / 8 / 9 / 10 都已关闭；当前进入维护态，继续保持 Docker 为默认 hermetic A/B 面与 Stage 10 shortest-path/shared-foundation proof 持续为绿 |
+| 执行进度 | `0 / 4` |
 | 架构信号 | `黄色` |
 | 自动触发 | 当前没有自动触发 |
 | 升级 Gate | `提醒后继续` |
@@ -27,22 +27,20 @@
 | worker 接续方向 | 收口阶段 / Stage 5 已完成 |
 | worker 接续状态 | `活跃` |
 | 下一 handoff 检查 | 确认 worker 停下后的接续、回流和升级都能靠 durable 真相完成。 |
-| 当前主要风险 | operator / planning follow-up 只剩： |
+| 当前主要风险 | raw `openclaw memory search` transport 仍是显式 watchlist：`3/8 raw ok`，其余为 `4` 条 `missing_json_payload` 与 `1` 条 `empty_results` |
 | 完整看板 | `项目助手 进展` / `project assistant progress` |
 
 ## 接下来先做什么
 | 顺序 | 当前要做的事 |
 | --- | --- |
-| 1 | 在真实 OpenClaw 会话里完成一次最终人类 sanity check，并确认稳定安装示例与 `v0.2.1` 一致。 |
-| 2 | 做最终 operator review，确认 `registry inspect` 的 `operatorPolicy` 不回退、project/workstream roadmap 不漂移。 |
-| 3 | 如果上述两项继续为绿，就创建并推送 `v0.2.1` tag；否则先处理漂移项，再讨论新的 enhancement plan 或 legacy root cleanup 窗口。 |
+| 1 | shorten install / bootstrap / verify into one clear shortest operator path |
+| 2 | add package / startup / first-run cost to the `light and fast` evidence surface |
+| 3 | publish stronger Codex shared-foundation proof |
 
 ## 当前任务板
 | 任务 | 类型 | 状态 |
 | --- | --- | --- |
-| 把 project/workstream roadmap 摘要对齐到当前 Stage 5 收口基线 | 主线 | 已完成 |
-| 刷新可见项目状态里的 smoke 与 memory-search governance 快照 | 主线 | 已完成 |
-| 保持 `registry inspect`、release-preflight 与公开文档和当前 operator baseline 一致 | 主线 | 已完成 |
-| define deeper accepted-action extraction as an explicit deferred enhancement queue | 主线 | 已完成 |
-| implement Step 47 field-aware accepted-action extraction with CLI / lifecycle coverage | 主线 | 已完成 |
-| 在 runtime API 前提稳定之前，继续把后续 enhancement planning 挂起，不提前重开下一阶段 | 主线 | 已完成 |
+| shorten install / bootstrap / verify into one clear shortest operator path | 主线 | 待完成 |
+| add package / startup / first-run cost to the `light and fast` evidence surface | 主线 | 待完成 |
+| publish stronger Codex shared-foundation proof | 主线 | 待完成 |
+| publish clearer multi-instance shared-memory operator proof | 主线 | 待完成 |

@@ -1,0 +1,347 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776460849123-2u9u39",
+  "generated_at": "2026-04-17T21:20:49.123Z",
+  "session_key": "agent:main:main",
+  "agent_id": "main",
+  "query": "Switch topics. Give me one short sentence on why shadow mode stays default-off.",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "Remember this old preference: my default editor used to be Vim."
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "Got it — I’ve noted that your default editor used to be Vim."
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "Update it now: my current default editor is Zed."
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "Updated: your current default editor is Zed."
+    }
+  ],
+  "decision": {
+    "relation": "resolve",
+    "confidence": 0.97,
+    "evict_turn_ids": [
+      "t1",
+      "t2",
+      "t3",
+      "t4"
+    ],
+    "pin_turn_ids": [
+      "t4"
+    ],
+    "archive_summary": "User updated their durable preference: the current default editor is Zed, replacing the earlier Vim preference.",
+    "reasoning_summary": "The preference update is resolved and no longer needs raw-turn support. The new shadow-mode question is a fresh topic, so the old block can be evicted while preserving the durable fact that the current default editor is Zed as a compact pin."
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "resolve",
+      "confidence": 0.97,
+      "archiveSummary": "User updated their durable preference: the current default editor is Zed, replacing the earlier Vim preference.",
+      "reasoningSummary": "The preference update is resolved and no longer needs raw-turn support. The new shadow-mode question is a fresh topic, so the old block can be evicted while preserving the durable fact that the current default editor is Zed as a compact pin.",
+      "latestUserTurnId": "t3",
+      "pinTurnIds": [
+        "t4"
+      ],
+      "pinnedOnlyTurnIds": [
+        "t4"
+      ],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ],
+      "blockedEvictTurnIds": [
+        "t3"
+      ],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t4"
+      ],
+      "keepTurnIds": [
+        "t3"
+      ],
+      "baselineTokens": 54,
+      "keptTokens": 12,
+      "prunedTokens": 42,
+      "reductionRatio": 0.7777777777777778,
+      "keepTurns": [
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "Update it now: my current default editor is Zed.",
+          "tokenEstimate": 12
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "Remember this old preference: my default editor used to be Vim.",
+          "tokenEstimate": 16
+        },
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "Got it — I’ve noted that your default editor used to be Vim.",
+          "tokenEstimate": 15
+        },
+        {
+          "id": "t4",
+          "role": "assistant",
+          "content": "Updated: your current default editor is Zed.",
+          "tokenEstimate": 11
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: Remember this old preference: my default editor used to be Vim.\nt2 assistant: Got it — I’ve noted that your default editor used to be Vim.\nt3 user: Update it now: my current default editor is Zed.\nt4 assistant: Updated: your current default editor is Zed.",
+    "shadowRawTranscript": "t3 user: Update it now: my current default editor is Zed.",
+    "semanticPinNotes": [
+      "assistant: Updated: your current default editor is Zed."
+    ],
+    "archiveSummary": "User updated their durable preference: the current default editor is Zed, replacing the earlier Vim preference.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 66,
+    "shadowRawPromptEstimate": 15,
+    "shadowPackageEstimate": 37,
+    "shadowPackageText": "Active raw turns:\nt3 user: Update it now: my current default editor is Zed.\n\nSemantic pins:\nassistant: Updated: your current default editor is Zed."
+  },
+  "scorecard": {
+    "relation": "resolve",
+    "baselineTurnCount": 4,
+    "keptTurnCount": 1,
+    "evictedTurnCount": 3,
+    "pinCount": 1,
+    "baselinePromptEstimate": 66,
+    "shadowRawPromptEstimate": 15,
+    "shadowPackageEstimate": 37,
+    "rawReductionRatio": 0.7778,
+    "packageReductionRatio": 0.4394,
+    "candidateLoadElapsedMs": 17,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 23952,
+    "totalElapsedMs": 23958,
+    "guardedEnabled": false,
+    "guardedApplied": false,
+    "guardedReason": "feature_disabled",
+    "guardedMessageCount": 8,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 104
+  },
+  "guarded": {
+    "enabled": false,
+    "applied": false,
+    "reason": "feature_disabled",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Remember this old preference: my default editor used to be Vim."
+          }
+        ],
+        "timestamp": 1776460784202
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "toolCall",
+            "id": "call_PPyu6esPall6ZW3HZM7GcBUc",
+            "name": "write",
+            "arguments": {
+              "path": "/tmp/umc-cmgc-live-NVNs9H/agents/main/agent/memory/2026-04-12.md",
+              "content": "# Daily Memory 2026-04-12\n\n- Confirmed update: Maya switched the main editor from Vim to Zed last week.\n- Confirmed update: the clinic demo moved to next Tuesday at 15:00 Shanghai time.\n- Confirmed update: the deploy region decision is now `eu-west-1`; the older `us-east-1` draft should be ignored.\n- Current keyboard preference: tactile switches over linear red switches.\n- Current notebook for meetings: the charcoal A5 notebook, not the old blue pocket notebook.\n- Old preference to remember: the default editor used to be Vim.\n"
+            },
+            "partialJson": "{\"path\":\"/tmp/umc-cmgc-live-NVNs9H/agents/main/agent/memory/2026-04-12.md\",\"content\":\"# Daily Memory 2026-04-12\\n\\n- Confirmed update: Maya switched the main editor from Vim to Zed last week.\\n- Confirmed update: the clinic demo moved to next Tuesday at 15:00 Shanghai time.\\n- Confirmed update: the deploy region decision is now `eu-west-1`; the older `us-east-1` draft should be ignored.\\n- Current keyboard preference: tactile switches over linear red switches.\\n- Current notebook for meetings: the charcoal A5 notebook, not the old blue pocket notebook.\\n- Old preference to remember: the default editor used to be Vim.\\n\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 7883,
+          "output": 179,
+          "cacheRead": 5120,
+          "cacheWrite": 0,
+          "totalTokens": 13182,
+          "cost": {
+            "input": 0.00591225,
+            "output": 0.0008055,
+            "cacheRead": 0.000384,
+            "cacheWrite": 0,
+            "total": 0.0071017499999999996
+          }
+        },
+        "stopReason": "toolUse",
+        "timestamp": 1776460784212,
+        "responseId": "resp_072f62691fc784060169e2a3f25d9c81918109d981a9500c44"
+      },
+      {
+        "role": "toolResult",
+        "toolCallId": "call_PPyu6esPall6ZW3HZM7GcBUc",
+        "toolName": "write",
+        "content": [
+          {
+            "type": "text",
+            "text": "Successfully wrote 532 bytes to /tmp/umc-cmgc-live-NVNs9H/agents/main/agent/memory/2026-04-12.md"
+          }
+        ],
+        "isError": false,
+        "timestamp": 1776460788252
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "Got it — I’ve noted that your default editor used to be Vim.",
+            "textSignature": "{\"v\":1,\"id\":\"msg_00fcbe1678236c690169e2a3f757fc8191bc298cb403d22147\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 427,
+          "output": 19,
+          "cacheRead": 12800,
+          "cacheWrite": 0,
+          "totalTokens": 13246,
+          "cost": {
+            "input": 0.00032025,
+            "output": 0.0000855,
+            "cacheRead": 0.0009599999999999999,
+            "cacheWrite": 0,
+            "total": 0.00136575
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776460788257,
+        "responseId": "resp_00fcbe1678236c690169e2a3f65c84819197824193fcb273fe"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Update it now: my current default editor is Zed."
+          }
+        ],
+        "timestamp": 1776460817068
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "toolCall",
+            "id": "call_jEmiVnqoc90GtE7fPvgh0Szu",
+            "name": "edit",
+            "arguments": {
+              "path": "/tmp/umc-cmgc-live-NVNs9H/agents/main/agent/memory/2026-04-12.md",
+              "edits": [
+                {
+                  "oldText": "- Old preference to remember: the default editor used to be Vim.\n",
+                  "newText": "- Editor preference: the current default editor is Zed.\n- Old preference to remember: the default editor used to be Vim.\n"
+                }
+              ]
+            },
+            "partialJson": "{\"path\":\"/tmp/umc-cmgc-live-NVNs9H/agents/main/agent/memory/2026-04-12.md\",\"edits\":[{\"oldText\":\"- Old preference to remember: the default editor used to be Vim.\\n\",\"newText\":\"- Editor preference: the current default editor is Zed.\\n- Old preference to remember: the default editor used to be Vim.\\n\"}]}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 8110,
+          "output": 101,
+          "cacheRead": 5120,
+          "cacheWrite": 0,
+          "totalTokens": 13331,
+          "cost": {
+            "input": 0.0060825,
+            "output": 0.0004545,
+            "cacheRead": 0.000384,
+            "cacheWrite": 0,
+            "total": 0.006921
+          }
+        },
+        "stopReason": "toolUse",
+        "timestamp": 1776460817078,
+        "responseId": "resp_00fcbe1678236c690169e2a41331b8819192036167d9a2eeab"
+      },
+      {
+        "role": "toolResult",
+        "toolCallId": "call_jEmiVnqoc90GtE7fPvgh0Szu",
+        "toolName": "edit",
+        "content": [
+          {
+            "type": "text",
+            "text": "Successfully replaced 1 block(s) in /tmp/umc-cmgc-live-NVNs9H/agents/main/agent/memory/2026-04-12.md."
+          }
+        ],
+        "isError": false,
+        "timestamp": 1776460820701
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "Updated: your current default editor is Zed.",
+            "textSignature": "{\"v\":1,\"id\":\"msg_00fcbe1678236c690169e2a4174e3c8191a9f08dd57a717fa5\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 579,
+          "output": 14,
+          "cacheRead": 12800,
+          "cacheWrite": 0,
+          "totalTokens": 13393,
+          "cost": {
+            "input": 0.00043425,
+            "output": 0.000063,
+            "cacheRead": 0.0009599999999999999,
+            "cacheWrite": 0,
+            "total": 0.0014572499999999998
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776460820705,
+        "responseId": "resp_00fcbe1678236c690169e2a416ce1c8191a38621a43544dd67"
+      }
+    ],
+    "filteredMessageCount": 8,
+    "filteredMessageTokenEstimate": 104,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 23958,
+    "decisionElapsedMs": 23952
+  }
+}

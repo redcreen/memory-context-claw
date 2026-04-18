@@ -1,0 +1,409 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776460901680-sj0x7h",
+  "generated_at": "2026-04-17T21:21:41.680Z",
+  "session_key": "agent:main:main",
+  "agent_id": "main",
+  "query": "Back to the editor fact. What is my current default editor now?",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "Remember this old preference: my default editor used to be Vim."
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "Got it — I’ve noted that your default editor used to be Vim."
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "Update it now: my current default editor is Zed."
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "Updated: your current default editor is Zed."
+    },
+    {
+      "id": "t5",
+      "role": "user",
+      "content": "Switch topics. Give me one short sentence on why shadow mode stays default-off."
+    },
+    {
+      "id": "t6",
+      "role": "assistant",
+      "content": "Because shadow mode can quietly collect behavior signals without obvious user impact, so default-off avoids accidental privacy, trust, and rollout risk."
+    }
+  ],
+  "decision": {
+    "relation": "switch",
+    "confidence": 0.96,
+    "evict_turn_ids": [
+      "t1",
+      "t2",
+      "t5",
+      "t6"
+    ],
+    "pin_turn_ids": [
+      "t3",
+      "t4"
+    ],
+    "archive_summary": "User’s default editor was updated from Vim to Zed; the shadow mode question was a separate resolved side topic and can be dropped.",
+    "reasoning_summary": "The latest user turn returns to the editor-fact topic, but the only durable fact needed is that the current default editor is Zed. The shadow mode exchange is off-topic for the next turn and can leave the prompt. The old Vim preference is superseded, so it should not be pinned."
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "switch",
+      "confidence": 0.96,
+      "archiveSummary": "User’s default editor was updated from Vim to Zed; the shadow mode question was a separate resolved side topic and can be dropped.",
+      "reasoningSummary": "The latest user turn returns to the editor-fact topic, but the only durable fact needed is that the current default editor is Zed. The shadow mode exchange is off-topic for the next turn and can leave the prompt. The old Vim preference is superseded, so it should not be pinned.",
+      "latestUserTurnId": "t5",
+      "pinTurnIds": [
+        "t3",
+        "t4"
+      ],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t5",
+        "t6"
+      ],
+      "blockedEvictTurnIds": [
+        "t5"
+      ],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t6"
+      ],
+      "keepTurnIds": [
+        "t3",
+        "t4",
+        "t5"
+      ],
+      "baselineTokens": 112,
+      "keptTokens": 43,
+      "prunedTokens": 69,
+      "reductionRatio": 0.6160714285714286,
+      "keepTurns": [
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "Update it now: my current default editor is Zed.",
+          "tokenEstimate": 12
+        },
+        {
+          "id": "t4",
+          "role": "assistant",
+          "content": "Updated: your current default editor is Zed.",
+          "tokenEstimate": 11
+        },
+        {
+          "id": "t5",
+          "role": "user",
+          "content": "Switch topics. Give me one short sentence on why shadow mode stays default-off.",
+          "tokenEstimate": 20
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "Remember this old preference: my default editor used to be Vim.",
+          "tokenEstimate": 16
+        },
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "Got it — I’ve noted that your default editor used to be Vim.",
+          "tokenEstimate": 15
+        },
+        {
+          "id": "t6",
+          "role": "assistant",
+          "content": "Because shadow mode can quietly collect behavior signals without obvious user impact, so default-off avoids accidental privacy, trust, and rollout risk.",
+          "tokenEstimate": 38
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: Remember this old preference: my default editor used to be Vim.\nt2 assistant: Got it — I’ve noted that your default editor used to be Vim.\nt3 user: Update it now: my current default editor is Zed.\nt4 assistant: Updated: your current default editor is Zed.\nt5 user: Switch topics. Give me one short sentence on why shadow mode stays default-off.\nt6 assistant: Because shadow mode can quietly collect behavior signals without obvious user impact, so default-off avoids accidental privacy, trust, and rollout risk.",
+    "shadowRawTranscript": "t3 user: Update it now: my current default editor is Zed.\nt4 assistant: Updated: your current default editor is Zed.\nt5 user: Switch topics. Give me one short sentence on why shadow mode stays default-off.",
+    "semanticPinNotes": [],
+    "archiveSummary": "User’s default editor was updated from Vim to Zed; the shadow mode question was a separate resolved side topic and can be dropped.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 130,
+    "shadowRawPromptEstimate": 52,
+    "shadowPackageEstimate": 56,
+    "shadowPackageText": "Active raw turns:\nt3 user: Update it now: my current default editor is Zed.\nt4 assistant: Updated: your current default editor is Zed.\nt5 user: Switch topics. Give me one short sentence on why shadow mode stays default-off."
+  },
+  "scorecard": {
+    "relation": "switch",
+    "baselineTurnCount": 6,
+    "keptTurnCount": 3,
+    "evictedTurnCount": 3,
+    "pinCount": 2,
+    "baselinePromptEstimate": 130,
+    "shadowRawPromptEstimate": 52,
+    "shadowPackageEstimate": 56,
+    "rawReductionRatio": 0.6161,
+    "packageReductionRatio": 0.5692,
+    "candidateLoadElapsedMs": 20,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 21753,
+    "totalElapsedMs": 21760,
+    "guardedEnabled": false,
+    "guardedApplied": false,
+    "guardedReason": "feature_disabled",
+    "guardedMessageCount": 10,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 162
+  },
+  "guarded": {
+    "enabled": false,
+    "applied": false,
+    "reason": "feature_disabled",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Remember this old preference: my default editor used to be Vim."
+          }
+        ],
+        "timestamp": 1776460784202
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "toolCall",
+            "id": "call_PPyu6esPall6ZW3HZM7GcBUc",
+            "name": "write",
+            "arguments": {
+              "path": "/tmp/umc-cmgc-live-NVNs9H/agents/main/agent/memory/2026-04-12.md",
+              "content": "# Daily Memory 2026-04-12\n\n- Confirmed update: Maya switched the main editor from Vim to Zed last week.\n- Confirmed update: the clinic demo moved to next Tuesday at 15:00 Shanghai time.\n- Confirmed update: the deploy region decision is now `eu-west-1`; the older `us-east-1` draft should be ignored.\n- Current keyboard preference: tactile switches over linear red switches.\n- Current notebook for meetings: the charcoal A5 notebook, not the old blue pocket notebook.\n- Old preference to remember: the default editor used to be Vim.\n"
+            },
+            "partialJson": "{\"path\":\"/tmp/umc-cmgc-live-NVNs9H/agents/main/agent/memory/2026-04-12.md\",\"content\":\"# Daily Memory 2026-04-12\\n\\n- Confirmed update: Maya switched the main editor from Vim to Zed last week.\\n- Confirmed update: the clinic demo moved to next Tuesday at 15:00 Shanghai time.\\n- Confirmed update: the deploy region decision is now `eu-west-1`; the older `us-east-1` draft should be ignored.\\n- Current keyboard preference: tactile switches over linear red switches.\\n- Current notebook for meetings: the charcoal A5 notebook, not the old blue pocket notebook.\\n- Old preference to remember: the default editor used to be Vim.\\n\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 7883,
+          "output": 179,
+          "cacheRead": 5120,
+          "cacheWrite": 0,
+          "totalTokens": 13182,
+          "cost": {
+            "input": 0.00591225,
+            "output": 0.0008055,
+            "cacheRead": 0.000384,
+            "cacheWrite": 0,
+            "total": 0.0071017499999999996
+          }
+        },
+        "stopReason": "toolUse",
+        "timestamp": 1776460784212,
+        "responseId": "resp_072f62691fc784060169e2a3f25d9c81918109d981a9500c44"
+      },
+      {
+        "role": "toolResult",
+        "toolCallId": "call_PPyu6esPall6ZW3HZM7GcBUc",
+        "toolName": "write",
+        "content": [
+          {
+            "type": "text",
+            "text": "Successfully wrote 532 bytes to /tmp/umc-cmgc-live-NVNs9H/agents/main/agent/memory/2026-04-12.md"
+          }
+        ],
+        "isError": false,
+        "timestamp": 1776460788252
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "Got it — I’ve noted that your default editor used to be Vim.",
+            "textSignature": "{\"v\":1,\"id\":\"msg_00fcbe1678236c690169e2a3f757fc8191bc298cb403d22147\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 427,
+          "output": 19,
+          "cacheRead": 12800,
+          "cacheWrite": 0,
+          "totalTokens": 13246,
+          "cost": {
+            "input": 0.00032025,
+            "output": 0.0000855,
+            "cacheRead": 0.0009599999999999999,
+            "cacheWrite": 0,
+            "total": 0.00136575
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776460788257,
+        "responseId": "resp_00fcbe1678236c690169e2a3f65c84819197824193fcb273fe"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Update it now: my current default editor is Zed."
+          }
+        ],
+        "timestamp": 1776460817068
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "toolCall",
+            "id": "call_jEmiVnqoc90GtE7fPvgh0Szu",
+            "name": "edit",
+            "arguments": {
+              "path": "/tmp/umc-cmgc-live-NVNs9H/agents/main/agent/memory/2026-04-12.md",
+              "edits": [
+                {
+                  "oldText": "- Old preference to remember: the default editor used to be Vim.\n",
+                  "newText": "- Editor preference: the current default editor is Zed.\n- Old preference to remember: the default editor used to be Vim.\n"
+                }
+              ]
+            },
+            "partialJson": "{\"path\":\"/tmp/umc-cmgc-live-NVNs9H/agents/main/agent/memory/2026-04-12.md\",\"edits\":[{\"oldText\":\"- Old preference to remember: the default editor used to be Vim.\\n\",\"newText\":\"- Editor preference: the current default editor is Zed.\\n- Old preference to remember: the default editor used to be Vim.\\n\"}]}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 8110,
+          "output": 101,
+          "cacheRead": 5120,
+          "cacheWrite": 0,
+          "totalTokens": 13331,
+          "cost": {
+            "input": 0.0060825,
+            "output": 0.0004545,
+            "cacheRead": 0.000384,
+            "cacheWrite": 0,
+            "total": 0.006921
+          }
+        },
+        "stopReason": "toolUse",
+        "timestamp": 1776460817078,
+        "responseId": "resp_00fcbe1678236c690169e2a41331b8819192036167d9a2eeab"
+      },
+      {
+        "role": "toolResult",
+        "toolCallId": "call_jEmiVnqoc90GtE7fPvgh0Szu",
+        "toolName": "edit",
+        "content": [
+          {
+            "type": "text",
+            "text": "Successfully replaced 1 block(s) in /tmp/umc-cmgc-live-NVNs9H/agents/main/agent/memory/2026-04-12.md."
+          }
+        ],
+        "isError": false,
+        "timestamp": 1776460820701
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "Updated: your current default editor is Zed.",
+            "textSignature": "{\"v\":1,\"id\":\"msg_00fcbe1678236c690169e2a4174e3c8191a9f08dd57a717fa5\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 579,
+          "output": 14,
+          "cacheRead": 12800,
+          "cacheWrite": 0,
+          "totalTokens": 13393,
+          "cost": {
+            "input": 0.00043425,
+            "output": 0.000063,
+            "cacheRead": 0.0009599999999999999,
+            "cacheWrite": 0,
+            "total": 0.0014572499999999998
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776460820705,
+        "responseId": "resp_00fcbe1678236c690169e2a416ce1c8191a38621a43544dd67"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Switch topics. Give me one short sentence on why shadow mode stays default-off."
+          }
+        ],
+        "timestamp": 1776460873088
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "Because shadow mode can quietly collect behavior signals without obvious user impact, so default-off avoids accidental privacy, trust, and rollout risk.",
+            "textSignature": "{\"v\":1,\"id\":\"msg_00fcbe1678236c690169e2a44bc13881919460351a0504941a\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 8277,
+          "output": 30,
+          "cacheRead": 5120,
+          "cacheWrite": 0,
+          "totalTokens": 13427,
+          "cost": {
+            "input": 0.00620775,
+            "output": 0.000135,
+            "cacheRead": 0.000384,
+            "cacheWrite": 0,
+            "total": 0.006726749999999999
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776460873100,
+        "responseId": "resp_00fcbe1678236c690169e2a44b2c1c8191b5056787b0b87755"
+      }
+    ],
+    "filteredMessageCount": 10,
+    "filteredMessageTokenEstimate": 162,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 21760,
+    "decisionElapsedMs": 21753
+  }
+}

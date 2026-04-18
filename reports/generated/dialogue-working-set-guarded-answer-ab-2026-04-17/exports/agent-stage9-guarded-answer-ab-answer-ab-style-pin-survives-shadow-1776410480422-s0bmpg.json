@@ -1,0 +1,203 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776410480422-s0bmpg",
+  "generated_at": "2026-04-17T07:21:20.422Z",
+  "session_key": "agent:stage9-guarded-answer-ab:answer-ab-style-pin-survives",
+  "agent_id": "stage9-guarded-answer-ab",
+  "query": "我刚才要求你回复时默认怎么组织结构？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "assistant",
+      "content": "当前状态：OpenClaw 版本 2026.3.31，当前模型 openai-codex/gpt-5.4，上下文占用 158k / 272k，缓存命中率 99%。"
+    },
+    {
+      "id": "t2",
+      "role": "user",
+      "content": "以后默认先给我结论，再展开细节。"
+    },
+    {
+      "id": "t3",
+      "role": "assistant",
+      "content": "记住了，以后默认先给结论。"
+    },
+    {
+      "id": "t4",
+      "role": "user",
+      "content": "先说检索策略，当前默认先走 fast path。"
+    },
+    {
+      "id": "t5",
+      "role": "assistant",
+      "content": "好，当前默认先走 fast path。"
+    },
+    {
+      "id": "t6",
+      "role": "user",
+      "content": "我刚才要求你回复时默认怎么组织结构？"
+    }
+  ],
+  "decision": {
+    "relation": "switch",
+    "confidence": 0.95,
+    "evict_turn_ids": [
+      "t1",
+      "t4",
+      "t5"
+    ],
+    "pin_turn_ids": [
+      "t2",
+      "t4"
+    ],
+    "archive_summary": "Durable user defaults established: responses should default to conclusion first, then details; retrieval should default to fast path. The older status snapshot is irrelevant. The current active turn asks to recall the response-structure preference, so that preference should remain directly available while the retrieval-strategy exchange can leave the raw prompt.",
+    "reasoning_summary": "The latest user turn depends on the earlier response-structure preference in t2, not on the status snapshot or the solved fast-path exchange. This is a topic switch back to an older durable preference, so irrelevant solved turns are good eviction candidates. Pin t2 and t4 because they are durable defaults that should survive even if their raw turns later leave the prompt."
+  },
+  "snapshot": {
+    "applied": {
+      "relation": "switch",
+      "confidence": 0.95,
+      "archiveSummary": "Durable user defaults established: responses should default to conclusion first, then details; retrieval should default to fast path. The older status snapshot is irrelevant. The current active turn asks to recall the response-structure preference, so that preference should remain directly available while the retrieval-strategy exchange can leave the raw prompt.",
+      "reasoningSummary": "The latest user turn depends on the earlier response-structure preference in t2, not on the status snapshot or the solved fast-path exchange. This is a topic switch back to an older durable preference, so irrelevant solved turns are good eviction candidates. Pin t2 and t4 because they are durable defaults that should survive even if their raw turns later leave the prompt.",
+      "latestUserTurnId": "t6",
+      "pinTurnIds": [
+        "t2",
+        "t4"
+      ],
+      "pinnedOnlyTurnIds": [
+        "t4"
+      ],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t4",
+        "t5"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t4",
+        "t5"
+      ],
+      "keepTurnIds": [
+        "t2",
+        "t3",
+        "t6"
+      ],
+      "baselineTokens": 45,
+      "keptTokens": 13,
+      "prunedTokens": 32,
+      "reductionRatio": 0.7111111111111111,
+      "keepTurns": [
+        {
+          "id": "t2",
+          "role": "user",
+          "content": "以后默认先给我结论，再展开细节。",
+          "tokenEstimate": 4
+        },
+        {
+          "id": "t3",
+          "role": "assistant",
+          "content": "记住了，以后默认先给结论。",
+          "tokenEstimate": 4
+        },
+        {
+          "id": "t6",
+          "role": "user",
+          "content": "我刚才要求你回复时默认怎么组织结构？",
+          "tokenEstimate": 5
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "assistant",
+          "content": "当前状态：OpenClaw 版本 2026.3.31，当前模型 openai-codex/gpt-5.4，上下文占用 158k / 272k，缓存命中率 99%。",
+          "tokenEstimate": 21
+        },
+        {
+          "id": "t4",
+          "role": "user",
+          "content": "先说检索策略，当前默认先走 fast path。",
+          "tokenEstimate": 6
+        },
+        {
+          "id": "t5",
+          "role": "assistant",
+          "content": "好，当前默认先走 fast path。",
+          "tokenEstimate": 5
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 assistant: 当前状态：OpenClaw 版本 2026.3.31，当前模型 openai-codex/gpt-5.4，上下文占用 158k / 272k，缓存命中率 99%。\nt2 user: 以后默认先给我结论，再展开细节。\nt3 assistant: 记住了，以后默认先给结论。\nt4 user: 先说检索策略，当前默认先走 fast path。\nt5 assistant: 好，当前默认先走 fast path。\nt6 user: 我刚才要求你回复时默认怎么组织结构？",
+    "shadowRawTranscript": "t2 user: 以后默认先给我结论，再展开细节。\nt3 assistant: 记住了，以后默认先给结论。\nt6 user: 我刚才要求你回复时默认怎么组织结构？",
+    "semanticPinNotes": [
+      "user: 先说检索策略，当前默认先走 fast path。"
+    ],
+    "archiveSummary": "Durable user defaults established: responses should default to conclusion first, then details; retrieval should default to fast path. The older status snapshot is irrelevant. The current active turn asks to recall the response-structure preference, so that preference should remain directly available while the retrieval-strategy exchange can leave the raw prompt.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 62,
+    "shadowRawPromptEstimate": 21,
+    "shadowPackageEstimate": 37,
+    "shadowPackageText": "Active raw turns:\nt2 user: 以后默认先给我结论，再展开细节。\nt3 assistant: 记住了，以后默认先给结论。\nt6 user: 我刚才要求你回复时默认怎么组织结构？\n\nSemantic pins:\nuser: 先说检索策略，当前默认先走 fast path。"
+  },
+  "scorecard": {
+    "relation": "switch",
+    "baselineTurnCount": 6,
+    "keptTurnCount": 3,
+    "evictedTurnCount": 3,
+    "pinCount": 2,
+    "baselinePromptEstimate": 62,
+    "shadowRawPromptEstimate": 21,
+    "shadowPackageEstimate": 37,
+    "rawReductionRatio": 0.7111,
+    "packageReductionRatio": 0.4032,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 17558,
+    "totalElapsedMs": 17558,
+    "guardedEnabled": true,
+    "guardedApplied": true,
+    "guardedReason": "guarded_candidate",
+    "guardedMessageCount": 3,
+    "guardedCarryForwardEstimate": 17,
+    "guardedFilteredMessageEstimate": 13
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": true,
+    "reason": "guarded_candidate",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": "以后默认先给我结论，再展开细节。"
+      },
+      {
+        "role": "assistant",
+        "content": "记住了，以后默认先给结论。"
+      },
+      {
+        "role": "user",
+        "content": "我刚才要求你回复时默认怎么组织结构？"
+      }
+    ],
+    "filteredMessageCount": 3,
+    "filteredMessageTokenEstimate": 13,
+    "carryForwardText": "Conversation carry-forward pins:\n- user: 先说检索策略，当前默认先走 fast path。",
+    "carryForwardEstimate": 17,
+    "evictedSourceIndices": [
+      0,
+      3,
+      4
+    ]
+  },
+  "timings": {
+    "totalElapsedMs": 17559,
+    "decisionElapsedMs": 17558
+  }
+}

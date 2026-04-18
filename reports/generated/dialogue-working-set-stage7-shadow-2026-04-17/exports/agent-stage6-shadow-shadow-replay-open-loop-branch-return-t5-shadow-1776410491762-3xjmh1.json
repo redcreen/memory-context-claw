@@ -1,0 +1,183 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776410491762-3xjmh1",
+  "generated_at": "2026-04-17T07:21:31.762Z",
+  "session_key": "agent:stage6-shadow:shadow-replay-open-loop-branch-return:t5",
+  "agent_id": "stage6-shadow",
+  "query": "好，回到刚才 Stage 6，那三个部分是什么？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "把 Stage 6 的验收拆成 3 个部分。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "可以，先拆成：功能正确性、回退安全、宿主集成验证。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "先别展开，我插一句：umc registry migrate 这条命令是做什么的？"
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "它更像 UMC 自己 registry root 的迁移，不是 builtin memory 的切换器。"
+    },
+    {
+      "id": "t5",
+      "role": "user",
+      "content": "好，回到刚才 Stage 6，那三个部分是什么？"
+    }
+  ],
+  "decision": {
+    "relation": "branch",
+    "confidence": 0.98,
+    "evict_turn_ids": [
+      "t3",
+      "t4"
+    ],
+    "pin_turn_ids": [],
+    "archive_summary": "Main task is Stage 6 acceptance split into three parts: 功能正确性、回退安全、宿主集成验证. A brief side question asked what `umc registry migrate` does; it was answered as UMC registry-root migration, not a builtin-memory switcher, and is not needed for the immediate return to Stage 6.",
+    "reasoning_summary": "The latest user turn explicitly returns to the earlier Stage 6 topic, so this is a side-question branch returning to the unfinished main task. Keep the raw Stage 6 turns (`t1`,`t2`) because the answer depends directly on them. The side detour (`t3`,`t4`) is resolved and irrelevant to the next turn, so it can leave the working set without pinning."
+  },
+  "snapshot": {
+    "applied": {
+      "relation": "branch",
+      "confidence": 0.98,
+      "archiveSummary": "Main task is Stage 6 acceptance split into three parts: 功能正确性、回退安全、宿主集成验证. A brief side question asked what `umc registry migrate` does; it was answered as UMC registry-root migration, not a builtin-memory switcher, and is not needed for the immediate return to Stage 6.",
+      "reasoningSummary": "The latest user turn explicitly returns to the earlier Stage 6 topic, so this is a side-question branch returning to the unfinished main task. Keep the raw Stage 6 turns (`t1`,`t2`) because the answer depends directly on them. The side detour (`t3`,`t4`) is resolved and irrelevant to the next turn, so it can leave the working set without pinning.",
+      "latestUserTurnId": "t5",
+      "pinTurnIds": [],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t3",
+        "t4"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t3",
+        "t4"
+      ],
+      "keepTurnIds": [
+        "t1",
+        "t2",
+        "t5"
+      ],
+      "baselineTokens": 43,
+      "keptTokens": 19,
+      "prunedTokens": 24,
+      "reductionRatio": 0.5581395348837209,
+      "keepTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "把 Stage 6 的验收拆成 3 个部分。",
+          "tokenEstimate": 6
+        },
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "可以，先拆成：功能正确性、回退安全、宿主集成验证。",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t5",
+          "role": "user",
+          "content": "好，回到刚才 Stage 6，那三个部分是什么？",
+          "tokenEstimate": 6
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "先别展开，我插一句：umc registry migrate 这条命令是做什么的？",
+          "tokenEstimate": 11
+        },
+        {
+          "id": "t4",
+          "role": "assistant",
+          "content": "它更像 UMC 自己 registry root 的迁移，不是 builtin memory 的切换器。",
+          "tokenEstimate": 13
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 把 Stage 6 的验收拆成 3 个部分。\nt2 assistant: 可以，先拆成：功能正确性、回退安全、宿主集成验证。\nt3 user: 先别展开，我插一句：umc registry migrate 这条命令是做什么的？\nt4 assistant: 它更像 UMC 自己 registry root 的迁移，不是 builtin memory 的切换器。\nt5 user: 好，回到刚才 Stage 6，那三个部分是什么？",
+    "shadowRawTranscript": "t1 user: 把 Stage 6 的验收拆成 3 个部分。\nt2 assistant: 可以，先拆成：功能正确性、回退安全、宿主集成验证。\nt5 user: 好，回到刚才 Stage 6，那三个部分是什么？",
+    "semanticPinNotes": [],
+    "archiveSummary": "Main task is Stage 6 acceptance split into three parts: 功能正确性、回退安全、宿主集成验证. A brief side question asked what `umc registry migrate` does; it was answered as UMC registry-root migration, not a builtin-memory switcher, and is not needed for the immediate return to Stage 6.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 56,
+    "shadowRawPromptEstimate": 27,
+    "shadowPackageEstimate": 31,
+    "shadowPackageText": "Active raw turns:\nt1 user: 把 Stage 6 的验收拆成 3 个部分。\nt2 assistant: 可以，先拆成：功能正确性、回退安全、宿主集成验证。\nt5 user: 好，回到刚才 Stage 6，那三个部分是什么？"
+  },
+  "scorecard": {
+    "relation": "branch",
+    "baselineTurnCount": 5,
+    "keptTurnCount": 3,
+    "evictedTurnCount": 2,
+    "pinCount": 0,
+    "baselinePromptEstimate": 56,
+    "shadowRawPromptEstimate": 27,
+    "shadowPackageEstimate": 31,
+    "rawReductionRatio": 0.5581,
+    "packageReductionRatio": 0.4464,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 13762,
+    "totalElapsedMs": 13762,
+    "guardedEnabled": false,
+    "guardedApplied": false,
+    "guardedReason": "feature_disabled",
+    "guardedMessageCount": 5,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 43
+  },
+  "guarded": {
+    "enabled": false,
+    "applied": false,
+    "reason": "feature_disabled",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": "把 Stage 6 的验收拆成 3 个部分。"
+      },
+      {
+        "role": "assistant",
+        "content": "可以，先拆成：功能正确性、回退安全、宿主集成验证。"
+      },
+      {
+        "role": "user",
+        "content": "先别展开，我插一句：umc registry migrate 这条命令是做什么的？"
+      },
+      {
+        "role": "assistant",
+        "content": "它更像 UMC 自己 registry root 的迁移，不是 builtin memory 的切换器。"
+      },
+      {
+        "role": "user",
+        "content": "好，回到刚才 Stage 6，那三个部分是什么？"
+      }
+    ],
+    "filteredMessageCount": 5,
+    "filteredMessageTokenEstimate": 43,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 13762,
+    "decisionElapsedMs": 13762
+  }
+}

@@ -1,0 +1,372 @@
+{
+  "generatedAt": "2026-04-17T05:58:06.838Z",
+  "casesPath": "/workspace/evals/openclaw-ordinary-conversation-memory-intent-ab-cases.js",
+  "agentId": "rtab",
+  "sourceAgentId": "main",
+  "environment": {
+    "executionEnvironment": "docker",
+    "dockerImage": "ghcr.io/openclaw/openclaw:2026.4.2",
+    "fixtureRoot": "/workspace/evals/openclaw-ordinary-conversation-fixture",
+    "pluginPath": "/workspace",
+    "authProfilesPath": "(mounted auth profiles)",
+    "hostSeededFromHome": false,
+    "baseStateReuse": true,
+    "legacyBaseStateKey": "legacy-0c28dcbc3c7dbf5d",
+    "currentBaseStateKey": "current-d0d90e2ef76bcc7a",
+    "templateCacheRoot": "/workspace/.cache/openclaw-ordinary-state-templates",
+    "legacyBaseStatePrepMs": 6,
+    "currentBaseStatePrepMs": 1,
+    "templateCacheHits": {
+      "legacy": true,
+      "current": true
+    }
+  },
+  "timing": {
+    "templatePrepMs": {
+      "legacy": 6,
+      "current": 1
+    },
+    "legacy": {
+      "runs": 3,
+      "cloneMs": 184,
+      "captureMs": 90170,
+      "captureWaitMs": 0,
+      "sessionClearMs": 29,
+      "recallMs": 90259,
+      "cleanupMs": 62,
+      "totalCaseMs": 180710,
+      "captureTimeouts": 3,
+      "recallTimeouts": 3,
+      "maxCloneMs": 78,
+      "maxCaptureMs": 30068,
+      "maxCaptureWaitMs": 0,
+      "maxSessionClearMs": 24,
+      "maxRecallMs": 30174,
+      "maxCleanupMs": 51,
+      "maxTotalCaseMs": 60352,
+      "avgCloneMs": 61,
+      "avgCaptureMs": 30057,
+      "avgCaptureWaitMs": 0,
+      "avgSessionClearMs": 10,
+      "avgRecallMs": 30086,
+      "avgCleanupMs": 21,
+      "avgTotalCaseMs": 60237
+    },
+    "current": {
+      "runs": 3,
+      "cloneMs": 113,
+      "captureMs": 83632,
+      "captureWaitMs": 36426,
+      "sessionClearMs": 11,
+      "recallMs": 90038,
+      "cleanupMs": 119,
+      "totalCaseMs": 210346,
+      "captureTimeouts": 2,
+      "recallTimeouts": 2,
+      "maxCloneMs": 45,
+      "maxCaptureMs": 30049,
+      "maxCaptureWaitMs": 12163,
+      "maxSessionClearMs": 9,
+      "maxRecallMs": 30059,
+      "maxCleanupMs": 103,
+      "maxTotalCaseMs": 72419,
+      "avgCloneMs": 38,
+      "avgCaptureMs": 27877,
+      "avgCaptureWaitMs": 12142,
+      "avgSessionClearMs": 4,
+      "avgRecallMs": 30013,
+      "avgCleanupMs": 40,
+      "avgTotalCaseMs": 70115
+    }
+  },
+  "summary": {
+    "total": 3,
+    "currentPassed": 0,
+    "legacyPassed": 0,
+    "bothPass": 0,
+    "umcOnly": 0,
+    "legacyOnly": 0,
+    "bothFail": 3,
+    "byLanguage": {
+      "en": {
+        "total": 1,
+        "currentPassed": 0,
+        "legacyPassed": 0,
+        "bothPass": 0,
+        "umcOnly": 0,
+        "legacyOnly": 0,
+        "bothFail": 1
+      },
+      "zh": {
+        "total": 2,
+        "currentPassed": 0,
+        "legacyPassed": 0,
+        "bothPass": 0,
+        "umcOnly": 0,
+        "legacyOnly": 0,
+        "bothFail": 2
+      }
+    },
+    "byCategory": {
+      "durable_rule": {
+        "total": 2,
+        "currentPassed": 0,
+        "legacyPassed": 0,
+        "bothPass": 0,
+        "umcOnly": 0,
+        "legacyOnly": 0,
+        "bothFail": 2
+      },
+      "tool_routing_preference": {
+        "total": 0,
+        "currentPassed": 0,
+        "legacyPassed": 0,
+        "bothPass": 0,
+        "umcOnly": 0,
+        "legacyOnly": 0,
+        "bothFail": 0
+      },
+      "user_profile_fact": {
+        "total": 1,
+        "currentPassed": 0,
+        "legacyPassed": 0,
+        "bothPass": 0,
+        "umcOnly": 0,
+        "legacyOnly": 0,
+        "bothFail": 1
+      },
+      "session_constraint": {
+        "total": 0,
+        "currentPassed": 0,
+        "legacyPassed": 0,
+        "bothPass": 0,
+        "umcOnly": 0,
+        "legacyOnly": 0,
+        "bothFail": 0
+      },
+      "one_off_instruction": {
+        "total": 0,
+        "currentPassed": 0,
+        "legacyPassed": 0,
+        "bothPass": 0,
+        "umcOnly": 0,
+        "legacyOnly": 0,
+        "bothFail": 0
+      }
+    },
+    "captureObserved": 0,
+    "isolation": {
+      "totalRuns": 6,
+      "uniqueStateRoots": 6,
+      "duplicateStateRoots": 0,
+      "uniqueRegistryRoots": 3,
+      "duplicateRegistryRoots": 0,
+      "cleanupOk": 6,
+      "cleanupFailed": 0,
+      "sessionClearOk": 6,
+      "sessionClearFailed": 0
+    }
+  },
+  "results": [
+    {
+      "expectedAny": [],
+      "expectedAll": [
+        "cedar-comments"
+      ],
+      "forbiddenAny": [
+        "i don't know based on current memory"
+      ],
+      "id": "ordinary-ab-en-rule-pr-comments-1",
+      "language": "en",
+      "category": "durable_rule",
+      "designQuestion": "A user defines a permanent pull-request review rule with the codename `cedar-comments`; recall should return the codename after the session transcript is removed.",
+      "expectedResult": "It should answer with `cedar-comments`.",
+      "captureMessage": "Going forward, any time I send a pull request link, first check unresolved review comments. The codename for that default rule is cedar-comments. Please remember it.",
+      "recallMessage": "Based only on your memory for this agent, what codename should you use for my default pull request review rule? If memory is missing, reply exactly: I don't know based on current memory.",
+      "legacy": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "timeout after 30000ms",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "answer": "",
+        "error": "timeout after 30000ms",
+        "stateRootKey": "umc-ordinary-legacy-case-fa62c588-6137-4f89-a8f2-6c4379618ba3",
+        "registryRootKey": "",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 75,
+          "captureMs": 30056,
+          "captureWaitMs": 0,
+          "sessionClearMs": 3,
+          "recallMs": 30044,
+          "cleanupMs": 6,
+          "totalCaseMs": 60186
+        }
+      },
+      "current": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "timeout after 30000ms",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "answer": "",
+        "error": "timeout after 30000ms",
+        "stateRootKey": "umc-ordinary-current-case-50cc9d1f-4001-4eac-a3d4-76204bdc0368",
+        "registryRootKey": "umc-ordinary-current-case-50cc9d1f-4001-4eac-a3d4-76204bdc0368/registry",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 45,
+          "captureMs": 30049,
+          "captureWaitMs": 12123,
+          "sessionClearMs": 1,
+          "recallMs": 30013,
+          "cleanupMs": 11,
+          "totalCaseMs": 72242
+        }
+      }
+    },
+    {
+      "expectedAny": [],
+      "expectedAll": [
+        "松针取消"
+      ],
+      "forbiddenAny": [
+        "i don't know based on current memory"
+      ],
+      "id": "ordinary-ab-zh-rule-hotels-1",
+      "language": "zh",
+      "category": "durable_rule",
+      "designQuestion": "用户定义了长期酒店筛选规则，并把它命名为 `松针取消`；跨会话后应能召回这个代号。",
+      "expectedResult": "应答出 `松针取消`。",
+      "captureMessage": "以后只要我问酒店方案，你先看取消政策；这个默认旅行规则的代号叫做松针取消。记住它。",
+      "recallMessage": "只根据当前记忆，我默认的酒店筛选规则代号是什么？如果没有这条记忆，就只回答：I don't know based on current memory.",
+      "legacy": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "timeout after 30000ms",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "answer": "",
+        "error": "timeout after 30000ms",
+        "stateRootKey": "umc-ordinary-legacy-case-318596ca-1764-49b2-b0ce-32091bc2f351",
+        "registryRootKey": "",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 78,
+          "captureMs": 30046,
+          "captureWaitMs": 0,
+          "sessionClearMs": 2,
+          "recallMs": 30041,
+          "cleanupMs": 5,
+          "totalCaseMs": 60172
+        }
+      },
+      "current": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "exit 1 signal null",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "exit 1 signal null",
+        "answer": "",
+        "error": "exit 1 signal null",
+        "stateRootKey": "umc-ordinary-current-case-5cf24d38-5ec3-401c-8ed4-cdf7a39109ab",
+        "registryRootKey": "umc-ordinary-current-case-5cf24d38-5ec3-401c-8ed4-cdf7a39109ab/registry",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 25,
+          "captureMs": 23538,
+          "captureWaitMs": 12140,
+          "sessionClearMs": 9,
+          "recallMs": 29966,
+          "cleanupMs": 5,
+          "totalCaseMs": 65685
+        }
+      }
+    },
+    {
+      "expectedAny": [
+        "前排"
+      ],
+      "expectedAll": [
+        "过道"
+      ],
+      "forbiddenAny": [
+        "i don't know based on current memory"
+      ],
+      "id": "ordinary-ab-zh-seat-1",
+      "language": "zh",
+      "category": "user_profile_fact",
+      "designQuestion": "用户给出长期的飞行座位偏好；跨会话后应能召回靠过道和尽量前排。",
+      "expectedResult": "应答出靠过道，并最好提到前排。",
+      "captureMessage": "我坐飞机时更喜欢靠过道，而且尽量前排。记住这个出行偏好。",
+      "recallMessage": "只根据当前记忆，我坐飞机更喜欢什么位置？如果没有这条记忆，就只回答：I don't know based on current memory.",
+      "legacy": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "timeout after 30000ms",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "answer": "",
+        "error": "timeout after 30000ms",
+        "stateRootKey": "umc-ordinary-legacy-case-b04064bc-b91a-46c8-af81-bc300bdf02d2",
+        "registryRootKey": "",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 31,
+          "captureMs": 30068,
+          "captureWaitMs": 0,
+          "sessionClearMs": 24,
+          "recallMs": 30174,
+          "cleanupMs": 51,
+          "totalCaseMs": 60352
+        }
+      },
+      "current": {
+        "passed": false,
+        "expectedAnyOk": false,
+        "expectedAllOk": false,
+        "forbiddenOk": false,
+        "reason": "timeout after 30000ms",
+        "captureObserved": false,
+        "sessionClearOk": true,
+        "captureAnswer": "",
+        "captureError": "timeout after 30000ms",
+        "answer": "",
+        "error": "timeout after 30000ms",
+        "stateRootKey": "umc-ordinary-current-case-ffe76e2d-a083-4771-8548-125cdc2ae81d",
+        "registryRootKey": "umc-ordinary-current-case-ffe76e2d-a083-4771-8548-125cdc2ae81d/registry",
+        "cleanupOk": true,
+        "timings": {
+          "cloneMs": 43,
+          "captureMs": 30045,
+          "captureWaitMs": 12163,
+          "sessionClearMs": 1,
+          "recallMs": 30059,
+          "cleanupMs": 103,
+          "totalCaseMs": 72419
+        }
+      }
+    }
+  ]
+}

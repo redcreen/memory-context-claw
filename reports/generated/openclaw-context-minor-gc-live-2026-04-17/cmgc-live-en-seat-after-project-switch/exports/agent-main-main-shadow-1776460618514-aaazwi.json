@@ -1,0 +1,288 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776460618514-aaazwi",
+  "generated_at": "2026-04-17T21:16:58.514Z",
+  "session_key": "agent:main:main",
+  "agent_id": "main",
+  "query": "Leave the report topic. What seat do I usually prefer on flights?",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "Remember this durable preference: I prefer aisle seats on flights."
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "Saved."
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "Now switch topics. Stage 7 closeout should keep the operator scorecard and the rollback boundary visible."
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "Noted — for Stage 7 closeout, keep the operator scorecard and the rollback boundary visible."
+    }
+  ],
+  "decision": {
+    "relation": "switch",
+    "confidence": 0.98,
+    "evict_turn_ids": [
+      "t1",
+      "t2"
+    ],
+    "pin_turn_ids": [
+      "t1"
+    ],
+    "archive_summary": "Preserve the durable flight-seat preference as a compact pin: the user prefers aisle seats on flights.",
+    "reasoning_summary": "The conversation has moved from the durable flight-seat preference to Stage 7 closeout. The preference is stable user memory and can be pinned while the older raw turns are evicted. The latest user turn is retained by the runtime, so it is not listed for eviction."
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "switch",
+      "confidence": 0.98,
+      "archiveSummary": "Preserve the durable flight-seat preference as a compact pin: the user prefers aisle seats on flights.",
+      "reasoningSummary": "The conversation has moved from the durable flight-seat preference to Stage 7 closeout. The preference is stable user memory and can be pinned while the older raw turns are evicted. The latest user turn is retained by the runtime, so it is not listed for eviction.",
+      "latestUserTurnId": "t3",
+      "pinTurnIds": [
+        "t1"
+      ],
+      "pinnedOnlyTurnIds": [
+        "t1"
+      ],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t2"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t2"
+      ],
+      "keepTurnIds": [
+        "t3",
+        "t4"
+      ],
+      "baselineTokens": 69,
+      "keptTokens": 50,
+      "prunedTokens": 19,
+      "reductionRatio": 0.2753623188405797,
+      "keepTurns": [
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "Now switch topics. Stage 7 closeout should keep the operator scorecard and the rollback boundary visible.",
+          "tokenEstimate": 27
+        },
+        {
+          "id": "t4",
+          "role": "assistant",
+          "content": "Noted — for Stage 7 closeout, keep the operator scorecard and the rollback boundary visible.",
+          "tokenEstimate": 23
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "Remember this durable preference: I prefer aisle seats on flights.",
+          "tokenEstimate": 17
+        },
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "Saved.",
+          "tokenEstimate": 2
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: Remember this durable preference: I prefer aisle seats on flights.\nt2 assistant: Saved.\nt3 user: Now switch topics. Stage 7 closeout should keep the operator scorecard and the rollback boundary visible.\nt4 assistant: Noted — for Stage 7 closeout, keep the operator scorecard and the rollback boundary visible.",
+    "shadowRawTranscript": "t3 user: Now switch topics. Stage 7 closeout should keep the operator scorecard and the rollback boundary visible.\nt4 assistant: Noted — for Stage 7 closeout, keep the operator scorecard and the rollback boundary visible.",
+    "semanticPinNotes": [
+      "user: Remember this durable preference: I prefer aisle seats on flights."
+    ],
+    "archiveSummary": "Preserve the durable flight-seat preference as a compact pin: the user prefers aisle seats on flights.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 80,
+    "shadowRawPromptEstimate": 56,
+    "shadowPackageEstimate": 82,
+    "shadowPackageText": "Active raw turns:\nt3 user: Now switch topics. Stage 7 closeout should keep the operator scorecard and the rollback boundary visible.\nt4 assistant: Noted — for Stage 7 closeout, keep the operator scorecard and the rollback boundary visible.\n\nSemantic pins:\nuser: Remember this durable preference: I prefer aisle seats on flights."
+  },
+  "scorecard": {
+    "relation": "switch",
+    "baselineTurnCount": 4,
+    "keptTurnCount": 2,
+    "evictedTurnCount": 2,
+    "pinCount": 1,
+    "baselinePromptEstimate": 80,
+    "shadowRawPromptEstimate": 56,
+    "shadowPackageEstimate": 82,
+    "rawReductionRatio": 0.2754,
+    "packageReductionRatio": -0.025,
+    "candidateLoadElapsedMs": 19,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 21916,
+    "totalElapsedMs": 21928,
+    "guardedEnabled": false,
+    "guardedApplied": false,
+    "guardedReason": "feature_disabled",
+    "guardedMessageCount": 6,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 93
+  },
+  "guarded": {
+    "enabled": false,
+    "applied": false,
+    "reason": "feature_disabled",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Remember this durable preference: I prefer aisle seats on flights."
+          }
+        ],
+        "timestamp": 1776460556945
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "toolCall",
+            "id": "call_trNAuc6KwmW9Pxe1ZXHQxveP",
+            "name": "write",
+            "arguments": {
+              "path": "/tmp/umc-cmgc-live-t1PjXt/agents/main/agent/memory/2026-04-12.md",
+              "content": "# Daily Memory 2026-04-12\n\n- Durable preference added: Maya prefers aisle seats on flights.\n"
+            },
+            "partialJson": "{\"path\":\"/tmp/umc-cmgc-live-t1PjXt/agents/main/agent/memory/2026-04-12.md\",\"content\":\"# Daily Memory 2026-04-12\\n\\n- Durable preference added: Maya prefers aisle seats on flights.\\n\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 7888,
+          "output": 73,
+          "cacheRead": 5120,
+          "cacheWrite": 0,
+          "totalTokens": 13081,
+          "cost": {
+            "input": 0.005916,
+            "output": 0.0003285,
+            "cacheRead": 0.000384,
+            "cacheWrite": 0,
+            "total": 0.0066285
+          }
+        },
+        "stopReason": "toolUse",
+        "timestamp": 1776460556959,
+        "responseId": "resp_083e92609f9804390169e2a30efcf08191913c3d893cf1b547"
+      },
+      {
+        "role": "toolResult",
+        "toolCallId": "call_trNAuc6KwmW9Pxe1ZXHQxveP",
+        "toolName": "write",
+        "content": [
+          {
+            "type": "text",
+            "text": "Successfully wrote 92 bytes to /tmp/umc-cmgc-live-t1PjXt/agents/main/agent/memory/2026-04-12.md"
+          }
+        ],
+        "isError": false,
+        "timestamp": 1776460560544
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "Saved.",
+            "textSignature": "{\"v\":1,\"id\":\"msg_02394e43afdbab990169e2a3131bf88191b0c8c94a24bfbfe2\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 326,
+          "output": 6,
+          "cacheRead": 12800,
+          "cacheWrite": 0,
+          "totalTokens": 13132,
+          "cost": {
+            "input": 0.0002445,
+            "output": 0.000027,
+            "cacheRead": 0.0009599999999999999,
+            "cacheWrite": 0,
+            "total": 0.0012315
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776460560559,
+        "responseId": "resp_02394e43afdbab990169e2a312aa3881919b42b2e06272be7f"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Now switch topics. Stage 7 closeout should keep the operator scorecard and the rollback boundary visible."
+          }
+        ],
+        "timestamp": 1776460589061
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "Noted — for Stage 7 closeout, keep the operator scorecard and the rollback boundary visible.",
+            "textSignature": "{\"v\":1,\"id\":\"msg_02394e43afdbab990169e2a3310b8c8191b319106f7d0cf512\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 13170,
+          "output": 31,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "totalTokens": 13201,
+          "cost": {
+            "input": 0.0098775,
+            "output": 0.0001395,
+            "cacheRead": 0,
+            "cacheWrite": 0,
+            "total": 0.010017000000000002
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776460589074,
+        "responseId": "resp_02394e43afdbab990169e2a32f33c88191892fb86a7674fef6"
+      }
+    ],
+    "filteredMessageCount": 6,
+    "filteredMessageTokenEstimate": 93,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 21928,
+    "decisionElapsedMs": 21916
+  }
+}

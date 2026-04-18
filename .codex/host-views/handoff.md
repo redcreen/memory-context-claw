@@ -5,10 +5,10 @@
 | --- | --- |
 | 仓库 | `/Users/redcreen/Project/unified-memory-core` |
 | 层级 | `大型` |
-| 当前阶段 | 收口阶段 / Stage 5 已完成 |
-| 当前切片 | 保持 post-Stage-5 路线图状态对齐 |
-| 当前执行线 | 保持 post-Stage-5 的 operator baseline、project/workstream roadmap 摘要和 canonical-root policy 同时稳定 |
-| 执行进度 | `6 / 6` |
+| 当前阶段 | post-stage10-adoption-closeout |
+| 当前切片 | hold-stage10-adoption-proof-stable |
+| 当前执行线 | Stage 7 / 8 / 9 / 10 都已关闭；当前进入维护态，继续保持 Docker 为默认 hermetic A/B 面与 Stage 10 shortest-path/shared-foundation proof 持续为绿 |
+| 执行进度 | `0 / 4` |
 | 架构信号 | `黄色` |
 | 自动触发 | 当前没有自动触发 |
 | 升级 Gate | `提醒后继续` |
@@ -28,7 +28,7 @@
 | worker 接续状态 | `活跃` |
 | 下一 handoff 检查 | 确认 worker 停下后的接续、回流和升级都能靠 durable 真相完成。 |
 | 当前模块 | `来源系统` |
-| 当前主要风险 | operator / planning follow-up 只剩： |
+| 当前主要风险 | raw `openclaw memory search` transport 仍是显式 watchlist：`3/8 raw ok`，其余为 `4` 条 `missing_json_payload` 与 `1` 条 `empty_results` |
 | 升级原因 | 当前方向可以继续，但监督状态需要保持可见 |
 
 ## Usable Now
@@ -73,30 +73,28 @@
 
 ### Chinese
 ```text
-项目助手 继续。先读取 .codex/status.md、.codex/plan.md、.codex/strategy.md、.codex/program-board.md、.codex/delivery-supervision.md、.codex/module-dashboard.md、.codex/ptl-supervision.md、.codex/worker-handoff.md；然后继续当前执行线：保持 post-Stage-5 的 operator baseline、project/workstream roadmap 摘要和 canonical-root policy 同时稳定。
+项目助手 继续。先读取 .codex/status.md、.codex/plan.md、.codex/strategy.md、.codex/program-board.md、.codex/delivery-supervision.md、.codex/module-dashboard.md、.codex/ptl-supervision.md、.codex/worker-handoff.md；然后继续当前执行线：Stage 7 / 8 / 9 / 10 都已关闭；当前进入维护态，继续保持 Docker 为默认 hermetic A/B 面与 Stage 10 shortest-path/shared-foundation proof 持续为绿。
 项目助手 告诉我这个项目当前进展，用全局视角、模块视角和图示输出。
 项目助手 继续当前执行线，并先运行验证：npm test；补充检查：npm run eval:smoke-promotion。
 ```
 
 ### English
 ```text
-project assistant continue. Read .codex/status.md, .codex/plan.md, .codex/strategy.md, .codex/program-board.md, .codex/delivery-supervision.md, .codex/module-dashboard.md, .codex/ptl-supervision.md, .codex/worker-handoff.md first; then continue the current execution line: hold-post-stage5-roadmap-state-aligned.
+project assistant continue. Read .codex/status.md, .codex/plan.md, .codex/strategy.md, .codex/program-board.md, .codex/delivery-supervision.md, .codex/module-dashboard.md, .codex/ptl-supervision.md, .codex/worker-handoff.md first; then continue the current execution line: hold-stage10-adoption-proof-stable.
 project assistant progress
 project assistant continue the current execution line and run validation first: npm test; extra checks: npm run eval:smoke-promotion.
 ```
 
 ## Next 3 Actions
-1. 在真实 OpenClaw 会话里完成一次最终人类 sanity check，并确认稳定安装示例与 `v0.2.1` 一致。
-2. 做最终 operator review，确认 `registry inspect` 的 `operatorPolicy` 不回退、project/workstream roadmap 不漂移。
-3. 如果上述两项继续为绿，就创建并推送 `v0.2.1` tag；否则先处理漂移项，再讨论新的 enhancement plan 或 legacy root cleanup 窗口。
+1. 保持 `npm run umc:stage10 -- --format markdown` 持续为绿。
+2. 保持 Docker hermetic baseline、Stage 7、Stage 8、Stage 9、Stage 10 的证据面一致。
+3. 只有在新的明确产品目标出现时，才打开新的编号阶段。
 
 ## Execution Tasks
-1. [x] EL-1 align project/workstream roadmap summaries with the current Stage 5 closeout baseline
-2. [x] EL-2 refresh smoke and memory-search governance snapshots in the visible project state
-3. [x] EL-3 keep `registry inspect`, release-preflight, and public docs aligned with the operator baseline
-4. [x] EL-4 define deeper accepted-action extraction as an explicit deferred enhancement queue
-5. [x] EL-5 implement Step 47 field-aware accepted-action extraction with CLI / lifecycle coverage
-6. [x] EL-6 keep later enhancement planning gated behind stable runtime API prerequisites instead of reopening the next phase early
+1. [ ] EL-1 shorten install / bootstrap / verify into one clear shortest operator path
+2. [ ] EL-2 add package / startup / first-run cost to the `light and fast` evidence surface
+3. [ ] EL-3 publish stronger Codex shared-foundation proof
+4. [ ] EL-4 publish clearer multi-instance shared-memory operator proof
 
 ## Notes
 - Start a new thread with this output and the repo path when you need a clean context.

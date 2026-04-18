@@ -1,0 +1,177 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776410620611-g7ou4y",
+  "generated_at": "2026-04-17T07:23:40.611Z",
+  "session_key": "agent:stage6-adversarial:adversarial-assistant-claim-not-durable",
+  "agent_id": "stage6-adversarial",
+  "query": "现在切到别的话题：帮我说一下 rollout 顺序。",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "assistant",
+      "content": "我猜你可能更喜欢语音电话。"
+    },
+    {
+      "id": "t2",
+      "role": "user",
+      "content": "不是，我更喜欢异步文字更新。"
+    },
+    {
+      "id": "t3",
+      "role": "assistant",
+      "content": "记住了，你更喜欢异步文字更新。"
+    },
+    {
+      "id": "t4",
+      "role": "user",
+      "content": "现在切到别的话题：帮我说一下 rollout 顺序。"
+    }
+  ],
+  "decision": {
+    "relation": "switch",
+    "confidence": 0.98,
+    "evict_turn_ids": [
+      "t1",
+      "t2",
+      "t3"
+    ],
+    "pin_turn_ids": [
+      "t2"
+    ],
+    "archive_summary": "Previous topic resolved: user corrected the assistant's assumption and stated a durable communication preference for asynchronous text updates rather than voice calls. Active topic has switched to asking about rollout order.",
+    "reasoning_summary": "The latest user turn explicitly switches topics. The prior exchange is resolved and no longer needed as raw prompt context, but the user's communication preference is durable and should be preserved as a semantic pin. No unresolved task from the earlier topic remains."
+  },
+  "snapshot": {
+    "applied": {
+      "relation": "switch",
+      "confidence": 0.98,
+      "archiveSummary": "Previous topic resolved: user corrected the assistant's assumption and stated a durable communication preference for asynchronous text updates rather than voice calls. Active topic has switched to asking about rollout order.",
+      "reasoningSummary": "The latest user turn explicitly switches topics. The prior exchange is resolved and no longer needed as raw prompt context, but the user's communication preference is durable and should be preserved as a semantic pin. No unresolved task from the earlier topic remains.",
+      "latestUserTurnId": "t4",
+      "pinTurnIds": [
+        "t2"
+      ],
+      "pinnedOnlyTurnIds": [
+        "t2"
+      ],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3"
+      ],
+      "keepTurnIds": [
+        "t4"
+      ],
+      "baselineTokens": 19,
+      "keptTokens": 7,
+      "prunedTokens": 12,
+      "reductionRatio": 0.631578947368421,
+      "keepTurns": [
+        {
+          "id": "t4",
+          "role": "user",
+          "content": "现在切到别的话题：帮我说一下 rollout 顺序。",
+          "tokenEstimate": 7
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "assistant",
+          "content": "我猜你可能更喜欢语音电话。",
+          "tokenEstimate": 4
+        },
+        {
+          "id": "t2",
+          "role": "user",
+          "content": "不是，我更喜欢异步文字更新。",
+          "tokenEstimate": 4
+        },
+        {
+          "id": "t3",
+          "role": "assistant",
+          "content": "记住了，你更喜欢异步文字更新。",
+          "tokenEstimate": 4
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 assistant: 我猜你可能更喜欢语音电话。\nt2 user: 不是，我更喜欢异步文字更新。\nt3 assistant: 记住了，你更喜欢异步文字更新。\nt4 user: 现在切到别的话题：帮我说一下 rollout 顺序。",
+    "shadowRawTranscript": "t4 user: 现在切到别的话题：帮我说一下 rollout 顺序。",
+    "semanticPinNotes": [
+      "user: 不是，我更喜欢异步文字更新。"
+    ],
+    "archiveSummary": "Previous topic resolved: user corrected the assistant's assumption and stated a durable communication preference for asynchronous text updates rather than voice calls. Active topic has switched to asking about rollout order.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 30,
+    "shadowRawPromptEstimate": 9,
+    "shadowPackageEstimate": 23,
+    "shadowPackageText": "Active raw turns:\nt4 user: 现在切到别的话题：帮我说一下 rollout 顺序。\n\nSemantic pins:\nuser: 不是，我更喜欢异步文字更新。"
+  },
+  "scorecard": {
+    "relation": "switch",
+    "baselineTurnCount": 4,
+    "keptTurnCount": 1,
+    "evictedTurnCount": 3,
+    "pinCount": 1,
+    "baselinePromptEstimate": 30,
+    "shadowRawPromptEstimate": 9,
+    "shadowPackageEstimate": 23,
+    "rawReductionRatio": 0.6316,
+    "packageReductionRatio": 0.2333,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 13302,
+    "totalElapsedMs": 13302,
+    "guardedEnabled": false,
+    "guardedApplied": false,
+    "guardedReason": "feature_disabled",
+    "guardedMessageCount": 4,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 19
+  },
+  "guarded": {
+    "enabled": false,
+    "applied": false,
+    "reason": "feature_disabled",
+    "filteredMessages": [
+      {
+        "role": "assistant",
+        "content": "我猜你可能更喜欢语音电话。"
+      },
+      {
+        "role": "user",
+        "content": "不是，我更喜欢异步文字更新。"
+      },
+      {
+        "role": "assistant",
+        "content": "记住了，你更喜欢异步文字更新。"
+      },
+      {
+        "role": "user",
+        "content": "现在切到别的话题：帮我说一下 rollout 顺序。"
+      }
+    ],
+    "filteredMessageCount": 4,
+    "filteredMessageTokenEstimate": 19,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 13302,
+    "decisionElapsedMs": 13302
+  }
+}

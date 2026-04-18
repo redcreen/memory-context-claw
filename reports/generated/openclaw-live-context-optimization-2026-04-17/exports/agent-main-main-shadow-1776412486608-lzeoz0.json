@@ -1,0 +1,114 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776412486608-lzeoz0",
+  "generated_at": "2026-04-17T07:54:46.608Z",
+  "session_key": "agent:main:main",
+  "agent_id": "main",
+  "query": "现在切换话题，我要写一个 Python 正则，把 foo123bar 里的数字提取出来。给最短答案。",
+  "status": "error",
+  "reason": "Error: Plugin runtime subagent methods are only available during a gateway request.",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "assistant",
+      "content": "DONE"
+    },
+    {
+      "id": "t2",
+      "role": "user",
+      "content": "task-system planning runtime context: - current_session_key: agent:main:main - current_task_id: unknown - planning_mode: tool-first-after-first-ack - if you need a future follow-up, use task-system tools in this order: 1. ts_attach_promise_guard 2. ts_create_followup_plan 3. ts_schedule_followup_from_plan 4. ts_finalize_planned_followup - for future-first requests, default to main_user_content_mode=none - runtime decides whether this turn sends no business content, a short summary, or a full answer - if main_user_content_mode=immediate-summary, keep the user-visible summary to one short business-facing line (about 120 chars max) - legacy structured user-content blocks may appear, but they are compatibility-only and must not leak to users - do not put scheduling status, promise state, or tool-chain state in the user-visible answer - provide followup_summary so runtime can send a meanin..."
+    },
+    {
+      "id": "t3",
+      "role": "assistant",
+      "content": "DONE"
+    },
+    {
+      "id": "t4",
+      "role": "user",
+      "content": "task-system runtime context: - session: agent:main:main - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded 只回复OK"
+    },
+    {
+      "id": "t5",
+      "role": "assistant",
+      "content": "OK"
+    },
+    {
+      "id": "t6",
+      "role": "user",
+      "content": "task-system runtime context: - session: agent:main:main - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded 我们先聊日本旅行。记住预算2万元，偏好住地铁附近。只回复确认。"
+    },
+    {
+      "id": "t7",
+      "role": "assistant",
+      "content": "确认"
+    },
+    {
+      "id": "t8",
+      "role": "user",
+      "content": "task-system runtime context: - session: agent:main:main - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded 我们先聊日本旅行。记住预算2万元，偏好住地铁附近。只回复确认。"
+    },
+    {
+      "id": "t9",
+      "role": "user",
+      "content": "task-system runtime context: - session: agent:main:main - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded Continue where you left off. The previous model attempt failed or timed out."
+    },
+    {
+      "id": "t10",
+      "role": "assistant",
+      "content": "确认"
+    },
+    {
+      "id": "t11",
+      "role": "user",
+      "content": "task-system runtime context: - session: agent:main:main - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded 再补充，我更想住京都不是大阪。只回复确认。"
+    },
+    {
+      "id": "t12",
+      "role": "assistant",
+      "content": "确认"
+    }
+  ],
+  "decision": null,
+  "snapshot": null,
+  "scorecard": {
+    "relation": "",
+    "baselineTurnCount": 12,
+    "keptTurnCount": 0,
+    "evictedTurnCount": 0,
+    "pinCount": 0,
+    "baselinePromptEstimate": 0,
+    "shadowRawPromptEstimate": 0,
+    "shadowPackageEstimate": 0,
+    "rawReductionRatio": 0,
+    "packageReductionRatio": 0,
+    "candidateLoadElapsedMs": 365,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 0,
+    "totalElapsedMs": 8,
+    "guardedEnabled": true,
+    "guardedApplied": false,
+    "guardedReason": "not_evaluated",
+    "guardedMessageCount": 24,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 0
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": false,
+    "reason": "not_evaluated",
+    "filteredMessageCount": 24,
+    "filteredMessageTokenEstimate": 0,
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 8,
+    "decisionElapsedMs": 0
+  }
+}
