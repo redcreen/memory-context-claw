@@ -388,6 +388,37 @@ function computePromptWindowMetrics(caseDef, turnRecords = []) {
   };
 }
 
+function computeThresholdMetrics(caseDef, turnRecords = []) {
+  const thresholdTokens = Math.max(0, Number(caseDef.compactThresholdTokens || 0));
+  if (thresholdTokens <= 0) {
+    return {
+      thresholdTokens: 0,
+      firstCrossTurnIndex: -1,
+      firstCrossPromptTokens: 0,
+      turnsAtOrAboveThreshold: 0,
+      postSwitchTurnsBelowThreshold: 0,
+      postSwitchTurnsAtOrAboveThreshold: 0
+    };
+  }
+
+  const switchTurnIndex = Math.max(0, Number(caseDef.switchTurnIndex || 0));
+  const rollbackWindow = Math.max(1, Number(caseDef.rollbackWindow || 2));
+  const successfulTurns = turnRecords.filter((item) => item.ok === true);
+  const firstCrossTurn = successfulTurns.find((item) => Number(item.promptTokens || 0) >= thresholdTokens) || null;
+  const switchWindowTurns = successfulTurns.filter(
+    (item) => item.turnIndex >= switchTurnIndex && item.turnIndex < switchTurnIndex + rollbackWindow
+  );
+
+  return {
+    thresholdTokens,
+    firstCrossTurnIndex: firstCrossTurn ? firstCrossTurn.turnIndex : -1,
+    firstCrossPromptTokens: firstCrossTurn ? Number(firstCrossTurn.promptTokens || 0) : 0,
+    turnsAtOrAboveThreshold: successfulTurns.filter((item) => Number(item.promptTokens || 0) >= thresholdTokens).length,
+    postSwitchTurnsBelowThreshold: switchWindowTurns.filter((item) => Number(item.promptTokens || 0) < thresholdTokens).length,
+    postSwitchTurnsAtOrAboveThreshold: switchWindowTurns.filter((item) => Number(item.promptTokens || 0) >= thresholdTokens).length
+  };
+}
+
 async function runCaseInMode({
   caseDef,
   mode,
@@ -457,7 +488,8 @@ async function runCaseInMode({
       turnsCompleted: turnRecords.filter((item) => item.ok === true).length,
       turns: turnRecords,
       checkpoints: evaluateCheckpoints(caseDef, turnRecords),
-      promptWindow: computePromptWindowMetrics(caseDef, turnRecords)
+      promptWindow: computePromptWindowMetrics(caseDef, turnRecords),
+      threshold: computeThresholdMetrics(caseDef, turnRecords)
     };
   } finally {
     await cleanupHermeticOpenClawState(stateDir);
@@ -491,6 +523,12 @@ function summarize(results = []) {
     averageGuardedRollbackRatio: total
       ? Number((results.reduce((sum, item) => sum + Number(item.guarded.promptWindow.rollbackRatio || 0), 0) / total).toFixed(4))
       : 0,
+    averageBaselineThresholdCrossTurn: total
+      ? Number((results.reduce((sum, item) => sum + Number(item.baseline.threshold.firstCrossTurnIndex || -1), 0) / total).toFixed(1))
+      : -1,
+    averageGuardedThresholdCrossTurn: total
+      ? Number((results.reduce((sum, item) => sum + Number(item.guarded.threshold.firstCrossTurnIndex || -1), 0) / total).toFixed(1))
+      : -1,
     averageGuardedVsBaselinePostSwitchSavingsRatio: total
       ? Number((results.reduce((sum, item) => sum + Number(item.promptComparison.postSwitchSavingsRatio || 0), 0) / total).toFixed(4))
       : 0
@@ -530,6 +568,8 @@ function renderMarkdown(report) {
   lines.push(`- averageGuardedPostSwitchPromptTokens: \`${report.summary.averageGuardedPostSwitchPromptTokens}\``);
   lines.push(`- averageBaselineRollbackRatio: \`${report.summary.averageBaselineRollbackRatio}\``);
   lines.push(`- averageGuardedRollbackRatio: \`${report.summary.averageGuardedRollbackRatio}\``);
+  lines.push(`- averageBaselineThresholdCrossTurn: \`${report.summary.averageBaselineThresholdCrossTurn}\``);
+  lines.push(`- averageGuardedThresholdCrossTurn: \`${report.summary.averageGuardedThresholdCrossTurn}\``);
   lines.push(`- averageGuardedVsBaselinePostSwitchSavingsRatio: \`${report.summary.averageGuardedVsBaselinePostSwitchSavingsRatio}\``);
   lines.push("");
   lines.push("## Method");
@@ -549,7 +589,17 @@ function renderMarkdown(report) {
     lines.push(`- baseline rollbackRatio: \`${item.baseline.promptWindow.rollbackRatio}\``);
     lines.push(`- guarded rollbackRatio: \`${item.guarded.promptWindow.rollbackRatio}\``);
     lines.push(`- guarded postSwitch savings vs baseline: \`${item.promptComparison.postSwitchSavingsRatio}\``);
+    lines.push(`- compactAvoidedByGuarded: \`${item.promptComparison.compactAvoided}\``);
     lines.push(`- guarded applied turns in switch window: \`${item.guarded.promptWindow.guardedAppliedTurns}\``);
+    if (Number(item.baseline.threshold.thresholdTokens || 0) > 0) {
+      lines.push(`- compact proxy threshold: \`${item.baseline.threshold.thresholdTokens}\``);
+      lines.push(`- baseline firstThresholdCrossTurn: \`${item.baseline.threshold.firstCrossTurnIndex >= 0 ? item.baseline.threshold.firstCrossTurnIndex + 1 : "none"}\``);
+      lines.push(`- guarded firstThresholdCrossTurn: \`${item.guarded.threshold.firstCrossTurnIndex >= 0 ? item.guarded.threshold.firstCrossTurnIndex + 1 : "none"}\``);
+      lines.push(`- baseline postSwitchBelowThresholdTurns: \`${item.baseline.threshold.postSwitchTurnsBelowThreshold}/${item.baseline.promptWindow.rollbackWindow}\``);
+      lines.push(`- guarded postSwitchBelowThresholdTurns: \`${item.guarded.threshold.postSwitchTurnsBelowThreshold}/${item.guarded.promptWindow.rollbackWindow}\``);
+      lines.push(`- baseline turnsAtOrAboveThreshold: \`${item.baseline.threshold.turnsAtOrAboveThreshold}\``);
+      lines.push(`- guarded turnsAtOrAboveThreshold: \`${item.guarded.threshold.turnsAtOrAboveThreshold}\``);
+    }
     lines.push(`- guarded checkpoints: \`${item.guarded.checkpoints.filter((entry) => entry.passed).length}/${item.guarded.checkpoints.length}\``);
     lines.push(`- baseline checkpoints: \`${item.baseline.checkpoints.filter((entry) => entry.passed).length}/${item.baseline.checkpoints.length}\``);
     lines.push("");
@@ -650,6 +700,10 @@ try {
     const postSwitchSavingsRatio = baselinePostSwitch > 0
       ? Number(((baselinePostSwitch - guardedPostSwitch) / baselinePostSwitch).toFixed(4))
       : 0;
+    const compactAvoided = Number(caseDef.compactThresholdTokens || 0) > 0
+      ? baseline.threshold.postSwitchTurnsAtOrAboveThreshold > 0
+        && guarded.threshold.postSwitchTurnsBelowThreshold > 0
+      : false;
 
     results.push({
       id: caseDef.id,
@@ -657,7 +711,8 @@ try {
       baseline,
       guarded,
       promptComparison: {
-        postSwitchSavingsRatio
+        postSwitchSavingsRatio,
+        compactAvoided
       }
     });
   }
