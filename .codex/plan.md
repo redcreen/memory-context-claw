@@ -41,7 +41,7 @@
 - 11F `summary-first-carry-forward`: completed
 - 11G `host-visible-validation-and-closeout`: current
 - Rule:
-  - Stage 11 stays reopened until user feel is real
+  - Stage 11 closeout now depends on OpenClaw host-visible user-feel evidence, not on keeping the phase artificially reopened
   - `Context Minor GC` stays green and `default-off` / opt-in only
   - Stage 12 work is paused until this closes
 
@@ -268,7 +268,7 @@
 - Signal: `yellow`
 - Signal Basis: open blockers or architectural risks are still recorded
 - Problem Class: post-stage10 maintenance coherence
-- Root Cause Hypothesis: 如果仓库继续保留“Stage 11 已关闭 / Stage 12 当前”的旧口径，维护者会绕过用户体感补强，直接把下一阶段当成当前阶段
+- Root Cause Hypothesis: 如果仓库继续保留“Stage 11 已重开”的旧口径，维护者会误以为当前仍应卡在旧 closeout 线上，绕不过后续 Stage 12 产品化工作
 - Correct Layer: roadmap, development plan, architecture docs, README, live A/B case design, control surface
 - Rejected Shortcut: 跳过 Stage 5 证据面和当前 operator baseline，直接讨论 runtime API / service mode
 - Automatic Review Trigger: no automatic trigger is currently active

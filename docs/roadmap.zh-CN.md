@@ -116,7 +116,7 @@
 
 如果你现在要顺着看，不要再在旧报告之间跳：
 
-1. 先看当前这页，确认 `Stage 11` 已重开、当前主线仍是 `Stage 11`
+1. 先看当前这页，确认 `Stage 11` 已关闭、当前主线已切到 `Stage 12`
 2. 如果你关心 `Minor GC`，先看 [Stage 11 收口报告](../reports/generated/stage11-context-minor-gc-and-codex-integration-closeout-2026-04-18.zh-CN.md)
 3. 再看 [Context Minor GC 架构页](reference/unified-memory-core/architecture/context-minor-gc.zh-CN.md)
 4. 再看 [Stage 11 具体计划](reference/unified-memory-core/development-plan.zh-CN.md#stage-11-context-minor-gc-and-codex-integration)

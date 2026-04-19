@@ -264,7 +264,7 @@
 ## Architecture Supervision
 - Signal: `yellow`
 - Signal Basis: open blockers or architectural risks are still recorded
-- Root Cause Hypothesis: 当前最大的风险不是“能力没做出来”，而是仓库继续保留“Stage 11 已关闭 / Stage 12 当前”的旧口径，导致维护者绕过用户体感补强，误把下一阶段当成本阶段
+- Root Cause Hypothesis: 当前最大的风险不是“能力没做出来”，而是仓库继续保留“Stage 11 已重开”的旧口径，导致维护者误以为当前仍卡在旧 closeout 线上，而不是已经转入 Stage 12
 - Correct Layer: roadmap, development plan, architecture docs, README, control surface
 - Automatic Review Trigger: no automatic trigger is currently active
 - Escalation Gate: raise but continue
@@ -298,7 +298,7 @@
 - [x] 11D cross-host-rollout-decision
 - [x] 11E growth-source-control
 - [x] 11F summary-first-carry-forward
-- [ ] 11G host-visible-validation-and-closeout
+- [x] 11G host-visible-validation-and-closeout
 
 ## Stage 12 Groups
 
