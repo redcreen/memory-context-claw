@@ -28,10 +28,11 @@ Detailed execution queue:
 
 ## Current One-Line Truth
 
-The repo has now truly closed `Stage 11`, and the current umbrella stage has moved to `Stage 12`.
+The repo has now also formally closed `Stage 12`. All defined numbered stages are complete, and the repo is operating in post-Stage-12 maintenance.
 
 - `Stage 11` is completed
-- the current umbrella stage is now: `Stage 12: Realtime Memory Intent Productization`
+- `Stage 12` is completed
+- the current operating phase is now: `post-stage12-product-maintenance`
 - `Context Minor GC` remains one of the long-running optimization tracks even after closeout
 
 What that means:
@@ -39,7 +40,7 @@ What that means:
 - `Context Minor GC` is now usable across both OpenClaw and Codex
 - the OpenClaw-side user-visible closeout evidence is now covered
 - the guarded seam remains `default-off` / opt-in only
-- the product mainline has moved into `Stage 12`, while Minor GC stays active as an optimization line
+- the product mainline is now maintenance / release / operator-proof hold rather than a new numbered stage
 
 ## Stage Timeline
 
@@ -56,7 +57,7 @@ What that means:
 | Stage 9 | completed | guarded smart-path promotion | bounded opt-in active path closed while staying `default-off` |
 | Stage 10 | completed | adoption simplification and shared-foundation proof | shortest adoption path and Codex / multi-instance shared proof |
 | Stage 11 | completed | Context Minor GC and Codex integration | the full capability is usable and the OpenClaw-side host-visible closeout is now covered |
-| Stage 12 | current umbrella stage | realtime memory intent productization | turn realtime governed memory intake into a clearer product and operator surface while keeping Minor GC as an ongoing optimization line |
+| Stage 12 | completed | realtime memory intent productization | realtime governed memory intake is now a formal product and operator surface |
 
 ## Stage 11: Context Minor GC And Codex Integration
 
@@ -108,9 +109,11 @@ The shortest answer is:
 
 ## Stage 12: Realtime Memory Intent Productization
 
-`Stage 12` is now the current umbrella stage. Its product theme is:
+`Stage 12` is now completed. Its closeout bar was:
 
-- turn realtime governed memory intake from a baseline capability into a real product and operator surface
+- realtime `memory_intent` / `memory_extraction` / accepted-action can no longer remain scattered capabilities
+- contract, replay, ordinary-conversation runtime ingest, and accepted-action host proof have to land as one product line
+- maintainers need one explicit proof entrypoint instead of stitching together old commands and reports
 
 At the same time, one long-running constraint remains true:
 
@@ -118,20 +121,27 @@ At the same time, one long-running constraint remains true:
 
 | Group | Status | Goal | Detailed Plan |
 | --- | --- | --- | --- |
-| 12A `contract-and-replay-hold` | current umbrella stage | consolidate the realtime `memory_intent` / `memory_extraction` / accepted-action contract, replay surface, and docs | [Plan: 12A](reference/unified-memory-core/development-plan.md#group-12a-contract-and-replay-hold) |
-| 12B `ordinary-conversation-runtime-ingest` | next | bring ordinary-conversation and runtime rule ingestion onto the same governed realtime path | [Plan: 12B](reference/unified-memory-core/development-plan.md#group-12b-ordinary-conversation-runtime-ingest) |
-| 12C `operator-surface-and-rollout` | later | turn inspect / audit / replay / rollback plus rollout boundaries into an explicit operator surface | [Plan: 12C](reference/unified-memory-core/development-plan.md#group-12c-operator-surface-and-rollout) |
+| 12A `contract-and-replay-hold` | completed | consolidate the realtime `memory_intent` / `memory_extraction` / accepted-action contract, replay surface, and docs | [Plan: 12A](reference/unified-memory-core/development-plan.md#group-12a-contract-and-replay-hold) |
+| 12B `ordinary-conversation-runtime-ingest` | completed | bring ordinary-conversation and runtime rule ingestion onto the same governed realtime path | [Plan: 12B](reference/unified-memory-core/development-plan.md#group-12b-ordinary-conversation-runtime-ingest) |
+| 12C `operator-surface-and-rollout` | completed | turn inspect / audit / replay / rollback plus rollout boundaries into an explicit operator surface | [Plan: 12C](reference/unified-memory-core/development-plan.md#group-12c-operator-surface-and-rollout) |
+
+### Stage 12 Closeout Evidence
+
+- [Stage 12 closeout report](../reports/generated/stage12-realtime-memory-intent-productization-closeout-2026-04-19.md)
+- [OpenClaw Ordinary-Conversation Strict Closeout](../reports/generated/openclaw-ordinary-conversation-memory-intent-closeout-2026-04-17.md)
+- [OpenClaw Accepted-Action Host Canary](../reports/generated/openclaw-accepted-action-canary-2026-04-15.md)
 
 ## Reading Order
 
 If you want to read in order, do not bounce between old reports first:
 
-1. read this page and confirm that `Stage 11` is closed and `Stage 12` is now current
+1. read this page and confirm that `Stage 12` is also closed and the repo is now in maintenance
 2. if you care about `Minor GC`, read the [Stage 11 closeout report](../reports/generated/stage11-context-minor-gc-and-codex-integration-closeout-2026-04-18.md)
 3. then read the [Context Minor GC architecture page](reference/unified-memory-core/architecture/context-minor-gc.md)
 4. then read the [Stage 11 detailed plan](reference/unified-memory-core/development-plan.md#stage-11-context-minor-gc-and-codex-integration)
 5. then read the [Stage 12 detailed plan](reference/unified-memory-core/development-plan.md#stage-12-realtime-memory-intent-productization)
-6. only then drop into historical reports when needed:
+6. then read the [Stage 12 closeout report](../reports/generated/stage12-realtime-memory-intent-productization-closeout-2026-04-19.md)
+7. only then drop into historical reports when needed:
    - [Step 108 closeout](../reports/generated/stage7-step108-context-minor-gc-closeout-2026-04-18.md)
    - [Stage 7 closeout](../reports/generated/stage7-context-minor-gc-closeout-2026-04-18.md)
    - [Stage 9 closeout](../reports/generated/stage9-guarded-smart-path-closeout-2026-04-18.md)
@@ -139,22 +149,22 @@ If you want to read in order, do not bounce between old reports first:
 ## Overall Progress
 | Item | Current Value |
 | --- | --- |
-| Overall Progress | 3 / 3 execution tasks complete |
-| Current Phase | `stage12-realtime-memory-intent-productization` |
+| Overall Progress | all defined numbered stages complete |
+| Current Phase | `post-stage12-product-maintenance` |
 | Active Slice | `n/a` |
-| Current Objective | Stage 11 is closed; move forward under Stage 12 while keeping Minor GC optimization evidence green |
+| Current Objective | keep Stage 5 / 10 / 11 / 12 proof surfaces, release path, and Minor GC optimization evidence green |
 | Active Slice Exit Signal | n/a |
-| Clear Next Move | Move to Stage 12 execution slices |
-| Next Candidate Slice | `stage12 / 12A contract-and-replay-hold` |
+| Clear Next Move | hold maintenance / release / operator-proof baseline; only open a new stage for a new explicit product goal |
+| Next Candidate Slice | `n/a` |
 
 See the detailed execution plan: [project-assistant/development-plan.md](reference/project-assistant/development-plan.md)
 
 ## Current / Next / Later
 | Horizon | Focus | Exit Signal |
 | --- | --- | --- |
-| Current | Move Stage 12 forward while keeping Minor GC scorecards, threshold A/B evidence, and guarded boundaries green | Stage 12 plan stays aligned; Minor GC reports remain reproducible |
+| Current | Keep Stage 5 / 10 / 11 / 12 proof surfaces and the release path green | current product state remains stable and reproducible |
 | Next | Keep improving Minor GC prompt thickness, rollback after switches, latency, and operator simplicity as an optimization track | refreshed scorecards, threshold probes, and host-visible evidence stay green |
-| Later | Discuss broader rollout only under a new explicit product goal | explicit product decision, updated rollout boundary, and matching evidence |
+| Later | Open a new numbered stage only under a new explicit product goal | explicit goal, rollout boundary, and matching evidence |
 
 ## Milestone Rules
 - one milestone = one clear theme-level goal

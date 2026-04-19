@@ -203,6 +203,23 @@ The repo has already completed five foundational pieces:
 - the OpenClaw adapter ordinary-conversation `agent_end` hook can already route durable ordinary signals into the same governed lifecycle
 - `npm run verify:memory-intent` now acts as the formal gate for this slice
 
+`Stage 12` now also has one formal maintainer proof entrypoint:
+
+- `npm run umc:stage12`
+
+That one command closes the productization surface by checking:
+
+1. a fresh `memory-intent` formal gate pass
+2. ordinary-conversation strict Docker closeout
+3. accepted-action host canary evidence
+4. aligned operator/docs surface
+
+Closeout evidence:
+
+- [../../../../reports/generated/stage12-realtime-memory-intent-productization-closeout-2026-04-19.md](../../../../reports/generated/stage12-realtime-memory-intent-productization-closeout-2026-04-19.md)
+- [../../../../reports/generated/openclaw-ordinary-conversation-memory-intent-closeout-2026-04-17.md](../../../../reports/generated/openclaw-ordinary-conversation-memory-intent-closeout-2026-04-17.md)
+- [../../../../reports/generated/openclaw-accepted-action-canary-2026-04-15.md](../../../../reports/generated/openclaw-accepted-action-canary-2026-04-15.md)
+
 Important boundary:
 
 - the Codex path already implements “same inference returns structured memory_extraction”
@@ -212,4 +229,4 @@ The next step is no longer to debate the contract itself.
 
 It is:
 
-`continue broader runtime adoption and keep replay/governance coverage aligned as the surrounding benchmark and runtime surfaces evolve`
+`keep this formal contract green as a maintenance-era product surface, and only open a later stage under a new explicit product goal`

@@ -3,15 +3,15 @@
 ## Delivery Tier
 
 - Tier: `large`
-- Last reviewed: `2026-04-18`
+- Last reviewed: `2026-04-19`
 
 ## Current Phase
 
-`stage12-realtime-memory-intent-productization`
+`post-stage12-product-maintenance`
 
 ## Active Slice
 
-`group-12a-contract-and-replay-hold`
+`maintenance-stage12-proof-hold`
 
 ## Current Product Promises
 
@@ -31,12 +31,14 @@
 
 ## Stage 12 Snapshot
 
-- Stage 12 定义：把 realtime governed memory intake 从 baseline 能力推进成清晰产品面与 operator 面
-- 12A `contract-and-replay-hold`：当前切片，先把 `memory_intent` / `memory_extraction` / accepted-action 的 contract、replay surface 和 operator 语言收成同一条产品线
-- 12B `ordinary-conversation-runtime-ingest`：下一步
-- 12C `operator-surface-and-rollout`：后续
-- 当前 gate：
+- Stage 12 已完成：
+  - `memory_intent` / `memory_extraction` / accepted-action 的共享 contract 已固定
+  - ordinary-conversation realtime ingest 已有 strict Docker hermetic closeout：current `40 / 40`、legacy `15 / 40`、`UMC-only = 25`、`both-fail = 0`
+  - accepted-action host canary 已证明真实 OpenClaw `after_tool_call` governed intake 可用
+  - `npm run umc:stage12` 已成为正式 maintainer proof 入口
+- 当前 maintenance gate：
   - `npm run verify:memory-intent`：`pass`
+  - `npm run umc:stage12`：`pass`
 
 ## Done
 

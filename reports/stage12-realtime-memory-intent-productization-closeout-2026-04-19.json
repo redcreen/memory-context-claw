@@ -1,0 +1,75 @@
+{
+  "generated_at": "2026-04-19T09:10:11.829Z",
+  "repo_root": "/Users/redcreen/Project/unified-memory-core",
+  "summary": {
+    "status": "pass",
+    "total_checks": 4,
+    "passed_checks": 4,
+    "failed_checks": 0
+  },
+  "checks": [
+    {
+      "code": "memory-intent-formal-gate",
+      "status": "pass",
+      "expected": "`npm run verify:memory-intent` passes on the current repo state",
+      "actual": "pass in 618ms",
+      "message": "Stage 12 cannot close without a fresh contract/runtime/governance gate pass."
+    },
+    {
+      "code": "ordinary-conversation-runtime-closeout",
+      "status": "pass",
+      "expected": "strict Docker ordinary-conversation closeout reaches full current pass with zero shared failures and clear UMC-only wins",
+      "actual": "current 40/40, legacy 15/40, UMC-only 25, both-fail 0",
+      "message": "This is the formal proof that realtime ordinary-conversation ingest is no longer just a contract on paper."
+    },
+    {
+      "code": "accepted-action-host-runtime-proof",
+      "status": "pass",
+      "expected": "the real OpenClaw host canary proves structured accepted_action reaches the governed registry path",
+      "actual": "result=pass, promoted=0",
+      "message": "Stage 12 also has to cover the accepted-action realtime seam, not only memory_extraction and replay."
+    },
+    {
+      "code": "operator-surface-is-one-command",
+      "status": "pass",
+      "expected": "package scripts and architecture docs expose one explicit Stage 12 operator surface plus both runtime seams",
+      "actual": "umc:stage12=true, verify:memory-intent=true, ordinary-ab=true, docsGate=true, docsSeams=true",
+      "message": "Stage 12 is productization work, so the proof surface must exist for maintainers, not only as scattered reports."
+    }
+  ],
+  "evidence": {
+    "memory_intent_gate": {
+      "status": "pass",
+      "duration_ms": 618,
+      "stdout": "\n> unified-memory-core@0.3.1 verify:memory-intent\n> node scripts/run-memory-intent-gate.js\n\n✔ memory intent contract parses durable tool routing preferences deterministically (0.700583ms)\n✔ memory intent admission keeps session constraints and task instructions out of durable candidate routing (0.065708ms)\nℹ tests 2\nℹ suites 0\nℹ pass 2\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 33.330292\n✔ codex adapter resolves local-first project binding defaults (1.755708ms)\n✔ codex adapter can resolve openclaw-compatible workspace plus agent settings (0.09425ms)\n✔ codex adapter loads governed code memory before a task (8.811542ms)\n✔ codex adapter persists a governed write-back event into source and candidate records (1.851ms)\n✔ codex adapter can share a namespace hint with openclaw-compatible workspace scope (1.753625ms)\n✔ codex adapter can merge workspace and agent sub-namespace memory like openclaw code agent (3.631959ms)\n✔ codex adapter can write back into the same agent sub-namespace (0.836166ms)\n✔ codex adapter exposes governed task defaults from policy inputs (3.949541ms)\n✔ codex adapter projects recent conversation into the baseline prompt block (0.431042ms)\n✔ codex adapter can apply guarded Context Minor GC to recent conversation context (2.876333ms)\n✔ createCodexWriteBackEvent validates summary and maps task metadata (0.143584ms)\n✔ createCodexAcceptedActionSource maps task result metadata into an accepted_action source (0.38875ms)\n✔ createCodexMemoryExtractionSource maps structured memory extraction into a memory_intent ingest source (0.2105ms)\n✔ codex adapter auto-emits accepted_action signals from write-after-task input (4.884833ms)\n✔ codex adapter writes structured memory extraction signals into source and candidate records (2.346ms)\n✔ codex adapter ignores memory extraction payloads marked as non-durable write skips (0.789666ms)\n✔ memory intent replay cases cover durable, session, task-local, and no-memory boundaries (2.3745ms)\n✔ umc where prints wrapper and backend paths (35.054417ms)\n✔ umc -h renders grouped top-level help (31.776541ms)\n✔ umc source without a subcommand renders grouped help (31.927709ms)\n✔ umc help source add renders command-specific help (31.129375ms)\n✔ portable top-level help hides full-only commands (30.133042ms)\n✔ umc source add delegates to the full cli backend (35.92725ms)\n✔ umc source add can fall back to the portable cli backend (31.959666ms)\n✔ umc source add accepts structured accepted_action sources (35.334625ms)\n✔ umc source add accepts structured memory_intent sources (35.566625ms)\n✔ umc learn lifecycle-run promotes accepted_action signals through the governed loop (44.766958ms)\nℹ tests 27\nℹ suites 0\nℹ pass 27\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 376.631416\n✔ parseNamespace accepts a governed namespace shape (0.845416ms)\n✔ artifact contracts validate source, candidate, stable, and export shapes (0.361709ms)\n✔ artifact contracts accept accepted_action source artifacts (0.063042ms)\n✔ artifact contracts accept memory_intent source artifacts (0.068625ms)\n✔ contracts reject invalid visibility (0.211833ms)\n✔ reflection system labels preference and rule candidates deterministically (3.140083ms)\n✔ reflection system persists reflection candidates and decision trails (3.168375ms)\n✔ reflection system raises confidence for repeated sources in the same namespace (0.724416ms)\n✔ reflection system treats Chinese should-style rules as stable rule candidates (0.971416ms)\n✔ reflection system splits accepted_action sources into target facts and outcome artifacts (1.076ms)\n✔ reflection system routes durable memory_intent sources into promotable rule candidates (0.684958ms)\n✔ reflection system keeps session memory_intent sources in observation state (0.357666ms)\n✔ source system normalizes manual input into a source artifact (1.4855ms)\n✔ source system snapshots directory sources for replay (8.518333ms)\n✔ source system normalizes url sources from local-first snapshots (0.221667ms)\n✔ source system snapshots image sources with text context (1.484416ms)\n✔ source system normalizes accepted_action sources into structured evidence (1.640208ms)\n✔ source system normalizes memory_intent sources into structured evidence (0.352542ms)\nℹ tests 18\nℹ suites 0\nℹ pass 18\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 48.558916\n",
+      "stderr": "[memory-intent-gate] running memory-intent-contract\n[memory-intent-gate] running memory-intent-runtime\n[memory-intent-gate] running memory-intent-governance\n[memory-intent-gate] all checks passed\n"
+    },
+    "ordinary_conversation_closeout": {
+      "report_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/openclaw-ordinary-conversation-memory-intent-closeout-2026-04-17.md",
+      "current_passed": 40,
+      "current_total": 40,
+      "legacy_passed": 15,
+      "legacy_total": 40,
+      "both_pass": 15,
+      "umc_only": 25,
+      "legacy_only": 0,
+      "both_fail": 0
+    },
+    "accepted_action_canary": {
+      "report_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/openclaw-accepted-action-canary-2026-04-15.md",
+      "result": "pass",
+      "promoted": "0"
+    },
+    "operator_surface": {
+      "scripts": {
+        "verifyMemoryIntent": "node scripts/run-memory-intent-gate.js",
+        "evalOpenClawOrdinaryAb": "node scripts/eval-openclaw-ordinary-conversation-memory-intent-ab.js",
+        "umcStage12": "node scripts/run-stage12-productization-proof.js"
+      },
+      "zh_mentions_formal_gate": true,
+      "en_mentions_formal_gate": true,
+      "zh_mentions_runtime_seams": true,
+      "en_mentions_runtime_seams": true
+    }
+  }
+}

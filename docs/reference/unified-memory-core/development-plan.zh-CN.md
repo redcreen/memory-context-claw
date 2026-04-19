@@ -26,22 +26,22 @@
 
 | 项目 | 当前值 |
 | --- | --- |
-| 总体进度 | 3 / 3 execution tasks 完成 |
-| 当前阶段 | `stage12-realtime-memory-intent-productization` |
+| 总体进度 | 所有已定义 numbered stages 已完成 |
+| 当前阶段 | `post-stage12-product-maintenance` |
 | 当前切片 | `n/a` |
-| 当前目标 | Stage 11 已关闭；转入 Stage 12 |
+| 当前目标 | 保持 Stage 5 / 10 / 11 / 12 的 proof surfaces、release 路径和 Minor GC 优化证据持续为绿 |
 | 当前切片退出条件 | n/a |
-| 明确下一步动作 | 转向 Stage 12 |
-| 下一候选切片 | `stage12 / 12A contract-and-replay-hold` |
+| 明确下一步动作 | 维持 maintenance / release / operator proof 基线；只有新明确产品目标出现时才开启新阶段 |
+| 下一候选切片 | `n/a` |
 
 ## 当前位置
 
 | 项目 | 当前值 | 说明 |
 | --- | --- | --- |
-| 当前阶段 | `stage12-realtime-memory-intent-productization` | 当前维护阶段 |
+| 当前阶段 | `post-stage12-product-maintenance` | 当前维护阶段 |
 | 当前切片 | `n/a` | Stage 11 已关闭 |
-| 当前执行线 | Stage 11 已完成；OpenClaw host-visible closeout 证据已补齐；Codex host-visible gap 不再阻塞本阶段关闭；同时继续把 `Context Minor GC` 作为长期优化主线之一维护 | 当前真正要保持为真的结论 |
-| 当前验证 | OpenClaw guarded session probe / stress probe、Docker hermetic long-session evidence、near-compaction threshold Docker A/B、Stage 7 / Stage 9 closeout evidence | Stage 11 关闭后的保留证据 |
+| 当前执行线 | 所有已定义 numbered stages 已完成；当前进入 maintenance，守住 Stage 5 / 10 / 11 / 12 proof surfaces 与 release/operator baseline，同时继续把 `Context Minor GC` 作为长期优化主线之一维护 | 当前真正要保持为真的结论 |
+| 当前验证 | `npm run umc:stage12`、OpenClaw ordinary-conversation strict closeout、accepted-action host canary、OpenClaw guarded session probe / threshold Docker A/B、Stage 10 adoption/shared-foundation proof | 维护态下的保留证据 |
 
 ## 执行任务进度
 
@@ -100,4 +100,32 @@
 
 | 下一步 | 为什么做 |
 | --- | --- |
-| 当前 execution tasks 已完成，转向下一切片或 release 决策 | 当前 execution tasks 已完成，下一步应进入下一切片或下一轮 release 判断。 |
+| 守住 maintenance / release / operator proof 基线 | 当前 numbered stages 已全部完成，下一步不再是继续开新切片，而是维持当前产品态稳定可验证。 |
+
+## Stage 12 Realtime Memory Intent Productization
+
+### Group 12A contract-and-replay-hold
+
+- 状态：`已完成`
+- 结果：
+  - `memory_intent` / `memory_extraction` / accepted-action 共享 contract 已固定
+  - replay suite、runtime tests、governance tests 已被 `npm run verify:memory-intent` 收口成正式 gate
+  - architecture / development-plan / control-surface 已收口到同一套术语
+
+### Group 12B ordinary-conversation-runtime-ingest
+
+- 状态：`已完成`
+- 结果：
+  - ordinary-conversation realtime ingest 已不再只是 contract 设计，而是有 strict Docker hermetic closeout
+  - closeout 结果：current `40 / 40`、legacy `15 / 40`、`UMC-only = 25`、`both-fail = 0`
+  - 对应报告：
+    - [openclaw-ordinary-conversation-memory-intent-closeout-2026-04-17.md](../../../reports/generated/openclaw-ordinary-conversation-memory-intent-closeout-2026-04-17.md)
+
+### Group 12C operator-surface-and-rollout
+
+- 状态：`已完成`
+- 结果：
+  - `npm run umc:stage12` 已成为 Stage 12 的正式维护者 proof 入口
+  - accepted-action host canary 已证明真实 OpenClaw `after_tool_call` governed intake 可用
+  - Stage 12 closeout 报告已补齐：
+    - [stage12-realtime-memory-intent-productization-closeout-2026-04-19.zh-CN.md](../../../reports/generated/stage12-realtime-memory-intent-productization-closeout-2026-04-19.zh-CN.md)

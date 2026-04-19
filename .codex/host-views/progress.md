@@ -5,11 +5,11 @@
 | --- | --- |
 | 项目 | `Unified Memory Core` |
 | 层级 | `大型` |
-| 当前判断 | stage12-realtime-memory-intent-productization 已进入执行；当前主战场是 realtime governed ingest contract / replay surface，正在推进 group-12a-contract-and-replay-hold。 |
-| 当前阶段 | stage12-realtime-memory-intent-productization |
+| 当前判断 | 所有已定义 numbered stages 已完成；仓库当前进入 post-stage12-product-maintenance。 |
+| 当前阶段 | post-stage12-product-maintenance |
 | 当前主战场 | `来源系统` |
-| 当前切片 | group-11g-host-visible-validation-and-closeout |
-| 当前执行线 | 只解决“用户体感不明显”的问题；先把宿主增长源控住，再把 carry-forward 收成 summary-first，最后用 host-visible 指标重新判定 closeout |
+| 当前切片 | maintenance-stage12-proof-hold |
+| 当前执行线 | 守住 Stage 5 / 10 / 11 / 12 的 proof surfaces、release 路径和 operator baseline，同时继续把 Minor GC 作为长期优化主线之一维护 |
 | 执行进度 | `0 / 0` |
 | 架构信号 | `黄色` |
 | 直接价值 | 让输入来源更稳定进入系统，而不是散落在各处。 |
@@ -18,9 +18,9 @@
 ## 当前定位
 | 项目位置 | 当前值 | 说明 | 链接 |
 | --- | --- | --- | --- |
-| 当前阶段 | stage12-realtime-memory-intent-productization | 当前所处的大阶段 | [路线图当前阶段](/Users/redcreen/Project/unified-memory-core/docs/roadmap.zh-CN.md:18) |
-| 当前切片 | group-11g-host-visible-validation-and-closeout | 当前真正推进的工作单元 | [当前切片对应位置](/Users/redcreen/Project/unified-memory-core/docs/workstreams/project/roadmap.zh-CN.md:225) |
-| 当前执行线 | 只解决“用户体感不明显”的问题；先把宿主增长源控住，再把 carry-forward 收成 summary-first，最后用 host-visible 指标重新判定 closeout | 这一轮长任务的人话说明 | 暂无 |
+| 当前阶段 | post-stage12-product-maintenance | 当前所处的维护阶段 | [路线图当前状态](/Users/redcreen/Project/unified-memory-core/docs/roadmap.zh-CN.md:18) |
+| 当前切片 | maintenance-stage12-proof-hold | 当前真正推进的工作单元 | 暂无 |
+| 当前执行线 | 守住 Stage 5 / 10 / 11 / 12 的 proof surfaces、release 路径和 operator baseline，同时继续把 Minor GC 作为长期优化主线之一维护 | 这一轮长任务的人话说明 | 暂无 |
 | 当前模块 | `来源系统` | 当前主战场 | 暂无 |
 | 总路线图 | `docs/roadmap` | 项目总阶段和 now/next/later | [docs/roadmap](/Users/redcreen/Project/unified-memory-core/docs/roadmap.zh-CN.md) |
 | 工作流路线图 | `project roadmap` | 当前工作流与焦点位置 | [project roadmap](/Users/redcreen/Project/unified-memory-core/docs/workstreams/project/roadmap.zh-CN.md) |
@@ -28,17 +28,17 @@
 ## 全局视角
 | 区域 | 当前状态 | 当前焦点 | 退出条件 |
 | --- | --- | --- | --- |
-| 项目整体 | stage12-realtime-memory-intent-productization | group-12a-contract-and-replay-hold | 在不丢失模块视角和治理清晰度的前提下推进当前切片 |
+| 项目整体 | post-stage12-product-maintenance | maintenance-stage12-proof-hold | 在不打开新 numbered stage 的前提下保持当前产品态稳定可验证 |
 
 ## 当前长任务
 | 项目 | 当前值 |
 | --- | --- |
-| 长任务名称 | group-11g-host-visible-validation-and-closeout |
-| 长任务目标 | 只解决“用户体感不明显”的问题；先把宿主增长源控住，再把 carry-forward 收成 summary-first，最后用 host-visible 指标重新判定 closeout |
+| 长任务名称 | maintenance-stage12-proof-hold |
+| 长任务目标 | 守住 Stage 12 closeout 和 release/operator proof baseline，不让 maintenance 真相再次漂移 |
 | 执行进度 | `0 / 0` |
 | 当前结论 | 当前切片已经推进到当前检查点 |
-| 是否存在 blocker | raw `openclaw memory search` transport 仍是显式 watchlist：`3/8 raw ok`，其余为 `4` 条 `missing_json_payload` 与 `1` 条 `empty_results` |
-| 下一步性质 | 保持 `npm run umc:stage10 -- --format markdown` 持续为绿。 |
+| 是否存在 blocker | 当前无功能 blocker；主要风险是 docs/control-truth 漂移或 proof surface 失真 |
+| 下一步性质 | 保持 `npm run umc:stage12 -- --format markdown` 持续为绿。 |
 
 ## 架构监督
 | 项目 | 当前值 |

@@ -4,10 +4,10 @@
 | 项目 | 当前值 |
 | --- | --- |
 | 层级 | `大型` |
-| 当前判断 | stage12-realtime-memory-intent-productization |
-| 当前阶段 | stage12-realtime-memory-intent-productization |
-| 当前切片 | group-11g-host-visible-validation-and-closeout |
-| 当前执行线 | 只解决“用户体感不明显”的问题；先把宿主增长源控住，再把 carry-forward 收成 summary-first，最后用 host-visible 指标重新判定 closeout |
+| 当前判断 | post-stage12-product-maintenance |
+| 当前阶段 | post-stage12-product-maintenance |
+| 当前切片 | maintenance-stage12-proof-hold |
+| 当前执行线 | 守住 Stage 5 / 10 / 11 / 12 的 proof surfaces、release 路径和 operator baseline，同时继续把 Minor GC 作为长期优化主线之一维护 |
 | 执行进度 | `0 / 0` |
 | 架构信号 | `黄色` |
 | 自动触发 | 当前没有自动触发 |
@@ -27,14 +27,14 @@
 | worker 接续方向 | 收口阶段 / Stage 5 已完成 |
 | worker 接续状态 | `活跃` |
 | 下一 handoff 检查 | 确认 worker 停下后的接续、回流和升级都能靠 durable 真相完成。 |
-| 当前主要风险 | raw `openclaw memory search` transport 仍是显式 watchlist：`3/8 raw ok`，其余为 `4` 条 `missing_json_payload` 与 `1` 条 `empty_results` |
+| 当前主要风险 | maintenance 口径再次漂移回“Stage 12 仍在进行中”，或 release/operator proof surface 与 docs/control truth 脱节 |
 | 完整看板 | `项目助手 进展` / `project assistant progress` |
 
 ## 接下来先做什么
 | 顺序 | 当前要做的事 |
 | --- | --- |
-| 1 | 保持 `npm run umc:stage10 -- --format markdown` 持续为绿。 |
-| 2 | 保持 Docker hermetic baseline、Stage 7、Stage 8、Stage 9、Stage 10 的证据面一致。 |
+| 1 | 保持 `npm run umc:stage12 -- --format markdown` 持续为绿。 |
+| 2 | 保持 Stage 5 / 10 / 11 / 12 的证据面与 release 路径一致。 |
 | 3 | 只有在新的明确产品目标出现时，才打开新的编号阶段。 |
 
 ## 当前任务板

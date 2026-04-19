@@ -2,7 +2,7 @@
 
 ## Current Phase
 
-`stage12-realtime-memory-intent-productization`
+`post-stage12-product-maintenance`
 
 ## Current Results Snapshot
 
@@ -34,18 +34,15 @@
 - Docker hermetic eval status: official-image runner, proxy rewrite, cloned-state path rewrite, warmed template cache, strict ordinary benchmark, and `gateway-steady` fast-watch ordinary benchmark are all landed; Docker is now the default trustworthy hermetic A/B base for this repo
 - Stage 10 adoption/shared-foundation proof: latest sampled package tarball `1456484 bytes`, `umc where` `154ms`, first-run `registry inspect` `80ms`, Codex shared proof `1 promoted / 1 candidate / 1 policy input`, multi-instance shared proof `2 candidates / 2 policy inputs`
 - `verify:memory-intent`: `pass`
-- Interpretation: `Stage 11` is closed. The next execution line is `Stage 12`, starting with `12A contract-and-replay-hold`, while `Context Minor GC` remains a long-running optimization track rather than the active blocker.
+- `umc:stage12`: `pass`
+- Interpretation: `Stage 12` is closed. The repo is now in maintenance, with `Context Minor GC` remaining as one long-running optimization track rather than a numbered-stage blocker.
 
-## Stage 12 Execution Focus
+## Maintenance Focus
 
-- 12A `contract-and-replay-hold`: current
-- 12B `ordinary-conversation-runtime-ingest`: next
-- 12C `operator-surface-and-rollout`: later
-- Rule:
-  - `Stage 12` is now active
-  - `Context Minor GC` stays green and remains an optimization line, not the phase blocker
-  - the current execution line is to freeze the realtime governed-ingest contract and replay surface before widening runtime rollout
-  - `npm run verify:memory-intent` is now the first formal gate for `12A`
+- keep `Stage 5 / 10 / 11 / 12` proof surfaces green
+- keep `Context Minor GC` green as an optimization line, not a numbered-stage blocker
+- keep release / install / operator paths aligned with the closed product state
+- treat any new numbered stage as opt-in and explicit rather than implicit continuation
 
 ## Current Product Promises
 
@@ -58,14 +55,14 @@
 
 ## Current Gap Order
 
-1. `Stage 11E / growth-source-control`
-   - stop active-thread growth from long commentary, raw session dumps, and heavy diagnostics
-2. `Stage 11F / summary-first-carry-forward`
-   - replace raw-turn-first carry-forward with summary-first task-state
-3. `Stage 11G / host-visible-validation-and-closeout`
-   - prove real user-visible thinning on comparable sessions instead of repo-local reduction only
-4. `Stage 12 / contract-and-replay-hold`
-   - keep the realtime governed-ingest contract, replay surface, and operator language aligned before widening rollout
+1. `maintenance-stage12-proof-hold`
+   - keep `npm run umc:stage12` green and keep Stage 12 docs/operator truth aligned
+2. `minor-gc-optimization-line`
+   - continue improving prompt thickness, rollback after switches, latency, and operator simplicity without reopening Stage 11
+3. `release-and-install-proof-hold`
+   - keep release-preflight, install verify, and shared-foundation proof green
+4. `explicit-next-stage-only`
+   - do not open another numbered stage unless a new product goal, rollout boundary, and closeout bar are written first
 
 ## Slices
 
@@ -304,9 +301,9 @@
 
 ## Stage 12 Groups
 
-- [ ] 12A contract-and-replay-hold
-- [ ] 12B ordinary-conversation-runtime-ingest
-- [ ] 12C operator-surface-and-rollout
+- [x] 12A contract-and-replay-hold
+- [x] 12B ordinary-conversation-runtime-ingest
+- [x] 12C operator-surface-and-rollout
 
 ## Development Log Capture
 

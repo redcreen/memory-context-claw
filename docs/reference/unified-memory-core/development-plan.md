@@ -26,22 +26,22 @@ It answers one practical question:
 
 | Item | Current Value |
 | --- | --- |
-| Overall Progress | 3 / 3 execution tasks complete |
-| Current Phase | `stage12-realtime-memory-intent-productization` |
+| Overall Progress | all defined numbered stages complete |
+| Current Phase | `post-stage12-product-maintenance` |
 | Active Slice | `n/a` |
-| Current Objective | Stage 11 is closed; move forward under Stage 12 while keeping Minor GC optimization evidence green |
+| Current Objective | keep Stage 5 / 10 / 11 / 12 proof surfaces, the release path, and Minor GC optimization evidence green |
 | Active Slice Exit Signal | n/a |
-| Clear Next Move | Move to Stage 12 execution slices |
-| Next Candidate Slice | `stage12 / 12A contract-and-replay-hold` |
+| Clear Next Move | hold the maintenance / release / operator-proof baseline; only open a new stage for a new explicit product goal |
+| Next Candidate Slice | `n/a` |
 
 ## Current Position
 
 | Item | Current Value | Meaning |
 | --- | --- | --- |
-| Current Phase | `stage12-realtime-memory-intent-productization` | Current maintainer-facing phase |
+| Current Phase | `post-stage12-product-maintenance` | Current maintainer-facing phase |
 | Active Slice | `n/a` | Stage 11 is closed |
-| Current Execution Line | Stage 11 is complete; OpenClaw host-visible closeout is covered; Codex host-visible gap no longer blocks the stage; keep `Context Minor GC` alive as one of the long-running optimization tracks | What the repo is trying to keep true now |
-| Validation | OpenClaw guarded session probe / stress probe, Docker hermetic long-session evidence, near-compaction threshold Docker A/B, Stage 7 / Stage 9 closeout evidence | The checks that must stay true while moving forward |
+| Current Execution Line | All defined numbered stages are complete; the repo is now in maintenance, holding Stage 5 / 10 / 11 / 12 proof surfaces plus the release/operator baseline while `Context Minor GC` continues as one long-running optimization track | What the repo is trying to keep true now |
+| Validation | `npm run umc:stage12`, OpenClaw ordinary-conversation strict closeout, accepted-action host canary, OpenClaw guarded session probe / threshold Docker A/B, Stage 10 adoption/shared-foundation proof | The checks that must stay true in maintenance mode |
 
 ## Execution Task Progress
 
@@ -87,7 +87,35 @@ No milestone drill-down could be derived from the roadmap yet.
 
 | Next Move | Why |
 | --- | --- |
-| Current execution tasks are complete; move to the next slice or release decision | The current execution tasks are complete, so the next move is to enter the next slice or release decision. |
+| Hold the maintenance / release / operator-proof baseline. | All numbered stages are complete, so the repo should now stay stable and verifiable instead of opening another slice implicitly. |
+
+## Stage 12 Realtime Memory Intent Productization
+
+### Group 12A contract-and-replay-hold
+
+- Status: `completed`
+- Result:
+  - the shared `memory_intent` / `memory_extraction` / accepted-action contract is fixed
+  - replay suite, runtime tests, and governance tests are now one formal gate under `npm run verify:memory-intent`
+  - architecture / development plan / control surface now use one aligned vocabulary
+
+### Group 12B ordinary-conversation-runtime-ingest
+
+- Status: `completed`
+- Result:
+  - ordinary-conversation realtime ingest is no longer just a contract design; it has a strict Docker hermetic closeout
+  - closeout result: current `40 / 40`, legacy `15 / 40`, `UMC-only = 25`, `both-fail = 0`
+  - report:
+    - [openclaw-ordinary-conversation-memory-intent-closeout-2026-04-17.md](../../../reports/generated/openclaw-ordinary-conversation-memory-intent-closeout-2026-04-17.md)
+
+### Group 12C operator-surface-and-rollout
+
+- Status: `completed`
+- Result:
+  - `npm run umc:stage12` is now the formal maintainer proof entrypoint for Stage 12
+  - the accepted-action host canary proves the real OpenClaw `after_tool_call` governed intake path
+  - Stage 12 closeout report:
+    - [stage12-realtime-memory-intent-productization-closeout-2026-04-19.md](../../../reports/generated/stage12-realtime-memory-intent-productization-closeout-2026-04-19.md)
 
 ## Ongoing Optimization Note
 

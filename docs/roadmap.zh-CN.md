@@ -23,10 +23,11 @@
 
 ## 当前一句话
 
-仓库当前已经把 `Stage 11` 真正收口，当前最新大阶段切到 `Stage 12`。
+仓库当前已经把 `Stage 12` 也正式收口；目前所有已定义的 numbered stages 都已完成，仓库进入 post-Stage-12 maintenance。
 
 - `Stage 11` 已完成
-- 当前最新的大阶段是：`Stage 12: Realtime Memory Intent Productization`
+- `Stage 12` 已完成
+- 当前运行状态是：`post-stage12-product-maintenance`
 - `Codex` 侧 host-visible gap 保留为后续独立优化，不再阻塞 `Stage 11`
 
 这句话的意思是：
@@ -34,7 +35,7 @@
 - `Context Minor GC` 现在已经在 OpenClaw + Codex 两侧可用
 - OpenClaw 侧“用户明显有体感”的 closeout 证据已经补齐
 - guarded seam 继续保持 `default-off` / opt-in only
-- 当前真正主线，已经转入 Stage 12 的产品化工作
+- 当前真正主线，不再是新 numbered stage，而是 maintenance / release / operator proof 维持
 - 同时，`Context Minor GC` 不会在 Stage 11 关闭后停止，而会继续作为长期优化主线之一
 
 ## 阶段时间线
@@ -52,7 +53,7 @@
 | Stage 9 | 已完成 | guarded smart-path promotion | bounded opt-in active path 收口，但继续 `default-off` |
 | Stage 10 | 已完成 | adoption simplification and shared-foundation proof | 最短接入路径、Codex / 多实例 shared proof 收口 |
 | Stage 11 | 已完成 | Context Minor GC and Codex integration | OpenClaw 侧 host-visible closeout 已补齐；Codex host-visible gap 不再阻塞 Stage 11 关闭 |
-| Stage 12 | 当前大阶段 | realtime memory intent productization | 把 realtime governed memory intake 从 baseline 能力推进成清晰产品面与 operator 面 |
+| Stage 12 | 已完成 | realtime memory intent productization | realtime governed memory intake 已收成正式产品面与 operator 面 |
 
 ## Stage 11: Context Minor GC And Codex Integration
 
@@ -105,9 +106,11 @@
 
 ## Stage 12: Realtime Memory Intent Productization
 
-`Stage 12` 现在就是当前大阶段。主题只保留一件事：
+`Stage 12` 现在已经完成。它关闭的标准是：
 
-- 把 realtime governed memory intake 从“baseline 能力”推进成真正的产品面和 operator 面
+- realtime `memory_intent` / `memory_extraction` / accepted-action 不再只是零散能力
+- contract、replay、ordinary-conversation runtime ingest、accepted-action host proof 已收成同一条产品线
+- 维护者已经有一条正式 proof 入口，而不是靠散落命令和旧报告拼接
 
 同时保留一个长期约束：
 
@@ -115,20 +118,27 @@
 
 | 分组 | 状态 | 目标 | 具体计划 |
 | --- | --- | --- | --- |
-| 12A `contract-and-replay-hold` | 当前切片 | 把 `memory_intent` / `memory_extraction` / accepted-action 的实时入口、回放和文档契约收成同一条产品线 | [Plan: 12A](reference/unified-memory-core/development-plan.zh-CN.md#group-12a-contract-and-replay-hold) |
-| 12B `ordinary-conversation-runtime-ingest` | 下一步 | 把普通对话与运行时 rule ingestion 接到同一套 governed realtime path | [Plan: 12B](reference/unified-memory-core/development-plan.zh-CN.md#group-12b-ordinary-conversation-runtime-ingest) |
-| 12C `operator-surface-and-rollout` | 后续 | 把 inspect / audit / replay / rollback 与 rollout boundary 收成正式 operator 面 | [Plan: 12C](reference/unified-memory-core/development-plan.zh-CN.md#group-12c-operator-surface-and-rollout) |
+| 12A `contract-and-replay-hold` | 已完成 | 把 `memory_intent` / `memory_extraction` / accepted-action 的实时入口、回放和文档契约收成同一条产品线 | [Plan: 12A](reference/unified-memory-core/development-plan.zh-CN.md#group-12a-contract-and-replay-hold) |
+| 12B `ordinary-conversation-runtime-ingest` | 已完成 | 把普通对话与运行时 rule ingestion 接到同一套 governed realtime path | [Plan: 12B](reference/unified-memory-core/development-plan.zh-CN.md#group-12b-ordinary-conversation-runtime-ingest) |
+| 12C `operator-surface-and-rollout` | 已完成 | 把 inspect / audit / replay / rollback 与 rollout boundary 收成正式 operator 面 | [Plan: 12C](reference/unified-memory-core/development-plan.zh-CN.md#group-12c-operator-surface-and-rollout) |
+
+### Stage 12 收口证据
+
+- [Stage 12 收口报告](../reports/generated/stage12-realtime-memory-intent-productization-closeout-2026-04-19.zh-CN.md)
+- [OpenClaw Ordinary-Conversation Strict Closeout](../reports/generated/openclaw-ordinary-conversation-memory-intent-closeout-2026-04-17.md)
+- [OpenClaw Accepted-Action Host Canary](../reports/generated/openclaw-accepted-action-canary-2026-04-15.md)
 
 ## 阅读顺序
 
 如果你现在要顺着看，不要再在旧报告之间跳：
 
-1. 先看当前这页，确认 `Stage 11` 已关闭、当前主线已切到 `Stage 12`
+1. 先看当前这页，确认 `Stage 12` 也已经关闭，仓库当前进入 maintenance
 2. 如果你关心 `Minor GC`，先看 [Stage 11 收口报告](../reports/generated/stage11-context-minor-gc-and-codex-integration-closeout-2026-04-18.zh-CN.md)
 3. 再看 [Context Minor GC 架构页](reference/unified-memory-core/architecture/context-minor-gc.zh-CN.md)
 4. 再看 [Stage 11 具体计划](reference/unified-memory-core/development-plan.zh-CN.md#stage-11-context-minor-gc-and-codex-integration)
 5. 再看 [Stage 12 具体计划](reference/unified-memory-core/development-plan.zh-CN.md#stage-12-realtime-memory-intent-productization)
-6. 需要核对历史证据时，再看：
+6. 再看 [Stage 12 收口报告](../reports/generated/stage12-realtime-memory-intent-productization-closeout-2026-04-19.zh-CN.md)
+7. 需要核对历史证据时，再看：
    - [Step 108 收口报告](../reports/generated/stage7-step108-context-minor-gc-closeout-2026-04-18.zh-CN.md)
    - [Stage 7 收口报告](../reports/generated/stage7-context-minor-gc-closeout-2026-04-18.zh-CN.md)
    - [Stage 9 收口报告](../reports/generated/stage9-guarded-smart-path-closeout-2026-04-18.zh-CN.md)
@@ -136,13 +146,13 @@
 ## 总体进展
 | 项目 | 当前值 |
 | --- | --- |
-| 总体进度 | 3 / 3 execution tasks 完成 |
-| 当前阶段 | `stage12-realtime-memory-intent-productization` |
+| 总体进度 | 所有已定义 numbered stages 已完成 |
+| 当前阶段 | `post-stage12-product-maintenance` |
 | 当前切片 | `n/a` |
-| 当前目标 | Stage 11 已关闭；转入 Stage 12，同时保持 Minor GC 优化证据持续为绿 |
+| 当前目标 | 保持 Stage 5 / 10 / 11 / 12 proof surfaces、release 路径和 Minor GC 优化证据持续为绿 |
 | 当前切片退出条件 | n/a |
-| 明确下一步动作 | 转向 Stage 12 execution slices |
-| 下一候选切片 | `stage12 / 12A contract-and-replay-hold` |
+| 明确下一步动作 | 维持 maintenance / release / operator proof 基线；只有新明确产品目标出现时才开启新阶段 |
+| 下一候选切片 | `n/a` |
 
 查看详细执行计划：[project-assistant/development-plan.zh-CN.md](reference/project-assistant/development-plan.zh-CN.md)
 
@@ -154,9 +164,9 @@
 ## 当前 / 下一步 / 更后面
 | 时间层级 | 重点 | 退出信号 |
 | --- | --- | --- |
-| 当前 | 推进 Stage 12，同时保持 Minor GC scorecard、threshold A/B 证据和 guarded boundary 为绿 | Stage 12 计划持续对齐；Minor GC 报告保持可复现 |
+| 当前 | 保持 Stage 5 / 10 / 11 / 12 的 proof surfaces 与 release 路径为绿 | 证明当前产品态稳定可维护 |
 | 下一步 | 继续把 Minor GC 当成长期优化主线之一，持续压更长对话下的 prompt thickness、切题回落、时延和 operator/debug 简洁度 | refreshed scorecards、threshold probes 和 host-visible evidence 持续为绿 |
-| 更后面 | 只有在新的明确产品目标下，才讨论更宽的默认路径 rollout | 明确 rollout decision、边界更新、证据面同步 |
+| 更后面 | 只有在新的明确产品目标下，才打开新的 numbered stage | 新阶段目标、边界和 closeout 证据面同时明确 |
 
 ## 里程碑规则
 - 一个里程碑只对应一个清晰的主题目标

@@ -199,6 +199,23 @@ flowchart TB
 - OpenClaw adapter 的 ordinary-conversation `agent_end` hook 已能把 durable ordinary signals 接入同一条 governed lifecycle
 - `npm run verify:memory-intent` 已成为这条 slice 的正式 gate
 
+同时，`Stage 12` 现在已经有一条正式的维护者 proof 入口：
+
+- `npm run umc:stage12`
+
+它把 4 件事收成同一条 closeout surface：
+
+1. fresh `memory-intent` formal gate
+2. ordinary-conversation strict Docker closeout
+3. accepted-action host canary
+4. operator surface / docs contract 已经对齐
+
+对应 closeout 证据：
+
+- [../../../../reports/generated/stage12-realtime-memory-intent-productization-closeout-2026-04-19.zh-CN.md](../../../../reports/generated/stage12-realtime-memory-intent-productization-closeout-2026-04-19.zh-CN.md)
+- [../../../../reports/generated/openclaw-ordinary-conversation-memory-intent-closeout-2026-04-17.md](../../../../reports/generated/openclaw-ordinary-conversation-memory-intent-closeout-2026-04-17.md)
+- [../../../../reports/generated/openclaw-accepted-action-canary-2026-04-15.md](../../../../reports/generated/openclaw-accepted-action-canary-2026-04-15.md)
+
 同时也要清楚边界：
 
 - Codex 路径已经实现了“主回复同一次推理顺带返回结构化 memory_extraction”
@@ -206,4 +223,4 @@ flowchart TB
 
 下一步不再是补 contract 本身，而是回到更上层的主线：
 
-`继续把这条正式 contract 接入更多 runtime 面，并在更大 benchmark / governance 面里持续观察 drift`
+`继续把这条正式 contract 作为维护态产品面守住，并只在新的明确产品目标下再开启后续阶段`

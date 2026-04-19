@@ -72,6 +72,7 @@
     "umc:openclaw-install-verify": "node scripts/run-openclaw-bundle-install.js",
     "umc:release-preflight": "node scripts/run-release-preflight.js",
     "umc:stage10": "node scripts/run-stage10-adoption-proof.js",
+    "umc:stage12": "node scripts/run-stage12-productization-proof.js",
     "umc:independent-review": "node scripts/run-independent-execution-review.js",
     "verify": "node scripts/verify-suite.js",
     "deploy:local": "node scripts/deploy-openclaw-local.js",
