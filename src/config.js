@@ -75,7 +75,8 @@ const DEFAULT_CONFIG = {
   openclawAdapter: {
     enabled: true,
     debug: {
-      canaryTool: false
+      canaryTool: false,
+      contextMinorGc: false
     },
     ordinaryConversationMemory: {
       enabled: true,
@@ -433,7 +434,8 @@ export function resolvePluginConfig(raw) {
     openclawAdapter: {
       enabled: openclawAdapter.enabled !== false,
       debug: {
-        canaryTool: debug.canaryTool === true
+        canaryTool: debug.canaryTool === true,
+        contextMinorGc: debug.contextMinorGc === true
       },
       ordinaryConversationMemory: {
         enabled: ordinaryConversationMemory.enabled !== false,

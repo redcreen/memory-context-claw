@@ -101,6 +101,19 @@ export class ContextAssemblyEngine {
     let result = null;
     let candidateLoadElapsedMs = 0;
     let assemblyBuildElapsedMs = 0;
+    const contextMinorGcDebug = (
+      this.config.openclawAdapter?.debug?.contextMinorGc === true
+      || String(process.env.UMC_DEBUG_CONTEXT_MINOR_GC || "").trim() === "1"
+    );
+    const logContextMinorGc = (message, details = null) => {
+      if (!contextMinorGcDebug) {
+        return;
+      }
+      const suffix = details ? ` ${JSON.stringify(details)}` : "";
+      (this.logger?.info || this.logger?.debug || this.logger?.warn)?.(
+        `[unified-memory-core][context-minor-gc] ${message}${suffix}`
+      );
+    };
 
     if (!this.config.enabled || !query || internalRerankSession) {
       const assemblyBuildStartedAt = Date.now();
@@ -118,6 +131,12 @@ export class ContextAssemblyEngine {
         this.config.dialogueWorkingSetGuarded?.enabled === true
         && isLikelyExplicitSwitchQuery(query)
       );
+      if (explicitSwitchFastPath) {
+        logContextMinorGc("explicit switch fast path active", {
+          sessionKey: params.sessionKey,
+          query
+        });
+      }
       const candidateLoadStartedAt = Date.now();
       const [governedContext, retrievalCandidates] = explicitSwitchFastPath
         ? [{
@@ -151,6 +170,12 @@ export class ContextAssemblyEngine {
             })
           ]);
       candidateLoadElapsedMs = Date.now() - candidateLoadStartedAt;
+      logContextMinorGc("candidate load completed", {
+        explicitSwitchFastPath,
+        candidateLoadElapsedMs,
+        retrievalCandidates: Array.isArray(retrievalCandidates) ? retrievalCandidates.length : 0,
+        governedCandidates: Array.isArray(governedContext?.candidates) ? governedContext.candidates.length : 0
+      });
       const governedCandidates = Array.isArray(governedContext?.candidates)
         ? governedContext.candidates
         : [];
@@ -165,7 +190,10 @@ export class ContextAssemblyEngine {
               ...this.config.dialogueWorkingSetShadow,
               enabled: true
             },
-            guardedConfig: this.config.dialogueWorkingSetGuarded,
+            guardedConfig: {
+              ...this.config.dialogueWorkingSetGuarded,
+              debugContextMinorGc: contextMinorGcDebug
+            },
             sessionKey: params.sessionKey,
             query,
             messages: params.messages,
@@ -182,6 +210,13 @@ export class ContextAssemblyEngine {
           if (dialogueWorkingSetEvent?.guarded?.applied) {
             assemblyMessages = dialogueWorkingSetEvent.guarded.filteredMessages;
           }
+          logContextMinorGc("guarded event resolved (no retrieval candidates)", {
+            relation: dialogueWorkingSetEvent?.decision?.relation || "",
+            transport: dialogueWorkingSetEvent?.decision_transport || "",
+            guardedApplied: dialogueWorkingSetEvent?.guarded?.applied === true,
+            guardedReason: dialogueWorkingSetEvent?.guarded?.reason || "",
+            filteredMessageCount: dialogueWorkingSetEvent?.guarded?.filteredMessageCount || 0
+          });
         }
         result = buildAssemblyResult({
           messages: assemblyMessages,
@@ -238,7 +273,10 @@ export class ContextAssemblyEngine {
               ...this.config.dialogueWorkingSetShadow,
               enabled: true
             },
-            guardedConfig: this.config.dialogueWorkingSetGuarded,
+            guardedConfig: {
+              ...this.config.dialogueWorkingSetGuarded,
+              debugContextMinorGc: contextMinorGcDebug
+            },
             sessionKey: params.sessionKey,
             query,
             messages: params.messages,
@@ -255,6 +293,14 @@ export class ContextAssemblyEngine {
           if (dialogueWorkingSetEvent?.guarded?.applied) {
             assemblyMessages = dialogueWorkingSetEvent.guarded.filteredMessages;
           }
+          logContextMinorGc("guarded event resolved", {
+            relation: dialogueWorkingSetEvent?.decision?.relation || "",
+            transport: dialogueWorkingSetEvent?.decision_transport || "",
+            guardedApplied: dialogueWorkingSetEvent?.guarded?.applied === true,
+            guardedReason: dialogueWorkingSetEvent?.guarded?.reason || "",
+            filteredMessageCount: dialogueWorkingSetEvent?.guarded?.filteredMessageCount || 0,
+            candidateCount: rankedCandidates.length
+          });
         }
         result = buildAssemblyResult({
           messages: assemblyMessages,
@@ -288,6 +334,9 @@ export class ContextAssemblyEngine {
           systemPromptAddition: mergedAddition,
           estimatedTokens
         };
+        logContextMinorGc("explicit switch reply hint injected", {
+          estimatedTokens
+        });
       }
     }
 
@@ -308,6 +357,16 @@ export class ContextAssemblyEngine {
         systemPromptAddition: mergedAddition,
         estimatedTokens
       };
+      if (contextMinorGcDebug) {
+        (this.logger?.info || this.logger?.debug || this.logger?.warn)?.(
+          `[unified-memory-core][context-minor-gc] merged guarded carry-forward ${JSON.stringify({
+            relation: dialogueWorkingSetEvent?.decision?.relation || "",
+            transport: dialogueWorkingSetEvent?.decision_transport || "",
+            carryForwardEstimate: dialogueWorkingSetEvent?.guarded?.carryForwardEstimate || 0,
+            estimatedTokens
+          })}`
+        );
+      }
     }
 
     return result;

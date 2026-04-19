@@ -428,12 +428,34 @@ export async function captureDialogueWorkingSetShadow({
   const startedAt = Date.now();
   const normalizedSessionKey = normalizeSessionKey(sessionKey);
   const agentId = parseAgentId(normalizedSessionKey);
+  const contextMinorGcDebug = (
+    guardedConfig?.enabled === true
+    && (
+      guardedConfig?.debugContextMinorGc === true
+      || String(process.env.UMC_DEBUG_CONTEXT_MINOR_GC || "").trim() === "1"
+    )
+  );
+  const logContextMinorGc = (message, details = null) => {
+    if (!contextMinorGcDebug) {
+      return;
+    }
+    const suffix = details ? ` ${JSON.stringify(details)}` : "";
+    (logger?.info || logger?.debug || logger?.warn)?.(
+      `[unified-memory-core][context-minor-gc] ${message}${suffix}`
+    );
+  };
   const sampling = evaluateDialogueWorkingSetShadowSampling({
     runtime,
     config,
     guardedConfig,
     query,
     messages
+  });
+  logContextMinorGc("shadow sampling evaluated", {
+    sessionKey: normalizedSessionKey,
+    eligible: sampling.eligible === true,
+    reason: sampling.reason || "",
+    query
   });
 
   const baseEvent = {
@@ -482,6 +504,10 @@ export async function captureDialogueWorkingSetShadow({
       },
       guarded: baseEvent.guarded
     });
+    logContextMinorGc("shadow sampling skipped", {
+      reason: baseEvent.reason,
+      transcriptTurns: Array.isArray(baseEvent.transcript) ? baseEvent.transcript.length : 0
+    });
     return writeShadowArtifacts(config.outputDir, baseEvent);
   }
 
@@ -491,8 +517,12 @@ export async function captureDialogueWorkingSetShadow({
       decision = {
         payload: buildHeuristicSwitchDecision(sampling.turns, query),
         elapsedMs: 0,
-        transport: "heuristic_switch"
-      };
+          transport: "heuristic_switch"
+        };
+      logContextMinorGc("using heuristic switch decision", {
+        sessionKey: normalizedSessionKey,
+        query
+      });
     } else if (guardedConfig?.enabled === true && isLikelyExplicitContinueQuery(query)) {
       const heuristicContinueDecision = buildHeuristicContinueAfterSwitchDecision(sampling.turns, query);
       if (heuristicContinueDecision) {
@@ -501,6 +531,10 @@ export async function captureDialogueWorkingSetShadow({
           elapsedMs: 0,
           transport: "heuristic_continue_after_switch"
         };
+        logContextMinorGc("using heuristic continue-after-switch decision", {
+          sessionKey: normalizedSessionKey,
+          query
+        });
       }
     }
     if (!decision) {
@@ -511,7 +545,12 @@ export async function captureDialogueWorkingSetShadow({
         turns: sampling.turns,
         config,
         logger,
-        decisionRunner
+          decisionRunner
+        });
+      logContextMinorGc("structured shadow decision completed", {
+        sessionKey: normalizedSessionKey,
+        transport: decision.transport || "",
+        elapsedMs: decision.elapsedMs || 0
       });
     }
     const snapshot = buildShadowContextSnapshot({
@@ -523,6 +562,14 @@ export async function captureDialogueWorkingSetShadow({
       projection: sampling.projection,
       snapshot,
       config: guardedConfig
+    });
+    logContextMinorGc("guarded application evaluated", {
+      relation: decision.payload?.relation || "",
+      transport: decision.transport || "",
+      guardedApplied: guarded.applied === true,
+      guardedReason: guarded.reason || "",
+      filteredMessageCount: guarded.filteredMessageCount || 0,
+      carryForwardEstimate: guarded.carryForwardEstimate || 0
     });
 
     return writeShadowArtifacts(config.outputDir, {
