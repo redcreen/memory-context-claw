@@ -14,14 +14,45 @@
 - `聪明`
 - `省心`
 
-当前已经实现的能力，对应关系可以简明理解成：
+当前已经实现的能力，和这 3 个卖点的对应关系是：
 
 - `轻快`
-  事实优先组装、`Context Minor GC`、更少依赖 `compact`、安装与验证路径更短
+  主要讲的是：
+  - 事实优先的上下文组装
+  - `Context Minor GC`
+  - 更长对话下更少依赖 `compact`
+  - 更短的安装、验证和部署路径
+  当前已经落地的代表能力：
+  - OpenClaw 默认 guarded `Context Minor GC`
+  - near-compaction threshold Docker A/B
+  - `umc:openclaw-install-verify`
+  - `release-preflight`
+
 - `聪明`
-  realtime `memory_intent` / `accepted_action`、nightly self-learning、promotion / decay、规则/偏好/事实的受治理进入
+  主要讲的是：
+  - realtime governed memory ingest
+  - nightly self-learning
+  - promotion / decay
+  - 规则、偏好、项目事实的稳定进入与复用
+  当前已经落地的代表能力：
+  - `memory_intent`
+  - `memory_extraction`
+  - `accepted_action`
+  - ordinary-conversation realtime ingest
+  - governed registry / reflection / candidate -> stable 闭环
+
 - `省心`
-  `umc` CLI、audit / replay / repair / rollback、Docker hermetic 验证、release-preflight、跨宿主共享契约
+  主要讲的是：
+  - 可审计、可回放、可修复、可回退
+  - 可复现验证
+  - release / install / host smoke 的 operator 面
+  - 跨宿主共享契约
+  当前已经落地的代表能力：
+  - `umc` CLI
+  - audit / replay / repair / rollback
+  - Docker hermetic 验证
+  - `release-preflight`
+  - OpenClaw / Codex shared contract
 
 ## 这是什么
 

@@ -10,6 +10,7 @@ Module architecture documents:
 - [projection-system.md](projection-system.md)
 - [governance-system.md](governance-system.md)
 - [openclaw-adapter.md](openclaw-adapter.md)
+- [openclaw-prompt-injection-flow.md](openclaw-prompt-injection-flow.md)
 - [codex-adapter.md](codex-adapter.md)
 - [realtime-memory-intent-ingestion.md](realtime-memory-intent-ingestion.md)
 - [context-slimming-and-budgeted-assembly.md](context-slimming-and-budgeted-assembly.md)

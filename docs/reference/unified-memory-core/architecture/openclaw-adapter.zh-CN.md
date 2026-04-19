@@ -15,6 +15,7 @@
 
 - [../deployment-topology.md](../deployment-topology.md)
 - [../../code-memory-binding-architecture.md](../../code-memory-binding-architecture.md)
+- [openclaw-prompt-injection-flow.zh-CN.md](openclaw-prompt-injection-flow.zh-CN.md)
 
 ## 它负责什么
 
@@ -25,6 +26,22 @@
 - OpenClaw ordinary-conversation memory-intent runtime hook
 - adapter-side compatibility rules
 - OpenClaw 多 agent 运行时协调规则
+
+## Prompt 注入主包边界
+
+如果你关心的是：
+
+`UMC 在 OpenClaw 里怎么把这一轮 prompt 包组出来，并最终进入 LLM？`
+
+直接看：
+
+- [openclaw-prompt-injection-flow.zh-CN.md](openclaw-prompt-injection-flow.zh-CN.md)
+
+最短边界是：
+
+- `contextEngine.assemble()` 负责组包
+- `before_agent_start / agent_end / after_tool_call` 主要负责写记忆
+- 最终主回复请求仍然是宿主发给 LLM，不是 UMC 自己直接发
 
 ## 它不负责什么
 

@@ -14,14 +14,45 @@ The three core product promises are still:
 - `smart`
 - `reassuring`
 
-The currently implemented capability map is:
+The currently implemented capability map behind those promises is:
 
 - `light and fast`
-  fact-first assembly, `Context Minor GC`, less dependence on `compact`, and a shorter install/verification path
+  Mainly means:
+  - fact-first context assembly
+  - `Context Minor GC`
+  - less dependence on `compact` in longer sessions
+  - a shorter install, verification, and deployment path
+  Representative landed capabilities:
+  - default-on guarded `Context Minor GC` on OpenClaw
+  - near-compaction threshold Docker A/B
+  - `umc:openclaw-install-verify`
+  - `release-preflight`
+
 - `smart`
-  realtime `memory_intent` / `accepted_action`, nightly self-learning, promotion / decay, and governed ingestion of rules, preferences, and facts
+  Mainly means:
+  - realtime governed memory ingest
+  - nightly self-learning
+  - promotion / decay
+  - stable capture and reuse of rules, preferences, and facts
+  Representative landed capabilities:
+  - `memory_intent`
+  - `memory_extraction`
+  - `accepted_action`
+  - ordinary-conversation realtime ingest
+  - the governed registry / reflection / candidate -> stable loop
+
 - `reassuring`
-  `umc` CLI, audit / replay / repair / rollback, Docker hermetic validation, release-preflight, and cross-host shared contracts
+  Mainly means:
+  - auditable, replayable, repairable, rollback-friendly behavior
+  - reproducible validation
+  - release / install / host smoke operator paths
+  - cross-host shared contracts
+  Representative landed capabilities:
+  - the `umc` CLI
+  - audit / replay / repair / rollback
+  - Docker hermetic validation
+  - `release-preflight`
+  - shared OpenClaw / Codex contracts
 
 ## What This Is
 

@@ -52,14 +52,45 @@ The roadmap and later optimization work still organize around three outward-faci
 - `smart`
 - `reassuring`
 
-Current implemented capability map:
+The current implemented capability map behind those promises is:
 
 - `light and fast`
-  fact-first assembly, `Context Minor GC`, less dependence on `compact`, and a shorter install/verification path
+  Mainly means:
+  - fact-first context assembly
+  - `Context Minor GC`
+  - less dependence on `compact` in longer sessions
+  - a shorter install / verification / deployment path
+  Current evidence:
+  - default-on guarded `Context Minor GC` on OpenClaw
+  - near-compaction threshold Docker A/B
+  - `umc:openclaw-install-verify`
+  - `release-preflight`
+
 - `smart`
-  realtime `memory_intent` / `accepted_action`, nightly self-learning, promotion / decay, and governed ingestion of rules, preferences, and facts
+  Mainly means:
+  - realtime governed memory ingest
+  - nightly self-learning
+  - promotion / decay
+  - stable capture and reuse of rules, preferences, and facts
+  Current evidence:
+  - `memory_intent`
+  - `memory_extraction`
+  - `accepted_action`
+  - ordinary-conversation realtime ingest
+  - the governed registry / reflection / candidate -> stable loop
+
 - `reassuring`
-  `umc` CLI, audit / replay / repair / rollback, Docker hermetic validation, release-preflight, and cross-host shared contracts
+  Mainly means:
+  - auditable, replayable, repairable, rollback-friendly behavior
+  - reproducible validation
+  - release / install / host smoke operator paths
+  - cross-host shared contracts
+  Current evidence:
+  - the `umc` CLI
+  - audit / replay / repair / rollback
+  - Docker hermetic validation
+  - `release-preflight`
+  - shared OpenClaw / Codex contracts
 
 ## Stage Timeline
 

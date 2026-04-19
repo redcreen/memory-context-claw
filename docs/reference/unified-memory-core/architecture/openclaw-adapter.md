@@ -15,6 +15,7 @@ Related documents:
 
 - [../deployment-topology.md](../deployment-topology.md)
 - [../../code-memory-binding-architecture.md](../../code-memory-binding-architecture.md)
+- [openclaw-prompt-injection-flow.md](openclaw-prompt-injection-flow.md)
 
 ## What It Owns
 
@@ -25,6 +26,22 @@ Related documents:
 - OpenClaw ordinary-conversation memory-intent runtime hook
 - adapter-side compatibility rules
 - OpenClaw multi-agent runtime coordination rules
+
+## Prompt Injection Boundary
+
+If what you really want to understand is:
+
+`how UMC assembles the turn-level prompt package inside OpenClaw and how that package finally reaches the LLM`
+
+read:
+
+- [openclaw-prompt-injection-flow.md](openclaw-prompt-injection-flow.md)
+
+Shortest boundary:
+
+- `contextEngine.assemble()` owns prompt-package assembly
+- `before_agent_start / agent_end / after_tool_call` mainly own memory writes
+- the final main-reply request is still sent by the host, not directly by UMC
 
 ## What It Does Not Own
 

@@ -8,6 +8,7 @@ This directory records durable implementation narratives: what went wrong, what 
 
 ## Entries
 
+- [Align product truth, default guarded GC, and OpenClaw prompt flow](2026-04-19-align-product-truth-default-guarded-and-openclaw-prompt-flow.md)
 - [Clarify host-level Context Minor GC acceptance and OpenClaw feasibility](2026-04-19-clarify-host-level-context-minor-gc-acceptance-and-openclaw-feasibility.md)
 - [Close 59-64 planning and open 200-case execution](2026-04-14-close-59-64-planning-and-open-200-case-execution.md)
 - [Expand benchmark coverage, separate transport watch, and expose answer-path regression](2026-04-14-expand-benchmark-separate-transport-and-expose-answer-path-regression.md)

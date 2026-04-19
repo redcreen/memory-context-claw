@@ -25,6 +25,15 @@
 
 如果你只是第一次看这个项目，先从 [../../../README.zh-CN.md](../../../README.zh-CN.md) 开始会更合适。
 
+如果你想看：
+
+- `contextEngine.assemble()` 到底组装了什么
+- `systemPromptAddition` / `messages` 最后怎么进到 LLM
+
+直接看：
+
+- [architecture/openclaw-prompt-injection-flow.zh-CN.md](architecture/openclaw-prompt-injection-flow.zh-CN.md)
+
 ## 按角色阅读
 
 如果你不想整篇顺着读，可以直接跳到和自己职责对应的部分：

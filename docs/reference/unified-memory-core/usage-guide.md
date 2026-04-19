@@ -26,6 +26,15 @@ This guide is for:
 This guide is not the best first read if you only want a high-level overview.
 In that case, start with [../../../README.md](../../../README.md).
 
+If you specifically want to see:
+
+- what `contextEngine.assemble()` actually assembles
+- how `systemPromptAddition` and `messages` finally reach the LLM
+
+go straight to:
+
+- [architecture/openclaw-prompt-injection-flow.md](architecture/openclaw-prompt-injection-flow.md)
+
 ## Read By Role
 
 If you do not want to read the whole manual in order, jump to the section that matches your job:
