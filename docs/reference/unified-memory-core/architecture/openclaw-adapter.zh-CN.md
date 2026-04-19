@@ -166,7 +166,7 @@ OpenClaw adapter 现在也拥有一条普通对话写侧接缝：
 
 这条 adapter 专项现在已经完成到“真实宿主已实证”的程度，而不是只停留在设计或测试替身：
 
-1. OpenClaw 已加载 `unified-memory-core v0.2.1`
+1. OpenClaw 已加载 `unified-memory-core v0.3.0`
 2. debug 开关打开时，宿主工具列表中会出现 `umc_emit_accepted_action_canary`
 3. 通过真实 `openclaw agent --local` 调用了这条工具
 4. 宿主真实触发了异步 `after_tool_call`

@@ -1,6 +1,6 @@
 {
   "name": "unified-memory-core",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "OpenClaw context-engine plugin for memory reranking and context assembly",
   "type": "module",
   "main": "index.js",
