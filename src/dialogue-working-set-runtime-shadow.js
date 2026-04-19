@@ -146,9 +146,24 @@ function compactSemanticTurnContent(value, maxChars = 120) {
   return truncateText(value, maxChars);
 }
 
-function buildHeuristicSwitchDecision(turns = [], query = "") {
+function findLatestUserTurn(turns = []) {
+  return [...(Array.isArray(turns) ? turns : [])].reverse().find((turn) => turn.role === "user") || null;
+}
+
+function findLatestExplicitSwitchUserTurn(turns = []) {
   const normalizedTurns = Array.isArray(turns) ? turns : [];
-  const latestUserTurnId = [...normalizedTurns].reverse().find((turn) => turn.role === "user")?.id || "";
+  const latestUserTurn = findLatestUserTurn(normalizedTurns);
+  return [...normalizedTurns]
+    .reverse()
+    .find((turn) =>
+      turn.role === "user"
+      && turn.id !== latestUserTurn?.id
+      && isLikelyExplicitSwitchQuery(turn.content)
+    ) || null;
+}
+
+function buildAnchorPinTurnIds(turns = [], latestUserTurnId = "") {
+  const normalizedTurns = Array.isArray(turns) ? turns : [];
   const priorUserTurns = normalizedTurns.filter(
     (turn) => turn.role === "user" && turn.id !== latestUserTurnId
   );
@@ -177,6 +192,15 @@ function buildHeuristicSwitchDecision(turns = [], query = "") {
   );
   maybeAdd(latestDurableTurn);
 
+  return anchorCandidates.slice(0, 3);
+}
+
+function buildHeuristicSwitchDecision(turns = [], query = "") {
+  const normalizedTurns = Array.isArray(turns) ? turns : [];
+  const latestUserTurnId = findLatestUserTurn(normalizedTurns)?.id || "";
+  const priorUserTurns = normalizedTurns.filter((turn) => turn.role === "user" && turn.id !== latestUserTurnId);
+  const anchorCandidates = buildAnchorPinTurnIds(normalizedTurns, latestUserTurnId);
+
   const archiveSummary = priorUserTurns
     .slice(Math.max(0, priorUserTurns.length - 3))
     .map((turn) => compactSemanticTurnContent(turn.content, 100))
@@ -192,6 +216,38 @@ function buildHeuristicSwitchDecision(turns = [], query = "") {
     pin_turn_ids: anchorCandidates.slice(0, 3),
     archive_summary: archiveSummary,
     reasoning_summary: `Explicit topic-switch marker detected in latest user turn: ${compactSemanticTurnContent(query, 120)}`
+  };
+}
+
+function buildHeuristicContinueAfterSwitchDecision(turns = [], query = "") {
+  const normalizedTurns = Array.isArray(turns) ? turns : [];
+  const latestUserTurnId = findLatestUserTurn(normalizedTurns)?.id || "";
+  const switchTurn = findLatestExplicitSwitchUserTurn(normalizedTurns);
+  if (!switchTurn) {
+    return null;
+  }
+  const switchIndex = normalizedTurns.findIndex((turn) => turn.id === switchTurn.id);
+  if (switchIndex < 0) {
+    return null;
+  }
+
+  const preSwitchTurns = normalizedTurns.slice(0, switchIndex);
+  const archiveSummary = preSwitchTurns
+    .filter((turn) => turn.role === "user")
+    .slice(Math.max(0, preSwitchTurns.filter((turn) => turn.role === "user").length - 3))
+    .map((turn) => compactSemanticTurnContent(turn.content, 100))
+    .filter(Boolean)
+    .join(" / ");
+
+  return {
+    relation: "continue",
+    confidence: 0.86,
+    evict_turn_ids: normalizedTurns
+      .filter((turn, index) => index < switchIndex)
+      .map((turn) => turn.id),
+    pin_turn_ids: buildAnchorPinTurnIds(preSwitchTurns, latestUserTurnId),
+    archive_summary: archiveSummary,
+    reasoning_summary: `Continue marker follows a recent explicit switch, so keep only the new-topic raw block and archive older context: ${compactSemanticTurnContent(query, 120)}`
   };
 }
 
@@ -247,11 +303,15 @@ export function evaluateDialogueWorkingSetShadowSampling({
   if (!normalizeString(query)) {
     return { eligible: false, reason: "missing_query" };
   }
-  if (guardedConfig?.enabled === true && isLikelyExplicitContinueQuery(query)) {
-    return { eligible: false, reason: "explicit_continue_marker" };
-  }
   const projected = projectRuntimeMessagesToDialogueProjection(messages, config);
   const turns = projected.turns;
+  if (
+    guardedConfig?.enabled === true
+    && isLikelyExplicitContinueQuery(query)
+    && !findLatestExplicitSwitchUserTurn(turns)
+  ) {
+    return { eligible: false, reason: "explicit_continue_marker", turns, projection: projected.projection };
+  }
   if (turns.length < Number(config.minTurns || 3)) {
     return { eligible: false, reason: "not_enough_turns", turns, projection: projected.projection };
   }
@@ -426,21 +486,34 @@ export async function captureDialogueWorkingSetShadow({
   }
 
   try {
-    const decision = isLikelyExplicitSwitchQuery(query)
-      ? {
-          payload: buildHeuristicSwitchDecision(sampling.turns, query),
+    let decision = null;
+    if (isLikelyExplicitSwitchQuery(query)) {
+      decision = {
+        payload: buildHeuristicSwitchDecision(sampling.turns, query),
+        elapsedMs: 0,
+        transport: "heuristic_switch"
+      };
+    } else if (guardedConfig?.enabled === true && isLikelyExplicitContinueQuery(query)) {
+      const heuristicContinueDecision = buildHeuristicContinueAfterSwitchDecision(sampling.turns, query);
+      if (heuristicContinueDecision) {
+        decision = {
+          payload: heuristicContinueDecision,
           elapsedMs: 0,
-          transport: "heuristic_switch"
-        }
-      : await runWorkingSetShadowDecision({
-          runtime,
-          sessionKey: normalizedSessionKey,
-          query,
-          turns: sampling.turns,
-          config,
-          logger,
-          decisionRunner
-        });
+          transport: "heuristic_continue_after_switch"
+        };
+      }
+    }
+    if (!decision) {
+      decision = await runWorkingSetShadowDecision({
+        runtime,
+        sessionKey: normalizedSessionKey,
+        query,
+        turns: sampling.turns,
+        config,
+        logger,
+        decisionRunner
+      });
+    }
     const snapshot = buildShadowContextSnapshot({
       turns: sampling.turns,
       decision: decision.payload
