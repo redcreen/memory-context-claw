@@ -54,7 +54,7 @@ export class ContextAssemblyEngine {
     this.info = {
       id: "unified-memory-core",
       name: "Unified Memory Core",
-      version: "0.2.1",
+      version: "0.3.0",
       ownsCompaction: false
     };
   }

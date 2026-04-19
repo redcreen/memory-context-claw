@@ -108,7 +108,7 @@ Not every note should become a stable learning artifact.
 Use this when you want a predictable user-facing install target.
 
 ```bash
-openclaw plugins install git+https://github.com/redcreen/Unified-Memory-Core.git#v0.2.1
+openclaw plugins install git+https://github.com/redcreen/Unified-Memory-Core.git#v0.3.0
 ```
 
 ### Development-head install
@@ -431,8 +431,8 @@ This is the right path if you are deciding whether the repo is ready for a stabl
 ```bash
 npm run umc:release-preflight -- --format markdown
 git status --short
-git tag v0.2.1
-git push origin v0.2.1
+git tag v0.3.0
+git push origin v0.3.0
 ```
 
 ### Release Owner Checklist
