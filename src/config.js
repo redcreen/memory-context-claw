@@ -66,7 +66,7 @@ const DEFAULT_CONFIG = {
     cleanupSession: true
   },
   dialogueWorkingSetGuarded: {
-    enabled: false,
+    enabled: true,
     allowedRelations: ["switch", "resolve"],
     minReductionRatio: 0.18,
     minEvictedTurns: 1,

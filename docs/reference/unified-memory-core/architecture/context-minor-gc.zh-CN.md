@@ -37,7 +37,7 @@
 | Stage 6 shadow runtime | 已完成；保持 `default-off` + shadow-only |
 | Stage 7 / Step 108 | 已完成；不改 OpenClaw core 也能跑通 decision transport |
 | Stage 7 / `104` harder eval matrix | 已完成；live matrix `6 / 6` |
-| Stage 9 guarded smart path | 已完成；继续保持 `default-off` / opt-in only |
+| Stage 9 guarded smart path | 已完成；maintenance 中已切到 OpenClaw 默认开启，shadow 仍保持 `default-off` |
 | Codex Context Minor GC live matrix | 已完成；`4 / 4` |
 | `Context Minor GC` 核心能力 | 已收口 |
 | Stage 11 | 已完成；OpenClaw host-visible closeout 已补齐 |
@@ -60,7 +60,7 @@
 | --- | --- |
 | GC 可用 | OpenClaw + Codex 都能消费同一套 decision contract / shadow / guarded seam |
 | 用户收益 | OpenClaw 长对话 Docker threshold A/B 里，baseline 切题后仍停留在 compact proxy danger zone 上方，而 guarded 能在不手动 `compact` 的前提下把 post-switch prompt 拉回阈值下方 |
-| rollback boundary 清楚 | guarded 继续保持 `default-off` / opt-in only |
+| rollback boundary 清楚 | guarded 默认开启，但仍只允许窄 relation 和 reduction / eviction 阈值通过 |
 
 关键新证据不是“package reduction ratio 很好看”，而是更贴近产品体感的 host-visible A/B：
 
@@ -185,7 +185,7 @@ OpenClaw run
 
 - `Context Minor GC` 负责热路径 working-set control plane
 - `plugin-owned context decision overlay` 负责把 decision transport 从宿主 seam 上解开
-- `guarded smart path` 提供极窄的 opt-in 用户收益
+- `guarded smart path` 现在提供默认开启、但边界仍然很窄的用户收益
 - `compact / compat` 继续只留在夜间或后台
 
 ## 证据

@@ -62,6 +62,14 @@ test("resolvePluginConfig keeps openclaw adapter governed export settings", () =
   assert.deepEqual(config.openclawAdapter.governedExports.allowedVisibilities, ["workspace", "shared"]);
 });
 
+test("resolvePluginConfig enables guarded dialogue working-set path by default", () => {
+  const config = resolvePluginConfig({});
+
+  assert.equal(config.dialogueWorkingSetShadow.enabled, false);
+  assert.equal(config.dialogueWorkingSetGuarded.enabled, true);
+  assert.deepEqual(config.dialogueWorkingSetGuarded.allowedRelations, ["switch", "resolve"]);
+});
+
 test("openclaw adapter runtime loads governed export candidates from local registry", async () => {
   const registryRoot = await fs.mkdtemp(path.join(os.tmpdir(), "umc-openclaw-"));
   const clock = () => new Date("2026-04-11T00:00:00.000Z");

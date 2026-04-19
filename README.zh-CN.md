@@ -24,7 +24,7 @@
   规则、身份、偏好、项目事实，不容易被无关历史和会话噪音冲掉。
 
 - 更长对话下更少依赖 `compact`
-  `Context Minor GC` 已经在 OpenClaw 的 host-visible 验证里证明：接近 compact danger zone 时，切题后可以把实际 prompt 拉回阈值下方，而不是立刻依赖手动 `compact`。
+  `Context Minor GC` 现在默认随 OpenClaw 路径生效；在 host-visible 验证里已经证明：接近 compact danger zone 时，切题后可以把实际 prompt 拉回阈值下方，而不是立刻依赖手动 `compact`。
 
 - 更受治理的记忆写入
   显式长期规则、工具偏好、用户偏好，不必只等 nightly 才有机会进入长期记忆。
@@ -82,6 +82,13 @@ openclaw plugins install git+https://github.com/redcreen/Unified-Memory-Core.git
   }
 }
 ```
+
+这份最简配置下，默认已经包含：
+
+- ordinary-conversation realtime governed memory ingest
+- `Context Minor GC` guarded path
+
+不需要再额外打开 guarded 开关。
 
 ### 验证是否加载成功
 

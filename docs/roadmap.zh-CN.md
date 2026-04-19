@@ -34,7 +34,7 @@
 
 - `Context Minor GC` 现在已经在 OpenClaw + Codex 两侧可用
 - OpenClaw 侧“用户明显有体感”的 closeout 证据已经补齐
-- guarded seam 继续保持 `default-off` / opt-in only
+- OpenClaw guarded seam 现已默认开启；shadow 继续保持 `default-off`
 - 当前真正主线，不再是新 numbered stage，而是 maintenance / release / operator proof 维持
 - 同时，`Context Minor GC` 不会在 Stage 11 关闭后停止，而会继续作为长期优化主线之一
 
@@ -50,7 +50,7 @@
 | Stage 6 | 已完成 | dialogue working-set shadow integration | runtime shadow measurement 面落地 |
 | Stage 7 | 已完成 | context loading optimization closure | `Context Minor GC` 正式进入主线并收口 |
 | Stage 8 | 已完成 | ordinary-conversation realtime-write latency closure | ordinary-conversation strict Docker A/B 收口 |
-| Stage 9 | 已完成 | guarded smart-path promotion | bounded opt-in active path 收口，但继续 `default-off` |
+| Stage 9 | 已完成 | guarded smart-path promotion | bounded active path 收口；maintenance 中已切到 OpenClaw 默认开启 |
 | Stage 10 | 已完成 | adoption simplification and shared-foundation proof | 最短接入路径、Codex / 多实例 shared proof 收口 |
 | Stage 11 | 已完成 | Context Minor GC and Codex integration | OpenClaw 侧 host-visible closeout 已补齐；Codex host-visible gap 不再阻塞 Stage 11 关闭 |
 | Stage 12 | 已完成 | realtime memory intent productization | realtime governed memory intake 已收成正式产品面与 operator 面 |
@@ -71,7 +71,7 @@
 | --- | --- | --- |
 | GC 可用 | OpenClaw + Codex 都能消费同一套 decision contract / shadow / guarded seam | 已满足 |
 | 用户收益 | OpenClaw 正例上有明确 prompt/context 缩减，而且在更长多轮对话里不依赖 `compact` 也能看到 thread 更薄 | 已满足 |
-| 边界清楚 | `default-off` / opt-in only 继续成立，不隐式放量 | 已满足 |
+| 边界清楚 | shadow 继续 `default-off`；guarded 默认开启但仍保持窄 relation / reduction / eviction 边界 | 已满足 |
 
 ### Stage 11 分组最终状态
 

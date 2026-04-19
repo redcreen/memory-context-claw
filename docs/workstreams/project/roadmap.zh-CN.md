@@ -215,21 +215,20 @@ flowchart TB
 
 ### 下一条主要工程主线
 
-**Stage 11 体验补强：把 `Context Minor GC` 从“能力可用”补到“用户明显有体感的按需加载”**
+**Maintenance 主线：守住已关闭的 Stage 11 / 12 真相，并继续优化 `Context Minor GC`**
 
 为什么先做这个：
 
-- 当前真正没收完的不是“再开一个新主题”，而是 `Stage 11` 里的用户体感验收
-- 当前 live 证据已经说明：project 层有局部裁剪，但宿主层实际盘子几乎没变薄
-- 用户现在最缺的不是更多 operator 指标，而是“这一轮真的明显更薄了”的体感
-- 所以当前主线应先补“host-visible context loading experience”，而不是把 `Stage 12` 提前并进来
+- 当前 numbered stages 已全部关闭，主问题不再是“还卡在哪个 stage”
+- 当前更需要的是守住已验证的 product truth、release path 和 operator proof，不让文档与实现再次漂移
+- `Context Minor GC` 仍是长期优化主线之一，但不再和 `Stage 12` 边界混在一起
 
 这一条主线具体包含：
 
-- 控制宿主线程增长源，避免重型调试输出继续污染当前线程
-- 把 project 层 carry-forward 从 raw-turn-first 推到 summary-first
-- 把 operator 观测与当前线程续写拆开，只把短结论回当前线程
-- 用用户可感知的体验指标重新定义 `Stage 11` 的关闭条件
+- 保持 `Stage 12` proof surface、ordinary-conversation strict closeout、accepted-action host canary 持续为绿
+- 保持 `Context Minor GC` 默认收益和 rollback boundary 清楚
+- 继续压更长对话下的 prompt thickness、切题回落和 answer latency
+- 只在新的明确产品目标下再开启后续 numbered stage
 
 关键文档：
 
@@ -277,15 +276,15 @@ flowchart TB
 
 项目下一步的大方向是：
 
-`先把 Stage 11 的用户体感缺口补齐，再进入下一条独立主题`
+`先守住 maintenance / release / operator proof baseline，再在新明确产品目标下决定是否开启下一条独立主题`
 
 从这里开始的计划阶段是：
 
-1. 先补完 `Stage 11 / host-visible experience hardening`
-2. 保持 release-preflight、bundle install verify、host smoke、`Stage 5` evidence 持续为绿
+1. 保持 `Stage 5 / 10 / 11 / 12` proof surfaces 持续为绿
+2. 保持 release-preflight、bundle install verify、host smoke 持续为绿
 3. 保持 canonical-root operator policy 在 CLI、公开文档和控制面里持续显式
 4. 保持项目 / workstream roadmap 与 live implementation baseline 同步
-5. 在 `Stage 11` 真正关闭后，再进入 `Stage 12` 这条独立主题
+5. 只有在新的明确产品目标出现时，再开启新的 numbered stage
 
 ## 架构方向
 

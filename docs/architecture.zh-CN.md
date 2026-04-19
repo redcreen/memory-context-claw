@@ -37,16 +37,18 @@ flowchart TB
 
 第二条现在已经是一等主线，不再只是 adapter 内的局部修补。
 
-并且从路线图角度，这条线已经重开 `Stage 11`，当前仍处于：
+从路线图角度，这条线现在已经不是“当前大阶段”，而是 maintenance 里的长期优化主线之一：
 
-- `Stage 11: Context Minor GC And Codex Integration`
+- `Stage 11` 已完成
+- `Stage 12` 已完成
+- 当前仓库状态是 `post-stage12-product-maintenance`
 
-这个大阶段的边界要明确：
+这个边界要明确：
 
-- Stage 6 / 7 / 9 这些 OpenClaw 侧主题仍然保持“已完成”的历史状态
-- `Stage 11` 已经把 `Context Minor GC` 的能力侧在 OpenClaw + Codex 两侧跑通
-- 当前最关键的 blocker 是“用户体感还不明显”
-- `Stage 12` 继续保持为下一条独立主题，而不是当前主线
+- Stage 6 / 7 / 9 这些 OpenClaw 侧主题保持“已完成”的历史状态
+- `Stage 11` 已经把 `Context Minor GC` 的能力和 OpenClaw host-visible 收益一起收口
+- `Stage 12` 已经把 realtime memory-intent productization 收口
+- 当前主线不再是“补某个未完成 stage”，而是守住 maintenance / release / operator proof baseline
 
 `context 优化` 当前明确分成几条互补的架构面：
 
@@ -64,10 +66,10 @@ flowchart TB
 
 - Stage 6 runtime shadow integration 已经落地
 - Stage 6 继续保持 `default-off` 和 shadow-only，作为测量面
-- Stage 9 guarded smart-path 已收口，但继续保持 `default-off` / opt-in only
+- Stage 9 guarded smart-path 已收口；maintenance 中 OpenClaw 默认开启，shadow 继续保持 `default-off`
 - 这条逐轮 context 优化主线，对外工作名现在统一收成 `Context Minor GC`
-- `Stage 11` 现在已经重开：GC 可用，但“用户端已有明确体感”这个结论已回退
-- 当前最新的大阶段仍是 `Stage 11`；`Stage 12` 继续保持为下一条独立产品线
+- `Stage 11` 不再是当前 blocker；它已经关闭，并转入长期优化线
+- 当前最新状态不是某个新 stage 正在执行，而是 `post-stage12-product-maintenance`
 - 当前推荐实施线不是修改 OpenClaw，而是优先把 `memory + context decision` 的 decision transport / scorecard / guarded seam 做成跨宿主一致契约
 - 日常产品目标已经明确：平时尽量靠逐轮 context 管理保持可持续，不把 compat / compact 当成日常热路径依赖；compat / compact 只保留为夜间或后台 safety net
 

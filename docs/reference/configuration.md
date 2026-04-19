@@ -303,7 +303,7 @@ Default:
 
 ```json5
 {
-  enabled: false,
+  enabled: true,
   allowedRelations: ["switch", "resolve"],
   minReductionRatio: 0.18,
   minEvictedTurns: 1,
@@ -313,7 +313,7 @@ Default:
 
 Meaning:
 
-- `enabled`: whether to enable the guarded opt-in path; keep this `false` by default
+- `enabled`: whether to enable the guarded active path; this is now `true` by default
 - `allowedRelations`: which `relation` values are allowed to activate the guarded path
 - `minReductionRatio`: the minimum raw reduction ratio required before a guarded candidate can apply
 - `minEvictedTurns`: the minimum number of projected turns that must be evicted
@@ -321,9 +321,9 @@ Meaning:
 
 Recommended rule:
 
-- keep this `default-off`
-- treat it as a Stage 9 narrow experiment seam, not as a default prompt-mutation feature
-- the purpose of this path is to make daily use rely less on compat / compact, not to move compat / compact into a more frequent main-path habit
+- keep it enabled by default as the OpenClaw daily-use gain surface
+- keep the rollback boundary narrow through `relation`, reduction, and eviction thresholds
+- only turn it off explicitly for shadow comparison, rollback diagnosis, or targeted regressions
 
 #### `openclawAdapter`
 

@@ -25,7 +25,7 @@ It brings these concerns together:
   Stable rules, identity facts, preferences, and project facts are less likely to be drowned out by irrelevant history.
 
 - Less dependence on `compact` in long sessions
-  `Context Minor GC` is now proven on the OpenClaw host-visible surface: near a practical compact danger zone, a topic switch can pull the real prompt back below threshold instead of forcing an immediate manual `compact`.
+  `Context Minor GC` now ships on by default on the OpenClaw path. The host-visible proof already shows that near a practical compact danger zone, a topic switch can pull the real prompt back below threshold instead of forcing an immediate manual `compact`.
 
 - More governed memory writes
   Explicit long-lived rules, tool preferences, and user preferences do not have to wait for nightly processing before they become eligible for long-term memory.
@@ -83,6 +83,13 @@ Set `unified-memory-core` as the active `contextEngine` in `~/.openclaw/openclaw
   }
 }
 ```
+
+With this minimal config, the default runtime already includes:
+
+- ordinary-conversation realtime governed memory ingest
+- the `Context Minor GC` guarded path
+
+No extra guarded toggle is required.
 
 ### Verify It Loaded
 

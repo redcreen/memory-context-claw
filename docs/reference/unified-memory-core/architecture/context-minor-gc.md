@@ -38,7 +38,7 @@ Read this section first.
 | Stage 6 shadow runtime | completed; stays `default-off` + shadow-only |
 | Stage 7 / Step 108 | completed; decision transport runs without modifying OpenClaw core |
 | Stage 7 / `104` harder eval matrix | completed; live matrix `6 / 6` |
-| Stage 9 guarded smart path | completed; stays `default-off` / opt-in only |
+| Stage 9 guarded smart path | completed; in maintenance it is now enabled by default on OpenClaw while shadow remains `default-off` |
 | Codex Context Minor GC live matrix | completed; `4 / 4` |
 | `Context Minor GC` core capability | closed |
 | Stage 11 | completed; OpenClaw host-visible closeout is now covered |
@@ -61,7 +61,7 @@ Current result:
 | --- | --- |
 | GC is usable | OpenClaw + Codex both consume the same decision contract / shadow / guarded seam |
 | User benefit is visible | in the OpenClaw long-session Docker threshold A/B, baseline stays above the compact-proxy danger line after the topic switch while guarded pulls post-switch prompt size back below threshold without manual `compact` |
-| Rollback boundary stays explicit | guarded remains `default-off` / opt-in only |
+| Rollback boundary stays explicit | guarded is now default-on, but still restricted by narrow relation, reduction, and eviction thresholds |
 
 The decisive new evidence is no longer just “the reduction ratio looks good.”
 It is a host-visible A/B that is much closer to real product feel:
@@ -184,7 +184,7 @@ The landed shape is:
 
 - `Context Minor GC` owns the hot-path working-set control plane
 - `plugin-owned context decision overlay` unties decision transport from the host seam
-- `guarded smart path` provides a very narrow opt-in user gain
+- `guarded smart path` now provides a default-on but still tightly bounded user gain
 - `compact / compat` stays in the background
 
 ## Evidence

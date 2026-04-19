@@ -223,21 +223,20 @@ Still ongoing:
 
 ### Primary next engineering focus
 
-**Stage 11 experience hardening: move `Context Minor GC` from “capability available” to “users can clearly feel on-demand context loading”**
+**Maintenance mainline: keep the closed Stage 11 / 12 truth stable while continuing to optimize `Context Minor GC`**
 
 Why this is next:
 
-- the truly unfinished part is not “open a new theme”, but the user-visible acceptance gap inside `Stage 11`
-- current live evidence already shows local project-layer pruning, but almost no meaningful host-visible shrinkage
-- what users currently miss is not another operator metric but an obvious “this turn is materially thinner” feel
-- so the mainline should finish host-visible context loading experience first instead of merging `Stage 12` into the same theme
+- all numbered stages are now closed, so the main problem is no longer “which open stage blocks progress”
+- the bigger risk is letting product truth, release proof, and operator proof drift apart again
+- `Context Minor GC` remains a long-running optimization line, but it should no longer be mixed with the Stage 12 boundary
 
 This mainline now includes:
 
-- controlling host-thread growth sources so debugging no longer bloats the active thread
-- moving the project layer from raw-turn-first carry-forward to summary-first carry-forward
-- separating operator observability from thread continuation and keeping only short conclusions in-thread
-- redefining `Stage 11` closeout around user-visible experience rather than repo-local capability alone
+- keep the Stage 12 proof surface, ordinary-conversation strict closeout, and accepted-action host canary green
+- keep the default `Context Minor GC` user gain and rollback boundary explicit
+- continue reducing prompt thickness, post-switch rebound, and answer latency in longer sessions
+- only open a later numbered stage under a new explicit product goal
 
 Key documents:
 
@@ -280,15 +279,15 @@ Key documents:
 
 The next major project move is:
 
-`finish the Stage 11 user-visible experience gap first, then move into the next separate theme`
+`hold the maintenance / release / operator-proof baseline first, then decide on any later stage only under a new explicit product goal`
 
 Planned project stages from here:
 
-1. finish `Stage 11 / host-visible experience hardening`
-2. keep release-preflight, bundle install verification, host smoke, and `Stage 5` evidence green
+1. keep `Stage 5 / 10 / 11 / 12` proof surfaces green
+2. keep release-preflight, bundle install verification, and host smoke green
 3. keep canonical-root operator policy explicit in CLI, public docs, and the control surface
 4. keep project and workstream roadmaps aligned with the live implementation baseline
-5. move into `Stage 12` only after `Stage 11` is truly closed under the user-visible bar
+5. open another numbered stage only when a new explicit product goal exists
 
 ## Architecture Direction
 

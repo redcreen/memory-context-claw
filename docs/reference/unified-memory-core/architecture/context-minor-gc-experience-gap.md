@@ -4,17 +4,21 @@
 
 ## Purpose
 
-This document answers one product-facing question:
+This document answers one **Codex / VS Code host-specific** product-experience question:
 
 `why does Context Minor GC look closed on paper while users still do not feel obvious “on-demand context loading” inside VS Code Codex?`
 
-It no longer treats this as a post-Stage-11 theme.
+It should now be read as:
 
-Its judgment is:
+- a **historical analysis plus current Codex-gap record**
+- not the active blocker for the repo-wide roadmap
+- and no longer the document that decides the global Stage 11 / Stage 12 closeout state
 
-- the user-visible acceptance bar for `Stage 11` was declared too early
-- this gap still belongs inside `Stage 11`
-- `Stage 12` should not be merged into the same stage
+Its retained historical judgment is:
+
+- the Codex host-visible acceptance bar was declared too early at that time
+- this gap originally belonged to the Stage 11 analysis surface
+- but the repo-wide state is now already `post-stage12-product-maintenance`
 
 Related documents:
 

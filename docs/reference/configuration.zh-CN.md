@@ -305,7 +305,7 @@ openclaw memory search "我爱吃什么"
 
 ```json5
 {
-  enabled: false,
+  enabled: true,
   allowedRelations: ["switch", "resolve"],
   minReductionRatio: 0.18,
   minEvictedTurns: 1,
@@ -315,7 +315,7 @@ openclaw memory search "我爱吃什么"
 
 含义：
 
-- `enabled`：是否打开 guarded opt-in 路径；默认保持 `false`
+- `enabled`：是否打开 guarded active path；默认现在是 `true`
 - `allowedRelations`：只允许哪些 `relation` 进入 guarded path
 - `minReductionRatio`：至少达到多少 raw reduction ratio 才允许 guarded candidate 生效
 - `minEvictedTurns`：至少需要 evict 多少个 projected turns
@@ -323,9 +323,9 @@ openclaw memory search "我爱吃什么"
 
 推荐原则：
 
-- 保持 `default-off`
-- 把它当成 Stage 9 的窄实验面，而不是默认 prompt mutation
-- 这条路径服务的目标是“日常尽量不靠 compat / compact”，而不是把 compat / compact 搬进更频繁的主路径
+- 默认让它保持开启，作为 OpenClaw 的日常主路径收益面
+- 继续把 rollback boundary 保持得很窄：只接受 `switch` / `resolve`，并受 reduction / eviction 阈值保护
+- 如果你在做 shadow 对照、极端回归或回滚诊断，再显式把它关掉
 
 #### `openclawAdapter`
 

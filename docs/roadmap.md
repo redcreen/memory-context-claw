@@ -39,7 +39,7 @@ What that means:
 
 - `Context Minor GC` is now usable across both OpenClaw and Codex
 - the OpenClaw-side user-visible closeout evidence is now covered
-- the guarded seam remains `default-off` / opt-in only
+- the OpenClaw guarded seam is now on by default while shadow remains `default-off`
 - the product mainline is now maintenance / release / operator-proof hold rather than a new numbered stage
 
 ## Stage Timeline
@@ -54,7 +54,7 @@ What that means:
 | Stage 6 | completed | dialogue working-set shadow integration | runtime shadow measurement surface |
 | Stage 7 | completed | context loading optimization closure | `Context Minor GC` formally entered the mainline and closed out |
 | Stage 8 | completed | ordinary-conversation realtime-write latency closure | ordinary-conversation strict Docker A/B closed |
-| Stage 9 | completed | guarded smart-path promotion | bounded opt-in active path closed while staying `default-off` |
+| Stage 9 | completed | guarded smart-path promotion | bounded active path closed; in maintenance it now ships default-on for OpenClaw |
 | Stage 10 | completed | adoption simplification and shared-foundation proof | shortest adoption path and Codex / multi-instance shared proof |
 | Stage 11 | completed | Context Minor GC and Codex integration | the full capability is usable and the OpenClaw-side host-visible closeout is now covered |
 | Stage 12 | completed | realtime memory intent productization | realtime governed memory intake is now a formal product and operator surface |
@@ -75,7 +75,7 @@ Its completion bar is no longer “can Minor GC run at all?” but:
 | --- | --- | --- |
 | GC is usable | OpenClaw + Codex both consume the same decision contract / shadow / guarded seam | satisfied |
 | User benefit is visible | positive cases show real prompt/context reduction, and the OpenClaw long-session threshold A/B proves that guarded can pull prompt size back below a practical compact danger line without manual `compact` | satisfied |
-| Boundaries stay explicit | `default-off` / opt-in only remains true and rollout is not widened implicitly | satisfied |
+| Boundaries stay explicit | shadow stays `default-off`; guarded is default-on but still bounded by narrow relation / reduction / eviction checks | satisfied |
 
 ### Stage 11 Final Group State
 
