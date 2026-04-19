@@ -48,6 +48,15 @@
 - `聪明`
 - `省心`
 
+当前已经实现的能力，对应关系简表：
+
+- `轻快`
+  事实优先组装、`Context Minor GC`、更少依赖 `compact`、更短安装与验证路径
+- `聪明`
+  realtime `memory_intent` / `accepted_action`、nightly self-learning、promotion / decay、规则/偏好/事实的受治理进入
+- `省心`
+  `umc` CLI、audit / replay / repair / rollback、Docker hermetic 验证、release-preflight、跨宿主共享契约
+
 ## 阶段时间线
 
 | 阶段 | 状态 | 主题 | 说明 |

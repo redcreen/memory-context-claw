@@ -52,6 +52,15 @@ The roadmap and later optimization work still organize around three outward-faci
 - `smart`
 - `reassuring`
 
+Current implemented capability map:
+
+- `light and fast`
+  fact-first assembly, `Context Minor GC`, less dependence on `compact`, and a shorter install/verification path
+- `smart`
+  realtime `memory_intent` / `accepted_action`, nightly self-learning, promotion / decay, and governed ingestion of rules, preferences, and facts
+- `reassuring`
+  `umc` CLI, audit / replay / repair / rollback, Docker hermetic validation, release-preflight, and cross-host shared contracts
+
 ## Stage Timeline
 
 | Stage | Status | Theme | Meaning |

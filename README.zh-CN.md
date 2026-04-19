@@ -14,6 +14,15 @@
 - `聪明`
 - `省心`
 
+当前已经实现的能力，对应关系可以简明理解成：
+
+- `轻快`
+  事实优先组装、`Context Minor GC`、更少依赖 `compact`、安装与验证路径更短
+- `聪明`
+  realtime `memory_intent` / `accepted_action`、nightly self-learning、promotion / decay、规则/偏好/事实的受治理进入
+- `省心`
+  `umc` CLI、audit / replay / repair / rollback、Docker hermetic 验证、release-preflight、跨宿主共享契约
+
 ## 这是什么
 
 `Unified Memory Core` 主要做两件事：

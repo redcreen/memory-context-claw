@@ -14,6 +14,15 @@ The three core product promises are still:
 - `smart`
 - `reassuring`
 
+The currently implemented capability map is:
+
+- `light and fast`
+  fact-first assembly, `Context Minor GC`, less dependence on `compact`, and a shorter install/verification path
+- `smart`
+  realtime `memory_intent` / `accepted_action`, nightly self-learning, promotion / decay, and governed ingestion of rules, preferences, and facts
+- `reassuring`
+  `umc` CLI, audit / replay / repair / rollback, Docker hermetic validation, release-preflight, and cross-host shared contracts
+
 ## What This Is
 
 `Unified Memory Core` does two main jobs:
