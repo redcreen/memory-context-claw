@@ -42,6 +42,16 @@ What that means:
 - the OpenClaw guarded seam is now on by default while shadow remains `default-off`
 - the product mainline is now maintenance / release / operator-proof hold rather than a new numbered stage
 
+## North Star
+
+> Simple to install, smooth to use, light and fast to run, smart to remember, easy to maintain.
+
+The roadmap and later optimization work still organize around three outward-facing promises:
+
+- `light and fast`
+- `smart`
+- `reassuring`
+
 ## Stage Timeline
 
 | Stage | Status | Theme | Meaning |

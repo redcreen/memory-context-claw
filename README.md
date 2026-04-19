@@ -4,6 +4,16 @@
 
 > A governed memory core for OpenClaw: keep important rules, preferences, and project facts more stable in the current turn, while making long conversations less dependent on `compact`.
 
+## North Star
+
+> Simple to install, smooth to use, light and fast to run, smart to remember, easy to maintain.
+
+The three core product promises are still:
+
+- `light and fast`
+- `smart`
+- `reassuring`
+
 ## What This Is
 
 `Unified Memory Core` does two main jobs:
