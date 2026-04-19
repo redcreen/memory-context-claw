@@ -133,7 +133,7 @@ Not the primary target:
 Stable release:
 
 ```bash
-openclaw plugins install git+https://github.com/redcreen/Unified-Memory-Core.git#v0.3.0
+openclaw plugins install git+https://github.com/redcreen/Unified-Memory-Core.git#v0.3.1
 ```
 
 Development head:

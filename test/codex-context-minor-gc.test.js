@@ -10,13 +10,13 @@ test("buildCodexContextMinorGcPackage writes codex-specific telemetry for the fi
   const outputDir = await fs.mkdtemp(path.join(os.tmpdir(), "umc-codex-gc-"));
   const result = await buildCodexContextMinorGcPackage({
     sessionKey: "codex:vscode:test-session",
-    query: "继续收敛当前问题",
+    query: "当前主线应该保留什么？",
     messages: [
       { role: "user", content: "先确认现状，旧背景 A 旧背景 A 旧背景 A 旧背景 A 旧背景 A。" },
       { role: "assistant", content: "现状已经确认，旧解释 B 旧解释 B 旧解释 B 旧解释 B 旧解释 B。" },
       { role: "user", content: "补充旧问题 C 旧问题 C 旧问题 C 旧问题 C。" },
       { role: "assistant", content: "收到，开始转到当前主线。" },
-      { role: "user", content: "继续收敛当前问题" }
+      { role: "user", content: "当前主线应该保留什么？" }
     ],
     config: {
       enabled: true,
@@ -58,17 +58,18 @@ test("buildCodexContextMinorGcPackage writes codex-specific telemetry for the fi
   assert.equal(exportPayload.session_key, "codex:vscode:test-session");
 });
 
-test("buildCodexContextMinorGcPackage prefers summary-first task state over active raw turns", async () => {
+test("buildCodexContextMinorGcPackage prefers cheap raw context over lossy summary-first packaging", async () => {
   const outputDir = await fs.mkdtemp(path.join(os.tmpdir(), "umc-codex-gc-summary-"));
   const oldUserContext = "旧背景和排查步骤 A A A A A A A。".repeat(24);
   const oldAssistantContext = "这是很长的旧解释和诊断输出 B B B B B B B。".repeat(24);
+  const currentAsk = "现在主线只保留什么？".repeat(18);
   const result = await buildCodexContextMinorGcPackage({
     sessionKey: "codex:vscode:summary-session",
-    query: "继续收口体感问题",
+    query: "现在主线只保留什么？",
     messages: [
       { role: "user", content: oldUserContext },
       { role: "assistant", content: oldAssistantContext },
-      { role: "user", content: "现在只关心怎么让用户明显感觉线程更薄。" }
+      { role: "user", content: currentAsk }
     ],
     config: {
       enabled: true,
@@ -90,7 +91,7 @@ test("buildCodexContextMinorGcPackage prefers summary-first task state over acti
   });
 
   assert.equal(result.applied, true);
-  assert.match(result.effectiveContextBlock, /Task state summary:/);
-  assert.match(result.effectiveContextBlock, /Latest user ask:/);
-  assert.doesNotMatch(result.effectiveContextBlock, /Active raw turns:/);
+  assert.match(result.effectiveContextBlock, /Recent raw context:/);
+  assert.match(result.effectiveContextBlock, /现在主线只保留什么/);
+  assert.doesNotMatch(result.effectiveContextBlock, /Task state summary:/);
 });

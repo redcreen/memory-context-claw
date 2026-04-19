@@ -100,7 +100,14 @@ export function buildSummaryFirstWorkingSetText({
   if (rawKeepText) {
     const summaryEstimate = estimateTokenCountFromText(summaryFirstText);
     const rawEstimate = estimateTokenCountFromText(rawKeepText);
-    if (rawEstimate <= summaryEstimate) {
+    const rawStillCheap = rawEstimate <= 80;
+    const compactSummaryWouldHideTooMuch = (
+      rawStillCheap
+      && keepTurns.length <= 5
+      && compactPins.length === 0
+      && Boolean(taskStateSummary)
+    );
+    if (rawEstimate <= summaryEstimate || compactSummaryWouldHideTooMuch) {
       return `Recent raw context:\n${rawKeepText}`;
     }
   }

@@ -107,7 +107,7 @@
 当你想要稳定、可复现的用户安装目标时，用这个。
 
 ```bash
-openclaw plugins install git+https://github.com/redcreen/Unified-Memory-Core.git#v0.3.0
+openclaw plugins install git+https://github.com/redcreen/Unified-Memory-Core.git#v0.3.1
 ```
 
 ### 开发头版本安装
@@ -430,8 +430,8 @@ npm run umc:cli -- review independent-execution --repo-root . --format markdown
 ```bash
 npm run umc:release-preflight -- --format markdown
 git status --short
-git tag v0.3.0
-git push origin v0.3.0
+git tag v0.3.1
+git push origin v0.3.1
 ```
 
 ### Release Owner 检查清单

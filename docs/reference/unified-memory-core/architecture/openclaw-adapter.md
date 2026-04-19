@@ -164,7 +164,7 @@ Why it exists:
 
 This adapter slice is now verified at the real-host level, not just as design intent:
 
-1. OpenClaw loads `unified-memory-core v0.3.0`
+1. OpenClaw loads `unified-memory-core v0.3.1`
 2. when debug mode is enabled, the host tool list includes `umc_emit_accepted_action_canary`
 3. a real `openclaw agent --local` run can call that tool
 4. the host really emits async `after_tool_call`

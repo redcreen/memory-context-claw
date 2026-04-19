@@ -3,8 +3,8 @@ import assert from "node:assert/strict";
 
 import cases from "../evals/codex-context-minor-gc-live-cases.js";
 
-test("codex Context Minor GC live cases keep a compact four-case shape", () => {
-  assert.equal(cases.length, 4);
+test("codex Context Minor GC live cases keep the current six-case shape", () => {
+  assert.equal(cases.length, 6);
 });
 
 test("codex Context Minor GC live cases use unique ids and explicit prompts", () => {
