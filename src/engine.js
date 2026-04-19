@@ -268,6 +268,27 @@ export class ContextAssemblyEngine {
         });
         assemblyBuildElapsedMs = Date.now() - assemblyBuildStartedAt;
       }
+
+      if (explicitSwitchFastPath) {
+        const switchHint = [
+          "The user explicitly switched to a new topic.",
+          "Answer only the new request.",
+          "Be direct and concise on this first reply.",
+          "Do not restate or summarize the older archived topic unless the user asks for it."
+        ].join(" ");
+        const mergedAddition = mergeSystemPromptAdditions(
+          switchHint,
+          result.systemPromptAddition
+        );
+        const estimatedTokens =
+          result.messages.reduce((sum, message) => sum + estimateMessageTokens(message), 0) +
+          estimateTokenCountFromText(mergedAddition);
+        result = {
+          ...result,
+          systemPromptAddition: mergedAddition,
+          estimatedTokens
+        };
+      }
     }
 
     if (dialogueWorkingSetEventPromise && !dialogueWorkingSetEvent) {

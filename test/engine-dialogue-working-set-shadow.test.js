@@ -242,6 +242,7 @@ test("assemble uses heuristic switch path for explicit topic-switch markers", as
   assert.equal(events[0].decision_transport, "heuristic_switch");
   assert.equal(events[0].decision.relation, "switch");
   assert.match(String(events[0].guarded.reason || ""), /guarded_candidate|no_net_token_gain/);
+  assert.match(result.systemPromptAddition, /explicitly switched to a new topic/i);
 });
 
 test("assemble skips retrieval loading on explicit switch fast path", async () => {
