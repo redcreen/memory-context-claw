@@ -2,7 +2,10 @@ import { delegateCompactionToRuntime } from "openclaw/plugin-sdk";
 import { buildAssemblyResult } from "./assembly.js";
 import { resolvePluginConfig } from "./config.js";
 import { mergeSystemPromptAdditions } from "./dialogue-working-set-guarded.js";
-import { captureDialogueWorkingSetShadow } from "./dialogue-working-set-runtime-shadow.js";
+import {
+  captureDialogueWorkingSetShadow,
+  isLikelyExplicitSwitchQuery
+} from "./dialogue-working-set-runtime-shadow.js";
 import { DistillationManager, estimateUsageRatio } from "./distillation-manager.js";
 import { createOpenClawAdapterRuntime } from "./openclaw-adapter.js";
 import { applyPolicyToScoredCandidates } from "./unified-memory-core/policy-adaptation.js";
@@ -111,24 +114,42 @@ export class ContextAssemblyEngine {
       assemblyBuildElapsedMs = Date.now() - assemblyBuildStartedAt;
     } else {
       const agentId = parseAgentId(params.sessionKey, this.config.forceAgentId);
+      const explicitSwitchFastPath = (
+        this.config.dialogueWorkingSetGuarded?.enabled === true
+        && isLikelyExplicitSwitchQuery(query)
+      );
       const candidateLoadStartedAt = Date.now();
-      const [governedContext, retrievalCandidates] = await Promise.all([
-        this.openclawAdapterRuntime.loadGovernedContext({
-          query,
-          maxCandidates: this.config.openclawAdapter?.governedExports?.maxCandidates,
-          agentId
-        }),
-        this.retrievalFn({
-          openclawCommand: this.config.openclawCommand,
-          agentId,
-          query,
-          maxCandidates: this.config.maxCandidates,
-          cardArtifacts: this.config.cardArtifacts,
-          excludePaths: this.config.excludePaths,
-          queryRewrite: this.config.queryRewrite,
-          logger: this.logger
-        })
-      ]);
+      const [governedContext, retrievalCandidates] = explicitSwitchFastPath
+        ? [{
+            candidates: [],
+            policyContext: {
+              enabled: false,
+              policy_inputs: [],
+              policy_block: "",
+              rollback: {
+                status: "disabled",
+                reason_codes: ["explicit_switch_fast_path"]
+              }
+            },
+            exportResults: []
+          }, []]
+        : await Promise.all([
+            this.openclawAdapterRuntime.loadGovernedContext({
+              query,
+              maxCandidates: this.config.openclawAdapter?.governedExports?.maxCandidates,
+              agentId
+            }),
+            this.retrievalFn({
+              openclawCommand: this.config.openclawCommand,
+              agentId,
+              query,
+              maxCandidates: this.config.maxCandidates,
+              cardArtifacts: this.config.cardArtifacts,
+              excludePaths: this.config.excludePaths,
+              queryRewrite: this.config.queryRewrite,
+              logger: this.logger
+            })
+          ]);
       candidateLoadElapsedMs = Date.now() - candidateLoadStartedAt;
       const governedCandidates = Array.isArray(governedContext?.candidates)
         ? governedContext.candidates

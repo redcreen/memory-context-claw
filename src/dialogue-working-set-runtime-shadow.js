@@ -81,7 +81,7 @@ export function resolveDialogueWorkingSetShadowOutputDir(outputDir = "") {
   return normalizeString(outputDir) || DEFAULT_DIALOGUE_WORKING_SET_SHADOW_OUTPUT_DIR;
 }
 
-function isLikelyExplicitContinueQuery(query = "") {
+export function isLikelyExplicitContinueQuery(query = "") {
   const text = normalizeWhitespace(query).toLowerCase();
   if (!text) {
     return false;
@@ -122,7 +122,7 @@ function isLikelyExplicitContinueQuery(query = "") {
   return hasContinueMarker && !hasBoundaryMarker;
 }
 
-function isLikelyExplicitSwitchQuery(query = "") {
+export function isLikelyExplicitSwitchQuery(query = "") {
   const text = normalizeWhitespace(query).toLowerCase();
   if (!text) {
     return false;

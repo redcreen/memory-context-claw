@@ -244,6 +244,57 @@ test("assemble uses heuristic switch path for explicit topic-switch markers", as
   assert.match(String(events[0].guarded.reason || ""), /guarded_candidate|no_net_token_gain/);
 });
 
+test("assemble skips retrieval loading on explicit switch fast path", async () => {
+  const outputDir = await fs.mkdtemp(path.join(os.tmpdir(), "umc-guarded-switch-skip-retrieval-"));
+  let retrievalCalls = 0;
+  const engine = new ContextAssemblyEngine({
+    runtime: {},
+    logger: { warn() {}, info() {} },
+    pluginConfig: {
+      enabled: true,
+      openclawAdapter: {
+        enabled: false,
+        governedExports: {
+          enabled: false
+        }
+      },
+      dialogueWorkingSetShadow: {
+        enabled: true,
+        outputDir
+      },
+      dialogueWorkingSetGuarded: {
+        enabled: true
+      }
+    },
+    structuredDecisionRunner: async () => {
+      throw new Error("explicit switch should not call decision runner");
+    },
+    retrievalFn: async () => {
+      retrievalCalls += 1;
+      return [{
+        path: "memory/MEMORY.md",
+        pathKind: "memoryFile",
+        startLine: 1,
+        endLine: 1,
+        snippet: "should not be used",
+        weightedScore: 1
+      }];
+    }
+  });
+
+  await engine.assemble({
+    messages: [
+      { role: "user", content: "记一下：当前编辑器是 Zed。" },
+      { role: "assistant", content: "记住了。" },
+      { role: "user", content: "现在切到完全不同的话题。帮我想一个京都三晚行程。" }
+    ],
+    tokenBudget: 4096,
+    sessionKey: "agent:main:test-guarded-switch-skip-retrieval"
+  });
+
+  assert.equal(retrievalCalls, 0);
+});
+
 test("assemble records runtime shadow telemetry even when retrieval returns no candidates", async () => {
   const outputDir = await fs.mkdtemp(path.join(os.tmpdir(), "umc-shadow-"));
   const engine = new ContextAssemblyEngine({
