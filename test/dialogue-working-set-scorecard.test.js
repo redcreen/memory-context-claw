@@ -114,3 +114,43 @@ test("applyGuardedWorkingSetToMessages skips activation when carry-forward would
   assert.equal(guarded.applied, false);
   assert.equal(guarded.reason, "no_net_token_gain");
 });
+
+test("applyGuardedWorkingSetToMessages drops unsampled older prefix on topic switch", () => {
+  const guarded = applyGuardedWorkingSetToMessages({
+    messages: [
+      { role: "user", content: "old-1" },
+      { role: "assistant", content: "old-1-ack" },
+      { role: "user", content: "old-2" },
+      { role: "assistant", content: "old-2-ack" },
+      { role: "user", content: "new topic ask" },
+      { role: "assistant", content: "new topic answer" }
+    ],
+    projection: [
+      { id: "t1", sourceIndex: 2 },
+      { id: "t2", sourceIndex: 3 },
+      { id: "t3", sourceIndex: 4 },
+      { id: "t4", sourceIndex: 5 }
+    ],
+    snapshot: {
+      baselinePromptEstimate: 200,
+      shadowRawPromptEstimate: 20,
+      injectedArchiveSummary: "Older topic summary.",
+      applied: {
+        relation: "switch",
+        reductionRatio: 0.5,
+        keepTurnIds: ["t3", "t4"],
+        appliedEvictTurnIds: ["t1", "t2"]
+      }
+    },
+    config: {
+      enabled: true
+    }
+  });
+
+  assert.equal(guarded.applied, true);
+  assert.equal(guarded.filteredMessageCount, 2);
+  assert.deepEqual(
+    guarded.filteredMessages.map((message) => message.content),
+    ["new topic ask", "new topic answer"]
+  );
+});

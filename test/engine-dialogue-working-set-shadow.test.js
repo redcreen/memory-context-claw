@@ -55,7 +55,7 @@ async function listExportEvents(outputDir) {
   return events;
 }
 
-test("projectRuntimeMessagesToDialogueTurns keeps only user/assistant messages and respects maxTurns", () => {
+test("projectRuntimeMessagesToDialogueTurns keeps only user/assistant messages and treats maxTurns as dialogue rounds", () => {
   const turns = projectRuntimeMessagesToDialogueTurns(
     [
       { role: "system", content: "system" },
@@ -70,7 +70,7 @@ test("projectRuntimeMessagesToDialogueTurns keeps only user/assistant messages a
 
   assert.deepEqual(
     turns.map((item) => `${item.id}:${item.role}:${item.content}`),
-    ["t1:assistant:a1", "t2:user:u2", "t3:assistant:a2"]
+    ["t1:user:u1", "t2:assistant:a1", "t3:user:u2", "t4:assistant:a2"]
   );
 });
 

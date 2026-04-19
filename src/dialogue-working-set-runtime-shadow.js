@@ -43,6 +43,16 @@ function normalizeSessionKey(value) {
   return normalizeString(value, "agent:main:dialogue-working-set-shadow");
 }
 
+function resolveShadowErrorReason(error) {
+  if (normalizeString(error?.reasonCode) === "decision_timeout") {
+    return "decision_timeout";
+  }
+  if (error?.code === "ETIMEDOUT") {
+    return "decision_timeout";
+  }
+  return normalizeString(String(error), "shadow_capture_failed");
+}
+
 function sanitizePathSegment(value, fallback = "session") {
   const normalized = normalizeString(value, fallback)
     .replace(/[^a-zA-Z0-9._-]+/g, "-")
@@ -78,6 +88,7 @@ export function projectRuntimeMessagesToDialogueTurns(messages = [], options = {
 export function projectRuntimeMessagesToDialogueProjection(messages = [], options = {}) {
   const maxTurns = Number(options.maxTurns || 12);
   const maxCharsPerTurn = Number(options.maxCharsPerTurn || 900);
+  const maxDialogueMessages = maxTurns > 0 ? maxTurns * 2 : 0;
   const dialogueMessages = (Array.isArray(messages) ? messages : [])
     .flatMap((message, sourceIndex) => {
       const role = normalizeString(message?.role);
@@ -91,7 +102,7 @@ export function projectRuntimeMessagesToDialogueProjection(messages = [], option
       return [{ role, content, sourceIndex }];
     });
 
-  const sliced = maxTurns > 0 ? dialogueMessages.slice(-maxTurns) : dialogueMessages;
+  const sliced = maxDialogueMessages > 0 ? dialogueMessages.slice(-maxDialogueMessages) : dialogueMessages;
   const turns = sliced.map((turn, index) => ({
     id: `t${index + 1}`,
     role: turn.role,
@@ -345,7 +356,7 @@ export async function captureDialogueWorkingSetShadow({
     return writeShadowArtifacts(config.outputDir, {
       ...baseEvent,
       status: "error",
-      reason: normalizeString(String(error), "shadow_capture_failed"),
+      reason: resolveShadowErrorReason(error),
       scorecard: buildContextOptimizationScorecard({
         projectionTurns: baseEvent.transcript,
         snapshot: baseEvent.snapshot,
