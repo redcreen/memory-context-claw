@@ -8,16 +8,17 @@
 
 - `Context Minor GC`
 
-同时明确一件事：
+同时明确两件事：
 
-- `Stage 11: Context Minor GC And Codex Integration` 现在已经关闭
+- `Stage 11: Context Minor GC And Codex Integration` 已正式收口
+- `Context Minor GC` 不再只是“能跑”的能力线，而是后续持续优化 `轻快 / prompt thickness / answer latency / operator simplicity` 的主线之一
 
 所以这份文档不再回答“Minor GC 还没做完什么”，而是回答：
 
 1. `Context Minor GC` 到底做完了什么
-2. 为什么现在可以视为已收口
+2. 为什么它的核心能力可以视为已收口
 3. 它和 `compact / compat` 的边界是什么
-4. 后续新工作为什么已经切到别的阶段
+4. 为什么它会继续作为后续主线之一持续优化
 
 相关文档：
 
@@ -38,31 +39,36 @@
 | Stage 7 / `104` harder eval matrix | 已完成；live matrix `6 / 6` |
 | Stage 9 guarded smart path | 已完成；继续保持 `default-off` / opt-in only |
 | Codex Context Minor GC live matrix | 已完成；`4 / 4` |
-| `Context Minor GC` | 已收口 |
-| Stage 11 | 已完成 |
-| 当前最新阶段 | `Stage 12: Realtime Memory Intent Productization` |
+| `Context Minor GC` 核心能力 | 已收口 |
+| Stage 11 | 已完成；OpenClaw host-visible closeout 已补齐 |
+| 下一独立阶段 | `Stage 12: Realtime Memory Intent Productization` |
 
 一句话：
 
-`Context Minor GC` 现在已经在 OpenClaw + Codex 两侧完成“可跑、可测、可回退、可收口”的闭环。
+`Context Minor GC` 现在已经在 OpenClaw + Codex 两侧完成“可跑、可测、可回退”的闭环；其中 OpenClaw 侧已经补齐 host-visible closeout，`Stage 11` 已关闭。
 
-## Stage 11 为什么能关闭
-
-`Stage 11` 的关闭标准现在很简单：
+## 为什么这条线现在值得重点讲
+`Stage 11` 最终关闭标准是：
 
 1. 整个 GC 可用
-2. 用户端有明显收益
+2. 用户端有明显且稳定可感知的收益
 3. rollback boundary 仍然清楚
 
 对应结果：
 
-| 标准 | 当前结果 |
+| 标准 | 最终结果 |
 | --- | --- |
 | GC 可用 | OpenClaw + Codex 都能消费同一套 decision contract / shadow / guarded seam |
-| 用户收益 | OpenClaw 正例上 average package reduction ratio `0.4657`；Codex 正例上 prompt reduction ratio `0.4355` / `0.1522` |
+| 用户收益 | OpenClaw 长对话 Docker threshold A/B 里，baseline 切题后仍停留在 compact proxy danger zone 上方，而 guarded 能在不手动 `compact` 的前提下把 post-switch prompt 拉回阈值下方 |
 | rollback boundary 清楚 | guarded 继续保持 `default-off` / opt-in only |
 
-所以 `Stage 11` 现在已经关闭，不再是当前开发阶段。
+关键新证据不是“package reduction ratio 很好看”，而是更贴近产品体感的 host-visible A/B：
+
+- baseline 在超长单主题对话里，会很早进入 compact proxy danger zone，并且切题后不明显回落
+- guarded 在同一条长对话里，切题后能把实际发给 LLM 的 prompt 拉回阈值下方
+- 全程不依赖手动 `compact`
+
+这说明 `Context Minor GC` 已经不只是“内部算法正确”，而是用户侧真的能获得“更长对话下更少依赖 compact”的收益。
 
 ## 阅读顺序
 
@@ -74,6 +80,7 @@
 4. [Stage 9 收口报告](../../../../reports/generated/stage9-guarded-smart-path-closeout-2026-04-18.zh-CN.md)
 5. [Codex Context Minor GC Live Matrix](../../../../reports/generated/codex-context-minor-gc-live-2026-04-18/report.md)
 6. [Stage 11 收口报告](../../../../reports/generated/stage11-context-minor-gc-and-codex-integration-closeout-2026-04-18.zh-CN.md)
+7. [OpenClaw Near-Compaction Threshold Docker A/B](../../../../reports/generated/openclaw-guarded-session-probe-threshold-docker-2026-04-19.md)
 
 ## 最短结论
 
@@ -201,22 +208,32 @@ OpenClaw run
 - `Context Minor GC` 方向本身已经站稳
 - OpenClaw 侧 `Minor GC` 已经不是 blocker
 - Codex 侧 bridge 也已经不是 blocker
-- `Stage 11` 可以关闭
+- OpenClaw 侧“更长对话下尽量不依赖 compact”这条用户价值也已经被正式证明
+
+新增一条最贴近用户体感的证据面：
+
+- [OpenClaw Near-Compaction Threshold Docker A/B](../../../../reports/generated/openclaw-guarded-session-probe-threshold-docker-2026-04-19.md)
+  - baseline first threshold cross turn: `3`
+  - baseline postSwitchMin: `18039`
+  - guarded postSwitchMin: `13186`
+  - guarded postSwitch savings vs baseline: `0.269`
+  - `compactAvoidedByGuarded: true`
 
 ## 还剩什么
 
-剩下的工作，不应该再写成“继续做 Minor GC 收口”。
+`Stage 11` 已经关闭，但这条线不会停。
 
-更准确的说法是：
+更准确的说法是，后续会把 `Context Minor GC` 当成一条持续优化主线之一，重点不再是“证明能不能做”，而是继续压：
 
-1. 持续保持 OpenClaw / Codex 两侧 `Context Minor GC` operator scorecard 为绿
-2. 继续保持 guarded seam `default-off` / opt-in only
-3. 当前真正的新主线切到 `Stage 12`：realtime memory intent productization
+1. `switch` 首轮与长对话高压区的 answer latency
+2. 切题后的 prompt rebound
+3. operator/debug surface 的清晰度
+4. 继续保持 OpenClaw / Codex 两侧 scorecard、matrix 和 guarded boundary 为绿
 
 ## 最终判断
 
 最短判断是：
 
-- `Context Minor GC` 作为能力，已经做完
-- `Stage 11` 作为总阶段，也已经做完
-- 它现在进入维护态，不再是当前最新大阶段
+- `Context Minor GC` 作为核心能力，已经做完
+- `Stage 11` 作为“能力 + 用户体感”总主题，也已经做完
+- 这条线今后继续作为长期优化主线之一存在，但不再阻塞 `Stage 12`

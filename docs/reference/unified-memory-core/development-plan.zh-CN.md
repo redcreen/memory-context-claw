@@ -40,8 +40,8 @@
 | --- | --- | --- |
 | 当前阶段 | `stage12-realtime-memory-intent-productization` | 当前维护阶段 |
 | 当前切片 | `n/a` | Stage 11 已关闭 |
-| 当前执行线 | Stage 11 已完成；OpenClaw host-visible closeout 证据已补齐；Codex host-visible gap 不再阻塞本阶段关闭 | 当前真正要保持为真的结论 |
-| 当前验证 | OpenClaw guarded session probe / stress probe、Docker hermetic long-session evidence、Stage 7 / Stage 9 closeout evidence | Stage 11 关闭后的保留证据 |
+| 当前执行线 | Stage 11 已完成；OpenClaw host-visible closeout 证据已补齐；Codex host-visible gap 不再阻塞本阶段关闭；同时继续把 `Context Minor GC` 作为长期优化主线之一维护 | 当前真正要保持为真的结论 |
+| 当前验证 | OpenClaw guarded session probe / stress probe、Docker hermetic long-session evidence、near-compaction threshold Docker A/B、Stage 7 / Stage 9 closeout evidence | Stage 11 关闭后的保留证据 |
 
 ## 执行任务进度
 
@@ -78,6 +78,19 @@
 | 21 | `define-deeper-accepted-action-extraction-todo` | 已记录 | 把 accepted-action 的更深抽取规则、分层准入、负向路径和治理覆盖明确写成 deferred enhancement queue，而不是继续隐含在聊天里 | self-learning architecture / roadmap / development plan 与 `.codex/*` 对齐；TODO 只定义后续实现，不误报成当前 baseline 已完成 |
 | 22 | `implement-step47-field-aware-accepted-action-extraction` | 已记录 | 落地 deferred queue 的 Step 47，让 accepted_action 基于结构化字段拆出 `target_fact`、显式 `operating_rule`、`outcome_artifact` 候选，而不是继续只产出一条保守摘要 | accepted_action source/reflection/CLI tests、`npm test`、`npm run verify`、`npm run umc:cli -- reflect run ... --source-type accepted_action`、`npm run umc:cli -- learn lifecycle-run ... --source-type accepted_action |
 | 23 | `hook-openclaw-after-tool-call-into-accepted-action-learning` | 已记录 | 把 OpenClaw 侧真正可用的异步 runtime seam 接上 governed accepted-action intake，让显式结构化 tool result 能直接进入 source -> reflection -> promotion 闭环 | OpenClaw hook regression tests、full `npm test`、`npm run verify`、本机部署后宿主侧 after_tool_call 模拟 |
+
+## 持续优化说明
+
+虽然 `Stage 11` 已经关闭，但 `Context Minor GC` 不会停止推进。
+
+它现在以“长期优化主线之一”的身份继续存在，重点保持在：
+
+1. 更长对话下的 prompt thickness 控制
+2. 切题后的真实 prompt 回落
+3. `switch` / 高压区 answer latency
+4. operator/debug surface 的清晰度与维护成本
+
+这条线后续不再以“是否能 closeout”为主问题，而是以“是否持续更薄、更稳、更快、更易维护”为主问题。
 
 ## 里程碑细节
 

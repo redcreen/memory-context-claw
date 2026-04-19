@@ -35,6 +35,7 @@
 - OpenClaw 侧“用户明显有体感”的 closeout 证据已经补齐
 - guarded seam 继续保持 `default-off` / opt-in only
 - 当前真正主线，已经转入 Stage 12 的产品化工作
+- 同时，`Context Minor GC` 不会在 Stage 11 关闭后停止，而会继续作为长期优化主线之一
 
 ## 阶段时间线
 
@@ -91,6 +92,7 @@
 - [Codex Context Minor GC Live Matrix](../reports/generated/codex-context-minor-gc-live-2026-04-18/report.md)
 - [Stage 11 收口报告](../reports/generated/stage11-context-minor-gc-and-codex-integration-closeout-2026-04-18.zh-CN.md)
 - [OpenClaw Guarded Session Probe `stress` Docker 报告](../reports/generated/openclaw-guarded-session-probe-stress-docker-2026-04-19.md)
+- [OpenClaw Near-Compaction Threshold Docker A/B](../reports/generated/openclaw-guarded-session-probe-threshold-docker-2026-04-19.md)
 
 ## 如果你只想知道“Minor GC 还剩什么”
 
@@ -99,12 +101,17 @@
 - `Minor GC` 的核心能力已经完成
 - OpenClaw + Codex 两侧的能力链路已经跑通
 - OpenClaw 用户体感 closeout 已补齐；Stage 11 不再阻塞 Stage 12
+- 但 `Context Minor GC` 仍继续作为长期优化主线之一推进
 
 ## Stage 12: Realtime Memory Intent Productization
 
 `Stage 12` 不是当前大阶段，而是下一条独立主题。主题只保留一件事：
 
 - 把 realtime governed memory intake 从“baseline 能力”推进成真正的产品面和 operator 面
+
+同时保留一个长期约束：
+
+- `Context Minor GC` 已收口，但会继续作为持续优化主线之一存在，重点继续压更长对话下的 prompt thickness、切题回落、answer latency 和 operator/debug 简洁度
 
 | 分组 | 状态 | 目标 | 具体计划 |
 | --- | --- | --- | --- |
@@ -120,7 +127,7 @@
 2. 如果你关心 `Minor GC`，先看 [Stage 11 收口报告](../reports/generated/stage11-context-minor-gc-and-codex-integration-closeout-2026-04-18.zh-CN.md)
 3. 再看 [Context Minor GC 架构页](reference/unified-memory-core/architecture/context-minor-gc.zh-CN.md)
 4. 再看 [Stage 11 具体计划](reference/unified-memory-core/development-plan.zh-CN.md#stage-11-context-minor-gc-and-codex-integration)
-5. 在确认 Stage 11 真正关闭后，再看 [Stage 12 具体计划](reference/unified-memory-core/development-plan.zh-CN.md#stage-12-realtime-memory-intent-productization)
+5. 再看 [Stage 12 具体计划](reference/unified-memory-core/development-plan.zh-CN.md#stage-12-realtime-memory-intent-productization)
 6. 需要核对历史证据时，再看：
    - [Step 108 收口报告](../reports/generated/stage7-step108-context-minor-gc-closeout-2026-04-18.zh-CN.md)
    - [Stage 7 收口报告](../reports/generated/stage7-context-minor-gc-closeout-2026-04-18.zh-CN.md)
@@ -129,13 +136,13 @@
 ## 总体进展
 | 项目 | 当前值 |
 | --- | --- |
-| 总体进度 | 2 / 3 execution tasks 完成 |
-| 当前阶段 | `stage11-context-minor-gc-user-visible-closeout-reopened` |
-| 当前切片 | `stage11-context-minor-gc-user-visible-closeout-reopened / group-11g-host-visible-validation-and-closeout` |
-| 当前目标 | 只解决“用户体感不明显”的问题；先控宿主增长源，再把 carry-forward 收成 summary-first，最后用 host-visible 指标重新判定 closeout |
-| 当前切片退出条件 | npm run codex:vscode:gc --silent`、Codex VS Code live telemetry、`test/codex-context-minor-gc.test.js`、`test/codex-vscode-context-minor-gc.test.js`、对比前后 host growth 的真实会话证据 |
-| 明确下一步动作 | 当前 execution tasks 已完成，转向下一切片 |
-| 下一候选切片 | n/a |
+| 总体进度 | 3 / 3 execution tasks 完成 |
+| 当前阶段 | `stage12-realtime-memory-intent-productization` |
+| 当前切片 | `n/a` |
+| 当前目标 | Stage 11 已关闭；转入 Stage 12，同时保持 Minor GC 优化证据持续为绿 |
+| 当前切片退出条件 | n/a |
+| 明确下一步动作 | 转向 Stage 12 execution slices |
+| 下一候选切片 | `stage12 / 12A contract-and-replay-hold` |
 
 查看详细执行计划：[project-assistant/development-plan.zh-CN.md](reference/project-assistant/development-plan.zh-CN.md)
 
@@ -147,9 +154,9 @@
 ## 当前 / 下一步 / 更后面
 | 时间层级 | 重点 | 退出信号 |
 | --- | --- | --- |
-| 当前 | 只解决“用户体感不明显”的问题；先控宿主增长源，再把 carry-forward 收成 summary-first，最后用 host-visible 指标重新判定 closeout | npm run codex:vscode:gc --silent`、Codex VS Code live telemetry、`test/codex-context-minor-gc.test.js`、`test/codex-vscode-context-minor-gc.test.js`、对比前后 host growth 的真实会话证据 |
-| 下一步 | 暂无 | 暂无 |
-| 更后面 | 暂无 | 暂无 |
+| 当前 | 推进 Stage 12，同时保持 Minor GC scorecard、threshold A/B 证据和 guarded boundary 为绿 | Stage 12 计划持续对齐；Minor GC 报告保持可复现 |
+| 下一步 | 继续把 Minor GC 当成长期优化主线之一，持续压更长对话下的 prompt thickness、切题回落、时延和 operator/debug 简洁度 | refreshed scorecards、threshold probes 和 host-visible evidence 持续为绿 |
+| 更后面 | 只有在新的明确产品目标下，才讨论更宽的默认路径 rollout | 明确 rollout decision、边界更新、证据面同步 |
 
 ## 里程碑规则
 - 一个里程碑只对应一个清晰的主题目标

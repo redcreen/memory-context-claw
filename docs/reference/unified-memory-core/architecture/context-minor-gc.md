@@ -8,17 +8,18 @@ This document turns the per-turn context optimization line into one explicit pro
 
 - `Context Minor GC`
 
-It also makes one status change explicit:
+It also makes two status changes explicit:
 
-- `Stage 11: Context Minor GC And Codex Integration` is now complete
+- `Stage 11: Context Minor GC And Codex Integration` is now formally closed
+- `Context Minor GC` is no longer only a “can run” capability line; it remains one of the ongoing main optimization tracks for `light-and-fast / prompt thickness / answer latency / operator simplicity`
 
 So this page no longer answers “what is still unfinished inside Minor GC?”
 It now answers:
 
 1. what `Context Minor GC` actually finished
-2. why it can now be treated as closed
+2. why its core capability can now be treated as closed
 3. how it differs from `compact / compat`
-4. why the next stage has moved elsewhere
+4. why this line remains an ongoing optimization track even after closeout
 
 Related documents:
 
@@ -39,31 +40,37 @@ Read this section first.
 | Stage 7 / `104` harder eval matrix | completed; live matrix `6 / 6` |
 | Stage 9 guarded smart path | completed; stays `default-off` / opt-in only |
 | Codex Context Minor GC live matrix | completed; `4 / 4` |
-| `Context Minor GC` | closed |
-| Stage 11 | completed |
-| Current stage | `Stage 12: Realtime Memory Intent Productization` |
+| `Context Minor GC` core capability | closed |
+| Stage 11 | completed; OpenClaw host-visible closeout is now covered |
+| Next separate stage | `Stage 12: Realtime Memory Intent Productization` |
 
 Short version:
 
-`Context Minor GC` now completed the “can run, can be measured, can roll back, can close out” loop across both OpenClaw and Codex.
+`Context Minor GC` now completed the “can run, can be measured, can roll back” loop across both OpenClaw and Codex; and on the OpenClaw side the host-visible closeout bar is now met, so `Stage 11` is closed.
 
-## Why Stage 11 Can Close
-
-The new closeout bar for `Stage 11` is simple:
+## Why This Line Now Deserves Top Billing
+The final closeout bar for `Stage 11` was:
 
 1. the full GC path is usable
-2. users can see a clear benefit
+2. users can feel a clear and stable benefit
 3. rollback boundaries remain explicit
 
 Current result:
 
-| Bar | Result |
+| Bar | Final Result |
 | --- | --- |
 | GC is usable | OpenClaw + Codex both consume the same decision contract / shadow / guarded seam |
-| User benefit is visible | OpenClaw positive cases reached average package reduction ratio `0.4657`; Codex positive cases reached prompt reduction ratios `0.4355` / `0.1522` |
+| User benefit is visible | in the OpenClaw long-session Docker threshold A/B, baseline stays above the compact-proxy danger line after the topic switch while guarded pulls post-switch prompt size back below threshold without manual `compact` |
 | Rollback boundary stays explicit | guarded remains `default-off` / opt-in only |
 
-That is why `Stage 11` is now closed instead of still being current.
+The decisive new evidence is no longer just “the reduction ratio looks good.”
+It is a host-visible A/B that is much closer to real product feel:
+
+- baseline enters the compact-proxy danger zone early in one long dense topic and stays thick even after a topic switch
+- guarded, on the same continuous long conversation, pulls the actual LLM prompt back below threshold after the switch
+- the whole probe runs without manual `compact`
+
+That makes `Context Minor GC` more than an internal algorithm success. It is now a user-facing “stay alive longer without compact” capability.
 
 ## Reading Order
 
@@ -75,6 +82,7 @@ If you only want to understand Minor GC progress and the final answer, read in t
 4. [Stage 9 closeout](../../../../reports/generated/stage9-guarded-smart-path-closeout-2026-04-18.md)
 5. [Codex Context Minor GC Live Matrix](../../../../reports/generated/codex-context-minor-gc-live-2026-04-18/report.md)
 6. [Stage 11 closeout report](../../../../reports/generated/stage11-context-minor-gc-and-codex-integration-closeout-2026-04-18.md)
+7. [OpenClaw Near-Compaction Threshold Docker A/B](../../../../reports/generated/openclaw-guarded-session-probe-threshold-docker-2026-04-19.md)
 
 ## Short Conclusion
 
@@ -199,22 +207,32 @@ Together these numbers mean:
 - the Minor GC direction is stable
 - the OpenClaw side is no longer a blocker
 - the Codex bridge is no longer a blocker
-- `Stage 11` can close
+- the OpenClaw-side user value of “less dependence on compact during longer sessions” is now explicitly proven
+
+One especially product-facing proof surface now matters:
+
+- [OpenClaw Near-Compaction Threshold Docker A/B](../../../../reports/generated/openclaw-guarded-session-probe-threshold-docker-2026-04-19.md)
+  - baseline first threshold cross turn: `3`
+  - baseline postSwitchMin: `18039`
+  - guarded postSwitchMin: `13186`
+  - guarded postSwitch savings vs baseline: `0.269`
+  - `compactAvoidedByGuarded: true`
 
 ## What Still Remains
 
-What remains should no longer be written as “finish Minor GC”.
+`Stage 11` is closed, but this line does not stop here.
 
-The real remaining work is:
+The more accurate framing is that `Context Minor GC` remains one of the ongoing optimization tracks, with the focus no longer on “can it work at all?” but on continued improvement of:
 
-1. keep the OpenClaw-side and Codex-side `Context Minor GC` evidence green
-2. keep the guarded seam `default-off` / opt-in only
-3. move the genuinely new work into `Stage 12`: realtime memory intent productization
+1. switch-turn and high-pressure long-session answer latency
+2. prompt rebound after a topic switch
+3. operator/debug clarity
+4. keeping the OpenClaw and Codex scorecards, matrices, and guarded boundary green over time
 
 ## Final Judgment
 
 The shortest judgment is:
 
-- `Context Minor GC` as a capability is done
-- `Stage 11` as an umbrella stage is also done
-- the line is now in hold-green maintenance, not the current feature stage
+- `Context Minor GC` as a core capability is done
+- `Stage 11` as the “capability + user-visible experience” umbrella is also done
+- this line continues as a long-running optimization track, but it no longer blocks `Stage 12`

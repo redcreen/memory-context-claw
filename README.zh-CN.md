@@ -36,6 +36,7 @@
 - [OpenClaw Guarded Live A/B](reports/generated/openclaw-guarded-live-ab-2026-04-18.md)
 - [Stage 9 收口报告](reports/generated/stage9-guarded-smart-path-closeout-2026-04-18.zh-CN.md)
 - [Stage 11 收口报告](reports/generated/stage11-context-minor-gc-and-codex-integration-closeout-2026-04-18.zh-CN.md)
+- [OpenClaw Near-Compaction Threshold Docker A/B](reports/generated/openclaw-guarded-session-probe-threshold-docker-2026-04-19.md)
 - [普通对话实时写记忆专项对比](reports/generated/openclaw-ordinary-conversation-memory-intent-ab-2026-04-17.md)
 - [普通对话 strict 收口报告](reports/generated/openclaw-ordinary-conversation-memory-intent-closeout-2026-04-17.md)
 - [普通对话 Docker 隔离复测总结](reports/generated/openclaw-ordinary-conversation-memory-intent-docker-rerun-2026-04-17.md)
@@ -51,9 +52,10 @@
 
 1. `轻快`
    - 装得简单，接入轻，包体和运行负担尽量小，主路径尽量快
-   - 当前已落地：fact-first assembly、runtime working-set shadow instrumentation、release-preflight、独立 Docker hermetic eval
+  - 当前已落地：fact-first assembly、runtime working-set shadow instrumentation、release-preflight、独立 Docker hermetic eval
   - 当前这条逐轮 context 优化主线，对外工作名统一为：`Context Minor GC`
   - 当前最新状态：`Context Minor GC` 的能力侧已在 OpenClaw + Codex 两侧跑通；OpenClaw 侧 host-visible closeout 已补齐，`Stage 11` 已关闭；compat / compact 继续只保留为夜间或后台 safety net
+  - 这条线的一个关键产品能力已经被正式证明：更长对话在接近 compact danger zone 时，切题后可以靠 GC 把实际 prompt 拉回阈值下方，而不是立刻依赖手动 `compact`
 2. `聪明`
    - 该记的记住，不该记的不乱记；该给的 context 才给，不确定时尽量收敛
    - 当前已落地：realtime `memory_intent` ingestion、nightly self-learning、durable-source slimming 方向、working-set pruning shadow 路径
@@ -74,6 +76,7 @@
 - `轻快`
   - 安装命令、默认配置、首次验证、包体、启动成本、prompt thickness、answer latency、runtime cost 都属于同一个目标面
   - 这条热路径主线现在统一叫 `Context Minor GC`；目标是不依赖 compat / compact 才能继续，而是用逐轮 context 管理把 prompt 厚度持续压在可用范围内；compat / compact 只保留为夜间或后台 safety net
+  - 当前这条线不会在 Stage 11 关闭后停掉；它已经成为后续持续优化的主线之一，重点继续落在 prompt thickness、切题回落、时延和 operator/debug 简洁度
 - `聪明`
   - self-learning、working-set pruning、budgeted assembly、abstention / guardrail、bounded decision contract 要协同提升“判断质量”
 - `省心`

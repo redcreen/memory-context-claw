@@ -36,6 +36,7 @@ Read these first:
 - [OpenClaw Guarded Live A/B](reports/generated/openclaw-guarded-live-ab-2026-04-18.md)
 - [Stage 9 Closeout](reports/generated/stage9-guarded-smart-path-closeout-2026-04-18.md)
 - [Stage 11 Closeout](reports/generated/stage11-context-minor-gc-and-codex-integration-closeout-2026-04-18.md)
+- [OpenClaw Near-Compaction Threshold Docker A/B](reports/generated/openclaw-guarded-session-probe-threshold-docker-2026-04-19.md)
 - [Focused Ordinary-Conversation Realtime Write A/B](reports/generated/openclaw-ordinary-conversation-memory-intent-ab-2026-04-17.md)
 - [Focused Ordinary-Conversation Strict Closeout](reports/generated/openclaw-ordinary-conversation-memory-intent-closeout-2026-04-17.md)
 - [Docker Hermetic Ordinary-Conversation Rerun](reports/generated/openclaw-ordinary-conversation-memory-intent-docker-rerun-2026-04-17.md)
@@ -51,13 +52,14 @@ From a user perspective, this product should collapse to three promises:
 
 1. `Light and fast`
    - simple to install, low-friction to adopt, small in footprint, and fast enough on the main path
-   - already landed: fact-first assembly, runtime working-set shadow instrumentation, release-preflight, and reproducible Docker hermetic eval
-   - the public workstream name for this turn-by-turn context path is now: `Context Minor GC`
-   - current state: `Context Minor GC` is now closed across both OpenClaw and Codex, with clear user-visible gains on positive cases; compat / compact stays nightly or background-only
+  - already landed: fact-first assembly, runtime working-set shadow instrumentation, release-preflight, and reproducible Docker hermetic eval
+  - the public workstream name for this turn-by-turn context path is now: `Context Minor GC`
+  - current state: the capability side of `Context Minor GC` now works across both OpenClaw and Codex; the OpenClaw host-visible closeout is now covered and `Stage 11` is closed; compat / compact stays nightly or background-only
+  - one especially important product capability is now explicitly proven: in longer sessions near a practical compact danger zone, a topic switch can use GC to pull the real prompt back below threshold instead of forcing an immediate manual `compact`
 2. `Smart`
    - remember what matters, avoid writing noise, send only the right context, and stay conservative when uncertain
    - already landed: realtime `memory_intent` ingestion, nightly self-learning, durable-source slimming direction, and the working-set pruning shadow path
-   - biggest current gap: Minor GC itself is now complete; the real new work is productizing realtime governed memory intake so `memory_intent` / `memory_extraction` / accepted-action become one readable product surface
+  - biggest current gap: the blocker is no longer “can Minor GC run?”, but “why is user feel still not obvious enough?”; Stage 12 realtime governed memory intake productization remains the next separate theme
 3. `Reassuring`
    - inspectable, governable, replayable, rollback-friendly, and reusable across OpenClaw, Codex, and future consumers
    - already landed: `umc` CLI, inspect / audit / replay / repair / rollback surfaces, canonical registry root, and OpenClaw / Codex adapters
@@ -93,7 +95,7 @@ Areas that are already relatively strong:
 Areas that are still comparatively weak:
 
 - `light and fast`
-  - `Context Minor GC` is already formally closed, and both OpenClaw + Codex can run it; the weak point is no longer “can it run?” but “can the light-and-fast evidence stay green over time, and should rollout ever widen?”
+  - the capability side of `Context Minor GC` is already real and `Stage 11` is closed; the remaining work is no longer closeout blocking, but continuing optimization of prompt thickness, switch-time rollback, latency, and operator simplicity
 - `smart`
   - context optimization is validated and now has a narrow guarded opt-in path, but it is still not the default user experience; widening that path would be a future product decision
 - `reassuring`
@@ -101,10 +103,10 @@ Areas that are still comparatively weak:
 
 So the next focus order should stay explicit:
 
-1. `Stage 11` is now closed: `Context Minor GC` is a usable capability rather than the current blocker
-2. move into `Stage 12`: productize realtime `memory_intent` / `memory_extraction` / accepted-action as one governed product surface
-3. keep the OpenClaw-side and Codex-side `Context Minor GC` scorecard, harder matrix, and guarded boundary green
-4. keep the Stage 10 shortest adoption path and shared-foundation proof green
+1. keep the OpenClaw-side and Codex-side `Context Minor GC` scorecard, harder matrix, and guarded boundary green
+2. continue treating `Context Minor GC` as one of the main optimization tracks for prompt thickness, rollback after topic switches, latency, and operator simplicity
+3. keep the Stage 10 shortest adoption path and shared-foundation proof green
+4. move the main productization focus into `Stage 12`: realtime `memory_intent` / `memory_extraction` / accepted-action as one governed product surface
 5. only discuss broader default-path rollout under a new explicit product goal
 
 ## Who This Is For
