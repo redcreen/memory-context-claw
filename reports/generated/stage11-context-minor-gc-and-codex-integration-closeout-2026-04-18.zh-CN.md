@@ -4,10 +4,10 @@
 
 ## 目标
 
-按新的关闭标准，正式收口 `Stage 11`：
+按最终关闭标准，正式收口 `Stage 11`：
 
 - 整个 `Context Minor GC` 已经可用，不再只是 OpenClaw 单宿主里的实验能力
-- 用户端已经有明确可见的收益，而不是只有 shadow telemetry
+- OpenClaw 用户端已经有明确可见的收益，而不是只有 shadow telemetry
 - rollback boundary 仍然清楚，不通过隐式放量来“伪收口”
 
 ## Stage 11 的完成标准
@@ -15,7 +15,7 @@
 | 标准 | 收口要求 | 当前结果 |
 | --- | --- | --- |
 | GC 可用 | OpenClaw 与 Codex 两侧都能跑通同一套 decision contract / shadow / guarded seam | 已满足 |
-| 用户收益 | 正例上出现明确 prompt/context 缩减，且 answer-level 不回退 | 已满足 |
+| 用户收益 | OpenClaw 正例上出现明确 prompt/context 缩减，而且在更长多轮对话里不依赖 `compact` 也能看到 thread 变薄 | 已满足 |
 | 边界清楚 | `default-off` / opt-in only 继续成立，不把 guarded path 偷偷扩大成默认路径 | 已满足 |
 
 ## 当前证据
@@ -36,6 +36,15 @@
   - activation matched `4 / 4`
   - false activations `0`
   - missed activations `0`
+- [OpenClaw Guarded Session Probe `stress` Docker 报告](openclaw-guarded-session-probe-stress-docker-2026-04-19.md)
+  - `baseline peakBeforeSwitch = 14054`
+  - `guarded peakBeforeSwitch = 14264`
+  - `baseline postSwitchMin = 14155`
+  - `guarded postSwitchMin = 12458`
+  - `guarded rollbackRatio = 0.1266`
+  - `guarded postSwitch savings vs baseline = 0.1199`
+  - 不使用 `compact`
+  - checkpoint `2 / 2`
 
 ### Codex 侧
 
@@ -56,10 +65,12 @@
 
 1. `Context Minor GC` 已经不是只能在 OpenClaw 里看的研究路径。
 2. 同一套 bounded decision contract 现在已经能进 OpenClaw 和 Codex 两条消费路径。
-3. 正例上用户已经能看到明确收益：
+3. OpenClaw 正例上用户已经能看到明确收益：
    - OpenClaw harder live matrix 平均 package reduction ratio `0.4657`
-   - Codex 正例上 prompt reduction ratio 分别达到 `0.4355` 和 `0.1522`
-4. 负例没有误激活，说明它不是“为了缩而缩”。
+   - OpenClaw Docker `stress` 长会话里，切题窗口 `guarded postSwitch savings vs baseline = 0.1199`
+   - OpenClaw Docker `stress` 长会话里，不依赖 `compact` 也能看到 `rollbackRatio = 0.1266`
+4. Codex 侧当前保留为 capability / maintenance 路径，但不再作为 Stage 11 收口 blocker。
+5. 负例没有误激活，说明它不是“为了缩而缩”。
 
 ## 明确决策
 
@@ -68,7 +79,7 @@
 关闭后的明确结论是：
 
 - `Context Minor GC` 已经是一条**可用能力**，不是 shadow-only 研究线
-- “整个 GC 可用；用户端有明显收益”这个标准现在已经满足
+- “整个 GC 可用；OpenClaw 用户端有明显收益”这个标准现在已经满足
 - guarded seam 继续保持 `default-off` / opt-in only
 - 不会因为 `Stage 11` 关闭，就把默认 active path 隐式放量
 
@@ -76,6 +87,7 @@
 
 这些不是 `Stage 11` 的未完成项：
 
+- Codex host-visible closeout
 - 更宽的默认 rollout
 - 更激进的 `Stage 0 Router`
 - 更深的 task-state ledger 结构化

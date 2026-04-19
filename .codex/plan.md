@@ -2,7 +2,7 @@
 
 ## Current Phase
 
-`stage12-realtime-memory-intent-productization`
+`stage11-context-minor-gc-user-visible-closeout-reopened`
 
 ## Current Results Snapshot
 
@@ -33,17 +33,17 @@
 - Stage 9 average guarded prompt reduction ratio: `0.0306`; applied-only prompt reduction ratio: `0.0067`; applied-only raw reduction ratio: `0.7422`
 - Docker hermetic eval status: official-image runner, proxy rewrite, cloned-state path rewrite, warmed template cache, strict ordinary benchmark, and `gateway-steady` fast-watch ordinary benchmark are all landed; Docker is now the default trustworthy hermetic A/B base for this repo
 - Stage 10 adoption/shared-foundation proof: latest sampled package tarball `1456484 bytes`, `umc where` `154ms`, first-run `registry inspect` `80ms`, Codex shared proof `1 promoted / 1 candidate / 1 policy input`, multi-instance shared proof `2 candidates / 2 policy inputs`
-- Interpretation: the `200+` case buildout, natural-Chinese / watchlist / perf hardening, Stage 6/7/8/9 closure, Stage 10 shared-foundation proof, and Stage 11 Minor GC + Codex closeout are all complete; the repo has now opened `Stage 12` for realtime memory intent productization
+- Interpretation: the capability side of `Context Minor GC` is complete, but the user-visible bar is still not convincing enough. Until that closes, Stage 12 work is paused.
 
-## Stage 12 Focus
+## Stage 11 User-Visible Focus
 
-- 12A `contract-and-replay-hold`: current
-- 12B `ordinary-conversation-runtime-ingest`: next
-- 12C `operator-surface-and-rollout`: later
+- 11E `growth-source-control`: current
+- 11F `summary-first-carry-forward`: completed
+- 11G `host-visible-validation-and-closeout`: current
 - Rule:
-  - Stage 11 stays closed
+  - Stage 11 stays reopened until user feel is real
   - `Context Minor GC` stays green and `default-off` / opt-in only
-  - the new workstream is realtime governed memory intake, not “more Minor GC”
+  - Stage 12 work is paused until this closes
 
 ## Current Product Promises
 
@@ -56,14 +56,14 @@
 
 ## Current Gap Order
 
-1. `Stage 12A / contract-and-replay-hold`
-   - consolidate the realtime `memory_intent` / `memory_extraction` / accepted-action contract, replay surface, and docs
-2. `Stage 12B / ordinary-conversation-runtime-ingest`
-   - bring ordinary-conversation and runtime rule ingestion onto the same governed realtime path
-3. `Stage 10 hold`
-   - keep shortest adoption path and shared-foundation proof green
-4. `Stage 12C / operator-surface-and-rollout`
-   - formalize inspect / audit / replay / rollback plus rollout boundaries
+1. `Stage 11E / growth-source-control`
+   - stop active-thread growth from long commentary, raw session dumps, and heavy diagnostics
+2. `Stage 11F / summary-first-carry-forward`
+   - replace raw-turn-first carry-forward with summary-first task-state
+3. `Stage 11G / host-visible-validation-and-closeout`
+   - prove real user-visible thinning on comparable sessions instead of repo-local reduction only
+4. `Stage 12 hold`
+   - do not advance realtime governed intake productization until the user-visible GC gap is closed
 
 ## Slices
 
@@ -268,29 +268,37 @@
 - Signal: `yellow`
 - Signal Basis: open blockers or architectural risks are still recorded
 - Problem Class: post-stage10 maintenance coherence
-- Root Cause Hypothesis: 如果 Stage 10 已收口但 roadmap / development plan / `.codex/*` 还继续停在 `121-126`，维护者会误以为这条线仍未完成，从而重新打开已经关闭的阶段工作
-- Correct Layer: roadmap, development plan, architecture docs, runtime experiment boundary, live A/B case design, transport watchlist, control surface
+- Root Cause Hypothesis: 如果仓库继续保留“Stage 11 已关闭 / Stage 12 当前”的旧口径，维护者会绕过用户体感补强，直接把下一阶段当成当前阶段
+- Correct Layer: roadmap, development plan, architecture docs, README, live A/B case design, control surface
 - Rejected Shortcut: 跳过 Stage 5 证据面和当前 operator baseline，直接讨论 runtime API / service mode
 - Automatic Review Trigger: no automatic trigger is currently active
 - Escalation Gate: raise but continue
 
 ## Current Execution Line
 
-- Objective: 进入 `Stage 12`，把 realtime `memory_intent` / `memory_extraction` / accepted-action 收成统一的 governed product surface
-- Plan Link: `stage12-realtime-memory-intent-productization / group-12a-contract-and-replay-hold`
-- Runway: Stage 11 closeout evidence、memory-intent replay suite、Docker hermetic baseline、release-preflight、canonical-root policy、shared-foundation proof
-- Progress: `0 / 3` groups complete
+- Objective: 只解决“用户体感不明显”的问题；先控宿主增长源，再把 carry-forward 收成 summary-first，最后用 host-visible 指标重新判定 closeout
+- Plan Link: `stage12-realtime-memory-intent-productization`
+- Runway: OpenClaw guarded session probe / stress probe、Docker hermetic evidence、Stage 12 contract-and-replay work
+- Progress: `3 / 3` groups complete
 - Current Critical Path:
-  - 把 realtime `memory_intent` / `memory_extraction` / accepted-action 的 contract、replay、operator wording 收成统一主线
-  - 让 ordinary-conversation runtime ingest 接到同一套 governed realtime path
-  - 保持 `Context Minor GC` 与 Stage 10 shortest-path/shared-foundation proof 持续为绿
+  - 保持 OpenClaw host-visible closeout evidence 不回退
+  - 保持 `default-off` / opt-in only 边界
+  - 把后续工作切到 Stage 12，而不是继续挂在 Stage 11
 - Stop Conditions:
-  - realtime governed intake stays fragmented across multiple contracts
-  - operator surface remains baseline-only and never becomes a clear product surface
-  - bounded LLM decision work turns into growing hardcoded rule tables
-  - `Context Minor GC` evidence regresses while this stage planning is ongoing
-  - Stage 10 proof regresses while this stage planning is ongoing
-- Validation: roadmap / development plan / architecture docs、Stage 11 closeout reports、memory-intent replay suite、`npm run umc:release-preflight`、Docker hermetic baseline、Stage 10 proof、`npm run umc:cli -- registry inspect --format markdown`
+  - OpenClaw host-visible probe evidence 回退
+  - Stage 11 / Stage 12 边界再次漂移
+  - rollout boundary 被隐式放量
+- Validation: OpenClaw guarded session probe / stress probe、Docker hermetic long-session evidence、Stage 7 / Stage 9 closeout evidence
+
+## Stage 11 User-Visible Groups
+
+- [x] 11A foundation-reframe
+- [x] 11B openclaw-baseline-hold
+- [x] 11C codex-context-bridge
+- [x] 11D cross-host-rollout-decision
+- [x] 11E growth-source-control
+- [x] 11F summary-first-carry-forward
+- [x] 11G host-visible-validation-and-closeout
 
 ## Stage 12 Groups
 

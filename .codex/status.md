@@ -7,11 +7,11 @@
 
 ## Current Phase
 
-`stage12-realtime-memory-intent-productization`
+`stage11-context-minor-gc-user-visible-closeout-reopened`
 
 ## Active Slice
 
-`group-12a-contract-and-replay-hold`
+`group-11g-host-visible-validation-and-closeout`
 
 ## Current Product Promises
 
@@ -24,20 +24,24 @@
 
 ## Stage 11 Snapshot
 
-- Stage 11 定义：把 `Context Minor GC` 在 OpenClaw + Codex 两侧收口，并给出显式跨宿主决策
+- Stage 11 定义：把 `Context Minor GC` 在 OpenClaw + Codex 两侧收口，并把“用户明显感觉到按需加载”纳入正式关闭条件
 - 11A `foundation-reframe`：已完成
 - 11B `openclaw-baseline-hold`：已完成
 - 11C `codex-context-bridge`：已完成
 - 11D `cross-host-rollout-decision`：已完成
+- 11E `growth-source-control`：已完成
+- 11F `summary-first-carry-forward`：已完成，当前默认改为 task-state summary 优先
+- 11G `host-visible-validation-and-closeout`：当前进行
 - 当前最重要的边界：
   - `Context Minor GC` 现在已经视为可用能力
+  - `Stage 11` 重新打开，直到“用户明显好用”被证实
   - guarded seam 继续保持 `default-off` / opt-in only
   - 当前不会隐式扩大默认 active path
 
 ## Stage 12 Snapshot
 
 - Stage 12 定义：把 realtime governed memory intake 从 baseline 能力推进成清晰产品面与 operator 面
-- 12A `contract-and-replay-hold`：当前进行
+- 12A `contract-and-replay-hold`：暂停，等待 Stage 11 体感问题关闭
 - 12B `ordinary-conversation-runtime-ingest`：下一步
 - 12C `operator-surface-and-rollout`：后续
 
@@ -213,7 +217,7 @@
 ## In Progress
 
 - Stage 11 已完成；当前恢复点切到 Stage 12
-- 当前 3 个用户承诺的维护顺序变成：
+  - 当前 3 个用户承诺的维护顺序变成：
   - 先保持 `轻快 / context loading optimization` 为绿
   - 然后保持 `轻快 / install` 的 shortest path 为绿
   - 再保持 `聪明` 的 bounded guarded seam 继续 `default-off` / opt-in only
@@ -260,8 +264,8 @@
 ## Architecture Supervision
 - Signal: `yellow`
 - Signal Basis: open blockers or architectural risks are still recorded
-- Root Cause Hypothesis: 当前最大的风险不再是“能力没做出来”，而是 Stage 10 已经完成后，如果文档与控制面继续停在 `121-126`，维护者会误以为这条线仍未完成
-- Correct Layer: roadmap, development plan, architecture docs, runtime experiment boundary, release-preflight evidence, control surface
+- Root Cause Hypothesis: 当前最大的风险不是“能力没做出来”，而是仓库继续保留“Stage 11 已关闭 / Stage 12 当前”的旧口径，导致维护者绕过用户体感补强，误把下一阶段当成本阶段
+- Correct Layer: roadmap, development plan, architecture docs, README, control surface
 - Automatic Review Trigger: no automatic trigger is currently active
 - Escalation Gate: raise but continue
 
@@ -272,19 +276,29 @@
 
 ## Current Execution Line
 
-- Objective: 进入 `Stage 12`，把 realtime `memory_intent` / `memory_extraction` / accepted-action 收成统一的 governed product surface
-- Plan Link: `stage12-realtime-memory-intent-productization / group-12a-contract-and-replay-hold`
+- Objective: 只解决“用户体感不明显”的问题；先把宿主增长源控住，再把 carry-forward 收成 summary-first，最后用 host-visible 指标重新判定 closeout
+- Plan Link: `stage11-context-minor-gc-user-visible-closeout-reopened / group-11g-host-visible-validation-and-closeout`
 - Current Critical Path:
-  - 把 realtime `memory_intent` / `memory_extraction` / accepted-action 的 contract、replay、operator wording 收成统一主线
-  - 让 ordinary-conversation runtime ingest 接到同一套 governed realtime path
-  - 保持 `Context Minor GC` 与 Stage 10 shortest-path/shared-foundation proof 持续为绿
-- Runway: Stage 11 closeout evidence、memory-intent replay suite、Docker hermetic baseline、release-preflight、canonical-root policy、shared-foundation proof
-- Progress: `0 / 3` groups complete
+  - 宿主线程停止继续被长 commentary、raw session dump、重型工具输出污染
+  - project-level carry-forward 改成 summary-first，而不是 `Active raw turns` 优先
+  - closeout 改看 host-visible growth slowdown，而不是只看 repo 内局部 reduction
+- Runway: Codex VS Code live telemetry、experience-gap docs、Codex context GC state docs、current host views、targeted Codex GC tests
+- Progress: `2 / 3` groups complete
 - Stop Conditions:
-  - realtime governed intake stays fragmented across multiple contracts
-  - ordinary-conversation runtime ingest remains outside the governed path
-  - operator surface remains baseline-only and never becomes a clear product surface
-  - `Context Minor GC` evidence regresses while Stage 12 is ongoing
+  - 同复杂度新会话里，host input 仍然没有明显下降或增长仍然线性偏快
+  - packaged block 仍以 raw assistant turns 为主，而不是 task-state summary
+  - 为了调试继续把大段观测直接写回当前线程
+  - `Context Minor GC` answer-level / guarded evidence回退
+
+## Stage 11 User-Visible Groups
+
+- [x] 11A foundation-reframe
+- [x] 11B openclaw-baseline-hold
+- [x] 11C codex-context-bridge
+- [x] 11D cross-host-rollout-decision
+- [x] 11E growth-source-control
+- [x] 11F summary-first-carry-forward
+- [ ] 11G host-visible-validation-and-closeout
 
 ## Stage 12 Groups
 
