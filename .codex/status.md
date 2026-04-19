@@ -7,11 +7,11 @@
 
 ## Current Phase
 
-`stage11-context-minor-gc-user-visible-closeout-reopened`
+`stage12-realtime-memory-intent-productization`
 
 ## Active Slice
 
-`group-11g-host-visible-validation-and-closeout`
+`group-12a-contract-and-replay-hold`
 
 ## Current Product Promises
 
@@ -24,26 +24,19 @@
 
 ## Stage 11 Snapshot
 
-- Stage 11 定义：把 `Context Minor GC` 在 OpenClaw + Codex 两侧收口，并把“用户明显感觉到按需加载”纳入正式关闭条件
-- 11A `foundation-reframe`：已完成
-- 11B `openclaw-baseline-hold`：已完成
-- 11C `codex-context-bridge`：已完成
-- 11D `cross-host-rollout-decision`：已完成
-- 11E `growth-source-control`：已完成
-- 11F `summary-first-carry-forward`：已完成，当前默认改为 task-state summary 优先
-- 11G `host-visible-validation-and-closeout`：当前进行
-- 当前最重要的边界：
-  - `Context Minor GC` 现在已经视为可用能力
-  - `Stage 11` 重新打开，直到“用户明显好用”被证实
+- Stage 11 已完成：
+  - `Context Minor GC` 在 OpenClaw + Codex 两侧已经可用
+  - OpenClaw host-visible closeout 已补齐
   - guarded seam 继续保持 `default-off` / opt-in only
-  - 当前不会隐式扩大默认 active path
 
 ## Stage 12 Snapshot
 
 - Stage 12 定义：把 realtime governed memory intake 从 baseline 能力推进成清晰产品面与 operator 面
-- 12A `contract-and-replay-hold`：暂停，等待 Stage 11 体感问题关闭
+- 12A `contract-and-replay-hold`：当前切片，先把 `memory_intent` / `memory_extraction` / accepted-action 的 contract、replay surface 和 operator 语言收成同一条产品线
 - 12B `ordinary-conversation-runtime-ingest`：下一步
 - 12C `operator-surface-and-rollout`：后续
+- 当前 gate：
+  - `npm run verify:memory-intent`：`pass`
 
 ## Done
 
@@ -118,6 +111,7 @@
   - `memory_intent` 现在已成为正式 source type / contract，显式包含 category、durability、confidence、admission route、structured rule
   - Codex adapter `writeAfterTask(...)` 已能消费 `memoryExtraction` / `memory_extraction`，并在 `should_write_memory=true` 时实时写入 governed `source + reflection + promotion`
   - CLI 已支持 `memory_intent` declared source intake，contract / source / reflection / runtime / CLI 回归已补齐
+  - `npm run verify:memory-intent` 当前保持为绿，可作为 12A 的第一条正式 gate
   - `npm run verify:memory-intent` 已成为这条 slice 的正式 gate
   - architecture / self-learning / development-plan / control-surface 文档已补上 realtime memory-intent ingestion 设计基线并收口
 - ordinary-conversation realtime-write A/B 已扩到更有代表性的 `40` 条 live case，并按“先 builtin、清空状态、再 current”的方法重跑：
@@ -277,7 +271,7 @@
 ## Current Execution Line
 
 - Objective: 只解决“用户体感不明显”的问题；先把宿主增长源控住，再把 carry-forward 收成 summary-first，最后用 host-visible 指标重新判定 closeout
-- Plan Link: `stage11-context-minor-gc-user-visible-closeout-reopened / group-11g-host-visible-validation-and-closeout`
+- Plan Link: `stage12-realtime-memory-intent-productization / group-12a-contract-and-replay-hold`
 - Current Critical Path:
   - 宿主线程停止继续被长 commentary、raw session dump、重型工具输出污染
   - project-level carry-forward 改成 summary-first，而不是 `Active raw turns` 优先
@@ -307,7 +301,7 @@
 - [ ] 12C operator-surface-and-rollout
 
 ## Development Log Capture
-
 - Trigger Level: high
-- Pending Capture: no
-- Last Entry: `docs/devlog/2026-04-13-isolate-compaction-fallback-test-from-host-config.md`
+- Pending Capture: yes
+- Reason: commits landed after the latest devlog and changed durable repo surfaces; latest examples: Add OpenClaw near-compaction threshold probe; Finalize Stage 11 closeout state
+- Last Entry: `docs/devlog/2026-04-19-clarify-host-level-context-minor-gc-acceptance-and-openclaw-feasibility.md`

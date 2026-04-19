@@ -5,7 +5,7 @@
 | --- | --- |
 | 仓库 | `/Users/redcreen/Project/unified-memory-core` |
 | 层级 | `大型` |
-| 当前阶段 | stage11-context-minor-gc-user-visible-closeout-reopened |
+| 当前阶段 | stage12-realtime-memory-intent-productization |
 | 当前切片 | group-11g-host-visible-validation-and-closeout |
 | 当前执行线 | 只解决“用户体感不明显”的问题；先把宿主增长源控住，再把 carry-forward 收成 summary-first，最后用 host-visible 指标重新判定 closeout |
 | 执行进度 | `0 / 0` |
@@ -79,7 +79,7 @@
 
 ### English
 ```text
-project assistant continue. Read .codex/status.md, .codex/plan.md, .codex/strategy.md, .codex/program-board.md, .codex/delivery-supervision.md, .codex/module-dashboard.md, .codex/ptl-supervision.md, .codex/worker-handoff.md first; then continue the current execution line: stage11-context-minor-gc-user-visible-closeout-reopened / group-11g-host-visible-validation-and-closeout.
+project assistant continue. Read .codex/status.md, .codex/plan.md, .codex/strategy.md, .codex/program-board.md, .codex/delivery-supervision.md, .codex/module-dashboard.md, .codex/ptl-supervision.md, .codex/worker-handoff.md first; then continue the current execution line: stage12-realtime-memory-intent-productization / group-12a-contract-and-replay-hold.
 project assistant progress
 project assistant continue the current execution line and run validation first: npm test; extra checks: npm run eval:smoke-promotion.
 ```

@@ -105,7 +105,7 @@
 
 ## Stage 12: Realtime Memory Intent Productization
 
-`Stage 12` 不是当前大阶段，而是下一条独立主题。主题只保留一件事：
+`Stage 12` 现在就是当前大阶段。主题只保留一件事：
 
 - 把 realtime governed memory intake 从“baseline 能力”推进成真正的产品面和 operator 面
 
@@ -115,7 +115,7 @@
 
 | 分组 | 状态 | 目标 | 具体计划 |
 | --- | --- | --- | --- |
-| 12A `contract-and-replay-hold` | 下一大阶段 | 把 `memory_intent` / `memory_extraction` / accepted-action 的实时入口、回放和文档契约收成同一条产品线 | [Plan: 12A](reference/unified-memory-core/development-plan.zh-CN.md#group-12a-contract-and-replay-hold) |
+| 12A `contract-and-replay-hold` | 当前切片 | 把 `memory_intent` / `memory_extraction` / accepted-action 的实时入口、回放和文档契约收成同一条产品线 | [Plan: 12A](reference/unified-memory-core/development-plan.zh-CN.md#group-12a-contract-and-replay-hold) |
 | 12B `ordinary-conversation-runtime-ingest` | 下一步 | 把普通对话与运行时 rule ingestion 接到同一套 governed realtime path | [Plan: 12B](reference/unified-memory-core/development-plan.zh-CN.md#group-12b-ordinary-conversation-runtime-ingest) |
 | 12C `operator-surface-and-rollout` | 后续 | 把 inspect / audit / replay / rollback 与 rollout boundary 收成正式 operator 面 | [Plan: 12C](reference/unified-memory-core/development-plan.zh-CN.md#group-12c-operator-surface-and-rollout) |
 

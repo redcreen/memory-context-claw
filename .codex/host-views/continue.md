@@ -4,8 +4,8 @@
 | 项目 | 当前值 |
 | --- | --- |
 | 层级 | `大型` |
-| 当前判断 | stage11-context-minor-gc-user-visible-closeout-reopened |
-| 当前阶段 | stage11-context-minor-gc-user-visible-closeout-reopened |
+| 当前判断 | stage12-realtime-memory-intent-productization |
+| 当前阶段 | stage12-realtime-memory-intent-productization |
 | 当前切片 | group-11g-host-visible-validation-and-closeout |
 | 当前执行线 | 只解决“用户体感不明显”的问题；先把宿主增长源控住，再把 carry-forward 收成 summary-first，最后用 host-visible 指标重新判定 closeout |
 | 执行进度 | `0 / 0` |

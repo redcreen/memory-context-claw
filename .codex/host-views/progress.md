@@ -5,8 +5,8 @@
 | --- | --- |
 | 项目 | `Unified Memory Core` |
 | 层级 | `大型` |
-| 当前判断 | stage11-context-minor-gc-user-visible-closeout-reopened 已进入执行；当前主战场是 来源系统，正在推进 group-11g-host-visible-validation-and-closeout。 |
-| 当前阶段 | stage11-context-minor-gc-user-visible-closeout-reopened |
+| 当前判断 | stage12-realtime-memory-intent-productization 已进入执行；当前主战场是 realtime governed ingest contract / replay surface，正在推进 group-12a-contract-and-replay-hold。 |
+| 当前阶段 | stage12-realtime-memory-intent-productization |
 | 当前主战场 | `来源系统` |
 | 当前切片 | group-11g-host-visible-validation-and-closeout |
 | 当前执行线 | 只解决“用户体感不明显”的问题；先把宿主增长源控住，再把 carry-forward 收成 summary-first，最后用 host-visible 指标重新判定 closeout |
@@ -18,7 +18,7 @@
 ## 当前定位
 | 项目位置 | 当前值 | 说明 | 链接 |
 | --- | --- | --- | --- |
-| 当前阶段 | stage11-context-minor-gc-user-visible-closeout-reopened | 当前所处的大阶段 | [路线图当前阶段](/Users/redcreen/Project/unified-memory-core/docs/roadmap.zh-CN.md:18) |
+| 当前阶段 | stage12-realtime-memory-intent-productization | 当前所处的大阶段 | [路线图当前阶段](/Users/redcreen/Project/unified-memory-core/docs/roadmap.zh-CN.md:18) |
 | 当前切片 | group-11g-host-visible-validation-and-closeout | 当前真正推进的工作单元 | [当前切片对应位置](/Users/redcreen/Project/unified-memory-core/docs/workstreams/project/roadmap.zh-CN.md:225) |
 | 当前执行线 | 只解决“用户体感不明显”的问题；先把宿主增长源控住，再把 carry-forward 收成 summary-first，最后用 host-visible 指标重新判定 closeout | 这一轮长任务的人话说明 | 暂无 |
 | 当前模块 | `来源系统` | 当前主战场 | 暂无 |
@@ -28,7 +28,7 @@
 ## 全局视角
 | 区域 | 当前状态 | 当前焦点 | 退出条件 |
 | --- | --- | --- | --- |
-| 项目整体 | stage11-context-minor-gc-user-visible-closeout-reopened | group-11g-host-visible-validation-and-closeout | 在不丢失模块视角和治理清晰度的前提下推进当前切片 |
+| 项目整体 | stage12-realtime-memory-intent-productization | group-12a-contract-and-replay-hold | 在不丢失模块视角和治理清晰度的前提下推进当前切片 |
 
 ## 当前长任务
 | 项目 | 当前值 |

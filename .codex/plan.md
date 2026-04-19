@@ -2,7 +2,7 @@
 
 ## Current Phase
 
-`stage11-context-minor-gc-user-visible-closeout-reopened`
+`stage12-realtime-memory-intent-productization`
 
 ## Current Results Snapshot
 
@@ -33,17 +33,19 @@
 - Stage 9 average guarded prompt reduction ratio: `0.0306`; applied-only prompt reduction ratio: `0.0067`; applied-only raw reduction ratio: `0.7422`
 - Docker hermetic eval status: official-image runner, proxy rewrite, cloned-state path rewrite, warmed template cache, strict ordinary benchmark, and `gateway-steady` fast-watch ordinary benchmark are all landed; Docker is now the default trustworthy hermetic A/B base for this repo
 - Stage 10 adoption/shared-foundation proof: latest sampled package tarball `1456484 bytes`, `umc where` `154ms`, first-run `registry inspect` `80ms`, Codex shared proof `1 promoted / 1 candidate / 1 policy input`, multi-instance shared proof `2 candidates / 2 policy inputs`
-- Interpretation: the capability side of `Context Minor GC` is complete, but the user-visible bar is still not convincing enough. Until that closes, Stage 12 work is paused.
+- `verify:memory-intent`: `pass`
+- Interpretation: `Stage 11` is closed. The next execution line is `Stage 12`, starting with `12A contract-and-replay-hold`, while `Context Minor GC` remains a long-running optimization track rather than the active blocker.
 
-## Stage 11 User-Visible Focus
+## Stage 12 Execution Focus
 
-- 11E `growth-source-control`: current
-- 11F `summary-first-carry-forward`: completed
-- 11G `host-visible-validation-and-closeout`: current
+- 12A `contract-and-replay-hold`: current
+- 12B `ordinary-conversation-runtime-ingest`: next
+- 12C `operator-surface-and-rollout`: later
 - Rule:
-  - Stage 11 closeout now depends on OpenClaw host-visible user-feel evidence, not on keeping the phase artificially reopened
-  - `Context Minor GC` stays green and `default-off` / opt-in only
-  - Stage 12 work is paused until this closes
+  - `Stage 12` is now active
+  - `Context Minor GC` stays green and remains an optimization line, not the phase blocker
+  - the current execution line is to freeze the realtime governed-ingest contract and replay surface before widening runtime rollout
+  - `npm run verify:memory-intent` is now the first formal gate for `12A`
 
 ## Current Product Promises
 
@@ -62,8 +64,8 @@
    - replace raw-turn-first carry-forward with summary-first task-state
 3. `Stage 11G / host-visible-validation-and-closeout`
    - prove real user-visible thinning on comparable sessions instead of repo-local reduction only
-4. `Stage 12 hold`
-   - do not advance realtime governed intake productization until the user-visible GC gap is closed
+4. `Stage 12 / contract-and-replay-hold`
+   - keep the realtime governed-ingest contract, replay surface, and operator language aligned before widening rollout
 
 ## Slices
 
