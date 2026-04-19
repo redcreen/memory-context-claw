@@ -145,6 +145,55 @@ test("assemble skips guarded shadow decision on explicit same-topic continue mar
   assert.equal(events[0].reason, "explicit_continue_marker");
 });
 
+test("assemble uses heuristic switch path for explicit topic-switch markers", async () => {
+  const outputDir = await fs.mkdtemp(path.join(os.tmpdir(), "umc-guarded-heuristic-switch-"));
+  let runnerCalls = 0;
+  const engine = new ContextAssemblyEngine({
+    runtime: {},
+    logger: { warn() {}, info() {} },
+    pluginConfig: {
+      enabled: true,
+      openclawAdapter: {
+        enabled: false,
+        governedExports: {
+          enabled: false
+        }
+      },
+      dialogueWorkingSetShadow: {
+        enabled: true,
+        outputDir
+      },
+      dialogueWorkingSetGuarded: {
+        enabled: true
+      }
+    },
+    structuredDecisionRunner: async () => {
+      runnerCalls += 1;
+      throw new Error("explicit switch should not call decision runner");
+    },
+    retrievalFn: async () => []
+  });
+
+  const result = await engine.assemble({
+    messages: [
+      { role: "user", content: "记一下：当前编辑器是 Zed。" },
+      { role: "assistant", content: "记住了。" },
+      { role: "user", content: "现在切到完全不同的话题。帮我想一个京都三晚行程。" }
+    ],
+    tokenBudget: 4096,
+    sessionKey: "agent:main:test-guarded-heuristic-switch"
+  });
+
+  assert.equal(runnerCalls, 0);
+  assert.ok(result.messages.length >= 1);
+  const events = await listExportEvents(resolveDialogueWorkingSetShadowOutputDir(outputDir));
+  assert.equal(events.length, 1);
+  assert.equal(events[0].status, "captured");
+  assert.equal(events[0].decision_transport, "heuristic_switch");
+  assert.equal(events[0].decision.relation, "switch");
+  assert.match(String(events[0].guarded.reason || ""), /guarded_candidate|no_net_token_gain/);
+});
+
 test("assemble records runtime shadow telemetry even when retrieval returns no candidates", async () => {
   const outputDir = await fs.mkdtemp(path.join(os.tmpdir(), "umc-shadow-"));
   const engine = new ContextAssemblyEngine({

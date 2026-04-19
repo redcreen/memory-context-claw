@@ -122,6 +122,79 @@ function isLikelyExplicitContinueQuery(query = "") {
   return hasContinueMarker && !hasBoundaryMarker;
 }
 
+function isLikelyExplicitSwitchQuery(query = "") {
+  const text = normalizeWhitespace(query).toLowerCase();
+  if (!text) {
+    return false;
+  }
+  return [
+    /现在切到.*不同话题/u,
+    /现在切到.*新话题/u,
+    /换个.*话题/u,
+    /完全不同的话题/u,
+    /先不聊.*了/u,
+    /先离开.*回到/u,
+    /\blet's switch\b/i,
+    /\bswitch to\b/i,
+    /\bleave the .* topic\b/i,
+    /\bback to the editor\b/i,
+    /\bback to the .* fact\b/i
+  ].some((pattern) => pattern.test(text));
+}
+
+function compactSemanticTurnContent(value, maxChars = 120) {
+  return truncateText(value, maxChars);
+}
+
+function buildHeuristicSwitchDecision(turns = [], query = "") {
+  const normalizedTurns = Array.isArray(turns) ? turns : [];
+  const latestUserTurnId = [...normalizedTurns].reverse().find((turn) => turn.role === "user")?.id || "";
+  const priorUserTurns = normalizedTurns.filter(
+    (turn) => turn.role === "user" && turn.id !== latestUserTurnId
+  );
+  const anchorCandidates = [];
+  const seen = new Set();
+  const maybeAdd = (turn) => {
+    if (!turn?.id || seen.has(turn.id)) {
+      return;
+    }
+    seen.add(turn.id);
+    anchorCandidates.push(turn.id);
+  };
+
+  const currentStateTurn = [...priorUserTurns].reverse().find((turn) =>
+    /(更新|现在|当前|目前|default|current)/i.test(turn.content)
+  );
+  maybeAdd(currentStateTurn);
+
+  const durableAnchorTurn = priorUserTurns.find((turn) =>
+    /(记住|记一下|默认|以后|固定|代号|喜欢|偏好|规则|语言|编辑器|时区)/i.test(turn.content)
+  );
+  maybeAdd(durableAnchorTurn);
+
+  const latestDurableTurn = [...priorUserTurns].reverse().find((turn) =>
+    /(默认|规则|代号|喜欢|偏好|编辑器|语言)/i.test(turn.content)
+  );
+  maybeAdd(latestDurableTurn);
+
+  const archiveSummary = priorUserTurns
+    .slice(Math.max(0, priorUserTurns.length - 3))
+    .map((turn) => compactSemanticTurnContent(turn.content, 100))
+    .filter(Boolean)
+    .join(" / ");
+
+  return {
+    relation: "switch",
+    confidence: 0.9,
+    evict_turn_ids: normalizedTurns
+      .filter((turn) => turn.id !== latestUserTurnId)
+      .map((turn) => turn.id),
+    pin_turn_ids: anchorCandidates.slice(0, 3),
+    archive_summary: archiveSummary,
+    reasoning_summary: `Explicit topic-switch marker detected in latest user turn: ${compactSemanticTurnContent(query, 120)}`
+  };
+}
+
 export function projectRuntimeMessagesToDialogueTurns(messages = [], options = {}) {
   return projectRuntimeMessagesToDialogueProjection(messages, options).turns;
 }
@@ -353,15 +426,21 @@ export async function captureDialogueWorkingSetShadow({
   }
 
   try {
-    const decision = await runWorkingSetShadowDecision({
-      runtime,
-      sessionKey: normalizedSessionKey,
-      query,
-      turns: sampling.turns,
-      config,
-      logger,
-      decisionRunner
-    });
+    const decision = isLikelyExplicitSwitchQuery(query)
+      ? {
+          payload: buildHeuristicSwitchDecision(sampling.turns, query),
+          elapsedMs: 0,
+          transport: "heuristic_switch"
+        }
+      : await runWorkingSetShadowDecision({
+          runtime,
+          sessionKey: normalizedSessionKey,
+          query,
+          turns: sampling.turns,
+          config,
+          logger,
+          decisionRunner
+        });
     const snapshot = buildShadowContextSnapshot({
       turns: sampling.turns,
       decision: decision.payload
