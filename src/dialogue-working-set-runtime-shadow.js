@@ -81,6 +81,47 @@ export function resolveDialogueWorkingSetShadowOutputDir(outputDir = "") {
   return normalizeString(outputDir) || DEFAULT_DIALOGUE_WORKING_SET_SHADOW_OUTPUT_DIR;
 }
 
+function isLikelyExplicitContinueQuery(query = "") {
+  const text = normalizeWhitespace(query).toLowerCase();
+  if (!text) {
+    return false;
+  }
+  const hasContinueMarker = [
+    /^继续/u,
+    /^继续同一个/u,
+    /^还是同一个/u,
+    /^还是同一个方案/u,
+    /^还是同一个话题/u,
+    /^还是 release/u,
+    /^还是旅行/u,
+    /^再补/u,
+    /^再补充/u,
+    /^再补一层/u,
+    /^再补一条/u,
+    /^最后再压一层/u,
+    /^continue\b/i,
+    /^still on\b/i,
+    /^same topic\b/i,
+    /^another detail\b/i,
+    /^add one more\b/i
+  ].some((pattern) => pattern.test(text));
+  const hasBoundaryMarker = [
+    /切到/u,
+    /换个.*话题/u,
+    /换到/u,
+    /先不聊/u,
+    /回到/u,
+    /先离开/u,
+    /完全不同的话题/u,
+    /\bback to\b/i,
+    /\breturn to\b/i,
+    /\bswitch\b/i,
+    /\bdifferent topic\b/i,
+    /\bleave\b.*\btopic\b/i
+  ].some((pattern) => pattern.test(text));
+  return hasContinueMarker && !hasBoundaryMarker;
+}
+
 export function projectRuntimeMessagesToDialogueTurns(messages = [], options = {}) {
   return projectRuntimeMessagesToDialogueProjection(messages, options).turns;
 }
@@ -123,6 +164,7 @@ export function projectRuntimeMessagesToDialogueProjection(messages = [], option
 export function evaluateDialogueWorkingSetShadowSampling({
   runtime,
   config,
+  guardedConfig,
   query,
   messages
 }) {
@@ -131,6 +173,9 @@ export function evaluateDialogueWorkingSetShadowSampling({
   }
   if (!normalizeString(query)) {
     return { eligible: false, reason: "missing_query" };
+  }
+  if (guardedConfig?.enabled === true && isLikelyExplicitContinueQuery(query)) {
+    return { eligible: false, reason: "explicit_continue_marker" };
   }
   const projected = projectRuntimeMessagesToDialogueProjection(messages, config);
   const turns = projected.turns;
@@ -253,6 +298,7 @@ export async function captureDialogueWorkingSetShadow({
   const sampling = evaluateDialogueWorkingSetShadowSampling({
     runtime,
     config,
+    guardedConfig,
     query,
     messages
   });

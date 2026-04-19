@@ -74,6 +74,77 @@ test("projectRuntimeMessagesToDialogueTurns keeps only user/assistant messages a
   );
 });
 
+test("projectRuntimeMessagesToDialogueTurns keeps recent dialogue rounds without role-specific truncation", () => {
+  const turns = projectRuntimeMessagesToDialogueTurns(
+    [
+      { role: "user", content: "u1 ".repeat(80) },
+      { role: "assistant", content: "a1 ".repeat(80) },
+      { role: "user", content: "u2 ".repeat(80) },
+      { role: "assistant", content: "a2 ".repeat(80) },
+      { role: "user", content: "u3 ".repeat(80) },
+      { role: "assistant", content: "a3 ".repeat(80) },
+      { role: "user", content: "u4 ".repeat(80) },
+      { role: "assistant", content: "a4 ".repeat(80) }
+    ],
+    { maxTurns: 4, maxCharsPerTurn: 400 }
+  );
+
+  assert.ok(turns.every((turn) => turn.content.length > 200));
+});
+
+test("assemble skips guarded shadow decision on explicit same-topic continue markers", async () => {
+  const outputDir = await fs.mkdtemp(path.join(os.tmpdir(), "umc-guarded-skip-"));
+  let runnerCalls = 0;
+  const engine = new ContextAssemblyEngine({
+    runtime: {},
+    logger: { warn() {}, info() {} },
+    pluginConfig: {
+      enabled: true,
+      openclawAdapter: {
+        enabled: false,
+        governedExports: {
+          enabled: false
+        }
+      },
+      dialogueWorkingSetShadow: {
+        enabled: true,
+        outputDir
+      },
+      dialogueWorkingSetGuarded: {
+        enabled: true
+      }
+    },
+    structuredDecisionRunner: async () => {
+      runnerCalls += 1;
+      return {
+        relation: "switch",
+        confidence: 0.9,
+        evict_turn_ids: ["t1", "t2"],
+        pin_turn_ids: [],
+        archive_summary: "",
+        reasoning_summary: "unused"
+      };
+    },
+    retrievalFn: async () => []
+  });
+
+  await engine.assemble({
+    messages: [
+      { role: "user", content: "旧话题设定。" },
+      { role: "assistant", content: "记住了。" },
+      { role: "user", content: "继续同一个话题：再补充一个细节。" }
+    ],
+    tokenBudget: 4096,
+    sessionKey: "agent:main:test-guarded-skip"
+  });
+
+  assert.equal(runnerCalls, 0);
+  const events = await listExportEvents(resolveDialogueWorkingSetShadowOutputDir(outputDir));
+  assert.equal(events.length, 1);
+  assert.equal(events[0].status, "skipped");
+  assert.equal(events[0].reason, "explicit_continue_marker");
+});
+
 test("assemble records runtime shadow telemetry even when retrieval returns no candidates", async () => {
   const outputDir = await fs.mkdtemp(path.join(os.tmpdir(), "umc-shadow-"));
   const engine = new ContextAssemblyEngine({
