@@ -1,0 +1,234 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776560948493-zjb2ki",
+  "generated_at": "2026-04-19T01:09:08.493Z",
+  "session_key": "codex:vscode:019da346-335b-7d31-be0e-56a3c1b52ff3",
+  "agent_id": "main",
+  "query": "回到编辑器问题。我现在默认编辑器是什么？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "我以前默认编辑器是 Vim。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "记住了。后续如果涉及编辑器习惯，我会默认按你偏向 `Vim`/Vim 风格来处理。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "更新一下：我现在默认编辑器是 Zed。"
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "已更新。后续我会默认按 `Zed` 作为你的编辑器习惯来理解。"
+    },
+    {
+      "id": "t5",
+      "role": "user",
+      "content": "切个话题。为什么 shadow mode 默认先不开？"
+    },
+    {
+      "id": "t6",
+      "role": "assistant",
+      "content": "因为这个仓库里 `shadow mode` 被定义成“测量面”，不是默认用户路径。 核心原因有四个："
+    },
+    {
+      "id": "t7",
+      "role": "user",
+      "content": "回到编辑器问题。我现在默认编辑器是什么？"
+    },
+    {
+      "id": "t8",
+      "role": "assistant",
+      "content": "你现在默认编辑器是 `Zed`。"
+    }
+  ],
+  "decision": {
+    "relation": "resolve",
+    "confidence": 0.96,
+    "evict_turn_ids": [
+      "t1",
+      "t2",
+      "t3",
+      "t4",
+      "t5",
+      "t6",
+      "t8"
+    ],
+    "pin_turn_ids": [
+      "t3",
+      "t4"
+    ],
+    "archive_summary": "Durable preference updated: the user's default editor is Zed (supersedes earlier Vim preference). A side topic about why shadow mode is off by default was answered and is no longer needed for the next turn.",
+    "reasoning_summary": "The latest exchange resolves the editor question, and there are no open tasks. The only durable context worth preserving is the updated editor preference 'Zed'; the older Vim preference is obsolete, and the shadow mode discussion is off-topic and solved. Keeping only the latest user turn plus a compact pin for the Zed preference minimizes the next-turn raw prompt."
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "resolve",
+      "confidence": 0.96,
+      "archiveSummary": "Durable preference updated: the user's default editor is Zed (supersedes earlier Vim preference). A side topic about why shadow mode is off by default was answered and is no longer needed for the next turn.",
+      "reasoningSummary": "The latest exchange resolves the editor question, and there are no open tasks. The only durable context worth preserving is the updated editor preference 'Zed'; the older Vim preference is obsolete, and the shadow mode discussion is off-topic and solved. Keeping only the latest user turn plus a compact pin for the Zed preference minimizes the next-turn raw prompt.",
+      "latestUserTurnId": "t7",
+      "pinTurnIds": [
+        "t3",
+        "t4"
+      ],
+      "pinnedOnlyTurnIds": [
+        "t3",
+        "t4"
+      ],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t8"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t8"
+      ],
+      "keepTurnIds": [
+        "t7"
+      ],
+      "baselineTokens": 57,
+      "keptTokens": 5,
+      "prunedTokens": 52,
+      "reductionRatio": 0.9122807017543859,
+      "keepTurns": [
+        {
+          "id": "t7",
+          "role": "user",
+          "content": "回到编辑器问题。我现在默认编辑器是什么？",
+          "tokenEstimate": 5
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "我以前默认编辑器是 Vim。",
+          "tokenEstimate": 4
+        },
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "记住了。后续如果涉及编辑器习惯，我会默认按你偏向 `Vim`/Vim 风格来处理。",
+          "tokenEstimate": 11
+        },
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "更新一下：我现在默认编辑器是 Zed。",
+          "tokenEstimate": 5
+        },
+        {
+          "id": "t4",
+          "role": "assistant",
+          "content": "已更新。后续我会默认按 `Zed` 作为你的编辑器习惯来理解。",
+          "tokenEstimate": 8
+        },
+        {
+          "id": "t5",
+          "role": "user",
+          "content": "切个话题。为什么 shadow mode 默认先不开？",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t6",
+          "role": "assistant",
+          "content": "因为这个仓库里 `shadow mode` 被定义成“测量面”，不是默认用户路径。 核心原因有四个：",
+          "tokenEstimate": 13
+        },
+        {
+          "id": "t8",
+          "role": "assistant",
+          "content": "你现在默认编辑器是 `Zed`。",
+          "tokenEstimate": 4
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 我以前默认编辑器是 Vim。\nt2 assistant: 记住了。后续如果涉及编辑器习惯，我会默认按你偏向 `Vim`/Vim 风格来处理。\nt3 user: 更新一下：我现在默认编辑器是 Zed。\nt4 assistant: 已更新。后续我会默认按 `Zed` 作为你的编辑器习惯来理解。\nt5 user: 切个话题。为什么 shadow mode 默认先不开？\nt6 assistant: 因为这个仓库里 `shadow mode` 被定义成“测量面”，不是默认用户路径。 核心原因有四个：\nt7 user: 回到编辑器问题。我现在默认编辑器是什么？\nt8 assistant: 你现在默认编辑器是 `Zed`。",
+    "shadowRawTranscript": "t7 user: 回到编辑器问题。我现在默认编辑器是什么？",
+    "semanticPinNotes": [
+      "user: 更新一下：我现在默认编辑器是 Zed。",
+      "assistant: 已更新。后续我会默认按 `Zed` 作为你的编辑器习惯来理解。"
+    ],
+    "archiveSummary": "Durable preference updated: the user's default editor is Zed (supersedes earlier Vim preference). A side topic about why shadow mode is off by default was answered and is no longer needed for the next turn.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 80,
+    "shadowRawPromptEstimate": 8,
+    "shadowPackageEstimate": 89,
+    "shadowPackageText": "Task state summary:\nDurable preference updated: the user's default editor is Zed (supersedes earlier Vim preference). A side topic about why shadow mode is off by default was answered and is no longer needed for the next turn.\n\nLatest user ask:\n- 回到编辑器问题。我现在默认编辑器是什么？\n\nSemantic pins:\n- user: 更新一下：我现在默认编辑器是 Zed。\n- assistant: 已更新。后续我会默认按 `Zed` 作为你的编辑器习惯来理解。"
+  },
+  "scorecard": {
+    "relation": "resolve",
+    "baselineTurnCount": 8,
+    "keptTurnCount": 1,
+    "evictedTurnCount": 7,
+    "pinCount": 2,
+    "baselinePromptEstimate": 80,
+    "shadowRawPromptEstimate": 8,
+    "shadowPackageEstimate": 89,
+    "rawReductionRatio": 0.9123,
+    "packageReductionRatio": -0.1125,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 10293,
+    "totalElapsedMs": 10295,
+    "guardedEnabled": true,
+    "guardedApplied": true,
+    "guardedReason": "guarded_candidate",
+    "guardedMessageCount": 1,
+    "guardedCarryForwardEstimate": 27,
+    "guardedFilteredMessageEstimate": 5
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": true,
+    "reason": "guarded_candidate",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": "回到编辑器问题。我现在默认编辑器是什么？"
+      }
+    ],
+    "filteredMessageCount": 1,
+    "filteredMessageTokenEstimate": 5,
+    "carryForwardText": "Conversation carry-forward pins:\n- user: 更新一下：我现在默认编辑器是 Zed。\n- assistant: 已更新。后续我会默认按 `Zed` 作为你的编辑器习惯来理解。",
+    "carryForwardEstimate": 27,
+    "evictedSourceIndices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      7
+    ]
+  },
+  "timings": {
+    "totalElapsedMs": 10296,
+    "decisionElapsedMs": 10293
+  }
+}

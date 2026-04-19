@@ -1,0 +1,94 @@
+{
+  "schema_version": "umc.codex-context-minor-gc.v1",
+  "generated_at": "2026-04-18T12:23:43.716Z",
+  "event_id": "shadow-1776515023713-l0911i-codex-packaged",
+  "session_key": "codex:vscode:019da08b-ae03-73e3-9378-881ff36e8fa4",
+  "query": "Stage 11 继续 直到收口",
+  "status": "skipped",
+  "reason": "not_enough_turns",
+  "decision_transport": "",
+  "relation": "",
+  "applied": false,
+  "codex_guard_reason": "not_enough_evictions",
+  "prompt_reduction_ratio": 0,
+  "baseline_context_estimate": 165,
+  "packaged_context_estimate": 165,
+  "effective_context_estimate": 165,
+  "shadow_status": "skipped",
+  "shadow_guarded_applied": false,
+  "shadow_guarded_reason": "not_evaluated",
+  "shadow_export_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da08b-ae03-73e3-9378-881ff36e8fa4-shadow-1776515023713-l0911i.json",
+  "shadow_summary_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl",
+  "export_path": "exports/codex-vscode-019da08b-ae03-73e3-9378-881ff36e8fa4-shadow-1776515023713-l0911i-codex-packaged.json",
+  "effective_context_block": "## Recent Conversation Context\nt1 user: # Files mentioned by the user: ## codex-resume-pack.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/codex-resume-pack.md ## continue.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/continue.md ## handoff.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/handoff.md ## progress.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/progress.md ## status.md: /Users/redcreen/Project/unified-memory-core/.codex/status.md ## plan.md: /Users/redcreen/Project/unified-memory-core/.codex/plan.md ## My request for Codex: Stage 11 继续 直到收口\nt2 user: Stage 11 继续 直到收口",
+  "packaged_context_block": "## Recent Conversation Context\nt1 user: # Files mentioned by the user: ## codex-resume-pack.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/codex-resume-pack.md ## continue.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/continue.md ## handoff.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/handoff.md ## progress.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/progress.md ## status.md: /Users/redcreen/Project/unified-memory-core/.codex/status.md ## plan.md: /Users/redcreen/Project/unified-memory-core/.codex/plan.md ## My request for Codex: Stage 11 继续 直到收口\nt2 user: Stage 11 继续 直到收口",
+  "shadow_event": {
+    "schema_version": "umc.dialogue-working-set-shadow.v1",
+    "event_id": "shadow-1776515023713-l0911i",
+    "generated_at": "2026-04-18T12:23:43.713Z",
+    "session_key": "codex:vscode:019da08b-ae03-73e3-9378-881ff36e8fa4",
+    "agent_id": "main",
+    "query": "Stage 11 继续 直到收口",
+    "status": "skipped",
+    "reason": "not_enough_turns",
+    "sampling": {
+      "max_turns": 12,
+      "min_turns": 3,
+      "max_chars_per_turn": 900
+    },
+    "transcript": [
+      {
+        "id": "t1",
+        "role": "user",
+        "content": "# Files mentioned by the user: ## codex-resume-pack.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/codex-resume-pack.md ## continue.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/continue.md ## handoff.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/handoff.md ## progress.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/progress.md ## status.md: /Users/redcreen/Project/unified-memory-core/.codex/status.md ## plan.md: /Users/redcreen/Project/unified-memory-core/.codex/plan.md ## My request for Codex: Stage 11 继续 直到收口"
+      },
+      {
+        "id": "t2",
+        "role": "user",
+        "content": "Stage 11 继续 直到收口"
+      }
+    ],
+    "decision": null,
+    "decision_transport": "",
+    "snapshot": null,
+    "scorecard": {
+      "relation": "",
+      "baselineTurnCount": 2,
+      "keptTurnCount": 0,
+      "evictedTurnCount": 0,
+      "pinCount": 0,
+      "baselinePromptEstimate": 0,
+      "shadowRawPromptEstimate": 0,
+      "shadowPackageEstimate": 0,
+      "rawReductionRatio": 0,
+      "packageReductionRatio": 0,
+      "candidateLoadElapsedMs": 0,
+      "assemblyBuildElapsedMs": 0,
+      "decisionElapsedMs": 0,
+      "totalElapsedMs": 1,
+      "guardedEnabled": true,
+      "guardedApplied": false,
+      "guardedReason": "not_evaluated",
+      "guardedMessageCount": 2,
+      "guardedCarryForwardEstimate": 0,
+      "guardedFilteredMessageEstimate": 0
+    },
+    "guarded": {
+      "enabled": true,
+      "applied": false,
+      "reason": "not_evaluated",
+      "filteredMessageCount": 2,
+      "filteredMessageTokenEstimate": 0,
+      "carryForwardEstimate": 0,
+      "evictedSourceIndices": []
+    },
+    "timings": {
+      "totalElapsedMs": 1,
+      "decisionElapsedMs": 0
+    },
+    "artifact_paths": {
+      "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da08b-ae03-73e3-9378-881ff36e8fa4-shadow-1776515023713-l0911i.json",
+      "summary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl"
+    }
+  }
+}

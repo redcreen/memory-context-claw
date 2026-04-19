@@ -1,0 +1,114 @@
+{
+  "schema_version": "umc.codex-context-minor-gc.v1",
+  "generated_at": "2026-04-18T16:41:43.750Z",
+  "event_id": "shadow-1776530501721-afxg6g-codex-packaged",
+  "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+  "query": "[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？",
+  "status": "error",
+  "reason": "Error: no structured decision transport succeeded (codex_exec: codex exec timed out after 1000ms)",
+  "decision_transport": "",
+  "relation": "",
+  "applied": false,
+  "codex_guard_reason": "not_enough_evictions",
+  "prompt_reduction_ratio": 0,
+  "baseline_context_estimate": 66,
+  "packaged_context_estimate": 66,
+  "effective_context_estimate": 66,
+  "shadow_status": "error",
+  "shadow_guarded_applied": false,
+  "shadow_guarded_reason": "not_evaluated",
+  "shadow_export_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da152-4841-76f2-adc4-b01a85d15a88-shadow-1776530501721-afxg6g.json",
+  "shadow_summary_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl",
+  "export_path": "exports/codex-vscode-019da152-4841-76f2-adc4-b01a85d15a88-shadow-1776530501721-afxg6g-codex-packaged.json",
+  "effective_context_block": "## Recent Conversation Context\nt1 user: [GC-D1] 记一下：我以前默认编辑器是 Vim。\nt2 user: [GC-D1] 更新一下：我现在默认编辑器是 Zed。\nt3 user: [GC-D1] 切个话题。为什么 shadow mode 默认先不开？\nt4 user: [GC-D1] 回到编辑器问题。我现在默认编辑器是什么？\nt5 user: [GC-D1] 回到编辑器问题。我现在默认编辑器是什么？\nt6 user: [GC-D1] 回到编辑器问题。我现在默认编辑器是什么？",
+  "packaged_context_block": "## Recent Conversation Context\nt1 user: [GC-D1] 记一下：我以前默认编辑器是 Vim。\nt2 user: [GC-D1] 更新一下：我现在默认编辑器是 Zed。\nt3 user: [GC-D1] 切个话题。为什么 shadow mode 默认先不开？\nt4 user: [GC-D1] 回到编辑器问题。我现在默认编辑器是什么？\nt5 user: [GC-D1] 回到编辑器问题。我现在默认编辑器是什么？\nt6 user: [GC-D1] 回到编辑器问题。我现在默认编辑器是什么？",
+  "shadow_event": {
+    "schema_version": "umc.dialogue-working-set-shadow.v1",
+    "event_id": "shadow-1776530501721-afxg6g",
+    "generated_at": "2026-04-18T16:41:41.721Z",
+    "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+    "agent_id": "main",
+    "query": "[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？",
+    "status": "error",
+    "reason": "Error: no structured decision transport succeeded (codex_exec: codex exec timed out after 1000ms)",
+    "sampling": {
+      "max_turns": 12,
+      "min_turns": 3,
+      "max_chars_per_turn": 900
+    },
+    "transcript": [
+      {
+        "id": "t1",
+        "role": "user",
+        "content": "[GC-D1] 记一下：我以前默认编辑器是 Vim。"
+      },
+      {
+        "id": "t2",
+        "role": "user",
+        "content": "[GC-D1] 更新一下：我现在默认编辑器是 Zed。"
+      },
+      {
+        "id": "t3",
+        "role": "user",
+        "content": "[GC-D1] 切个话题。为什么 shadow mode 默认先不开？"
+      },
+      {
+        "id": "t4",
+        "role": "user",
+        "content": "[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？"
+      },
+      {
+        "id": "t5",
+        "role": "user",
+        "content": "[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？"
+      },
+      {
+        "id": "t6",
+        "role": "user",
+        "content": "[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？"
+      }
+    ],
+    "decision": null,
+    "decision_transport": "",
+    "snapshot": null,
+    "scorecard": {
+      "relation": "",
+      "baselineTurnCount": 6,
+      "keptTurnCount": 0,
+      "evictedTurnCount": 0,
+      "pinCount": 0,
+      "baselinePromptEstimate": 0,
+      "shadowRawPromptEstimate": 0,
+      "shadowPackageEstimate": 0,
+      "rawReductionRatio": 0,
+      "packageReductionRatio": 0,
+      "candidateLoadElapsedMs": 0,
+      "assemblyBuildElapsedMs": 0,
+      "decisionElapsedMs": 0,
+      "totalElapsedMs": 2028,
+      "guardedEnabled": true,
+      "guardedApplied": false,
+      "guardedReason": "not_evaluated",
+      "guardedMessageCount": 6,
+      "guardedCarryForwardEstimate": 0,
+      "guardedFilteredMessageEstimate": 0
+    },
+    "guarded": {
+      "enabled": true,
+      "applied": false,
+      "reason": "not_evaluated",
+      "filteredMessageCount": 6,
+      "filteredMessageTokenEstimate": 0,
+      "carryForwardEstimate": 0,
+      "evictedSourceIndices": []
+    },
+    "timings": {
+      "totalElapsedMs": 2028,
+      "decisionElapsedMs": 0
+    },
+    "artifact_paths": {
+      "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da152-4841-76f2-adc4-b01a85d15a88-shadow-1776530501721-afxg6g.json",
+      "summary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl"
+    }
+  }
+}

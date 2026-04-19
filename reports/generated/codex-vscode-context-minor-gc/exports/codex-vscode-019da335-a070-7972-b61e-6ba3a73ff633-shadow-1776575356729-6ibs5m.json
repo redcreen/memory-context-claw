@@ -1,0 +1,285 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776575356729-6ibs5m",
+  "generated_at": "2026-04-19T05:09:16.729Z",
+  "session_key": "codex:vscode:019da335-a070-7972-b61e-6ba3a73ff633",
+  "agent_id": "main",
+  "query": "现在可以安装到openclaw 安全使用么？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "assistant",
+      "content": "做完了。 先说原因： - `switch` 当轮慢，主要不是答案生成慢，而是每轮先跑一次 shadow decision。 - 之前放大采样窗口后，decision 看见的 transcript 更长了。 - 很多明显 `continue` 的轮次也在白跑 decision，成本高但不 apply。 - `switch` 当轮还要走 `codex_exec`，这是最重的一次。"
+    },
+    {
+      "id": "t2",
+      "role": "user",
+      "content": "继续"
+    },
+    {
+      "id": "t3",
+      "role": "assistant",
+      "content": "这轮继续做完了，重点是压 `switch` 当轮的 decision 成本，而不是扩测试面。 我加了两个 fast path： - 明显 `continue` 的轮次直接跳过 shadow decision - 明显 `switch` 的轮次走本地 heuristic switch，不再调用 `codex_exec`"
+    },
+    {
+      "id": "t4",
+      "role": "user",
+      "content": "继续 只压 switch 当轮时延"
+    },
+    {
+      "id": "t5",
+      "role": "assistant",
+      "content": "继续做完了，这轮只压 `switch` 当轮时延，并顺手解决了“切题后下一轮又弹回去”的问题。 做的事： - `continue` 明显同题轮：直接 skip shadow decision - `switch` 明显切题轮：走本地 heuristic switch - `switch` 后的 `continue` 轮：走本地 heuristic continue-after-switch，不再把旧前缀重新带回来"
+    },
+    {
+      "id": "t6",
+      "role": "user",
+      "content": "压 t8 这种第一次切题问答本身的回答时延 继续"
+    },
+    {
+      "id": "t7",
+      "role": "assistant",
+      "content": "继续做了，范围只压 `switch` 当轮时延，没有扩测试面。 这轮新增了两个 fast path： - 明显 `switch` 的用户输入：直接走本地 `heuristic_switch`，不再调用 `codex_exec` decision - `switch` 之后的明显 `continue`：走本地 `heuristic_continue_after_switch`，不再回到重 decision"
+    },
+    {
+      "id": "t8",
+      "role": "user",
+      "content": "压 t8 回答阶段本身的回答时延，例如减少切题首轮的检索/装配负担或限制回答形态 =》继续"
+    },
+    {
+      "id": "t9",
+      "role": "assistant",
+      "content": "继续做完了，这轮只压 `t8` 这种第一次切题问答的回答阶段时延。 我做的改动： - 对显式 `switch` 首轮，直接跳过 retrieval/loading - 这样切题首轮不再为普通新话题做完整记忆候选装配"
+    },
+    {
+      "id": "t10",
+      "role": "user",
+      "content": "那么现在 关于 gc 的工作还能继续做那些？ 文档是哪个？"
+    },
+    {
+      "id": "t11",
+      "role": "assistant",
+      "content": "还能继续做，主要剩 4 条线，按优先级我建议这样排： **还能做什么** - 压 `switch` 首轮回答时延。 现在 GC 判断和检索降载已经做了一轮，下一步更像是压“回答阶段本身”，例如切题首轮默认更短答、更少展开。 - 压切题后的 `rebound`。 现在切题后已经会回落，但后两轮还有回弹，可以继续做“新话题短窗口保护”，让新话题前 2 到 3 轮维持更薄。 - 做自适应预算。 现在很多阈值还是固定的，可以按…"
+    },
+    {
+      "id": "t12",
+      "role": "user",
+      "content": "现在可以安装到openclaw 安全使用么？"
+    }
+  ],
+  "decision": {
+    "relation": "continue",
+    "confidence": 0.82,
+    "evict_turn_ids": [
+      "t1",
+      "t2",
+      "t3",
+      "t4",
+      "t5",
+      "t6",
+      "t7",
+      "t8"
+    ],
+    "pin_turn_ids": [],
+    "archive_summary": "Prior GC optimization work focused on reducing first-turn switch latency: skip shadow decision on obvious continue turns, use local heuristic switch/continue-after-switch, and skip retrieval/loading on explicit switch first turns. Latest still-relevant raw context is that GC work is not fully complete yet; remaining items mentioned include further reducing switch first-answer latency, reducing rebound after topic switch, and adaptive budgeting.",
+    "reasoning_summary": "The latest user question is still about the same GC/deployment topic, now asking whether the current state is safe to install into OpenClaw. That depends on the recent status/context about what was changed and what remains unfinished, so this is a continue, not a switch. Older step-by-step implementation turns are resolved and no longer needed raw; the most recent status turns should remain raw for the next answer."
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "continue",
+      "confidence": 0.82,
+      "archiveSummary": "Prior GC optimization work focused on reducing first-turn switch latency: skip shadow decision on obvious continue turns, use local heuristic switch/continue-after-switch, and skip retrieval/loading on explicit switch first turns. Latest still-relevant raw context is that GC work is not fully complete yet; remaining items mentioned include further reducing switch first-answer latency, reducing rebound after topic switch, and adaptive budgeting.",
+      "reasoningSummary": "The latest user question is still about the same GC/deployment topic, now asking whether the current state is safe to install into OpenClaw. That depends on the recent status/context about what was changed and what remains unfinished, so this is a continue, not a switch. Older step-by-step implementation turns are resolved and no longer needed raw; the most recent status turns should remain raw for the next answer.",
+      "latestUserTurnId": "t12",
+      "pinTurnIds": [],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8"
+      ],
+      "keepTurnIds": [
+        "t9",
+        "t10",
+        "t11",
+        "t12"
+      ],
+      "baselineTokens": 309,
+      "keptTokens": 94,
+      "prunedTokens": 215,
+      "reductionRatio": 0.6957928802588996,
+      "keepTurns": [
+        {
+          "id": "t9",
+          "role": "assistant",
+          "content": "继续做完了，这轮只压 `t8` 这种第一次切题问答的回答阶段时延。 我做的改动： - 对显式 `switch` 首轮，直接跳过 retrieval/loading - 这样切题首轮不再为普通新话题做完整记忆候选装配",
+          "tokenEstimate": 27
+        },
+        {
+          "id": "t10",
+          "role": "user",
+          "content": "那么现在 关于 gc 的工作还能继续做那些？ 文档是哪个？",
+          "tokenEstimate": 8
+        },
+        {
+          "id": "t11",
+          "role": "assistant",
+          "content": "还能继续做，主要剩 4 条线，按优先级我建议这样排： **还能做什么** - 压 `switch` 首轮回答时延。 现在 GC 判断和检索降载已经做了一轮，下一步更像是压“回答阶段本身”，例如切题首轮默认更短答、更少展开。 - 压切题后的 `rebound`。 现在切题后已经会回落，但后两轮还有回弹，可以继续做“新话题短窗口保护”，让新话题前 2 到 3 轮维持更薄。 - 做自适应预算。 现在很多阈值还是固定的，可以按…",
+          "tokenEstimate": 53
+        },
+        {
+          "id": "t12",
+          "role": "user",
+          "content": "现在可以安装到openclaw 安全使用么？",
+          "tokenEstimate": 6
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "assistant",
+          "content": "做完了。 先说原因： - `switch` 当轮慢，主要不是答案生成慢，而是每轮先跑一次 shadow decision。 - 之前放大采样窗口后，decision 看见的 transcript 更长了。 - 很多明显 `continue` 的轮次也在白跑 decision，成本高但不 apply。 - `switch` 当轮还要走 `codex_exec`，这是最重的一次。",
+          "tokenEstimate": 48
+        },
+        {
+          "id": "t2",
+          "role": "user",
+          "content": "继续",
+          "tokenEstimate": 1
+        },
+        {
+          "id": "t3",
+          "role": "assistant",
+          "content": "这轮继续做完了，重点是压 `switch` 当轮的 decision 成本，而不是扩测试面。 我加了两个 fast path： - 明显 `continue` 的轮次直接跳过 shadow decision - 明显 `switch` 的轮次走本地 heuristic switch，不再调用 `codex_exec`",
+          "tokenEstimate": 40
+        },
+        {
+          "id": "t4",
+          "role": "user",
+          "content": "继续 只压 switch 当轮时延",
+          "tokenEstimate": 5
+        },
+        {
+          "id": "t5",
+          "role": "assistant",
+          "content": "继续做完了，这轮只压 `switch` 当轮时延，并顺手解决了“切题后下一轮又弹回去”的问题。 做的事： - `continue` 明显同题轮：直接 skip shadow decision - `switch` 明显切题轮：走本地 heuristic switch - `switch` 后的 `continue` 轮：走本地 heuristic continue-after-switch，不再把旧前缀重新带回来",
+          "tokenEstimate": 52
+        },
+        {
+          "id": "t6",
+          "role": "user",
+          "content": "压 t8 这种第一次切题问答本身的回答时延 继续",
+          "tokenEstimate": 6
+        },
+        {
+          "id": "t7",
+          "role": "assistant",
+          "content": "继续做了，范围只压 `switch` 当轮时延，没有扩测试面。 这轮新增了两个 fast path： - 明显 `switch` 的用户输入：直接走本地 `heuristic_switch`，不再调用 `codex_exec` decision - `switch` 之后的明显 `continue`：走本地 `heuristic_continue_after_switch`，不再回到重 decision",
+          "tokenEstimate": 51
+        },
+        {
+          "id": "t8",
+          "role": "user",
+          "content": "压 t8 回答阶段本身的回答时延，例如减少切题首轮的检索/装配负担或限制回答形态 =》继续",
+          "tokenEstimate": 12
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 assistant: 做完了。 先说原因： - `switch` 当轮慢，主要不是答案生成慢，而是每轮先跑一次 shadow decision。 - 之前放大采样窗口后，decision 看见的 transcript 更长了。 - 很多明显 `continue` 的轮次也在白跑 decision，成本高但不 apply。 - `switch` 当轮还要走 `codex_exec`，这是最重的一次。\nt2 user: 继续\nt3 assistant: 这轮继续做完了，重点是压 `switch` 当轮的 decision 成本，而不是扩测试面。 我加了两个 fast path： - 明显 `continue` 的轮次直接跳过 shadow decision - 明显 `switch` 的轮次走本地 heuristic switch，不再调用 `codex_exec`\nt4 user: 继续 只压 switch 当轮时延\nt5 assistant: 继续做完了，这轮只压 `switch` 当轮时延，并顺手解决了“切题后下一轮又弹回去”的问题。 做的事： - `continue` 明显同题轮：直接 skip shadow decision - `switch` 明显切题轮：走本地 heuristic switch - `switch` 后的 `continue` 轮：走本地 heuristic continue-after-switch，不再把旧前缀重新带回来\nt6 user: 压 t8 这种第一次切题问答本身的回答时延 继续\nt7 assistant: 继续做了，范围只压 `switch` 当轮时延，没有扩测试面。 这轮新增了两个 fast path： - 明显 `switch` 的用户输入：直接走本地 `heuristic_switch`，不再调用 `codex_exec` decision - `switch` 之后的明显 `continue`：走本地 `heuristic_continue_after_switch`，不再回到重 decision\nt8 user: 压 t8 回答阶段本身的回答时延，例如减少切题首轮的检索/装配负担或限制回答形态 =》继续\nt9 assistant: 继续做完了，这轮只压 `t8` 这种第一次切题问答的回答阶段时延。 我做的改动： - 对显式 `switch` 首轮，直接跳过 retrieval/loading - 这样切题首轮不再为普通新话题做完整记忆候选装配\nt10 user: 那么现在 关于 gc 的工作还能继续做那些？ 文档是哪个？\nt11 assistant: 还能继续做，主要剩 4 条线，按优先级我建议这样排： **还能做什么** - 压 `switch` 首轮回答时延。 现在 GC 判断和检索降载已经做了一轮，下一步更像是压“回答阶段本身”，例如切题首轮默认更短答、更少展开。 - 压切题后的 `rebound`。 现在切题后已经会回落，但后两轮还有回弹，可以继续做“新话题短窗口保护”，让新话题前 2 到 3 轮维持更薄。 - 做自适应预算。 现在很多阈值还是固定的，可以按…\nt12 user: 现在可以安装到openclaw 安全使用么？",
+    "shadowRawTranscript": "t9 assistant: 继续做完了，这轮只压 `t8` 这种第一次切题问答的回答阶段时延。 我做的改动： - 对显式 `switch` 首轮，直接跳过 retrieval/loading - 这样切题首轮不再为普通新话题做完整记忆候选装配\nt10 user: 那么现在 关于 gc 的工作还能继续做那些？ 文档是哪个？\nt11 assistant: 还能继续做，主要剩 4 条线，按优先级我建议这样排： **还能做什么** - 压 `switch` 首轮回答时延。 现在 GC 判断和检索降载已经做了一轮，下一步更像是压“回答阶段本身”，例如切题首轮默认更短答、更少展开。 - 压切题后的 `rebound`。 现在切题后已经会回落，但后两轮还有回弹，可以继续做“新话题短窗口保护”，让新话题前 2 到 3 轮维持更薄。 - 做自适应预算。 现在很多阈值还是固定的，可以按…\nt12 user: 现在可以安装到openclaw 安全使用么？",
+    "semanticPinNotes": [],
+    "archiveSummary": "Prior GC optimization work focused on reducing first-turn switch latency: skip shadow decision on obvious continue turns, use local heuristic switch/continue-after-switch, and skip retrieval/loading on explicit switch first turns. Latest still-relevant raw context is that GC work is not fully complete yet; remaining items mentioned include further reducing switch first-answer latency, reducing rebound after topic switch, and adaptive budgeting.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 343,
+    "shadowRawPromptEstimate": 106,
+    "shadowPackageEstimate": 71,
+    "shadowPackageText": "Task state summary:\nPrior GC optimization work focused on reducing first-turn switch latency: skip shadow decision on obvious continue turns, use local heuristic switch/continue-after-switch, and skip retrieval/loading on explicit switch f…\n\nLatest user ask:\n- 现在可以安装到openclaw 安全使用么？"
+  },
+  "scorecard": {
+    "relation": "continue",
+    "baselineTurnCount": 12,
+    "keptTurnCount": 4,
+    "evictedTurnCount": 8,
+    "pinCount": 0,
+    "baselinePromptEstimate": 343,
+    "shadowRawPromptEstimate": 106,
+    "shadowPackageEstimate": 71,
+    "rawReductionRatio": 0.6958,
+    "packageReductionRatio": 0.793,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 17482,
+    "totalElapsedMs": 17489,
+    "guardedEnabled": true,
+    "guardedApplied": true,
+    "guardedReason": "guarded_candidate",
+    "guardedMessageCount": 4,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 94
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": true,
+    "reason": "guarded_candidate",
+    "filteredMessages": [
+      {
+        "role": "assistant",
+        "content": "继续做完了，这轮只压 `t8` 这种第一次切题问答的回答阶段时延。 我做的改动： - 对显式 `switch` 首轮，直接跳过 retrieval/loading - 这样切题首轮不再为普通新话题做完整记忆候选装配"
+      },
+      {
+        "role": "user",
+        "content": "那么现在 关于 gc 的工作还能继续做那些？ 文档是哪个？"
+      },
+      {
+        "role": "assistant",
+        "content": "还能继续做，主要剩 4 条线，按优先级我建议这样排： **还能做什么** - 压 `switch` 首轮回答时延。 现在 GC 判断和检索降载已经做了一轮，下一步更像是压“回答阶段本身”，例如切题首轮默认更短答、更少展开。 - 压切题后的 `rebound`。 现在切题后已经会回落，但后两轮还有回弹，可以继续做“新话题短窗口保护”，让新话题前 2 到 3 轮维持更薄。 - 做自适应预算。 现在很多阈值还是固定的，可以按…"
+      },
+      {
+        "role": "user",
+        "content": "现在可以安装到openclaw 安全使用么？"
+      }
+    ],
+    "filteredMessageCount": 4,
+    "filteredMessageTokenEstimate": 94,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ]
+  },
+  "timings": {
+    "totalElapsedMs": 17489,
+    "decisionElapsedMs": 17482
+  }
+}

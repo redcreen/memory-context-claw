@@ -1,0 +1,89 @@
+{
+  "schema_version": "umc.codex-context-minor-gc.v1",
+  "generated_at": "2026-04-19T00:56:43.174Z",
+  "event_id": "shadow-1776560203174-tcr1jr-codex-packaged",
+  "session_key": "codex:vscode:019da33d-4d22-7d62-8623-5237f90e4ec1",
+  "query": "我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。",
+  "status": "skipped",
+  "reason": "not_enough_turns",
+  "decision_transport": "",
+  "relation": "",
+  "applied": false,
+  "codex_guard_reason": "not_enough_evictions",
+  "prompt_reduction_ratio": 0,
+  "baseline_context_estimate": 19,
+  "packaged_context_estimate": 19,
+  "effective_context_estimate": 19,
+  "shadow_status": "skipped",
+  "shadow_guarded_applied": false,
+  "shadow_guarded_reason": "not_evaluated",
+  "shadow_export_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da33d-4d22-7d62-8623-5237f90e4ec1-shadow-1776560203174-tcr1jr.json",
+  "shadow_summary_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl",
+  "export_path": "exports/codex-vscode-019da33d-4d22-7d62-8623-5237f90e4ec1-shadow-1776560203174-tcr1jr-codex-packaged.json",
+  "effective_context_block": "## Recent Conversation Context\nt1 user: 我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。",
+  "packaged_context_block": "## Recent Conversation Context\nt1 user: 我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。",
+  "shadow_event": {
+    "schema_version": "umc.dialogue-working-set-shadow.v1",
+    "event_id": "shadow-1776560203174-tcr1jr",
+    "generated_at": "2026-04-19T00:56:43.174Z",
+    "session_key": "codex:vscode:019da33d-4d22-7d62-8623-5237f90e4ec1",
+    "agent_id": "main",
+    "query": "我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。",
+    "status": "skipped",
+    "reason": "not_enough_turns",
+    "sampling": {
+      "max_turns": 12,
+      "min_turns": 3,
+      "max_chars_per_turn": 900
+    },
+    "transcript": [
+      {
+        "id": "t1",
+        "role": "user",
+        "content": "我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。"
+      }
+    ],
+    "decision": null,
+    "decision_transport": "",
+    "snapshot": null,
+    "scorecard": {
+      "relation": "",
+      "baselineTurnCount": 1,
+      "keptTurnCount": 0,
+      "evictedTurnCount": 0,
+      "pinCount": 0,
+      "baselinePromptEstimate": 0,
+      "shadowRawPromptEstimate": 0,
+      "shadowPackageEstimate": 0,
+      "rawReductionRatio": 0,
+      "packageReductionRatio": 0,
+      "candidateLoadElapsedMs": 0,
+      "assemblyBuildElapsedMs": 0,
+      "decisionElapsedMs": 0,
+      "totalElapsedMs": 0,
+      "guardedEnabled": true,
+      "guardedApplied": false,
+      "guardedReason": "not_evaluated",
+      "guardedMessageCount": 1,
+      "guardedCarryForwardEstimate": 0,
+      "guardedFilteredMessageEstimate": 0
+    },
+    "guarded": {
+      "enabled": true,
+      "applied": false,
+      "reason": "not_evaluated",
+      "filteredMessageCount": 1,
+      "filteredMessageTokenEstimate": 0,
+      "carryForwardEstimate": 0,
+      "evictedSourceIndices": []
+    },
+    "timings": {
+      "totalElapsedMs": 0,
+      "decisionElapsedMs": 0
+    },
+    "artifact_paths": {
+      "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da33d-4d22-7d62-8623-5237f90e4ec1-shadow-1776560203174-tcr1jr.json",
+      "summary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl"
+    }
+  }
+}

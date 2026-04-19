@@ -1,0 +1,158 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776500899038-t9q8u3",
+  "generated_at": "2026-04-18T08:28:19.038Z",
+  "session_key": "codex:vscode:019d9fad-6f50-7a41-bb2c-d9fce435bfe6",
+  "agent_id": "main",
+  "query": "本轮发送context 和 状态栏不匹配； 每次打开新的codex窗口，状态栏是否没有准确读取 ？ 或者读错了/ \n如果两个codex 同时在vscode 打开，好像会有问题；",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "我的合理的方式，不是扩大context window；先改回到258k； 不然无法测试 compat是否会发生；"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "Context(估算): 本轮发送context 71.6k，宿主context 71.6k；窗口总大小 258k，压缩比：0.0%（71.6k/71.6k），占总窗口比例：27.8%（71.6k/258k） 默认口径已经改回 `258k`。现在 VS Code helper 会先把宿主上报的 `model_context_window` clamp 到 `258000` 再算风险和 header，但同时保留原始上报值，避免把真实运行态丢掉。实现点在 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/codex-vscode-context-minor-gc.js:13) 和 [scripts/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/scripts/codex-vscode-context-minor-gc.js:26)。 我也补了回归测试，覆盖“宿主报 `486000` 时默认仍按 `258000` 算”的场景，见 [test/codex-vscode-context-minor-gc.test.js](/Users/redcreen/Project/unified-memory-core/test/codex-vscode-context-minor-gc.test.js:285)。验证已过：`node --test test/codex-vscode-context-minor-gc.test.js`，`4/4` 通过。当前实际 `npm run codex:vscode:gc --silent` 也已显示 `hostContextWindow=258000`、`hostReportedContextWindow=486400`，所以现在可以继续按你要的保守窗口去观察 `compat` 是否会发生。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "本轮发送context 和 状态栏不匹配； 每次打开新的codex窗口，状态栏是否没有准确读取 ？ 或者读错了/ 如果两个codex 同时在vscode 打开，好像会有问题；"
+    }
+  ],
+  "decision": {
+    "relation": "continue",
+    "confidence": 0.87,
+    "evict_turn_ids": [
+      "t1"
+    ],
+    "pin_turn_ids": [
+      "t1"
+    ],
+    "archive_summary": "User prefers keeping the default context window at 258k rather than expanding it, so compat behavior can be tested under the conservative window. That preference should persist as a compact semantic pin even if the raw turn leaves the next-turn prompt.",
+    "reasoning_summary": "The latest user turn stays on the same active topic: Codex VS Code context/status reporting behavior. The immediately previous assistant turn (t2) is still needed as raw context because it contains the recent code/config change to 258k and the observed host-vs-reported window values, which may be relevant to diagnosing the new mismatch/multi-window issue. The earlier user turn (t1) is resolved as a preference/instruction and can leave the raw working set, but its semantic content should be pinned."
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "continue",
+      "confidence": 0.87,
+      "archiveSummary": "User prefers keeping the default context window at 258k rather than expanding it, so compat behavior can be tested under the conservative window. That preference should persist as a compact semantic pin even if the raw turn leaves the next-turn prompt.",
+      "reasoningSummary": "The latest user turn stays on the same active topic: Codex VS Code context/status reporting behavior. The immediately previous assistant turn (t2) is still needed as raw context because it contains the recent code/config change to 258k and the observed host-vs-reported window values, which may be relevant to diagnosing the new mismatch/multi-window issue. The earlier user turn (t1) is resolved as a preference/instruction and can leave the raw working set, but its semantic content should be pinned.",
+      "latestUserTurnId": "t3",
+      "pinTurnIds": [
+        "t1"
+      ],
+      "pinnedOnlyTurnIds": [
+        "t1"
+      ],
+      "requestedEvictTurnIds": [
+        "t1"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t1"
+      ],
+      "keepTurnIds": [
+        "t2",
+        "t3"
+      ],
+      "baselineTokens": 258,
+      "keptTokens": 244,
+      "prunedTokens": 14,
+      "reductionRatio": 0.05426356589147287,
+      "keepTurns": [
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "Context(估算): 本轮发送context 71.6k，宿主context 71.6k；窗口总大小 258k，压缩比：0.0%（71.6k/71.6k），占总窗口比例：27.8%（71.6k/258k） 默认口径已经改回 `258k`。现在 VS Code helper 会先把宿主上报的 `model_context_window` clamp 到 `258000` 再算风险和 header，但同时保留原始上报值，避免把真实运行态丢掉。实现点在 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/codex-vscode-context-minor-gc.js:13) 和 [scripts/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/scripts/codex-vscode-context-minor-gc.js:26)。 我也补了回归测试，覆盖“宿主报 `486000` 时默认仍按 `258000` 算”的场景，见 [test/codex-vscode-context-minor-gc.test.js](/Users/redcreen/Project/unified-memory-core/test/codex-vscode-context-minor-gc.test.js:285)。验证已过：`node --test test/codex-vscode-context-minor-gc.test.js`，`4/4` 通过。当前实际 `npm run codex:vscode:gc --silent` 也已显示 `hostContextWindow=258000`、`hostReportedContextWindow=486400`，所以现在可以继续按你要的保守窗口去观察 `compat` 是否会发生。",
+          "tokenEstimate": 222
+        },
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "本轮发送context 和 状态栏不匹配； 每次打开新的codex窗口，状态栏是否没有准确读取 ？ 或者读错了/ 如果两个codex 同时在vscode 打开，好像会有问题；",
+          "tokenEstimate": 22
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "我的合理的方式，不是扩大context window；先改回到258k； 不然无法测试 compat是否会发生；",
+          "tokenEstimate": 14
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 我的合理的方式，不是扩大context window；先改回到258k； 不然无法测试 compat是否会发生；\nt2 assistant: Context(估算): 本轮发送context 71.6k，宿主context 71.6k；窗口总大小 258k，压缩比：0.0%（71.6k/71.6k），占总窗口比例：27.8%（71.6k/258k） 默认口径已经改回 `258k`。现在 VS Code helper 会先把宿主上报的 `model_context_window` clamp 到 `258000` 再算风险和 header，但同时保留原始上报值，避免把真实运行态丢掉。实现点在 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/codex-vscode-context-minor-gc.js:13) 和 [scripts/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/scripts/codex-vscode-context-minor-gc.js:26)。 我也补了回归测试，覆盖“宿主报 `486000` 时默认仍按 `258000` 算”的场景，见 [test/codex-vscode-context-minor-gc.test.js](/Users/redcreen/Project/unified-memory-core/test/codex-vscode-context-minor-gc.test.js:285)。验证已过：`node --test test/codex-vscode-context-minor-gc.test.js`，`4/4` 通过。当前实际 `npm run codex:vscode:gc --silent` 也已显示 `hostContextWindow=258000`、`hostReportedContextWindow=486400`，所以现在可以继续按你要的保守窗口去观察 `compat` 是否会发生。\nt3 user: 本轮发送context 和 状态栏不匹配； 每次打开新的codex窗口，状态栏是否没有准确读取 ？ 或者读错了/ 如果两个codex 同时在vscode 打开，好像会有问题；",
+    "shadowRawTranscript": "t2 assistant: Context(估算): 本轮发送context 71.6k，宿主context 71.6k；窗口总大小 258k，压缩比：0.0%（71.6k/71.6k），占总窗口比例：27.8%（71.6k/258k） 默认口径已经改回 `258k`。现在 VS Code helper 会先把宿主上报的 `model_context_window` clamp 到 `258000` 再算风险和 header，但同时保留原始上报值，避免把真实运行态丢掉。实现点在 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/codex-vscode-context-minor-gc.js:13) 和 [scripts/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/scripts/codex-vscode-context-minor-gc.js:26)。 我也补了回归测试，覆盖“宿主报 `486000` 时默认仍按 `258000` 算”的场景，见 [test/codex-vscode-context-minor-gc.test.js](/Users/redcreen/Project/unified-memory-core/test/codex-vscode-context-minor-gc.test.js:285)。验证已过：`node --test test/codex-vscode-context-minor-gc.test.js`，`4/4` 通过。当前实际 `npm run codex:vscode:gc --silent` 也已显示 `hostContextWindow=258000`、`hostReportedContextWindow=486400`，所以现在可以继续按你要的保守窗口去观察 `compat` 是否会发生。\nt3 user: 本轮发送context 和 状态栏不匹配； 每次打开新的codex窗口，状态栏是否没有准确读取 ？ 或者读错了/ 如果两个codex 同时在vscode 打开，好像会有问题；",
+    "semanticPinNotes": [
+      "user: 我的合理的方式，不是扩大context window；先改回到258k； 不然无法测试 compat是否会发生；"
+    ],
+    "archiveSummary": "User prefers keeping the default context window at 258k rather than expanding it, so compat behavior can be tested under the conservative window. That preference should persist as a compact semantic pin even if the raw turn leaves the next-turn prompt.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 266,
+    "shadowRawPromptEstimate": 249,
+    "shadowPackageEstimate": 273,
+    "shadowPackageText": "Active raw turns:\nt2 assistant: Context(估算): 本轮发送context 71.6k，宿主context 71.6k；窗口总大小 258k，压缩比：0.0%（71.6k/71.6k），占总窗口比例：27.8%（71.6k/258k） 默认口径已经改回 `258k`。现在 VS Code helper 会先把宿主上报的 `model_context_window` clamp 到 `258000` 再算风险和 header，但同时保留原始上报值，避免把真实运行态丢掉。实现点在 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/codex-vscode-context-minor-gc.js:13) 和 [scripts/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/scripts/codex-vscode-context-minor-gc.js:26)。 我也补了回归测试，覆盖“宿主报 `486000` 时默认仍按 `258000` 算”的场景，见 [test/codex-vscode-context-minor-gc.test.js](/Users/redcreen/Project/unified-memory-core/test/codex-vscode-context-minor-gc.test.js:285)。验证已过：`node --test test/codex-vscode-context-minor-gc.test.js`，`4/4` 通过。当前实际 `npm run codex:vscode:gc --silent` 也已显示 `hostContextWindow=258000`、`hostReportedContextWindow=486400`，所以现在可以继续按你要的保守窗口去观察 `compat` 是否会发生。\nt3 user: 本轮发送context 和 状态栏不匹配； 每次打开新的codex窗口，状态栏是否没有准确读取 ？ 或者读错了/ 如果两个codex 同时在vscode 打开，好像会有问题；\n\nSemantic pins:\nuser: 我的合理的方式，不是扩大context window；先改回到258k； 不然无法测试 compat是否会发生；"
+  },
+  "scorecard": {
+    "relation": "continue",
+    "baselineTurnCount": 3,
+    "keptTurnCount": 2,
+    "evictedTurnCount": 1,
+    "pinCount": 1,
+    "baselinePromptEstimate": 266,
+    "shadowRawPromptEstimate": 249,
+    "shadowPackageEstimate": 273,
+    "rawReductionRatio": 0.0543,
+    "packageReductionRatio": -0.0263,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 20188,
+    "totalElapsedMs": 20192,
+    "guardedEnabled": true,
+    "guardedApplied": false,
+    "guardedReason": "reduction_below_min",
+    "guardedMessageCount": 3,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 258
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": false,
+    "reason": "reduction_below_min",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": "我的合理的方式，不是扩大context window；先改回到258k； 不然无法测试 compat是否会发生；"
+      },
+      {
+        "role": "assistant",
+        "content": "Context(估算): 本轮发送context 71.6k，宿主context 71.6k；窗口总大小 258k，压缩比：0.0%（71.6k/71.6k），占总窗口比例：27.8%（71.6k/258k） 默认口径已经改回 `258k`。现在 VS Code helper 会先把宿主上报的 `model_context_window` clamp 到 `258000` 再算风险和 header，但同时保留原始上报值，避免把真实运行态丢掉。实现点在 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/codex-vscode-context-minor-gc.js:13) 和 [scripts/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/scripts/codex-vscode-context-minor-gc.js:26)。 我也补了回归测试，覆盖“宿主报 `486000` 时默认仍按 `258000` 算”的场景，见 [test/codex-vscode-context-minor-gc.test.js](/Users/redcreen/Project/unified-memory-core/test/codex-vscode-context-minor-gc.test.js:285)。验证已过：`node --test test/codex-vscode-context-minor-gc.test.js`，`4/4` 通过。当前实际 `npm run codex:vscode:gc --silent` 也已显示 `hostContextWindow=258000`、`hostReportedContextWindow=486400`，所以现在可以继续按你要的保守窗口去观察 `compat` 是否会发生。"
+      },
+      {
+        "role": "user",
+        "content": "本轮发送context 和 状态栏不匹配； 每次打开新的codex窗口，状态栏是否没有准确读取 ？ 或者读错了/ 如果两个codex 同时在vscode 打开，好像会有问题；"
+      }
+    ],
+    "filteredMessageCount": 3,
+    "filteredMessageTokenEstimate": 258,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 20192,
+    "decisionElapsedMs": 20188
+  }
+}

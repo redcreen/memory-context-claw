@@ -1,0 +1,154 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776560389638-glm36z",
+  "generated_at": "2026-04-19T00:59:49.638Z",
+  "session_key": "codex:vscode:019da33d-4d22-7d62-8623-5237f90e4ec1",
+  "agent_id": "main",
+  "query": "现在切到代码：给我一个 Python 正则，提取 foo123bar 里的数字。",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "已记下：旅行预算 `2万元`，更想住 `京都`，最好 `靠近地铁站`。后面如果你要我帮你筛酒店、排路线或做预算分配，我会按这个偏好来。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "现在切到代码：给我一个 Python 正则，提取 foo123bar 里的数字。"
+    }
+  ],
+  "decision": {
+    "relation": "switch",
+    "confidence": 0.98,
+    "evict_turn_ids": [
+      "t2"
+    ],
+    "pin_turn_ids": [
+      "t1"
+    ],
+    "archive_summary": "Earlier topic was travel planning preferences: budget 20,000 RMB, prefers staying in Kyoto, ideally near a subway station. Latest topic switches to a Python regex for extracting digits from 'foo123bar'.",
+    "reasoning_summary": "The active topic changed from travel to coding. The latest turn no longer depends on the assistant acknowledgement in t2, so that raw turn can leave the next-turn prompt. The user’s travel preferences from t1 are durable and may matter later, so preserve them as a semantic pin rather than raw context. The latest user turn is kept automatically and is not listed for eviction."
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "switch",
+      "confidence": 0.98,
+      "archiveSummary": "Earlier topic was travel planning preferences: budget 20,000 RMB, prefers staying in Kyoto, ideally near a subway station. Latest topic switches to a Python regex for extracting digits from 'foo123bar'.",
+      "reasoningSummary": "The active topic changed from travel to coding. The latest turn no longer depends on the assistant acknowledgement in t2, so that raw turn can leave the next-turn prompt. The user’s travel preferences from t1 are durable and may matter later, so preserve them as a semantic pin rather than raw context. The latest user turn is kept automatically and is not listed for eviction.",
+      "latestUserTurnId": "t3",
+      "pinTurnIds": [
+        "t1"
+      ],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t2"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t2"
+      ],
+      "keepTurnIds": [
+        "t1",
+        "t3"
+      ],
+      "baselineTokens": 36,
+      "keptTokens": 19,
+      "prunedTokens": 17,
+      "reductionRatio": 0.4722222222222222,
+      "keepTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。",
+          "tokenEstimate": 9
+        },
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "现在切到代码：给我一个 Python 正则，提取 foo123bar 里的数字。",
+          "tokenEstimate": 10
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "已记下：旅行预算 `2万元`，更想住 `京都`，最好 `靠近地铁站`。后面如果你要我帮你筛酒店、排路线或做预算分配，我会按这个偏好来。",
+          "tokenEstimate": 17
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。\nt2 assistant: 已记下：旅行预算 `2万元`，更想住 `京都`，最好 `靠近地铁站`。后面如果你要我帮你筛酒店、排路线或做预算分配，我会按这个偏好来。\nt3 user: 现在切到代码：给我一个 Python 正则，提取 foo123bar 里的数字。",
+    "shadowRawTranscript": "t1 user: 我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。\nt3 user: 现在切到代码：给我一个 Python 正则，提取 foo123bar 里的数字。",
+    "semanticPinNotes": [],
+    "archiveSummary": "Earlier topic was travel planning preferences: budget 20,000 RMB, prefers staying in Kyoto, ideally near a subway station. Latest topic switches to a Python regex for extracting digits from 'foo123bar'.",
+    "injectedArchiveSummary": "Earlier topic was travel planning preferences: budget 20,000 RMB, prefers staying in Kyoto, idea...",
+    "baselinePromptEstimate": 44,
+    "shadowRawPromptEstimate": 23,
+    "shadowPackageEstimate": 71,
+    "shadowPackageText": "Task state summary:\nEarlier topic was travel planning preferences: budget 20,000 RMB, prefers staying in Kyoto, ideally near a subway station. Latest topic switches to a Python regex for extracting digits from 'foo123bar'.\n\nLatest user ask:\n- 现在切到代码：给我一个 Python 正则，提取 foo123bar 里的数字。"
+  },
+  "scorecard": {
+    "relation": "switch",
+    "baselineTurnCount": 3,
+    "keptTurnCount": 2,
+    "evictedTurnCount": 1,
+    "pinCount": 1,
+    "baselinePromptEstimate": 44,
+    "shadowRawPromptEstimate": 23,
+    "shadowPackageEstimate": 71,
+    "rawReductionRatio": 0.4722,
+    "packageReductionRatio": -0.6136,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 7203,
+    "totalElapsedMs": 7204,
+    "guardedEnabled": true,
+    "guardedApplied": false,
+    "guardedReason": "no_net_token_gain",
+    "guardedMessageCount": 3,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 36
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": false,
+    "reason": "no_net_token_gain",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": "我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。"
+      },
+      {
+        "role": "assistant",
+        "content": "已记下：旅行预算 `2万元`，更想住 `京都`，最好 `靠近地铁站`。后面如果你要我帮你筛酒店、排路线或做预算分配，我会按这个偏好来。"
+      },
+      {
+        "role": "user",
+        "content": "现在切到代码：给我一个 Python 正则，提取 foo123bar 里的数字。"
+      }
+    ],
+    "filteredMessageCount": 3,
+    "filteredMessageTokenEstimate": 36,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 7204,
+    "decisionElapsedMs": 7203
+  }
+}

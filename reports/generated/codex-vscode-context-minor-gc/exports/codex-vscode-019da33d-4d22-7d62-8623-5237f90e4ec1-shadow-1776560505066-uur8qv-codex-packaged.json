@@ -1,0 +1,257 @@
+{
+  "schema_version": "umc.codex-context-minor-gc.v1",
+  "generated_at": "2026-04-19T01:02:00.737Z",
+  "event_id": "shadow-1776560505066-uur8qv-codex-packaged",
+  "session_key": "codex:vscode:019da33d-4d22-7d62-8623-5237f90e4ec1",
+  "query": "先不聊代码了。刚才旅行那段里，我更想住哪座城市？",
+  "status": "captured",
+  "reason": "",
+  "decision_transport": "codex_exec",
+  "relation": "switch",
+  "applied": true,
+  "codex_guard_reason": "codex_packaged_guard",
+  "prompt_reduction_ratio": 0.233,
+  "baseline_context_estimate": 103,
+  "packaged_context_estimate": 79,
+  "effective_context_estimate": 79,
+  "shadow_status": "captured",
+  "shadow_guarded_applied": true,
+  "shadow_guarded_reason": "guarded_candidate",
+  "shadow_export_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da33d-4d22-7d62-8623-5237f90e4ec1-shadow-1776560505066-uur8qv.json",
+  "shadow_summary_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl",
+  "export_path": "exports/codex-vscode-019da33d-4d22-7d62-8623-5237f90e4ec1-shadow-1776560505066-uur8qv-codex-packaged.json",
+  "effective_context_block": "## Context Minor GC Working Set\nTask state summary:\nTravel preferences were established: budget 20,000 RMB, prefers staying in Kyoto, ideally near a subway station. A short code detour followed about Python regex for extracting digits, which was answered and is no longer…\n\nLatest user ask:\n- 先不聊代码了。刚才旅行那段里，我更想住哪座城市？",
+  "packaged_context_block": "## Context Minor GC Working Set\nTask state summary:\nTravel preferences were established: budget 20,000 RMB, prefers staying in Kyoto, ideally near a subway station. A short code detour followed about Python regex for extracting digits, which was answered and is no longer…\n\nLatest user ask:\n- 先不聊代码了。刚才旅行那段里，我更想住哪座城市？",
+  "shadow_event": {
+    "schema_version": "umc.dialogue-working-set-shadow.v1",
+    "event_id": "shadow-1776560505066-uur8qv",
+    "generated_at": "2026-04-19T01:01:45.066Z",
+    "session_key": "codex:vscode:019da33d-4d22-7d62-8623-5237f90e4ec1",
+    "agent_id": "main",
+    "query": "先不聊代码了。刚才旅行那段里，我更想住哪座城市？",
+    "status": "captured",
+    "reason": "",
+    "sampling": {
+      "max_turns": 12,
+      "min_turns": 3,
+      "max_chars_per_turn": 900
+    },
+    "transcript": [
+      {
+        "id": "t1",
+        "role": "user",
+        "content": "我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。"
+      },
+      {
+        "id": "t2",
+        "role": "assistant",
+        "content": "已记下：旅行预算 `2万元`，更想住 `京都`，最好 `靠近地铁站`。后面如果你要我帮你筛酒店、排路线或做预算分配，我会按这个偏好来。"
+      },
+      {
+        "id": "t3",
+        "role": "user",
+        "content": "现在切到代码：给我一个 Python 正则，提取 foo123bar 里的数字。"
+      },
+      {
+        "id": "t4",
+        "role": "assistant",
+        "content": "用这个： ```python r\"\\d+\" ```"
+      },
+      {
+        "id": "t5",
+        "role": "user",
+        "content": "继续代码：如果只取第一个数字分组，写法怎么更短？"
+      },
+      {
+        "id": "t6",
+        "role": "assistant",
+        "content": "可以直接写成： ```python re.search(r\"(\\d+)\", s).group(1) ```"
+      },
+      {
+        "id": "t7",
+        "role": "user",
+        "content": "先不聊代码了。刚才旅行那段里，我更想住哪座城市？"
+      },
+      {
+        "id": "t8",
+        "role": "assistant",
+        "content": "你刚才说更想住 `京都`。"
+      }
+    ],
+    "decision": {
+      "relation": "switch",
+      "confidence": 0.95,
+      "evict_turn_ids": [
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6"
+      ],
+      "pin_turn_ids": [
+        "t1"
+      ],
+      "archive_summary": "Travel preferences were established: budget 20,000 RMB, prefers staying in Kyoto, ideally near a subway station. A short code detour followed about Python regex for extracting digits, which was answered and is no longer relevant. The conversation then switched back to the travel topic, asking which city was preferred; the answer was Kyoto.",
+      "reasoning_summary": "The active topic switched from a resolved code side topic back to the earlier travel preferences. The next turn still depends on the original travel fact in t1, so that should remain semantically preserved and is worth pinning as a durable preference set. The regex exchange in t3-t6 is solved and off-topic, so it is a strong eviction candidate. t2 is redundant acknowledgment of t1 and can also leave the raw working set."
+    },
+    "decision_transport": "codex_exec",
+    "snapshot": {
+      "applied": {
+        "relation": "switch",
+        "confidence": 0.95,
+        "archiveSummary": "Travel preferences were established: budget 20,000 RMB, prefers staying in Kyoto, ideally near a subway station. A short code detour followed about Python regex for extracting digits, which was answered and is no longer relevant. The conversation then switched back to the travel topic, asking which city was preferred; the answer was Kyoto.",
+        "reasoningSummary": "The active topic switched from a resolved code side topic back to the earlier travel preferences. The next turn still depends on the original travel fact in t1, so that should remain semantically preserved and is worth pinning as a durable preference set. The regex exchange in t3-t6 is solved and off-topic, so it is a strong eviction candidate. t2 is redundant acknowledgment of t1 and can also leave the raw working set.",
+        "latestUserTurnId": "t7",
+        "pinTurnIds": [
+          "t1"
+        ],
+        "pinnedOnlyTurnIds": [],
+        "requestedEvictTurnIds": [
+          "t2",
+          "t3",
+          "t4",
+          "t5",
+          "t6"
+        ],
+        "blockedEvictTurnIds": [],
+        "appliedEvictTurnIds": [
+          "t2",
+          "t3",
+          "t4",
+          "t5",
+          "t6"
+        ],
+        "keepTurnIds": [
+          "t1",
+          "t7",
+          "t8"
+        ],
+        "baselineTokens": 73,
+        "keptTokens": 19,
+        "prunedTokens": 54,
+        "reductionRatio": 0.7397260273972602,
+        "keepTurns": [
+          {
+            "id": "t1",
+            "role": "user",
+            "content": "我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。",
+            "tokenEstimate": 9
+          },
+          {
+            "id": "t7",
+            "role": "user",
+            "content": "先不聊代码了。刚才旅行那段里，我更想住哪座城市？",
+            "tokenEstimate": 6
+          },
+          {
+            "id": "t8",
+            "role": "assistant",
+            "content": "你刚才说更想住 `京都`。",
+            "tokenEstimate": 4
+          }
+        ],
+        "evictedTurns": [
+          {
+            "id": "t2",
+            "role": "assistant",
+            "content": "已记下：旅行预算 `2万元`，更想住 `京都`，最好 `靠近地铁站`。后面如果你要我帮你筛酒店、排路线或做预算分配，我会按这个偏好来。",
+            "tokenEstimate": 17
+          },
+          {
+            "id": "t3",
+            "role": "user",
+            "content": "现在切到代码：给我一个 Python 正则，提取 foo123bar 里的数字。",
+            "tokenEstimate": 10
+          },
+          {
+            "id": "t4",
+            "role": "assistant",
+            "content": "用这个： ```python r\"\\d+\" ```",
+            "tokenEstimate": 7
+          },
+          {
+            "id": "t5",
+            "role": "user",
+            "content": "继续代码：如果只取第一个数字分组，写法怎么更短？",
+            "tokenEstimate": 6
+          },
+          {
+            "id": "t6",
+            "role": "assistant",
+            "content": "可以直接写成： ```python re.search(r\"(\\d+)\", s).group(1) ```",
+            "tokenEstimate": 14
+          }
+        ]
+      },
+      "baselineRawTranscript": "t1 user: 我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。\nt2 assistant: 已记下：旅行预算 `2万元`，更想住 `京都`，最好 `靠近地铁站`。后面如果你要我帮你筛酒店、排路线或做预算分配，我会按这个偏好来。\nt3 user: 现在切到代码：给我一个 Python 正则，提取 foo123bar 里的数字。\nt4 assistant: 用这个： ```python r\"\\d+\" ```\nt5 user: 继续代码：如果只取第一个数字分组，写法怎么更短？\nt6 assistant: 可以直接写成： ```python re.search(r\"(\\d+)\", s).group(1) ```\nt7 user: 先不聊代码了。刚才旅行那段里，我更想住哪座城市？\nt8 assistant: 你刚才说更想住 `京都`。",
+      "shadowRawTranscript": "t1 user: 我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。\nt7 user: 先不聊代码了。刚才旅行那段里，我更想住哪座城市？\nt8 assistant: 你刚才说更想住 `京都`。",
+      "semanticPinNotes": [],
+      "archiveSummary": "Travel preferences were established: budget 20,000 RMB, prefers staying in Kyoto, ideally near a subway station. A short code detour followed about Python regex for extracting digits, which was answered and is no longer relevant. The conversation then switched back to the travel topic, asking which city was preferred; the answer was Kyoto.",
+      "injectedArchiveSummary": "",
+      "baselinePromptEstimate": 95,
+      "shadowRawPromptEstimate": 26,
+      "shadowPackageEstimate": 71,
+      "shadowPackageText": "Task state summary:\nTravel preferences were established: budget 20,000 RMB, prefers staying in Kyoto, ideally near a subway station. A short code detour followed about Python regex for extracting digits, which was answered and is no longer…\n\nLatest user ask:\n- 先不聊代码了。刚才旅行那段里，我更想住哪座城市？"
+    },
+    "scorecard": {
+      "relation": "switch",
+      "baselineTurnCount": 8,
+      "keptTurnCount": 3,
+      "evictedTurnCount": 5,
+      "pinCount": 1,
+      "baselinePromptEstimate": 95,
+      "shadowRawPromptEstimate": 26,
+      "shadowPackageEstimate": 71,
+      "rawReductionRatio": 0.7397,
+      "packageReductionRatio": 0.2526,
+      "candidateLoadElapsedMs": 0,
+      "assemblyBuildElapsedMs": 0,
+      "decisionElapsedMs": 15670,
+      "totalElapsedMs": 15671,
+      "guardedEnabled": true,
+      "guardedApplied": true,
+      "guardedReason": "guarded_candidate",
+      "guardedMessageCount": 3,
+      "guardedCarryForwardEstimate": 0,
+      "guardedFilteredMessageEstimate": 19
+    },
+    "guarded": {
+      "enabled": true,
+      "applied": true,
+      "reason": "guarded_candidate",
+      "filteredMessages": [
+        {
+          "role": "user",
+          "content": "我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。"
+        },
+        {
+          "role": "user",
+          "content": "先不聊代码了。刚才旅行那段里，我更想住哪座城市？"
+        },
+        {
+          "role": "assistant",
+          "content": "你刚才说更想住 `京都`。"
+        }
+      ],
+      "filteredMessageCount": 3,
+      "filteredMessageTokenEstimate": 19,
+      "carryForwardText": "",
+      "carryForwardEstimate": 0,
+      "evictedSourceIndices": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    "timings": {
+      "totalElapsedMs": 15671,
+      "decisionElapsedMs": 15670
+    },
+    "artifact_paths": {
+      "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da33d-4d22-7d62-8623-5237f90e4ec1-shadow-1776560505066-uur8qv.json",
+      "summary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl"
+    }
+  }
+}

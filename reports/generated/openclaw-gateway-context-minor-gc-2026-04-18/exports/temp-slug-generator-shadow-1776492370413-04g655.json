@@ -1,0 +1,54 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776492370413-04g655",
+  "generated_at": "2026-04-18T06:06:10.413Z",
+  "session_key": "temp:slug-generator",
+  "agent_id": "main",
+  "query": "Based on this conversation, generate a short 1-2 word filename slug (lowercase, hyphen-separated, no file extension).\n\nConversation summary:\nassistant: 生效了：`MEMORY.md` 里的长期记忆已经能被我直接读出来；`memory/2026-04-05.md` 也是这个会话里被检索到并引用的。\nuser: task-system planning runtime context:\n- current_session_key: agent:main:telegram:direct:8705812936\n- current_task_id: task_364fb616a8b7470eac5b85bf943c1396\n- planning_mode: tool-first-after-first-ack\n- if you need a future follow-up, use task-system tools in this order:\n  1. ts_attach_promise_guard\n  2. ts_create_followup_plan\n  3. ts_schedule_followup_from_plan\n  4. ts_finalize_planned_followup\n- for future-first requests, default to main_user_content_mode=none\n- runtime decides whether this turn sends no business content, a short summary, or a full answer\n- if main_user_content_mode=immediate-summary, keep the user-visible summary to one short business-facing line (about 120 chars max)\n- legacy structured user-content blocks may appear, but they are compatibility-only and must not leak to users\n- do not put scheduling status, promise state, or tool-chain state in the user-visible answer\n- provide followup_summary so runtime can send a meaningful wd scheduling confirmation\n- use followup_due_at as an absolute RFC3339 time\n- if scheduling is overdue, still schedule and tell the user it is being recovered\n- never promise a future reply without a successful task-system tool result\n\nConversation info (untrusted metadata):\n```json\n{\n  \"message_id\": \"649\",\n  \"sender_id\": \"8705812936\",\n  \"sender\": \"Chao Liu\",\n  \"timestamp\": \"Thu 2026-04-16 00:08 GMT+8\"\n}\n```\n\nSender (untrusted metadata):\n```json\n{\n  \"label\": \"Chao Liu (8705812936)\",\n  \"id\": \"8705812936\",\n  \"name\": \"Chao Liu\",\n  \"username\": \"redcreen\"\n}\n```\n\n我是说 memory core 这个记忆插件看看有没哟生效； umc插件；\nassistant: 是，`umc` 这类 memory core 插件是生效过的。  \n我这边能直接读到 `MEMORY.md`，也能用 `memory_search`/`memory_get` 命中并读取 `memory/2026-04-05.md`，这就说明记忆链路在工作。\n\n如果你要确认“插件本体是否加载”，不是看我能不能读文件，而是看 OpenClaw 里插件状态；之前的记录里提过要先跑：\n- `openclaw plugins list`\n- `openclaw memory status --json`\n\n要不要我现在按这个方向给你做一次更硬核的确认？\nuser: task-system planning runtime context:\n- current_sess\n\nReply with ONLY the slug, nothing else. Examples: \"vendor-pitch\", \"api-design\", \"bug-fix\"",
+  "status": "skipped",
+  "reason": "not_enough_turns",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [],
+  "decision": null,
+  "decision_transport": "",
+  "snapshot": null,
+  "scorecard": {
+    "relation": "",
+    "baselineTurnCount": 0,
+    "keptTurnCount": 0,
+    "evictedTurnCount": 0,
+    "pinCount": 0,
+    "baselinePromptEstimate": 0,
+    "shadowRawPromptEstimate": 0,
+    "shadowPackageEstimate": 0,
+    "rawReductionRatio": 0,
+    "packageReductionRatio": 0,
+    "candidateLoadElapsedMs": 24,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 0,
+    "totalElapsedMs": 0,
+    "guardedEnabled": false,
+    "guardedApplied": false,
+    "guardedReason": "feature_disabled",
+    "guardedMessageCount": 0,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 0
+  },
+  "guarded": {
+    "enabled": false,
+    "applied": false,
+    "reason": "feature_disabled",
+    "filteredMessageCount": 0,
+    "filteredMessageTokenEstimate": 0,
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 0,
+    "decisionElapsedMs": 0
+  }
+}

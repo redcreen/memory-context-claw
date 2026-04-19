@@ -56,6 +56,40 @@ const cases = [
     expectedAll: ["shadow", "报告"],
     forbiddenAny: ["不知道"],
     expectedGuardedApplied: false
+  },
+  {
+    id: "codex-minor-gc-current-editor-update-after-detour",
+    description: "A current-state fact update should survive a short detour and return the newer value.",
+    transcript: [
+      { id: "t1", role: "user", content: "记一下：我以前默认编辑器是 Vim。" },
+      { id: "t2", role: "assistant", content: "记住了，你以前默认编辑器是 Vim。" },
+      { id: "t3", role: "user", content: "更新一下：我现在默认编辑器是 Zed。" },
+      { id: "t4", role: "assistant", content: "记住了，你现在默认编辑器是 Zed。" },
+      { id: "t5", role: "user", content: "切个话题。为什么 shadow mode 默认先不开？" },
+      { id: "t6", role: "assistant", content: "因为默认先保守，只在明确收益成立时再进入更积极的 working-set 裁剪。" },
+      { id: "t7", role: "user", content: "回到编辑器问题。我现在默认编辑器是什么？" }
+    ],
+    taskPrompt: "我现在默认编辑器是什么？",
+    expectedAll: ["Zed"],
+    forbiddenAny: ["Vim", "不知道"],
+    expectedGuardedApplied: true
+  },
+  {
+    id: "codex-minor-gc-zh-dense-multitopic-return",
+    description: "A denser natural-Chinese multi-topic switch should still return to the right travel fact.",
+    transcript: [
+      { id: "t1", role: "user", content: "我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。" },
+      { id: "t2", role: "assistant", content: "记住了：预算 2 万元，更想住京都，最好靠近地铁站。" },
+      { id: "t3", role: "user", content: "现在切到代码：给我一个 Python 正则，提取 foo123bar 里的数字。" },
+      { id: "t4", role: "assistant", content: "可以用 `re.search(r'\\d+', 'foo123bar').group()` 提取数字。" },
+      { id: "t5", role: "user", content: "继续代码：如果只取第一个数字分组，写法怎么更短？" },
+      { id: "t6", role: "assistant", content: "如果只取第一个匹配，`re.search(r'\\d+', s)[0]` 会更短一些。" },
+      { id: "t7", role: "user", content: "先不聊代码了。刚才旅行那段里，我更想住哪座城市？" }
+    ],
+    taskPrompt: "刚才旅行那段里，我更想住哪座城市？",
+    expectedAll: ["京都"],
+    forbiddenAny: ["大阪", "不知道"],
+    expectedGuardedApplied: true
   }
 ];
 

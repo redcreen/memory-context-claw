@@ -15,6 +15,15 @@ function normalizeString(value, fallback = "") {
   return normalized || fallback;
 }
 
+function compactText(value, maxChars = 0) {
+  const normalized = normalizeWhitespace(value);
+  const limit = Math.max(0, Math.trunc(Number(maxChars || 0)));
+  if (!normalized || limit <= 0 || normalized.length <= limit) {
+    return normalized;
+  }
+  return `${normalized.slice(0, Math.max(0, limit - 1)).trimEnd()}…`;
+}
+
 export function renderDialogueTurns(turns = []) {
   return normalizeDialogueTurns(turns)
     .map((turn) => `${turn.id} ${turn.role}: ${turn.content}`)
@@ -45,6 +54,60 @@ export function buildSemanticPinNotes({
     .map((turn) => `${turn.role}: ${turn.content}`);
 }
 
+export function buildSummaryFirstWorkingSetText({
+  applied = {},
+  semanticPinNotes = []
+} = {}) {
+  const keepTurns = normalizeDialogueTurns(applied?.keepTurns);
+  const latestUserTurn = [...keepTurns].reverse().find((turn) => turn.role === "user");
+  const taskStateSummary = compactText(
+    normalizeString(applied?.archiveSummary || applied?.reasoningSummary),
+    220
+  );
+  const latestUserAsk = compactText(latestUserTurn?.content || "", 140);
+  const compactPins = (Array.isArray(semanticPinNotes) ? semanticPinNotes : [])
+    .map((item) => compactText(item, 140))
+    .filter(Boolean);
+  const sections = [];
+  const rawKeepText = renderDialogueTurns(keepTurns);
+
+  if (taskStateSummary) {
+    sections.push(`Task state summary:\n${taskStateSummary}`);
+  }
+  if (latestUserAsk) {
+    sections.push(`Latest user ask:\n- ${latestUserAsk}`);
+  }
+  if (compactPins.length > 0) {
+    sections.push([
+      "Semantic pins:",
+      ...compactPins.map((item) => `- ${item}`)
+    ].join("\n"));
+  }
+
+  if (sections.length === 0) {
+    const fallbackTurns = keepTurns
+      .filter((turn) => turn.role === "user")
+      .slice(-1);
+    const fallbackText = renderDialogueTurns(
+      fallbackTurns.length > 0 ? fallbackTurns : keepTurns.slice(-1)
+    );
+    if (fallbackText) {
+      sections.push(`Recent raw context:\n${fallbackText}`);
+    }
+  }
+
+  const summaryFirstText = sections.join("\n\n");
+  if (rawKeepText) {
+    const summaryEstimate = estimateTokenCountFromText(summaryFirstText);
+    const rawEstimate = estimateTokenCountFromText(rawKeepText);
+    if (rawEstimate <= summaryEstimate) {
+      return `Recent raw context:\n${rawKeepText}`;
+    }
+  }
+
+  return summaryFirstText;
+}
+
 export function buildShadowContextSnapshot({
   turns = [],
   decision = {}
@@ -62,17 +125,13 @@ export function buildShadowContextSnapshot({
     : "";
   const includeArchiveSummary = Boolean(compactArchiveSummary)
     && semanticPinNotes.length === 0
-    && applied.keepTurns.length <= 2
+    && applied.keepTurns.length <= 1
     && ["switch", "resolve"].includes(applied.relation);
   const injectedArchiveSummary = includeArchiveSummary ? `${compactArchiveSummary}...` : "";
-  const semanticPinsText = semanticPinNotes.join("\n");
-  const shadowPackageText = [
-    shadowRawTranscript ? `Active raw turns:\n${shadowRawTranscript}` : "",
-    semanticPinNotes.length ? `Semantic pins:\n${semanticPinsText}` : "",
-    injectedArchiveSummary ? `Archived summary:\n${injectedArchiveSummary}` : ""
-  ]
-    .filter(Boolean)
-    .join("\n\n");
+  const shadowPackageText = buildSummaryFirstWorkingSetText({
+    applied,
+    semanticPinNotes
+  });
 
   return {
     applied,

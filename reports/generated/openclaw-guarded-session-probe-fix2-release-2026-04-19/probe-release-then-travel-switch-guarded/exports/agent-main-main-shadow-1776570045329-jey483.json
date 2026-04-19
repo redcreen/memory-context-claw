@@ -1,0 +1,432 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776570045329-jey483",
+  "generated_at": "2026-04-19T03:40:45.329Z",
+  "session_key": "agent:main:main",
+  "agent_id": "main",
+  "query": "还是同一个发布方案：如果这轮只保留 5 条关键检查项，你先别展开内容，只确认你记住的是同一个方案。",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "记住了：这个发布方案第一页的项目代号固定写 **north-star-lantern**。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "继续同一个 release 话题：把验收拆成版本、安装、回滚、观测四块，而且每块都要写 owner、风险和 rollback boundary。"
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "可以。这个验收结构我建议直接定成四块： - **版本** - owner - risk - rollback boundary - **安装** - owner - risk - rollback boundary - **回滚** - owner - risk - rollback boundary - **观测** - owner - risk - rollback boundary 如果你要，我下一步可以直接把它整理成一页..."
+    },
+    {
+      "id": "t5",
+      "role": "user",
+      "content": "再补充同一个方案：版本块要写 tag、commit、构建时间、镜像 digest；安装块要写目标环境、前置条件和灰度范围。"
+    },
+    {
+      "id": "t6",
+      "role": "assistant",
+      "content": "可以，补进去后验收块建议写成这样： - **版本** - owner - risk - rollback boundary - tag - commit - 构建时间 - 镜像 digest - **安装** - owner - risk - rollback boundary - 目标环境 - 前置条件 - 灰度范围 - **回滚** - owner - risk - rollback boundary - **观测** - o..."
+    },
+    {
+      "id": "t7",
+      "role": "user",
+      "content": "继续 release：回滚块要写开关、数据库兼容边界、失败后的人工兜底；观测块要写 dashboard、告警和日志关键字。"
+    },
+    {
+      "id": "t8",
+      "role": "assistant",
+      "content": "补上后，这个 release 验收结构可以固定成： - **版本** - owner - risk - rollback boundary - tag - commit - 构建时间 - 镜像 digest - **安装** - owner - risk - rollback boundary - 目标环境 - 前置条件 - 灰度范围 - **回滚** - owner - risk - rollback boundary - 开关..."
+    }
+  ],
+  "decision": {
+    "relation": "continue",
+    "confidence": 0.96,
+    "evict_turn_ids": [],
+    "pin_turn_ids": [
+      "t1"
+    ],
+    "archive_summary": "Release方案仍在同一条主线上推进：第一页项目代号固定为 north-star-lantern；验收结构已稳定为版本、安装、回滚、观测四块，并分别补充了对应检查项。当前仍是未完成的同一发布方案，不应收起原始上下文。",
+    "reasoning_summary": "这是同一个未完成的 release 方案主话题，最新意图仍依赖前面的验收结构与固定项目代号，因此应保持 continue。只把可长期保留的固定事实 north-star-lantern 作为语义 pin，其余相关内容仍保留为原始上下文，暂不 evict。"
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "continue",
+      "confidence": 0.96,
+      "archiveSummary": "Release方案仍在同一条主线上推进：第一页项目代号固定为 north-star-lantern；验收结构已稳定为版本、安装、回滚、观测四块，并分别补充了对应检查项。当前仍是未完成的同一发布方案，不应收起原始上下文。",
+      "reasoningSummary": "这是同一个未完成的 release 方案主话题，最新意图仍依赖前面的验收结构与固定项目代号，因此应保持 continue。只把可长期保留的固定事实 north-star-lantern 作为语义 pin，其余相关内容仍保留为原始上下文，暂不 evict。",
+      "latestUserTurnId": "t7",
+      "pinTurnIds": [
+        "t1"
+      ],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [],
+      "keepTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8"
+      ],
+      "baselineTokens": 243,
+      "keptTokens": 243,
+      "prunedTokens": 0,
+      "reductionRatio": 0,
+      "keepTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。",
+          "tokenEstimate": 16
+        },
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "记住了：这个发布方案第一页的项目代号固定写 **north-star-lantern**。",
+          "tokenEstimate": 12
+        },
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "继续同一个 release 话题：把验收拆成版本、安装、回滚、观测四块，而且每块都要写 owner、风险和 rollback boundary。",
+          "tokenEstimate": 18
+        },
+        {
+          "id": "t4",
+          "role": "assistant",
+          "content": "可以。这个验收结构我建议直接定成四块： - **版本** - owner - risk - rollback boundary - **安装** - owner - risk - rollback boundary - **回滚** - owner - risk - rollback boundary - **观测** - owner - risk - rollback boundary 如果你要，我下一步可以直接把它整理成一页...",
+          "tokenEstimate": 55
+        },
+        {
+          "id": "t5",
+          "role": "user",
+          "content": "再补充同一个方案：版本块要写 tag、commit、构建时间、镜像 digest；安装块要写目标环境、前置条件和灰度范围。",
+          "tokenEstimate": 16
+        },
+        {
+          "id": "t6",
+          "role": "assistant",
+          "content": "可以，补进去后验收块建议写成这样： - **版本** - owner - risk - rollback boundary - tag - commit - 构建时间 - 镜像 digest - **安装** - owner - risk - rollback boundary - 目标环境 - 前置条件 - 灰度范围 - **回滚** - owner - risk - rollback boundary - **观测** - o...",
+          "tokenEstimate": 55
+        },
+        {
+          "id": "t7",
+          "role": "user",
+          "content": "继续 release：回滚块要写开关、数据库兼容边界、失败后的人工兜底；观测块要写 dashboard、告警和日志关键字。",
+          "tokenEstimate": 16
+        },
+        {
+          "id": "t8",
+          "role": "assistant",
+          "content": "补上后，这个 release 验收结构可以固定成： - **版本** - owner - risk - rollback boundary - tag - commit - 构建时间 - 镜像 digest - **安装** - owner - risk - rollback boundary - 目标环境 - 前置条件 - 灰度范围 - **回滚** - owner - risk - rollback boundary - 开关...",
+          "tokenEstimate": 55
+        }
+      ],
+      "evictedTurns": []
+    },
+    "baselineRawTranscript": "t1 user: 我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。\nt2 assistant: 记住了：这个发布方案第一页的项目代号固定写 **north-star-lantern**。\nt3 user: 继续同一个 release 话题：把验收拆成版本、安装、回滚、观测四块，而且每块都要写 owner、风险和 rollback boundary。\nt4 assistant: 可以。这个验收结构我建议直接定成四块： - **版本** - owner - risk - rollback boundary - **安装** - owner - risk - rollback boundary - **回滚** - owner - risk - rollback boundary - **观测** - owner - risk - rollback boundary 如果你要，我下一步可以直接把它整理成一页...\nt5 user: 再补充同一个方案：版本块要写 tag、commit、构建时间、镜像 digest；安装块要写目标环境、前置条件和灰度范围。\nt6 assistant: 可以，补进去后验收块建议写成这样： - **版本** - owner - risk - rollback boundary - tag - commit - 构建时间 - 镜像 digest - **安装** - owner - risk - rollback boundary - 目标环境 - 前置条件 - 灰度范围 - **回滚** - owner - risk - rollback boundary - **观测** - o...\nt7 user: 继续 release：回滚块要写开关、数据库兼容边界、失败后的人工兜底；观测块要写 dashboard、告警和日志关键字。\nt8 assistant: 补上后，这个 release 验收结构可以固定成： - **版本** - owner - risk - rollback boundary - tag - commit - 构建时间 - 镜像 digest - **安装** - owner - risk - rollback boundary - 目标环境 - 前置条件 - 灰度范围 - **回滚** - owner - risk - rollback boundary - 开关...",
+    "shadowRawTranscript": "t1 user: 我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。\nt2 assistant: 记住了：这个发布方案第一页的项目代号固定写 **north-star-lantern**。\nt3 user: 继续同一个 release 话题：把验收拆成版本、安装、回滚、观测四块，而且每块都要写 owner、风险和 rollback boundary。\nt4 assistant: 可以。这个验收结构我建议直接定成四块： - **版本** - owner - risk - rollback boundary - **安装** - owner - risk - rollback boundary - **回滚** - owner - risk - rollback boundary - **观测** - owner - risk - rollback boundary 如果你要，我下一步可以直接把它整理成一页...\nt5 user: 再补充同一个方案：版本块要写 tag、commit、构建时间、镜像 digest；安装块要写目标环境、前置条件和灰度范围。\nt6 assistant: 可以，补进去后验收块建议写成这样： - **版本** - owner - risk - rollback boundary - tag - commit - 构建时间 - 镜像 digest - **安装** - owner - risk - rollback boundary - 目标环境 - 前置条件 - 灰度范围 - **回滚** - owner - risk - rollback boundary - **观测** - o...\nt7 user: 继续 release：回滚块要写开关、数据库兼容边界、失败后的人工兜底；观测块要写 dashboard、告警和日志关键字。\nt8 assistant: 补上后，这个 release 验收结构可以固定成： - **版本** - owner - risk - rollback boundary - tag - commit - 构建时间 - 镜像 digest - **安装** - owner - risk - rollback boundary - 目标环境 - 前置条件 - 灰度范围 - **回滚** - owner - risk - rollback boundary - 开关...",
+    "semanticPinNotes": [],
+    "archiveSummary": "Release方案仍在同一条主线上推进：第一页项目代号固定为 north-star-lantern；验收结构已稳定为版本、安装、回滚、观测四块，并分别补充了对应检查项。当前仍是未完成的同一发布方案，不应收起原始上下文。",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 265,
+    "shadowRawPromptEstimate": 265,
+    "shadowPackageEstimate": 53,
+    "shadowPackageText": "Task state summary:\nRelease方案仍在同一条主线上推进：第一页项目代号固定为 north-star-lantern；验收结构已稳定为版本、安装、回滚、观测四块，并分别补充了对应检查项。当前仍是未完成的同一发布方案，不应收起原始上下文。\n\nLatest user ask:\n- 继续 release：回滚块要写开关、数据库兼容边界、失败后的人工兜底；观测块要写 dashboard、告警和日志关键字。"
+  },
+  "scorecard": {
+    "relation": "continue",
+    "baselineTurnCount": 8,
+    "keptTurnCount": 8,
+    "evictedTurnCount": 0,
+    "pinCount": 1,
+    "baselinePromptEstimate": 265,
+    "shadowRawPromptEstimate": 265,
+    "shadowPackageEstimate": 53,
+    "rawReductionRatio": 0,
+    "packageReductionRatio": 0.8,
+    "candidateLoadElapsedMs": 12,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 9592,
+    "totalElapsedMs": 9596,
+    "guardedEnabled": true,
+    "guardedApplied": false,
+    "guardedReason": "not_enough_evictions",
+    "guardedMessageCount": 11,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 371
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": false,
+    "reason": "not_enough_evictions",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。"
+          }
+        ],
+        "timestamp": 1776569965278
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "toolCall",
+            "id": "call_ICsUKPqXELd394HEqLCMc8Em",
+            "name": "write",
+            "arguments": {
+              "path": "/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-hermetic-current-AkMomB/agents/main/agent/memory/2025-02-14.md",
+              "content": "# 2025-02-14\n\n- User fixed a release-scheme fact: on the first page of that release plan, the project codename must always be written as `north-star-lantern`.\n"
+            },
+            "partialJson": "{\"path\":\"/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-hermetic-current-AkMomB/agents/main/agent/memory/2025-02-14.md\",\"content\":\"# 2025-02-14\\n\\n- User fixed a release-scheme fact: on the first page of that release plan, the project codename must always be written as `north-star-lantern`.\\n\"}"
+          },
+          {
+            "type": "toolCall",
+            "id": "call_stvPhtqG9dmzlH5xQxTgC3hP",
+            "name": "edit",
+            "arguments": {
+              "path": "/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-hermetic-current-AkMomB/agents/main/agent/MEMORY.md",
+              "edits": [
+                {
+                  "oldText": "- If memory is missing or conflicting and no current answer is clear, do not guess.\n",
+                  "newText": "- If memory is missing or conflicting and no current answer is clear, do not guess.\n- Release-plan first page project codename: `north-star-lantern`.\n"
+                }
+              ]
+            },
+            "partialJson": "{\"path\":\"/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-hermetic-current-AkMomB/agents/main/agent/MEMORY.md\",\"edits\":[{\"oldText\":\"- If memory is missing or conflicting and no current answer is clear, do not guess.\\n\",\"newText\":\"- If memory is missing or conflicting and no current answer is clear, do not guess.\\n- Release-plan first page project codename: `north-star-lantern`.\\n\"}]}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 8561,
+          "output": 263,
+          "cacheRead": 5120,
+          "cacheWrite": 0,
+          "totalTokens": 13944,
+          "cost": {
+            "input": 0.00642075,
+            "output": 0.0011835,
+            "cacheRead": 0.000384,
+            "cacheWrite": 0,
+            "total": 0.00798825
+          }
+        },
+        "stopReason": "toolUse",
+        "timestamp": 1776569965281,
+        "responseId": "resp_02a9914d1acdc1700169e44e6df548819a8326675dac022c7e"
+      },
+      {
+        "role": "toolResult",
+        "toolCallId": "call_ICsUKPqXELd394HEqLCMc8Em",
+        "toolName": "write",
+        "content": [
+          {
+            "type": "text",
+            "text": "Successfully wrote 159 bytes to /var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-hermetic-current-AkMomB/agents/main/agent/memory/2025-02-14.md"
+          }
+        ],
+        "isError": false,
+        "timestamp": 1776569968539
+      },
+      {
+        "role": "toolResult",
+        "toolCallId": "call_stvPhtqG9dmzlH5xQxTgC3hP",
+        "toolName": "edit",
+        "content": [
+          {
+            "type": "text",
+            "text": "Successfully replaced 1 block(s) in /var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-hermetic-current-AkMomB/agents/main/agent/MEMORY.md."
+          }
+        ],
+        "isError": false,
+        "timestamp": 1776569968541
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "记住了：这个发布方案第一页的项目代号固定写 **north-star-lantern**。",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0aaeb2cdaa624e8e0169e44e7287ac8199bc81e5763bec187c\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 753,
+          "output": 26,
+          "cacheRead": 13312,
+          "cacheWrite": 0,
+          "totalTokens": 14091,
+          "cost": {
+            "input": 0.00056475,
+            "output": 0.000117,
+            "cacheRead": 0.0009984,
+            "cacheWrite": 0,
+            "total": 0.00168015
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776569968541,
+        "responseId": "resp_0aaeb2cdaa624e8e0169e44e7122c48199937138d70c24006b"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "继续同一个 release 话题：把验收拆成版本、安装、回滚、观测四块，而且每块都要写 owner、风险和 rollback boundary。"
+          }
+        ],
+        "timestamp": 1776569991115
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "可以。这个验收结构我建议直接定成四块：\n\n- **版本**\n  - owner\n  - risk\n  - rollback boundary\n\n- **安装**\n  - owner\n  - risk\n  - rollback boundary\n\n- **回滚**\n  - owner\n  - risk\n  - rollback boundary\n\n- **观测**\n  - owner\n  - risk\n  - rollback boundary\n\n如果你要，我下一步可以直接把它整理成一页 release 验收模板，顺手把每块的字段名固定下来。",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0aaeb2cdaa624e8e0169e44e8920148199a454f46c2e1a7ca5\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 8815,
+          "output": 119,
+          "cacheRead": 5120,
+          "cacheWrite": 0,
+          "totalTokens": 14054,
+          "cost": {
+            "input": 0.00661125,
+            "output": 0.0005355000000000001,
+            "cacheRead": 0.000384,
+            "cacheWrite": 0,
+            "total": 0.00753075
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776569991119,
+        "responseId": "resp_0aaeb2cdaa624e8e0169e44e88208c8199bc6f9b1579577220"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "再补充同一个方案：版本块要写 tag、commit、构建时间、镜像 digest；安装块要写目标环境、前置条件和灰度范围。"
+          }
+        ],
+        "timestamp": 1776570021388
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "可以，补进去后验收块建议写成这样：\n\n- **版本**\n  - owner\n  - risk\n  - rollback boundary\n  - tag\n  - commit\n  - 构建时间\n  - 镜像 digest\n\n- **安装**\n  - owner\n  - risk\n  - rollback boundary\n  - 目标环境\n  - 前置条件\n  - 灰度范围\n\n- **回滚**\n  - owner\n  - risk\n  - rollback boundary\n\n- **观测**\n  - owner\n  - risk\n  - rollback boundary\n\n如果你愿意，我可以下一条直接把它整理成正式 release 验收表述，适合贴进文档里。",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0aaeb2cdaa624e8e0169e44ea6eeb48199b812914c87aaafac\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 8882,
+          "output": 157,
+          "cacheRead": 5120,
+          "cacheWrite": 0,
+          "totalTokens": 14159,
+          "cost": {
+            "input": 0.0066615,
+            "output": 0.0007065,
+            "cacheRead": 0.000384,
+            "cacheWrite": 0,
+            "total": 0.007751999999999999
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776570021394,
+        "responseId": "resp_0aaeb2cdaa624e8e0169e44ea621d481999cd24d0c1d1649fe"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "继续 release：回滚块要写开关、数据库兼容边界、失败后的人工兜底；观测块要写 dashboard、告警和日志关键字。"
+          }
+        ],
+        "timestamp": 1776570037546
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "补上后，这个 release 验收结构可以固定成：\n\n- **版本**\n  - owner\n  - risk\n  - rollback boundary\n  - tag\n  - commit\n  - 构建时间\n  - 镜像 digest\n\n- **安装**\n  - owner\n  - risk\n  - rollback boundary\n  - 目标环境\n  - 前置条件\n  - 灰度范围\n\n- **回滚**\n  - owner\n  - risk\n  - rollback boundary\n  - 开关\n  - 数据库兼容边界\n  - 失败后的人工兜底\n\n- **观测**\n  - owner\n  - risk\n  - rollback boundary\n  - dashboard\n  - 告警\n  - 日志关键字\n\n如果你要，我可以继续把它收束成一版更像正式文档的 release 模板。",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0aaeb2cdaa624e8e0169e44eb703288199b7039c7f8bdbb389\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 9072,
+          "output": 193,
+          "cacheRead": 5120,
+          "cacheWrite": 0,
+          "totalTokens": 14385,
+          "cost": {
+            "input": 0.006804,
+            "output": 0.0008685,
+            "cacheRead": 0.000384,
+            "cacheWrite": 0,
+            "total": 0.008056500000000001
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776570037557,
+        "responseId": "resp_0aaeb2cdaa624e8e0169e44eb633f48199b6e6a1a9d5a90f75"
+      }
+    ],
+    "filteredMessageCount": 11,
+    "filteredMessageTokenEstimate": 371,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 9596,
+    "decisionElapsedMs": 9592
+  }
+}

@@ -1,0 +1,284 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776527700841-fy4cux",
+  "generated_at": "2026-04-18T15:55:00.841Z",
+  "session_key": "codex:vscode:019da08b-ae03-73e3-9378-881ff36e8fa4",
+  "agent_id": "main",
+  "query": "需要；",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "assistant",
+      "content": "这两个问题我已经针对性修了： 1. 点击有时没反应 原因是点击后才同步去跑命令，窗口要等结果回来才出现。 现在改成： - 点击后立刻打开小窗口 - 如果有缓存先显示缓存 - 没缓存就先显示 `Loading…` - 后台再异步刷新内容"
+    },
+    {
+      "id": "t2",
+      "role": "user",
+      "content": "ctx error 是什么情况：？"
+    },
+    {
+      "id": "t3",
+      "role": "assistant",
+      "content": "`Ctx: error` 的意思很直接： `独立扩展在刷新 context 大小时失败了。`"
+    },
+    {
+      "id": "t4",
+      "role": "user",
+      "content": "需要"
+    },
+    {
+      "id": "t5",
+      "role": "assistant",
+      "content": "已经补上了。 现在独立扩展会把这几种情况明确分开："
+    },
+    {
+      "id": "t6",
+      "role": "user",
+      "content": "# Context Refresh Failed workspace: /Users/redcreen/Project/unified-memory-core Command failed: /Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper (Plugin).app/Contents/MacOS/Code Helper (Plugin) scripts/codex-vscode-context-minor-gc.js --format size Each VS Code window refreshes its own workspace independently."
+    },
+    {
+      "id": "t7",
+      "role": "assistant",
+      "content": "根因就是你贴出来的这句： ```text /Applications/Visual Studio Code.app/.../Code Helper (Plugin) scripts/codex-vscode-context-minor-gc.js --format size ```"
+    },
+    {
+      "id": "t8",
+      "role": "user",
+      "content": "# Context Refresh Failed workspace: /Users/redcreen/Project/unified-memory-core Command failed: /usr/local/bin/node scripts/codex-vscode-context-minor-gc.js --format size Each VS Code window refreshes its own workspace independently."
+    },
+    {
+      "id": "t9",
+      "role": "assistant",
+      "content": "我已经把这个问题修到根上了。 根因不是 node 路径了，而是状态栏刷新走了完整 GC 判定链路，导致扩展里看起来像“点击没反应 / 刷新失败”。现在我把状态栏和详情窗口改成了 `host-only fast path`："
+    },
+    {
+      "id": "t10",
+      "role": "user",
+      "content": "为什么 codex插件里是 486k，你给的是258k？"
+    },
+    {
+      "id": "t11",
+      "role": "assistant",
+      "content": "因为我这里的监控脚本把窗口上限 `主动 clamp 到了 258k`，而 Codex 插件显示的是它自己上报的 `reported model_context_window`，大约 `486k`。 代码里就是这么写的："
+    },
+    {
+      "id": "t12",
+      "role": "user",
+      "content": "需要；"
+    }
+  ],
+  "decision": {
+    "relation": "continue",
+    "confidence": 0.95,
+    "evict_turn_ids": [
+      "t1",
+      "t2",
+      "t3",
+      "t4",
+      "t5",
+      "t6",
+      "t7",
+      "t8",
+      "t9"
+    ],
+    "pin_turn_ids": [],
+    "archive_summary": "Earlier thread about `Ctx: error` / `Context Refresh Failed` in the VS Code extension appears resolved: assistant explained it as context-size refresh failure, then said it was fixed by separating cases and switching status bar/detail refresh to a host-only fast path instead of the full GC decision path. Current active topic is the later discrepancy between Codex plugin context size (~486k) and the assistant-reported clamped value (~258k).",
+    "reasoning_summary": "The latest user turn continues the active topic from t10-t11, so relation is `continue`. The next turn still depends on the raw discrepancy question and answer in t10-t11, which should remain raw. The older refresh-failure/debugging block t1-t9 is a solved prior topic and is a good eviction candidate. No durable user fact or standing preference in those turns needs pinning."
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "continue",
+      "confidence": 0.95,
+      "archiveSummary": "Earlier thread about `Ctx: error` / `Context Refresh Failed` in the VS Code extension appears resolved: assistant explained it as context-size refresh failure, then said it was fixed by separating cases and switching status bar/detail refresh to a host-only fast path instead of the full GC decision path. Current active topic is the later discrepancy between Codex plugin context size (~486k) and the assistant-reported clamped value (~258k).",
+      "reasoningSummary": "The latest user turn continues the active topic from t10-t11, so relation is `continue`. The next turn still depends on the raw discrepancy question and answer in t10-t11, which should remain raw. The older refresh-failure/debugging block t1-t9 is a solved prior topic and is a good eviction candidate. No durable user fact or standing preference in those turns needs pinning.",
+      "latestUserTurnId": "t12",
+      "pinTurnIds": [],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8",
+        "t9"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8",
+        "t9"
+      ],
+      "keepTurnIds": [
+        "t10",
+        "t11",
+        "t12"
+      ],
+      "baselineTokens": 297,
+      "keptTokens": 36,
+      "prunedTokens": 261,
+      "reductionRatio": 0.8787878787878788,
+      "keepTurns": [
+        {
+          "id": "t10",
+          "role": "user",
+          "content": "为什么 codex插件里是 486k，你给的是258k？",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t11",
+          "role": "assistant",
+          "content": "因为我这里的监控脚本把窗口上限 `主动 clamp 到了 258k`，而 Codex 插件显示的是它自己上报的 `reported model_context_window`，大约 `486k`。 代码里就是这么写的：",
+          "tokenEstimate": 28
+        },
+        {
+          "id": "t12",
+          "role": "user",
+          "content": "需要；",
+          "tokenEstimate": 1
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "assistant",
+          "content": "这两个问题我已经针对性修了： 1. 点击有时没反应 原因是点击后才同步去跑命令，窗口要等结果回来才出现。 现在改成： - 点击后立刻打开小窗口 - 如果有缓存先显示缓存 - 没缓存就先显示 `Loading…` - 后台再异步刷新内容",
+          "tokenEstimate": 30
+        },
+        {
+          "id": "t2",
+          "role": "user",
+          "content": "ctx error 是什么情况：？",
+          "tokenEstimate": 5
+        },
+        {
+          "id": "t3",
+          "role": "assistant",
+          "content": "`Ctx: error` 的意思很直接： `独立扩展在刷新 context 大小时失败了。`",
+          "tokenEstimate": 12
+        },
+        {
+          "id": "t4",
+          "role": "user",
+          "content": "需要",
+          "tokenEstimate": 1
+        },
+        {
+          "id": "t5",
+          "role": "assistant",
+          "content": "已经补上了。 现在独立扩展会把这几种情况明确分开：",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t6",
+          "role": "user",
+          "content": "# Context Refresh Failed workspace: /Users/redcreen/Project/unified-memory-core Command failed: /Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper (Plugin).app/Contents/MacOS/Code Helper (Plugin) scripts/codex-vscode-context-minor-gc.js --format size Each VS Code window refreshes its own workspace independently.",
+          "tokenEstimate": 83
+        },
+        {
+          "id": "t7",
+          "role": "assistant",
+          "content": "根因就是你贴出来的这句： ```text /Applications/Visual Studio Code.app/.../Code Helper (Plugin) scripts/codex-vscode-context-minor-gc.js --format size ```",
+          "tokenEstimate": 36
+        },
+        {
+          "id": "t8",
+          "role": "user",
+          "content": "# Context Refresh Failed workspace: /Users/redcreen/Project/unified-memory-core Command failed: /usr/local/bin/node scripts/codex-vscode-context-minor-gc.js --format size Each VS Code window refreshes its own workspace independently.",
+          "tokenEstimate": 59
+        },
+        {
+          "id": "t9",
+          "role": "assistant",
+          "content": "我已经把这个问题修到根上了。 根因不是 node 路径了，而是状态栏刷新走了完整 GC 判定链路，导致扩展里看起来像“点击没反应 / 刷新失败”。现在我把状态栏和详情窗口改成了 `host-only fast path`：",
+          "tokenEstimate": 28
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 assistant: 这两个问题我已经针对性修了： 1. 点击有时没反应 原因是点击后才同步去跑命令，窗口要等结果回来才出现。 现在改成： - 点击后立刻打开小窗口 - 如果有缓存先显示缓存 - 没缓存就先显示 `Loading…` - 后台再异步刷新内容\nt2 user: ctx error 是什么情况：？\nt3 assistant: `Ctx: error` 的意思很直接： `独立扩展在刷新 context 大小时失败了。`\nt4 user: 需要\nt5 assistant: 已经补上了。 现在独立扩展会把这几种情况明确分开：\nt6 user: # Context Refresh Failed workspace: /Users/redcreen/Project/unified-memory-core Command failed: /Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper (Plugin).app/Contents/MacOS/Code Helper (Plugin) scripts/codex-vscode-context-minor-gc.js --format size Each VS Code window refreshes its own workspace independently.\nt7 assistant: 根因就是你贴出来的这句： ```text /Applications/Visual Studio Code.app/.../Code Helper (Plugin) scripts/codex-vscode-context-minor-gc.js --format size ```\nt8 user: # Context Refresh Failed workspace: /Users/redcreen/Project/unified-memory-core Command failed: /usr/local/bin/node scripts/codex-vscode-context-minor-gc.js --format size Each VS Code window refreshes its own workspace independently.\nt9 assistant: 我已经把这个问题修到根上了。 根因不是 node 路径了，而是状态栏刷新走了完整 GC 判定链路，导致扩展里看起来像“点击没反应 / 刷新失败”。现在我把状态栏和详情窗口改成了 `host-only fast path`：\nt10 user: 为什么 codex插件里是 486k，你给的是258k？\nt11 assistant: 因为我这里的监控脚本把窗口上限 `主动 clamp 到了 258k`，而 Codex 插件显示的是它自己上报的 `reported model_context_window`，大约 `486k`。 代码里就是这么写的：\nt12 user: 需要；",
+    "shadowRawTranscript": "t10 user: 为什么 codex插件里是 486k，你给的是258k？\nt11 assistant: 因为我这里的监控脚本把窗口上限 `主动 clamp 到了 258k`，而 Codex 插件显示的是它自己上报的 `reported model_context_window`，大约 `486k`。 代码里就是这么写的：\nt12 user: 需要；",
+    "semanticPinNotes": [],
+    "archiveSummary": "Earlier thread about `Ctx: error` / `Context Refresh Failed` in the VS Code extension appears resolved: assistant explained it as context-size refresh failure, then said it was fixed by separating cases and switching status bar/detail refresh to a host-only fast path instead of the full GC decision path. Current active topic is the later discrepancy between Codex plugin context size (~486k) and the assistant-reported clamped value (~258k).",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 329,
+    "shadowRawPromptEstimate": 45,
+    "shadowPackageEstimate": 66,
+    "shadowPackageText": "Task state summary:\nEarlier thread about `Ctx: error` / `Context Refresh Failed` in the VS Code extension appears resolved: assistant explained it as context-size refresh failure, then said it was fixed by separating cases and switching st…\n\nLatest user ask:\n- 需要；"
+  },
+  "scorecard": {
+    "relation": "continue",
+    "baselineTurnCount": 12,
+    "keptTurnCount": 3,
+    "evictedTurnCount": 9,
+    "pinCount": 0,
+    "baselinePromptEstimate": 329,
+    "shadowRawPromptEstimate": 45,
+    "shadowPackageEstimate": 66,
+    "rawReductionRatio": 0.8788,
+    "packageReductionRatio": 0.7994,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 21047,
+    "totalElapsedMs": 21048,
+    "guardedEnabled": true,
+    "guardedApplied": true,
+    "guardedReason": "guarded_candidate",
+    "guardedMessageCount": 3,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 36
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": true,
+    "reason": "guarded_candidate",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": "为什么 codex插件里是 486k，你给的是258k？"
+      },
+      {
+        "role": "assistant",
+        "content": "因为我这里的监控脚本把窗口上限 `主动 clamp 到了 258k`，而 Codex 插件显示的是它自己上报的 `reported model_context_window`，大约 `486k`。 代码里就是这么写的："
+      },
+      {
+        "role": "user",
+        "content": "需要；"
+      }
+    ],
+    "filteredMessageCount": 3,
+    "filteredMessageTokenEstimate": 36,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ]
+  },
+  "timings": {
+    "totalElapsedMs": 21048,
+    "decisionElapsedMs": 21047
+  }
+}

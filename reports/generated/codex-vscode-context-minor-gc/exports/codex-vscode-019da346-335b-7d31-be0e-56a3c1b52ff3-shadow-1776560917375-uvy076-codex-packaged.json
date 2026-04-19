@@ -1,0 +1,263 @@
+{
+  "schema_version": "umc.codex-context-minor-gc.v1",
+  "generated_at": "2026-04-19T01:08:50.434Z",
+  "event_id": "shadow-1776560917375-uvy076-codex-packaged",
+  "session_key": "codex:vscode:019da346-335b-7d31-be0e-56a3c1b52ff3",
+  "query": "回到编辑器问题。我现在默认编辑器是什么？",
+  "status": "captured",
+  "reason": "",
+  "decision_transport": "codex_exec",
+  "relation": "resolve",
+  "applied": true,
+  "codex_guard_reason": "codex_packaged_guard",
+  "prompt_reduction_ratio": 0.7586,
+  "baseline_context_estimate": 87,
+  "packaged_context_estimate": 21,
+  "effective_context_estimate": 21,
+  "shadow_status": "captured",
+  "shadow_guarded_applied": true,
+  "shadow_guarded_reason": "guarded_candidate",
+  "shadow_export_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da346-335b-7d31-be0e-56a3c1b52ff3-shadow-1776560917375-uvy076.json",
+  "shadow_summary_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl",
+  "export_path": "exports/codex-vscode-019da346-335b-7d31-be0e-56a3c1b52ff3-shadow-1776560917375-uvy076-codex-packaged.json",
+  "effective_context_block": "## Context Minor GC Working Set\nRecent raw context:\nt7 user: 回到编辑器问题。我现在默认编辑器是什么？",
+  "packaged_context_block": "## Context Minor GC Working Set\nRecent raw context:\nt7 user: 回到编辑器问题。我现在默认编辑器是什么？",
+  "shadow_event": {
+    "schema_version": "umc.dialogue-working-set-shadow.v1",
+    "event_id": "shadow-1776560917375-uvy076",
+    "generated_at": "2026-04-19T01:08:37.375Z",
+    "session_key": "codex:vscode:019da346-335b-7d31-be0e-56a3c1b52ff3",
+    "agent_id": "main",
+    "query": "回到编辑器问题。我现在默认编辑器是什么？",
+    "status": "captured",
+    "reason": "",
+    "sampling": {
+      "max_turns": 12,
+      "min_turns": 3,
+      "max_chars_per_turn": 900
+    },
+    "transcript": [
+      {
+        "id": "t1",
+        "role": "user",
+        "content": "我以前默认编辑器是 Vim。"
+      },
+      {
+        "id": "t2",
+        "role": "assistant",
+        "content": "记住了。后续如果涉及编辑器习惯，我会默认按你偏向 `Vim`/Vim 风格来处理。"
+      },
+      {
+        "id": "t3",
+        "role": "user",
+        "content": "更新一下：我现在默认编辑器是 Zed。"
+      },
+      {
+        "id": "t4",
+        "role": "assistant",
+        "content": "已更新。后续我会默认按 `Zed` 作为你的编辑器习惯来理解。"
+      },
+      {
+        "id": "t5",
+        "role": "user",
+        "content": "切个话题。为什么 shadow mode 默认先不开？"
+      },
+      {
+        "id": "t6",
+        "role": "assistant",
+        "content": "因为这个仓库里 `shadow mode` 被定义成“测量面”，不是默认用户路径。 核心原因有四个："
+      },
+      {
+        "id": "t7",
+        "role": "user",
+        "content": "回到编辑器问题。我现在默认编辑器是什么？"
+      },
+      {
+        "id": "t8",
+        "role": "assistant",
+        "content": "你现在默认编辑器是 `Zed`。"
+      }
+    ],
+    "decision": {
+      "relation": "resolve",
+      "confidence": 0.95,
+      "evict_turn_ids": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t8"
+      ],
+      "pin_turn_ids": [
+        "t3",
+        "t4"
+      ],
+      "archive_summary": "Durable preference: the user updated their default editor from Vim to Zed; current default editor should be treated as Zed. Older Vim preference is superseded. A separate shadow mode question was asked and answered and is not relevant to the active editor fact.",
+      "reasoning_summary": "The editor question is resolved, and the only durable context worth carrying forward is the user preference that their default editor is now Zed. The earlier Vim turns are obsolete, and the shadow mode detour is a solved side topic. Using resolve keeps the next-turn working set minimal: retain the latest user turn automatically, preserve the editor preference as a compact pin, and evict the solved raw turns."
+    },
+    "decision_transport": "codex_exec",
+    "snapshot": {
+      "applied": {
+        "relation": "resolve",
+        "confidence": 0.95,
+        "archiveSummary": "Durable preference: the user updated their default editor from Vim to Zed; current default editor should be treated as Zed. Older Vim preference is superseded. A separate shadow mode question was asked and answered and is not relevant to the active editor fact.",
+        "reasoningSummary": "The editor question is resolved, and the only durable context worth carrying forward is the user preference that their default editor is now Zed. The earlier Vim turns are obsolete, and the shadow mode detour is a solved side topic. Using resolve keeps the next-turn working set minimal: retain the latest user turn automatically, preserve the editor preference as a compact pin, and evict the solved raw turns.",
+        "latestUserTurnId": "t7",
+        "pinTurnIds": [
+          "t3",
+          "t4"
+        ],
+        "pinnedOnlyTurnIds": [
+          "t3",
+          "t4"
+        ],
+        "requestedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3",
+          "t4",
+          "t5",
+          "t6",
+          "t8"
+        ],
+        "blockedEvictTurnIds": [],
+        "appliedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3",
+          "t4",
+          "t5",
+          "t6",
+          "t8"
+        ],
+        "keepTurnIds": [
+          "t7"
+        ],
+        "baselineTokens": 57,
+        "keptTokens": 5,
+        "prunedTokens": 52,
+        "reductionRatio": 0.9122807017543859,
+        "keepTurns": [
+          {
+            "id": "t7",
+            "role": "user",
+            "content": "回到编辑器问题。我现在默认编辑器是什么？",
+            "tokenEstimate": 5
+          }
+        ],
+        "evictedTurns": [
+          {
+            "id": "t1",
+            "role": "user",
+            "content": "我以前默认编辑器是 Vim。",
+            "tokenEstimate": 4
+          },
+          {
+            "id": "t2",
+            "role": "assistant",
+            "content": "记住了。后续如果涉及编辑器习惯，我会默认按你偏向 `Vim`/Vim 风格来处理。",
+            "tokenEstimate": 11
+          },
+          {
+            "id": "t3",
+            "role": "user",
+            "content": "更新一下：我现在默认编辑器是 Zed。",
+            "tokenEstimate": 5
+          },
+          {
+            "id": "t4",
+            "role": "assistant",
+            "content": "已更新。后续我会默认按 `Zed` 作为你的编辑器习惯来理解。",
+            "tokenEstimate": 8
+          },
+          {
+            "id": "t5",
+            "role": "user",
+            "content": "切个话题。为什么 shadow mode 默认先不开？",
+            "tokenEstimate": 7
+          },
+          {
+            "id": "t6",
+            "role": "assistant",
+            "content": "因为这个仓库里 `shadow mode` 被定义成“测量面”，不是默认用户路径。 核心原因有四个：",
+            "tokenEstimate": 13
+          },
+          {
+            "id": "t8",
+            "role": "assistant",
+            "content": "你现在默认编辑器是 `Zed`。",
+            "tokenEstimate": 4
+          }
+        ]
+      },
+      "baselineRawTranscript": "t1 user: 我以前默认编辑器是 Vim。\nt2 assistant: 记住了。后续如果涉及编辑器习惯，我会默认按你偏向 `Vim`/Vim 风格来处理。\nt3 user: 更新一下：我现在默认编辑器是 Zed。\nt4 assistant: 已更新。后续我会默认按 `Zed` 作为你的编辑器习惯来理解。\nt5 user: 切个话题。为什么 shadow mode 默认先不开？\nt6 assistant: 因为这个仓库里 `shadow mode` 被定义成“测量面”，不是默认用户路径。 核心原因有四个：\nt7 user: 回到编辑器问题。我现在默认编辑器是什么？\nt8 assistant: 你现在默认编辑器是 `Zed`。",
+      "shadowRawTranscript": "t7 user: 回到编辑器问题。我现在默认编辑器是什么？",
+      "semanticPinNotes": [
+        "user: 更新一下：我现在默认编辑器是 Zed。",
+        "assistant: 已更新。后续我会默认按 `Zed` 作为你的编辑器习惯来理解。"
+      ],
+      "archiveSummary": "Durable preference: the user updated their default editor from Vim to Zed; current default editor should be treated as Zed. Older Vim preference is superseded. A separate shadow mode question was asked and answered and is not relevant to the active editor fact.",
+      "injectedArchiveSummary": "",
+      "baselinePromptEstimate": 80,
+      "shadowRawPromptEstimate": 8,
+      "shadowPackageEstimate": 13,
+      "shadowPackageText": "Recent raw context:\nt7 user: 回到编辑器问题。我现在默认编辑器是什么？"
+    },
+    "scorecard": {
+      "relation": "resolve",
+      "baselineTurnCount": 8,
+      "keptTurnCount": 1,
+      "evictedTurnCount": 7,
+      "pinCount": 2,
+      "baselinePromptEstimate": 80,
+      "shadowRawPromptEstimate": 8,
+      "shadowPackageEstimate": 13,
+      "rawReductionRatio": 0.9123,
+      "packageReductionRatio": 0.8375,
+      "candidateLoadElapsedMs": 0,
+      "assemblyBuildElapsedMs": 0,
+      "decisionElapsedMs": 13054,
+      "totalElapsedMs": 13057,
+      "guardedEnabled": true,
+      "guardedApplied": true,
+      "guardedReason": "guarded_candidate",
+      "guardedMessageCount": 1,
+      "guardedCarryForwardEstimate": 27,
+      "guardedFilteredMessageEstimate": 5
+    },
+    "guarded": {
+      "enabled": true,
+      "applied": true,
+      "reason": "guarded_candidate",
+      "filteredMessages": [
+        {
+          "role": "user",
+          "content": "回到编辑器问题。我现在默认编辑器是什么？"
+        }
+      ],
+      "filteredMessageCount": 1,
+      "filteredMessageTokenEstimate": 5,
+      "carryForwardText": "Conversation carry-forward pins:\n- user: 更新一下：我现在默认编辑器是 Zed。\n- assistant: 已更新。后续我会默认按 `Zed` 作为你的编辑器习惯来理解。",
+      "carryForwardEstimate": 27,
+      "evictedSourceIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        7
+      ]
+    },
+    "timings": {
+      "totalElapsedMs": 13057,
+      "decisionElapsedMs": 13054
+    },
+    "artifact_paths": {
+      "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da346-335b-7d31-be0e-56a3c1b52ff3-shadow-1776560917375-uvy076.json",
+      "summary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl"
+    }
+  }
+}

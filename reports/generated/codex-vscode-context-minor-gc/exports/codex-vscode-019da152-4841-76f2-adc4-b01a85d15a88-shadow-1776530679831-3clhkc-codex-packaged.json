@@ -1,0 +1,319 @@
+{
+  "schema_version": "umc.codex-context-minor-gc.v1",
+  "generated_at": "2026-04-18T16:45:01.296Z",
+  "event_id": "shadow-1776530679831-3clhkc-codex-packaged",
+  "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+  "query": "[GC-D2] 记一下：我以前默认编辑器是 Vim。",
+  "status": "captured",
+  "reason": "",
+  "decision_transport": "codex_exec",
+  "relation": "continue",
+  "applied": true,
+  "codex_guard_reason": "codex_packaged_guard",
+  "prompt_reduction_ratio": 0.602,
+  "baseline_context_estimate": 201,
+  "packaged_context_estimate": 80,
+  "effective_context_estimate": 80,
+  "shadow_status": "captured",
+  "shadow_guarded_applied": true,
+  "shadow_guarded_reason": "guarded_candidate",
+  "shadow_export_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da152-4841-76f2-adc4-b01a85d15a88-shadow-1776530679831-3clhkc.json",
+  "shadow_summary_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl",
+  "export_path": "exports/codex-vscode-019da152-4841-76f2-adc4-b01a85d15a88-shadow-1776530679831-3clhkc-codex-packaged.json",
+  "effective_context_block": "## Context Minor GC Working Set\nTask state summary:\nEarlier block covered diagnosing and fixing GC decision-runner issues, including converting decision timeouts into explicit errors instead of fake continue results, then setting up a clean rerun for Case D using the GC-…\n\nLatest user ask:\n- [GC-D2] 记一下：我以前默认编辑器是 Vim。",
+  "packaged_context_block": "## Context Minor GC Working Set\nTask state summary:\nEarlier block covered diagnosing and fixing GC decision-runner issues, including converting decision timeouts into explicit errors instead of fake continue results, then setting up a clean rerun for Case D using the GC-…\n\nLatest user ask:\n- [GC-D2] 记一下：我以前默认编辑器是 Vim。",
+  "shadow_event": {
+    "schema_version": "umc.dialogue-working-set-shadow.v1",
+    "event_id": "shadow-1776530679831-3clhkc",
+    "generated_at": "2026-04-18T16:44:39.831Z",
+    "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+    "agent_id": "main",
+    "query": "[GC-D2] 记一下：我以前默认编辑器是 Vim。",
+    "status": "captured",
+    "reason": "",
+    "sampling": {
+      "max_turns": 12,
+      "min_turns": 3,
+      "max_chars_per_turn": 900
+    },
+    "transcript": [
+      {
+        "id": "t1",
+        "role": "user",
+        "content": "继续"
+      },
+      {
+        "id": "t2",
+        "role": "assistant",
+        "content": "Zed。 `Case D` 也是半通过： - 答案正确，说明“新事实覆盖旧事实”成立 - 但 GC 仍然没有真正应用，最终稳定成： - `relation=continue` - `applied=false` - `guard_reason=not_enough_evictions`"
+      },
+      {
+        "id": "t3",
+        "role": "user",
+        "content": "需要"
+      },
+      {
+        "id": "t4",
+        "role": "assistant",
+        "content": "根因基本确认了，不是单纯“模型把 B/D 判成了 `continue`”。 核心问题有两个。"
+      },
+      {
+        "id": "t5",
+        "role": "user",
+        "content": "要； 先做1，然后做2"
+      },
+      {
+        "id": "t6",
+        "role": "assistant",
+        "content": "已经做完，顺序就是你要的 `1 -> 2`。 第 1 条已修： - timeout 不再伪装成 `continue` - 现在会落成 `status=\"error\", reason=\"decision_timeout\"` - 相关改动在 [structured-decision-runner.js](/Users/redcreen/Project/unified-memory-core/src/structured-decision-…"
+      },
+      {
+        "id": "t7",
+        "role": "user",
+        "content": "需要"
+      },
+      {
+        "id": "t8",
+        "role": "assistant",
+        "content": "先重跑短一点的 `Case D`。下一条发这个： ```text [GC-D2] 记一下：我以前默认编辑器是 Vim。 ```"
+      },
+      {
+        "id": "t9",
+        "role": "user",
+        "content": "[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？"
+      },
+      {
+        "id": "t10",
+        "role": "assistant",
+        "content": "Zed。 不过这条还是旧前缀 `GC-D1`，不适合拿来验证修复后的行为。要干净重跑，请下一条改发："
+      },
+      {
+        "id": "t11",
+        "role": "user",
+        "content": "[GC-D2] 记一下：我以前默认编辑器是 Vim。"
+      },
+      {
+        "id": "t12",
+        "role": "assistant",
+        "content": "很好，`GC-D2` 已经是干净样本了。 下一条发："
+      }
+    ],
+    "decision": {
+      "relation": "continue",
+      "confidence": 0.93,
+      "evict_turn_ids": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7"
+      ],
+      "pin_turn_ids": [
+        "t9"
+      ],
+      "archive_summary": "Earlier block covered diagnosing and fixing GC decision-runner issues, including converting decision timeouts into explicit errors instead of fake continue results, then setting up a clean rerun for Case D using the GC-D2 prefix. That implementation/debug block is no longer needed as raw prompt context for the immediate next turn.",
+      "reasoning_summary": "The active topic is still the GC-D2 editor-memory test, so this remains a continue. The next turn still depends on the recent raw setup around rerunning Case D2, especially the immediate test framing in t8-t12. The older implementation/debug discussion in t1-t7 is solved and can leave the next-turn raw working set. The current-editor fact from t9 is durable and should survive as a compact pin if its raw turn later leaves the prompt."
+    },
+    "decision_transport": "codex_exec",
+    "snapshot": {
+      "applied": {
+        "relation": "continue",
+        "confidence": 0.93,
+        "archiveSummary": "Earlier block covered diagnosing and fixing GC decision-runner issues, including converting decision timeouts into explicit errors instead of fake continue results, then setting up a clean rerun for Case D using the GC-D2 prefix. That implementation/debug block is no longer needed as raw prompt context for the immediate next turn.",
+        "reasoningSummary": "The active topic is still the GC-D2 editor-memory test, so this remains a continue. The next turn still depends on the recent raw setup around rerunning Case D2, especially the immediate test framing in t8-t12. The older implementation/debug discussion in t1-t7 is solved and can leave the next-turn raw working set. The current-editor fact from t9 is durable and should survive as a compact pin if its raw turn later leaves the prompt.",
+        "latestUserTurnId": "t11",
+        "pinTurnIds": [
+          "t9"
+        ],
+        "pinnedOnlyTurnIds": [],
+        "requestedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3",
+          "t4",
+          "t5",
+          "t6",
+          "t7"
+        ],
+        "blockedEvictTurnIds": [],
+        "appliedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3",
+          "t4",
+          "t5",
+          "t6",
+          "t7"
+        ],
+        "keepTurnIds": [
+          "t8",
+          "t9",
+          "t10",
+          "t11",
+          "t12"
+        ],
+        "baselineTokens": 159,
+        "keptTokens": 50,
+        "prunedTokens": 109,
+        "reductionRatio": 0.6855345911949685,
+        "keepTurns": [
+          {
+            "id": "t8",
+            "role": "assistant",
+            "content": "先重跑短一点的 `Case D`。下一条发这个： ```text [GC-D2] 记一下：我以前默认编辑器是 Vim。 ```",
+            "tokenEstimate": 16
+          },
+          {
+            "id": "t9",
+            "role": "user",
+            "content": "[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？",
+            "tokenEstimate": 7
+          },
+          {
+            "id": "t10",
+            "role": "assistant",
+            "content": "Zed。 不过这条还是旧前缀 `GC-D1`，不适合拿来验证修复后的行为。要干净重跑，请下一条改发：",
+            "tokenEstimate": 13
+          },
+          {
+            "id": "t11",
+            "role": "user",
+            "content": "[GC-D2] 记一下：我以前默认编辑器是 Vim。",
+            "tokenEstimate": 7
+          },
+          {
+            "id": "t12",
+            "role": "assistant",
+            "content": "很好，`GC-D2` 已经是干净样本了。 下一条发：",
+            "tokenEstimate": 7
+          }
+        ],
+        "evictedTurns": [
+          {
+            "id": "t1",
+            "role": "user",
+            "content": "继续",
+            "tokenEstimate": 1
+          },
+          {
+            "id": "t2",
+            "role": "assistant",
+            "content": "Zed。 `Case D` 也是半通过： - 答案正确，说明“新事实覆盖旧事实”成立 - 但 GC 仍然没有真正应用，最终稳定成： - `relation=continue` - `applied=false` - `guard_reason=not_enough_evictions`",
+            "tokenEstimate": 36
+          },
+          {
+            "id": "t3",
+            "role": "user",
+            "content": "需要",
+            "tokenEstimate": 1
+          },
+          {
+            "id": "t4",
+            "role": "assistant",
+            "content": "根因基本确认了，不是单纯“模型把 B/D 判成了 `continue`”。 核心问题有两个。",
+            "tokenEstimate": 12
+          },
+          {
+            "id": "t5",
+            "role": "user",
+            "content": "要； 先做1，然后做2",
+            "tokenEstimate": 3
+          },
+          {
+            "id": "t6",
+            "role": "assistant",
+            "content": "已经做完，顺序就是你要的 `1 -> 2`。 第 1 条已修： - timeout 不再伪装成 `continue` - 现在会落成 `status=\"error\", reason=\"decision_timeout\"` - 相关改动在 [structured-decision-runner.js](/Users/redcreen/Project/unified-memory-core/src/structured-decision-…",
+            "tokenEstimate": 55
+          },
+          {
+            "id": "t7",
+            "role": "user",
+            "content": "需要",
+            "tokenEstimate": 1
+          }
+        ]
+      },
+      "baselineRawTranscript": "t1 user: 继续\nt2 assistant: Zed。 `Case D` 也是半通过： - 答案正确，说明“新事实覆盖旧事实”成立 - 但 GC 仍然没有真正应用，最终稳定成： - `relation=continue` - `applied=false` - `guard_reason=not_enough_evictions`\nt3 user: 需要\nt4 assistant: 根因基本确认了，不是单纯“模型把 B/D 判成了 `continue`”。 核心问题有两个。\nt5 user: 要； 先做1，然后做2\nt6 assistant: 已经做完，顺序就是你要的 `1 -> 2`。 第 1 条已修： - timeout 不再伪装成 `continue` - 现在会落成 `status=\"error\", reason=\"decision_timeout\"` - 相关改动在 [structured-decision-runner.js](/Users/redcreen/Project/unified-memory-core/src/structured-decision-…\nt7 user: 需要\nt8 assistant: 先重跑短一点的 `Case D`。下一条发这个： ```text [GC-D2] 记一下：我以前默认编辑器是 Vim。 ```\nt9 user: [GC-D1] 回到编辑器问题。我现在默认编辑器是什么？\nt10 assistant: Zed。 不过这条还是旧前缀 `GC-D1`，不适合拿来验证修复后的行为。要干净重跑，请下一条改发：\nt11 user: [GC-D2] 记一下：我以前默认编辑器是 Vim。\nt12 assistant: 很好，`GC-D2` 已经是干净样本了。 下一条发：",
+      "shadowRawTranscript": "t8 assistant: 先重跑短一点的 `Case D`。下一条发这个： ```text [GC-D2] 记一下：我以前默认编辑器是 Vim。 ```\nt9 user: [GC-D1] 回到编辑器问题。我现在默认编辑器是什么？\nt10 assistant: Zed。 不过这条还是旧前缀 `GC-D1`，不适合拿来验证修复后的行为。要干净重跑，请下一条改发：\nt11 user: [GC-D2] 记一下：我以前默认编辑器是 Vim。\nt12 assistant: 很好，`GC-D2` 已经是干净样本了。 下一条发：",
+      "semanticPinNotes": [],
+      "archiveSummary": "Earlier block covered diagnosing and fixing GC decision-runner issues, including converting decision timeouts into explicit errors instead of fake continue results, then setting up a clean rerun for Case D using the GC-D2 prefix. That implementation/debug block is no longer needed as raw prompt context for the immediate next turn.",
+      "injectedArchiveSummary": "",
+      "baselinePromptEstimate": 193,
+      "shadowRawPromptEstimate": 65,
+      "shadowPackageEstimate": 72,
+      "shadowPackageText": "Task state summary:\nEarlier block covered diagnosing and fixing GC decision-runner issues, including converting decision timeouts into explicit errors instead of fake continue results, then setting up a clean rerun for Case D using the GC-…\n\nLatest user ask:\n- [GC-D2] 记一下：我以前默认编辑器是 Vim。"
+    },
+    "scorecard": {
+      "relation": "continue",
+      "baselineTurnCount": 12,
+      "keptTurnCount": 5,
+      "evictedTurnCount": 7,
+      "pinCount": 1,
+      "baselinePromptEstimate": 193,
+      "shadowRawPromptEstimate": 65,
+      "shadowPackageEstimate": 72,
+      "rawReductionRatio": 0.6855,
+      "packageReductionRatio": 0.6269,
+      "candidateLoadElapsedMs": 0,
+      "assemblyBuildElapsedMs": 0,
+      "decisionElapsedMs": 21462,
+      "totalElapsedMs": 21465,
+      "guardedEnabled": true,
+      "guardedApplied": true,
+      "guardedReason": "guarded_candidate",
+      "guardedMessageCount": 5,
+      "guardedCarryForwardEstimate": 0,
+      "guardedFilteredMessageEstimate": 50
+    },
+    "guarded": {
+      "enabled": true,
+      "applied": true,
+      "reason": "guarded_candidate",
+      "filteredMessages": [
+        {
+          "role": "assistant",
+          "content": "先重跑短一点的 `Case D`。下一条发这个： ```text [GC-D2] 记一下：我以前默认编辑器是 Vim。 ```"
+        },
+        {
+          "role": "user",
+          "content": "[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？"
+        },
+        {
+          "role": "assistant",
+          "content": "Zed。 不过这条还是旧前缀 `GC-D1`，不适合拿来验证修复后的行为。要干净重跑，请下一条改发："
+        },
+        {
+          "role": "user",
+          "content": "[GC-D2] 记一下：我以前默认编辑器是 Vim。"
+        },
+        {
+          "role": "assistant",
+          "content": "很好，`GC-D2` 已经是干净样本了。 下一条发："
+        }
+      ],
+      "filteredMessageCount": 5,
+      "filteredMessageTokenEstimate": 50,
+      "carryForwardText": "",
+      "carryForwardEstimate": 0,
+      "evictedSourceIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "timings": {
+      "totalElapsedMs": 21465,
+      "decisionElapsedMs": 21462
+    },
+    "artifact_paths": {
+      "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da152-4841-76f2-adc4-b01a85d15a88-shadow-1776530679831-3clhkc.json",
+      "summary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl"
+    }
+  }
+}

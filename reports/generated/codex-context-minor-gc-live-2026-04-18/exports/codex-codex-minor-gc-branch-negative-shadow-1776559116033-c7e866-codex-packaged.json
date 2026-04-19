@@ -1,0 +1,187 @@
+{
+  "schema_version": "umc.codex-context-minor-gc.v1",
+  "generated_at": "2026-04-19T00:38:46.898Z",
+  "event_id": "shadow-1776559116033-c7e866-codex-packaged",
+  "session_key": "codex:codex-minor-gc-branch-negative",
+  "query": "先回到刚才的发布验收，那三部分是什么？",
+  "status": "captured",
+  "reason": "",
+  "decision_transport": "codex_exec",
+  "relation": "continue",
+  "applied": false,
+  "codex_guard_reason": "continue_pin_only_not_allowed",
+  "prompt_reduction_ratio": 0,
+  "baseline_context_estimate": 32,
+  "packaged_context_estimate": 28,
+  "effective_context_estimate": 32,
+  "shadow_status": "captured",
+  "shadow_guarded_applied": false,
+  "shadow_guarded_reason": "continue_pin_only_not_allowed",
+  "shadow_export_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc-live-2026-04-18/exports/codex-codex-minor-gc-branch-negative-shadow-1776559116033-c7e866.json",
+  "shadow_summary_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc-live-2026-04-18/telemetry.jsonl",
+  "export_path": "exports/codex-codex-minor-gc-branch-negative-shadow-1776559116033-c7e866-codex-packaged.json",
+  "effective_context_block": "## Recent Conversation Context\nt1 user: 把发布验收拆成版本、安装、回滚三部分。\nt2 user: 插一句，我的时区是 Asia/Shanghai，记住。\nt3 user: 先回到刚才的发布验收，那三部分是什么？",
+  "packaged_context_block": "## Context Minor GC Working Set\nRecent raw context:\nt1 user: 把发布验收拆成版本、安装、回滚三部分。\nt3 user: 先回到刚才的发布验收，那三部分是什么？",
+  "shadow_event": {
+    "schema_version": "umc.dialogue-working-set-shadow.v1",
+    "event_id": "shadow-1776559116033-c7e866",
+    "generated_at": "2026-04-19T00:38:36.033Z",
+    "session_key": "codex:codex-minor-gc-branch-negative",
+    "agent_id": "main",
+    "query": "先回到刚才的发布验收，那三部分是什么？",
+    "status": "captured",
+    "reason": "",
+    "sampling": {
+      "max_turns": 12,
+      "min_turns": 3,
+      "max_chars_per_turn": 900
+    },
+    "transcript": [
+      {
+        "id": "t1",
+        "role": "user",
+        "content": "把发布验收拆成版本、安装、回滚三部分。"
+      },
+      {
+        "id": "t2",
+        "role": "user",
+        "content": "插一句，我的时区是 Asia/Shanghai，记住。"
+      },
+      {
+        "id": "t3",
+        "role": "user",
+        "content": "先回到刚才的发布验收，那三部分是什么？"
+      }
+    ],
+    "decision": {
+      "relation": "continue",
+      "confidence": 0.97,
+      "evict_turn_ids": [
+        "t2"
+      ],
+      "pin_turn_ids": [
+        "t2"
+      ],
+      "archive_summary": "Durable user fact: user's timezone is Asia/Shanghai. Active topic remains release acceptance split into three parts: version, installation, rollback.",
+      "reasoning_summary": "The latest turn returns to the original release-acceptance topic and depends directly on t1, so t1 should remain raw. t2 is a resolved side note with durable preference/fact value, so its raw turn can leave the next-turn prompt while its semantic content is preserved as a pin."
+    },
+    "decision_transport": "codex_exec",
+    "snapshot": {
+      "applied": {
+        "relation": "continue",
+        "confidence": 0.97,
+        "archiveSummary": "Durable user fact: user's timezone is Asia/Shanghai. Active topic remains release acceptance split into three parts: version, installation, rollback.",
+        "reasoningSummary": "The latest turn returns to the original release-acceptance topic and depends directly on t1, so t1 should remain raw. t2 is a resolved side note with durable preference/fact value, so its raw turn can leave the next-turn prompt while its semantic content is preserved as a pin.",
+        "latestUserTurnId": "t3",
+        "pinTurnIds": [
+          "t2"
+        ],
+        "pinnedOnlyTurnIds": [
+          "t2"
+        ],
+        "requestedEvictTurnIds": [
+          "t2"
+        ],
+        "blockedEvictTurnIds": [],
+        "appliedEvictTurnIds": [
+          "t2"
+        ],
+        "keepTurnIds": [
+          "t1",
+          "t3"
+        ],
+        "baselineTokens": 17,
+        "keptTokens": 10,
+        "prunedTokens": 7,
+        "reductionRatio": 0.4117647058823529,
+        "keepTurns": [
+          {
+            "id": "t1",
+            "role": "user",
+            "content": "把发布验收拆成版本、安装、回滚三部分。",
+            "tokenEstimate": 5
+          },
+          {
+            "id": "t3",
+            "role": "user",
+            "content": "先回到刚才的发布验收，那三部分是什么？",
+            "tokenEstimate": 5
+          }
+        ],
+        "evictedTurns": [
+          {
+            "id": "t2",
+            "role": "user",
+            "content": "插一句，我的时区是 Asia/Shanghai，记住。",
+            "tokenEstimate": 7
+          }
+        ]
+      },
+      "baselineRawTranscript": "t1 user: 把发布验收拆成版本、安装、回滚三部分。\nt2 user: 插一句，我的时区是 Asia/Shanghai，记住。\nt3 user: 先回到刚才的发布验收，那三部分是什么？",
+      "shadowRawTranscript": "t1 user: 把发布验收拆成版本、安装、回滚三部分。\nt3 user: 先回到刚才的发布验收，那三部分是什么？",
+      "semanticPinNotes": [
+        "user: 插一句，我的时区是 Asia/Shanghai，记住。"
+      ],
+      "archiveSummary": "Durable user fact: user's timezone is Asia/Shanghai. Active topic remains release acceptance split into three parts: version, installation, rollback.",
+      "injectedArchiveSummary": "",
+      "baselinePromptEstimate": 24,
+      "shadowRawPromptEstimate": 15,
+      "shadowPackageEstimate": 20,
+      "shadowPackageText": "Recent raw context:\nt1 user: 把发布验收拆成版本、安装、回滚三部分。\nt3 user: 先回到刚才的发布验收，那三部分是什么？"
+    },
+    "scorecard": {
+      "relation": "continue",
+      "baselineTurnCount": 3,
+      "keptTurnCount": 2,
+      "evictedTurnCount": 1,
+      "pinCount": 1,
+      "baselinePromptEstimate": 24,
+      "shadowRawPromptEstimate": 15,
+      "shadowPackageEstimate": 20,
+      "rawReductionRatio": 0.4118,
+      "packageReductionRatio": 0.1667,
+      "candidateLoadElapsedMs": 0,
+      "assemblyBuildElapsedMs": 0,
+      "decisionElapsedMs": 10860,
+      "totalElapsedMs": 10864,
+      "guardedEnabled": true,
+      "guardedApplied": false,
+      "guardedReason": "continue_pin_only_not_allowed",
+      "guardedMessageCount": 3,
+      "guardedCarryForwardEstimate": 0,
+      "guardedFilteredMessageEstimate": 17
+    },
+    "guarded": {
+      "enabled": true,
+      "applied": false,
+      "reason": "continue_pin_only_not_allowed",
+      "filteredMessages": [
+        {
+          "role": "user",
+          "content": "把发布验收拆成版本、安装、回滚三部分。"
+        },
+        {
+          "role": "user",
+          "content": "插一句，我的时区是 Asia/Shanghai，记住。"
+        },
+        {
+          "role": "user",
+          "content": "先回到刚才的发布验收，那三部分是什么？"
+        }
+      ],
+      "filteredMessageCount": 3,
+      "filteredMessageTokenEstimate": 17,
+      "carryForwardText": "",
+      "carryForwardEstimate": 0,
+      "evictedSourceIndices": []
+    },
+    "timings": {
+      "totalElapsedMs": 10864,
+      "decisionElapsedMs": 10860
+    },
+    "artifact_paths": {
+      "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc-live-2026-04-18/exports/codex-codex-minor-gc-branch-negative-shadow-1776559116033-c7e866.json",
+      "summary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc-live-2026-04-18/telemetry.jsonl"
+    }
+  }
+}

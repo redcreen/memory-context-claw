@@ -1,0 +1,215 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776559078952-cuditq",
+  "generated_at": "2026-04-19T00:37:58.952Z",
+  "session_key": "codex:codex-minor-gc-seat-preference",
+  "agent_id": "main",
+  "query": "我坐飞机喜欢什么位置？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "以后默认给我中文，结论优先。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "记住了。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "再记一下：我坐飞机喜欢靠过道。"
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "记住了，你坐飞机偏好靠过道。"
+    },
+    {
+      "id": "t5",
+      "role": "user",
+      "content": "插一句代码：这轮先只做 shadow，不接管主路径。"
+    },
+    {
+      "id": "t6",
+      "role": "assistant",
+      "content": "收到，这轮代码 detour 先只做 shadow。"
+    },
+    {
+      "id": "t7",
+      "role": "user",
+      "content": "代码 detour 已经结束。回到偏好：我坐飞机喜欢什么位置？"
+    }
+  ],
+  "decision": {
+    "relation": "switch",
+    "confidence": 0.98,
+    "evict_turn_ids": [
+      "t2",
+      "t4",
+      "t5",
+      "t6"
+    ],
+    "pin_turn_ids": [
+      "t1",
+      "t3"
+    ],
+    "archive_summary": "用户长期偏好已明确并可压缩保留：默认中文、结论优先；坐飞机偏好靠过道。中间的代码 detour/shadow 话题已明确结束，可移出下一轮原始工作集。",
+    "reasoning_summary": "最新用户问题回到“坐飞机喜欢什么位置”，与 t3 的 durable preference 直接相关；代码 shadow/detour 话题在 t7 已声明结束，属于已解决的旁支。为缩小下一轮 raw prompt，保留用户长期偏好为语义 pin，移除确认性回复和已结束的代码块。"
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "switch",
+      "confidence": 0.98,
+      "archiveSummary": "用户长期偏好已明确并可压缩保留：默认中文、结论优先；坐飞机偏好靠过道。中间的代码 detour/shadow 话题已明确结束，可移出下一轮原始工作集。",
+      "reasoningSummary": "最新用户问题回到“坐飞机喜欢什么位置”，与 t3 的 durable preference 直接相关；代码 shadow/detour 话题在 t7 已声明结束，属于已解决的旁支。为缩小下一轮 raw prompt，保留用户长期偏好为语义 pin，移除确认性回复和已结束的代码块。",
+      "latestUserTurnId": "t7",
+      "pinTurnIds": [
+        "t1",
+        "t3"
+      ],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t2",
+        "t4",
+        "t5",
+        "t6"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t2",
+        "t4",
+        "t5",
+        "t6"
+      ],
+      "keepTurnIds": [
+        "t1",
+        "t3",
+        "t7"
+      ],
+      "baselineTokens": 35,
+      "keptTokens": 16,
+      "prunedTokens": 19,
+      "reductionRatio": 0.5428571428571428,
+      "keepTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "以后默认给我中文，结论优先。",
+          "tokenEstimate": 4
+        },
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "再记一下：我坐飞机喜欢靠过道。",
+          "tokenEstimate": 4
+        },
+        {
+          "id": "t7",
+          "role": "user",
+          "content": "代码 detour 已经结束。回到偏好：我坐飞机喜欢什么位置？",
+          "tokenEstimate": 8
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "记住了。",
+          "tokenEstimate": 1
+        },
+        {
+          "id": "t4",
+          "role": "assistant",
+          "content": "记住了，你坐飞机偏好靠过道。",
+          "tokenEstimate": 4
+        },
+        {
+          "id": "t5",
+          "role": "user",
+          "content": "插一句代码：这轮先只做 shadow，不接管主路径。",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t6",
+          "role": "assistant",
+          "content": "收到，这轮代码 detour 先只做 shadow。",
+          "tokenEstimate": 7
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 以后默认给我中文，结论优先。\nt2 assistant: 记住了。\nt3 user: 再记一下：我坐飞机喜欢靠过道。\nt4 assistant: 记住了，你坐飞机偏好靠过道。\nt5 user: 插一句代码：这轮先只做 shadow，不接管主路径。\nt6 assistant: 收到，这轮代码 detour 先只做 shadow。\nt7 user: 代码 detour 已经结束。回到偏好：我坐飞机喜欢什么位置？",
+    "shadowRawTranscript": "t1 user: 以后默认给我中文，结论优先。\nt3 user: 再记一下：我坐飞机喜欢靠过道。\nt7 user: 代码 detour 已经结束。回到偏好：我坐飞机喜欢什么位置？",
+    "semanticPinNotes": [],
+    "archiveSummary": "用户长期偏好已明确并可压缩保留：默认中文、结论优先；坐飞机偏好靠过道。中间的代码 detour/shadow 话题已明确结束，可移出下一轮原始工作集。",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 54,
+    "shadowRawPromptEstimate": 23,
+    "shadowPackageEstimate": 28,
+    "shadowPackageText": "Recent raw context:\nt1 user: 以后默认给我中文，结论优先。\nt3 user: 再记一下：我坐飞机喜欢靠过道。\nt7 user: 代码 detour 已经结束。回到偏好：我坐飞机喜欢什么位置？"
+  },
+  "scorecard": {
+    "relation": "switch",
+    "baselineTurnCount": 7,
+    "keptTurnCount": 3,
+    "evictedTurnCount": 4,
+    "pinCount": 2,
+    "baselinePromptEstimate": 54,
+    "shadowRawPromptEstimate": 23,
+    "shadowPackageEstimate": 28,
+    "rawReductionRatio": 0.5429,
+    "packageReductionRatio": 0.4815,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 13520,
+    "totalElapsedMs": 13522,
+    "guardedEnabled": true,
+    "guardedApplied": true,
+    "guardedReason": "guarded_candidate",
+    "guardedMessageCount": 3,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 16
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": true,
+    "reason": "guarded_candidate",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": "以后默认给我中文，结论优先。"
+      },
+      {
+        "role": "user",
+        "content": "再记一下：我坐飞机喜欢靠过道。"
+      },
+      {
+        "role": "user",
+        "content": "代码 detour 已经结束。回到偏好：我坐飞机喜欢什么位置？"
+      }
+    ],
+    "filteredMessageCount": 3,
+    "filteredMessageTokenEstimate": 16,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": [
+      1,
+      3,
+      4,
+      5
+    ]
+  },
+  "timings": {
+    "totalElapsedMs": 13522,
+    "decisionElapsedMs": 13520
+  }
+}

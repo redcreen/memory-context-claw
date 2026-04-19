@@ -1,0 +1,65 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776584473235-09x138",
+  "generated_at": "2026-04-19T07:41:13.235Z",
+  "session_key": "agent:order:main",
+  "agent_id": "order",
+  "query": "[Sun 2026-04-19 15:41 GMT+8] 如果我要追溯旧订单线索、旧聊天、旧CSV，你现在应该优先用哪些硬执行命令？一句话回答。",
+  "status": "skipped",
+  "reason": "not_enough_turns",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "task-system runtime context: - session: agent:order:main - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded [Sun 2026-04-19 13:57 GMT+8] 你是谁？你的数据真相源是什么？你处理订单写入时必须遵守什么规则？三行以内回答。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "我是 order，local-first 订单运作代理。 数据真相源是 ~/Documents/openclaw-order。 写入必须先持久化输入，且严格遵守 draft → confirmation → commit。"
+    }
+  ],
+  "decision": null,
+  "decision_transport": "",
+  "snapshot": null,
+  "scorecard": {
+    "relation": "",
+    "baselineTurnCount": 2,
+    "keptTurnCount": 0,
+    "evictedTurnCount": 0,
+    "pinCount": 0,
+    "baselinePromptEstimate": 0,
+    "shadowRawPromptEstimate": 0,
+    "shadowPackageEstimate": 0,
+    "rawReductionRatio": 0,
+    "packageReductionRatio": 0,
+    "candidateLoadElapsedMs": 15,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 0,
+    "totalElapsedMs": 1,
+    "guardedEnabled": false,
+    "guardedApplied": false,
+    "guardedReason": "feature_disabled",
+    "guardedMessageCount": 2,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 0
+  },
+  "guarded": {
+    "enabled": false,
+    "applied": false,
+    "reason": "feature_disabled",
+    "filteredMessageCount": 2,
+    "filteredMessageTokenEstimate": 0,
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 1,
+    "decisionElapsedMs": 0
+  }
+}

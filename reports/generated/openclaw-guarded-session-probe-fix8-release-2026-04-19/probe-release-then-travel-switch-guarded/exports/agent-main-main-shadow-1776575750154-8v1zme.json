@@ -1,0 +1,75 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776575750154-8v1zme",
+  "generated_at": "2026-04-19T05:15:50.154Z",
+  "session_key": "agent:main:main",
+  "agent_id": "main",
+  "query": "再补充同一个方案：版本块要写 tag、commit、构建时间、镜像 digest；安装块要写目标环境、前置条件和灰度范围。",
+  "status": "skipped",
+  "reason": "explicit_continue_marker",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "我记住了：这个发布方案第一页的项目代号固定写 `north-star-lantern`。 我记住了：这个发布方案第一页的项目代号固定写 `north-star-lantern`。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "继续同一个 release 话题：把验收拆成版本、安装、回滚、观测四块，而且每块都要写 owner、风险和 rollback boundary。"
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "可以，这样拆很稳。 我建议验收页直接按这四块写成固定结构： - **版本** - owner - 风险 - rollback boundary - **安装** - owner - 风险 - rollback boundary - **回滚** - owner - 风险 - rollback boundary - **观测** - owner - 风险 - rollback boundary 如果你要，我可以下一步直接帮你把这四块展开成可粘贴到 release 方案里的正式文案。"
+    }
+  ],
+  "decision": null,
+  "decision_transport": "",
+  "snapshot": null,
+  "scorecard": {
+    "relation": "",
+    "baselineTurnCount": 4,
+    "keptTurnCount": 0,
+    "evictedTurnCount": 0,
+    "pinCount": 0,
+    "baselinePromptEstimate": 0,
+    "shadowRawPromptEstimate": 0,
+    "shadowPackageEstimate": 0,
+    "rawReductionRatio": 0,
+    "packageReductionRatio": 0,
+    "candidateLoadElapsedMs": 8,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 0,
+    "totalElapsedMs": 1,
+    "guardedEnabled": true,
+    "guardedApplied": false,
+    "guardedReason": "not_evaluated",
+    "guardedMessageCount": 4,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 0
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": false,
+    "reason": "not_evaluated",
+    "filteredMessageCount": 4,
+    "filteredMessageTokenEstimate": 0,
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 1,
+    "decisionElapsedMs": 0
+  }
+}

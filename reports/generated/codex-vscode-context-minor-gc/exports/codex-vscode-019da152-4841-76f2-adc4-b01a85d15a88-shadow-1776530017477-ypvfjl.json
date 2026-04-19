@@ -1,0 +1,290 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776530017477-ypvfjl",
+  "generated_at": "2026-04-18T16:33:37.477Z",
+  "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+  "agent_id": "main",
+  "query": "[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "assistant",
+      "content": "京都。 `Case B` 这次只算半通过： - 答案正确，说明旅行事实没丢 - 但 GC 没有明显生效，最终是 `relation=continue`、`applied=false`、`guard_reason=not_enough_evictions`"
+    },
+    {
+      "id": "t2",
+      "role": "user",
+      "content": "可以 继续"
+    },
+    {
+      "id": "t3",
+      "role": "assistant",
+      "content": "下一条发这个： ```text [GC-D1] 记一下：我以前默认编辑器是 Vim。 ```"
+    },
+    {
+      "id": "t4",
+      "role": "user",
+      "content": "[GC-D1] 记一下：我以前默认编辑器是 Vim。"
+    },
+    {
+      "id": "t5",
+      "role": "assistant",
+      "content": "下一条发这个： ```text [GC-D1] 更新一下：我现在默认编辑器是 Zed。 ```"
+    },
+    {
+      "id": "t6",
+      "role": "user",
+      "content": "[GC-D1] 更新一下：我现在默认编辑器是 Zed。"
+    },
+    {
+      "id": "t7",
+      "role": "assistant",
+      "content": "继续发下一条： ```text [GC-D1] 切个话题。为什么 shadow mode 默认先不开？ ```"
+    },
+    {
+      "id": "t8",
+      "role": "user",
+      "content": "[GC-D1] 切个话题。为什么 shadow mode 默认先不开？"
+    },
+    {
+      "id": "t9",
+      "role": "assistant",
+      "content": "继续发最后一条： ```text [GC-D1] 回到编辑器问题。我现在默认编辑器是什么？ ```"
+    },
+    {
+      "id": "t10",
+      "role": "user",
+      "content": "[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？"
+    },
+    {
+      "id": "t11",
+      "role": "assistant",
+      "content": "继续发最后一条： ```text [GC-D1] 回到编辑器问题。我现在默认编辑器是什么？ ```"
+    },
+    {
+      "id": "t12",
+      "role": "user",
+      "content": "[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？"
+    }
+  ],
+  "decision": {
+    "relation": "switch",
+    "confidence": 0.95,
+    "evict_turn_ids": [
+      "t1",
+      "t2",
+      "t3",
+      "t5",
+      "t7",
+      "t8",
+      "t9",
+      "t10",
+      "t11"
+    ],
+    "pin_turn_ids": [
+      "t4",
+      "t6"
+    ],
+    "archive_summary": "User established editor preferences in GC-D1: previous default editor was Vim, then updated current default editor to Zed. A brief side topic asked why shadow mode is not enabled by default; that topic is not needed for the current editor question. The latest user turn returns to the editor topic and asks for the current default editor.",
+    "reasoning_summary": "The active topic switched back from the shadow-mode side question to the editor-memory question. The only durable facts still needed are the editor updates, especially that the current default editor is Zed, so those should survive as pins. Meta coaching turns, duplicate prompts, and the shadow-mode snapshot are good eviction candidates because they do not add evidence needed for the next turn."
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "switch",
+      "confidence": 0.95,
+      "archiveSummary": "User established editor preferences in GC-D1: previous default editor was Vim, then updated current default editor to Zed. A brief side topic asked why shadow mode is not enabled by default; that topic is not needed for the current editor question. The latest user turn returns to the editor topic and asks for the current default editor.",
+      "reasoningSummary": "The active topic switched back from the shadow-mode side question to the editor-memory question. The only durable facts still needed are the editor updates, especially that the current default editor is Zed, so those should survive as pins. Meta coaching turns, duplicate prompts, and the shadow-mode snapshot are good eviction candidates because they do not add evidence needed for the next turn.",
+      "latestUserTurnId": "t12",
+      "pinTurnIds": [
+        "t4",
+        "t6"
+      ],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t5",
+        "t7",
+        "t8",
+        "t9",
+        "t10",
+        "t11"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t5",
+        "t7",
+        "t8",
+        "t9",
+        "t10",
+        "t11"
+      ],
+      "keepTurnIds": [
+        "t4",
+        "t6",
+        "t12"
+      ],
+      "baselineTokens": 135,
+      "keptTokens": 21,
+      "prunedTokens": 114,
+      "reductionRatio": 0.8444444444444444,
+      "keepTurns": [
+        {
+          "id": "t4",
+          "role": "user",
+          "content": "[GC-D1] 记一下：我以前默认编辑器是 Vim。",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t6",
+          "role": "user",
+          "content": "[GC-D1] 更新一下：我现在默认编辑器是 Zed。",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t12",
+          "role": "user",
+          "content": "[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？",
+          "tokenEstimate": 7
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "assistant",
+          "content": "京都。 `Case B` 这次只算半通过： - 答案正确，说明旅行事实没丢 - 但 GC 没有明显生效，最终是 `relation=continue`、`applied=false`、`guard_reason=not_enough_evictions`",
+          "tokenEstimate": 32
+        },
+        {
+          "id": "t2",
+          "role": "user",
+          "content": "可以 继续",
+          "tokenEstimate": 2
+        },
+        {
+          "id": "t3",
+          "role": "assistant",
+          "content": "下一条发这个： ```text [GC-D1] 记一下：我以前默认编辑器是 Vim。 ```",
+          "tokenEstimate": 12
+        },
+        {
+          "id": "t5",
+          "role": "assistant",
+          "content": "下一条发这个： ```text [GC-D1] 更新一下：我现在默认编辑器是 Zed。 ```",
+          "tokenEstimate": 12
+        },
+        {
+          "id": "t7",
+          "role": "assistant",
+          "content": "继续发下一条： ```text [GC-D1] 切个话题。为什么 shadow mode 默认先不开？ ```",
+          "tokenEstimate": 14
+        },
+        {
+          "id": "t8",
+          "role": "user",
+          "content": "[GC-D1] 切个话题。为什么 shadow mode 默认先不开？",
+          "tokenEstimate": 9
+        },
+        {
+          "id": "t9",
+          "role": "assistant",
+          "content": "继续发最后一条： ```text [GC-D1] 回到编辑器问题。我现在默认编辑器是什么？ ```",
+          "tokenEstimate": 13
+        },
+        {
+          "id": "t10",
+          "role": "user",
+          "content": "[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t11",
+          "role": "assistant",
+          "content": "继续发最后一条： ```text [GC-D1] 回到编辑器问题。我现在默认编辑器是什么？ ```",
+          "tokenEstimate": 13
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 assistant: 京都。 `Case B` 这次只算半通过： - 答案正确，说明旅行事实没丢 - 但 GC 没有明显生效，最终是 `relation=continue`、`applied=false`、`guard_reason=not_enough_evictions`\nt2 user: 可以 继续\nt3 assistant: 下一条发这个： ```text [GC-D1] 记一下：我以前默认编辑器是 Vim。 ```\nt4 user: [GC-D1] 记一下：我以前默认编辑器是 Vim。\nt5 assistant: 下一条发这个： ```text [GC-D1] 更新一下：我现在默认编辑器是 Zed。 ```\nt6 user: [GC-D1] 更新一下：我现在默认编辑器是 Zed。\nt7 assistant: 继续发下一条： ```text [GC-D1] 切个话题。为什么 shadow mode 默认先不开？ ```\nt8 user: [GC-D1] 切个话题。为什么 shadow mode 默认先不开？\nt9 assistant: 继续发最后一条： ```text [GC-D1] 回到编辑器问题。我现在默认编辑器是什么？ ```\nt10 user: [GC-D1] 回到编辑器问题。我现在默认编辑器是什么？\nt11 assistant: 继续发最后一条： ```text [GC-D1] 回到编辑器问题。我现在默认编辑器是什么？ ```\nt12 user: [GC-D1] 回到编辑器问题。我现在默认编辑器是什么？",
+    "shadowRawTranscript": "t4 user: [GC-D1] 记一下：我以前默认编辑器是 Vim。\nt6 user: [GC-D1] 更新一下：我现在默认编辑器是 Zed。\nt12 user: [GC-D1] 回到编辑器问题。我现在默认编辑器是什么？",
+    "semanticPinNotes": [],
+    "archiveSummary": "User established editor preferences in GC-D1: previous default editor was Vim, then updated current default editor to Zed. A brief side topic asked why shadow mode is not enabled by default; that topic is not needed for the current editor question. The latest user turn returns to the editor topic and asks for the current default editor.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 169,
+    "shadowRawPromptEstimate": 28,
+    "shadowPackageEstimate": 72,
+    "shadowPackageText": "Task state summary:\nUser established editor preferences in GC-D1: previous default editor was Vim, then updated current default editor to Zed. A brief side topic asked why shadow mode is not enabled by default; that topic is not needed for…\n\nLatest user ask:\n- [GC-D1] 回到编辑器问题。我现在默认编辑器是什么？"
+  },
+  "scorecard": {
+    "relation": "switch",
+    "baselineTurnCount": 12,
+    "keptTurnCount": 3,
+    "evictedTurnCount": 9,
+    "pinCount": 2,
+    "baselinePromptEstimate": 169,
+    "shadowRawPromptEstimate": 28,
+    "shadowPackageEstimate": 72,
+    "rawReductionRatio": 0.8444,
+    "packageReductionRatio": 0.574,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 88038,
+    "totalElapsedMs": 88041,
+    "guardedEnabled": true,
+    "guardedApplied": true,
+    "guardedReason": "guarded_candidate",
+    "guardedMessageCount": 3,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 21
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": true,
+    "reason": "guarded_candidate",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": "[GC-D1] 记一下：我以前默认编辑器是 Vim。"
+      },
+      {
+        "role": "user",
+        "content": "[GC-D1] 更新一下：我现在默认编辑器是 Zed。"
+      },
+      {
+        "role": "user",
+        "content": "[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？"
+      }
+    ],
+    "filteredMessageCount": 3,
+    "filteredMessageTokenEstimate": 21,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": [
+      0,
+      1,
+      2,
+      4,
+      6,
+      7,
+      8,
+      9,
+      10
+    ]
+  },
+  "timings": {
+    "totalElapsedMs": 88041,
+    "decisionElapsedMs": 88038
+  }
+}

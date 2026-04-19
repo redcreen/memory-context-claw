@@ -119,6 +119,14 @@ async function runWithCodexExec({
         codexHome
       });
 
+      if (result?.execError?.timedOut === true) {
+        const error = new Error("decision_timeout");
+        error.reasonCode = "decision_timeout";
+        error.transport = "codex_exec";
+        error.execError = result.execError;
+        throw error;
+      }
+
       return {
         payload: result.payload,
         elapsedMs: result.elapsedMs,
@@ -126,6 +134,9 @@ async function runWithCodexExec({
         transport: "codex_exec"
       };
     } catch (error) {
+      if (error?.code === "ETIMEDOUT" && !error?.reasonCode) {
+        error.reasonCode = "decision_timeout";
+      }
       lastError = error;
       await disposeSharedMinimalCodexHome(reasoningEffort);
       if (attempt >= maxAttempts) {
@@ -220,6 +231,7 @@ export async function runStructuredDecision({
   cwd = process.cwd()
 }) {
   const errors = [];
+  const structuredErrors = [];
   const attempts = buildAttemptOrder({
     transport: normalizeString(config.transport, "auto"),
     runtime,
@@ -269,11 +281,18 @@ export async function runStructuredDecision({
         payload: normalizePayload ? normalizePayload(result.payload) : result.payload
       };
     } catch (error) {
+      structuredErrors.push(error);
       errors.push(`${attempt}: ${String(error?.message || error)}`);
       logger?.warn?.(
         `[unified-memory-core] ${purpose} transport ${attempt} failed for ${normalizeString(sessionKey, "session")}: ${String(error)}`
       );
     }
+  }
+
+  if (structuredErrors.some((error) => normalizeString(error?.reasonCode) === "decision_timeout")) {
+    const timeoutError = new Error("decision_timeout");
+    timeoutError.reasonCode = "decision_timeout";
+    throw timeoutError;
   }
 
   throw new Error(

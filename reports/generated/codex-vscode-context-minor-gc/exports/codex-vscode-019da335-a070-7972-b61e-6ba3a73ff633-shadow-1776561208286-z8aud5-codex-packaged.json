@@ -1,0 +1,322 @@
+{
+  "schema_version": "umc.codex-context-minor-gc.v1",
+  "generated_at": "2026-04-19T01:13:44.273Z",
+  "event_id": "shadow-1776561208286-z8aud5-codex-packaged",
+  "session_key": "codex:vscode:019da335-a070-7972-b61e-6ba3a73ff633",
+  "query": "肉眼看到的 # Context History 也没有减小，一直增加，也是正常的？",
+  "status": "captured",
+  "reason": "",
+  "decision_transport": "codex_exec",
+  "relation": "continue",
+  "applied": true,
+  "codex_guard_reason": "codex_packaged_guard",
+  "prompt_reduction_ratio": 0.8202,
+  "baseline_context_estimate": 684,
+  "packaged_context_estimate": 123,
+  "effective_context_estimate": 123,
+  "shadow_status": "captured",
+  "shadow_guarded_applied": true,
+  "shadow_guarded_reason": "guarded_candidate",
+  "shadow_export_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da335-a070-7972-b61e-6ba3a73ff633-shadow-1776561208286-z8aud5.json",
+  "shadow_summary_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl",
+  "export_path": "exports/codex-vscode-019da335-a070-7972-b61e-6ba3a73ff633-shadow-1776561208286-z8aud5-codex-packaged.json",
+  "effective_context_block": "## Context Minor GC Working Set\nTask state summary:\nEarlier test thread is resolved: the two manual new-thread GC cases were judged passed, with correct answers and GC applied on both; key takeaway is that GC behavior improved and did trigger during topic switches, but v…\n\nLatest user ask:\n- 肉眼看到的 # Context History 也没有减小，一直增加，也是正常的？\n\nSemantic pins:\n- assistant: 这轮新线程体感测试可以判定为通过，而且相比旧版有明显改善。 两组都满足“答案正确 + 切题后 GC 生效”： - 第 1 组回答是 `京都`，`applied=true`，`promptReductionRatio=0.7864` - 第 2 组回答是 `…",
+  "packaged_context_block": "## Context Minor GC Working Set\nTask state summary:\nEarlier test thread is resolved: the two manual new-thread GC cases were judged passed, with correct answers and GC applied on both; key takeaway is that GC behavior improved and did trigger during topic switches, but v…\n\nLatest user ask:\n- 肉眼看到的 # Context History 也没有减小，一直增加，也是正常的？\n\nSemantic pins:\n- assistant: 这轮新线程体感测试可以判定为通过，而且相比旧版有明显改善。 两组都满足“答案正确 + 切题后 GC 生效”： - 第 1 组回答是 `京都`，`applied=true`，`promptReductionRatio=0.7864` - 第 2 组回答是 `…",
+  "shadow_event": {
+    "schema_version": "umc.dialogue-working-set-shadow.v1",
+    "event_id": "shadow-1776561208286-z8aud5",
+    "generated_at": "2026-04-19T01:13:28.286Z",
+    "session_key": "codex:vscode:019da335-a070-7972-b61e-6ba3a73ff633",
+    "agent_id": "main",
+    "query": "肉眼看到的 # Context History 也没有减小，一直增加，也是正常的？",
+    "status": "captured",
+    "reason": "",
+    "sampling": {
+      "max_turns": 12,
+      "min_turns": 3,
+      "max_chars_per_turn": 900
+    },
+    "transcript": [
+      {
+        "id": "t1",
+        "role": "assistant",
+        "content": "记忆已恢复，当前我会按“只做新线程体感测试，不改代码”的约束继续。 关键信息我已经对齐： - 当前目标是新 Codex 线程里做 2 组最短手工 case，验证 Context Minor GC 是否更薄、更稳、切题后更明显收缩。 - 顺序固定：先跑“中文多轮切题 case”，再跑“旧值被新值覆盖后再回问”的 case。 - 每组结束后都要执行一次 `npm run codex:vscode:gc --silent`，重点看…"
+      },
+      {
+        "id": "t2",
+        "role": "user",
+        "content": "开始"
+      },
+      {
+        "id": "t3",
+        "role": "user",
+        "content": "开始测试吧"
+      },
+      {
+        "id": "t4",
+        "role": "assistant",
+        "content": "# 第 1 组测试：现在开始 请在**新的 Codex 线程**里，依次只发这 4 句："
+      },
+      {
+        "id": "t5",
+        "role": "user",
+        "content": "# Files mentioned by the user: ## codex-resume-pack.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/codex-resume-pack.md ## continue.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/continue.md ## handoff.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/handoff.md ## progress.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/progress.md ## status.md: /Users/redcreen/Project/unified-memory-core/.codex/status.md ## plan.md: /Users/redcreen/Project/unified-memory-core/.codex/plan.md ## My request for Codex: redcreen@redcreendeMac-mini-2 unified-memory-core % npm run codex:vscode:gc --silent - status: `ok` - query: `先不聊代码了。刚才旅行那段里，我更想住哪座城市？` - extractedMessageCount: `8` - sessionId: `019da33d-4d22-7d62-8623-5237f90e4ec1` - gcStatus: `captured` - applied: `true` - reason: `n/a` - relation: `resolve` - decisionTransport: `c..."
+      },
+      {
+        "id": "t6",
+        "role": "assistant",
+        "content": "第 1 组先看 GC 行为，结论是：明显比旧版更像对的。 你的结果里有 3 个强信号： - `applied: true`，说明切题回问时确实触发了 GC。 - `promptReductionRatio: 0.7864`，说明工作集裁剪得很明显，不是轻微噪音。 - `relation: resolve`，虽然不是预期里的 `switch`，但这类“从代码 detour 回到先前旅行事实”的回问，被判成 `resolve`…"
+      },
+      {
+        "id": "t7",
+        "role": "user",
+        "content": "是京都 zed redcreen@redcreendeMac-mini-2 unified-memory-core % npm run codex:vscode:gc --silent - status: `ok` - query: `回到编辑器问题。我现在默认编辑器是什么？` - extractedMessageCount: `8` - sessionId: `019da346-335b-7d31-be0e-56a3c1b52ff3` - gcStatus: `captured` - applied: `true` - reason: `n/a` - relation: `resolve` - decisionTransport: `codex_exec` - promptReductionRatio: `0.7586` - hostActualInputTokens: `44494` - hostOriginalInputTokens: `44560` - hostContextWindow: `486400` - hostActualWindowRatio: `0.0915` - hostRiskLevel: `normal` - hostRecommendedAction: `continue` - footer: `Context(估算): 最近一轮输入 44.5k，无GC估算 44.6k；窗口口径 486k，压缩比：0.1%（44.5k/44.6k），占窗口比例：9.2%（44.5k/486k）`"
+      },
+      {
+        "id": "t8",
+        "role": "assistant",
+        "content": "这轮新线程体感测试可以判定为通过，而且相比旧版有明显改善。 两组都满足“答案正确 + 切题后 GC 生效”： - 第 1 组回答是 `京都`，`applied=true`，`promptReductionRatio=0.7864` - 第 2 组回答是 `Zed`，`applied=true`，`promptReductionRatio=0.7586`"
+      },
+      {
+        "id": "t9",
+        "role": "user",
+        "content": "可是 每一轮的 Context(估算) 并没有减小啊"
+      },
+      {
+        "id": "t10",
+        "role": "assistant",
+        "content": "对，这就是现在最该警惕的误读点：`Context(估算)` 没明显变小，不等于 GC 没生效。 原因是现在有两个不同口径："
+      },
+      {
+        "id": "t11",
+        "role": "user",
+        "content": "肉眼看到的 # Context History 也没有减小，一直增加，也是正常的？"
+      },
+      {
+        "id": "t12",
+        "role": "assistant",
+        "content": "是，通常正常。 `# Context History` 来自最近几轮的 `last_token_usage.input_tokens`，代码就在 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/codex-vscode-context-minor-gc.js:240) 和…"
+      }
+    ],
+    "decision": {
+      "relation": "continue",
+      "confidence": 0.91,
+      "evict_turn_ids": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8"
+      ],
+      "pin_turn_ids": [
+        "t8"
+      ],
+      "archive_summary": "Earlier test thread is resolved: the two manual new-thread GC cases were judged passed, with correct answers and GC applied on both; key takeaway is that GC behavior improved and did trigger during topic switches, but visible context-size indicators may not shrink in the same way users expect.",
+      "reasoning_summary": "The active topic is still the same metric-interpretation discussion begun in t9 and answered in t10/t12: why visible Context(估算) or # Context History may keep increasing despite GC. The latest user turn depends on the recent explanation, not on the detailed earlier test instructions or per-case logs. Those older turns are resolved and can leave the raw next-turn prompt, while preserving a compact pin that the test was considered successful and GC was observed to apply."
+    },
+    "decision_transport": "codex_exec",
+    "snapshot": {
+      "applied": {
+        "relation": "continue",
+        "confidence": 0.91,
+        "archiveSummary": "Earlier test thread is resolved: the two manual new-thread GC cases were judged passed, with correct answers and GC applied on both; key takeaway is that GC behavior improved and did trigger during topic switches, but visible context-size indicators may not shrink in the same way users expect.",
+        "reasoningSummary": "The active topic is still the same metric-interpretation discussion begun in t9 and answered in t10/t12: why visible Context(估算) or # Context History may keep increasing despite GC. The latest user turn depends on the recent explanation, not on the detailed earlier test instructions or per-case logs. Those older turns are resolved and can leave the raw next-turn prompt, while preserving a compact pin that the test was considered successful and GC was observed to apply.",
+        "latestUserTurnId": "t11",
+        "pinTurnIds": [
+          "t8"
+        ],
+        "pinnedOnlyTurnIds": [
+          "t8"
+        ],
+        "requestedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3",
+          "t4",
+          "t5",
+          "t6",
+          "t7",
+          "t8"
+        ],
+        "blockedEvictTurnIds": [],
+        "appliedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3",
+          "t4",
+          "t5",
+          "t6",
+          "t7",
+          "t8"
+        ],
+        "keepTurnIds": [
+          "t9",
+          "t10",
+          "t11",
+          "t12"
+        ],
+        "baselineTokens": 643,
+        "keptTokens": 84,
+        "prunedTokens": 559,
+        "reductionRatio": 0.8693623639191291,
+        "keepTurns": [
+          {
+            "id": "t9",
+            "role": "user",
+            "content": "可是 每一轮的 Context(估算) 并没有减小啊",
+            "tokenEstimate": 7
+          },
+          {
+            "id": "t10",
+            "role": "assistant",
+            "content": "对，这就是现在最该警惕的误读点：`Context(估算)` 没明显变小，不等于 GC 没生效。 原因是现在有两个不同口径：",
+            "tokenEstimate": 16
+          },
+          {
+            "id": "t11",
+            "role": "user",
+            "content": "肉眼看到的 # Context History 也没有减小，一直增加，也是正常的？",
+            "tokenEstimate": 11
+          },
+          {
+            "id": "t12",
+            "role": "assistant",
+            "content": "是，通常正常。 `# Context History` 来自最近几轮的 `last_token_usage.input_tokens`，代码就在 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/codex-vscode-context-minor-gc.js:240) 和…",
+            "tokenEstimate": 50
+          }
+        ],
+        "evictedTurns": [
+          {
+            "id": "t1",
+            "role": "assistant",
+            "content": "记忆已恢复，当前我会按“只做新线程体感测试，不改代码”的约束继续。 关键信息我已经对齐： - 当前目标是新 Codex 线程里做 2 组最短手工 case，验证 Context Minor GC 是否更薄、更稳、切题后更明显收缩。 - 顺序固定：先跑“中文多轮切题 case”，再跑“旧值被新值覆盖后再回问”的 case。 - 每组结束后都要执行一次 `npm run codex:vscode:gc --silent`，重点看…",
+            "tokenEstimate": 54
+          },
+          {
+            "id": "t2",
+            "role": "user",
+            "content": "开始",
+            "tokenEstimate": 1
+          },
+          {
+            "id": "t3",
+            "role": "user",
+            "content": "开始测试吧",
+            "tokenEstimate": 2
+          },
+          {
+            "id": "t4",
+            "role": "assistant",
+            "content": "# 第 1 组测试：现在开始 请在**新的 Codex 线程**里，依次只发这 4 句：",
+            "tokenEstimate": 11
+          },
+          {
+            "id": "t5",
+            "role": "user",
+            "content": "# Files mentioned by the user: ## codex-resume-pack.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/codex-resume-pack.md ## continue.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/continue.md ## handoff.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/handoff.md ## progress.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/progress.md ## status.md: /Users/redcreen/Project/unified-memory-core/.codex/status.md ## plan.md: /Users/redcreen/Project/unified-memory-core/.codex/plan.md ## My request for Codex: redcreen@redcreendeMac-mini-2 unified-memory-core % npm run codex:vscode:gc --silent - status: `ok` - query: `先不聊代码了。刚才旅行那段里，我更想住哪座城市？` - extractedMessageCount: `8` - sessionId: `019da33d-4d22-7d62-8623-5237f90e4ec1` - gcStatus: `captured` - applied: `true` - reason: `n/a` - relation: `resolve` - decisionTransport: `c...",
+            "tokenEstimate": 225
+          },
+          {
+            "id": "t6",
+            "role": "assistant",
+            "content": "第 1 组先看 GC 行为，结论是：明显比旧版更像对的。 你的结果里有 3 个强信号： - `applied: true`，说明切题回问时确实触发了 GC。 - `promptReductionRatio: 0.7864`，说明工作集裁剪得很明显，不是轻微噪音。 - `relation: resolve`，虽然不是预期里的 `switch`，但这类“从代码 detour 回到先前旅行事实”的回问，被判成 `resolve`…",
+            "tokenEstimate": 54
+          },
+          {
+            "id": "t7",
+            "role": "user",
+            "content": "是京都 zed redcreen@redcreendeMac-mini-2 unified-memory-core % npm run codex:vscode:gc --silent - status: `ok` - query: `回到编辑器问题。我现在默认编辑器是什么？` - extractedMessageCount: `8` - sessionId: `019da346-335b-7d31-be0e-56a3c1b52ff3` - gcStatus: `captured` - applied: `true` - reason: `n/a` - relation: `resolve` - decisionTransport: `codex_exec` - promptReductionRatio: `0.7586` - hostActualInputTokens: `44494` - hostOriginalInputTokens: `44560` - hostContextWindow: `486400` - hostActualWindowRatio: `0.0915` - hostRiskLevel: `normal` - hostRecommendedAction: `continue` - footer: `Context(估算): 最近一轮输入 44.5k，无GC估算 44.6k；窗口口径 486k，压缩比：0.1%（44.5k/44.6k），占窗口比例：9.2%（44.5k/486k）`",
+            "tokenEstimate": 167
+          },
+          {
+            "id": "t8",
+            "role": "assistant",
+            "content": "这轮新线程体感测试可以判定为通过，而且相比旧版有明显改善。 两组都满足“答案正确 + 切题后 GC 生效”： - 第 1 组回答是 `京都`，`applied=true`，`promptReductionRatio=0.7864` - 第 2 组回答是 `Zed`，`applied=true`，`promptReductionRatio=0.7586`",
+            "tokenEstimate": 45
+          }
+        ]
+      },
+      "baselineRawTranscript": "t1 assistant: 记忆已恢复，当前我会按“只做新线程体感测试，不改代码”的约束继续。 关键信息我已经对齐： - 当前目标是新 Codex 线程里做 2 组最短手工 case，验证 Context Minor GC 是否更薄、更稳、切题后更明显收缩。 - 顺序固定：先跑“中文多轮切题 case”，再跑“旧值被新值覆盖后再回问”的 case。 - 每组结束后都要执行一次 `npm run codex:vscode:gc --silent`，重点看…\nt2 user: 开始\nt3 user: 开始测试吧\nt4 assistant: # 第 1 组测试：现在开始 请在**新的 Codex 线程**里，依次只发这 4 句：\nt5 user: # Files mentioned by the user: ## codex-resume-pack.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/codex-resume-pack.md ## continue.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/continue.md ## handoff.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/handoff.md ## progress.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/progress.md ## status.md: /Users/redcreen/Project/unified-memory-core/.codex/status.md ## plan.md: /Users/redcreen/Project/unified-memory-core/.codex/plan.md ## My request for Codex: redcreen@redcreendeMac-mini-2 unified-memory-core % npm run codex:vscode:gc --silent - status: `ok` - query: `先不聊代码了。刚才旅行那段里，我更想住哪座城市？` - extractedMessageCount: `8` - sessionId: `019da33d-4d22-7d62-8623-5237f90e4ec1` - gcStatus: `captured` - applied: `true` - reason: `n/a` - relation: `resolve` - decisionTransport: `c...\nt6 assistant: 第 1 组先看 GC 行为，结论是：明显比旧版更像对的。 你的结果里有 3 个强信号： - `applied: true`，说明切题回问时确实触发了 GC。 - `promptReductionRatio: 0.7864`，说明工作集裁剪得很明显，不是轻微噪音。 - `relation: resolve`，虽然不是预期里的 `switch`，但这类“从代码 detour 回到先前旅行事实”的回问，被判成 `resolve`…\nt7 user: 是京都 zed redcreen@redcreendeMac-mini-2 unified-memory-core % npm run codex:vscode:gc --silent - status: `ok` - query: `回到编辑器问题。我现在默认编辑器是什么？` - extractedMessageCount: `8` - sessionId: `019da346-335b-7d31-be0e-56a3c1b52ff3` - gcStatus: `captured` - applied: `true` - reason: `n/a` - relation: `resolve` - decisionTransport: `codex_exec` - promptReductionRatio: `0.7586` - hostActualInputTokens: `44494` - hostOriginalInputTokens: `44560` - hostContextWindow: `486400` - hostActualWindowRatio: `0.0915` - hostRiskLevel: `normal` - hostRecommendedAction: `continue` - footer: `Context(估算): 最近一轮输入 44.5k，无GC估算 44.6k；窗口口径 486k，压缩比：0.1%（44.5k/44.6k），占窗口比例：9.2%（44.5k/486k）`\nt8 assistant: 这轮新线程体感测试可以判定为通过，而且相比旧版有明显改善。 两组都满足“答案正确 + 切题后 GC 生效”： - 第 1 组回答是 `京都`，`applied=true`，`promptReductionRatio=0.7864` - 第 2 组回答是 `Zed`，`applied=true`，`promptReductionRatio=0.7586`\nt9 user: 可是 每一轮的 Context(估算) 并没有减小啊\nt10 assistant: 对，这就是现在最该警惕的误读点：`Context(估算)` 没明显变小，不等于 GC 没生效。 原因是现在有两个不同口径：\nt11 user: 肉眼看到的 # Context History 也没有减小，一直增加，也是正常的？\nt12 assistant: 是，通常正常。 `# Context History` 来自最近几轮的 `last_token_usage.input_tokens`，代码就在 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/codex-vscode-context-minor-gc.js:240) 和…",
+      "shadowRawTranscript": "t9 user: 可是 每一轮的 Context(估算) 并没有减小啊\nt10 assistant: 对，这就是现在最该警惕的误读点：`Context(估算)` 没明显变小，不等于 GC 没生效。 原因是现在有两个不同口径：\nt11 user: 肉眼看到的 # Context History 也没有减小，一直增加，也是正常的？\nt12 assistant: 是，通常正常。 `# Context History` 来自最近几轮的 `last_token_usage.input_tokens`，代码就在 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/codex-vscode-context-minor-gc.js:240) 和…",
+      "semanticPinNotes": [
+        "assistant: 这轮新线程体感测试可以判定为通过，而且相比旧版有明显改善。 两组都满足“答案正确 + 切题后 GC 生效”： - 第 1 组回答是 `京都`，`applied=true`，`promptReductionRatio=0.7864` - 第 2 组回答是 `Zed`，`applied=true`，`promptReductionRatio=0.7586`"
+      ],
+      "archiveSummary": "Earlier test thread is resolved: the two manual new-thread GC cases were judged passed, with correct answers and GC applied on both; key takeaway is that GC behavior improved and did trigger during topic switches, but visible context-size indicators may not shrink in the same way users expect.",
+      "injectedArchiveSummary": "",
+      "baselinePromptEstimate": 676,
+      "shadowRawPromptEstimate": 95,
+      "shadowPackageEstimate": 115,
+      "shadowPackageText": "Task state summary:\nEarlier test thread is resolved: the two manual new-thread GC cases were judged passed, with correct answers and GC applied on both; key takeaway is that GC behavior improved and did trigger during topic switches, but v…\n\nLatest user ask:\n- 肉眼看到的 # Context History 也没有减小，一直增加，也是正常的？\n\nSemantic pins:\n- assistant: 这轮新线程体感测试可以判定为通过，而且相比旧版有明显改善。 两组都满足“答案正确 + 切题后 GC 生效”： - 第 1 组回答是 `京都`，`applied=true`，`promptReductionRatio=0.7864` - 第 2 组回答是 `…"
+    },
+    "scorecard": {
+      "relation": "continue",
+      "baselineTurnCount": 12,
+      "keptTurnCount": 4,
+      "evictedTurnCount": 8,
+      "pinCount": 1,
+      "baselinePromptEstimate": 676,
+      "shadowRawPromptEstimate": 95,
+      "shadowPackageEstimate": 115,
+      "rawReductionRatio": 0.8694,
+      "packageReductionRatio": 0.8299,
+      "candidateLoadElapsedMs": 0,
+      "assemblyBuildElapsedMs": 0,
+      "decisionElapsedMs": 15984,
+      "totalElapsedMs": 15986,
+      "guardedEnabled": true,
+      "guardedApplied": true,
+      "guardedReason": "guarded_candidate",
+      "guardedMessageCount": 4,
+      "guardedCarryForwardEstimate": 56,
+      "guardedFilteredMessageEstimate": 84
+    },
+    "guarded": {
+      "enabled": true,
+      "applied": true,
+      "reason": "guarded_candidate",
+      "filteredMessages": [
+        {
+          "role": "user",
+          "content": "可是 每一轮的 Context(估算) 并没有减小啊"
+        },
+        {
+          "role": "assistant",
+          "content": "对，这就是现在最该警惕的误读点：`Context(估算)` 没明显变小，不等于 GC 没生效。 原因是现在有两个不同口径："
+        },
+        {
+          "role": "user",
+          "content": "肉眼看到的 # Context History 也没有减小，一直增加，也是正常的？"
+        },
+        {
+          "role": "assistant",
+          "content": "是，通常正常。 `# Context History` 来自最近几轮的 `last_token_usage.input_tokens`，代码就在 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/codex-vscode-context-minor-gc.js:240) 和…"
+        }
+      ],
+      "filteredMessageCount": 4,
+      "filteredMessageTokenEstimate": 84,
+      "carryForwardText": "Conversation carry-forward pins:\n- assistant: 这轮新线程体感测试可以判定为通过，而且相比旧版有明显改善。 两组都满足“答案正确 + 切题后 GC 生效”： - 第 1 组回答是 `京都`，`applied=true`，`promptReductionRatio=0.7864` - 第 2 组回答是 `Zed`，`applied=true`，`promptReductionRatio=0.7586`",
+      "carryForwardEstimate": 56,
+      "evictedSourceIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "timings": {
+      "totalElapsedMs": 15986,
+      "decisionElapsedMs": 15984
+    },
+    "artifact_paths": {
+      "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da335-a070-7972-b61e-6ba3a73ff633-shadow-1776561208286-z8aud5.json",
+      "summary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl"
+    }
+  }
+}

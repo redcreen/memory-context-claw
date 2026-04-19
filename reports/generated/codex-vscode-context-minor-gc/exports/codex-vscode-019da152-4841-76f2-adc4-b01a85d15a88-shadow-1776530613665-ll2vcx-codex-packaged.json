@@ -1,0 +1,326 @@
+{
+  "schema_version": "umc.codex-context-minor-gc.v1",
+  "generated_at": "2026-04-18T16:44:00.424Z",
+  "event_id": "shadow-1776530613665-ll2vcx-codex-packaged",
+  "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+  "query": "需要",
+  "status": "captured",
+  "reason": "",
+  "decision_transport": "codex_exec",
+  "relation": "continue",
+  "applied": true,
+  "codex_guard_reason": "codex_packaged_guard",
+  "prompt_reduction_ratio": 0.3605,
+  "baseline_context_estimate": 233,
+  "packaged_context_estimate": 149,
+  "effective_context_estimate": 149,
+  "shadow_status": "captured",
+  "shadow_guarded_applied": true,
+  "shadow_guarded_reason": "guarded_candidate",
+  "shadow_export_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da152-4841-76f2-adc4-b01a85d15a88-shadow-1776530613665-ll2vcx.json",
+  "shadow_summary_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl",
+  "export_path": "exports/codex-vscode-019da152-4841-76f2-adc4-b01a85d15a88-shadow-1776530613665-ll2vcx-codex-packaged.json",
+  "effective_context_block": "## Context Minor GC Working Set\nTask state summary:\nEarlier subcase established that the user's default editor is Zed, and Case D behaved like Case B: answer correctness was fine, but GC did not apply because the decision stabilized at relation=continue with guard_reason…\n\nLatest user ask:\n- 需要\n\nSemantic pins:\n- assistant: Zed。 `Case D` 的答案正确，但和 `Case B` 一样，GC 没明显生效。最终落盘是： - `query=\"[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？\"` - `relation=continue` - `applied=fal…\n- assistant: Zed。 `Case D` 也是半通过： - 答案正确，说明“新事实覆盖旧事实”成立 - 但 GC 仍然没有真正应用，最终稳定成： - `relation=continue` - `applied=false` - `guard_reason=not_en…",
+  "packaged_context_block": "## Context Minor GC Working Set\nTask state summary:\nEarlier subcase established that the user's default editor is Zed, and Case D behaved like Case B: answer correctness was fine, but GC did not apply because the decision stabilized at relation=continue with guard_reason…\n\nLatest user ask:\n- 需要\n\nSemantic pins:\n- assistant: Zed。 `Case D` 的答案正确，但和 `Case B` 一样，GC 没明显生效。最终落盘是： - `query=\"[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？\"` - `relation=continue` - `applied=fal…\n- assistant: Zed。 `Case D` 也是半通过： - 答案正确，说明“新事实覆盖旧事实”成立 - 但 GC 仍然没有真正应用，最终稳定成： - `relation=continue` - `applied=false` - `guard_reason=not_en…",
+  "shadow_event": {
+    "schema_version": "umc.dialogue-working-set-shadow.v1",
+    "event_id": "shadow-1776530613665-ll2vcx",
+    "generated_at": "2026-04-18T16:43:33.665Z",
+    "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+    "agent_id": "main",
+    "query": "需要",
+    "status": "captured",
+    "reason": "",
+    "sampling": {
+      "max_turns": 12,
+      "min_turns": 3,
+      "max_chars_per_turn": 900
+    },
+    "transcript": [
+      {
+        "id": "t1",
+        "role": "assistant",
+        "content": "继续发最后一条： ```text [GC-D1] 回到编辑器问题。我现在默认编辑器是什么？ ```"
+      },
+      {
+        "id": "t2",
+        "role": "user",
+        "content": "[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？"
+      },
+      {
+        "id": "t3",
+        "role": "assistant",
+        "content": "继续发最后一条： ```text [GC-D1] 回到编辑器问题。我现在默认编辑器是什么？ ```"
+      },
+      {
+        "id": "t4",
+        "role": "user",
+        "content": "[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？"
+      },
+      {
+        "id": "t5",
+        "role": "assistant",
+        "content": "Zed。 `Case D` 的答案正确，但和 `Case B` 一样，GC 没明显生效。最终落盘是： - `query=\"[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？\"` - `relation=continue` - `applied=false` - `guard_reason=not_enough_evictions`"
+      },
+      {
+        "id": "t6",
+        "role": "user",
+        "content": "继续"
+      },
+      {
+        "id": "t7",
+        "role": "assistant",
+        "content": "Zed。 `Case D` 也是半通过： - 答案正确，说明“新事实覆盖旧事实”成立 - 但 GC 仍然没有真正应用，最终稳定成： - `relation=continue` - `applied=false` - `guard_reason=not_enough_evictions`"
+      },
+      {
+        "id": "t8",
+        "role": "user",
+        "content": "需要"
+      },
+      {
+        "id": "t9",
+        "role": "assistant",
+        "content": "根因基本确认了，不是单纯“模型把 B/D 判成了 `continue`”。 核心问题有两个。"
+      },
+      {
+        "id": "t10",
+        "role": "user",
+        "content": "要； 先做1，然后做2"
+      },
+      {
+        "id": "t11",
+        "role": "assistant",
+        "content": "已经做完，顺序就是你要的 `1 -> 2`。 第 1 条已修： - timeout 不再伪装成 `continue` - 现在会落成 `status=\"error\", reason=\"decision_timeout\"` - 相关改动在 [structured-decision-runner.js](/Users/redcreen/Project/unified-memory-core/src/structured-decision-…"
+      },
+      {
+        "id": "t12",
+        "role": "user",
+        "content": "需要"
+      }
+    ],
+    "decision": {
+      "relation": "continue",
+      "confidence": 0.91,
+      "evict_turn_ids": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8"
+      ],
+      "pin_turn_ids": [
+        "t5",
+        "t7"
+      ],
+      "archive_summary": "Earlier subcase established that the user's default editor is Zed, and Case D behaved like Case B: answer correctness was fine, but GC did not apply because the decision stabilized at relation=continue with guard_reason=not_enough_evictions. The conversation then shifted to root-cause analysis and implementation work on fixing that GC behavior.",
+      "reasoning_summary": "The latest user turn ('需要') is part of the same active GC debugging thread, so relation=continue. The next turn should keep the immediate implementation context around root-cause analysis and the ordered 1->2 fix work (t9-t11). Earlier duplicated editor-question turns and repeated status confirmations are resolved/background and can leave the raw prompt. The durable facts from t5/t7 remain useful as compact pins because they summarize the verified Case D behavior and the Zed fact without needing the full raw exchange."
+    },
+    "decision_transport": "codex_exec",
+    "snapshot": {
+      "applied": {
+        "relation": "continue",
+        "confidence": 0.91,
+        "archiveSummary": "Earlier subcase established that the user's default editor is Zed, and Case D behaved like Case B: answer correctness was fine, but GC did not apply because the decision stabilized at relation=continue with guard_reason=not_enough_evictions. The conversation then shifted to root-cause analysis and implementation work on fixing that GC behavior.",
+        "reasoningSummary": "The latest user turn ('需要') is part of the same active GC debugging thread, so relation=continue. The next turn should keep the immediate implementation context around root-cause analysis and the ordered 1->2 fix work (t9-t11). Earlier duplicated editor-question turns and repeated status confirmations are resolved/background and can leave the raw prompt. The durable facts from t5/t7 remain useful as compact pins because they summarize the verified Case D behavior and the Zed fact without needing the full raw exchange.",
+        "latestUserTurnId": "t12",
+        "pinTurnIds": [
+          "t5",
+          "t7"
+        ],
+        "pinnedOnlyTurnIds": [
+          "t5",
+          "t7"
+        ],
+        "requestedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3",
+          "t4",
+          "t5",
+          "t6",
+          "t7",
+          "t8"
+        ],
+        "blockedEvictTurnIds": [],
+        "appliedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3",
+          "t4",
+          "t5",
+          "t6",
+          "t7",
+          "t8"
+        ],
+        "keepTurnIds": [
+          "t9",
+          "t10",
+          "t11",
+          "t12"
+        ],
+        "baselineTokens": 192,
+        "keptTokens": 71,
+        "prunedTokens": 121,
+        "reductionRatio": 0.6302083333333334,
+        "keepTurns": [
+          {
+            "id": "t9",
+            "role": "assistant",
+            "content": "根因基本确认了，不是单纯“模型把 B/D 判成了 `continue`”。 核心问题有两个。",
+            "tokenEstimate": 12
+          },
+          {
+            "id": "t10",
+            "role": "user",
+            "content": "要； 先做1，然后做2",
+            "tokenEstimate": 3
+          },
+          {
+            "id": "t11",
+            "role": "assistant",
+            "content": "已经做完，顺序就是你要的 `1 -> 2`。 第 1 条已修： - timeout 不再伪装成 `continue` - 现在会落成 `status=\"error\", reason=\"decision_timeout\"` - 相关改动在 [structured-decision-runner.js](/Users/redcreen/Project/unified-memory-core/src/structured-decision-…",
+            "tokenEstimate": 55
+          },
+          {
+            "id": "t12",
+            "role": "user",
+            "content": "需要",
+            "tokenEstimate": 1
+          }
+        ],
+        "evictedTurns": [
+          {
+            "id": "t1",
+            "role": "assistant",
+            "content": "继续发最后一条： ```text [GC-D1] 回到编辑器问题。我现在默认编辑器是什么？ ```",
+            "tokenEstimate": 13
+          },
+          {
+            "id": "t2",
+            "role": "user",
+            "content": "[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？",
+            "tokenEstimate": 7
+          },
+          {
+            "id": "t3",
+            "role": "assistant",
+            "content": "继续发最后一条： ```text [GC-D1] 回到编辑器问题。我现在默认编辑器是什么？ ```",
+            "tokenEstimate": 13
+          },
+          {
+            "id": "t4",
+            "role": "user",
+            "content": "[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？",
+            "tokenEstimate": 7
+          },
+          {
+            "id": "t5",
+            "role": "assistant",
+            "content": "Zed。 `Case D` 的答案正确，但和 `Case B` 一样，GC 没明显生效。最终落盘是： - `query=\"[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？\"` - `relation=continue` - `applied=false` - `guard_reason=not_enough_evictions`",
+            "tokenEstimate": 43
+          },
+          {
+            "id": "t6",
+            "role": "user",
+            "content": "继续",
+            "tokenEstimate": 1
+          },
+          {
+            "id": "t7",
+            "role": "assistant",
+            "content": "Zed。 `Case D` 也是半通过： - 答案正确，说明“新事实覆盖旧事实”成立 - 但 GC 仍然没有真正应用，最终稳定成： - `relation=continue` - `applied=false` - `guard_reason=not_enough_evictions`",
+            "tokenEstimate": 36
+          },
+          {
+            "id": "t8",
+            "role": "user",
+            "content": "需要",
+            "tokenEstimate": 1
+          }
+        ]
+      },
+      "baselineRawTranscript": "t1 assistant: 继续发最后一条： ```text [GC-D1] 回到编辑器问题。我现在默认编辑器是什么？ ```\nt2 user: [GC-D1] 回到编辑器问题。我现在默认编辑器是什么？\nt3 assistant: 继续发最后一条： ```text [GC-D1] 回到编辑器问题。我现在默认编辑器是什么？ ```\nt4 user: [GC-D1] 回到编辑器问题。我现在默认编辑器是什么？\nt5 assistant: Zed。 `Case D` 的答案正确，但和 `Case B` 一样，GC 没明显生效。最终落盘是： - `query=\"[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？\"` - `relation=continue` - `applied=false` - `guard_reason=not_enough_evictions`\nt6 user: 继续\nt7 assistant: Zed。 `Case D` 也是半通过： - 答案正确，说明“新事实覆盖旧事实”成立 - 但 GC 仍然没有真正应用，最终稳定成： - `relation=continue` - `applied=false` - `guard_reason=not_enough_evictions`\nt8 user: 需要\nt9 assistant: 根因基本确认了，不是单纯“模型把 B/D 判成了 `continue`”。 核心问题有两个。\nt10 user: 要； 先做1，然后做2\nt11 assistant: 已经做完，顺序就是你要的 `1 -> 2`。 第 1 条已修： - timeout 不再伪装成 `continue` - 现在会落成 `status=\"error\", reason=\"decision_timeout\"` - 相关改动在 [structured-decision-runner.js](/Users/redcreen/Project/unified-memory-core/src/structured-decision-…\nt12 user: 需要",
+      "shadowRawTranscript": "t9 assistant: 根因基本确认了，不是单纯“模型把 B/D 判成了 `continue`”。 核心问题有两个。\nt10 user: 要； 先做1，然后做2\nt11 assistant: 已经做完，顺序就是你要的 `1 -> 2`。 第 1 条已修： - timeout 不再伪装成 `continue` - 现在会落成 `status=\"error\", reason=\"decision_timeout\"` - 相关改动在 [structured-decision-runner.js](/Users/redcreen/Project/unified-memory-core/src/structured-decision-…\nt12 user: 需要",
+      "semanticPinNotes": [
+        "assistant: Zed。 `Case D` 的答案正确，但和 `Case B` 一样，GC 没明显生效。最终落盘是： - `query=\"[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？\"` - `relation=continue` - `applied=false` - `guard_reason=not_enough_evictions`",
+        "assistant: Zed。 `Case D` 也是半通过： - 答案正确，说明“新事实覆盖旧事实”成立 - 但 GC 仍然没有真正应用，最终稳定成： - `relation=continue` - `applied=false` - `guard_reason=not_enough_evictions`"
+      ],
+      "archiveSummary": "Earlier subcase established that the user's default editor is Zed, and Case D behaved like Case B: answer correctness was fine, but GC did not apply because the decision stabilized at relation=continue with guard_reason=not_enough_evictions. The conversation then shifted to root-cause analysis and implementation work on fixing that GC behavior.",
+      "injectedArchiveSummary": "",
+      "baselinePromptEstimate": 226,
+      "shadowRawPromptEstimate": 83,
+      "shadowPackageEstimate": 141,
+      "shadowPackageText": "Task state summary:\nEarlier subcase established that the user's default editor is Zed, and Case D behaved like Case B: answer correctness was fine, but GC did not apply because the decision stabilized at relation=continue with guard_reason…\n\nLatest user ask:\n- 需要\n\nSemantic pins:\n- assistant: Zed。 `Case D` 的答案正确，但和 `Case B` 一样，GC 没明显生效。最终落盘是： - `query=\"[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？\"` - `relation=continue` - `applied=fal…\n- assistant: Zed。 `Case D` 也是半通过： - 答案正确，说明“新事实覆盖旧事实”成立 - 但 GC 仍然没有真正应用，最终稳定成： - `relation=continue` - `applied=false` - `guard_reason=not_en…"
+    },
+    "scorecard": {
+      "relation": "continue",
+      "baselineTurnCount": 12,
+      "keptTurnCount": 4,
+      "evictedTurnCount": 8,
+      "pinCount": 2,
+      "baselinePromptEstimate": 226,
+      "shadowRawPromptEstimate": 83,
+      "shadowPackageEstimate": 141,
+      "rawReductionRatio": 0.6302,
+      "packageReductionRatio": 0.3761,
+      "candidateLoadElapsedMs": 0,
+      "assemblyBuildElapsedMs": 0,
+      "decisionElapsedMs": 26754,
+      "totalElapsedMs": 26758,
+      "guardedEnabled": true,
+      "guardedApplied": true,
+      "guardedReason": "guarded_candidate",
+      "guardedMessageCount": 4,
+      "guardedCarryForwardEstimate": 93,
+      "guardedFilteredMessageEstimate": 71
+    },
+    "guarded": {
+      "enabled": true,
+      "applied": true,
+      "reason": "guarded_candidate",
+      "filteredMessages": [
+        {
+          "role": "assistant",
+          "content": "根因基本确认了，不是单纯“模型把 B/D 判成了 `continue`”。 核心问题有两个。"
+        },
+        {
+          "role": "user",
+          "content": "要； 先做1，然后做2"
+        },
+        {
+          "role": "assistant",
+          "content": "已经做完，顺序就是你要的 `1 -> 2`。 第 1 条已修： - timeout 不再伪装成 `continue` - 现在会落成 `status=\"error\", reason=\"decision_timeout\"` - 相关改动在 [structured-decision-runner.js](/Users/redcreen/Project/unified-memory-core/src/structured-decision-…"
+        },
+        {
+          "role": "user",
+          "content": "需要"
+        }
+      ],
+      "filteredMessageCount": 4,
+      "filteredMessageTokenEstimate": 71,
+      "carryForwardText": "Conversation carry-forward pins:\n- assistant: Zed。 `Case D` 的答案正确，但和 `Case B` 一样，GC 没明显生效。最终落盘是： - `query=\"[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？\"` - `relation=continue` - `applied=false` - `guard_reason=not_enough_evictions`\n- assistant: Zed。 `Case D` 也是半通过： - 答案正确，说明“新事实覆盖旧事实”成立 - 但 GC 仍然没有真正应用，最终稳定成： - `relation=continue` - `applied=false` - `guard_reason=not_enough_evictions`",
+      "carryForwardEstimate": 93,
+      "evictedSourceIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "timings": {
+      "totalElapsedMs": 26758,
+      "decisionElapsedMs": 26754
+    },
+    "artifact_paths": {
+      "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da152-4841-76f2-adc4-b01a85d15a88-shadow-1776530613665-ll2vcx.json",
+      "summary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl"
+    }
+  }
+}

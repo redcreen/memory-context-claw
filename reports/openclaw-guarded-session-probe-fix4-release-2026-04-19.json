@@ -1,0 +1,1972 @@
+{
+  "generatedAt": "2026-04-19T04:05:01.379Z",
+  "agentId": "main",
+  "agentModel": "openai-codex/gpt-5.4-mini",
+  "shadowModel": "gpt-5.4-mini",
+  "reasoningEffort": "low",
+  "transport": "codex_exec",
+  "outputRoot": "/Users/redcreen/Project/unified-memory-core/reports/generated/openclaw-guarded-session-probe-fix4-release-2026-04-19",
+  "summary": {
+    "total": 1,
+    "guardedCasesOk": 1,
+    "baselineCasesOk": 1,
+    "guardedCheckpointPasses": 2,
+    "guardedCheckpointTotal": 2,
+    "averageBaselinePeakPromptTokens": 17406,
+    "averageGuardedPeakPromptTokens": 14367,
+    "averageBaselinePostSwitchPromptTokens": 17077,
+    "averageGuardedPostSwitchPromptTokens": 13554,
+    "averageBaselineRollbackRatio": 0.0189,
+    "averageGuardedRollbackRatio": 0.0566,
+    "averageGuardedVsBaselinePostSwitchSavingsRatio": 0.2063
+  },
+  "results": [
+    {
+      "id": "probe-release-then-travel-switch",
+      "description": "A long release-planning thread should shrink after switching to travel while preserving the original project codename for a later return.",
+      "baseline": {
+        "mode": "baseline",
+        "sessionId": "probe-release-then-travel-switch-baseline",
+        "sessionKey": "agent:main:probe-release-then-travel-switch-baseline",
+        "ok": true,
+        "turnsCompleted": 11,
+        "turns": [
+          {
+            "turnIndex": 0,
+            "message": "我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。",
+            "ok": true,
+            "answer": "记住了：这个发布方案第一页的项目代号固定写 `north-star-lantern`。",
+            "error": "",
+            "promptTokens": 14936,
+            "durationMs": 9270,
+            "event": null
+          },
+          {
+            "turnIndex": 1,
+            "message": "继续同一个 release 话题：把验收拆成版本、安装、回滚、观测四块，而且每块都要写 owner、风险和 rollback boundary。",
+            "ok": true,
+            "answer": "可以。这个 release 方案的验收结构就按四块拆：\n\n- 版本\n- 安装\n- 回滚\n- 观测\n\n而且每一块都固定写这三项：\n\n- owner\n- 风险\n- rollback boundary\n\n我建议版式直接统一成一个表格/卡片模板，每块一行，字段固定，方便后面填内容和审阅。比如：\n\n- 版本\n - owner:\n - 风险:\n - rollback boundary:\n\n- 安装\n - owner:\n - 风险:\n - rollback boundary:\n\n- 回滚\n - owner:\n - 风险:\n - rollback boundary:\n\n- 观测\n - owner:\n - 风险:\n - rollback boundary:\n\n如果你愿意，我下一步可以直接帮你把这四块展开成一版可交付的 release 验收草案。",
+            "error": "",
+            "promptTokens": 14790,
+            "durationMs": 4974,
+            "event": null
+          },
+          {
+            "turnIndex": 2,
+            "message": "再补充同一个方案：版本块要写 tag、commit、构建时间、镜像 digest；安装块要写目标环境、前置条件和灰度范围。",
+            "ok": true,
+            "answer": "收到。这个 release 方案的验收内容可以更新成下面这样：\n\n- 版本\n - owner:\n - 风险:\n - rollback boundary:\n - tag:\n - commit:\n - 构建时间:\n - 镜像 digest:\n\n- 安装\n - owner:\n - 风险:\n - rollback boundary:\n - 目标环境:\n - 前置条件:\n - 灰度范围:\n\n- 回滚\n - owner:\n - 风险:\n - rollback boundary:\n\n- 观测\n - owner:\n - 风险:\n - rollback boundary:\n\n如果你要，我可以下一条直接把这四块整理成正式的 release 验收模板文案，适合你贴进方案里。",
+            "error": "",
+            "promptTokens": 14934,
+            "durationMs": 6795,
+            "event": null
+          },
+          {
+            "turnIndex": 3,
+            "message": "继续 release：回滚块要写开关、数据库兼容边界、失败后的人工兜底；观测块要写 dashboard、告警和日志关键字。",
+            "ok": true,
+            "answer": "补齐后，这个 release 方案的验收结构就定成这样：\n\n- 版本\n - owner:\n - 风险:\n - rollback boundary:\n - tag:\n - commit:\n - 构建时间:\n - 镜像 digest:\n\n- 安装\n - owner:\n - 风险:\n - rollback boundary:\n - 目标环境:\n - 前置条件:\n - 灰度范围:\n\n- 回滚\n - owner:\n - 风险:\n - rollback boundary:\n - 开关:\n - 数据库兼容边界:\n - 失败后的人工兜底:\n\n- 观测\n - owner:\n - 风险:\n - rollback boundary:\n - dashboard:\n - 告警:\n - 日志关键字:\n\n如果你要，我可以下一步直接把它整理成一份「release 方案第一页 + 验收页」的可复制模板。",
+            "error": "",
+            "promptTokens": 15133,
+            "durationMs": 5134,
+            "event": null
+          },
+          {
+            "turnIndex": 4,
+            "message": "还是同一个发布方案：如果这轮只保留 5 条关键检查项，你先别展开内容，只确认你记住的是同一个方案。",
+            "ok": true,
+            "answer": "记住了，是同一个 release 方案。",
+            "error": "",
+            "promptTokens": 15505,
+            "durationMs": 4441,
+            "event": null
+          },
+          {
+            "turnIndex": 5,
+            "message": "继续：以后我问这个发布方案时，默认先给结论，再补细节，而且回答里保留 north-star-lantern 这个代号。",
+            "ok": true,
+            "answer": "记住了：以后你问这个发布方案时，我默认先给结论，再补细节，而且会保留 `north-star-lantern` 这个代号。",
+            "error": "",
+            "promptTokens": 16830,
+            "durationMs": 19289,
+            "event": null
+          },
+          {
+            "turnIndex": 6,
+            "message": "再补一层：这个方案要先跑 staging，再进 production，而且 staging 通过后 30 分钟内要盯错误率和回滚开关。",
+            "ok": true,
+            "answer": "记住了，同一个 `north-star-lantern` 发布方案再补一层：\n\n- 先跑 staging\n- 再进 production\n- staging 通过后，30 分钟内要盯错误率和回滚开关\n\n后面你再问这个方案，我会按这些固定前提来答。",
+            "error": "",
+            "promptTokens": 17406,
+            "durationMs": 4517,
+            "event": null
+          },
+          {
+            "turnIndex": 7,
+            "message": "现在换个完全不同的话题。帮我想一个京都三晚行程，偏安静、靠地铁、预算两万元。",
+            "ok": true,
+            "answer": "可以。先给结论：**京都三晚，建议住在乌丸/四条一带**，最稳，安静度和地铁便利性都好，预算两万元绰绰有余，能把住宿、交通、吃饭和门票都留出余量。\n\n### 方案骨架\n- **住区**：乌丸、四条、二条城南侧\n- **交通**：以地铁乌丸线、东西线为主，少折腾\n- **节奏**：每天 1 个主景点 + 1 个慢散步区\n- **风格**：寺院、庭园、咖啡、河边、老街，尽量避开过度拥挤点\n\n### 3 晚行程建议\n\n#### Day 1：抵达 + 城市慢热\n- 下午入住乌丸/四条附近酒店\n- 先去 **锦市场** 轻松逛一圈\n- 傍晚到 **鸭川** 或 **先斗町** 附近散步\n- 晚餐选一间安静的京料理或居酒屋\n\n#### Day 2：经典京都，但走安静线\n- 上午：**二条城** 或 **京都御苑**\n- 中午：乌丸一带吃简餐\n- 下午：**南禅寺 + 哲学之道**，节奏放慢\n- 晚上：回市区休息，别排太满\n\n#### Day 3：寺院与庭园日\n- 上午：**东福寺** 或 **建仁寺**\n- 下午：**祇园白川**、**八坂周边** 低强度散步\n- 如果想更安静，可替换成 **大德寺** 一带\n- 晚上找一家高评分日式定食或怀石\n\n#### Day 4：返程前半天\n- 早上喝咖啡、补买伴手礼\n- 如果时间够，去 **京都站周边** 轻松收尾\n- 前往机场或新干线\n\n### 预算感\n两万元预算下，比较舒服的分配是：\n- 住宿：占大头，但可以住得很好\n- 餐饮：中高档都能安排几顿\n- 门票交通：占比不大\n- 还可以留一笔机动金\n\n### 选酒店的标准\n- 靠 **乌丸线** 或 **东西线** 站点\n- 尽量选 **非临街高噪音房型**\n- 优先有大浴场/安静楼层/评分高的商务精品酒店\n\n如果你愿意，我下一步可以直接给你出一版：\n- **“偏安静版京都三晚具体路线”**\n- 或者 **“按每天上午/下午/晚上拆开的可执行版”**",
+            "error": "",
+            "promptTokens": 17077,
+            "durationMs": 9411,
+            "event": null
+          },
+          {
+            "turnIndex": 8,
+            "message": "继续旅行话题：如果第一晚住四条乌丸，后两晚更适合住哪里？一句话。",
+            "ok": true,
+            "answer": "后两晚更适合住 **京都站附近或二条城/丸太町一带**，一个更方便返程、一个更安静更稳。",
+            "error": "",
+            "promptTokens": 17822,
+            "durationMs": 5401,
+            "event": null
+          },
+          {
+            "turnIndex": 9,
+            "message": "还是旅行：刚才这段里，我更想住哪座城市？",
+            "ok": true,
+            "answer": "你更想住 **京都**。",
+            "error": "",
+            "promptTokens": 17846,
+            "durationMs": 4347,
+            "event": null
+          },
+          {
+            "turnIndex": 10,
+            "message": "先离开旅行，回到最早那个发布方案。第一页固定代号是什么？",
+            "ok": true,
+            "answer": "`north-star-lantern`",
+            "error": "",
+            "promptTokens": 17873,
+            "durationMs": 4177,
+            "event": null
+          }
+        ],
+        "checkpoints": [
+          {
+            "label": "travel-city-recall",
+            "turnIndex": 9,
+            "answer": "你更想住 **京都**。",
+            "passed": true,
+            "expectedAll": [
+              "京都"
+            ],
+            "expectedAny": [],
+            "forbiddenAny": [
+              "大阪",
+              "不知道"
+            ]
+          },
+          {
+            "label": "release-codename-return",
+            "turnIndex": 10,
+            "answer": "`north-star-lantern`",
+            "passed": true,
+            "expectedAll": [
+              "north-star-lantern"
+            ],
+            "expectedAny": [],
+            "forbiddenAny": [
+              "不知道"
+            ]
+          }
+        ],
+        "promptWindow": {
+          "switchTurnIndex": 7,
+          "rollbackWindow": 3,
+          "peakBeforeSwitch": 17406,
+          "minWithinSwitchWindow": 17077,
+          "rollbackRatio": 0.0189,
+          "guardedAppliedTurns": 0
+        }
+      },
+      "guarded": {
+        "mode": "guarded",
+        "sessionId": "probe-release-then-travel-switch-guarded",
+        "sessionKey": "agent:main:probe-release-then-travel-switch-guarded",
+        "ok": true,
+        "turnsCompleted": 11,
+        "turns": [
+          {
+            "turnIndex": 0,
+            "message": "我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。",
+            "ok": true,
+            "answer": "我记住了：这个 release 方案第一页的项目代号固定写 **north-star-lantern**。\n我记住了：这个 release 方案第一页的项目代号固定写 **north-star-lantern**。",
+            "error": "",
+            "promptTokens": 13691,
+            "durationMs": 4533,
+            "event": {
+              "schema_version": "umc.dialogue-working-set-shadow.v1",
+              "event_id": "shadow-1776571272956-gcvw2k",
+              "generated_at": "2026-04-19T04:01:12.956Z",
+              "session_key": "agent:main:main",
+              "agent_id": "main",
+              "query": "我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。",
+              "status": "skipped",
+              "reason": "not_enough_turns",
+              "sampling": {
+                "max_turns": 12,
+                "min_turns": 3,
+                "max_chars_per_turn": 900
+              },
+              "transcript": [],
+              "decision": null,
+              "decision_transport": "",
+              "snapshot": null,
+              "scorecard": {
+                "relation": "",
+                "baselineTurnCount": 0,
+                "keptTurnCount": 0,
+                "evictedTurnCount": 0,
+                "pinCount": 0,
+                "baselinePromptEstimate": 0,
+                "shadowRawPromptEstimate": 0,
+                "shadowPackageEstimate": 0,
+                "rawReductionRatio": 0,
+                "packageReductionRatio": 0,
+                "candidateLoadElapsedMs": 9,
+                "assemblyBuildElapsedMs": 0,
+                "decisionElapsedMs": 0,
+                "totalElapsedMs": 0,
+                "guardedEnabled": true,
+                "guardedApplied": false,
+                "guardedReason": "not_evaluated",
+                "guardedMessageCount": 0,
+                "guardedCarryForwardEstimate": 0,
+                "guardedFilteredMessageEstimate": 0
+              },
+              "guarded": {
+                "enabled": true,
+                "applied": false,
+                "reason": "not_evaluated",
+                "filteredMessageCount": 0,
+                "filteredMessageTokenEstimate": 0,
+                "carryForwardEstimate": 0,
+                "evictedSourceIndices": []
+              },
+              "timings": {
+                "totalElapsedMs": 0,
+                "decisionElapsedMs": 0
+              },
+              "exportPath": "/Users/redcreen/Project/unified-memory-core/reports/generated/openclaw-guarded-session-probe-fix4-release-2026-04-19/probe-release-then-travel-switch-guarded/exports/agent-main-main-shadow-1776571272956-gcvw2k.json"
+            }
+          },
+          {
+            "turnIndex": 1,
+            "message": "继续同一个 release 话题：把验收拆成版本、安装、回滚、观测四块，而且每块都要写 owner、风险和 rollback boundary。",
+            "ok": true,
+            "answer": "可以，按这四块拆最清楚。建议验收结构如下：\n\n- **版本**\n - owner\n - 风险\n - rollback boundary\n\n- **安装**\n - owner\n - 风险\n - rollback boundary\n\n- **回滚**\n - owner\n - 风险\n - rollback boundary\n\n- **观测**\n - owner\n - 风险\n - rollback boundary\n\n如果你要，我可以下一步直接帮你把它整理成一页 release 验收模板，或者继续把每块的内容填具体。",
+            "error": "",
+            "promptTokens": 13578,
+            "durationMs": 5471,
+            "event": {
+              "schema_version": "umc.dialogue-working-set-shadow.v1",
+              "event_id": "shadow-1776571295455-7itjyd",
+              "generated_at": "2026-04-19T04:01:35.455Z",
+              "session_key": "agent:main:main",
+              "agent_id": "main",
+              "query": "继续同一个 release 话题：把验收拆成版本、安装、回滚、观测四块，而且每块都要写 owner、风险和 rollback boundary。",
+              "status": "skipped",
+              "reason": "explicit_continue_marker",
+              "sampling": {
+                "max_turns": 12,
+                "min_turns": 3,
+                "max_chars_per_turn": 900
+              },
+              "transcript": [
+                {
+                  "id": "t1",
+                  "role": "user",
+                  "content": "我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。"
+                },
+                {
+                  "id": "t2",
+                  "role": "assistant",
+                  "content": "我记住了：这个 release 方案第一页的项目代号固定写 **north-star-lantern**。 我记住了：这个 release 方案第一页的项目代号固定写 **north-star-lantern**。"
+                }
+              ],
+              "decision": null,
+              "decision_transport": "",
+              "snapshot": null,
+              "scorecard": {
+                "relation": "",
+                "baselineTurnCount": 2,
+                "keptTurnCount": 0,
+                "evictedTurnCount": 0,
+                "pinCount": 0,
+                "baselinePromptEstimate": 0,
+                "shadowRawPromptEstimate": 0,
+                "shadowPackageEstimate": 0,
+                "rawReductionRatio": 0,
+                "packageReductionRatio": 0,
+                "candidateLoadElapsedMs": 8,
+                "assemblyBuildElapsedMs": 0,
+                "decisionElapsedMs": 0,
+                "totalElapsedMs": 1,
+                "guardedEnabled": true,
+                "guardedApplied": false,
+                "guardedReason": "not_evaluated",
+                "guardedMessageCount": 2,
+                "guardedCarryForwardEstimate": 0,
+                "guardedFilteredMessageEstimate": 0
+              },
+              "guarded": {
+                "enabled": true,
+                "applied": false,
+                "reason": "not_evaluated",
+                "filteredMessageCount": 2,
+                "filteredMessageTokenEstimate": 0,
+                "carryForwardEstimate": 0,
+                "evictedSourceIndices": []
+              },
+              "timings": {
+                "totalElapsedMs": 1,
+                "decisionElapsedMs": 0
+              },
+              "exportPath": "/Users/redcreen/Project/unified-memory-core/reports/generated/openclaw-guarded-session-probe-fix4-release-2026-04-19/probe-release-then-travel-switch-guarded/exports/agent-main-main-shadow-1776571295455-7itjyd.json"
+            }
+          },
+          {
+            "turnIndex": 2,
+            "message": "再补充同一个方案：版本块要写 tag、commit、构建时间、镜像 digest；安装块要写目标环境、前置条件和灰度范围。",
+            "ok": true,
+            "answer": "可以，更新后这版验收结构会是：\n\n- **版本**\n - owner\n - 风险\n - rollback boundary\n - tag\n - commit\n - 构建时间\n - 镜像 digest\n\n- **安装**\n - owner\n - 风险\n - rollback boundary\n - 目标环境\n - 前置条件\n - 灰度范围\n\n- **回滚**\n - owner\n - 风险\n - rollback boundary\n\n- **观测**\n - owner\n - 风险\n - rollback boundary\n\n如果你愿意，我可以继续把它整理成一份可直接贴到文档里的 release 验收表单。",
+            "error": "",
+            "promptTokens": 13653,
+            "durationMs": 5732,
+            "event": {
+              "schema_version": "umc.dialogue-working-set-shadow.v1",
+              "event_id": "shadow-1776571318147-urilw1",
+              "generated_at": "2026-04-19T04:01:58.147Z",
+              "session_key": "agent:main:main",
+              "agent_id": "main",
+              "query": "再补充同一个方案：版本块要写 tag、commit、构建时间、镜像 digest；安装块要写目标环境、前置条件和灰度范围。",
+              "status": "skipped",
+              "reason": "explicit_continue_marker",
+              "sampling": {
+                "max_turns": 12,
+                "min_turns": 3,
+                "max_chars_per_turn": 900
+              },
+              "transcript": [
+                {
+                  "id": "t1",
+                  "role": "user",
+                  "content": "我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。"
+                },
+                {
+                  "id": "t2",
+                  "role": "assistant",
+                  "content": "我记住了：这个 release 方案第一页的项目代号固定写 **north-star-lantern**。 我记住了：这个 release 方案第一页的项目代号固定写 **north-star-lantern**。"
+                },
+                {
+                  "id": "t3",
+                  "role": "user",
+                  "content": "继续同一个 release 话题：把验收拆成版本、安装、回滚、观测四块，而且每块都要写 owner、风险和 rollback boundary。"
+                },
+                {
+                  "id": "t4",
+                  "role": "assistant",
+                  "content": "可以，按这四块拆最清楚。建议验收结构如下： - **版本** - owner - 风险 - rollback boundary - **安装** - owner - 风险 - rollback boundary - **回滚** - owner - 风险 - rollback boundary - **观测** - owner - 风险 - rollback boundary 如果你要，我可以下一步直接帮你把它整理成一页 release 验收模板，或者继续把每块的内容填具体。"
+                }
+              ],
+              "decision": null,
+              "decision_transport": "",
+              "snapshot": null,
+              "scorecard": {
+                "relation": "",
+                "baselineTurnCount": 4,
+                "keptTurnCount": 0,
+                "evictedTurnCount": 0,
+                "pinCount": 0,
+                "baselinePromptEstimate": 0,
+                "shadowRawPromptEstimate": 0,
+                "shadowPackageEstimate": 0,
+                "rawReductionRatio": 0,
+                "packageReductionRatio": 0,
+                "candidateLoadElapsedMs": 7,
+                "assemblyBuildElapsedMs": 0,
+                "decisionElapsedMs": 0,
+                "totalElapsedMs": 0,
+                "guardedEnabled": true,
+                "guardedApplied": false,
+                "guardedReason": "not_evaluated",
+                "guardedMessageCount": 4,
+                "guardedCarryForwardEstimate": 0,
+                "guardedFilteredMessageEstimate": 0
+              },
+              "guarded": {
+                "enabled": true,
+                "applied": false,
+                "reason": "not_evaluated",
+                "filteredMessageCount": 4,
+                "filteredMessageTokenEstimate": 0,
+                "carryForwardEstimate": 0,
+                "evictedSourceIndices": []
+              },
+              "timings": {
+                "totalElapsedMs": 0,
+                "decisionElapsedMs": 0
+              },
+              "exportPath": "/Users/redcreen/Project/unified-memory-core/reports/generated/openclaw-guarded-session-probe-fix4-release-2026-04-19/probe-release-then-travel-switch-guarded/exports/agent-main-main-shadow-1776571318147-urilw1.json"
+            }
+          },
+          {
+            "turnIndex": 3,
+            "message": "继续 release：回滚块要写开关、数据库兼容边界、失败后的人工兜底；观测块要写 dashboard、告警和日志关键字。",
+            "ok": true,
+            "answer": "可以，补完后这版 release 验收结构是：\n\n- **版本**\n - owner\n - 风险\n - rollback boundary\n - tag\n - commit\n - 构建时间\n - 镜像 digest\n\n- **安装**\n - owner\n - 风险\n - rollback boundary\n - 目标环境\n - 前置条件\n - 灰度范围\n\n- **回滚**\n - owner\n - 风险\n - rollback boundary\n - 开关\n - 数据库兼容边界\n - 失败后的人工兜底\n\n- **观测**\n - owner\n - 风险\n - rollback boundary\n - dashboard\n - 告警\n - 日志关键字\n\n如果你要，我可以下一步把这四块整理成一段统一的 release 模板文案。",
+            "error": "",
+            "promptTokens": 13844,
+            "durationMs": 6197,
+            "event": {
+              "schema_version": "umc.dialogue-working-set-shadow.v1",
+              "event_id": "shadow-1776571341643-a9h3rl",
+              "generated_at": "2026-04-19T04:02:21.643Z",
+              "session_key": "agent:main:main",
+              "agent_id": "main",
+              "query": "继续 release：回滚块要写开关、数据库兼容边界、失败后的人工兜底；观测块要写 dashboard、告警和日志关键字。",
+              "status": "skipped",
+              "reason": "explicit_continue_marker",
+              "sampling": {
+                "max_turns": 12,
+                "min_turns": 3,
+                "max_chars_per_turn": 900
+              },
+              "transcript": [
+                {
+                  "id": "t1",
+                  "role": "user",
+                  "content": "我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。"
+                },
+                {
+                  "id": "t2",
+                  "role": "assistant",
+                  "content": "我记住了：这个 release 方案第一页的项目代号固定写 **north-star-lantern**。 我记住了：这个 release 方案第一页的项目代号固定写 **north-star-lantern**。"
+                },
+                {
+                  "id": "t3",
+                  "role": "user",
+                  "content": "继续同一个 release 话题：把验收拆成版本、安装、回滚、观测四块，而且每块都要写 owner、风险和 rollback boundary。"
+                },
+                {
+                  "id": "t4",
+                  "role": "assistant",
+                  "content": "可以，按这四块拆最清楚。建议验收结构如下： - **版本** - owner - 风险 - rollback boundary - **安装** - owner - 风险 - rollback boundary - **回滚** - owner - 风险 - rollback boundary - **观测** - owner - 风险 - rollback boundary 如果你要，我可以下一步直接帮你把它整理成一页 release 验收模板，或者继续把每块的内容填具体。"
+                },
+                {
+                  "id": "t5",
+                  "role": "user",
+                  "content": "再补充同一个方案：版本块要写 tag、commit、构建时间、镜像 digest；安装块要写目标环境、前置条件和灰度范围。"
+                },
+                {
+                  "id": "t6",
+                  "role": "assistant",
+                  "content": "可以，更新后这版验收结构会是： - **版本** - owner - 风险 - rollback boundary - tag - commit - 构建时间 - 镜像 digest - **安装** - owner - 风险 - rollback boundary - 目标环境 - 前置条件 - 灰度范围 - **回滚** - owner - 风险 - rollback boundary - **观测** - owner - 风险 - rollback boundary 如果你愿意，我可以继续把它整理成一份可直接贴到文档里的 release 验收表单。"
+                }
+              ],
+              "decision": null,
+              "decision_transport": "",
+              "snapshot": null,
+              "scorecard": {
+                "relation": "",
+                "baselineTurnCount": 6,
+                "keptTurnCount": 0,
+                "evictedTurnCount": 0,
+                "pinCount": 0,
+                "baselinePromptEstimate": 0,
+                "shadowRawPromptEstimate": 0,
+                "shadowPackageEstimate": 0,
+                "rawReductionRatio": 0,
+                "packageReductionRatio": 0,
+                "candidateLoadElapsedMs": 11,
+                "assemblyBuildElapsedMs": 0,
+                "decisionElapsedMs": 0,
+                "totalElapsedMs": 0,
+                "guardedEnabled": true,
+                "guardedApplied": false,
+                "guardedReason": "not_evaluated",
+                "guardedMessageCount": 6,
+                "guardedCarryForwardEstimate": 0,
+                "guardedFilteredMessageEstimate": 0
+              },
+              "guarded": {
+                "enabled": true,
+                "applied": false,
+                "reason": "not_evaluated",
+                "filteredMessageCount": 6,
+                "filteredMessageTokenEstimate": 0,
+                "carryForwardEstimate": 0,
+                "evictedSourceIndices": []
+              },
+              "timings": {
+                "totalElapsedMs": 0,
+                "decisionElapsedMs": 0
+              },
+              "exportPath": "/Users/redcreen/Project/unified-memory-core/reports/generated/openclaw-guarded-session-probe-fix4-release-2026-04-19/probe-release-then-travel-switch-guarded/exports/agent-main-main-shadow-1776571341643-a9h3rl.json"
+            }
+          },
+          {
+            "turnIndex": 4,
+            "message": "还是同一个发布方案：如果这轮只保留 5 条关键检查项，你先别展开内容，只确认你记住的是同一个方案。",
+            "ok": true,
+            "answer": "记住了，还是同一个 release 方案。",
+            "error": "",
+            "promptTokens": 14207,
+            "durationMs": 5059,
+            "event": {
+              "schema_version": "umc.dialogue-working-set-shadow.v1",
+              "event_id": "shadow-1776571365517-7639yp",
+              "generated_at": "2026-04-19T04:02:45.517Z",
+              "session_key": "agent:main:main",
+              "agent_id": "main",
+              "query": "还是同一个发布方案：如果这轮只保留 5 条关键检查项，你先别展开内容，只确认你记住的是同一个方案。",
+              "status": "skipped",
+              "reason": "explicit_continue_marker",
+              "sampling": {
+                "max_turns": 12,
+                "min_turns": 3,
+                "max_chars_per_turn": 900
+              },
+              "transcript": [
+                {
+                  "id": "t1",
+                  "role": "user",
+                  "content": "我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。"
+                },
+                {
+                  "id": "t2",
+                  "role": "assistant",
+                  "content": "我记住了：这个 release 方案第一页的项目代号固定写 **north-star-lantern**。 我记住了：这个 release 方案第一页的项目代号固定写 **north-star-lantern**。"
+                },
+                {
+                  "id": "t3",
+                  "role": "user",
+                  "content": "继续同一个 release 话题：把验收拆成版本、安装、回滚、观测四块，而且每块都要写 owner、风险和 rollback boundary。"
+                },
+                {
+                  "id": "t4",
+                  "role": "assistant",
+                  "content": "可以，按这四块拆最清楚。建议验收结构如下： - **版本** - owner - 风险 - rollback boundary - **安装** - owner - 风险 - rollback boundary - **回滚** - owner - 风险 - rollback boundary - **观测** - owner - 风险 - rollback boundary 如果你要，我可以下一步直接帮你把它整理成一页 release 验收模板，或者继续把每块的内容填具体。"
+                },
+                {
+                  "id": "t5",
+                  "role": "user",
+                  "content": "再补充同一个方案：版本块要写 tag、commit、构建时间、镜像 digest；安装块要写目标环境、前置条件和灰度范围。"
+                },
+                {
+                  "id": "t6",
+                  "role": "assistant",
+                  "content": "可以，更新后这版验收结构会是： - **版本** - owner - 风险 - rollback boundary - tag - commit - 构建时间 - 镜像 digest - **安装** - owner - 风险 - rollback boundary - 目标环境 - 前置条件 - 灰度范围 - **回滚** - owner - 风险 - rollback boundary - **观测** - owner - 风险 - rollback boundary 如果你愿意，我可以继续把它整理成一份可直接贴到文档里的 release 验收表单。"
+                },
+                {
+                  "id": "t7",
+                  "role": "user",
+                  "content": "继续 release：回滚块要写开关、数据库兼容边界、失败后的人工兜底；观测块要写 dashboard、告警和日志关键字。"
+                },
+                {
+                  "id": "t8",
+                  "role": "assistant",
+                  "content": "可以，补完后这版 release 验收结构是： - **版本** - owner - 风险 - rollback boundary - tag - commit - 构建时间 - 镜像 digest - **安装** - owner - 风险 - rollback boundary - 目标环境 - 前置条件 - 灰度范围 - **回滚** - owner - 风险 - rollback boundary - 开关 - 数据库兼容边界 - 失败后的人工兜底 - **观测** - owner - 风险 - rollback boundary - dashboard - 告警 - 日志关键字 如果你要，我可以下一步把这四块整理成一段统一的 release 模板文案。"
+                }
+              ],
+              "decision": null,
+              "decision_transport": "",
+              "snapshot": null,
+              "scorecard": {
+                "relation": "",
+                "baselineTurnCount": 8,
+                "keptTurnCount": 0,
+                "evictedTurnCount": 0,
+                "pinCount": 0,
+                "baselinePromptEstimate": 0,
+                "shadowRawPromptEstimate": 0,
+                "shadowPackageEstimate": 0,
+                "rawReductionRatio": 0,
+                "packageReductionRatio": 0,
+                "candidateLoadElapsedMs": 10,
+                "assemblyBuildElapsedMs": 0,
+                "decisionElapsedMs": 0,
+                "totalElapsedMs": 0,
+                "guardedEnabled": true,
+                "guardedApplied": false,
+                "guardedReason": "not_evaluated",
+                "guardedMessageCount": 8,
+                "guardedCarryForwardEstimate": 0,
+                "guardedFilteredMessageEstimate": 0
+              },
+              "guarded": {
+                "enabled": true,
+                "applied": false,
+                "reason": "not_evaluated",
+                "filteredMessageCount": 8,
+                "filteredMessageTokenEstimate": 0,
+                "carryForwardEstimate": 0,
+                "evictedSourceIndices": []
+              },
+              "timings": {
+                "totalElapsedMs": 0,
+                "decisionElapsedMs": 0
+              },
+              "exportPath": "/Users/redcreen/Project/unified-memory-core/reports/generated/openclaw-guarded-session-probe-fix4-release-2026-04-19/probe-release-then-travel-switch-guarded/exports/agent-main-main-shadow-1776571365517-7639yp.json"
+            }
+          },
+          {
+            "turnIndex": 5,
+            "message": "继续：以后我问这个发布方案时，默认先给结论，再补细节，而且回答里保留 north-star-lantern 这个代号。",
+            "ok": true,
+            "answer": "记住了：以后你问这个发布方案时，我默认先给结论，再补细节；回答里也会保留 **north-star-lantern** 这个代号。",
+            "error": "",
+            "promptTokens": 14172,
+            "durationMs": 5000,
+            "event": {
+              "schema_version": "umc.dialogue-working-set-shadow.v1",
+              "event_id": "shadow-1776571388969-o9w0j7",
+              "generated_at": "2026-04-19T04:03:08.969Z",
+              "session_key": "agent:main:main",
+              "agent_id": "main",
+              "query": "继续：以后我问这个发布方案时，默认先给结论，再补细节，而且回答里保留 north-star-lantern 这个代号。",
+              "status": "skipped",
+              "reason": "explicit_continue_marker",
+              "sampling": {
+                "max_turns": 12,
+                "min_turns": 3,
+                "max_chars_per_turn": 900
+              },
+              "transcript": [
+                {
+                  "id": "t1",
+                  "role": "user",
+                  "content": "我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。"
+                },
+                {
+                  "id": "t2",
+                  "role": "assistant",
+                  "content": "我记住了：这个 release 方案第一页的项目代号固定写 **north-star-lantern**。 我记住了：这个 release 方案第一页的项目代号固定写 **north-star-lantern**。"
+                },
+                {
+                  "id": "t3",
+                  "role": "user",
+                  "content": "继续同一个 release 话题：把验收拆成版本、安装、回滚、观测四块，而且每块都要写 owner、风险和 rollback boundary。"
+                },
+                {
+                  "id": "t4",
+                  "role": "assistant",
+                  "content": "可以，按这四块拆最清楚。建议验收结构如下： - **版本** - owner - 风险 - rollback boundary - **安装** - owner - 风险 - rollback boundary - **回滚** - owner - 风险 - rollback boundary - **观测** - owner - 风险 - rollback boundary 如果你要，我可以下一步直接帮你把它整理成一页 release 验收模板，或者继续把每块的内容填具体。"
+                },
+                {
+                  "id": "t5",
+                  "role": "user",
+                  "content": "再补充同一个方案：版本块要写 tag、commit、构建时间、镜像 digest；安装块要写目标环境、前置条件和灰度范围。"
+                },
+                {
+                  "id": "t6",
+                  "role": "assistant",
+                  "content": "可以，更新后这版验收结构会是： - **版本** - owner - 风险 - rollback boundary - tag - commit - 构建时间 - 镜像 digest - **安装** - owner - 风险 - rollback boundary - 目标环境 - 前置条件 - 灰度范围 - **回滚** - owner - 风险 - rollback boundary - **观测** - owner - 风险 - rollback boundary 如果你愿意，我可以继续把它整理成一份可直接贴到文档里的 release 验收表单。"
+                },
+                {
+                  "id": "t7",
+                  "role": "user",
+                  "content": "继续 release：回滚块要写开关、数据库兼容边界、失败后的人工兜底；观测块要写 dashboard、告警和日志关键字。"
+                },
+                {
+                  "id": "t8",
+                  "role": "assistant",
+                  "content": "可以，补完后这版 release 验收结构是： - **版本** - owner - 风险 - rollback boundary - tag - commit - 构建时间 - 镜像 digest - **安装** - owner - 风险 - rollback boundary - 目标环境 - 前置条件 - 灰度范围 - **回滚** - owner - 风险 - rollback boundary - 开关 - 数据库兼容边界 - 失败后的人工兜底 - **观测** - owner - 风险 - rollback boundary - dashboard - 告警 - 日志关键字 如果你要，我可以下一步把这四块整理成一段统一的 release 模板文案。"
+                },
+                {
+                  "id": "t9",
+                  "role": "user",
+                  "content": "还是同一个发布方案：如果这轮只保留 5 条关键检查项，你先别展开内容，只确认你记住的是同一个方案。"
+                },
+                {
+                  "id": "t10",
+                  "role": "assistant",
+                  "content": "记住了，还是同一个 release 方案。"
+                }
+              ],
+              "decision": null,
+              "decision_transport": "",
+              "snapshot": null,
+              "scorecard": {
+                "relation": "",
+                "baselineTurnCount": 10,
+                "keptTurnCount": 0,
+                "evictedTurnCount": 0,
+                "pinCount": 0,
+                "baselinePromptEstimate": 0,
+                "shadowRawPromptEstimate": 0,
+                "shadowPackageEstimate": 0,
+                "rawReductionRatio": 0,
+                "packageReductionRatio": 0,
+                "candidateLoadElapsedMs": 10,
+                "assemblyBuildElapsedMs": 0,
+                "decisionElapsedMs": 0,
+                "totalElapsedMs": 0,
+                "guardedEnabled": true,
+                "guardedApplied": false,
+                "guardedReason": "not_evaluated",
+                "guardedMessageCount": 10,
+                "guardedCarryForwardEstimate": 0,
+                "guardedFilteredMessageEstimate": 0
+              },
+              "guarded": {
+                "enabled": true,
+                "applied": false,
+                "reason": "not_evaluated",
+                "filteredMessageCount": 10,
+                "filteredMessageTokenEstimate": 0,
+                "carryForwardEstimate": 0,
+                "evictedSourceIndices": []
+              },
+              "timings": {
+                "totalElapsedMs": 0,
+                "decisionElapsedMs": 0
+              },
+              "exportPath": "/Users/redcreen/Project/unified-memory-core/reports/generated/openclaw-guarded-session-probe-fix4-release-2026-04-19/probe-release-then-travel-switch-guarded/exports/agent-main-main-shadow-1776571388969-o9w0j7.json"
+            }
+          },
+          {
+            "turnIndex": 6,
+            "message": "再补一层：这个方案要先跑 staging，再进 production，而且 staging 通过后 30 分钟内要盯错误率和回滚开关。",
+            "ok": true,
+            "answer": "记住了。这个 release 方案的顺序是：\n\n- 先跑 **staging**\n- 再进 **production**\n- **staging** 通过后，接下来 **30 分钟内** 要盯：\n - 错误率\n - 回滚开关\n\n我后面提这个方案时，会继续按这个上下文来讲。",
+            "error": "",
+            "promptTokens": 14367,
+            "durationMs": 5152,
+            "event": {
+              "schema_version": "umc.dialogue-working-set-shadow.v1",
+              "event_id": "shadow-1776571411528-l1g6iv",
+              "generated_at": "2026-04-19T04:03:31.528Z",
+              "session_key": "agent:main:main",
+              "agent_id": "main",
+              "query": "再补一层：这个方案要先跑 staging，再进 production，而且 staging 通过后 30 分钟内要盯错误率和回滚开关。",
+              "status": "skipped",
+              "reason": "explicit_continue_marker",
+              "sampling": {
+                "max_turns": 12,
+                "min_turns": 3,
+                "max_chars_per_turn": 900
+              },
+              "transcript": [
+                {
+                  "id": "t1",
+                  "role": "user",
+                  "content": "我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。"
+                },
+                {
+                  "id": "t2",
+                  "role": "assistant",
+                  "content": "我记住了：这个 release 方案第一页的项目代号固定写 **north-star-lantern**。 我记住了：这个 release 方案第一页的项目代号固定写 **north-star-lantern**。"
+                },
+                {
+                  "id": "t3",
+                  "role": "user",
+                  "content": "继续同一个 release 话题：把验收拆成版本、安装、回滚、观测四块，而且每块都要写 owner、风险和 rollback boundary。"
+                },
+                {
+                  "id": "t4",
+                  "role": "assistant",
+                  "content": "可以，按这四块拆最清楚。建议验收结构如下： - **版本** - owner - 风险 - rollback boundary - **安装** - owner - 风险 - rollback boundary - **回滚** - owner - 风险 - rollback boundary - **观测** - owner - 风险 - rollback boundary 如果你要，我可以下一步直接帮你把它整理成一页 release 验收模板，或者继续把每块的内容填具体。"
+                },
+                {
+                  "id": "t5",
+                  "role": "user",
+                  "content": "再补充同一个方案：版本块要写 tag、commit、构建时间、镜像 digest；安装块要写目标环境、前置条件和灰度范围。"
+                },
+                {
+                  "id": "t6",
+                  "role": "assistant",
+                  "content": "可以，更新后这版验收结构会是： - **版本** - owner - 风险 - rollback boundary - tag - commit - 构建时间 - 镜像 digest - **安装** - owner - 风险 - rollback boundary - 目标环境 - 前置条件 - 灰度范围 - **回滚** - owner - 风险 - rollback boundary - **观测** - owner - 风险 - rollback boundary 如果你愿意，我可以继续把它整理成一份可直接贴到文档里的 release 验收表单。"
+                },
+                {
+                  "id": "t7",
+                  "role": "user",
+                  "content": "继续 release：回滚块要写开关、数据库兼容边界、失败后的人工兜底；观测块要写 dashboard、告警和日志关键字。"
+                },
+                {
+                  "id": "t8",
+                  "role": "assistant",
+                  "content": "可以，补完后这版 release 验收结构是： - **版本** - owner - 风险 - rollback boundary - tag - commit - 构建时间 - 镜像 digest - **安装** - owner - 风险 - rollback boundary - 目标环境 - 前置条件 - 灰度范围 - **回滚** - owner - 风险 - rollback boundary - 开关 - 数据库兼容边界 - 失败后的人工兜底 - **观测** - owner - 风险 - rollback boundary - dashboard - 告警 - 日志关键字 如果你要，我可以下一步把这四块整理成一段统一的 release 模板文案。"
+                },
+                {
+                  "id": "t9",
+                  "role": "user",
+                  "content": "还是同一个发布方案：如果这轮只保留 5 条关键检查项，你先别展开内容，只确认你记住的是同一个方案。"
+                },
+                {
+                  "id": "t10",
+                  "role": "assistant",
+                  "content": "记住了，还是同一个 release 方案。"
+                },
+                {
+                  "id": "t11",
+                  "role": "user",
+                  "content": "继续：以后我问这个发布方案时，默认先给结论，再补细节，而且回答里保留 north-star-lantern 这个代号。"
+                },
+                {
+                  "id": "t12",
+                  "role": "assistant",
+                  "content": "记住了：以后你问这个发布方案时，我默认先给结论，再补细节；回答里也会保留 **north-star-lantern** 这个代号。"
+                }
+              ],
+              "decision": null,
+              "decision_transport": "",
+              "snapshot": null,
+              "scorecard": {
+                "relation": "",
+                "baselineTurnCount": 12,
+                "keptTurnCount": 0,
+                "evictedTurnCount": 0,
+                "pinCount": 0,
+                "baselinePromptEstimate": 0,
+                "shadowRawPromptEstimate": 0,
+                "shadowPackageEstimate": 0,
+                "rawReductionRatio": 0,
+                "packageReductionRatio": 0,
+                "candidateLoadElapsedMs": 9,
+                "assemblyBuildElapsedMs": 0,
+                "decisionElapsedMs": 0,
+                "totalElapsedMs": 0,
+                "guardedEnabled": true,
+                "guardedApplied": false,
+                "guardedReason": "not_evaluated",
+                "guardedMessageCount": 12,
+                "guardedCarryForwardEstimate": 0,
+                "guardedFilteredMessageEstimate": 0
+              },
+              "guarded": {
+                "enabled": true,
+                "applied": false,
+                "reason": "not_evaluated",
+                "filteredMessageCount": 12,
+                "filteredMessageTokenEstimate": 0,
+                "carryForwardEstimate": 0,
+                "evictedSourceIndices": []
+              },
+              "timings": {
+                "totalElapsedMs": 0,
+                "decisionElapsedMs": 0
+              },
+              "exportPath": "/Users/redcreen/Project/unified-memory-core/reports/generated/openclaw-guarded-session-probe-fix4-release-2026-04-19/probe-release-then-travel-switch-guarded/exports/agent-main-main-shadow-1776571411528-l1g6iv.json"
+            }
+          },
+          {
+            "turnIndex": 7,
+            "message": "现在换个完全不同的话题。帮我想一个京都三晚行程，偏安静、靠地铁、预算两万元。",
+            "ok": true,
+            "answer": "可以。先给结论：**京都 3 晚建议住在乌丸御池 / 京都市役所前 / 四条附近，行程走“少折腾、少赶景点、以地铁+步行”为主”**；你要的“安静、靠地铁、预算两万元”是能做到的，而且可以住得比较舒服。\n\n我先按这个方向给你一个稳妥版本：\n\n- **住宿区域**：乌丸御池优先，其次京都市役所前、四条烏丸\n- **节奏**：每天 2–3 个点，下午留白\n- **交通**：地铁 + 公交少量 + 步行，尽量不住太靠祇园核心街区\n- **预算**：两万元人民币内，三晚通常够覆盖\n - 酒店：约 3,000–8,000 RMB\n - 餐饮：约 2,000–4,000 RMB\n - 交通：约 300–800 RMB\n - 门票/杂费：约 500–1,500 RMB\n - 余量很足，可把酒店拉高一点\n\n### 行程建议\n\n**Day 1｜到达 + 轻松适应**\n- 下午/傍晚到京都后，先去酒店入住\n- 晚上只安排：\n - 京都站周边简单吃饭\n - 或去 **鸭川边散步**\n - 或去 **先斗町** 走一小段就回\n- 这一晚不要排太满，主要是缓冲时差和移动疲劳\n\n**Day 2｜东侧安静线：寺院 + 老街**\n- 上午：\n - **南禅寺** 或 **永观堂**（二选一，偏安静）\n- 中午：\n - 哲学之道附近简单午餐\n- 下午：\n - **银阁寺** 周边慢逛\n - 或只走 **哲学之道**，不硬塞太多景点\n- 晚上：\n - 回市区吃饭，早点休息\n\n**Day 3｜市区慢逛 + 室内补充**\n- 上午：\n - **二条城** 或 **京都国际漫画博物馆**（看你更偏历史还是轻松）\n- 中午：\n - 乌丸一带午餐\n- 下午：\n - **锦市场** 轻逛\n - 或找一家咖啡馆坐一会儿\n- 晚上：\n - 如果想看夜景，可以去 **京都塔** 或酒店附近随便走走\n\n**Day 4｜西侧/轻郊选一个**\n- 如果想再安静一点：\n - **岚山** 只选竹林 + 河边散步，不要把整天塞满\n- 如果想更城市一点：\n - 补逛市区没去完的点\n- 然后离开京都\n\n### 住宿建议\n想“安静+靠地铁”，我会优先这几个：\n- **乌丸御池**\n- **京都市役所前**\n- **四条烏丸**\n- 次选：**二条城前**\n\n尽量避开：\n- 祇园深处的热门路段\n- 京都站正门口最吵的区域\n- 岚山住一晚，除非你特别想看清晨人少的风景\n\n### 预算控制思路\n如果你是**两个人**，两万元通常很够；如果是**一个人**，可以住得更好。\n- 住宿选中高端商务酒店或日式精品酒店\n- 餐饮可以兼顾：\n - 怀石一顿\n - 其余普通餐馆/定食/拉面\n- 不建议把钱都花在“景点票”，京都真正值钱的是节奏\n\n如果你愿意，我可以下一条直接给你做成：\n1. **更精确的 3 晚逐小时路线**\n2. **按“情侣 / 亲子 / 独行”三种版本**\n3. **附酒店区域和推荐住宿名单**",
+            "error": "",
+            "promptTokens": 13554,
+            "durationMs": 10544,
+            "event": {
+              "schema_version": "umc.dialogue-working-set-shadow.v1",
+              "event_id": "shadow-1776571434398-tap8z2",
+              "generated_at": "2026-04-19T04:03:54.398Z",
+              "session_key": "agent:main:main",
+              "agent_id": "main",
+              "query": "现在换个完全不同的话题。帮我想一个京都三晚行程，偏安静、靠地铁、预算两万元。",
+              "status": "captured",
+              "reason": "",
+              "sampling": {
+                "max_turns": 12,
+                "min_turns": 3,
+                "max_chars_per_turn": 900
+              },
+              "transcript": [
+                {
+                  "id": "t1",
+                  "role": "user",
+                  "content": "我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。"
+                },
+                {
+                  "id": "t2",
+                  "role": "assistant",
+                  "content": "我记住了：这个 release 方案第一页的项目代号固定写 **north-star-lantern**。 我记住了：这个 release 方案第一页的项目代号固定写 **north-star-lantern**。"
+                },
+                {
+                  "id": "t3",
+                  "role": "user",
+                  "content": "继续同一个 release 话题：把验收拆成版本、安装、回滚、观测四块，而且每块都要写 owner、风险和 rollback boundary。"
+                },
+                {
+                  "id": "t4",
+                  "role": "assistant",
+                  "content": "可以，按这四块拆最清楚。建议验收结构如下： - **版本** - owner - 风险 - rollback boundary - **安装** - owner - 风险 - rollback boundary - **回滚** - owner - 风险 - rollback boundary - **观测** - owner - 风险 - rollback boundary 如果你要，我可以下一步直接帮你把它整理成一页 release 验收模板，或者继续把每块的内容填具体。"
+                },
+                {
+                  "id": "t5",
+                  "role": "user",
+                  "content": "再补充同一个方案：版本块要写 tag、commit、构建时间、镜像 digest；安装块要写目标环境、前置条件和灰度范围。"
+                },
+                {
+                  "id": "t6",
+                  "role": "assistant",
+                  "content": "可以，更新后这版验收结构会是： - **版本** - owner - 风险 - rollback boundary - tag - commit - 构建时间 - 镜像 digest - **安装** - owner - 风险 - rollback boundary - 目标环境 - 前置条件 - 灰度范围 - **回滚** - owner - 风险 - rollback boundary - **观测** - owner - 风险 - rollback boundary 如果你愿意，我可以继续把它整理成一份可直接贴到文档里的 release 验收表单。"
+                },
+                {
+                  "id": "t7",
+                  "role": "user",
+                  "content": "继续 release：回滚块要写开关、数据库兼容边界、失败后的人工兜底；观测块要写 dashboard、告警和日志关键字。"
+                },
+                {
+                  "id": "t8",
+                  "role": "assistant",
+                  "content": "可以，补完后这版 release 验收结构是： - **版本** - owner - 风险 - rollback boundary - tag - commit - 构建时间 - 镜像 digest - **安装** - owner - 风险 - rollback boundary - 目标环境 - 前置条件 - 灰度范围 - **回滚** - owner - 风险 - rollback boundary - 开关 - 数据库兼容边界 - 失败后的人工兜底 - **观测** - owner - 风险 - rollback boundary - dashboard - 告警 - 日志关键字 如果你要，我可以下一步把这四块整理成一段统一的 release 模板文案。"
+                },
+                {
+                  "id": "t9",
+                  "role": "user",
+                  "content": "还是同一个发布方案：如果这轮只保留 5 条关键检查项，你先别展开内容，只确认你记住的是同一个方案。"
+                },
+                {
+                  "id": "t10",
+                  "role": "assistant",
+                  "content": "记住了，还是同一个 release 方案。"
+                },
+                {
+                  "id": "t11",
+                  "role": "user",
+                  "content": "继续：以后我问这个发布方案时，默认先给结论，再补细节，而且回答里保留 north-star-lantern 这个代号。"
+                },
+                {
+                  "id": "t12",
+                  "role": "assistant",
+                  "content": "记住了：以后你问这个发布方案时，我默认先给结论，再补细节；回答里也会保留 **north-star-lantern** 这个代号。"
+                },
+                {
+                  "id": "t13",
+                  "role": "user",
+                  "content": "再补一层：这个方案要先跑 staging，再进 production，而且 staging 通过后 30 分钟内要盯错误率和回滚开关。"
+                },
+                {
+                  "id": "t14",
+                  "role": "assistant",
+                  "content": "记住了。这个 release 方案的顺序是： - 先跑 **staging** - 再进 **production** - **staging** 通过后，接下来 **30 分钟内** 要盯： - 错误率 - 回滚开关 我后面提这个方案时，会继续按这个上下文来讲。"
+                }
+              ],
+              "decision": {
+                "relation": "switch",
+                "confidence": 0.9,
+                "evict_turn_ids": [
+                  "t1",
+                  "t2",
+                  "t3",
+                  "t4",
+                  "t5",
+                  "t6",
+                  "t7",
+                  "t8",
+                  "t9",
+                  "t10",
+                  "t11",
+                  "t12",
+                  "t14"
+                ],
+                "pin_turn_ids": [
+                  "t1",
+                  "t11"
+                ],
+                "archive_summary": "继续 release：回滚块要写开关、数据库兼容边界、失败后的人工兜底；观测块要写 dashboard、告警和日志关键字。 / 还是同一个发布方案：如果这轮只保留 5 条关键检查项，你先别展开内容，只确认你记住的是同一个方案。 / 继续：以后我问这个发布方案时，默认先给结论，再补细节，而且回答里保留 north-star-lantern 这个代号。",
+                "reasoning_summary": "Explicit topic-switch marker detected in latest user turn: 现在换个完全不同的话题。帮我想一个京都三晚行程，偏安静、靠地铁、预算两万元。"
+              },
+              "decision_transport": "heuristic_switch",
+              "snapshot": {
+                "applied": {
+                  "relation": "switch",
+                  "confidence": 0.9,
+                  "archiveSummary": "继续 release：回滚块要写开关、数据库兼容边界、失败后的人工兜底；观测块要写 dashboard、告警和日志关键字。 / 还是同一个发布方案：如果这轮只保留 5 条关键检查项，你先别展开内容，只确认你记住的是同一个方案。 / 继续：以后我问这个发布方案时，默认先给结论，再补细节，而且回答里保留 north-star-lantern 这个代号。",
+                  "reasoningSummary": "Explicit topic-switch marker detected in latest user turn: 现在换个完全不同的话题。帮我想一个京都三晚行程，偏安静、靠地铁、预算两万元。",
+                  "latestUserTurnId": "t13",
+                  "pinTurnIds": [
+                    "t1",
+                    "t11"
+                  ],
+                  "pinnedOnlyTurnIds": [
+                    "t1",
+                    "t11"
+                  ],
+                  "requestedEvictTurnIds": [
+                    "t1",
+                    "t2",
+                    "t3",
+                    "t4",
+                    "t5",
+                    "t6",
+                    "t7",
+                    "t8",
+                    "t9",
+                    "t10",
+                    "t11",
+                    "t12",
+                    "t14"
+                  ],
+                  "blockedEvictTurnIds": [],
+                  "appliedEvictTurnIds": [
+                    "t1",
+                    "t2",
+                    "t3",
+                    "t4",
+                    "t5",
+                    "t6",
+                    "t7",
+                    "t8",
+                    "t9",
+                    "t10",
+                    "t11",
+                    "t12",
+                    "t14"
+                  ],
+                  "keepTurnIds": [
+                    "t13"
+                  ],
+                  "baselineTokens": 408,
+                  "keptTokens": 17,
+                  "prunedTokens": 391,
+                  "reductionRatio": 0.9583333333333334,
+                  "keepTurns": [
+                    {
+                      "id": "t13",
+                      "role": "user",
+                      "content": "再补一层：这个方案要先跑 staging，再进 production，而且 staging 通过后 30 分钟内要盯错误率和回滚开关。",
+                      "tokenEstimate": 17
+                    }
+                  ],
+                  "evictedTurns": [
+                    {
+                      "id": "t1",
+                      "role": "user",
+                      "content": "我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。",
+                      "tokenEstimate": 16
+                    },
+                    {
+                      "id": "t2",
+                      "role": "assistant",
+                      "content": "我记住了：这个 release 方案第一页的项目代号固定写 **north-star-lantern**。 我记住了：这个 release 方案第一页的项目代号固定写 **north-star-lantern**。",
+                      "tokenEstimate": 27
+                    },
+                    {
+                      "id": "t3",
+                      "role": "user",
+                      "content": "继续同一个 release 话题：把验收拆成版本、安装、回滚、观测四块，而且每块都要写 owner、风险和 rollback boundary。",
+                      "tokenEstimate": 18
+                    },
+                    {
+                      "id": "t4",
+                      "role": "assistant",
+                      "content": "可以，按这四块拆最清楚。建议验收结构如下： - **版本** - owner - 风险 - rollback boundary - **安装** - owner - 风险 - rollback boundary - **回滚** - owner - 风险 - rollback boundary - **观测** - owner - 风险 - rollback boundary 如果你要，我可以下一步直接帮你把它整理成一页 release 验收模板，或者继续把每块的内容填具体。",
+                      "tokenEstimate": 60
+                    },
+                    {
+                      "id": "t5",
+                      "role": "user",
+                      "content": "再补充同一个方案：版本块要写 tag、commit、构建时间、镜像 digest；安装块要写目标环境、前置条件和灰度范围。",
+                      "tokenEstimate": 16
+                    },
+                    {
+                      "id": "t6",
+                      "role": "assistant",
+                      "content": "可以，更新后这版验收结构会是： - **版本** - owner - 风险 - rollback boundary - tag - commit - 构建时间 - 镜像 digest - **安装** - owner - 风险 - rollback boundary - 目标环境 - 前置条件 - 灰度范围 - **回滚** - owner - 风险 - rollback boundary - **观测** - owner - 风险 - rollback boundary 如果你愿意，我可以继续把它整理成一份可直接贴到文档里的 release 验收表单。",
+                      "tokenEstimate": 70
+                    },
+                    {
+                      "id": "t7",
+                      "role": "user",
+                      "content": "继续 release：回滚块要写开关、数据库兼容边界、失败后的人工兜底；观测块要写 dashboard、告警和日志关键字。",
+                      "tokenEstimate": 16
+                    },
+                    {
+                      "id": "t8",
+                      "role": "assistant",
+                      "content": "可以，补完后这版 release 验收结构是： - **版本** - owner - 风险 - rollback boundary - tag - commit - 构建时间 - 镜像 digest - **安装** - owner - 风险 - rollback boundary - 目标环境 - 前置条件 - 灰度范围 - **回滚** - owner - 风险 - rollback boundary - 开关 - 数据库兼容边界 - 失败后的人工兜底 - **观测** - owner - 风险 - rollback boundary - dashboard - 告警 - 日志关键字 如果你要，我可以下一步把这四块整理成一段统一的 release 模板文案。",
+                      "tokenEstimate": 84
+                    },
+                    {
+                      "id": "t9",
+                      "role": "user",
+                      "content": "还是同一个发布方案：如果这轮只保留 5 条关键检查项，你先别展开内容，只确认你记住的是同一个方案。",
+                      "tokenEstimate": 13
+                    },
+                    {
+                      "id": "t10",
+                      "role": "assistant",
+                      "content": "记住了，还是同一个 release 方案。",
+                      "tokenEstimate": 6
+                    },
+                    {
+                      "id": "t11",
+                      "role": "user",
+                      "content": "继续：以后我问这个发布方案时，默认先给结论，再补细节，而且回答里保留 north-star-lantern 这个代号。",
+                      "tokenEstimate": 15
+                    },
+                    {
+                      "id": "t12",
+                      "role": "assistant",
+                      "content": "记住了：以后你问这个发布方案时，我默认先给结论，再补细节；回答里也会保留 **north-star-lantern** 这个代号。",
+                      "tokenEstimate": 17
+                    },
+                    {
+                      "id": "t14",
+                      "role": "assistant",
+                      "content": "记住了。这个 release 方案的顺序是： - 先跑 **staging** - 再进 **production** - **staging** 通过后，接下来 **30 分钟内** 要盯： - 错误率 - 回滚开关 我后面提这个方案时，会继续按这个上下文来讲。",
+                      "tokenEstimate": 33
+                    }
+                  ]
+                },
+                "baselineRawTranscript": "t1 user: 我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。\nt2 assistant: 我记住了：这个 release 方案第一页的项目代号固定写 **north-star-lantern**。 我记住了：这个 release 方案第一页的项目代号固定写 **north-star-lantern**。\nt3 user: 继续同一个 release 话题：把验收拆成版本、安装、回滚、观测四块，而且每块都要写 owner、风险和 rollback boundary。\nt4 assistant: 可以，按这四块拆最清楚。建议验收结构如下： - **版本** - owner - 风险 - rollback boundary - **安装** - owner - 风险 - rollback boundary - **回滚** - owner - 风险 - rollback boundary - **观测** - owner - 风险 - rollback boundary 如果你要，我可以下一步直接帮你把它整理成一页 release 验收模板，或者继续把每块的内容填具体。\nt5 user: 再补充同一个方案：版本块要写 tag、commit、构建时间、镜像 digest；安装块要写目标环境、前置条件和灰度范围。\nt6 assistant: 可以，更新后这版验收结构会是： - **版本** - owner - 风险 - rollback boundary - tag - commit - 构建时间 - 镜像 digest - **安装** - owner - 风险 - rollback boundary - 目标环境 - 前置条件 - 灰度范围 - **回滚** - owner - 风险 - rollback boundary - **观测** - owner - 风险 - rollback boundary 如果你愿意，我可以继续把它整理成一份可直接贴到文档里的 release 验收表单。\nt7 user: 继续 release：回滚块要写开关、数据库兼容边界、失败后的人工兜底；观测块要写 dashboard、告警和日志关键字。\nt8 assistant: 可以，补完后这版 release 验收结构是： - **版本** - owner - 风险 - rollback boundary - tag - commit - 构建时间 - 镜像 digest - **安装** - owner - 风险 - rollback boundary - 目标环境 - 前置条件 - 灰度范围 - **回滚** - owner - 风险 - rollback boundary - 开关 - 数据库兼容边界 - 失败后的人工兜底 - **观测** - owner - 风险 - rollback boundary - dashboard - 告警 - 日志关键字 如果你要，我可以下一步把这四块整理成一段统一的 release 模板文案。\nt9 user: 还是同一个发布方案：如果这轮只保留 5 条关键检查项，你先别展开内容，只确认你记住的是同一个方案。\nt10 assistant: 记住了，还是同一个 release 方案。\nt11 user: 继续：以后我问这个发布方案时，默认先给结论，再补细节，而且回答里保留 north-star-lantern 这个代号。\nt12 assistant: 记住了：以后你问这个发布方案时，我默认先给结论，再补细节；回答里也会保留 **north-star-lantern** 这个代号。\nt13 user: 再补一层：这个方案要先跑 staging，再进 production，而且 staging 通过后 30 分钟内要盯错误率和回滚开关。\nt14 assistant: 记住了。这个 release 方案的顺序是： - 先跑 **staging** - 再进 **production** - **staging** 通过后，接下来 **30 分钟内** 要盯： - 错误率 - 回滚开关 我后面提这个方案时，会继续按这个上下文来讲。",
+                "shadowRawTranscript": "t13 user: 再补一层：这个方案要先跑 staging，再进 production，而且 staging 通过后 30 分钟内要盯错误率和回滚开关。",
+                "semanticPinNotes": [
+                  "user: 我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。",
+                  "user: 继续：以后我问这个发布方案时，默认先给结论，再补细节，而且回答里保留 north-star-lantern 这个代号。"
+                ],
+                "archiveSummary": "继续 release：回滚块要写开关、数据库兼容边界、失败后的人工兜底；观测块要写 dashboard、告警和日志关键字。 / 还是同一个发布方案：如果这轮只保留 5 条关键检查项，你先别展开内容，只确认你记住的是同一个方案。 / 继续：以后我问这个发布方案时，默认先给结论，再补细节，而且回答里保留 north-star-lantern 这个代号。",
+                "injectedArchiveSummary": "",
+                "baselinePromptEstimate": 448,
+                "shadowRawPromptEstimate": 20,
+                "shadowPackageEstimate": 25,
+                "shadowPackageText": "Recent raw context:\nt13 user: 再补一层：这个方案要先跑 staging，再进 production，而且 staging 通过后 30 分钟内要盯错误率和回滚开关。"
+              },
+              "scorecard": {
+                "relation": "switch",
+                "baselineTurnCount": 14,
+                "keptTurnCount": 1,
+                "evictedTurnCount": 13,
+                "pinCount": 2,
+                "baselinePromptEstimate": 448,
+                "shadowRawPromptEstimate": 20,
+                "shadowPackageEstimate": 25,
+                "rawReductionRatio": 0.9583,
+                "packageReductionRatio": 0.9442,
+                "candidateLoadElapsedMs": 9,
+                "assemblyBuildElapsedMs": 0,
+                "decisionElapsedMs": 0,
+                "totalElapsedMs": 1,
+                "guardedEnabled": true,
+                "guardedApplied": true,
+                "guardedReason": "guarded_candidate",
+                "guardedMessageCount": 1,
+                "guardedCarryForwardEstimate": 43,
+                "guardedFilteredMessageEstimate": 17
+              },
+              "guarded": {
+                "enabled": true,
+                "applied": true,
+                "reason": "guarded_candidate",
+                "filteredMessages": [
+                  {
+                    "role": "user",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "再补一层：这个方案要先跑 staging，再进 production，而且 staging 通过后 30 分钟内要盯错误率和回滚开关。"
+                      }
+                    ],
+                    "timestamp": 1776571411531
+                  }
+                ],
+                "filteredMessageCount": 1,
+                "filteredMessageTokenEstimate": 17,
+                "carryForwardText": "Conversation carry-forward pins:\n- user: 我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。\n- user: 继续：以后我问这个发布方案时，默认先给结论，再补细节，而且回答里保留 north-star-lantern 这个代号。",
+                "carryForwardEstimate": 43,
+                "evictedSourceIndices": [
+                  0,
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7,
+                  8,
+                  9,
+                  10,
+                  11,
+                  13
+                ]
+              },
+              "timings": {
+                "totalElapsedMs": 1,
+                "decisionElapsedMs": 0
+              },
+              "exportPath": "/Users/redcreen/Project/unified-memory-core/reports/generated/openclaw-guarded-session-probe-fix4-release-2026-04-19/probe-release-then-travel-switch-guarded/exports/agent-main-main-shadow-1776571434398-tap8z2.json"
+            }
+          },
+          {
+            "turnIndex": 8,
+            "message": "继续旅行话题：如果第一晚住四条乌丸，后两晚更适合住哪里？一句话。",
+            "ok": true,
+            "answer": "后两晚更适合住 **乌丸御池**，最稳，继续靠地铁、比四条乌丸更安静一点。",
+            "error": "",
+            "promptTokens": 15464,
+            "durationMs": 5628,
+            "event": {
+              "schema_version": "umc.dialogue-working-set-shadow.v1",
+              "event_id": "shadow-1776571448043-9nt5ew",
+              "generated_at": "2026-04-19T04:04:08.043Z",
+              "session_key": "agent:main:main",
+              "agent_id": "main",
+              "query": "继续旅行话题：如果第一晚住四条乌丸，后两晚更适合住哪里？一句话。",
+              "status": "skipped",
+              "reason": "explicit_continue_marker",
+              "sampling": {
+                "max_turns": 12,
+                "min_turns": 3,
+                "max_chars_per_turn": 900
+              },
+              "transcript": [
+                {
+                  "id": "t1",
+                  "role": "user",
+                  "content": "我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。"
+                },
+                {
+                  "id": "t2",
+                  "role": "assistant",
+                  "content": "我记住了：这个 release 方案第一页的项目代号固定写 **north-star-lantern**。 我记住了：这个 release 方案第一页的项目代号固定写 **north-star-lantern**。"
+                },
+                {
+                  "id": "t3",
+                  "role": "user",
+                  "content": "继续同一个 release 话题：把验收拆成版本、安装、回滚、观测四块，而且每块都要写 owner、风险和 rollback boundary。"
+                },
+                {
+                  "id": "t4",
+                  "role": "assistant",
+                  "content": "可以，按这四块拆最清楚。建议验收结构如下： - **版本** - owner - 风险 - rollback boundary - **安装** - owner - 风险 - rollback boundary - **回滚** - owner - 风险 - rollback boundary - **观测** - owner - 风险 - rollback boundary 如果你要，我可以下一步直接帮你把它整理成一页 release 验收模板，或者继续把每块的内容填具体。"
+                },
+                {
+                  "id": "t5",
+                  "role": "user",
+                  "content": "再补充同一个方案：版本块要写 tag、commit、构建时间、镜像 digest；安装块要写目标环境、前置条件和灰度范围。"
+                },
+                {
+                  "id": "t6",
+                  "role": "assistant",
+                  "content": "可以，更新后这版验收结构会是： - **版本** - owner - 风险 - rollback boundary - tag - commit - 构建时间 - 镜像 digest - **安装** - owner - 风险 - rollback boundary - 目标环境 - 前置条件 - 灰度范围 - **回滚** - owner - 风险 - rollback boundary - **观测** - owner - 风险 - rollback boundary 如果你愿意，我可以继续把它整理成一份可直接贴到文档里的 release 验收表单。"
+                },
+                {
+                  "id": "t7",
+                  "role": "user",
+                  "content": "继续 release：回滚块要写开关、数据库兼容边界、失败后的人工兜底；观测块要写 dashboard、告警和日志关键字。"
+                },
+                {
+                  "id": "t8",
+                  "role": "assistant",
+                  "content": "可以，补完后这版 release 验收结构是： - **版本** - owner - 风险 - rollback boundary - tag - commit - 构建时间 - 镜像 digest - **安装** - owner - 风险 - rollback boundary - 目标环境 - 前置条件 - 灰度范围 - **回滚** - owner - 风险 - rollback boundary - 开关 - 数据库兼容边界 - 失败后的人工兜底 - **观测** - owner - 风险 - rollback boundary - dashboard - 告警 - 日志关键字 如果你要，我可以下一步把这四块整理成一段统一的 release 模板文案。"
+                },
+                {
+                  "id": "t9",
+                  "role": "user",
+                  "content": "还是同一个发布方案：如果这轮只保留 5 条关键检查项，你先别展开内容，只确认你记住的是同一个方案。"
+                },
+                {
+                  "id": "t10",
+                  "role": "assistant",
+                  "content": "记住了，还是同一个 release 方案。"
+                },
+                {
+                  "id": "t11",
+                  "role": "user",
+                  "content": "继续：以后我问这个发布方案时，默认先给结论，再补细节，而且回答里保留 north-star-lantern 这个代号。"
+                },
+                {
+                  "id": "t12",
+                  "role": "assistant",
+                  "content": "记住了：以后你问这个发布方案时，我默认先给结论，再补细节；回答里也会保留 **north-star-lantern** 这个代号。"
+                },
+                {
+                  "id": "t13",
+                  "role": "user",
+                  "content": "再补一层：这个方案要先跑 staging，再进 production，而且 staging 通过后 30 分钟内要盯错误率和回滚开关。"
+                },
+                {
+                  "id": "t14",
+                  "role": "assistant",
+                  "content": "记住了。这个 release 方案的顺序是： - 先跑 **staging** - 再进 **production** - **staging** 通过后，接下来 **30 分钟内** 要盯： - 错误率 - 回滚开关 我后面提这个方案时，会继续按这个上下文来讲。"
+                },
+                {
+                  "id": "t15",
+                  "role": "user",
+                  "content": "现在换个完全不同的话题。帮我想一个京都三晚行程，偏安静、靠地铁、预算两万元。"
+                },
+                {
+                  "id": "t16",
+                  "role": "assistant",
+                  "content": "可以。先给结论：**京都 3 晚建议住在乌丸御池 / 京都市役所前 / 四条附近，行程走“少折腾、少赶景点、以地铁+步行”为主”**；你要的“安静、靠地铁、预算两万元”是能做到的，而且可以住得比较舒服。 我先按这个方向给你一个稳妥版本： - **住宿区域**：乌丸御池优先，其次京都市役所前、四条烏丸 - **节奏**：每天 2–3 个点，下午留白 - **交通**：地铁 + 公交少量 + 步行，尽量不住太靠祇园核心街区 - **预算**：两万元人民币内，三晚通常够覆盖 - 酒店：约 3,000–8,000 RMB - 餐饮：约 2,000–4,000 RMB - 交通：约 300–800 RMB - 门票/杂费：约 500–1,500 RMB - 余量很足，可把酒店拉高一点 ### 行程建议 **Day 1｜到达 + 轻松适应** - 下午/傍晚到京都后，先去酒店入住 - 晚上只安排： - 京都站周边简单吃饭 - 或去 **鸭川边散步** - 或去 **先斗町** 走一小段就回 - 这一晚不要排太满，主要是缓冲时差和移动疲劳 **Day 2｜东侧安静线：寺院 + 老街** - 上午： - **南禅寺** 或 **永观堂**（二选一，偏安静） - 中午： - 哲学之道附近简单午餐 - 下午： - **银阁寺** 周边慢逛 - 或只走 **哲学之道**，不硬塞太多景点 - 晚上： - 回市区吃饭，早点休息 **Day 3｜市区慢逛 + 室内补充** - 上午： - **二条城** 或 **京都国际漫画博物馆**（看你更偏历史还是轻松） - 中午： - 乌丸一带午餐 - 下午： - **锦市场** 轻逛 - 或找一家咖啡馆坐一会儿 - 晚上： - 如果想看夜景，可以去 **京都塔** 或酒店附近随便走走 **Day 4｜西侧/轻郊选一个** - 如果想再安静一点： - **岚山** 只选竹林 + 河边散步，不要把整天塞满 - 如果想更城市一点： - 补逛市区没去完的点 - 然后离开京都 ### 住宿建议 想“安静+靠地铁”，我会优先这几个： - **乌丸御池** - *..."
+                }
+              ],
+              "decision": null,
+              "decision_transport": "",
+              "snapshot": null,
+              "scorecard": {
+                "relation": "",
+                "baselineTurnCount": 16,
+                "keptTurnCount": 0,
+                "evictedTurnCount": 0,
+                "pinCount": 0,
+                "baselinePromptEstimate": 0,
+                "shadowRawPromptEstimate": 0,
+                "shadowPackageEstimate": 0,
+                "rawReductionRatio": 0,
+                "packageReductionRatio": 0,
+                "candidateLoadElapsedMs": 9,
+                "assemblyBuildElapsedMs": 0,
+                "decisionElapsedMs": 0,
+                "totalElapsedMs": 0,
+                "guardedEnabled": true,
+                "guardedApplied": false,
+                "guardedReason": "not_evaluated",
+                "guardedMessageCount": 16,
+                "guardedCarryForwardEstimate": 0,
+                "guardedFilteredMessageEstimate": 0
+              },
+              "guarded": {
+                "enabled": true,
+                "applied": false,
+                "reason": "not_evaluated",
+                "filteredMessageCount": 16,
+                "filteredMessageTokenEstimate": 0,
+                "carryForwardEstimate": 0,
+                "evictedSourceIndices": []
+              },
+              "timings": {
+                "totalElapsedMs": 0,
+                "decisionElapsedMs": 0
+              },
+              "exportPath": "/Users/redcreen/Project/unified-memory-core/reports/generated/openclaw-guarded-session-probe-fix4-release-2026-04-19/probe-release-then-travel-switch-guarded/exports/agent-main-main-shadow-1776571448043-9nt5ew.json"
+            }
+          },
+          {
+            "turnIndex": 9,
+            "message": "还是旅行：刚才这段里，我更想住哪座城市？",
+            "ok": true,
+            "answer": "你更想住的是 **京都**。",
+            "error": "",
+            "promptTokens": 15484,
+            "durationMs": 5143,
+            "event": {
+              "schema_version": "umc.dialogue-working-set-shadow.v1",
+              "event_id": "shadow-1776571472028-psaz91",
+              "generated_at": "2026-04-19T04:04:32.028Z",
+              "session_key": "agent:main:main",
+              "agent_id": "main",
+              "query": "还是旅行：刚才这段里，我更想住哪座城市？",
+              "status": "skipped",
+              "reason": "explicit_continue_marker",
+              "sampling": {
+                "max_turns": 12,
+                "min_turns": 3,
+                "max_chars_per_turn": 900
+              },
+              "transcript": [
+                {
+                  "id": "t1",
+                  "role": "user",
+                  "content": "我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。"
+                },
+                {
+                  "id": "t2",
+                  "role": "assistant",
+                  "content": "我记住了：这个 release 方案第一页的项目代号固定写 **north-star-lantern**。 我记住了：这个 release 方案第一页的项目代号固定写 **north-star-lantern**。"
+                },
+                {
+                  "id": "t3",
+                  "role": "user",
+                  "content": "继续同一个 release 话题：把验收拆成版本、安装、回滚、观测四块，而且每块都要写 owner、风险和 rollback boundary。"
+                },
+                {
+                  "id": "t4",
+                  "role": "assistant",
+                  "content": "可以，按这四块拆最清楚。建议验收结构如下： - **版本** - owner - 风险 - rollback boundary - **安装** - owner - 风险 - rollback boundary - **回滚** - owner - 风险 - rollback boundary - **观测** - owner - 风险 - rollback boundary 如果你要，我可以下一步直接帮你把它整理成一页 release 验收模板，或者继续把每块的内容填具体。"
+                },
+                {
+                  "id": "t5",
+                  "role": "user",
+                  "content": "再补充同一个方案：版本块要写 tag、commit、构建时间、镜像 digest；安装块要写目标环境、前置条件和灰度范围。"
+                },
+                {
+                  "id": "t6",
+                  "role": "assistant",
+                  "content": "可以，更新后这版验收结构会是： - **版本** - owner - 风险 - rollback boundary - tag - commit - 构建时间 - 镜像 digest - **安装** - owner - 风险 - rollback boundary - 目标环境 - 前置条件 - 灰度范围 - **回滚** - owner - 风险 - rollback boundary - **观测** - owner - 风险 - rollback boundary 如果你愿意，我可以继续把它整理成一份可直接贴到文档里的 release 验收表单。"
+                },
+                {
+                  "id": "t7",
+                  "role": "user",
+                  "content": "继续 release：回滚块要写开关、数据库兼容边界、失败后的人工兜底；观测块要写 dashboard、告警和日志关键字。"
+                },
+                {
+                  "id": "t8",
+                  "role": "assistant",
+                  "content": "可以，补完后这版 release 验收结构是： - **版本** - owner - 风险 - rollback boundary - tag - commit - 构建时间 - 镜像 digest - **安装** - owner - 风险 - rollback boundary - 目标环境 - 前置条件 - 灰度范围 - **回滚** - owner - 风险 - rollback boundary - 开关 - 数据库兼容边界 - 失败后的人工兜底 - **观测** - owner - 风险 - rollback boundary - dashboard - 告警 - 日志关键字 如果你要，我可以下一步把这四块整理成一段统一的 release 模板文案。"
+                },
+                {
+                  "id": "t9",
+                  "role": "user",
+                  "content": "还是同一个发布方案：如果这轮只保留 5 条关键检查项，你先别展开内容，只确认你记住的是同一个方案。"
+                },
+                {
+                  "id": "t10",
+                  "role": "assistant",
+                  "content": "记住了，还是同一个 release 方案。"
+                },
+                {
+                  "id": "t11",
+                  "role": "user",
+                  "content": "继续：以后我问这个发布方案时，默认先给结论，再补细节，而且回答里保留 north-star-lantern 这个代号。"
+                },
+                {
+                  "id": "t12",
+                  "role": "assistant",
+                  "content": "记住了：以后你问这个发布方案时，我默认先给结论，再补细节；回答里也会保留 **north-star-lantern** 这个代号。"
+                },
+                {
+                  "id": "t13",
+                  "role": "user",
+                  "content": "再补一层：这个方案要先跑 staging，再进 production，而且 staging 通过后 30 分钟内要盯错误率和回滚开关。"
+                },
+                {
+                  "id": "t14",
+                  "role": "assistant",
+                  "content": "记住了。这个 release 方案的顺序是： - 先跑 **staging** - 再进 **production** - **staging** 通过后，接下来 **30 分钟内** 要盯： - 错误率 - 回滚开关 我后面提这个方案时，会继续按这个上下文来讲。"
+                },
+                {
+                  "id": "t15",
+                  "role": "user",
+                  "content": "现在换个完全不同的话题。帮我想一个京都三晚行程，偏安静、靠地铁、预算两万元。"
+                },
+                {
+                  "id": "t16",
+                  "role": "assistant",
+                  "content": "可以。先给结论：**京都 3 晚建议住在乌丸御池 / 京都市役所前 / 四条附近，行程走“少折腾、少赶景点、以地铁+步行”为主”**；你要的“安静、靠地铁、预算两万元”是能做到的，而且可以住得比较舒服。 我先按这个方向给你一个稳妥版本： - **住宿区域**：乌丸御池优先，其次京都市役所前、四条烏丸 - **节奏**：每天 2–3 个点，下午留白 - **交通**：地铁 + 公交少量 + 步行，尽量不住太靠祇园核心街区 - **预算**：两万元人民币内，三晚通常够覆盖 - 酒店：约 3,000–8,000 RMB - 餐饮：约 2,000–4,000 RMB - 交通：约 300–800 RMB - 门票/杂费：约 500–1,500 RMB - 余量很足，可把酒店拉高一点 ### 行程建议 **Day 1｜到达 + 轻松适应** - 下午/傍晚到京都后，先去酒店入住 - 晚上只安排： - 京都站周边简单吃饭 - 或去 **鸭川边散步** - 或去 **先斗町** 走一小段就回 - 这一晚不要排太满，主要是缓冲时差和移动疲劳 **Day 2｜东侧安静线：寺院 + 老街** - 上午： - **南禅寺** 或 **永观堂**（二选一，偏安静） - 中午： - 哲学之道附近简单午餐 - 下午： - **银阁寺** 周边慢逛 - 或只走 **哲学之道**，不硬塞太多景点 - 晚上： - 回市区吃饭，早点休息 **Day 3｜市区慢逛 + 室内补充** - 上午： - **二条城** 或 **京都国际漫画博物馆**（看你更偏历史还是轻松） - 中午： - 乌丸一带午餐 - 下午： - **锦市场** 轻逛 - 或找一家咖啡馆坐一会儿 - 晚上： - 如果想看夜景，可以去 **京都塔** 或酒店附近随便走走 **Day 4｜西侧/轻郊选一个** - 如果想再安静一点： - **岚山** 只选竹林 + 河边散步，不要把整天塞满 - 如果想更城市一点： - 补逛市区没去完的点 - 然后离开京都 ### 住宿建议 想“安静+靠地铁”，我会优先这几个： - **乌丸御池** - *..."
+                },
+                {
+                  "id": "t17",
+                  "role": "user",
+                  "content": "继续旅行话题：如果第一晚住四条乌丸，后两晚更适合住哪里？一句话。"
+                },
+                {
+                  "id": "t18",
+                  "role": "assistant",
+                  "content": "后两晚更适合住 **乌丸御池**，最稳，继续靠地铁、比四条乌丸更安静一点。"
+                }
+              ],
+              "decision": null,
+              "decision_transport": "",
+              "snapshot": null,
+              "scorecard": {
+                "relation": "",
+                "baselineTurnCount": 18,
+                "keptTurnCount": 0,
+                "evictedTurnCount": 0,
+                "pinCount": 0,
+                "baselinePromptEstimate": 0,
+                "shadowRawPromptEstimate": 0,
+                "shadowPackageEstimate": 0,
+                "rawReductionRatio": 0,
+                "packageReductionRatio": 0,
+                "candidateLoadElapsedMs": 8,
+                "assemblyBuildElapsedMs": 0,
+                "decisionElapsedMs": 0,
+                "totalElapsedMs": 0,
+                "guardedEnabled": true,
+                "guardedApplied": false,
+                "guardedReason": "not_evaluated",
+                "guardedMessageCount": 18,
+                "guardedCarryForwardEstimate": 0,
+                "guardedFilteredMessageEstimate": 0
+              },
+              "guarded": {
+                "enabled": true,
+                "applied": false,
+                "reason": "not_evaluated",
+                "filteredMessageCount": 18,
+                "filteredMessageTokenEstimate": 0,
+                "carryForwardEstimate": 0,
+                "evictedSourceIndices": []
+              },
+              "timings": {
+                "totalElapsedMs": 0,
+                "decisionElapsedMs": 0
+              },
+              "exportPath": "/Users/redcreen/Project/unified-memory-core/reports/generated/openclaw-guarded-session-probe-fix4-release-2026-04-19/probe-release-then-travel-switch-guarded/exports/agent-main-main-shadow-1776571472028-psaz91.json"
+            }
+          },
+          {
+            "turnIndex": 10,
+            "message": "先离开旅行，回到最早那个发布方案。第一页固定代号是什么？",
+            "ok": true,
+            "answer": "north-star-lantern",
+            "error": "",
+            "promptTokens": 13580,
+            "durationMs": 4234,
+            "event": {
+              "schema_version": "umc.dialogue-working-set-shadow.v1",
+              "event_id": "shadow-1776571499110-4t26mz",
+              "generated_at": "2026-04-19T04:04:59.110Z",
+              "session_key": "agent:main:main",
+              "agent_id": "main",
+              "query": "先离开旅行，回到最早那个发布方案。第一页固定代号是什么？",
+              "status": "captured",
+              "reason": "",
+              "sampling": {
+                "max_turns": 12,
+                "min_turns": 3,
+                "max_chars_per_turn": 900
+              },
+              "transcript": [
+                {
+                  "id": "t1",
+                  "role": "user",
+                  "content": "我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。"
+                },
+                {
+                  "id": "t2",
+                  "role": "assistant",
+                  "content": "我记住了：这个 release 方案第一页的项目代号固定写 **north-star-lantern**。 我记住了：这个 release 方案第一页的项目代号固定写 **north-star-lantern**。"
+                },
+                {
+                  "id": "t3",
+                  "role": "user",
+                  "content": "继续同一个 release 话题：把验收拆成版本、安装、回滚、观测四块，而且每块都要写 owner、风险和 rollback boundary。"
+                },
+                {
+                  "id": "t4",
+                  "role": "assistant",
+                  "content": "可以，按这四块拆最清楚。建议验收结构如下： - **版本** - owner - 风险 - rollback boundary - **安装** - owner - 风险 - rollback boundary - **回滚** - owner - 风险 - rollback boundary - **观测** - owner - 风险 - rollback boundary 如果你要，我可以下一步直接帮你把它整理成一页 release 验收模板，或者继续把每块的内容填具体。"
+                },
+                {
+                  "id": "t5",
+                  "role": "user",
+                  "content": "再补充同一个方案：版本块要写 tag、commit、构建时间、镜像 digest；安装块要写目标环境、前置条件和灰度范围。"
+                },
+                {
+                  "id": "t6",
+                  "role": "assistant",
+                  "content": "可以，更新后这版验收结构会是： - **版本** - owner - 风险 - rollback boundary - tag - commit - 构建时间 - 镜像 digest - **安装** - owner - 风险 - rollback boundary - 目标环境 - 前置条件 - 灰度范围 - **回滚** - owner - 风险 - rollback boundary - **观测** - owner - 风险 - rollback boundary 如果你愿意，我可以继续把它整理成一份可直接贴到文档里的 release 验收表单。"
+                },
+                {
+                  "id": "t7",
+                  "role": "user",
+                  "content": "继续 release：回滚块要写开关、数据库兼容边界、失败后的人工兜底；观测块要写 dashboard、告警和日志关键字。"
+                },
+                {
+                  "id": "t8",
+                  "role": "assistant",
+                  "content": "可以，补完后这版 release 验收结构是： - **版本** - owner - 风险 - rollback boundary - tag - commit - 构建时间 - 镜像 digest - **安装** - owner - 风险 - rollback boundary - 目标环境 - 前置条件 - 灰度范围 - **回滚** - owner - 风险 - rollback boundary - 开关 - 数据库兼容边界 - 失败后的人工兜底 - **观测** - owner - 风险 - rollback boundary - dashboard - 告警 - 日志关键字 如果你要，我可以下一步把这四块整理成一段统一的 release 模板文案。"
+                },
+                {
+                  "id": "t9",
+                  "role": "user",
+                  "content": "还是同一个发布方案：如果这轮只保留 5 条关键检查项，你先别展开内容，只确认你记住的是同一个方案。"
+                },
+                {
+                  "id": "t10",
+                  "role": "assistant",
+                  "content": "记住了，还是同一个 release 方案。"
+                },
+                {
+                  "id": "t11",
+                  "role": "user",
+                  "content": "继续：以后我问这个发布方案时，默认先给结论，再补细节，而且回答里保留 north-star-lantern 这个代号。"
+                },
+                {
+                  "id": "t12",
+                  "role": "assistant",
+                  "content": "记住了：以后你问这个发布方案时，我默认先给结论，再补细节；回答里也会保留 **north-star-lantern** 这个代号。"
+                },
+                {
+                  "id": "t13",
+                  "role": "user",
+                  "content": "再补一层：这个方案要先跑 staging，再进 production，而且 staging 通过后 30 分钟内要盯错误率和回滚开关。"
+                },
+                {
+                  "id": "t14",
+                  "role": "assistant",
+                  "content": "记住了。这个 release 方案的顺序是： - 先跑 **staging** - 再进 **production** - **staging** 通过后，接下来 **30 分钟内** 要盯： - 错误率 - 回滚开关 我后面提这个方案时，会继续按这个上下文来讲。"
+                },
+                {
+                  "id": "t15",
+                  "role": "user",
+                  "content": "现在换个完全不同的话题。帮我想一个京都三晚行程，偏安静、靠地铁、预算两万元。"
+                },
+                {
+                  "id": "t16",
+                  "role": "assistant",
+                  "content": "可以。先给结论：**京都 3 晚建议住在乌丸御池 / 京都市役所前 / 四条附近，行程走“少折腾、少赶景点、以地铁+步行”为主”**；你要的“安静、靠地铁、预算两万元”是能做到的，而且可以住得比较舒服。 我先按这个方向给你一个稳妥版本： - **住宿区域**：乌丸御池优先，其次京都市役所前、四条烏丸 - **节奏**：每天 2–3 个点，下午留白 - **交通**：地铁 + 公交少量 + 步行，尽量不住太靠祇园核心街区 - **预算**：两万元人民币内，三晚通常够覆盖 - 酒店：约 3,000–8,000 RMB - 餐饮：约 2,000–4,000 RMB - 交通：约 300–800 RMB - 门票/杂费：约 500–1,500 RMB - 余量很足，可把酒店拉高一点 ### 行程建议 **Day 1｜到达 + 轻松适应** - 下午/傍晚到京都后，先去酒店入住 - 晚上只安排： - 京都站周边简单吃饭 - 或去 **鸭川边散步** - 或去 **先斗町** 走一小段就回 - 这一晚不要排太满，主要是缓冲时差和移动疲劳 **Day 2｜东侧安静线：寺院 + 老街** - 上午： - **南禅寺** 或 **永观堂**（二选一，偏安静） - 中午： - 哲学之道附近简单午餐 - 下午： - **银阁寺** 周边慢逛 - 或只走 **哲学之道**，不硬塞太多景点 - 晚上： - 回市区吃饭，早点休息 **Day 3｜市区慢逛 + 室内补充** - 上午： - **二条城** 或 **京都国际漫画博物馆**（看你更偏历史还是轻松） - 中午： - 乌丸一带午餐 - 下午： - **锦市场** 轻逛 - 或找一家咖啡馆坐一会儿 - 晚上： - 如果想看夜景，可以去 **京都塔** 或酒店附近随便走走 **Day 4｜西侧/轻郊选一个** - 如果想再安静一点： - **岚山** 只选竹林 + 河边散步，不要把整天塞满 - 如果想更城市一点： - 补逛市区没去完的点 - 然后离开京都 ### 住宿建议 想“安静+靠地铁”，我会优先这几个： - **乌丸御池** - *..."
+                },
+                {
+                  "id": "t17",
+                  "role": "user",
+                  "content": "继续旅行话题：如果第一晚住四条乌丸，后两晚更适合住哪里？一句话。"
+                },
+                {
+                  "id": "t18",
+                  "role": "assistant",
+                  "content": "后两晚更适合住 **乌丸御池**，最稳，继续靠地铁、比四条乌丸更安静一点。"
+                },
+                {
+                  "id": "t19",
+                  "role": "user",
+                  "content": "还是旅行：刚才这段里，我更想住哪座城市？"
+                },
+                {
+                  "id": "t20",
+                  "role": "assistant",
+                  "content": "你更想住的是 **京都**。"
+                }
+              ],
+              "decision": {
+                "relation": "switch",
+                "confidence": 0.9,
+                "evict_turn_ids": [
+                  "t1",
+                  "t2",
+                  "t3",
+                  "t4",
+                  "t5",
+                  "t6",
+                  "t7",
+                  "t8",
+                  "t9",
+                  "t10",
+                  "t11",
+                  "t12",
+                  "t13",
+                  "t14",
+                  "t15",
+                  "t16",
+                  "t17",
+                  "t18",
+                  "t20"
+                ],
+                "pin_turn_ids": [
+                  "t15",
+                  "t1",
+                  "t11"
+                ],
+                "archive_summary": "再补一层：这个方案要先跑 staging，再进 production，而且 staging 通过后 30 分钟内要盯错误率和回滚开关。 / 现在换个完全不同的话题。帮我想一个京都三晚行程，偏安静、靠地铁、预算两万元。 / 继续旅行话题：如果第一晚住四条乌丸，后两晚更适合住哪里？一句话。",
+                "reasoning_summary": "Explicit topic-switch marker detected in latest user turn: 先离开旅行，回到最早那个发布方案。第一页固定代号是什么？"
+              },
+              "decision_transport": "heuristic_switch",
+              "snapshot": {
+                "applied": {
+                  "relation": "switch",
+                  "confidence": 0.9,
+                  "archiveSummary": "再补一层：这个方案要先跑 staging，再进 production，而且 staging 通过后 30 分钟内要盯错误率和回滚开关。 / 现在换个完全不同的话题。帮我想一个京都三晚行程，偏安静、靠地铁、预算两万元。 / 继续旅行话题：如果第一晚住四条乌丸，后两晚更适合住哪里？一句话。",
+                  "reasoningSummary": "Explicit topic-switch marker detected in latest user turn: 先离开旅行，回到最早那个发布方案。第一页固定代号是什么？",
+                  "latestUserTurnId": "t19",
+                  "pinTurnIds": [
+                    "t15",
+                    "t1",
+                    "t11"
+                  ],
+                  "pinnedOnlyTurnIds": [
+                    "t15",
+                    "t1",
+                    "t11"
+                  ],
+                  "requestedEvictTurnIds": [
+                    "t1",
+                    "t2",
+                    "t3",
+                    "t4",
+                    "t5",
+                    "t6",
+                    "t7",
+                    "t8",
+                    "t9",
+                    "t10",
+                    "t11",
+                    "t12",
+                    "t13",
+                    "t14",
+                    "t15",
+                    "t16",
+                    "t17",
+                    "t18",
+                    "t20"
+                  ],
+                  "blockedEvictTurnIds": [],
+                  "appliedEvictTurnIds": [
+                    "t1",
+                    "t2",
+                    "t3",
+                    "t4",
+                    "t5",
+                    "t6",
+                    "t7",
+                    "t8",
+                    "t9",
+                    "t10",
+                    "t11",
+                    "t12",
+                    "t13",
+                    "t14",
+                    "t15",
+                    "t16",
+                    "t17",
+                    "t18",
+                    "t20"
+                  ],
+                  "keepTurnIds": [
+                    "t19"
+                  ],
+                  "baselineTokens": 670,
+                  "keptTokens": 5,
+                  "prunedTokens": 665,
+                  "reductionRatio": 0.9925373134328358,
+                  "keepTurns": [
+                    {
+                      "id": "t19",
+                      "role": "user",
+                      "content": "还是旅行：刚才这段里，我更想住哪座城市？",
+                      "tokenEstimate": 5
+                    }
+                  ],
+                  "evictedTurns": [
+                    {
+                      "id": "t1",
+                      "role": "user",
+                      "content": "我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。",
+                      "tokenEstimate": 16
+                    },
+                    {
+                      "id": "t2",
+                      "role": "assistant",
+                      "content": "我记住了：这个 release 方案第一页的项目代号固定写 **north-star-lantern**。 我记住了：这个 release 方案第一页的项目代号固定写 **north-star-lantern**。",
+                      "tokenEstimate": 27
+                    },
+                    {
+                      "id": "t3",
+                      "role": "user",
+                      "content": "继续同一个 release 话题：把验收拆成版本、安装、回滚、观测四块，而且每块都要写 owner、风险和 rollback boundary。",
+                      "tokenEstimate": 18
+                    },
+                    {
+                      "id": "t4",
+                      "role": "assistant",
+                      "content": "可以，按这四块拆最清楚。建议验收结构如下： - **版本** - owner - 风险 - rollback boundary - **安装** - owner - 风险 - rollback boundary - **回滚** - owner - 风险 - rollback boundary - **观测** - owner - 风险 - rollback boundary 如果你要，我可以下一步直接帮你把它整理成一页 release 验收模板，或者继续把每块的内容填具体。",
+                      "tokenEstimate": 60
+                    },
+                    {
+                      "id": "t5",
+                      "role": "user",
+                      "content": "再补充同一个方案：版本块要写 tag、commit、构建时间、镜像 digest；安装块要写目标环境、前置条件和灰度范围。",
+                      "tokenEstimate": 16
+                    },
+                    {
+                      "id": "t6",
+                      "role": "assistant",
+                      "content": "可以，更新后这版验收结构会是： - **版本** - owner - 风险 - rollback boundary - tag - commit - 构建时间 - 镜像 digest - **安装** - owner - 风险 - rollback boundary - 目标环境 - 前置条件 - 灰度范围 - **回滚** - owner - 风险 - rollback boundary - **观测** - owner - 风险 - rollback boundary 如果你愿意，我可以继续把它整理成一份可直接贴到文档里的 release 验收表单。",
+                      "tokenEstimate": 70
+                    },
+                    {
+                      "id": "t7",
+                      "role": "user",
+                      "content": "继续 release：回滚块要写开关、数据库兼容边界、失败后的人工兜底；观测块要写 dashboard、告警和日志关键字。",
+                      "tokenEstimate": 16
+                    },
+                    {
+                      "id": "t8",
+                      "role": "assistant",
+                      "content": "可以，补完后这版 release 验收结构是： - **版本** - owner - 风险 - rollback boundary - tag - commit - 构建时间 - 镜像 digest - **安装** - owner - 风险 - rollback boundary - 目标环境 - 前置条件 - 灰度范围 - **回滚** - owner - 风险 - rollback boundary - 开关 - 数据库兼容边界 - 失败后的人工兜底 - **观测** - owner - 风险 - rollback boundary - dashboard - 告警 - 日志关键字 如果你要，我可以下一步把这四块整理成一段统一的 release 模板文案。",
+                      "tokenEstimate": 84
+                    },
+                    {
+                      "id": "t9",
+                      "role": "user",
+                      "content": "还是同一个发布方案：如果这轮只保留 5 条关键检查项，你先别展开内容，只确认你记住的是同一个方案。",
+                      "tokenEstimate": 13
+                    },
+                    {
+                      "id": "t10",
+                      "role": "assistant",
+                      "content": "记住了，还是同一个 release 方案。",
+                      "tokenEstimate": 6
+                    },
+                    {
+                      "id": "t11",
+                      "role": "user",
+                      "content": "继续：以后我问这个发布方案时，默认先给结论，再补细节，而且回答里保留 north-star-lantern 这个代号。",
+                      "tokenEstimate": 15
+                    },
+                    {
+                      "id": "t12",
+                      "role": "assistant",
+                      "content": "记住了：以后你问这个发布方案时，我默认先给结论，再补细节；回答里也会保留 **north-star-lantern** 这个代号。",
+                      "tokenEstimate": 17
+                    },
+                    {
+                      "id": "t13",
+                      "role": "user",
+                      "content": "再补一层：这个方案要先跑 staging，再进 production，而且 staging 通过后 30 分钟内要盯错误率和回滚开关。",
+                      "tokenEstimate": 17
+                    },
+                    {
+                      "id": "t14",
+                      "role": "assistant",
+                      "content": "记住了。这个 release 方案的顺序是： - 先跑 **staging** - 再进 **production** - **staging** 通过后，接下来 **30 分钟内** 要盯： - 错误率 - 回滚开关 我后面提这个方案时，会继续按这个上下文来讲。",
+                      "tokenEstimate": 33
+                    },
+                    {
+                      "id": "t15",
+                      "role": "user",
+                      "content": "现在换个完全不同的话题。帮我想一个京都三晚行程，偏安静、靠地铁、预算两万元。",
+                      "tokenEstimate": 10
+                    },
+                    {
+                      "id": "t16",
+                      "role": "assistant",
+                      "content": "可以。先给结论：**京都 3 晚建议住在乌丸御池 / 京都市役所前 / 四条附近，行程走“少折腾、少赶景点、以地铁+步行”为主”**；你要的“安静、靠地铁、预算两万元”是能做到的，而且可以住得比较舒服。 我先按这个方向给你一个稳妥版本： - **住宿区域**：乌丸御池优先，其次京都市役所前、四条烏丸 - **节奏**：每天 2–3 个点，下午留白 - **交通**：地铁 + 公交少量 + 步行，尽量不住太靠祇园核心街区 - **预算**：两万元人民币内，三晚通常够覆盖 - 酒店：约 3,000–8,000 RMB - 餐饮：约 2,000–4,000 RMB - 交通：约 300–800 RMB - 门票/杂费：约 500–1,500 RMB - 余量很足，可把酒店拉高一点 ### 行程建议 **Day 1｜到达 + 轻松适应** - 下午/傍晚到京都后，先去酒店入住 - 晚上只安排： - 京都站周边简单吃饭 - 或去 **鸭川边散步** - 或去 **先斗町** 走一小段就回 - 这一晚不要排太满，主要是缓冲时差和移动疲劳 **Day 2｜东侧安静线：寺院 + 老街** - 上午： - **南禅寺** 或 **永观堂**（二选一，偏安静） - 中午： - 哲学之道附近简单午餐 - 下午： - **银阁寺** 周边慢逛 - 或只走 **哲学之道**，不硬塞太多景点 - 晚上： - 回市区吃饭，早点休息 **Day 3｜市区慢逛 + 室内补充** - 上午： - **二条城** 或 **京都国际漫画博物馆**（看你更偏历史还是轻松） - 中午： - 乌丸一带午餐 - 下午： - **锦市场** 轻逛 - 或找一家咖啡馆坐一会儿 - 晚上： - 如果想看夜景，可以去 **京都塔** 或酒店附近随便走走 **Day 4｜西侧/轻郊选一个** - 如果想再安静一点： - **岚山** 只选竹林 + 河边散步，不要把整天塞满 - 如果想更城市一点： - 补逛市区没去完的点 - 然后离开京都 ### 住宿建议 想“安静+靠地铁”，我会优先这几个： - **乌丸御池** - *...",
+                      "tokenEstimate": 225
+                    },
+                    {
+                      "id": "t17",
+                      "role": "user",
+                      "content": "继续旅行话题：如果第一晚住四条乌丸，后两晚更适合住哪里？一句话。",
+                      "tokenEstimate": 8
+                    },
+                    {
+                      "id": "t18",
+                      "role": "assistant",
+                      "content": "后两晚更适合住 **乌丸御池**，最稳，继续靠地铁、比四条乌丸更安静一点。",
+                      "tokenEstimate": 10
+                    },
+                    {
+                      "id": "t20",
+                      "role": "assistant",
+                      "content": "你更想住的是 **京都**。",
+                      "tokenEstimate": 4
+                    }
+                  ]
+                },
+                "baselineRawTranscript": "t1 user: 我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。\nt2 assistant: 我记住了：这个 release 方案第一页的项目代号固定写 **north-star-lantern**。 我记住了：这个 release 方案第一页的项目代号固定写 **north-star-lantern**。\nt3 user: 继续同一个 release 话题：把验收拆成版本、安装、回滚、观测四块，而且每块都要写 owner、风险和 rollback boundary。\nt4 assistant: 可以，按这四块拆最清楚。建议验收结构如下： - **版本** - owner - 风险 - rollback boundary - **安装** - owner - 风险 - rollback boundary - **回滚** - owner - 风险 - rollback boundary - **观测** - owner - 风险 - rollback boundary 如果你要，我可以下一步直接帮你把它整理成一页 release 验收模板，或者继续把每块的内容填具体。\nt5 user: 再补充同一个方案：版本块要写 tag、commit、构建时间、镜像 digest；安装块要写目标环境、前置条件和灰度范围。\nt6 assistant: 可以，更新后这版验收结构会是： - **版本** - owner - 风险 - rollback boundary - tag - commit - 构建时间 - 镜像 digest - **安装** - owner - 风险 - rollback boundary - 目标环境 - 前置条件 - 灰度范围 - **回滚** - owner - 风险 - rollback boundary - **观测** - owner - 风险 - rollback boundary 如果你愿意，我可以继续把它整理成一份可直接贴到文档里的 release 验收表单。\nt7 user: 继续 release：回滚块要写开关、数据库兼容边界、失败后的人工兜底；观测块要写 dashboard、告警和日志关键字。\nt8 assistant: 可以，补完后这版 release 验收结构是： - **版本** - owner - 风险 - rollback boundary - tag - commit - 构建时间 - 镜像 digest - **安装** - owner - 风险 - rollback boundary - 目标环境 - 前置条件 - 灰度范围 - **回滚** - owner - 风险 - rollback boundary - 开关 - 数据库兼容边界 - 失败后的人工兜底 - **观测** - owner - 风险 - rollback boundary - dashboard - 告警 - 日志关键字 如果你要，我可以下一步把这四块整理成一段统一的 release 模板文案。\nt9 user: 还是同一个发布方案：如果这轮只保留 5 条关键检查项，你先别展开内容，只确认你记住的是同一个方案。\nt10 assistant: 记住了，还是同一个 release 方案。\nt11 user: 继续：以后我问这个发布方案时，默认先给结论，再补细节，而且回答里保留 north-star-lantern 这个代号。\nt12 assistant: 记住了：以后你问这个发布方案时，我默认先给结论，再补细节；回答里也会保留 **north-star-lantern** 这个代号。\nt13 user: 再补一层：这个方案要先跑 staging，再进 production，而且 staging 通过后 30 分钟内要盯错误率和回滚开关。\nt14 assistant: 记住了。这个 release 方案的顺序是： - 先跑 **staging** - 再进 **production** - **staging** 通过后，接下来 **30 分钟内** 要盯： - 错误率 - 回滚开关 我后面提这个方案时，会继续按这个上下文来讲。\nt15 user: 现在换个完全不同的话题。帮我想一个京都三晚行程，偏安静、靠地铁、预算两万元。\nt16 assistant: 可以。先给结论：**京都 3 晚建议住在乌丸御池 / 京都市役所前 / 四条附近，行程走“少折腾、少赶景点、以地铁+步行”为主”**；你要的“安静、靠地铁、预算两万元”是能做到的，而且可以住得比较舒服。 我先按这个方向给你一个稳妥版本： - **住宿区域**：乌丸御池优先，其次京都市役所前、四条烏丸 - **节奏**：每天 2–3 个点，下午留白 - **交通**：地铁 + 公交少量 + 步行，尽量不住太靠祇园核心街区 - **预算**：两万元人民币内，三晚通常够覆盖 - 酒店：约 3,000–8,000 RMB - 餐饮：约 2,000–4,000 RMB - 交通：约 300–800 RMB - 门票/杂费：约 500–1,500 RMB - 余量很足，可把酒店拉高一点 ### 行程建议 **Day 1｜到达 + 轻松适应** - 下午/傍晚到京都后，先去酒店入住 - 晚上只安排： - 京都站周边简单吃饭 - 或去 **鸭川边散步** - 或去 **先斗町** 走一小段就回 - 这一晚不要排太满，主要是缓冲时差和移动疲劳 **Day 2｜东侧安静线：寺院 + 老街** - 上午： - **南禅寺** 或 **永观堂**（二选一，偏安静） - 中午： - 哲学之道附近简单午餐 - 下午： - **银阁寺** 周边慢逛 - 或只走 **哲学之道**，不硬塞太多景点 - 晚上： - 回市区吃饭，早点休息 **Day 3｜市区慢逛 + 室内补充** - 上午： - **二条城** 或 **京都国际漫画博物馆**（看你更偏历史还是轻松） - 中午： - 乌丸一带午餐 - 下午： - **锦市场** 轻逛 - 或找一家咖啡馆坐一会儿 - 晚上： - 如果想看夜景，可以去 **京都塔** 或酒店附近随便走走 **Day 4｜西侧/轻郊选一个** - 如果想再安静一点： - **岚山** 只选竹林 + 河边散步，不要把整天塞满 - 如果想更城市一点： - 补逛市区没去完的点 - 然后离开京都 ### 住宿建议 想“安静+靠地铁”，我会优先这几个： - **乌丸御池** - *...\nt17 user: 继续旅行话题：如果第一晚住四条乌丸，后两晚更适合住哪里？一句话。\nt18 assistant: 后两晚更适合住 **乌丸御池**，最稳，继续靠地铁、比四条乌丸更安静一点。\nt19 user: 还是旅行：刚才这段里，我更想住哪座城市？\nt20 assistant: 你更想住的是 **京都**。",
+                "shadowRawTranscript": "t19 user: 还是旅行：刚才这段里，我更想住哪座城市？",
+                "semanticPinNotes": [
+                  "user: 我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。",
+                  "user: 继续：以后我问这个发布方案时，默认先给结论，再补细节，而且回答里保留 north-star-lantern 这个代号。",
+                  "user: 现在换个完全不同的话题。帮我想一个京都三晚行程，偏安静、靠地铁、预算两万元。"
+                ],
+                "archiveSummary": "再补一层：这个方案要先跑 staging，再进 production，而且 staging 通过后 30 分钟内要盯错误率和回滚开关。 / 现在换个完全不同的话题。帮我想一个京都三晚行程，偏安静、靠地铁、预算两万元。 / 继续旅行话题：如果第一晚住四条乌丸，后两晚更适合住哪里？一句话。",
+                "injectedArchiveSummary": "",
+                "baselinePromptEstimate": 728,
+                "shadowRawPromptEstimate": 8,
+                "shadowPackageEstimate": 13,
+                "shadowPackageText": "Recent raw context:\nt19 user: 还是旅行：刚才这段里，我更想住哪座城市？"
+              },
+              "scorecard": {
+                "relation": "switch",
+                "baselineTurnCount": 20,
+                "keptTurnCount": 1,
+                "evictedTurnCount": 19,
+                "pinCount": 3,
+                "baselinePromptEstimate": 728,
+                "shadowRawPromptEstimate": 8,
+                "shadowPackageEstimate": 13,
+                "rawReductionRatio": 0.9925,
+                "packageReductionRatio": 0.9821,
+                "candidateLoadElapsedMs": 8,
+                "assemblyBuildElapsedMs": 0,
+                "decisionElapsedMs": 0,
+                "totalElapsedMs": 1,
+                "guardedEnabled": true,
+                "guardedApplied": true,
+                "guardedReason": "guarded_candidate",
+                "guardedMessageCount": 1,
+                "guardedCarryForwardEstimate": 55,
+                "guardedFilteredMessageEstimate": 5
+              },
+              "guarded": {
+                "enabled": true,
+                "applied": true,
+                "reason": "guarded_candidate",
+                "filteredMessages": [
+                  {
+                    "role": "user",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "还是旅行：刚才这段里，我更想住哪座城市？"
+                      }
+                    ],
+                    "timestamp": 1776571472032
+                  }
+                ],
+                "filteredMessageCount": 1,
+                "filteredMessageTokenEstimate": 5,
+                "carryForwardText": "Conversation carry-forward pins:\n- user: 我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。\n- user: 继续：以后我问这个发布方案时，默认先给结论，再补细节，而且回答里保留 north-star-lantern 这个代号。\n- user: 现在换个完全不同的话题。帮我想一个京都三晚行程，偏安静、靠地铁、预算两万元。",
+                "carryForwardEstimate": 55,
+                "evictedSourceIndices": [
+                  0,
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7,
+                  8,
+                  9,
+                  10,
+                  11,
+                  12,
+                  13,
+                  14,
+                  15,
+                  16,
+                  17,
+                  19
+                ]
+              },
+              "timings": {
+                "totalElapsedMs": 1,
+                "decisionElapsedMs": 0
+              },
+              "exportPath": "/Users/redcreen/Project/unified-memory-core/reports/generated/openclaw-guarded-session-probe-fix4-release-2026-04-19/probe-release-then-travel-switch-guarded/exports/agent-main-main-shadow-1776571499110-4t26mz.json"
+            }
+          }
+        ],
+        "checkpoints": [
+          {
+            "label": "travel-city-recall",
+            "turnIndex": 9,
+            "answer": "你更想住的是 **京都**。",
+            "passed": true,
+            "expectedAll": [
+              "京都"
+            ],
+            "expectedAny": [],
+            "forbiddenAny": [
+              "大阪",
+              "不知道"
+            ]
+          },
+          {
+            "label": "release-codename-return",
+            "turnIndex": 10,
+            "answer": "north-star-lantern",
+            "passed": true,
+            "expectedAll": [
+              "north-star-lantern"
+            ],
+            "expectedAny": [],
+            "forbiddenAny": [
+              "不知道"
+            ]
+          }
+        ],
+        "promptWindow": {
+          "switchTurnIndex": 7,
+          "rollbackWindow": 3,
+          "peakBeforeSwitch": 14367,
+          "minWithinSwitchWindow": 13554,
+          "rollbackRatio": 0.0566,
+          "guardedAppliedTurns": 1
+        }
+      },
+      "promptComparison": {
+        "postSwitchSavingsRatio": 0.2063
+      }
+    }
+  ]
+}

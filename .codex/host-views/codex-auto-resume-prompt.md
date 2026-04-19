@@ -6,7 +6,7 @@
 
 - 项目名：`unified-memory-core`
 - 工作区路径：`/Users/redcreen/Project/unified-memory-core`
-- 最近匹配会话：`评估上下文瘦身双写并行切换可行性}】 (019d93e3-8a09-75a0-88ea-d09749a873fb)`
+- 最近匹配会话：`重做 Context Minor GC 体感测试 (019da335-a070-7972-b61e-6ba3a73ff633)`
 
 如果当前线程上下文和上面的项目信息不一致，优先以上面的工作区路径为准。
 
@@ -18,7 +18,7 @@
 
 ## 当前连续性
 
-- 当前 checkpoint：`Stage 7 closeout evidence、Docker hermetic baseline、release-preflight、canonical-root policy、shared-foundation proof`
+- 当前 checkpoint：`Codex VS Code live telemetry、experience-gap docs、Codex context GC state docs、current host views、targeted Codex GC tests`
 - 下一动作：`保持 \`npm run umc:stage10 -- --format markdown\` 持续为绿。`
 - 下一动作来源：`status.next-3`
 

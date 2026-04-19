@@ -1,0 +1,284 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776532035468-jt4tf7",
+  "generated_at": "2026-04-18T17:07:15.468Z",
+  "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+  "agent_id": "main",
+  "query": "要；尽量不是白名单，有硬编码嫌疑；",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "assistant",
+      "content": "继续之后，第 3 个点也已经基本收住了。 现在状态是："
+    },
+    {
+      "id": "t2",
+      "role": "user",
+      "content": "直接给你一条最短回归命令，方便你以后自己 spot check。"
+    },
+    {
+      "id": "t3",
+      "role": "assistant",
+      "content": "最短 spot check 我建议就这 2 条： ```bash npm run codex:vscode:gc --silent ```"
+    },
+    {
+      "id": "t4",
+      "role": "user",
+      "content": "接下来 我要做蛇呢么？"
+    },
+    {
+      "id": "t5",
+      "role": "assistant",
+      "content": "接下来做这 3 件事就够了。 1. 先留一条最小回归命令 直接用这条做以后 spot check： ```bash npm run codex:vscode:gc --silent ``` 如果怀疑 prompt 没及时落盘，再用： ```bash node scripts/codex-vscode-context-minor-gc.js --format markdown --prompt \"[GC-D2] 回到编辑器问题。…"
+    },
+    {
+      "id": "t6",
+      "role": "user",
+      "content": "或者补一个 repo 内可重复的 smoke/eval case，把 GC-D2 收进固定回归"
+    },
+    {
+      "id": "t7",
+      "role": "assistant",
+      "content": "已经补进去了。 新回归 case 在： - [evals/codex-context-minor-gc-live-cases.js](/Users/redcreen/Project/unified-memory-core/evals/codex-context-minor-gc-live-cases.js)"
+    },
+    {
+      "id": "t8",
+      "role": "user",
+      "content": "要"
+    },
+    {
+      "id": "t9",
+      "role": "assistant",
+      "content": "已经修到全绿了。 我做了两件事： - 把 Codex minor GC 默认允许的 guarded relation 放宽到包含 `continue` - 把 `codex-minor-gc-current-editor-update-after-detour` 收进固定 live eval case"
+    },
+    {
+      "id": "t10",
+      "role": "user",
+      "content": "继续扩 harder cases，把类似 GC-B 的自然中文多轮切题也收进固定回归"
+    },
+    {
+      "id": "t11",
+      "role": "assistant",
+      "content": "已经把 harder case 补进固定回归了。 新增 case： - `codex-minor-gc-zh-dense-multitopic-return` - 文件：[evals/codex-context-minor-gc-live-cases.js](/Users/redcreen/Project/unified-memory-core/evals/codex-context-minor-gc-live-cases.js)"
+    },
+    {
+      "id": "t12",
+      "role": "user",
+      "content": "要；尽量不是白名单，有硬编码嫌疑；"
+    }
+  ],
+  "decision": {
+    "relation": "continue",
+    "confidence": 0.87,
+    "evict_turn_ids": [
+      "t1",
+      "t2",
+      "t3",
+      "t4",
+      "t5",
+      "t6",
+      "t7",
+      "t8",
+      "t9"
+    ],
+    "pin_turn_ids": [],
+    "archive_summary": "Earlier subtopics are resolved: a minimal spot-check command was established (`npm run codex:vscode:gc --silent`, with a fallback prompt-injection command if needed), and a repeatable repo smoke/eval case was added and reported green. The assistant also noted prior changes: guarded relation handling was broadened to include `continue`, and an editor-detour live eval case was added. Those are background results, not the current unresolved focus.",
+    "reasoning_summary": "The latest user turn stays automatically. The active topic is still the same evaluation/regression work, now narrowed to making the new harder Chinese multitopic case less whitelist-like and less hardcoded, so `relation=continue`. Keep the immediate raw context around `t10`-`t12`, which captures the unresolved request and the just-added harder case. Older setup, status, and already-resolved spot-check/smoke-case turns are good eviction candidates and do not need pinning because they are not durable user preferences or required next-turn evidence."
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "continue",
+      "confidence": 0.87,
+      "archiveSummary": "Earlier subtopics are resolved: a minimal spot-check command was established (`npm run codex:vscode:gc --silent`, with a fallback prompt-injection command if needed), and a repeatable repo smoke/eval case was added and reported green. The assistant also noted prior changes: guarded relation handling was broadened to include `continue`, and an editor-detour live eval case was added. Those are background results, not the current unresolved focus.",
+      "reasoningSummary": "The latest user turn stays automatically. The active topic is still the same evaluation/regression work, now narrowed to making the new harder Chinese multitopic case less whitelist-like and less hardcoded, so `relation=continue`. Keep the immediate raw context around `t10`-`t12`, which captures the unresolved request and the just-added harder case. Older setup, status, and already-resolved spot-check/smoke-case turns are good eviction candidates and do not need pinning because they are not durable user preferences or required next-turn evidence.",
+      "latestUserTurnId": "t12",
+      "pinTurnIds": [],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8",
+        "t9"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8",
+        "t9"
+      ],
+      "keepTurnIds": [
+        "t10",
+        "t11",
+        "t12"
+      ],
+      "baselineTokens": 251,
+      "keptTokens": 71,
+      "prunedTokens": 180,
+      "reductionRatio": 0.7171314741035857,
+      "keepTurns": [
+        {
+          "id": "t10",
+          "role": "user",
+          "content": "继续扩 harder cases，把类似 GC-B 的自然中文多轮切题也收进固定回归",
+          "tokenEstimate": 11
+        },
+        {
+          "id": "t11",
+          "role": "assistant",
+          "content": "已经把 harder case 补进固定回归了。 新增 case： - `codex-minor-gc-zh-dense-multitopic-return` - 文件：[evals/codex-context-minor-gc-live-cases.js](/Users/redcreen/Project/unified-memory-core/evals/codex-context-minor-gc-live-cases.js)",
+          "tokenEstimate": 55
+        },
+        {
+          "id": "t12",
+          "role": "user",
+          "content": "要；尽量不是白名单，有硬编码嫌疑；",
+          "tokenEstimate": 5
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "assistant",
+          "content": "继续之后，第 3 个点也已经基本收住了。 现在状态是：",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t2",
+          "role": "user",
+          "content": "直接给你一条最短回归命令，方便你以后自己 spot check。",
+          "tokenEstimate": 8
+        },
+        {
+          "id": "t3",
+          "role": "assistant",
+          "content": "最短 spot check 我建议就这 2 条： ```bash npm run codex:vscode:gc --silent ```",
+          "tokenEstimate": 18
+        },
+        {
+          "id": "t4",
+          "role": "user",
+          "content": "接下来 我要做蛇呢么？",
+          "tokenEstimate": 3
+        },
+        {
+          "id": "t5",
+          "role": "assistant",
+          "content": "接下来做这 3 件事就够了。 1. 先留一条最小回归命令 直接用这条做以后 spot check： ```bash npm run codex:vscode:gc --silent ``` 如果怀疑 prompt 没及时落盘，再用： ```bash node scripts/codex-vscode-context-minor-gc.js --format markdown --prompt \"[GC-D2] 回到编辑器问题。…",
+          "tokenEstimate": 54
+        },
+        {
+          "id": "t6",
+          "role": "user",
+          "content": "或者补一个 repo 内可重复的 smoke/eval case，把 GC-D2 收进固定回归",
+          "tokenEstimate": 12
+        },
+        {
+          "id": "t7",
+          "role": "assistant",
+          "content": "已经补进去了。 新回归 case 在： - [evals/codex-context-minor-gc-live-cases.js](/Users/redcreen/Project/unified-memory-core/evals/codex-context-minor-gc-live-cases.js)",
+          "tokenEstimate": 39
+        },
+        {
+          "id": "t8",
+          "role": "user",
+          "content": "要",
+          "tokenEstimate": 1
+        },
+        {
+          "id": "t9",
+          "role": "assistant",
+          "content": "已经修到全绿了。 我做了两件事： - 把 Codex minor GC 默认允许的 guarded relation 放宽到包含 `continue` - 把 `codex-minor-gc-current-editor-update-after-detour` 收进固定 live eval case",
+          "tokenEstimate": 38
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 assistant: 继续之后，第 3 个点也已经基本收住了。 现在状态是：\nt2 user: 直接给你一条最短回归命令，方便你以后自己 spot check。\nt3 assistant: 最短 spot check 我建议就这 2 条： ```bash npm run codex:vscode:gc --silent ```\nt4 user: 接下来 我要做蛇呢么？\nt5 assistant: 接下来做这 3 件事就够了。 1. 先留一条最小回归命令 直接用这条做以后 spot check： ```bash npm run codex:vscode:gc --silent ``` 如果怀疑 prompt 没及时落盘，再用： ```bash node scripts/codex-vscode-context-minor-gc.js --format markdown --prompt \"[GC-D2] 回到编辑器问题。…\nt6 user: 或者补一个 repo 内可重复的 smoke/eval case，把 GC-D2 收进固定回归\nt7 assistant: 已经补进去了。 新回归 case 在： - [evals/codex-context-minor-gc-live-cases.js](/Users/redcreen/Project/unified-memory-core/evals/codex-context-minor-gc-live-cases.js)\nt8 user: 要\nt9 assistant: 已经修到全绿了。 我做了两件事： - 把 Codex minor GC 默认允许的 guarded relation 放宽到包含 `continue` - 把 `codex-minor-gc-current-editor-update-after-detour` 收进固定 live eval case\nt10 user: 继续扩 harder cases，把类似 GC-B 的自然中文多轮切题也收进固定回归\nt11 assistant: 已经把 harder case 补进固定回归了。 新增 case： - `codex-minor-gc-zh-dense-multitopic-return` - 文件：[evals/codex-context-minor-gc-live-cases.js](/Users/redcreen/Project/unified-memory-core/evals/codex-context-minor-gc-live-cases.js)\nt12 user: 要；尽量不是白名单，有硬编码嫌疑；",
+    "shadowRawTranscript": "t10 user: 继续扩 harder cases，把类似 GC-B 的自然中文多轮切题也收进固定回归\nt11 assistant: 已经把 harder case 补进固定回归了。 新增 case： - `codex-minor-gc-zh-dense-multitopic-return` - 文件：[evals/codex-context-minor-gc-live-cases.js](/Users/redcreen/Project/unified-memory-core/evals/codex-context-minor-gc-live-cases.js)\nt12 user: 要；尽量不是白名单，有硬编码嫌疑；",
+    "semanticPinNotes": [],
+    "archiveSummary": "Earlier subtopics are resolved: a minimal spot-check command was established (`npm run codex:vscode:gc --silent`, with a fallback prompt-injection command if needed), and a repeatable repo smoke/eval case was added and reported green. The assistant also noted prior changes: guarded relation handling was broadened to include `continue`, and an editor-detour live eval case was added. Those are background results, not the current unresolved focus.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 284,
+    "shadowRawPromptEstimate": 79,
+    "shadowPackageEstimate": 69,
+    "shadowPackageText": "Task state summary:\nEarlier subtopics are resolved: a minimal spot-check command was established (`npm run codex:vscode:gc --silent`, with a fallback prompt-injection command if needed), and a repeatable repo smoke/eval case was added and…\n\nLatest user ask:\n- 要；尽量不是白名单，有硬编码嫌疑；"
+  },
+  "scorecard": {
+    "relation": "continue",
+    "baselineTurnCount": 12,
+    "keptTurnCount": 3,
+    "evictedTurnCount": 9,
+    "pinCount": 0,
+    "baselinePromptEstimate": 284,
+    "shadowRawPromptEstimate": 79,
+    "shadowPackageEstimate": 69,
+    "rawReductionRatio": 0.7171,
+    "packageReductionRatio": 0.757,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 19319,
+    "totalElapsedMs": 19319,
+    "guardedEnabled": true,
+    "guardedApplied": true,
+    "guardedReason": "guarded_candidate",
+    "guardedMessageCount": 3,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 71
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": true,
+    "reason": "guarded_candidate",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": "继续扩 harder cases，把类似 GC-B 的自然中文多轮切题也收进固定回归"
+      },
+      {
+        "role": "assistant",
+        "content": "已经把 harder case 补进固定回归了。 新增 case： - `codex-minor-gc-zh-dense-multitopic-return` - 文件：[evals/codex-context-minor-gc-live-cases.js](/Users/redcreen/Project/unified-memory-core/evals/codex-context-minor-gc-live-cases.js)"
+      },
+      {
+        "role": "user",
+        "content": "要；尽量不是白名单，有硬编码嫌疑；"
+      }
+    ],
+    "filteredMessageCount": 3,
+    "filteredMessageTokenEstimate": 71,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ]
+  },
+  "timings": {
+    "totalElapsedMs": 19319,
+    "decisionElapsedMs": 19319
+  }
+}

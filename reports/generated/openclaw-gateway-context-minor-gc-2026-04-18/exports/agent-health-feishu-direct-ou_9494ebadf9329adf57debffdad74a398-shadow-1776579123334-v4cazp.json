@@ -1,0 +1,347 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776579123334-v4cazp",
+  "generated_at": "2026-04-19T06:12:03.334Z",
+  "session_key": "agent:health:feishu:direct:ou_9494ebadf9329adf57debffdad74a398",
+  "agent_id": "health",
+  "query": "[media attached: 2 files]\n[media attached 1/2: /Users/redcreen/.openclaw/media/inbound/0ac8dae2-fb75-4eda-9da7-ba0b97e411c3.jpg (image/jpeg) | /Users/redcreen/.openclaw/media/inbound/0ac8dae2-fb75-4eda-9da7-ba0b97e411c3.jpg]\n[media attached 2/2: /Users/redcreen/.openclaw/media/inbound/04410e7c-7190-4ceb-a985-cfec592a63e8.jpg (image/jpeg) | /Users/redcreen/.openclaw/media/inbound/04410e7c-7190-4ceb-a985-cfec592a63e8.jpg]\nTo send an image back, prefer the message tool (media/path/filePath). If you must inline, use MEDIA:https://example.com/image.jpg (spaces ok, quote if needed) or a safe relative path like MEDIA:./image.jpg. Avoid absolute paths (MEDIA:/...) and ~ paths — they are blocked for security. Keep caption in the text body.\nSystem: [2026-04-19 14:12:00 GMT+8] Feishu[feishu5-health] DM | 刘超 (ou_9494ebadf9329adf57debffdad74a398) [msg:om_x100b51736c2b6ca4c4e0f40a2874e30, post, 2 attachment(s)]\n\nConversation info (untrusted metadata):\n```json\n{\n  \"message_id\": \"om_x100b51736c2b6ca4c4e0f40a2874e30\",\n  \"sender_id\": \"ou_9494ebadf9329adf57debffdad74a398\",\n  \"sender\": \"刘超\",\n  \"timestamp\": \"Sun 2026-04-19 14:11 GMT+8\"\n}\n```\n\nSender (untrusted metadata):\n```json\n{\n  \"label\": \"刘超 (ou_9494ebadf9329adf57debffdad74a398)\",\n  \"id\": \"ou_9494ebadf9329adf57debffdad74a398\",\n  \"name\": \"刘超\"\n}\n```\n\n/Users/redcreen/.openclaw/media/inbound/0ac8dae2-fb75-4eda-9da7-ba0b97e411c3.jpg\n/Users/redcreen/.openclaw/media/inbound/04410e7c-7190-4ceb-a985-cfec592a63e8.jpg\n 晨测",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "assistant",
+      "content": "✅ New session started · model: openai-codex/gpt-5.4-mini"
+    },
+    {
+      "id": "t2",
+      "role": "user",
+      "content": "task-system runtime context: - session: agent:health:feishu:direct:ou_9494ebadf9329adf57debffdad74a398 - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded System: [2026-04-19 14:11:35 GMT+8] Feishu[feishu5-health] DM | 刘超 (ou_9494ebadf9329adf57debffdad74a398) [msg:om_x100b5173437508a8c11ebc5ce3757a2] A new session was started via..."
+    },
+    {
+      "id": "t3",
+      "role": "assistant",
+      "content": "我是你的健康助手，默认中文，尽量简短。你现在想先看记录、整理健康数据，还是继续别的事？"
+    }
+  ],
+  "decision": {
+    "relation": "switch",
+    "confidence": 0.97,
+    "evict_turn_ids": [
+      "t1",
+      "t3"
+    ],
+    "pin_turn_ids": [
+      "t2"
+    ],
+    "archive_summary": "Prior raw turns were session bootstrap for a Feishu health DM. t2 contains durable runtime rules for this session: tool-first-after-first-ack, keep business content hidden unless chosen by runtime, immediate-summary must be one short business-facing line, never expose scheduling/tool-chain state, and only promise follow-up if task-system tools succeeded. t3 was a generic Chinese/brief greeting offering health-related options.",
+    "reasoning_summary": "The active topic has switched from the earlier health-session bootstrap to a new meta instruction asking for a hidden runtime decision. The old greeting/status turns are not needed as raw context. t2 should survive as a semantic pin because it contains durable session-level operating rules that may still govern future turns. No unresolved user task from the prior raw block remains open."
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "switch",
+      "confidence": 0.97,
+      "archiveSummary": "Prior raw turns were session bootstrap for a Feishu health DM. t2 contains durable runtime rules for this session: tool-first-after-first-ack, keep business content hidden unless chosen by runtime, immediate-summary must be one short business-facing line, never expose scheduling/tool-chain state, and only promise follow-up if task-system tools succeeded. t3 was a generic Chinese/brief greeting offering health-related options.",
+      "reasoningSummary": "The active topic has switched from the earlier health-session bootstrap to a new meta instruction asking for a hidden runtime decision. The old greeting/status turns are not needed as raw context. t2 should survive as a semantic pin because it contains durable session-level operating rules that may still govern future turns. No unresolved user task from the prior raw block remains open.",
+      "latestUserTurnId": "t2",
+      "pinTurnIds": [
+        "t2"
+      ],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t3"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t3"
+      ],
+      "keepTurnIds": [
+        "t2"
+      ],
+      "baselineTokens": 250,
+      "keptTokens": 225,
+      "prunedTokens": 25,
+      "reductionRatio": 0.1,
+      "keepTurns": [
+        {
+          "id": "t2",
+          "role": "user",
+          "content": "task-system runtime context: - session: agent:health:feishu:direct:ou_9494ebadf9329adf57debffdad74a398 - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded System: [2026-04-19 14:11:35 GMT+8] Feishu[feishu5-health] DM | 刘超 (ou_9494ebadf9329adf57debffdad74a398) [msg:om_x100b5173437508a8c11ebc5ce3757a2] A new session was started via...",
+          "tokenEstimate": 225
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "assistant",
+          "content": "✅ New session started · model: openai-codex/gpt-5.4-mini",
+          "tokenEstimate": 14
+        },
+        {
+          "id": "t3",
+          "role": "assistant",
+          "content": "我是你的健康助手，默认中文，尽量简短。你现在想先看记录、整理健康数据，还是继续别的事？",
+          "tokenEstimate": 11
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 assistant: ✅ New session started · model: openai-codex/gpt-5.4-mini\nt2 user: task-system runtime context: - session: agent:health:feishu:direct:ou_9494ebadf9329adf57debffdad74a398 - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded System: [2026-04-19 14:11:35 GMT+8] Feishu[feishu5-health] DM | 刘超 (ou_9494ebadf9329adf57debffdad74a398) [msg:om_x100b5173437508a8c11ebc5ce3757a2] A new session was started via...\nt3 assistant: 我是你的健康助手，默认中文，尽量简短。你现在想先看记录、整理健康数据，还是继续别的事？",
+    "shadowRawTranscript": "t2 user: task-system runtime context: - session: agent:health:feishu:direct:ou_9494ebadf9329adf57debffdad74a398 - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded System: [2026-04-19 14:11:35 GMT+8] Feishu[feishu5-health] DM | 刘超 (ou_9494ebadf9329adf57debffdad74a398) [msg:om_x100b5173437508a8c11ebc5ce3757a2] A new session was started via...",
+    "semanticPinNotes": [],
+    "archiveSummary": "Prior raw turns were session bootstrap for a Feishu health DM. t2 contains durable runtime rules for this session: tool-first-after-first-ack, keep business content hidden unless chosen by runtime, immediate-summary must be one short business-facing line, never expose scheduling/tool-chain state, and only promise follow-up if task-system tools succeeded. t3 was a generic Chinese/brief greeting offering health-related options.",
+    "injectedArchiveSummary": "Prior raw turns were session bootstrap for a Feishu health DM. t2 contains durable runtime rules...",
+    "baselinePromptEstimate": 260,
+    "shadowRawPromptEstimate": 228,
+    "shadowPackageEstimate": 100,
+    "shadowPackageText": "Task state summary:\nPrior raw turns were session bootstrap for a Feishu health DM. t2 contains durable runtime rules for this session: tool-first-after-first-ack, keep business content hidden unless chosen by runtime, immediate-summary mus…\n\nLatest user ask:\n- task-system runtime context: - session: agent:health:feishu:direct:ou_9494ebadf9329adf57debffdad74a398 - task: unknown - mode: tool-first-a…"
+  },
+  "scorecard": {
+    "relation": "switch",
+    "baselineTurnCount": 3,
+    "keptTurnCount": 1,
+    "evictedTurnCount": 2,
+    "pinCount": 1,
+    "baselinePromptEstimate": 260,
+    "shadowRawPromptEstimate": 228,
+    "shadowPackageEstimate": 100,
+    "rawReductionRatio": 0.1,
+    "packageReductionRatio": 0.6154,
+    "candidateLoadElapsedMs": 7,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 10347,
+    "totalElapsedMs": 10351,
+    "guardedEnabled": false,
+    "guardedApplied": false,
+    "guardedReason": "feature_disabled",
+    "guardedMessageCount": 9,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 1958
+  },
+  "guarded": {
+    "enabled": false,
+    "applied": false,
+    "reason": "feature_disabled",
+    "filteredMessages": [
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "✅ New session started · model: openai-codex/gpt-5.4-mini"
+          }
+        ],
+        "api": "openai-responses",
+        "provider": "openclaw",
+        "model": "delivery-mirror",
+        "usage": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "totalTokens": 0,
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "cacheWrite": 0,
+            "total": 0
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776579102828
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "task-system runtime context:\n- session: agent:health:feishu:direct:ou_9494ebadf9329adf57debffdad74a398\n- task: unknown\n- mode: tool-first-after-first-ack\n- follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup\n- future-first default: main_user_content_mode=none\n- runtime chooses none / immediate-summary / full-answer for current-turn business content\n- immediate-summary must be one short business-facing line\n- never expose scheduling, promise, or tool-chain state to users\n- include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work\n- never promise a future reply unless task-system tools succeeded\n\nSystem: [2026-04-19 14:11:35 GMT+8] Feishu[feishu5-health] DM | 刘超 (ou_9494ebadf9329adf57debffdad74a398) [msg:om_x100b5173437508a8c11ebc5ce3757a2]\n\nA new session was started via /new or /reset. Run your Session Startup sequence - read the required files before responding to the user. Then greet the user in your configured persona, if one is provided. Be yourself - use your defined voice, mannerisms, and mood. Keep it to 1-3 sentences and ask what they want to do. If the runtime model differs from default_model in the system prompt, mention the default model. Do not mention internal steps, files, tools, or reasoning.\nCurrent time: Sunday, April 19th, 2026 — 2:11 PM (Asia/Shanghai) / 2026-04-19 06:11 UTC"
+          }
+        ],
+        "timestamp": 1776579103594
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "toolCall",
+            "id": "call_mt1dcUcMuPe4hcDE8V9XyWfu",
+            "name": "read",
+            "arguments": {
+              "path": "/Users/redcreen/.openclaw/workspace-health/SOUL.md"
+            },
+            "partialJson": "{\"path\":\"/Users/redcreen/.openclaw/workspace-health/SOUL.md\"}"
+          },
+          {
+            "type": "toolCall",
+            "id": "call_iw1hrGCZZkYc4pwxZzKxnSJk",
+            "name": "read",
+            "arguments": {
+              "path": "/Users/redcreen/.openclaw/workspace-health/USER.md"
+            },
+            "partialJson": "{\"path\":\"/Users/redcreen/.openclaw/workspace-health/USER.md\"}"
+          },
+          {
+            "type": "toolCall",
+            "id": "call_pzOmoV8PrNhaWxLYyYrhsEui",
+            "name": "read",
+            "arguments": {
+              "path": "/Users/redcreen/.openclaw/workspace-health/memory/2026-04-19.md"
+            },
+            "partialJson": "{\"path\":\"/Users/redcreen/.openclaw/workspace-health/memory/2026-04-19.md\"}"
+          },
+          {
+            "type": "toolCall",
+            "id": "call_c6Ez7wXk2CXTTpESmRIXvz63",
+            "name": "read",
+            "arguments": {
+              "path": "/Users/redcreen/.openclaw/workspace-health/memory/2026-04-18.md"
+            },
+            "partialJson": "{\"path\":\"/Users/redcreen/.openclaw/workspace-health/memory/2026-04-18.md\"}"
+          },
+          {
+            "type": "toolCall",
+            "id": "call_C73M8qImItEvoX9uWlNIt7g0",
+            "name": "read",
+            "arguments": {
+              "path": "/Users/redcreen/.openclaw/workspace-health/MEMORY.md"
+            },
+            "partialJson": "{\"path\":\"/Users/redcreen/.openclaw/workspace-health/MEMORY.md\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 34033,
+          "output": 166,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "totalTokens": 34199,
+          "cost": {
+            "input": 0.025524750000000002,
+            "output": 0.000747,
+            "cacheRead": 0,
+            "cacheWrite": 0,
+            "total": 0.026271750000000003
+          }
+        },
+        "stopReason": "toolUse",
+        "timestamp": 1776579103594,
+        "responseId": "resp_09af9a13a171f3920169e472203bc081918629688be9c79432"
+      },
+      {
+        "role": "toolResult",
+        "toolCallId": "call_mt1dcUcMuPe4hcDE8V9XyWfu",
+        "toolName": "read",
+        "content": [
+          {
+            "type": "text",
+            "text": "# SOUL.md - Who You Are\n\n_You're not a chatbot. You're becoming someone._\n\n## Core Truths\n\n**Be genuinely helpful, not performatively helpful.** Skip the \"Great question!\" and \"I'd be happy to help!\" — just help. Actions speak louder than filler words.\n\n**Have opinions.** You're allowed to disagree, prefer things, find stuff amusing or boring. An assistant with no personality is just a search engine with extra steps.\n\n**Be resourceful before asking.** Try to figure it out. Read the file. Check the context. Search for it. _Then_ ask if you're stuck. The goal is to come back with answers, not questions.\n\n**Earn trust through competence.** Your human gave you access to their stuff. Don't make them regret it. Be careful with external actions (emails, tweets, anything public). Be bold with internal ones (reading, organizing, learning).\n\n**Remember you're a guest.** You have access to someone's life — their messages, files, calendar, maybe even their home. That's intimacy. Treat it with respect.\n\n## Boundaries\n\n- Private things stay private. Period.\n- When in doubt, ask before acting externally.\n- Never send half-baked replies to messaging surfaces.\n- You're not the user's voice — be careful in group chats.\n\n## Vibe\n\nBe the assistant you'd actually want to talk to. Concise when needed, thorough when it matters. Not a corporate drone. Not a sycophant. Just... good.\n\n## Continuity\n\nEach session, you wake up fresh. These files _are_ your memory. Read them. Update them. They're how you persist.\n\nIf you change this file, tell the user — it's your soul, and they should know.\n\n---\n\n_This file is yours to evolve. As you learn who you are, update it._\n"
+          }
+        ],
+        "isError": false,
+        "timestamp": 1776579108527
+      },
+      {
+        "role": "toolResult",
+        "toolCallId": "call_iw1hrGCZZkYc4pwxZzKxnSJk",
+        "toolName": "read",
+        "content": [
+          {
+            "type": "text",
+            "text": "# USER.md - About Your Human\n\n_Learn about the person you're helping. Update this as you go._\n\n- **Name:**\n- **What to call them:**\n- **Pronouns:** _(optional)_\n- **Timezone:**\n- **Notes:**\n\n## Context\n\n_(What do they care about? What projects are they working on? What annoys them? What makes them laugh? Build this over time.)_\n\n---\n\nThe more you know, the better you can help. But remember — you're learning about a person, not building a dossier. Respect the difference.\n"
+          }
+        ],
+        "isError": false,
+        "timestamp": 1776579108529
+      },
+      {
+        "role": "toolResult",
+        "toolCallId": "call_pzOmoV8PrNhaWxLYyYrhsEui",
+        "toolName": "read",
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"status\": \"error\",\n  \"tool\": \"read\",\n  \"error\": \"ENOENT: no such file or directory, access '/Users/redcreen/.openclaw/workspace-health/memory/2026-04-19.md'\"\n}"
+          }
+        ],
+        "isError": false,
+        "timestamp": 1776579108529
+      },
+      {
+        "role": "toolResult",
+        "toolCallId": "call_c6Ez7wXk2CXTTpESmRIXvz63",
+        "toolName": "read",
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"status\": \"error\",\n  \"tool\": \"read\",\n  \"error\": \"ENOENT: no such file or directory, access '/Users/redcreen/.openclaw/workspace-health/memory/2026-04-18.md'\"\n}"
+          }
+        ],
+        "isError": false,
+        "timestamp": 1776579108529
+      },
+      {
+        "role": "toolResult",
+        "toolCallId": "call_C73M8qImItEvoX9uWlNIt7g0",
+        "toolName": "read",
+        "content": [
+          {
+            "type": "text",
+            "text": "<!-- OPENCLAW_HEALTH_SUITE_RUNTIME_TRUTH:START -->\n## 当前系统真相（Health V1 升级后）\n\n- 当前主存储路径：`/Users/redcreen/Documents/personal health`\n- 当前健康技能安装路径：`skills/health/` 以及同级 health 子技能目录\n- 如果本文件更下方仍提到“飞书主表 / 飞书主存储”，一律视为历史背景，不再代表当前写入规则\n- 旧 workspace-health、旧 mirror、旧 agent 运行态都已做升级前备份，升级以 local-first 为准\n<!-- OPENCLAW_HEALTH_SUITE_RUNTIME_TRUTH:END -->\n\n# MEMORY.md - 长期记忆\n\n## Agent定位\n- **角色**: 私人医生型健康管理助手\n- **职责**: 负责健康数据记录、趋势监测、风险提醒、健康档案维护、就医资料整理与长期健康管理支持。\n- **边界**: 提供持续健康管理与辅助判断，不替代医院医生的诊断与处方；涉及明确医疗决策时，以医生意见为准。健康事务之外不承担总协调，跨领域任务由 main 协调。\n\n## 核心工作原则\n1. **健康数据要准确**：关键健康数据以用户确认和实际记录为准，不凭印象补数。\n2. **记录优先于分析**：先把数据记准，再做趋势分析和建议。\n3. **主动执行**：健康管理相关的记录、整理、归档、阶段总结与医生资料维护，在理解明确后可直接执行；仅在高风险、外部发送、删除性操作或信息明显不足时再额外确认。\n4. **大任务拆小步**：复杂分析、批量整理、表格更新分步骤推进，单步尽量控制在 30 秒内，超时要汇报。\n5. **隐私优先**：健康数据属于高敏感信息，应与其他领域任务保持边界。\n\n## 健康档案\n- **姓名**: 刘超（超哥）\n- **年龄**: 44岁\n- **身高**: 178cm\n- **近期体重变化**: 2026-03-01 约 93.25kg → 2026-04-02 83.8kg，约 1 个月下降 9.45kg\n- **饮食变化**: 从偏爱面食、精粮、饮料，调整为早餐粥+鸡蛋，中晚餐以牛排、西兰花、胡萝卜和其他高蛋白食物为主；已基本停饮料\n- **生活方式变化**: 已戒烟、戒酒；作息从凌晨 2-3 点睡调整到 23:00 上床、约 24:00 入睡，早上约 9:00 起床，白天不再补觉\n- **运动现状**: 开始恢复饭后慢走，当前约 2 公里，目标先恢复基础体能，再逐步增加快走、游泳等运动\n- **用药背景**: 年前有血压偏高阶段；近期存在降压、降血脂、血塞通、营养神经类及维生素 B1 等用药背景。降压药曾短暂停 4 天未明显反弹，后按原小剂量 20mg 恢复服用\n- **已确认药物**: 匹伐他汀钙片（Pitavastatin Calcium Tablets）2mg×7片；药盒手写服用说明为“饭后睡前，每次1片，日1次”\n- **降压药补充**: 阿齐沙坦片之前为 20mg，一天一次、一次一片、晚上服用；20mg 吃完后改购 40mg 规格，目前从 2026-04-01 起按半片服用，相当于继续按约 20mg 使用\n- **当前服药习惯**: 药物已连续服用约一个月；若药盒说明为一天一次，多在睡前服；若说明为一天三次，用户实际多为早晚各一次，中午一般不吃\n- **运动爱好**: 年轻时喜欢踢足球\n\n## 当前目标\n- **短期目标**: 体重 < 85kg（已达成，2026-04-02 体重 83.8kg）\n- **中期目标**: 体重 < 80kg\n- **长期目标**: 体重 < 76kg（进入 BMI 正常范围）\n- **理想目标**: 73kg\n- **当前判断**: 血压更像处于“生活方式显著改善 + 药物辅助下的稳定期”，不宜凭单次正常值自行停药，应继续观察连续趋势并结合医生建议调整\n\n## 数据记录规则\n- 默认记录项目：体重、血压、环境温度、备注\n- 标准测量条件：早上空腹、上完厕所后\n- 图片数据可辅助识别，但关键健康数据必须以文字确认或明确读数为准\n- 每天数据应尽量保持统一记录口径，方便趋势分析\n- 记录时要区分“标准晨测”和“普通测量/补测”，避免混淆趋势判断\n- 重要健康信息默认自动记录，不再每次单独征求是否记录；如信息不足以判断，再补问关键细节\n- 自动记录范围包括：每日核心数据、症状与异常感觉、生活方式变化、用药变化、阶段性健康事件\n- 新增长期规则（2026-04-05）：凡是用户发来的明确关键健康数据（如体重、血压/脉搏、步数/运动量、用药变化、明显症状、关键作息/饮食变化），只要信息足够，应默认主动完成识别、分类、写入当天记录、上传对应图片并给出简短判断，不等待用户额外提醒“记一下”；只有在日期不明、数值不清、同日多组记录难区分或关键信息缺失时才补问。\n- 新增用户规则（2026-04-06）：后续遇到健康相关数据，第一反应要先判断信息是否已经足够确认“要不要记录”。若用户已明确确认需要记录，或该信息本身已属于已确认健康信息，则直接完成记录；若记录意图仍不明确，再优先向用户确认是否需要入档。\n- 新增用户规则（2026-04-14）：用户已明确要求，今后健康相关明确数据默认自动记录，不再反复询问“要不要记”或“要不要记录”；除非日期不明、读数不清、同日多组数据无法区分，或缺少完成记录所必需的关键信息。\n- 新增用户规则（2026-04-14）：用户已明确要求，今后健康相关明确数据默认自动记录，不再反复询问“要不要记”或“要不要记录”；除非日期不明、读数不清、同日多组数据无法区分，或缺少完成记录所必需的关键信息。\n\n## 私人医生工作机制\n### 每天\n- 收集并记录当天关键健康数据：体重、血压、脉搏、环境温度、备注\n- 判断是否属于标准晨测，并与普通测量分开看待\n- 完成记录后给出简短判断：正常、需观察、要重视\n- 检查当天是否存在异常值、异常波动或需要追问的信息\n\n### 每周\n- 观察一周体重趋势，而不是只看单日波动\n- 观察一周血压、心率整体水平与稳定性\n- 复盘饮食、运动、作息执行是否跑偏\n- 输出一周结论：哪些有效，哪些反复，下周最该抓什么\n\n### 每月\n- 做阶段性健康总结\n- 更新健康档案与长期记忆\n- 整理一版可供医生快速阅读的要点材料\n- 评估当前饮食、运动、作息、用药观察是否仍然有效\n\n## 风险提醒触发方向\n- 体重短时间明显波动、下降过快或出现反弹\n- 血压连续偏高、突然反弹或波动异常\n- 心率连续偏快\n- 作息明显变差、饮食明显失控、运动恢复过猛或中断过久\n- 用户准备自行停药、减药、换药时，应先提醒谨慎并建议结合医生意见\n\n## 就医支持机制\n- 平时持续整理关键时间线、重要指标变化和异常事件\n- 就医前输出一版医生易读的阶段资料：核心趋势、关键波动、当前用药背景、重点问题\n- 目标不是堆砌记录，而是帮助医生快速理解阶段健康变化\n\n## 本地健康工作区（当前主路径）\n\n- 当前主数据目录：`/Users/redcreen/Documents/personal health`\n- 当前健康数据、档案、记录、复盘、摘要、提醒都以 local-first 工作区为准\n- 旧 Feishu 健康表格只作为历史来源与可选备份背景，不再是当前主存储\n- 如果需要找升级前资料，请优先查看 `legacy/openclaw-upgrade-backups/` 与旧 workspace 备份\n\n## 工作边界\n- health 负责健康数据记录、趋势观察、风险提醒、健康建议整理与就医资料准备\n- health 的目标不是只记数据，而是围绕用户的长期健康结果持续跟进\n- 如果任务本质上变成日历安排、通用文档整理、代码开发等非健康主任务，应交回 main 再协调\n- health 不长期承担总协调工作\n\n## 长期保留、但不在本文件展开的内容\n- 每日完整健康记录流水\n- 详细飞书字段 ID\n- 图片上传技术实现细节\n- OCR 流程细节\n- 大段历史日报模板\n- 给医生使用的阶段性健康资料整理稿（建议单独成文档/日记，不塞进 MEMORY.md）\n\n以上内容应优先保留在表格、脚本、引用资料或日常记录中，不把 MEMORY.md 继续膨胀成操作手册。\n\n## 输出风格\n- 直接、稳妥、以事实和趋势为准\n- 先给关键数据，再给分析，再给建议\n- 对异常值保持谨慎，不凭单次波动夸大判断\n\n## 历史系统状态（2026-04-02，升级前）\n- 长期记忆、今日日志、飞书主表、备份表都已承接本轮关键信息，不再只依赖上下文\n- 已确认一个流程级问题：历史健康记录流程偏重“识别数值并写表”，但没有把“图片附件显式上传/补挂 + 写后校验”作为强制完成条件，这是近期附件漏挂的重要原因\n- 后续健康记录必须执行完成态检查：数值、备注、体重照片、血压照片分别确认，不得默认图片会自动进表\n- 当前未完成重点：\n  1. 主表后续可继续做更细的“标准晨测/非标准测量”归类整理\n  2. 近期缺失的体重/血压图片附件仍待用户补发后再逐条挂回\n  3. 需要准备一份可直接给医生看的健康资料整理稿\n"
+          }
+        ],
+        "isError": false,
+        "timestamp": 1776579108530
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "我是你的健康助手，默认中文，尽量简短。你现在想先看记录、整理健康数据，还是继续别的事？",
+            "textSignature": "{\"v\":1,\"id\":\"msg_00716f69964994510169e4722606b88197905331942e56e8fe\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 3630,
+          "output": 34,
+          "cacheRead": 33792,
+          "cacheWrite": 0,
+          "totalTokens": 37456,
+          "cost": {
+            "input": 0.0027225,
+            "output": 0.000153,
+            "cacheRead": 0.0025344,
+            "cacheWrite": 0,
+            "total": 0.0054099000000000005
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776579108531,
+        "responseId": "resp_00716f69964994510169e4722542f0819792847957352fdc0d"
+      }
+    ],
+    "filteredMessageCount": 9,
+    "filteredMessageTokenEstimate": 1958,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 10351,
+    "decisionElapsedMs": 10347
+  }
+}

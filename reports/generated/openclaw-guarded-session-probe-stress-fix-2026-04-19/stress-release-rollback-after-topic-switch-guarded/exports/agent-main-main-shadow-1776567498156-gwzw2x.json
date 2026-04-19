@@ -1,0 +1,302 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776567498156-gwzw2x",
+  "generated_at": "2026-04-19T02:58:18.156Z",
+  "session_key": "agent:main:main",
+  "agent_id": "main",
+  "query": "还是同一个方案：版本块要写 tag、commit、构建时间、镜像 digest、制品校验方式；安装块要写目标环境、前置条件、灰度范围、依赖服务和失败时的暂停条件。",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "我们先只聊 release 方案。记住一个固定事实：这个发布方案首页的固定代号是 north-star-lantern，而且后面我回问时都按这个代号回答。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "记住了：这个发布方案首页的固定代号是 **north-star-lantern**。 之后你再回问，我会按这个代号回答。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "继续同一个方案：验收一定拆成版本、安装、回滚、观测四块，每块都必须写 owner、风险等级、回滚边界、人工兜底人和预计耗时。"
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "记下了。 这个方案的验收必须拆成四块： - 版本 - 安装 - 回滚 - 观测 而且每一块都要写： - owner - 风险等级 - 回滚边界 - 人工兜底人 - 预计耗时 后面我会按这个结构来。"
+    }
+  ],
+  "decision": {
+    "relation": "continue",
+    "confidence": 0.88,
+    "evict_turn_ids": [
+      "t2"
+    ],
+    "pin_turn_ids": [
+      "t1"
+    ],
+    "archive_summary": "保留当前 release 方案主线；固定代号 north-star-lantern 作为长期语义事实保留。验收结构仍然是版本、安装、回滚、观测四块，每块需写 owner、风险等级、回滚边界、人工兜底人和预计耗时。",
+    "reasoning_summary": "这是同一条活跃方案线索，没有切题；最新用户约束继续依赖早先的固定代号事实，因此关系应为 continue。可压缩的是 assistant 对代号的重复确认，用 pin 保留 north-star-lantern 这条持久事实；其余验收结构仍是当前活跃上下文，不应降级为仅 pin。"
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "continue",
+      "confidence": 0.88,
+      "archiveSummary": "保留当前 release 方案主线；固定代号 north-star-lantern 作为长期语义事实保留。验收结构仍然是版本、安装、回滚、观测四块，每块需写 owner、风险等级、回滚边界、人工兜底人和预计耗时。",
+      "reasoningSummary": "这是同一条活跃方案线索，没有切题；最新用户约束继续依赖早先的固定代号事实，因此关系应为 continue。可压缩的是 assistant 对代号的重复确认，用 pin 保留 north-star-lantern 这条持久事实；其余验收结构仍是当前活跃上下文，不应降级为仅 pin。",
+      "latestUserTurnId": "t3",
+      "pinTurnIds": [
+        "t1"
+      ],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t2"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t2"
+      ],
+      "keepTurnIds": [
+        "t1",
+        "t3",
+        "t4"
+      ],
+      "baselineTokens": 76,
+      "keptTokens": 61,
+      "prunedTokens": 15,
+      "reductionRatio": 0.19736842105263158,
+      "keepTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "我们先只聊 release 方案。记住一个固定事实：这个发布方案首页的固定代号是 north-star-lantern，而且后面我回问时都按这个代号回答。",
+          "tokenEstimate": 20
+        },
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "继续同一个方案：验收一定拆成版本、安装、回滚、观测四块，每块都必须写 owner、风险等级、回滚边界、人工兜底人和预计耗时。",
+          "tokenEstimate": 16
+        },
+        {
+          "id": "t4",
+          "role": "assistant",
+          "content": "记下了。 这个方案的验收必须拆成四块： - 版本 - 安装 - 回滚 - 观测 而且每一块都要写： - owner - 风险等级 - 回滚边界 - 人工兜底人 - 预计耗时 后面我会按这个结构来。",
+          "tokenEstimate": 25
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "记住了：这个发布方案首页的固定代号是 **north-star-lantern**。 之后你再回问，我会按这个代号回答。",
+          "tokenEstimate": 15
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 我们先只聊 release 方案。记住一个固定事实：这个发布方案首页的固定代号是 north-star-lantern，而且后面我回问时都按这个代号回答。\nt2 assistant: 记住了：这个发布方案首页的固定代号是 **north-star-lantern**。 之后你再回问，我会按这个代号回答。\nt3 user: 继续同一个方案：验收一定拆成版本、安装、回滚、观测四块，每块都必须写 owner、风险等级、回滚边界、人工兜底人和预计耗时。\nt4 assistant: 记下了。 这个方案的验收必须拆成四块： - 版本 - 安装 - 回滚 - 观测 而且每一块都要写： - owner - 风险等级 - 回滚边界 - 人工兜底人 - 预计耗时 后面我会按这个结构来。",
+    "shadowRawTranscript": "t1 user: 我们先只聊 release 方案。记住一个固定事实：这个发布方案首页的固定代号是 north-star-lantern，而且后面我回问时都按这个代号回答。\nt3 user: 继续同一个方案：验收一定拆成版本、安装、回滚、观测四块，每块都必须写 owner、风险等级、回滚边界、人工兜底人和预计耗时。\nt4 assistant: 记下了。 这个方案的验收必须拆成四块： - 版本 - 安装 - 回滚 - 观测 而且每一块都要写： - owner - 风险等级 - 回滚边界 - 人工兜底人 - 预计耗时 后面我会按这个结构来。",
+    "semanticPinNotes": [],
+    "archiveSummary": "保留当前 release 方案主线；固定代号 north-star-lantern 作为长期语义事实保留。验收结构仍然是版本、安装、回滚、观测四块，每块需写 owner、风险等级、回滚边界、人工兜底人和预计耗时。",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 87,
+    "shadowRawPromptEstimate": 68,
+    "shadowPackageEstimate": 52,
+    "shadowPackageText": "Task state summary:\n保留当前 release 方案主线；固定代号 north-star-lantern 作为长期语义事实保留。验收结构仍然是版本、安装、回滚、观测四块，每块需写 owner、风险等级、回滚边界、人工兜底人和预计耗时。\n\nLatest user ask:\n- 继续同一个方案：验收一定拆成版本、安装、回滚、观测四块，每块都必须写 owner、风险等级、回滚边界、人工兜底人和预计耗时。"
+  },
+  "scorecard": {
+    "relation": "continue",
+    "baselineTurnCount": 4,
+    "keptTurnCount": 3,
+    "evictedTurnCount": 1,
+    "pinCount": 1,
+    "baselinePromptEstimate": 87,
+    "shadowRawPromptEstimate": 68,
+    "shadowPackageEstimate": 52,
+    "rawReductionRatio": 0.1974,
+    "packageReductionRatio": 0.4023,
+    "candidateLoadElapsedMs": 7,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 10564,
+    "totalElapsedMs": 10566,
+    "guardedEnabled": true,
+    "guardedApplied": true,
+    "guardedReason": "guarded_candidate",
+    "guardedMessageCount": 7,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 87
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": true,
+    "reason": "guarded_candidate",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "我们先只聊 release 方案。记住一个固定事实：这个发布方案首页的固定代号是 north-star-lantern，而且后面我回问时都按这个代号回答。"
+          }
+        ],
+        "timestamp": 1776567440354
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "toolCall",
+            "id": "call_HIPhmRuT9dRCXu6x1Dk3vqNo",
+            "name": "write",
+            "arguments": {
+              "path": "memory/2025-02-14.md",
+              "content": "# 2025-02-14\n\n- User requested that the release plan homepage fixed codename be remembered as `north-star-lantern`.\n- Future questions about this release plan should be answered using that codename.\n"
+            },
+            "partialJson": "{\"path\":\"memory/2025-02-14.md\",\"content\":\"# 2025-02-14\\n\\n- User requested that the release plan homepage fixed codename be remembered as `north-star-lantern`.\\n- Future questions about this release plan should be answered using that codename.\\n\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 8564,
+          "output": 77,
+          "cacheRead": 5120,
+          "cacheWrite": 0,
+          "totalTokens": 13761,
+          "cost": {
+            "input": 0.006423,
+            "output": 0.0003465,
+            "cacheRead": 0.000384,
+            "cacheWrite": 0,
+            "total": 0.007153499999999999
+          }
+        },
+        "stopReason": "toolUse",
+        "timestamp": 1776567440357,
+        "responseId": "resp_02cffc34129f09bc0169e4449104e481919f7a027fe5de5c04"
+      },
+      {
+        "role": "toolResult",
+        "toolCallId": "call_HIPhmRuT9dRCXu6x1Dk3vqNo",
+        "toolName": "write",
+        "content": [
+          {
+            "type": "text",
+            "text": "Successfully wrote 199 bytes to memory/2025-02-14.md"
+          }
+        ],
+        "isError": false,
+        "timestamp": 1776567442440
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "继续同一个方案：验收一定拆成版本、安装、回滚、观测四块，每块都必须写 owner、风险等级、回滚边界、人工兜底人和预计耗时。"
+          }
+        ],
+        "timestamp": 1776567467081
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "toolCall",
+            "id": "call_F9ethOFly2e4xltPqBd7j0Q8",
+            "name": "write",
+            "arguments": {
+              "path": "memory/2025-02-14.md",
+              "content": "# 2025-02-14\n\n- User requested that the release plan homepage fixed codename be remembered as `north-star-lantern`.\n- Future questions about this release plan should be answered using that codename.\n- For the same release plan, acceptance must be split into four sections: version, installation, rollback, and observability.\n- Each section must include: owner, risk level, rollback boundary, human fallback owner, and estimated duration.\n"
+            },
+            "partialJson": "{\"path\":\"memory/2025-02-14.md\",\"content\":\"# 2025-02-14\\n\\n- User requested that the release plan homepage fixed codename be remembered as `north-star-lantern`.\\n- Future questions about this release plan should be answered using that codename.\\n- For the same release plan, acceptance must be split into four sections: version, installation, rollback, and observability.\\n- Each section must include: owner, risk level, rollback boundary, human fallback owner, and estimated duration.\\n\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 8593,
+          "output": 126,
+          "cacheRead": 5120,
+          "cacheWrite": 0,
+          "totalTokens": 13839,
+          "cost": {
+            "input": 0.00644475,
+            "output": 0.000567,
+            "cacheRead": 0.000384,
+            "cacheWrite": 0,
+            "total": 0.0073957499999999995
+          }
+        },
+        "stopReason": "toolUse",
+        "timestamp": 1776567467085,
+        "responseId": "resp_0038643fc6e2f08d0169e444abd3308191972ab58764135735"
+      },
+      {
+        "role": "toolResult",
+        "toolCallId": "call_F9ethOFly2e4xltPqBd7j0Q8",
+        "toolName": "write",
+        "content": [
+          {
+            "type": "text",
+            "text": "Successfully wrote 438 bytes to memory/2025-02-14.md"
+          }
+        ],
+        "isError": false,
+        "timestamp": 1776567470150
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "记下了。  \n这个方案的验收必须拆成四块：\n\n- 版本\n- 安装\n- 回滚\n- 观测\n\n而且每一块都要写：\n\n- owner\n- 风险等级\n- 回滚边界\n- 人工兜底人\n- 预计耗时\n\n后面我会按这个结构来。",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0038643fc6e2f08d0169e444b0abb881918ecd844f6a2cdfad\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 552,
+          "output": 83,
+          "cacheRead": 13312,
+          "cacheWrite": 0,
+          "totalTokens": 13947,
+          "cost": {
+            "input": 0.00041400000000000003,
+            "output": 0.0003735,
+            "cacheRead": 0.0009984,
+            "cacheWrite": 0,
+            "total": 0.0017859
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776567470153,
+        "responseId": "resp_0038643fc6e2f08d0169e444aec00081918544290ac22d0816"
+      }
+    ],
+    "filteredMessageCount": 7,
+    "filteredMessageTokenEstimate": 87,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": [
+      3
+    ]
+  },
+  "timings": {
+    "totalElapsedMs": 10567,
+    "decisionElapsedMs": 10564
+  }
+}

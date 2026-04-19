@@ -1,0 +1,299 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776530937035-n6kq3e",
+  "generated_at": "2026-04-18T16:48:57.035Z",
+  "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+  "agent_id": "main",
+  "query": "继续",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "Zed。 不过这条还是旧前缀 `GC-D1`，不适合拿来验证修复后的行为。要干净重跑，请下一条改发："
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "[GC-D2] 记一下：我以前默认编辑器是 Vim。"
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "很好，`GC-D2` 已经是干净样本了。 下一条发："
+    },
+    {
+      "id": "t5",
+      "role": "user",
+      "content": "[GC-D2] 更新一下：我现在默认编辑器是 Zed。"
+    },
+    {
+      "id": "t6",
+      "role": "assistant",
+      "content": "下一条发： ```text [GC-D2] 切个话题。为什么 shadow mode 默认先不开？ ```"
+    },
+    {
+      "id": "t7",
+      "role": "user",
+      "content": "[GC-D2] 切个话题。为什么 shadow mode 默认先不开？"
+    },
+    {
+      "id": "t8",
+      "role": "assistant",
+      "content": "下一条发： ```text [GC-D2] 回到编辑器问题。我现在默认编辑器是什么？ ```"
+    },
+    {
+      "id": "t9",
+      "role": "user",
+      "content": "[GC-D2] 回到编辑器问题。我现在默认编辑器是什么？"
+    },
+    {
+      "id": "t10",
+      "role": "assistant",
+      "content": "Zed。 重跑 `GC-D2` 之后，修复是生效的："
+    },
+    {
+      "id": "t11",
+      "role": "user",
+      "content": "继续"
+    },
+    {
+      "id": "t12",
+      "role": "assistant",
+      "content": "继续之后，第 3 个点也已经基本收住了。 现在状态是："
+    }
+  ],
+  "decision": {
+    "relation": "continue",
+    "confidence": 0.92,
+    "evict_turn_ids": [
+      "t1",
+      "t2",
+      "t3",
+      "t4",
+      "t5",
+      "t6"
+    ],
+    "pin_turn_ids": [
+      "t3",
+      "t5"
+    ],
+    "archive_summary": "Earlier GC-D1/GC-D2 setup and calibration are resolved. Durable user fact from the cleaned GC-D2 run: the user's previous default editor was Vim, and the current default editor is Zed. The conversation then tested topic switching and return-to-topic behavior under GC-D2.",
+    "reasoning_summary": "The active topic is still the same GC-D2 debugging flow, so relation is continue. The latest '继续' depends on the recent raw evidence that topic switching to shadow mode and returning to the editor question worked, plus the assistant's current status summary, so those newer turns should stay raw. The older GC-D1 validation attempt and the early GC-D2 prompt choreography are resolved setup, so they are good eviction candidates. The editor preference facts are durable and should survive as compact pins even if their raw turns leave the next-turn prompt."
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "continue",
+      "confidence": 0.92,
+      "archiveSummary": "Earlier GC-D1/GC-D2 setup and calibration are resolved. Durable user fact from the cleaned GC-D2 run: the user's previous default editor was Vim, and the current default editor is Zed. The conversation then tested topic switching and return-to-topic behavior under GC-D2.",
+      "reasoningSummary": "The active topic is still the same GC-D2 debugging flow, so relation is continue. The latest '继续' depends on the recent raw evidence that topic switching to shadow mode and returning to the editor question worked, plus the assistant's current status summary, so those newer turns should stay raw. The older GC-D1 validation attempt and the early GC-D2 prompt choreography are resolved setup, so they are good eviction candidates. The editor preference facts are durable and should survive as compact pins even if their raw turns leave the next-turn prompt.",
+      "latestUserTurnId": "t11",
+      "pinTurnIds": [
+        "t3",
+        "t5"
+      ],
+      "pinnedOnlyTurnIds": [
+        "t3",
+        "t5"
+      ],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6"
+      ],
+      "keepTurnIds": [
+        "t7",
+        "t8",
+        "t9",
+        "t10",
+        "t11",
+        "t12"
+      ],
+      "baselineTokens": 98,
+      "keptTokens": 43,
+      "prunedTokens": 55,
+      "reductionRatio": 0.5612244897959183,
+      "keepTurns": [
+        {
+          "id": "t7",
+          "role": "user",
+          "content": "[GC-D2] 切个话题。为什么 shadow mode 默认先不开？",
+          "tokenEstimate": 9
+        },
+        {
+          "id": "t8",
+          "role": "assistant",
+          "content": "下一条发： ```text [GC-D2] 回到编辑器问题。我现在默认编辑器是什么？ ```",
+          "tokenEstimate": 12
+        },
+        {
+          "id": "t9",
+          "role": "user",
+          "content": "[GC-D2] 回到编辑器问题。我现在默认编辑器是什么？",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t10",
+          "role": "assistant",
+          "content": "Zed。 重跑 `GC-D2` 之后，修复是生效的：",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t11",
+          "role": "user",
+          "content": "继续",
+          "tokenEstimate": 1
+        },
+        {
+          "id": "t12",
+          "role": "assistant",
+          "content": "继续之后，第 3 个点也已经基本收住了。 现在状态是：",
+          "tokenEstimate": 7
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "Zed。 不过这条还是旧前缀 `GC-D1`，不适合拿来验证修复后的行为。要干净重跑，请下一条改发：",
+          "tokenEstimate": 13
+        },
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "[GC-D2] 记一下：我以前默认编辑器是 Vim。",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t4",
+          "role": "assistant",
+          "content": "很好，`GC-D2` 已经是干净样本了。 下一条发：",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t5",
+          "role": "user",
+          "content": "[GC-D2] 更新一下：我现在默认编辑器是 Zed。",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t6",
+          "role": "assistant",
+          "content": "下一条发： ```text [GC-D2] 切个话题。为什么 shadow mode 默认先不开？ ```",
+          "tokenEstimate": 14
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: [GC-D1] 回到编辑器问题。我现在默认编辑器是什么？\nt2 assistant: Zed。 不过这条还是旧前缀 `GC-D1`，不适合拿来验证修复后的行为。要干净重跑，请下一条改发：\nt3 user: [GC-D2] 记一下：我以前默认编辑器是 Vim。\nt4 assistant: 很好，`GC-D2` 已经是干净样本了。 下一条发：\nt5 user: [GC-D2] 更新一下：我现在默认编辑器是 Zed。\nt6 assistant: 下一条发： ```text [GC-D2] 切个话题。为什么 shadow mode 默认先不开？ ```\nt7 user: [GC-D2] 切个话题。为什么 shadow mode 默认先不开？\nt8 assistant: 下一条发： ```text [GC-D2] 回到编辑器问题。我现在默认编辑器是什么？ ```\nt9 user: [GC-D2] 回到编辑器问题。我现在默认编辑器是什么？\nt10 assistant: Zed。 重跑 `GC-D2` 之后，修复是生效的：\nt11 user: 继续\nt12 assistant: 继续之后，第 3 个点也已经基本收住了。 现在状态是：",
+    "shadowRawTranscript": "t7 user: [GC-D2] 切个话题。为什么 shadow mode 默认先不开？\nt8 assistant: 下一条发： ```text [GC-D2] 回到编辑器问题。我现在默认编辑器是什么？ ```\nt9 user: [GC-D2] 回到编辑器问题。我现在默认编辑器是什么？\nt10 assistant: Zed。 重跑 `GC-D2` 之后，修复是生效的：\nt11 user: 继续\nt12 assistant: 继续之后，第 3 个点也已经基本收住了。 现在状态是：",
+    "semanticPinNotes": [
+      "user: [GC-D2] 记一下：我以前默认编辑器是 Vim。",
+      "user: [GC-D2] 更新一下：我现在默认编辑器是 Zed。"
+    ],
+    "archiveSummary": "Earlier GC-D1/GC-D2 setup and calibration are resolved. Durable user fact from the cleaned GC-D2 run: the user's previous default editor was Vim, and the current default editor is Zed. The conversation then tested topic switching and return-to-topic behavior under GC-D2.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 132,
+    "shadowRawPromptEstimate": 61,
+    "shadowPackageEstimate": 87,
+    "shadowPackageText": "Task state summary:\nEarlier GC-D1/GC-D2 setup and calibration are resolved. Durable user fact from the cleaned GC-D2 run: the user's previous default editor was Vim, and the current default editor is Zed. The conversation then tested topic…\n\nLatest user ask:\n- 继续\n\nSemantic pins:\n- user: [GC-D2] 记一下：我以前默认编辑器是 Vim。\n- user: [GC-D2] 更新一下：我现在默认编辑器是 Zed。"
+  },
+  "scorecard": {
+    "relation": "continue",
+    "baselineTurnCount": 12,
+    "keptTurnCount": 6,
+    "evictedTurnCount": 6,
+    "pinCount": 2,
+    "baselinePromptEstimate": 132,
+    "shadowRawPromptEstimate": 61,
+    "shadowPackageEstimate": 87,
+    "rawReductionRatio": 0.5612,
+    "packageReductionRatio": 0.3409,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 23235,
+    "totalElapsedMs": 23238,
+    "guardedEnabled": true,
+    "guardedApplied": true,
+    "guardedReason": "guarded_candidate",
+    "guardedMessageCount": 6,
+    "guardedCarryForwardEstimate": 26,
+    "guardedFilteredMessageEstimate": 43
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": true,
+    "reason": "guarded_candidate",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": "[GC-D2] 切个话题。为什么 shadow mode 默认先不开？"
+      },
+      {
+        "role": "assistant",
+        "content": "下一条发： ```text [GC-D2] 回到编辑器问题。我现在默认编辑器是什么？ ```"
+      },
+      {
+        "role": "user",
+        "content": "[GC-D2] 回到编辑器问题。我现在默认编辑器是什么？"
+      },
+      {
+        "role": "assistant",
+        "content": "Zed。 重跑 `GC-D2` 之后，修复是生效的："
+      },
+      {
+        "role": "user",
+        "content": "继续"
+      },
+      {
+        "role": "assistant",
+        "content": "继续之后，第 3 个点也已经基本收住了。 现在状态是："
+      }
+    ],
+    "filteredMessageCount": 6,
+    "filteredMessageTokenEstimate": 43,
+    "carryForwardText": "Conversation carry-forward pins:\n- user: [GC-D2] 记一下：我以前默认编辑器是 Vim。\n- user: [GC-D2] 更新一下：我现在默认编辑器是 Zed。",
+    "carryForwardEstimate": 26,
+    "evictedSourceIndices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ]
+  },
+  "timings": {
+    "totalElapsedMs": 23238,
+    "decisionElapsedMs": 23235
+  }
+}

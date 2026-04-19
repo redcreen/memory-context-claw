@@ -1,0 +1,293 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776568418504-mzv4hy",
+  "generated_at": "2026-04-19T03:13:38.504Z",
+  "session_key": "agent:main:main",
+  "agent_id": "main",
+  "query": "继续同一个编辑器话题：我把日常工作拆成代码导航、批量替换、Git 操作、预览四块，你先记住这是同一个 workflow。",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "记一下：我以前默认编辑器是 Vim。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "已记下。"
+    },
+    {
+      "id": "t3",
+      "role": "assistant",
+      "content": "已记下。"
+    },
+    {
+      "id": "t4",
+      "role": "user",
+      "content": "更新一下：我现在默认编辑器是 Zed，而且后面都按这个新值算。"
+    },
+    {
+      "id": "t5",
+      "role": "assistant",
+      "content": "已更新，后面按 Zed 记。"
+    }
+  ],
+  "decision": {
+    "relation": "resolve",
+    "confidence": 0.96,
+    "evict_turn_ids": [
+      "t1",
+      "t2",
+      "t3",
+      "t5"
+    ],
+    "pin_turn_ids": [
+      "t1",
+      "t4"
+    ],
+    "archive_summary": "User preference for default editor changed from Vim to Zed; future work should assume Zed.",
+    "reasoning_summary": "This topic is effectively closed after the correction is acknowledged. The durable fact to keep is the updated editor preference (Zed), while the old Vim note and assistant acknowledgments can leave the raw prompt. The latest user turn remains in the runtime context by rule, so it is not listed for eviction."
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "resolve",
+      "confidence": 0.96,
+      "archiveSummary": "User preference for default editor changed from Vim to Zed; future work should assume Zed.",
+      "reasoningSummary": "This topic is effectively closed after the correction is acknowledged. The durable fact to keep is the updated editor preference (Zed), while the old Vim note and assistant acknowledgments can leave the raw prompt. The latest user turn remains in the runtime context by rule, so it is not listed for eviction.",
+      "latestUserTurnId": "t4",
+      "pinTurnIds": [
+        "t1",
+        "t4"
+      ],
+      "pinnedOnlyTurnIds": [
+        "t1"
+      ],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t5"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t5"
+      ],
+      "keepTurnIds": [
+        "t4"
+      ],
+      "baselineTokens": 19,
+      "keptTokens": 8,
+      "prunedTokens": 11,
+      "reductionRatio": 0.5789473684210527,
+      "keepTurns": [
+        {
+          "id": "t4",
+          "role": "user",
+          "content": "更新一下：我现在默认编辑器是 Zed，而且后面都按这个新值算。",
+          "tokenEstimate": 8
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "记一下：我以前默认编辑器是 Vim。",
+          "tokenEstimate": 5
+        },
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "已记下。",
+          "tokenEstimate": 1
+        },
+        {
+          "id": "t3",
+          "role": "assistant",
+          "content": "已记下。",
+          "tokenEstimate": 1
+        },
+        {
+          "id": "t5",
+          "role": "assistant",
+          "content": "已更新，后面按 Zed 记。",
+          "tokenEstimate": 4
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 记一下：我以前默认编辑器是 Vim。\nt2 assistant: 已记下。\nt3 assistant: 已记下。\nt4 user: 更新一下：我现在默认编辑器是 Zed，而且后面都按这个新值算。\nt5 assistant: 已更新，后面按 Zed 记。",
+    "shadowRawTranscript": "t4 user: 更新一下：我现在默认编辑器是 Zed，而且后面都按这个新值算。",
+    "semanticPinNotes": [
+      "user: 记一下：我以前默认编辑器是 Vim。"
+    ],
+    "archiveSummary": "User preference for default editor changed from Vim to Zed; future work should assume Zed.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 34,
+    "shadowRawPromptEstimate": 10,
+    "shadowPackageEstimate": 15,
+    "shadowPackageText": "Recent raw context:\nt4 user: 更新一下：我现在默认编辑器是 Zed，而且后面都按这个新值算。"
+  },
+  "scorecard": {
+    "relation": "resolve",
+    "baselineTurnCount": 5,
+    "keptTurnCount": 1,
+    "evictedTurnCount": 4,
+    "pinCount": 2,
+    "baselinePromptEstimate": 34,
+    "shadowRawPromptEstimate": 10,
+    "shadowPackageEstimate": 15,
+    "rawReductionRatio": 0.5789,
+    "packageReductionRatio": 0.5588,
+    "candidateLoadElapsedMs": 9,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 8401,
+    "totalElapsedMs": 8404,
+    "guardedEnabled": true,
+    "guardedApplied": true,
+    "guardedReason": "guarded_candidate",
+    "guardedMessageCount": 5,
+    "guardedCarryForwardEstimate": 15,
+    "guardedFilteredMessageEstimate": 39
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": true,
+    "reason": "guarded_candidate",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "更新一下：我现在默认编辑器是 Zed，而且后面都按这个新值算。"
+          }
+        ],
+        "timestamp": 1776568397847
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "toolCall",
+            "id": "call_ZWrVdbU0GfJju9AjuSTRGQxD",
+            "name": "read",
+            "arguments": {
+              "path": "memory/2026-04-12.md"
+            },
+            "partialJson": "{\"path\":\"memory/2026-04-12.md\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 8992,
+          "output": 25,
+          "cacheRead": 5120,
+          "cacheWrite": 0,
+          "totalTokens": 14137,
+          "cost": {
+            "input": 0.006744,
+            "output": 0.0001125,
+            "cacheRead": 0.000384,
+            "cacheWrite": 0,
+            "total": 0.0072404999999999995
+          }
+        },
+        "stopReason": "toolUse",
+        "timestamp": 1776568397853,
+        "responseId": "resp_0d82fb5ef959a2600169e4484e75248193bc350f2055409001"
+      },
+      {
+        "role": "toolResult",
+        "toolCallId": "call_ZWrVdbU0GfJju9AjuSTRGQxD",
+        "toolName": "read",
+        "content": [
+          {
+            "type": "text",
+            "text": "# Daily Memory 2026-04-12\n\n- Confirmed update: Maya以前默认编辑器是 Vim。\n"
+          }
+        ],
+        "isError": false,
+        "timestamp": 1776568400872
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "toolCall",
+            "id": "call_OYYYWmiVawnkrX0Xd9nX35nk",
+            "name": "edit",
+            "arguments": {
+              "path": "memory/2026-04-12.md",
+              "edits": [
+                {
+                  "oldText": "# Daily Memory 2026-04-12\n\n- Confirmed update: Maya以前默认编辑器是 Vim。\n",
+                  "newText": "# Daily Memory 2026-04-12\n\n- Confirmed update: Maya's default editor is now Zed, and this supersedes the previous Vim default.\n"
+                }
+              ]
+            },
+            "partialJson": "{\"path\":\"memory/2026-04-12.md\",\"edits\":[{\"oldText\":\"# Daily Memory 2026-04-12\\n\\n- Confirmed update: Maya以前默认编辑器是 Vim。\\n\",\"newText\":\"# Daily Memory 2026-04-12\\n\\n- Confirmed update: Maya's default editor is now Zed, and this supersedes the previous Vim default.\\n\"}]}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 347,
+          "output": 100,
+          "cacheRead": 13824,
+          "cacheWrite": 0,
+          "totalTokens": 14271,
+          "cost": {
+            "input": 0.00026025,
+            "output": 0.00045,
+            "cacheRead": 0.0010368,
+            "cacheWrite": 0,
+            "total": 0.00174705
+          }
+        },
+        "stopReason": "toolUse",
+        "timestamp": 1776568400873,
+        "responseId": "resp_0d82fb5ef959a2600169e44851a0608193805ff0668dbf0fe1"
+      },
+      {
+        "role": "toolResult",
+        "toolCallId": "call_OYYYWmiVawnkrX0Xd9nX35nk",
+        "toolName": "edit",
+        "content": [
+          {
+            "type": "text",
+            "text": "Successfully replaced 1 block(s) in memory/2026-04-12.md."
+          }
+        ],
+        "isError": false,
+        "timestamp": 1776568403342
+      }
+    ],
+    "filteredMessageCount": 5,
+    "filteredMessageTokenEstimate": 39,
+    "carryForwardText": "Conversation carry-forward pins:\n- user: 记一下：我以前默认编辑器是 Vim。",
+    "carryForwardEstimate": 15,
+    "evictedSourceIndices": [
+      0,
+      1,
+      3,
+      9
+    ]
+  },
+  "timings": {
+    "totalElapsedMs": 8404,
+    "decisionElapsedMs": 8401
+  }
+}

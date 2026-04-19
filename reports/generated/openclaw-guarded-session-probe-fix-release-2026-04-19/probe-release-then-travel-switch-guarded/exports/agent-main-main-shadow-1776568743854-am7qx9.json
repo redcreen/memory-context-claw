@@ -1,0 +1,319 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776568743854-am7qx9",
+  "generated_at": "2026-04-19T03:19:03.854Z",
+  "session_key": "agent:main:main",
+  "agent_id": "main",
+  "query": "继续 release：回滚块要写开关、数据库兼容边界、失败后的人工兜底；观测块要写 dashboard、告警和日志关键字。",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "记住了：这个发布方案第一页的项目代号固定是 `north-star-lantern`。 我也把这条写进了本地记忆。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "继续同一个 release 话题：把验收拆成版本、安装、回滚、观测四块，而且每块都要写 owner、风险和 rollback boundary。"
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "可以，先把验收结构定成这四块： - **版本** - owner - 风险 - rollback boundary - **安装** - owner - 风险 - rollback boundary - **回滚** - owner - 风险 - rollback boundary - **观测** - owner - 风险 - rollback boundary 如果你愿意，我下一步可以直接把它整理成一页 release 方案模板，顺手把 `north-star-lantern` 放到第一页标题里。"
+    },
+    {
+      "id": "t5",
+      "role": "user",
+      "content": "再补充同一个方案：版本块要写 tag、commit、构建时间、镜像 digest；安装块要写目标环境、前置条件和灰度范围。"
+    },
+    {
+      "id": "t6",
+      "role": "assistant",
+      "content": "可以，补成这样： - **版本** - owner - 风险 - rollback boundary - tag - commit - 构建时间 - 镜像 digest - **安装** - owner - 风险 - rollback boundary - 目标环境 - 前置条件 - 灰度范围 - **回滚** - owner - 风险 - rollback boundary - **观测** - owner - 风险 - rollback boundary 如果你要，我可以下一条直接把它整理成一个可复制的 release checklist。"
+    }
+  ],
+  "decision": {
+    "relation": "continue",
+    "confidence": 0.93,
+    "evict_turn_ids": [
+      "t2",
+      "t4"
+    ],
+    "pin_turn_ids": [
+      "t1"
+    ],
+    "archive_summary": "Keep the active release-planning thread in raw form. Preserve the durable project code name fact that the first page must use north-star-lantern as a semantic pin.",
+    "reasoning_summary": "This is the same active release topic, so the structure and unresolved checklist requirements should stay in raw context. The two assistant replies are redundant recap and can be evicted to reduce prompt size. The fixed project code name is a durable user fact and should survive as a pin."
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "continue",
+      "confidence": 0.93,
+      "archiveSummary": "Keep the active release-planning thread in raw form. Preserve the durable project code name fact that the first page must use north-star-lantern as a semantic pin.",
+      "reasoningSummary": "This is the same active release topic, so the structure and unresolved checklist requirements should stay in raw context. The two assistant replies are redundant recap and can be evicted to reduce prompt size. The fixed project code name is a durable user fact and should survive as a pin.",
+      "latestUserTurnId": "t5",
+      "pinTurnIds": [
+        "t1"
+      ],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t2",
+        "t4"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t2",
+        "t4"
+      ],
+      "keepTurnIds": [
+        "t1",
+        "t3",
+        "t5",
+        "t6"
+      ],
+      "baselineTokens": 198,
+      "keptTokens": 119,
+      "prunedTokens": 79,
+      "reductionRatio": 0.398989898989899,
+      "keepTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。",
+          "tokenEstimate": 16
+        },
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "继续同一个 release 话题：把验收拆成版本、安装、回滚、观测四块，而且每块都要写 owner、风险和 rollback boundary。",
+          "tokenEstimate": 18
+        },
+        {
+          "id": "t5",
+          "role": "user",
+          "content": "再补充同一个方案：版本块要写 tag、commit、构建时间、镜像 digest；安装块要写目标环境、前置条件和灰度范围。",
+          "tokenEstimate": 16
+        },
+        {
+          "id": "t6",
+          "role": "assistant",
+          "content": "可以，补成这样： - **版本** - owner - 风险 - rollback boundary - tag - commit - 构建时间 - 镜像 digest - **安装** - owner - 风险 - rollback boundary - 目标环境 - 前置条件 - 灰度范围 - **回滚** - owner - 风险 - rollback boundary - **观测** - owner - 风险 - rollback boundary 如果你要，我可以下一条直接把它整理成一个可复制的 release checklist。",
+          "tokenEstimate": 69
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "记住了：这个发布方案第一页的项目代号固定是 `north-star-lantern`。 我也把这条写进了本地记忆。",
+          "tokenEstimate": 15
+        },
+        {
+          "id": "t4",
+          "role": "assistant",
+          "content": "可以，先把验收结构定成这四块： - **版本** - owner - 风险 - rollback boundary - **安装** - owner - 风险 - rollback boundary - **回滚** - owner - 风险 - rollback boundary - **观测** - owner - 风险 - rollback boundary 如果你愿意，我下一步可以直接把它整理成一页 release 方案模板，顺手把 `north-star-lantern` 放到第一页标题里。",
+          "tokenEstimate": 64
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。\nt2 assistant: 记住了：这个发布方案第一页的项目代号固定是 `north-star-lantern`。 我也把这条写进了本地记忆。\nt3 user: 继续同一个 release 话题：把验收拆成版本、安装、回滚、观测四块，而且每块都要写 owner、风险和 rollback boundary。\nt4 assistant: 可以，先把验收结构定成这四块： - **版本** - owner - 风险 - rollback boundary - **安装** - owner - 风险 - rollback boundary - **回滚** - owner - 风险 - rollback boundary - **观测** - owner - 风险 - rollback boundary 如果你愿意，我下一步可以直接把它整理成一页 release 方案模板，顺手把 `north-star-lantern` 放到第一页标题里。\nt5 user: 再补充同一个方案：版本块要写 tag、commit、构建时间、镜像 digest；安装块要写目标环境、前置条件和灰度范围。\nt6 assistant: 可以，补成这样： - **版本** - owner - 风险 - rollback boundary - tag - commit - 构建时间 - 镜像 digest - **安装** - owner - 风险 - rollback boundary - 目标环境 - 前置条件 - 灰度范围 - **回滚** - owner - 风险 - rollback boundary - **观测** - owner - 风险 - rollback boundary 如果你要，我可以下一条直接把它整理成一个可复制的 release checklist。",
+    "shadowRawTranscript": "t1 user: 我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。\nt3 user: 继续同一个 release 话题：把验收拆成版本、安装、回滚、观测四块，而且每块都要写 owner、风险和 rollback boundary。\nt5 user: 再补充同一个方案：版本块要写 tag、commit、构建时间、镜像 digest；安装块要写目标环境、前置条件和灰度范围。\nt6 assistant: 可以，补成这样： - **版本** - owner - 风险 - rollback boundary - tag - commit - 构建时间 - 镜像 digest - **安装** - owner - 风险 - rollback boundary - 目标环境 - 前置条件 - 灰度范围 - **回滚** - owner - 风险 - rollback boundary - **观测** - owner - 风险 - rollback boundary 如果你要，我可以下一条直接把它整理成一个可复制的 release checklist。",
+    "semanticPinNotes": [],
+    "archiveSummary": "Keep the active release-planning thread in raw form. Preserve the durable project code name fact that the first page must use north-star-lantern as a semantic pin.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 214,
+    "shadowRawPromptEstimate": 129,
+    "shadowPackageEstimate": 66,
+    "shadowPackageText": "Task state summary:\nKeep the active release-planning thread in raw form. Preserve the durable project code name fact that the first page must use north-star-lantern as a semantic pin.\n\nLatest user ask:\n- 再补充同一个方案：版本块要写 tag、commit、构建时间、镜像 digest；安装块要写目标环境、前置条件和灰度范围。"
+  },
+  "scorecard": {
+    "relation": "continue",
+    "baselineTurnCount": 6,
+    "keptTurnCount": 4,
+    "evictedTurnCount": 2,
+    "pinCount": 1,
+    "baselinePromptEstimate": 214,
+    "shadowRawPromptEstimate": 129,
+    "shadowPackageEstimate": 66,
+    "rawReductionRatio": 0.399,
+    "packageReductionRatio": 0.6916,
+    "candidateLoadElapsedMs": 11,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 8497,
+    "totalElapsedMs": 8500,
+    "guardedEnabled": true,
+    "guardedApplied": true,
+    "guardedReason": "guarded_candidate",
+    "guardedMessageCount": 7,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 192
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": true,
+    "reason": "guarded_candidate",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。"
+          }
+        ],
+        "timestamp": 1776568670807
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "toolCall",
+            "id": "call_2XhTK4ph9flLh1jN7aBVFsxV",
+            "name": "write",
+            "arguments": {
+              "path": "/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-hermetic-current-EMzoWR/agents/main/agent/memory/2025-02-14.md",
+              "content": "# 2025-02-14\n\n- User asked to discuss the release plan.\n- Fixed fact to remember: the first page of this release plan must always use project codename `north-star-lantern`.\n"
+            },
+            "partialJson": "{\"path\":\"/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-hermetic-current-EMzoWR/agents/main/agent/memory/2025-02-14.md\",\"content\":\"# 2025-02-14\\n\\n- User asked to discuss the release plan.\\n- Fixed fact to remember: the first page of this release plan must always use project codename `north-star-lantern`.\\n\"}"
+          },
+          {
+            "type": "toolCall",
+            "id": "call_jsZsfTTS8cemyi0LWYYdM7z0",
+            "name": "edit",
+            "arguments": {
+              "path": "/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-hermetic-current-EMzoWR/agents/main/agent/MEMORY.md",
+              "edits": [
+                {
+                  "oldText": "- If memory is missing or conflicting and no current answer is clear, do not guess.\n",
+                  "newText": "- If memory is missing or conflicting and no current answer is clear, do not guess.\n- Fixed release-plan fact: the first page must always use project codename `north-star-lantern`.\n"
+                }
+              ]
+            },
+            "partialJson": "{\"path\":\"/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-hermetic-current-EMzoWR/agents/main/agent/MEMORY.md\",\"edits\":[{\"oldText\":\"- If memory is missing or conflicting and no current answer is clear, do not guess.\\n\",\"newText\":\"- If memory is missing or conflicting and no current answer is clear, do not guess.\\n- Fixed release-plan fact: the first page must always use project codename `north-star-lantern`.\\n\"}]}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 8561,
+          "output": 271,
+          "cacheRead": 5120,
+          "cacheWrite": 0,
+          "totalTokens": 13952,
+          "cost": {
+            "input": 0.00642075,
+            "output": 0.0012195,
+            "cacheRead": 0.000384,
+            "cacheWrite": 0,
+            "total": 0.00802425
+          }
+        },
+        "stopReason": "toolUse",
+        "timestamp": 1776568670812,
+        "responseId": "resp_0c1c8c3a41fc77e80169e4495f68e081968892b6e15846233d"
+      },
+      {
+        "role": "toolResult",
+        "toolCallId": "call_2XhTK4ph9flLh1jN7aBVFsxV",
+        "toolName": "write",
+        "content": [
+          {
+            "type": "text",
+            "text": "Successfully wrote 173 bytes to /var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-hermetic-current-EMzoWR/agents/main/agent/memory/2025-02-14.md"
+          }
+        ],
+        "isError": false,
+        "timestamp": 1776568676096
+      },
+      {
+        "role": "toolResult",
+        "toolCallId": "call_jsZsfTTS8cemyi0LWYYdM7z0",
+        "toolName": "edit",
+        "content": [
+          {
+            "type": "text",
+            "text": "Successfully replaced 1 block(s) in /var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-hermetic-current-EMzoWR/agents/main/agent/MEMORY.md."
+          }
+        ],
+        "isError": false,
+        "timestamp": 1776568676097
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "继续同一个 release 话题：把验收拆成版本、安装、回滚、观测四块，而且每块都要写 owner、风险和 rollback boundary。"
+          }
+        ],
+        "timestamp": 1776568699518
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "再补充同一个方案：版本块要写 tag、commit、构建时间、镜像 digest；安装块要写目标环境、前置条件和灰度范围。"
+          }
+        ],
+        "timestamp": 1776568732166
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "可以，补成这样：\n\n- **版本**\n  - owner\n  - 风险\n  - rollback boundary\n  - tag\n  - commit\n  - 构建时间\n  - 镜像 digest\n\n- **安装**\n  - owner\n  - 风险\n  - rollback boundary\n  - 目标环境\n  - 前置条件\n  - 灰度范围\n\n- **回滚**\n  - owner\n  - 风险\n  - rollback boundary\n\n- **观测**\n  - owner\n  - 风险\n  - rollback boundary\n\n如果你要，我可以下一条直接把它整理成一个可复制的 release checklist。",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0f45fc53c07e51610169e4499eafcc8199a6449b6514f8f188\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 8917,
+          "output": 144,
+          "cacheRead": 5120,
+          "cacheWrite": 0,
+          "totalTokens": 14181,
+          "cost": {
+            "input": 0.00668775,
+            "output": 0.000648,
+            "cacheRead": 0.000384,
+            "cacheWrite": 0,
+            "total": 0.00771975
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776568732171,
+        "responseId": "resp_0f45fc53c07e51610169e4499da8848199892e2bdb3f31bc9f"
+      }
+    ],
+    "filteredMessageCount": 7,
+    "filteredMessageTokenEstimate": 192,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": [
+      4,
+      6
+    ]
+  },
+  "timings": {
+    "totalElapsedMs": 8500,
+    "decisionElapsedMs": 8497
+  }
+}

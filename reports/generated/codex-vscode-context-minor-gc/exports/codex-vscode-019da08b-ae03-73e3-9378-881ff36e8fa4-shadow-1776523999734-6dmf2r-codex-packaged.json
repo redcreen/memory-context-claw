@@ -1,0 +1,270 @@
+{
+  "schema_version": "umc.codex-context-minor-gc.v1",
+  "generated_at": "2026-04-18T14:53:44.386Z",
+  "event_id": "shadow-1776523999734-6dmf2r-codex-packaged",
+  "session_key": "codex:vscode:019da08b-ae03-73e3-9378-881ff36e8fa4",
+  "query": "继续",
+  "status": "captured",
+  "reason": "",
+  "decision_transport": "codex_exec",
+  "relation": "continue",
+  "applied": true,
+  "codex_guard_reason": "codex_packaged_guard",
+  "prompt_reduction_ratio": 0.7613,
+  "baseline_context_estimate": 310,
+  "packaged_context_estimate": 74,
+  "effective_context_estimate": 74,
+  "shadow_status": "captured",
+  "shadow_guarded_applied": true,
+  "shadow_guarded_reason": "guarded_candidate",
+  "shadow_export_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da08b-ae03-73e3-9378-881ff36e8fa4-shadow-1776523999734-6dmf2r.json",
+  "shadow_summary_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl",
+  "export_path": "exports/codex-vscode-019da08b-ae03-73e3-9378-881ff36e8fa4-shadow-1776523999734-6dmf2r-codex-packaged.json",
+  "effective_context_block": "## Context Minor GC Working Set\nTask state summary:\nEarlier Stage 11 control-plane cleanup and host-view/status synchronization were completed and reported. The conversation then shifted to whether end users can already feel a clear improvement; the assessment was not ye…\n\nLatest user ask:\n- 继续",
+  "packaged_context_block": "## Context Minor GC Working Set\nTask state summary:\nEarlier Stage 11 control-plane cleanup and host-view/status synchronization were completed and reported. The conversation then shifted to whether end users can already feel a clear improvement; the assessment was not ye…\n\nLatest user ask:\n- 继续",
+  "shadow_event": {
+    "schema_version": "umc.dialogue-working-set-shadow.v1",
+    "event_id": "shadow-1776523999734-6dmf2r",
+    "generated_at": "2026-04-18T14:53:19.734Z",
+    "session_key": "codex:vscode:019da08b-ae03-73e3-9378-881ff36e8fa4",
+    "agent_id": "main",
+    "query": "继续",
+    "status": "captured",
+    "reason": "",
+    "sampling": {
+      "max_turns": 12,
+      "min_turns": 3,
+      "max_chars_per_turn": 900
+    },
+    "transcript": [
+      {
+        "id": "t1",
+        "role": "user",
+        "content": "# Files mentioned by the user: ## codex-resume-pack.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/codex-resume-pack.md ## continue.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/continue.md ## handoff.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/handoff.md ## progress.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/progress.md ## status.md: /Users/redcreen/Project/unified-memory-core/.codex/status.md ## plan.md: /Users/redcreen/Project/unified-memory-core/.codex/plan.md ## My request for Codex: Stage 11 继续 直到收口"
+      },
+      {
+        "id": "t2",
+        "role": "assistant",
+        "content": "`Stage 11` 的控制面我已经收口了。现在 `.codex/status.md` 和 `.codex/plan.md` 都回到 `Stage 12` 当前，当前切片是 `group-12a-contract-and-replay-hold`；`continue.md`、`progress.md`、`handoff.md`、`codex-resume-pack.md`，以及自动恢复提示也都同步成同一套口径，不再把 `Stage…"
+      },
+      {
+        "id": "t3",
+        "role": "user",
+        "content": "现在用户端有明显好用了么？"
+      },
+      {
+        "id": "t4",
+        "role": "assistant",
+        "content": "截至 `2026-04-18`，如果标准是“用户现在能稳定明显感觉更好用了”，我的判断是：`还不能稳妥地这么说`。 更准确地说是两层："
+      },
+      {
+        "id": "t5",
+        "role": "user",
+        "content": "怎么解决，如果这个问题不解决，其他的都不要做"
+      },
+      {
+        "id": "t6",
+        "role": "assistant",
+        "content": "能解，而且方向很明确。关键是别再把它当成“继续做更多功能”，而是把它当成一个单独的 `UX bug` 来收。 我已经先把控制面改了：`.codex/status.md`、`.codex/plan.md` 和几个 host view 现在都回到“只解决用户体感不明显，`Stage 12` 暂停”。"
+      },
+      {
+        "id": "t7",
+        "role": "user",
+        "content": "需要，继续"
+      },
+      {
+        "id": "t8",
+        "role": "assistant",
+        "content": "继续做了，且这轮只动了“用户体感”主线。 我已经落了两类实改："
+      },
+      {
+        "id": "t9",
+        "role": "user",
+        "content": "继续"
+      }
+    ],
+    "decision": {
+      "relation": "continue",
+      "confidence": 0.95,
+      "evict_turn_ids": [
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ],
+      "pin_turn_ids": [],
+      "archive_summary": "Earlier Stage 11 control-plane cleanup and host-view/status synchronization were completed and reported. The conversation then shifted to whether end users can already feel a clear improvement; the assessment was not yet. The user then set a hard priority: solve the user-visible UX improvement first, and do not do other work until that is fixed.",
+      "reasoning_summary": "The latest turn is a continuation of the current active topic, not a branch or switch. The unresolved main task is the user-visible UX issue introduced in t5 and continued through t6-t8, so those turns should remain raw. Turns t1-t2 are a resolved prior block about Stage 11 control-plane/status files. Turns t3-t4 are an answered status check that has been superseded by the stronger priority-setting in t5. No semantic pins are necessary because the still-relevant constraint and task remain active raw context rather than archival facts."
+    },
+    "decision_transport": "codex_exec",
+    "snapshot": {
+      "applied": {
+        "relation": "continue",
+        "confidence": 0.95,
+        "archiveSummary": "Earlier Stage 11 control-plane cleanup and host-view/status synchronization were completed and reported. The conversation then shifted to whether end users can already feel a clear improvement; the assessment was not yet. The user then set a hard priority: solve the user-visible UX improvement first, and do not do other work until that is fixed.",
+        "reasoningSummary": "The latest turn is a continuation of the current active topic, not a branch or switch. The unresolved main task is the user-visible UX issue introduced in t5 and continued through t6-t8, so those turns should remain raw. Turns t1-t2 are a resolved prior block about Stage 11 control-plane/status files. Turns t3-t4 are an answered status check that has been superseded by the stronger priority-setting in t5. No semantic pins are necessary because the still-relevant constraint and task remain active raw context rather than archival facts.",
+        "latestUserTurnId": "t9",
+        "pinTurnIds": [],
+        "pinnedOnlyTurnIds": [],
+        "requestedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3",
+          "t4"
+        ],
+        "blockedEvictTurnIds": [],
+        "appliedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3",
+          "t4"
+        ],
+        "keepTurnIds": [
+          "t5",
+          "t6",
+          "t7",
+          "t8",
+          "t9"
+        ],
+        "baselineTokens": 279,
+        "keptTokens": 54,
+        "prunedTokens": 225,
+        "reductionRatio": 0.8064516129032258,
+        "keepTurns": [
+          {
+            "id": "t5",
+            "role": "user",
+            "content": "怎么解决，如果这个问题不解决，其他的都不要做",
+            "tokenEstimate": 6
+          },
+          {
+            "id": "t6",
+            "role": "assistant",
+            "content": "能解，而且方向很明确。关键是别再把它当成“继续做更多功能”，而是把它当成一个单独的 `UX bug` 来收。 我已经先把控制面改了：`.codex/status.md`、`.codex/plan.md` 和几个 host view 现在都回到“只解决用户体感不明显，`Stage 12` 暂停”。",
+            "tokenEstimate": 37
+          },
+          {
+            "id": "t7",
+            "role": "user",
+            "content": "需要，继续",
+            "tokenEstimate": 2
+          },
+          {
+            "id": "t8",
+            "role": "assistant",
+            "content": "继续做了，且这轮只动了“用户体感”主线。 我已经落了两类实改：",
+            "tokenEstimate": 8
+          },
+          {
+            "id": "t9",
+            "role": "user",
+            "content": "继续",
+            "tokenEstimate": 1
+          }
+        ],
+        "evictedTurns": [
+          {
+            "id": "t1",
+            "role": "user",
+            "content": "# Files mentioned by the user: ## codex-resume-pack.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/codex-resume-pack.md ## continue.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/continue.md ## handoff.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/handoff.md ## progress.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/progress.md ## status.md: /Users/redcreen/Project/unified-memory-core/.codex/status.md ## plan.md: /Users/redcreen/Project/unified-memory-core/.codex/plan.md ## My request for Codex: Stage 11 继续 直到收口",
+            "tokenEstimate": 149
+          },
+          {
+            "id": "t2",
+            "role": "assistant",
+            "content": "`Stage 11` 的控制面我已经收口了。现在 `.codex/status.md` 和 `.codex/plan.md` 都回到 `Stage 12` 当前，当前切片是 `group-12a-contract-and-replay-hold`；`continue.md`、`progress.md`、`handoff.md`、`codex-resume-pack.md`，以及自动恢复提示也都同步成同一套口径，不再把 `Stage…",
+            "tokenEstimate": 55
+          },
+          {
+            "id": "t3",
+            "role": "user",
+            "content": "现在用户端有明显好用了么？",
+            "tokenEstimate": 4
+          },
+          {
+            "id": "t4",
+            "role": "assistant",
+            "content": "截至 `2026-04-18`，如果标准是“用户现在能稳定明显感觉更好用了”，我的判断是：`还不能稳妥地这么说`。 更准确地说是两层：",
+            "tokenEstimate": 17
+          }
+        ]
+      },
+      "baselineRawTranscript": "t1 user: # Files mentioned by the user: ## codex-resume-pack.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/codex-resume-pack.md ## continue.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/continue.md ## handoff.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/handoff.md ## progress.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/progress.md ## status.md: /Users/redcreen/Project/unified-memory-core/.codex/status.md ## plan.md: /Users/redcreen/Project/unified-memory-core/.codex/plan.md ## My request for Codex: Stage 11 继续 直到收口\nt2 assistant: `Stage 11` 的控制面我已经收口了。现在 `.codex/status.md` 和 `.codex/plan.md` 都回到 `Stage 12` 当前，当前切片是 `group-12a-contract-and-replay-hold`；`continue.md`、`progress.md`、`handoff.md`、`codex-resume-pack.md`，以及自动恢复提示也都同步成同一套口径，不再把 `Stage…\nt3 user: 现在用户端有明显好用了么？\nt4 assistant: 截至 `2026-04-18`，如果标准是“用户现在能稳定明显感觉更好用了”，我的判断是：`还不能稳妥地这么说`。 更准确地说是两层：\nt5 user: 怎么解决，如果这个问题不解决，其他的都不要做\nt6 assistant: 能解，而且方向很明确。关键是别再把它当成“继续做更多功能”，而是把它当成一个单独的 `UX bug` 来收。 我已经先把控制面改了：`.codex/status.md`、`.codex/plan.md` 和几个 host view 现在都回到“只解决用户体感不明显，`Stage 12` 暂停”。\nt7 user: 需要，继续\nt8 assistant: 继续做了，且这轮只动了“用户体感”主线。 我已经落了两类实改：\nt9 user: 继续",
+      "shadowRawTranscript": "t5 user: 怎么解决，如果这个问题不解决，其他的都不要做\nt6 assistant: 能解，而且方向很明确。关键是别再把它当成“继续做更多功能”，而是把它当成一个单独的 `UX bug` 来收。 我已经先把控制面改了：`.codex/status.md`、`.codex/plan.md` 和几个 host view 现在都回到“只解决用户体感不明显，`Stage 12` 暂停”。\nt7 user: 需要，继续\nt8 assistant: 继续做了，且这轮只动了“用户体感”主线。 我已经落了两类实改：\nt9 user: 继续",
+      "semanticPinNotes": [],
+      "archiveSummary": "Earlier Stage 11 control-plane cleanup and host-view/status synchronization were completed and reported. The conversation then shifted to whether end users can already feel a clear improvement; the assessment was not yet. The user then set a hard priority: solve the user-visible UX improvement first, and do not do other work until that is fixed.",
+      "injectedArchiveSummary": "",
+      "baselinePromptEstimate": 303,
+      "shadowRawPromptEstimate": 67,
+      "shadowPackageEstimate": 66,
+      "shadowPackageText": "Task state summary:\nEarlier Stage 11 control-plane cleanup and host-view/status synchronization were completed and reported. The conversation then shifted to whether end users can already feel a clear improvement; the assessment was not ye…\n\nLatest user ask:\n- 继续"
+    },
+    "scorecard": {
+      "relation": "continue",
+      "baselineTurnCount": 9,
+      "keptTurnCount": 5,
+      "evictedTurnCount": 4,
+      "pinCount": 0,
+      "baselinePromptEstimate": 303,
+      "shadowRawPromptEstimate": 67,
+      "shadowPackageEstimate": 66,
+      "rawReductionRatio": 0.8065,
+      "packageReductionRatio": 0.7822,
+      "candidateLoadElapsedMs": 0,
+      "assemblyBuildElapsedMs": 0,
+      "decisionElapsedMs": 24644,
+      "totalElapsedMs": 24648,
+      "guardedEnabled": true,
+      "guardedApplied": true,
+      "guardedReason": "guarded_candidate",
+      "guardedMessageCount": 5,
+      "guardedCarryForwardEstimate": 0,
+      "guardedFilteredMessageEstimate": 54
+    },
+    "guarded": {
+      "enabled": true,
+      "applied": true,
+      "reason": "guarded_candidate",
+      "filteredMessages": [
+        {
+          "role": "user",
+          "content": "怎么解决，如果这个问题不解决，其他的都不要做"
+        },
+        {
+          "role": "assistant",
+          "content": "能解，而且方向很明确。关键是别再把它当成“继续做更多功能”，而是把它当成一个单独的 `UX bug` 来收。 我已经先把控制面改了：`.codex/status.md`、`.codex/plan.md` 和几个 host view 现在都回到“只解决用户体感不明显，`Stage 12` 暂停”。"
+        },
+        {
+          "role": "user",
+          "content": "需要，继续"
+        },
+        {
+          "role": "assistant",
+          "content": "继续做了，且这轮只动了“用户体感”主线。 我已经落了两类实改："
+        },
+        {
+          "role": "user",
+          "content": "继续"
+        }
+      ],
+      "filteredMessageCount": 5,
+      "filteredMessageTokenEstimate": 54,
+      "carryForwardText": "",
+      "carryForwardEstimate": 0,
+      "evictedSourceIndices": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    "timings": {
+      "totalElapsedMs": 24648,
+      "decisionElapsedMs": 24644
+    },
+    "artifact_paths": {
+      "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da08b-ae03-73e3-9378-881ff36e8fa4-shadow-1776523999734-6dmf2r.json",
+      "summary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl"
+    }
+  }
+}

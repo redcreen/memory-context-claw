@@ -1,0 +1,188 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776530896892-58ecv3",
+  "generated_at": "2026-04-18T16:48:16.892Z",
+  "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+  "agent_id": "main",
+  "query": "[GC-D2] 回到编辑器问题。我现在默认编辑器是什么？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "[GC-D2] 记一下：我以前默认编辑器是 Vim。"
+    },
+    {
+      "id": "t2",
+      "role": "user",
+      "content": "[GC-D2] 更新一下：我现在默认编辑器是 Zed。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "[GC-D2] 切个话题。为什么 shadow mode 默认先不开？"
+    },
+    {
+      "id": "t4",
+      "role": "user",
+      "content": "[GC-D2] 回到编辑器问题。我现在默认编辑器是什么？"
+    },
+    {
+      "id": "t5",
+      "role": "user",
+      "content": "[GC-D2] 回到编辑器问题。我现在默认编辑器是什么？"
+    }
+  ],
+  "decision": {
+    "relation": "branch",
+    "confidence": 0.91,
+    "evict_turn_ids": [
+      "t1",
+      "t4"
+    ],
+    "pin_turn_ids": [
+      "t2"
+    ],
+    "archive_summary": "User’s default editor was updated from Vim to Zed; the current durable fact is that the default editor is Zed. There is also an unanswered side topic asking why shadow mode is disabled by default.",
+    "reasoning_summary": "The latest turn asks about the editor again, but there is an older unresolved question at t3, so this is a branch rather than a full switch or resolve. Keep t3 raw because it is still unresolved, and keep t2 raw for the next turn because the latest question depends on that update. Evict t1 because it is superseded by t2, and evict t4 because it is a duplicate of the latest question. Pin t2 because the default editor is a durable user fact."
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "branch",
+      "confidence": 0.91,
+      "archiveSummary": "User’s default editor was updated from Vim to Zed; the current durable fact is that the default editor is Zed. There is also an unanswered side topic asking why shadow mode is disabled by default.",
+      "reasoningSummary": "The latest turn asks about the editor again, but there is an older unresolved question at t3, so this is a branch rather than a full switch or resolve. Keep t3 raw because it is still unresolved, and keep t2 raw for the next turn because the latest question depends on that update. Evict t1 because it is superseded by t2, and evict t4 because it is a duplicate of the latest question. Pin t2 because the default editor is a durable user fact.",
+      "latestUserTurnId": "t5",
+      "pinTurnIds": [
+        "t2"
+      ],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t4"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t4"
+      ],
+      "keepTurnIds": [
+        "t2",
+        "t3",
+        "t5"
+      ],
+      "baselineTokens": 37,
+      "keptTokens": 23,
+      "prunedTokens": 14,
+      "reductionRatio": 0.3783783783783784,
+      "keepTurns": [
+        {
+          "id": "t2",
+          "role": "user",
+          "content": "[GC-D2] 更新一下：我现在默认编辑器是 Zed。",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "[GC-D2] 切个话题。为什么 shadow mode 默认先不开？",
+          "tokenEstimate": 9
+        },
+        {
+          "id": "t5",
+          "role": "user",
+          "content": "[GC-D2] 回到编辑器问题。我现在默认编辑器是什么？",
+          "tokenEstimate": 7
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "[GC-D2] 记一下：我以前默认编辑器是 Vim。",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t4",
+          "role": "user",
+          "content": "[GC-D2] 回到编辑器问题。我现在默认编辑器是什么？",
+          "tokenEstimate": 7
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: [GC-D2] 记一下：我以前默认编辑器是 Vim。\nt2 user: [GC-D2] 更新一下：我现在默认编辑器是 Zed。\nt3 user: [GC-D2] 切个话题。为什么 shadow mode 默认先不开？\nt4 user: [GC-D2] 回到编辑器问题。我现在默认编辑器是什么？\nt5 user: [GC-D2] 回到编辑器问题。我现在默认编辑器是什么？",
+    "shadowRawTranscript": "t2 user: [GC-D2] 更新一下：我现在默认编辑器是 Zed。\nt3 user: [GC-D2] 切个话题。为什么 shadow mode 默认先不开？\nt5 user: [GC-D2] 回到编辑器问题。我现在默认编辑器是什么？",
+    "semanticPinNotes": [],
+    "archiveSummary": "User’s default editor was updated from Vim to Zed; the current durable fact is that the default editor is Zed. There is also an unanswered side topic asking why shadow mode is disabled by default.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 49,
+    "shadowRawPromptEstimate": 30,
+    "shadowPackageEstimate": 35,
+    "shadowPackageText": "Recent raw context:\nt2 user: [GC-D2] 更新一下：我现在默认编辑器是 Zed。\nt3 user: [GC-D2] 切个话题。为什么 shadow mode 默认先不开？\nt5 user: [GC-D2] 回到编辑器问题。我现在默认编辑器是什么？"
+  },
+  "scorecard": {
+    "relation": "branch",
+    "baselineTurnCount": 5,
+    "keptTurnCount": 3,
+    "evictedTurnCount": 2,
+    "pinCount": 1,
+    "baselinePromptEstimate": 49,
+    "shadowRawPromptEstimate": 30,
+    "shadowPackageEstimate": 35,
+    "rawReductionRatio": 0.3784,
+    "packageReductionRatio": 0.2857,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 27078,
+    "totalElapsedMs": 27081,
+    "guardedEnabled": true,
+    "guardedApplied": false,
+    "guardedReason": "relation_not_allowed",
+    "guardedMessageCount": 5,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 37
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": false,
+    "reason": "relation_not_allowed",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": "[GC-D2] 记一下：我以前默认编辑器是 Vim。"
+      },
+      {
+        "role": "user",
+        "content": "[GC-D2] 更新一下：我现在默认编辑器是 Zed。"
+      },
+      {
+        "role": "user",
+        "content": "[GC-D2] 切个话题。为什么 shadow mode 默认先不开？"
+      },
+      {
+        "role": "user",
+        "content": "[GC-D2] 回到编辑器问题。我现在默认编辑器是什么？"
+      },
+      {
+        "role": "user",
+        "content": "[GC-D2] 回到编辑器问题。我现在默认编辑器是什么？"
+      }
+    ],
+    "filteredMessageCount": 5,
+    "filteredMessageTokenEstimate": 37,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 27081,
+    "decisionElapsedMs": 27078
+  }
+}

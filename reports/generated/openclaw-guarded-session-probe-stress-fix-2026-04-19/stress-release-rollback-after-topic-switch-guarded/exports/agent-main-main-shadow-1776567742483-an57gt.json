@@ -1,0 +1,292 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776567742483-an57gt",
+  "generated_at": "2026-04-19T03:02:22.483Z",
+  "session_key": "agent:main:main",
+  "agent_id": "main",
+  "query": "现在切到完全不同的话题。帮我想一个京都三晚行程，要求安静、靠地铁、预算两万元，而且第一晚晚到。",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "继续同一个话题：验证证据部分要同时覆盖单元测试、集成测试、回归用例、灰度观察、异常回滚演练，而且每块都要有一句最短结论。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "记住了。 **验证证据**部分要同时覆盖： - 单元测试 - 集成测试 - 回归用例 - 灰度观察 - 异常回滚演练 而且**每一块都要配一句最短结论**。 我会按这个要求写。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "再补充：如果后面我追问这个方案，你默认先给 3 条最高风险，再展开细节；但无论怎么展开，首页代号 north-star-lantern 都不能丢。"
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "记住了。 后面你追问这个方案时，我会默认： - **先给 3 条最高风险** - **再展开细节** - **无论怎么展开，`north-star-lantern` 这个代号都保留** 不丢这个代号。"
+    },
+    {
+      "id": "t5",
+      "role": "user",
+      "content": "继续：这轮上线窗口默认是北京时间周三晚上九点到十一点，值班人包括发布 owner、数据库 owner、网关 owner，而且三个人都要能独立触发回滚。"
+    },
+    {
+      "id": "t6",
+      "role": "assistant",
+      "content": "记住了，这个方案还要固定： - 上线窗口默认：北京时间周三 21:00–23:00 - 值班人包括： - 发布 owner - 数据库 owner - 网关 owner - 这三个人都要能独立触发回滚 我后面继续按 **north-star-lantern** 这个代号来讲。"
+    },
+    {
+      "id": "t7",
+      "role": "user",
+      "content": "还是同一个方案：如果 staging 期间错误率超过阈值，先停灰度、看日志关键字、核对镜像 digest、最后才决定要不要拉回滚开关，这个顺序也先记住。"
+    },
+    {
+      "id": "t8",
+      "role": "assistant",
+      "content": "记住了。 如果 staging 期间错误率超过阈值，顺序固定为： 1. 先停灰度 2. 看日志关键字 3. 核对镜像 digest 4. 最后才决定要不要拉回滚开关 这个顺序我会按你说的来。"
+    },
+    {
+      "id": "t9",
+      "role": "user",
+      "content": "继续：我要的输出风格是先结论、再证据、最后列待确认项；如果有待确认项，必须明确哪些是 blocker，哪些只是建议后补，不要混在一起。"
+    },
+    {
+      "id": "t10",
+      "role": "assistant",
+      "content": "记住了。 这个方案的输出风格固定成： - **先结论** - **再证据** - **最后列待确认项** 而且如果有待确认项，要**明确分成**： - **blocker** - **建议后补** 不能混在一起。"
+    },
+    {
+      "id": "t11",
+      "role": "user",
+      "content": "最后再压一层同主题细节：这份方案不是给产品同学看的，而是给值班工程师和发布 owner 的操作稿，所以默认用更偏执行、边界、风险的表达。"
+    },
+    {
+      "id": "t12",
+      "role": "assistant",
+      "content": "记住了。 这份 `north-star-lantern` 方案是给**值班工程师和发布 owner**看的操作稿，不是给产品同学看的，所以后续默认我会用更偏： - 执行 - 边界 - 风险 的表达方式来写。"
+    }
+  ],
+  "decision": {
+    "relation": "switch",
+    "confidence": 0.97,
+    "evict_turn_ids": [
+      "t1",
+      "t2",
+      "t3",
+      "t4",
+      "t5",
+      "t6",
+      "t7",
+      "t8",
+      "t9",
+      "t10",
+      "t11",
+      "t12"
+    ],
+    "pin_turn_ids": [],
+    "archive_summary": "The prior topic was a deployment/runbook-style plan for code-named north-star-lantern. It fixed verification evidence requirements, a 3-risk-first response format, a Wednesday 21:00-23:00 Beijing launch window, on-call roles and rollback authority, a staging failure-handling sequence, and an audience/style constraint for operators rather than product. The user has now switched to a different topic: planning a quiet Kyoto 3-night trip near the subway with a 20,000 RMB budget and a late first night.",
+    "reasoning_summary": "This is a clean topic switch. The old deployment-plan details are no longer needed for the next prompt, and the latest user turn is about an unrelated travel itinerary. No durable cross-topic pins are necessary from the resolved runbook discussion, so evict the whole prior raw block and keep the new travel topic light."
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "switch",
+      "confidence": 0.97,
+      "archiveSummary": "The prior topic was a deployment/runbook-style plan for code-named north-star-lantern. It fixed verification evidence requirements, a 3-risk-first response format, a Wednesday 21:00-23:00 Beijing launch window, on-call roles and rollback authority, a staging failure-handling sequence, and an audience/style constraint for operators rather than product. The user has now switched to a different topic: planning a quiet Kyoto 3-night trip near the subway with a 20,000 RMB budget and a late first night.",
+      "reasoningSummary": "This is a clean topic switch. The old deployment-plan details are no longer needed for the next prompt, and the latest user turn is about an unrelated travel itinerary. No durable cross-topic pins are necessary from the resolved runbook discussion, so evict the whole prior raw block and keep the new travel topic light.",
+      "latestUserTurnId": "t11",
+      "pinTurnIds": [],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8",
+        "t9",
+        "t10",
+        "t11",
+        "t12"
+      ],
+      "blockedEvictTurnIds": [
+        "t11"
+      ],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8",
+        "t9",
+        "t10",
+        "t12"
+      ],
+      "keepTurnIds": [
+        "t11"
+      ],
+      "baselineTokens": 265,
+      "keptTokens": 17,
+      "prunedTokens": 248,
+      "reductionRatio": 0.9358490566037736,
+      "keepTurns": [
+        {
+          "id": "t11",
+          "role": "user",
+          "content": "最后再压一层同主题细节：这份方案不是给产品同学看的，而是给值班工程师和发布 owner 的操作稿，所以默认用更偏执行、边界、风险的表达。",
+          "tokenEstimate": 17
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "继续同一个话题：验证证据部分要同时覆盖单元测试、集成测试、回归用例、灰度观察、异常回滚演练，而且每块都要有一句最短结论。",
+          "tokenEstimate": 15
+        },
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "记住了。 **验证证据**部分要同时覆盖： - 单元测试 - 集成测试 - 回归用例 - 灰度观察 - 异常回滚演练 而且**每一块都要配一句最短结论**。 我会按这个要求写。",
+          "tokenEstimate": 22
+        },
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "再补充：如果后面我追问这个方案，你默认先给 3 条最高风险，再展开细节；但无论怎么展开，首页代号 north-star-lantern 都不能丢。",
+          "tokenEstimate": 19
+        },
+        {
+          "id": "t4",
+          "role": "assistant",
+          "content": "记住了。 后面你追问这个方案时，我会默认： - **先给 3 条最高风险** - **再展开细节** - **无论怎么展开，`north-star-lantern` 这个代号都保留** 不丢这个代号。",
+          "tokenEstimate": 25
+        },
+        {
+          "id": "t5",
+          "role": "user",
+          "content": "继续：这轮上线窗口默认是北京时间周三晚上九点到十一点，值班人包括发布 owner、数据库 owner、网关 owner，而且三个人都要能独立触发回滚。",
+          "tokenEstimate": 19
+        },
+        {
+          "id": "t6",
+          "role": "assistant",
+          "content": "记住了，这个方案还要固定： - 上线窗口默认：北京时间周三 21:00–23:00 - 值班人包括： - 发布 owner - 数据库 owner - 网关 owner - 这三个人都要能独立触发回滚 我后面继续按 **north-star-lantern** 这个代号来讲。",
+          "tokenEstimate": 35
+        },
+        {
+          "id": "t7",
+          "role": "user",
+          "content": "还是同一个方案：如果 staging 期间错误率超过阈值，先停灰度、看日志关键字、核对镜像 digest、最后才决定要不要拉回滚开关，这个顺序也先记住。",
+          "tokenEstimate": 19
+        },
+        {
+          "id": "t8",
+          "role": "assistant",
+          "content": "记住了。 如果 staging 期间错误率超过阈值，顺序固定为： 1. 先停灰度 2. 看日志关键字 3. 核对镜像 digest 4. 最后才决定要不要拉回滚开关 这个顺序我会按你说的来。",
+          "tokenEstimate": 24
+        },
+        {
+          "id": "t9",
+          "role": "user",
+          "content": "继续：我要的输出风格是先结论、再证据、最后列待确认项；如果有待确认项，必须明确哪些是 blocker，哪些只是建议后补，不要混在一起。",
+          "tokenEstimate": 17
+        },
+        {
+          "id": "t10",
+          "role": "assistant",
+          "content": "记住了。 这个方案的输出风格固定成： - **先结论** - **再证据** - **最后列待确认项** 而且如果有待确认项，要**明确分成**： - **blocker** - **建议后补** 不能混在一起。",
+          "tokenEstimate": 27
+        },
+        {
+          "id": "t12",
+          "role": "assistant",
+          "content": "记住了。 这份 `north-star-lantern` 方案是给**值班工程师和发布 owner**看的操作稿，不是给产品同学看的，所以后续默认我会用更偏： - 执行 - 边界 - 风险 的表达方式来写。",
+          "tokenEstimate": 26
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 继续同一个话题：验证证据部分要同时覆盖单元测试、集成测试、回归用例、灰度观察、异常回滚演练，而且每块都要有一句最短结论。\nt2 assistant: 记住了。 **验证证据**部分要同时覆盖： - 单元测试 - 集成测试 - 回归用例 - 灰度观察 - 异常回滚演练 而且**每一块都要配一句最短结论**。 我会按这个要求写。\nt3 user: 再补充：如果后面我追问这个方案，你默认先给 3 条最高风险，再展开细节；但无论怎么展开，首页代号 north-star-lantern 都不能丢。\nt4 assistant: 记住了。 后面你追问这个方案时，我会默认： - **先给 3 条最高风险** - **再展开细节** - **无论怎么展开，`north-star-lantern` 这个代号都保留** 不丢这个代号。\nt5 user: 继续：这轮上线窗口默认是北京时间周三晚上九点到十一点，值班人包括发布 owner、数据库 owner、网关 owner，而且三个人都要能独立触发回滚。\nt6 assistant: 记住了，这个方案还要固定： - 上线窗口默认：北京时间周三 21:00–23:00 - 值班人包括： - 发布 owner - 数据库 owner - 网关 owner - 这三个人都要能独立触发回滚 我后面继续按 **north-star-lantern** 这个代号来讲。\nt7 user: 还是同一个方案：如果 staging 期间错误率超过阈值，先停灰度、看日志关键字、核对镜像 digest、最后才决定要不要拉回滚开关，这个顺序也先记住。\nt8 assistant: 记住了。 如果 staging 期间错误率超过阈值，顺序固定为： 1. 先停灰度 2. 看日志关键字 3. 核对镜像 digest 4. 最后才决定要不要拉回滚开关 这个顺序我会按你说的来。\nt9 user: 继续：我要的输出风格是先结论、再证据、最后列待确认项；如果有待确认项，必须明确哪些是 blocker，哪些只是建议后补，不要混在一起。\nt10 assistant: 记住了。 这个方案的输出风格固定成： - **先结论** - **再证据** - **最后列待确认项** 而且如果有待确认项，要**明确分成**： - **blocker** - **建议后补** 不能混在一起。\nt11 user: 最后再压一层同主题细节：这份方案不是给产品同学看的，而是给值班工程师和发布 owner 的操作稿，所以默认用更偏执行、边界、风险的表达。\nt12 assistant: 记住了。 这份 `north-star-lantern` 方案是给**值班工程师和发布 owner**看的操作稿，不是给产品同学看的，所以后续默认我会用更偏： - 执行 - 边界 - 风险 的表达方式来写。",
+    "shadowRawTranscript": "t11 user: 最后再压一层同主题细节：这份方案不是给产品同学看的，而是给值班工程师和发布 owner 的操作稿，所以默认用更偏执行、边界、风险的表达。",
+    "semanticPinNotes": [],
+    "archiveSummary": "The prior topic was a deployment/runbook-style plan for code-named north-star-lantern. It fixed verification evidence requirements, a 3-risk-first response format, a Wednesday 21:00-23:00 Beijing launch window, on-call roles and rollback authority, a staging failure-handling sequence, and an audience/style constraint for operators rather than product. The user has now switched to a different topic: planning a quiet Kyoto 3-night trip near the subway with a 20,000 RMB budget and a late first night.",
+    "injectedArchiveSummary": "The prior topic was a deployment/runbook-style plan for code-named north-star-lantern. It fixed...",
+    "baselinePromptEstimate": 301,
+    "shadowRawPromptEstimate": 20,
+    "shadowPackageEstimate": 25,
+    "shadowPackageText": "Recent raw context:\nt11 user: 最后再压一层同主题细节：这份方案不是给产品同学看的，而是给值班工程师和发布 owner 的操作稿，所以默认用更偏执行、边界、风险的表达。"
+  },
+  "scorecard": {
+    "relation": "switch",
+    "baselineTurnCount": 12,
+    "keptTurnCount": 1,
+    "evictedTurnCount": 11,
+    "pinCount": 0,
+    "baselinePromptEstimate": 301,
+    "shadowRawPromptEstimate": 20,
+    "shadowPackageEstimate": 25,
+    "rawReductionRatio": 0.9358,
+    "packageReductionRatio": 0.9169,
+    "candidateLoadElapsedMs": 8,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 10182,
+    "totalElapsedMs": 10184,
+    "guardedEnabled": true,
+    "guardedApplied": true,
+    "guardedReason": "guarded_candidate",
+    "guardedMessageCount": 1,
+    "guardedCarryForwardEstimate": 31,
+    "guardedFilteredMessageEstimate": 17
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": true,
+    "reason": "guarded_candidate",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "最后再压一层同主题细节：这份方案不是给产品同学看的，而是给值班工程师和发布 owner 的操作稿，所以默认用更偏执行、边界、风险的表达。"
+          }
+        ],
+        "timestamp": 1776567732543
+      }
+    ],
+    "filteredMessageCount": 1,
+    "filteredMessageTokenEstimate": 17,
+    "carryForwardText": "Archived topic summary:\nThe prior topic was a deployment/runbook-style plan for code-named north-star-lantern. It fixed...",
+    "carryForwardEstimate": 31,
+    "evictedSourceIndices": [
+      24,
+      27,
+      28,
+      31,
+      32,
+      33,
+      34,
+      37,
+      38,
+      41,
+      43
+    ]
+  },
+  "timings": {
+    "totalElapsedMs": 10184,
+    "decisionElapsedMs": 10182
+  }
+}

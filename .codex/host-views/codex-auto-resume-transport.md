@@ -4,7 +4,7 @@ Project Assistant 自动恢复传输文件。目标项目: unified-memory-core (
 
 实际任务：
 - 目标项目是 unified-memory-core，工作区路径是 /Users/redcreen/Project/unified-memory-core。
-- 当前 checkpoint 是 Stage 7 closeout evidence、Docker hermetic baseline、release-preflight、canonical-root policy、shared-foundation proof。
+- 当前 checkpoint 是 Codex VS Code live telemetry、experience-gap docs、Codex context GC state docs、current host views、targeted Codex GC tests。
 - 下一动作是 保持 `npm run umc:stage10 -- --format markdown` 持续为绿。。
 - 先读取附加的 resume 文件。
 - 不要重新从零做仓库扫描。

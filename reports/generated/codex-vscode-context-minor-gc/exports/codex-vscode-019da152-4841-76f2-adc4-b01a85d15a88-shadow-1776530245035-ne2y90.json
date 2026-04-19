@@ -1,0 +1,293 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776530245035-ne2y90",
+  "generated_at": "2026-04-18T16:37:25.035Z",
+  "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+  "agent_id": "main",
+  "query": "需要",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "assistant",
+      "content": "下一条发这个： ```text [GC-D1] 更新一下：我现在默认编辑器是 Zed。 ```"
+    },
+    {
+      "id": "t2",
+      "role": "user",
+      "content": "[GC-D1] 更新一下：我现在默认编辑器是 Zed。"
+    },
+    {
+      "id": "t3",
+      "role": "assistant",
+      "content": "继续发下一条： ```text [GC-D1] 切个话题。为什么 shadow mode 默认先不开？ ```"
+    },
+    {
+      "id": "t4",
+      "role": "user",
+      "content": "[GC-D1] 切个话题。为什么 shadow mode 默认先不开？"
+    },
+    {
+      "id": "t5",
+      "role": "assistant",
+      "content": "继续发最后一条： ```text [GC-D1] 回到编辑器问题。我现在默认编辑器是什么？ ```"
+    },
+    {
+      "id": "t6",
+      "role": "user",
+      "content": "[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？"
+    },
+    {
+      "id": "t7",
+      "role": "assistant",
+      "content": "继续发最后一条： ```text [GC-D1] 回到编辑器问题。我现在默认编辑器是什么？ ```"
+    },
+    {
+      "id": "t8",
+      "role": "user",
+      "content": "[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？"
+    },
+    {
+      "id": "t9",
+      "role": "assistant",
+      "content": "Zed。 `Case D` 的答案正确，但和 `Case B` 一样，GC 没明显生效。最终落盘是： - `query=\"[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？\"` - `relation=continue` - `applied=false` - `guard_reason=not_enough_evictions`"
+    },
+    {
+      "id": "t10",
+      "role": "user",
+      "content": "继续"
+    },
+    {
+      "id": "t11",
+      "role": "assistant",
+      "content": "Zed。 `Case D` 也是半通过： - 答案正确，说明“新事实覆盖旧事实”成立 - 但 GC 仍然没有真正应用，最终稳定成： - `relation=continue` - `applied=false` - `guard_reason=not_enough_evictions`"
+    },
+    {
+      "id": "t12",
+      "role": "user",
+      "content": "需要"
+    }
+  ],
+  "decision": {
+    "relation": "continue",
+    "confidence": 0.87,
+    "evict_turn_ids": [
+      "t1",
+      "t2",
+      "t3",
+      "t4",
+      "t5",
+      "t6",
+      "t7",
+      "t8"
+    ],
+    "pin_turn_ids": [
+      "t2"
+    ],
+    "archive_summary": "Case codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88 tests GC behavior. Durable user fact established earlier: the user's default editor is Zed. A side-topic question about why shadow mode is off by default was raised and is no longer relevant. Repeated editor-recall probes succeeded, but the GC outcome remained effectively unchanged: relation stayed continue, applied=false, guard_reason=not_enough_evictions. Current live topic is what is still needed next for this GC case.",
+    "reasoning_summary": "The latest user turn is a brief continuation of the same active GC-debug topic, so relation=continue. The next turn still depends on the recent outcome/status in t9-t11, not on the full earlier probe transcript. The older setup and repeated probe turns are resolved and can leave the raw working set. The editor preference is a durable user fact, so pin t2 semantically while evicting its raw turn."
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "continue",
+      "confidence": 0.87,
+      "archiveSummary": "Case codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88 tests GC behavior. Durable user fact established earlier: the user's default editor is Zed. A side-topic question about why shadow mode is off by default was raised and is no longer relevant. Repeated editor-recall probes succeeded, but the GC outcome remained effectively unchanged: relation stayed continue, applied=false, guard_reason=not_enough_evictions. Current live topic is what is still needed next for this GC case.",
+      "reasoningSummary": "The latest user turn is a brief continuation of the same active GC-debug topic, so relation=continue. The next turn still depends on the recent outcome/status in t9-t11, not on the full earlier probe transcript. The older setup and repeated probe turns are resolved and can leave the raw working set. The editor preference is a durable user fact, so pin t2 semantically while evicting its raw turn.",
+      "latestUserTurnId": "t12",
+      "pinTurnIds": [
+        "t2"
+      ],
+      "pinnedOnlyTurnIds": [
+        "t2"
+      ],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8"
+      ],
+      "keepTurnIds": [
+        "t9",
+        "t10",
+        "t11",
+        "t12"
+      ],
+      "baselineTokens": 163,
+      "keptTokens": 81,
+      "prunedTokens": 82,
+      "reductionRatio": 0.5030674846625767,
+      "keepTurns": [
+        {
+          "id": "t9",
+          "role": "assistant",
+          "content": "Zed。 `Case D` 的答案正确，但和 `Case B` 一样，GC 没明显生效。最终落盘是： - `query=\"[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？\"` - `relation=continue` - `applied=false` - `guard_reason=not_enough_evictions`",
+          "tokenEstimate": 43
+        },
+        {
+          "id": "t10",
+          "role": "user",
+          "content": "继续",
+          "tokenEstimate": 1
+        },
+        {
+          "id": "t11",
+          "role": "assistant",
+          "content": "Zed。 `Case D` 也是半通过： - 答案正确，说明“新事实覆盖旧事实”成立 - 但 GC 仍然没有真正应用，最终稳定成： - `relation=continue` - `applied=false` - `guard_reason=not_enough_evictions`",
+          "tokenEstimate": 36
+        },
+        {
+          "id": "t12",
+          "role": "user",
+          "content": "需要",
+          "tokenEstimate": 1
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "assistant",
+          "content": "下一条发这个： ```text [GC-D1] 更新一下：我现在默认编辑器是 Zed。 ```",
+          "tokenEstimate": 12
+        },
+        {
+          "id": "t2",
+          "role": "user",
+          "content": "[GC-D1] 更新一下：我现在默认编辑器是 Zed。",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t3",
+          "role": "assistant",
+          "content": "继续发下一条： ```text [GC-D1] 切个话题。为什么 shadow mode 默认先不开？ ```",
+          "tokenEstimate": 14
+        },
+        {
+          "id": "t4",
+          "role": "user",
+          "content": "[GC-D1] 切个话题。为什么 shadow mode 默认先不开？",
+          "tokenEstimate": 9
+        },
+        {
+          "id": "t5",
+          "role": "assistant",
+          "content": "继续发最后一条： ```text [GC-D1] 回到编辑器问题。我现在默认编辑器是什么？ ```",
+          "tokenEstimate": 13
+        },
+        {
+          "id": "t6",
+          "role": "user",
+          "content": "[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t7",
+          "role": "assistant",
+          "content": "继续发最后一条： ```text [GC-D1] 回到编辑器问题。我现在默认编辑器是什么？ ```",
+          "tokenEstimate": 13
+        },
+        {
+          "id": "t8",
+          "role": "user",
+          "content": "[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？",
+          "tokenEstimate": 7
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 assistant: 下一条发这个： ```text [GC-D1] 更新一下：我现在默认编辑器是 Zed。 ```\nt2 user: [GC-D1] 更新一下：我现在默认编辑器是 Zed。\nt3 assistant: 继续发下一条： ```text [GC-D1] 切个话题。为什么 shadow mode 默认先不开？ ```\nt4 user: [GC-D1] 切个话题。为什么 shadow mode 默认先不开？\nt5 assistant: 继续发最后一条： ```text [GC-D1] 回到编辑器问题。我现在默认编辑器是什么？ ```\nt6 user: [GC-D1] 回到编辑器问题。我现在默认编辑器是什么？\nt7 assistant: 继续发最后一条： ```text [GC-D1] 回到编辑器问题。我现在默认编辑器是什么？ ```\nt8 user: [GC-D1] 回到编辑器问题。我现在默认编辑器是什么？\nt9 assistant: Zed。 `Case D` 的答案正确，但和 `Case B` 一样，GC 没明显生效。最终落盘是： - `query=\"[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？\"` - `relation=continue` - `applied=false` - `guard_reason=not_enough_evictions`\nt10 user: 继续\nt11 assistant: Zed。 `Case D` 也是半通过： - 答案正确，说明“新事实覆盖旧事实”成立 - 但 GC 仍然没有真正应用，最终稳定成： - `relation=continue` - `applied=false` - `guard_reason=not_enough_evictions`\nt12 user: 需要",
+    "shadowRawTranscript": "t9 assistant: Zed。 `Case D` 的答案正确，但和 `Case B` 一样，GC 没明显生效。最终落盘是： - `query=\"[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？\"` - `relation=continue` - `applied=false` - `guard_reason=not_enough_evictions`\nt10 user: 继续\nt11 assistant: Zed。 `Case D` 也是半通过： - 答案正确，说明“新事实覆盖旧事实”成立 - 但 GC 仍然没有真正应用，最终稳定成： - `relation=continue` - `applied=false` - `guard_reason=not_enough_evictions`\nt12 user: 需要",
+    "semanticPinNotes": [
+      "user: [GC-D1] 更新一下：我现在默认编辑器是 Zed。"
+    ],
+    "archiveSummary": "Case codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88 tests GC behavior. Durable user fact established earlier: the user's default editor is Zed. A side-topic question about why shadow mode is off by default was raised and is no longer relevant. Repeated editor-recall probes succeeded, but the GC outcome remained effectively unchanged: relation stayed continue, applied=false, guard_reason=not_enough_evictions. Current live topic is what is still needed next for this GC case.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 197,
+    "shadowRawPromptEstimate": 92,
+    "shadowPackageEstimate": 79,
+    "shadowPackageText": "Task state summary:\nCase codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88 tests GC behavior. Durable user fact established earlier: the user's default editor is Zed. A side-topic question about why shadow mode is off by default was raised…\n\nLatest user ask:\n- 需要\n\nSemantic pins:\n- user: [GC-D1] 更新一下：我现在默认编辑器是 Zed。"
+  },
+  "scorecard": {
+    "relation": "continue",
+    "baselineTurnCount": 12,
+    "keptTurnCount": 4,
+    "evictedTurnCount": 8,
+    "pinCount": 1,
+    "baselinePromptEstimate": 197,
+    "shadowRawPromptEstimate": 92,
+    "shadowPackageEstimate": 79,
+    "rawReductionRatio": 0.5031,
+    "packageReductionRatio": 0.599,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 16345,
+    "totalElapsedMs": 16347,
+    "guardedEnabled": true,
+    "guardedApplied": true,
+    "guardedReason": "guarded_candidate",
+    "guardedMessageCount": 4,
+    "guardedCarryForwardEstimate": 17,
+    "guardedFilteredMessageEstimate": 81
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": true,
+    "reason": "guarded_candidate",
+    "filteredMessages": [
+      {
+        "role": "assistant",
+        "content": "Zed。 `Case D` 的答案正确，但和 `Case B` 一样，GC 没明显生效。最终落盘是： - `query=\"[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？\"` - `relation=continue` - `applied=false` - `guard_reason=not_enough_evictions`"
+      },
+      {
+        "role": "user",
+        "content": "继续"
+      },
+      {
+        "role": "assistant",
+        "content": "Zed。 `Case D` 也是半通过： - 答案正确，说明“新事实覆盖旧事实”成立 - 但 GC 仍然没有真正应用，最终稳定成： - `relation=continue` - `applied=false` - `guard_reason=not_enough_evictions`"
+      },
+      {
+        "role": "user",
+        "content": "需要"
+      }
+    ],
+    "filteredMessageCount": 4,
+    "filteredMessageTokenEstimate": 81,
+    "carryForwardText": "Conversation carry-forward pins:\n- user: [GC-D1] 更新一下：我现在默认编辑器是 Zed。",
+    "carryForwardEstimate": 17,
+    "evictedSourceIndices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ]
+  },
+  "timings": {
+    "totalElapsedMs": 16347,
+    "decisionElapsedMs": 16345
+  }
+}

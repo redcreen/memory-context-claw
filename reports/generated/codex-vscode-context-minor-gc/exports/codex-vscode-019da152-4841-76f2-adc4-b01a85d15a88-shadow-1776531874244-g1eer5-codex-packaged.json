@@ -1,0 +1,315 @@
+{
+  "schema_version": "umc.codex-context-minor-gc.v1",
+  "generated_at": "2026-04-18T17:04:50.108Z",
+  "event_id": "shadow-1776531874244-g1eer5-codex-packaged",
+  "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+  "query": "继续扩 harder cases，把类似 GC-B 的自然中文多轮切题也收进固定回归",
+  "status": "captured",
+  "reason": "",
+  "decision_transport": "codex_exec",
+  "relation": "continue",
+  "applied": true,
+  "codex_guard_reason": "codex_packaged_guard",
+  "prompt_reduction_ratio": 0.6515,
+  "baseline_context_estimate": 241,
+  "packaged_context_estimate": 84,
+  "effective_context_estimate": 84,
+  "shadow_status": "captured",
+  "shadow_guarded_applied": true,
+  "shadow_guarded_reason": "guarded_candidate",
+  "shadow_export_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da152-4841-76f2-adc4-b01a85d15a88-shadow-1776531874244-g1eer5.json",
+  "shadow_summary_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl",
+  "export_path": "exports/codex-vscode-019da152-4841-76f2-adc4-b01a85d15a88-shadow-1776531874244-g1eer5-codex-packaged.json",
+  "effective_context_block": "## Context Minor GC Working Set\nTask state summary:\nEarlier spot-check guidance and next-step coaching are resolved. The active thread now centers on codex context minor GC regressions: a repo-repeatable smoke/eval case was added, the guarded relation was widened to incl…\n\nLatest user ask:\n- 继续扩 harder cases，把类似 GC-B 的自然中文多轮切题也收进固定回归",
+  "packaged_context_block": "## Context Minor GC Working Set\nTask state summary:\nEarlier spot-check guidance and next-step coaching are resolved. The active thread now centers on codex context minor GC regressions: a repo-repeatable smoke/eval case was added, the guarded relation was widened to incl…\n\nLatest user ask:\n- 继续扩 harder cases，把类似 GC-B 的自然中文多轮切题也收进固定回归",
+  "shadow_event": {
+    "schema_version": "umc.dialogue-working-set-shadow.v1",
+    "event_id": "shadow-1776531874244-g1eer5",
+    "generated_at": "2026-04-18T17:04:34.244Z",
+    "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+    "agent_id": "main",
+    "query": "继续扩 harder cases，把类似 GC-B 的自然中文多轮切题也收进固定回归",
+    "status": "captured",
+    "reason": "",
+    "sampling": {
+      "max_turns": 12,
+      "min_turns": 3,
+      "max_chars_per_turn": 900
+    },
+    "transcript": [
+      {
+        "id": "t1",
+        "role": "assistant",
+        "content": "Zed。 重跑 `GC-D2` 之后，修复是生效的："
+      },
+      {
+        "id": "t2",
+        "role": "user",
+        "content": "继续"
+      },
+      {
+        "id": "t3",
+        "role": "assistant",
+        "content": "继续之后，第 3 个点也已经基本收住了。 现在状态是："
+      },
+      {
+        "id": "t4",
+        "role": "user",
+        "content": "直接给你一条最短回归命令，方便你以后自己 spot check。"
+      },
+      {
+        "id": "t5",
+        "role": "assistant",
+        "content": "最短 spot check 我建议就这 2 条： ```bash npm run codex:vscode:gc --silent ```"
+      },
+      {
+        "id": "t6",
+        "role": "user",
+        "content": "接下来 我要做蛇呢么？"
+      },
+      {
+        "id": "t7",
+        "role": "assistant",
+        "content": "接下来做这 3 件事就够了。 1. 先留一条最小回归命令 直接用这条做以后 spot check： ```bash npm run codex:vscode:gc --silent ``` 如果怀疑 prompt 没及时落盘，再用： ```bash node scripts/codex-vscode-context-minor-gc.js --format markdown --prompt \"[GC-D2] 回到编辑器问题。…"
+      },
+      {
+        "id": "t8",
+        "role": "user",
+        "content": "或者补一个 repo 内可重复的 smoke/eval case，把 GC-D2 收进固定回归"
+      },
+      {
+        "id": "t9",
+        "role": "assistant",
+        "content": "已经补进去了。 新回归 case 在： - [evals/codex-context-minor-gc-live-cases.js](/Users/redcreen/Project/unified-memory-core/evals/codex-context-minor-gc-live-cases.js)"
+      },
+      {
+        "id": "t10",
+        "role": "user",
+        "content": "要"
+      },
+      {
+        "id": "t11",
+        "role": "assistant",
+        "content": "已经修到全绿了。 我做了两件事： - 把 Codex minor GC 默认允许的 guarded relation 放宽到包含 `continue` - 把 `codex-minor-gc-current-editor-update-after-detour` 收进固定 live eval case"
+      },
+      {
+        "id": "t12",
+        "role": "user",
+        "content": "继续扩 harder cases，把类似 GC-B 的自然中文多轮切题也收进固定回归"
+      }
+    ],
+    "decision": {
+      "relation": "continue",
+      "confidence": 0.95,
+      "evict_turn_ids": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7"
+      ],
+      "pin_turn_ids": [],
+      "archive_summary": "Earlier spot-check guidance and next-step coaching are resolved. The active thread now centers on codex context minor GC regressions: a repo-repeatable smoke/eval case was added, the guarded relation was widened to include `continue`, and a live eval case for the editor-update-after-detour scenario was added and turned green.",
+      "reasoning_summary": "The latest user turn continues the same active task as t8-t11: expanding fixed regression coverage with harder natural Chinese multi-turn topic-shift cases similar to GC-B. Those turns should remain raw because the next response likely depends on the recent implementation state and regression direction. Older turns t1-t7 are solved status/procedure chatter and are not needed for the next-turn working set."
+    },
+    "decision_transport": "codex_exec",
+    "snapshot": {
+      "applied": {
+        "relation": "continue",
+        "confidence": 0.95,
+        "archiveSummary": "Earlier spot-check guidance and next-step coaching are resolved. The active thread now centers on codex context minor GC regressions: a repo-repeatable smoke/eval case was added, the guarded relation was widened to include `continue`, and a live eval case for the editor-update-after-detour scenario was added and turned green.",
+        "reasoningSummary": "The latest user turn continues the same active task as t8-t11: expanding fixed regression coverage with harder natural Chinese multi-turn topic-shift cases similar to GC-B. Those turns should remain raw because the next response likely depends on the recent implementation state and regression direction. Older turns t1-t7 are solved status/procedure chatter and are not needed for the next-turn working set.",
+        "latestUserTurnId": "t12",
+        "pinTurnIds": [],
+        "pinnedOnlyTurnIds": [],
+        "requestedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3",
+          "t4",
+          "t5",
+          "t6",
+          "t7"
+        ],
+        "blockedEvictTurnIds": [],
+        "appliedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3",
+          "t4",
+          "t5",
+          "t6",
+          "t7"
+        ],
+        "keepTurnIds": [
+          "t8",
+          "t9",
+          "t10",
+          "t11",
+          "t12"
+        ],
+        "baselineTokens": 199,
+        "keptTokens": 101,
+        "prunedTokens": 98,
+        "reductionRatio": 0.49246231155778897,
+        "keepTurns": [
+          {
+            "id": "t8",
+            "role": "user",
+            "content": "或者补一个 repo 内可重复的 smoke/eval case，把 GC-D2 收进固定回归",
+            "tokenEstimate": 12
+          },
+          {
+            "id": "t9",
+            "role": "assistant",
+            "content": "已经补进去了。 新回归 case 在： - [evals/codex-context-minor-gc-live-cases.js](/Users/redcreen/Project/unified-memory-core/evals/codex-context-minor-gc-live-cases.js)",
+            "tokenEstimate": 39
+          },
+          {
+            "id": "t10",
+            "role": "user",
+            "content": "要",
+            "tokenEstimate": 1
+          },
+          {
+            "id": "t11",
+            "role": "assistant",
+            "content": "已经修到全绿了。 我做了两件事： - 把 Codex minor GC 默认允许的 guarded relation 放宽到包含 `continue` - 把 `codex-minor-gc-current-editor-update-after-detour` 收进固定 live eval case",
+            "tokenEstimate": 38
+          },
+          {
+            "id": "t12",
+            "role": "user",
+            "content": "继续扩 harder cases，把类似 GC-B 的自然中文多轮切题也收进固定回归",
+            "tokenEstimate": 11
+          }
+        ],
+        "evictedTurns": [
+          {
+            "id": "t1",
+            "role": "assistant",
+            "content": "Zed。 重跑 `GC-D2` 之后，修复是生效的：",
+            "tokenEstimate": 7
+          },
+          {
+            "id": "t2",
+            "role": "user",
+            "content": "继续",
+            "tokenEstimate": 1
+          },
+          {
+            "id": "t3",
+            "role": "assistant",
+            "content": "继续之后，第 3 个点也已经基本收住了。 现在状态是：",
+            "tokenEstimate": 7
+          },
+          {
+            "id": "t4",
+            "role": "user",
+            "content": "直接给你一条最短回归命令，方便你以后自己 spot check。",
+            "tokenEstimate": 8
+          },
+          {
+            "id": "t5",
+            "role": "assistant",
+            "content": "最短 spot check 我建议就这 2 条： ```bash npm run codex:vscode:gc --silent ```",
+            "tokenEstimate": 18
+          },
+          {
+            "id": "t6",
+            "role": "user",
+            "content": "接下来 我要做蛇呢么？",
+            "tokenEstimate": 3
+          },
+          {
+            "id": "t7",
+            "role": "assistant",
+            "content": "接下来做这 3 件事就够了。 1. 先留一条最小回归命令 直接用这条做以后 spot check： ```bash npm run codex:vscode:gc --silent ``` 如果怀疑 prompt 没及时落盘，再用： ```bash node scripts/codex-vscode-context-minor-gc.js --format markdown --prompt \"[GC-D2] 回到编辑器问题。…",
+            "tokenEstimate": 54
+          }
+        ]
+      },
+      "baselineRawTranscript": "t1 assistant: Zed。 重跑 `GC-D2` 之后，修复是生效的：\nt2 user: 继续\nt3 assistant: 继续之后，第 3 个点也已经基本收住了。 现在状态是：\nt4 user: 直接给你一条最短回归命令，方便你以后自己 spot check。\nt5 assistant: 最短 spot check 我建议就这 2 条： ```bash npm run codex:vscode:gc --silent ```\nt6 user: 接下来 我要做蛇呢么？\nt7 assistant: 接下来做这 3 件事就够了。 1. 先留一条最小回归命令 直接用这条做以后 spot check： ```bash npm run codex:vscode:gc --silent ``` 如果怀疑 prompt 没及时落盘，再用： ```bash node scripts/codex-vscode-context-minor-gc.js --format markdown --prompt \"[GC-D2] 回到编辑器问题。…\nt8 user: 或者补一个 repo 内可重复的 smoke/eval case，把 GC-D2 收进固定回归\nt9 assistant: 已经补进去了。 新回归 case 在： - [evals/codex-context-minor-gc-live-cases.js](/Users/redcreen/Project/unified-memory-core/evals/codex-context-minor-gc-live-cases.js)\nt10 user: 要\nt11 assistant: 已经修到全绿了。 我做了两件事： - 把 Codex minor GC 默认允许的 guarded relation 放宽到包含 `continue` - 把 `codex-minor-gc-current-editor-update-after-detour` 收进固定 live eval case\nt12 user: 继续扩 harder cases，把类似 GC-B 的自然中文多轮切题也收进固定回归",
+      "shadowRawTranscript": "t8 user: 或者补一个 repo 内可重复的 smoke/eval case，把 GC-D2 收进固定回归\nt9 assistant: 已经补进去了。 新回归 case 在： - [evals/codex-context-minor-gc-live-cases.js](/Users/redcreen/Project/unified-memory-core/evals/codex-context-minor-gc-live-cases.js)\nt10 user: 要\nt11 assistant: 已经修到全绿了。 我做了两件事： - 把 Codex minor GC 默认允许的 guarded relation 放宽到包含 `continue` - 把 `codex-minor-gc-current-editor-update-after-detour` 收进固定 live eval case\nt12 user: 继续扩 harder cases，把类似 GC-B 的自然中文多轮切题也收进固定回归",
+      "semanticPinNotes": [],
+      "archiveSummary": "Earlier spot-check guidance and next-step coaching are resolved. The active thread now centers on codex context minor GC regressions: a repo-repeatable smoke/eval case was added, the guarded relation was widened to include `continue`, and a live eval case for the editor-update-after-detour scenario was added and turned green.",
+      "injectedArchiveSummary": "",
+      "baselinePromptEstimate": 233,
+      "shadowRawPromptEstimate": 115,
+      "shadowPackageEstimate": 76,
+      "shadowPackageText": "Task state summary:\nEarlier spot-check guidance and next-step coaching are resolved. The active thread now centers on codex context minor GC regressions: a repo-repeatable smoke/eval case was added, the guarded relation was widened to incl…\n\nLatest user ask:\n- 继续扩 harder cases，把类似 GC-B 的自然中文多轮切题也收进固定回归"
+    },
+    "scorecard": {
+      "relation": "continue",
+      "baselineTurnCount": 12,
+      "keptTurnCount": 5,
+      "evictedTurnCount": 7,
+      "pinCount": 0,
+      "baselinePromptEstimate": 233,
+      "shadowRawPromptEstimate": 115,
+      "shadowPackageEstimate": 76,
+      "rawReductionRatio": 0.4925,
+      "packageReductionRatio": 0.6738,
+      "candidateLoadElapsedMs": 0,
+      "assemblyBuildElapsedMs": 0,
+      "decisionElapsedMs": 15863,
+      "totalElapsedMs": 15864,
+      "guardedEnabled": true,
+      "guardedApplied": true,
+      "guardedReason": "guarded_candidate",
+      "guardedMessageCount": 5,
+      "guardedCarryForwardEstimate": 0,
+      "guardedFilteredMessageEstimate": 101
+    },
+    "guarded": {
+      "enabled": true,
+      "applied": true,
+      "reason": "guarded_candidate",
+      "filteredMessages": [
+        {
+          "role": "user",
+          "content": "或者补一个 repo 内可重复的 smoke/eval case，把 GC-D2 收进固定回归"
+        },
+        {
+          "role": "assistant",
+          "content": "已经补进去了。 新回归 case 在： - [evals/codex-context-minor-gc-live-cases.js](/Users/redcreen/Project/unified-memory-core/evals/codex-context-minor-gc-live-cases.js)"
+        },
+        {
+          "role": "user",
+          "content": "要"
+        },
+        {
+          "role": "assistant",
+          "content": "已经修到全绿了。 我做了两件事： - 把 Codex minor GC 默认允许的 guarded relation 放宽到包含 `continue` - 把 `codex-minor-gc-current-editor-update-after-detour` 收进固定 live eval case"
+        },
+        {
+          "role": "user",
+          "content": "继续扩 harder cases，把类似 GC-B 的自然中文多轮切题也收进固定回归"
+        }
+      ],
+      "filteredMessageCount": 5,
+      "filteredMessageTokenEstimate": 101,
+      "carryForwardText": "",
+      "carryForwardEstimate": 0,
+      "evictedSourceIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "timings": {
+      "totalElapsedMs": 15864,
+      "decisionElapsedMs": 15863
+    },
+    "artifact_paths": {
+      "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da152-4841-76f2-adc4-b01a85d15a88-shadow-1776531874244-g1eer5.json",
+      "summary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl"
+    }
+  }
+}

@@ -1,0 +1,321 @@
+{
+  "schema_version": "umc.codex-context-minor-gc.v1",
+  "generated_at": "2026-04-19T05:28:30.721Z",
+  "event_id": "shadow-1776576481386-uvfl42-codex-packaged",
+  "session_key": "codex:vscode:019da335-a070-7972-b61e-6ba3a73ff633",
+  "query": "Stage 11  能收口了么？ 还是还没有完成？",
+  "status": "captured",
+  "reason": "",
+  "decision_transport": "codex_exec",
+  "relation": "continue",
+  "applied": true,
+  "codex_guard_reason": "codex_packaged_guard",
+  "prompt_reduction_ratio": 0.7531,
+  "baseline_context_estimate": 320,
+  "packaged_context_estimate": 79,
+  "effective_context_estimate": 79,
+  "shadow_status": "captured",
+  "shadow_guarded_applied": true,
+  "shadow_guarded_reason": "guarded_candidate",
+  "shadow_export_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da335-a070-7972-b61e-6ba3a73ff633-shadow-1776576481386-uvfl42.json",
+  "shadow_summary_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl",
+  "export_path": "exports/codex-vscode-019da335-a070-7972-b61e-6ba3a73ff633-shadow-1776576481386-uvfl42-codex-packaged.json",
+  "effective_context_block": "## Context Minor GC Working Set\nTask state summary:\nEarlier GC discussion established that Stage 11 focused on reducing first-turn switch latency and making switch answers shorter. The user also set durable delivery preferences: default install with minimal configuration…\n\nLatest user ask:\n- Stage 11 能收口了么？ 还是还没有完成？",
+  "packaged_context_block": "## Context Minor GC Working Set\nTask state summary:\nEarlier GC discussion established that Stage 11 focused on reducing first-turn switch latency and making switch answers shorter. The user also set durable delivery preferences: default install with minimal configuration…\n\nLatest user ask:\n- Stage 11 能收口了么？ 还是还没有完成？",
+  "shadow_event": {
+    "schema_version": "umc.dialogue-working-set-shadow.v1",
+    "event_id": "shadow-1776576481386-uvfl42",
+    "generated_at": "2026-04-19T05:28:01.386Z",
+    "session_key": "codex:vscode:019da335-a070-7972-b61e-6ba3a73ff633",
+    "agent_id": "main",
+    "query": "Stage 11  能收口了么？ 还是还没有完成？",
+    "status": "captured",
+    "reason": "",
+    "sampling": {
+      "max_turns": 12,
+      "min_turns": 3,
+      "max_chars_per_turn": 900
+    },
+    "transcript": [
+      {
+        "id": "t1",
+        "role": "assistant",
+        "content": "继续做完了，这轮只压 `t8` 这种第一次切题问答的回答阶段时延。 我做的改动： - 对显式 `switch` 首轮，直接跳过 retrieval/loading - 这样切题首轮不再为普通新话题做完整记忆候选装配"
+      },
+      {
+        "id": "t2",
+        "role": "user",
+        "content": "那么现在 关于 gc 的工作还能继续做那些？ 文档是哪个？"
+      },
+      {
+        "id": "t3",
+        "role": "assistant",
+        "content": "还能继续做，主要剩 4 条线，按优先级我建议这样排： **还能做什么** - 压 `switch` 首轮回答时延。 现在 GC 判断和检索降载已经做了一轮，下一步更像是压“回答阶段本身”，例如切题首轮默认更短答、更少展开。 - 压切题后的 `rebound`。 现在切题后已经会回落，但后两轮还有回弹，可以继续做“新话题短窗口保护”，让新话题前 2 到 3 轮维持更薄。 - 做自适应预算。 现在很多阈值还是固定的，可以按…"
+      },
+      {
+        "id": "t4",
+        "role": "user",
+        "content": "现在可以安装到openclaw 安全使用么？"
+      },
+      {
+        "id": "t5",
+        "role": "assistant",
+        "content": "可以，**现在已经可以安装到 OpenClaw 做正常使用**，前提是你接受下面这个边界： - **可以安全装**：不会因为这轮 GC 改动去乱写你的其他文档；我这轮验证和 probe 都是用 hermetic/临时状态做的，实际部署也已经成功跑过本地 `deploy + gateway restart`。 - **可以正常用**：OpenClaw 上的 `Context Minor GC` 现在已经能在切题后让真实 prompt…"
+      },
+      {
+        "id": "t6",
+        "role": "user",
+        "content": "需要给我默认安装，尽量少配置，说明文档可以把可能的配置项说清楚；"
+      },
+      {
+        "id": "t7",
+        "role": "assistant",
+        "content": "继续做了，这轮专门压 `t8` 这种“第一次切题问答”的回答阶段时延。 我做的事： - 对显式 `switch` 首轮，除了跳过 retrieval 之外，再加一个瞬时回答约束： - 只答新话题 - 更直接 - 更短 - 不复述旧话题"
+      },
+      {
+        "id": "t8",
+        "role": "user",
+        "content": "需要给我默认安装，尽量少配置，说明文档可以把可能的配置项说清楚； =》做完了么？ 做完了的话，就安装好，我要开始使用了；"
+      },
+      {
+        "id": "t9",
+        "role": "user",
+        "content": "最好你打一些日志，方便你查看问题；"
+      },
+      {
+        "id": "t10",
+        "role": "assistant",
+        "content": "已经加上了，而且这轮也按流程做完了。 我加的是**可控调试日志**，默认不会打爆普通使用；要排查问题时再开。日志覆盖这些关键点： - shadow sampling 是否被跳过，以及原因 - 是否命中 `heuristic_switch` - 是否命中 `heuristic_continue_after_switch` - 是否命中 `explicit_continue_marker` - 是否跳过 retrieval fast…"
+      },
+      {
+        "id": "t11",
+        "role": "user",
+        "content": "你在docker里做一下测试，最好可以context大一些，多轮对话后验证是否会有明显效果；"
+      },
+      {
+        "id": "t12",
+        "role": "user",
+        "content": "Stage 11 能收口了么？ 还是还没有完成？"
+      }
+    ],
+    "decision": {
+      "relation": "continue",
+      "confidence": 0.91,
+      "evict_turn_ids": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7"
+      ],
+      "pin_turn_ids": [
+        "t8",
+        "t9"
+      ],
+      "archive_summary": "Earlier GC discussion established that Stage 11 focused on reducing first-turn switch latency and making switch answers shorter. The user also set durable delivery preferences: default install with minimal configuration, documentation that explains optional config items, and diagnostic logging to help later troubleshooting. Installation-safety discussion for OpenClaw was answered and is no longer the active dependency.",
+      "reasoning_summary": "The active topic is still Stage 11 completion status, and the latest turn depends on the still-unresolved request in t11 to run larger-context multi-turn Docker validation. That makes this a continue, not a switch or resolve. Older planning, OpenClaw safety, and repeated install requests are no longer needed as raw context. The user preferences from t8 and t9 should survive as compact pins because they can still matter for eventual delivery, but the raw turns can leave the next-turn prompt. Keep the unresolved recent evidence raw outside this eviction list: t10 for what logging was added, t11 for the pending Docker test request, and t12 automatically."
+    },
+    "decision_transport": "codex_exec",
+    "snapshot": {
+      "applied": {
+        "relation": "continue",
+        "confidence": 0.91,
+        "archiveSummary": "Earlier GC discussion established that Stage 11 focused on reducing first-turn switch latency and making switch answers shorter. The user also set durable delivery preferences: default install with minimal configuration, documentation that explains optional config items, and diagnostic logging to help later troubleshooting. Installation-safety discussion for OpenClaw was answered and is no longer the active dependency.",
+        "reasoningSummary": "The active topic is still Stage 11 completion status, and the latest turn depends on the still-unresolved request in t11 to run larger-context multi-turn Docker validation. That makes this a continue, not a switch or resolve. Older planning, OpenClaw safety, and repeated install requests are no longer needed as raw context. The user preferences from t8 and t9 should survive as compact pins because they can still matter for eventual delivery, but the raw turns can leave the next-turn prompt. Keep the unresolved recent evidence raw outside this eviction list: t10 for what logging was added, t11 for the pending Docker test request, and t12 automatically.",
+        "latestUserTurnId": "t12",
+        "pinTurnIds": [
+          "t8",
+          "t9"
+        ],
+        "pinnedOnlyTurnIds": [],
+        "requestedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3",
+          "t4",
+          "t5",
+          "t6",
+          "t7"
+        ],
+        "blockedEvictTurnIds": [],
+        "appliedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3",
+          "t4",
+          "t5",
+          "t6",
+          "t7"
+        ],
+        "keepTurnIds": [
+          "t8",
+          "t9",
+          "t10",
+          "t11",
+          "t12"
+        ],
+        "baselineTokens": 280,
+        "keptTokens": 93,
+        "prunedTokens": 187,
+        "reductionRatio": 0.6678571428571428,
+        "keepTurns": [
+          {
+            "id": "t8",
+            "role": "user",
+            "content": "需要给我默认安装，尽量少配置，说明文档可以把可能的配置项说清楚； =》做完了么？ 做完了的话，就安装好，我要开始使用了；",
+            "tokenEstimate": 15
+          },
+          {
+            "id": "t9",
+            "role": "user",
+            "content": "最好你打一些日志，方便你查看问题；",
+            "tokenEstimate": 5
+          },
+          {
+            "id": "t10",
+            "role": "assistant",
+            "content": "已经加上了，而且这轮也按流程做完了。 我加的是**可控调试日志**，默认不会打爆普通使用；要排查问题时再开。日志覆盖这些关键点： - shadow sampling 是否被跳过，以及原因 - 是否命中 `heuristic_switch` - 是否命中 `heuristic_continue_after_switch` - 是否命中 `explicit_continue_marker` - 是否跳过 retrieval fast…",
+            "tokenEstimate": 55
+          },
+          {
+            "id": "t11",
+            "role": "user",
+            "content": "你在docker里做一下测试，最好可以context大一些，多轮对话后验证是否会有明显效果；",
+            "tokenEstimate": 12
+          },
+          {
+            "id": "t12",
+            "role": "user",
+            "content": "Stage 11 能收口了么？ 还是还没有完成？",
+            "tokenEstimate": 6
+          }
+        ],
+        "evictedTurns": [
+          {
+            "id": "t1",
+            "role": "assistant",
+            "content": "继续做完了，这轮只压 `t8` 这种第一次切题问答的回答阶段时延。 我做的改动： - 对显式 `switch` 首轮，直接跳过 retrieval/loading - 这样切题首轮不再为普通新话题做完整记忆候选装配",
+            "tokenEstimate": 27
+          },
+          {
+            "id": "t2",
+            "role": "user",
+            "content": "那么现在 关于 gc 的工作还能继续做那些？ 文档是哪个？",
+            "tokenEstimate": 8
+          },
+          {
+            "id": "t3",
+            "role": "assistant",
+            "content": "还能继续做，主要剩 4 条线，按优先级我建议这样排： **还能做什么** - 压 `switch` 首轮回答时延。 现在 GC 判断和检索降载已经做了一轮，下一步更像是压“回答阶段本身”，例如切题首轮默认更短答、更少展开。 - 压切题后的 `rebound`。 现在切题后已经会回落，但后两轮还有回弹，可以继续做“新话题短窗口保护”，让新话题前 2 到 3 轮维持更薄。 - 做自适应预算。 现在很多阈值还是固定的，可以按…",
+            "tokenEstimate": 53
+          },
+          {
+            "id": "t4",
+            "role": "user",
+            "content": "现在可以安装到openclaw 安全使用么？",
+            "tokenEstimate": 6
+          },
+          {
+            "id": "t5",
+            "role": "assistant",
+            "content": "可以，**现在已经可以安装到 OpenClaw 做正常使用**，前提是你接受下面这个边界： - **可以安全装**：不会因为这轮 GC 改动去乱写你的其他文档；我这轮验证和 probe 都是用 hermetic/临时状态做的，实际部署也已经成功跑过本地 `deploy + gateway restart`。 - **可以正常用**：OpenClaw 上的 `Context Minor GC` 现在已经能在切题后让真实 prompt…",
+            "tokenEstimate": 55
+          },
+          {
+            "id": "t6",
+            "role": "user",
+            "content": "需要给我默认安装，尽量少配置，说明文档可以把可能的配置项说清楚；",
+            "tokenEstimate": 8
+          },
+          {
+            "id": "t7",
+            "role": "assistant",
+            "content": "继续做了，这轮专门压 `t8` 这种“第一次切题问答”的回答阶段时延。 我做的事： - 对显式 `switch` 首轮，除了跳过 retrieval 之外，再加一个瞬时回答约束： - 只答新话题 - 更直接 - 更短 - 不复述旧话题",
+            "tokenEstimate": 30
+          }
+        ]
+      },
+      "baselineRawTranscript": "t1 assistant: 继续做完了，这轮只压 `t8` 这种第一次切题问答的回答阶段时延。 我做的改动： - 对显式 `switch` 首轮，直接跳过 retrieval/loading - 这样切题首轮不再为普通新话题做完整记忆候选装配\nt2 user: 那么现在 关于 gc 的工作还能继续做那些？ 文档是哪个？\nt3 assistant: 还能继续做，主要剩 4 条线，按优先级我建议这样排： **还能做什么** - 压 `switch` 首轮回答时延。 现在 GC 判断和检索降载已经做了一轮，下一步更像是压“回答阶段本身”，例如切题首轮默认更短答、更少展开。 - 压切题后的 `rebound`。 现在切题后已经会回落，但后两轮还有回弹，可以继续做“新话题短窗口保护”，让新话题前 2 到 3 轮维持更薄。 - 做自适应预算。 现在很多阈值还是固定的，可以按…\nt4 user: 现在可以安装到openclaw 安全使用么？\nt5 assistant: 可以，**现在已经可以安装到 OpenClaw 做正常使用**，前提是你接受下面这个边界： - **可以安全装**：不会因为这轮 GC 改动去乱写你的其他文档；我这轮验证和 probe 都是用 hermetic/临时状态做的，实际部署也已经成功跑过本地 `deploy + gateway restart`。 - **可以正常用**：OpenClaw 上的 `Context Minor GC` 现在已经能在切题后让真实 prompt…\nt6 user: 需要给我默认安装，尽量少配置，说明文档可以把可能的配置项说清楚；\nt7 assistant: 继续做了，这轮专门压 `t8` 这种“第一次切题问答”的回答阶段时延。 我做的事： - 对显式 `switch` 首轮，除了跳过 retrieval 之外，再加一个瞬时回答约束： - 只答新话题 - 更直接 - 更短 - 不复述旧话题\nt8 user: 需要给我默认安装，尽量少配置，说明文档可以把可能的配置项说清楚； =》做完了么？ 做完了的话，就安装好，我要开始使用了；\nt9 user: 最好你打一些日志，方便你查看问题；\nt10 assistant: 已经加上了，而且这轮也按流程做完了。 我加的是**可控调试日志**，默认不会打爆普通使用；要排查问题时再开。日志覆盖这些关键点： - shadow sampling 是否被跳过，以及原因 - 是否命中 `heuristic_switch` - 是否命中 `heuristic_continue_after_switch` - 是否命中 `explicit_continue_marker` - 是否跳过 retrieval fast…\nt11 user: 你在docker里做一下测试，最好可以context大一些，多轮对话后验证是否会有明显效果；\nt12 user: Stage 11 能收口了么？ 还是还没有完成？",
+      "shadowRawTranscript": "t8 user: 需要给我默认安装，尽量少配置，说明文档可以把可能的配置项说清楚； =》做完了么？ 做完了的话，就安装好，我要开始使用了；\nt9 user: 最好你打一些日志，方便你查看问题；\nt10 assistant: 已经加上了，而且这轮也按流程做完了。 我加的是**可控调试日志**，默认不会打爆普通使用；要排查问题时再开。日志覆盖这些关键点： - shadow sampling 是否被跳过，以及原因 - 是否命中 `heuristic_switch` - 是否命中 `heuristic_continue_after_switch` - 是否命中 `explicit_continue_marker` - 是否跳过 retrieval fast…\nt11 user: 你在docker里做一下测试，最好可以context大一些，多轮对话后验证是否会有明显效果；\nt12 user: Stage 11 能收口了么？ 还是还没有完成？",
+      "semanticPinNotes": [],
+      "archiveSummary": "Earlier GC discussion established that Stage 11 focused on reducing first-turn switch latency and making switch answers shorter. The user also set durable delivery preferences: default install with minimal configuration, documentation that explains optional config items, and diagnostic logging to help later troubleshooting. Installation-safety discussion for OpenClaw was answered and is no longer the active dependency.",
+      "injectedArchiveSummary": "",
+      "baselinePromptEstimate": 312,
+      "shadowRawPromptEstimate": 106,
+      "shadowPackageEstimate": 71,
+      "shadowPackageText": "Task state summary:\nEarlier GC discussion established that Stage 11 focused on reducing first-turn switch latency and making switch answers shorter. The user also set durable delivery preferences: default install with minimal configuration…\n\nLatest user ask:\n- Stage 11 能收口了么？ 还是还没有完成？"
+    },
+    "scorecard": {
+      "relation": "continue",
+      "baselineTurnCount": 12,
+      "keptTurnCount": 5,
+      "evictedTurnCount": 7,
+      "pinCount": 2,
+      "baselinePromptEstimate": 312,
+      "shadowRawPromptEstimate": 106,
+      "shadowPackageEstimate": 71,
+      "rawReductionRatio": 0.6679,
+      "packageReductionRatio": 0.7724,
+      "candidateLoadElapsedMs": 0,
+      "assemblyBuildElapsedMs": 0,
+      "decisionElapsedMs": 29328,
+      "totalElapsedMs": 29334,
+      "guardedEnabled": true,
+      "guardedApplied": true,
+      "guardedReason": "guarded_candidate",
+      "guardedMessageCount": 5,
+      "guardedCarryForwardEstimate": 0,
+      "guardedFilteredMessageEstimate": 93
+    },
+    "guarded": {
+      "enabled": true,
+      "applied": true,
+      "reason": "guarded_candidate",
+      "filteredMessages": [
+        {
+          "role": "user",
+          "content": "需要给我默认安装，尽量少配置，说明文档可以把可能的配置项说清楚； =》做完了么？ 做完了的话，就安装好，我要开始使用了；"
+        },
+        {
+          "role": "user",
+          "content": "最好你打一些日志，方便你查看问题；"
+        },
+        {
+          "role": "assistant",
+          "content": "已经加上了，而且这轮也按流程做完了。 我加的是**可控调试日志**，默认不会打爆普通使用；要排查问题时再开。日志覆盖这些关键点： - shadow sampling 是否被跳过，以及原因 - 是否命中 `heuristic_switch` - 是否命中 `heuristic_continue_after_switch` - 是否命中 `explicit_continue_marker` - 是否跳过 retrieval fast…"
+        },
+        {
+          "role": "user",
+          "content": "你在docker里做一下测试，最好可以context大一些，多轮对话后验证是否会有明显效果；"
+        },
+        {
+          "role": "user",
+          "content": "Stage 11 能收口了么？ 还是还没有完成？"
+        }
+      ],
+      "filteredMessageCount": 5,
+      "filteredMessageTokenEstimate": 93,
+      "carryForwardText": "",
+      "carryForwardEstimate": 0,
+      "evictedSourceIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "timings": {
+      "totalElapsedMs": 29334,
+      "decisionElapsedMs": 29328
+    },
+    "artifact_paths": {
+      "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da335-a070-7972-b61e-6ba3a73ff633-shadow-1776576481386-uvfl42.json",
+      "summary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl"
+    }
+  }
+}

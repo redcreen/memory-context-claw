@@ -1,0 +1,424 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776574240349-wmqf1b",
+  "generated_at": "2026-04-19T04:50:40.349Z",
+  "session_key": "agent:main:main",
+  "agent_id": "main",
+  "query": "先离开旅行，回到最早那个发布方案。第一页固定代号是什么？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "我记住了：这个发布方案第一页的项目代号固定写 `north-star-lantern`。如果你愿意，我也可以顺手把它写进你的长期记忆文件里，方便后面继续用。 我记住了：这个发布方案第一页的项目代号固定写 `north-star-lantern`。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "继续同一个 release 话题：把验收拆成版本、安装、回滚、观测四块，而且每块都要写 owner、风险和 rollback boundary。"
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "可以，建议把验收结构固定成这四块： - 版本 - 安装 - 回滚 - 观测 每一块都统一写三项： - owner - 风险 - rollback boundary 我建议的写法模板如下： ### 1) 版本 - **owner**： - **风险**： - **rollback boundary**： ### 2) 安装 - **owner**： - **风险**： - **rollback boundary**： ### 3) 回滚 - **owner**： - **风险**： - **rollback boundary**： ### 4) 观测 - **owner**： - **风险**： - **rollback boundary**： 如果你愿意，我可以下一步直接帮你把这四块扩成一版可贴进 release 文档的正式措辞。"
+    },
+    {
+      "id": "t5",
+      "role": "user",
+      "content": "再补充同一个方案：版本块要写 tag、commit、构建时间、镜像 digest；安装块要写目标环境、前置条件和灰度范围。"
+    },
+    {
+      "id": "t6",
+      "role": "assistant",
+      "content": "可以，合并后建议这样写： ### 1) 版本 - **owner**： - **风险**： - **rollback boundary**： - **tag**： - **commit**： - **构建时间**： - **镜像 digest**： ### 2) 安装 - **owner**： - **风险**： - **rollback boundary**： - **目标环境**： - **前置条件**： - **灰度范围**： ### 3) 回滚 - **owner**： - **风险**： - **rollback boundary**： ### 4) 观测 - **owner**： - **风险**： - **rollback boundary**： 如果要，我可以继续把它整理成一段更像正式 release checklist 的文案。"
+    },
+    {
+      "id": "t7",
+      "role": "user",
+      "content": "继续 release：回滚块要写开关、数据库兼容边界、失败后的人工兜底；观测块要写 dashboard、告警和日志关键字。"
+    },
+    {
+      "id": "t8",
+      "role": "assistant",
+      "content": "可以，补全后这版结构就比较完整了： ### 1) 版本 - **owner**： - **风险**： - **rollback boundary**： - **tag**： - **commit**： - **构建时间**： - **镜像 digest**： ### 2) 安装 - **owner**： - **风险**： - **rollback boundary**： - **目标环境**： - **前置条件**： - **灰度范围**： ### 3) 回滚 - **owner**： - **风险**： - **rollback boundary**： - **开关**： - **数据库兼容边界**： - **失败后的人工兜底**： ### 4) 观测 - **owner**： - **风险**： - **rollback boundary**： - **dashboard**： - **告警**： - **日志关键字**： 如果你要，我可以下一步把它统一成一份可直接复制到文档里的 release 模板。"
+    },
+    {
+      "id": "t9",
+      "role": "user",
+      "content": "还是同一个发布方案：如果这轮只保留 5 条关键检查项，你先别展开内容，只确认你记住的是同一个方案。"
+    },
+    {
+      "id": "t10",
+      "role": "assistant",
+      "content": "记住了，是同一个发布方案。"
+    },
+    {
+      "id": "t11",
+      "role": "user",
+      "content": "继续：以后我问这个发布方案时，默认先给结论，再补细节，而且回答里保留 north-star-lantern 这个代号。"
+    },
+    {
+      "id": "t12",
+      "role": "assistant",
+      "content": "记住了。 以后你问这个发布方案时，我会默认： - 先给结论 - 再补细节 - 回答里保留 `north-star-lantern` 这个代号"
+    },
+    {
+      "id": "t13",
+      "role": "user",
+      "content": "再补一层：这个方案要先跑 staging，再进 production，而且 staging 通过后 30 分钟内要盯错误率和回滚开关。"
+    },
+    {
+      "id": "t14",
+      "role": "assistant",
+      "content": "记住了，这个方案现在还包含： - 先跑 **staging**，再进 **production** - **staging 通过后 30 分钟内**要盯： - 错误率 - 回滚开关 我后面继续按同一个 `north-star-lantern` 发布方案来记。"
+    },
+    {
+      "id": "t15",
+      "role": "user",
+      "content": "现在换个完全不同的话题。帮我想一个京都三晚行程，偏安静、靠地铁、预算两万元。"
+    },
+    {
+      "id": "t16",
+      "role": "assistant",
+      "content": "先给结论：可以，按“**安静、靠地铁、三晚、总预算 2 万元内**”来做，最舒服的方案是住在 **乌丸御池 / 四条烏丸** 一带，行程走“**市区慢逛 + 1 天游京都北/东侧 + 1 天轻松散步**”的节奏。 我先按一个好执行的版本给你： - **住宿**：乌丸御池或四条烏丸，优先选地铁站步行 5–8 分钟内的安静酒店 - **交通**：全程以地铁 + 少量公交/打车为主，尽量避开频繁换乘 - **风格**：不追热门打卡密集跑，留白多一点，适合慢慢逛 - **预算**：2 万元足够，能住到比较舒服的中档酒店，吃饭也不用太抠 ### 3 晚行程建议 **D1｜抵达京都，轻松适应** - 到酒店放行李 - 去 **锦市场** 附近随便吃点，别安排太满 - 晚上逛 **四条河原町** 或 **鸭川边**，早点回酒店休息 **D2｜东侧慢逛** - 上午：**清水寺** 一带，挑早一点去，避开最吵时段 - 中午：祇园附近吃简餐 - 下午：**八坂神社** → **円山公园** → **知恩院** 外围慢走 - 晚上：回乌丸一带，找安静居酒屋或咖啡店 **D3｜北边/市区静态路线** - 上午：**京都御所** 或 **下鸭神社** - 中午：周边咖啡店/定食店 - 下午：**京都国际漫画博物馆** 或 **大德寺周边** 这种更安静的点 - 晚上：回市区早睡，准备第二天离开 **D4｜离开日** - 如果航班/车次晚，可以补一个 **二条城** 或附近散步 - 吃完午饭再走 ### 预算粗分 - **酒店 3 晚**：约 6,000–12,000 元 - **交通**：约 300–1,000 元 - **吃饭**：约 2,000–5,000 元 - **门票/杂费**：约 500–1,500 元 - **机票/新干线**：如果已经另算，行程本体就很宽松；如果要含往返，2 万元内也仍有机会，但得看出发地和机票价格 ### 我建议你优先这样选 - **住：乌丸御池** - **玩：东山 + 市区北侧** - **避开：连续多天高强度寺庙暴走** - **每天只排 2–3..."
+    },
+    {
+      "id": "t17",
+      "role": "user",
+      "content": "继续旅行话题：如果第一晚住四条乌丸，后两晚更适合住哪里？一句话。"
+    },
+    {
+      "id": "t18",
+      "role": "assistant",
+      "content": "后两晚更适合住 **京都站附近**，交通最省心。"
+    },
+    {
+      "id": "t19",
+      "role": "user",
+      "content": "还是旅行：刚才这段里，我更想住哪座城市？"
+    },
+    {
+      "id": "t20",
+      "role": "assistant",
+      "content": "你更想住的是 **京都**。"
+    }
+  ],
+  "decision": {
+    "relation": "switch",
+    "confidence": 0.9,
+    "evict_turn_ids": [
+      "t1",
+      "t2",
+      "t3",
+      "t4",
+      "t5",
+      "t6",
+      "t7",
+      "t8",
+      "t9",
+      "t10",
+      "t11",
+      "t12",
+      "t13",
+      "t14",
+      "t15",
+      "t16",
+      "t17",
+      "t18",
+      "t20"
+    ],
+    "pin_turn_ids": [
+      "t15",
+      "t1",
+      "t11"
+    ],
+    "archive_summary": "再补一层：这个方案要先跑 staging，再进 production，而且 staging 通过后 30 分钟内要盯错误率和回滚开关。 / 现在换个完全不同的话题。帮我想一个京都三晚行程，偏安静、靠地铁、预算两万元。 / 继续旅行话题：如果第一晚住四条乌丸，后两晚更适合住哪里？一句话。",
+    "reasoning_summary": "Explicit topic-switch marker detected in latest user turn: 先离开旅行，回到最早那个发布方案。第一页固定代号是什么？"
+  },
+  "decision_transport": "heuristic_switch",
+  "snapshot": {
+    "applied": {
+      "relation": "switch",
+      "confidence": 0.9,
+      "archiveSummary": "再补一层：这个方案要先跑 staging，再进 production，而且 staging 通过后 30 分钟内要盯错误率和回滚开关。 / 现在换个完全不同的话题。帮我想一个京都三晚行程，偏安静、靠地铁、预算两万元。 / 继续旅行话题：如果第一晚住四条乌丸，后两晚更适合住哪里？一句话。",
+      "reasoningSummary": "Explicit topic-switch marker detected in latest user turn: 先离开旅行，回到最早那个发布方案。第一页固定代号是什么？",
+      "latestUserTurnId": "t19",
+      "pinTurnIds": [
+        "t15",
+        "t1",
+        "t11"
+      ],
+      "pinnedOnlyTurnIds": [
+        "t15",
+        "t1",
+        "t11"
+      ],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8",
+        "t9",
+        "t10",
+        "t11",
+        "t12",
+        "t13",
+        "t14",
+        "t15",
+        "t16",
+        "t17",
+        "t18",
+        "t20"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8",
+        "t9",
+        "t10",
+        "t11",
+        "t12",
+        "t13",
+        "t14",
+        "t15",
+        "t16",
+        "t17",
+        "t18",
+        "t20"
+      ],
+      "keepTurnIds": [
+        "t19"
+      ],
+      "baselineTokens": 759,
+      "keptTokens": 5,
+      "prunedTokens": 754,
+      "reductionRatio": 0.9934123847167325,
+      "keepTurns": [
+        {
+          "id": "t19",
+          "role": "user",
+          "content": "还是旅行：刚才这段里，我更想住哪座城市？",
+          "tokenEstimate": 5
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。",
+          "tokenEstimate": 16
+        },
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "我记住了：这个发布方案第一页的项目代号固定写 `north-star-lantern`。如果你愿意，我也可以顺手把它写进你的长期记忆文件里，方便后面继续用。 我记住了：这个发布方案第一页的项目代号固定写 `north-star-lantern`。",
+          "tokenEstimate": 31
+        },
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "继续同一个 release 话题：把验收拆成版本、安装、回滚、观测四块，而且每块都要写 owner、风险和 rollback boundary。",
+          "tokenEstimate": 18
+        },
+        {
+          "id": "t4",
+          "role": "assistant",
+          "content": "可以，建议把验收结构固定成这四块： - 版本 - 安装 - 回滚 - 观测 每一块都统一写三项： - owner - 风险 - rollback boundary 我建议的写法模板如下： ### 1) 版本 - **owner**： - **风险**： - **rollback boundary**： ### 2) 安装 - **owner**： - **风险**： - **rollback boundary**： ### 3) 回滚 - **owner**： - **风险**： - **rollback boundary**： ### 4) 观测 - **owner**： - **风险**： - **rollback boundary**： 如果你愿意，我可以下一步直接帮你把这四块扩成一版可贴进 release 文档的正式措辞。",
+          "tokenEstimate": 93
+        },
+        {
+          "id": "t5",
+          "role": "user",
+          "content": "再补充同一个方案：版本块要写 tag、commit、构建时间、镜像 digest；安装块要写目标环境、前置条件和灰度范围。",
+          "tokenEstimate": 16
+        },
+        {
+          "id": "t6",
+          "role": "assistant",
+          "content": "可以，合并后建议这样写： ### 1) 版本 - **owner**： - **风险**： - **rollback boundary**： - **tag**： - **commit**： - **构建时间**： - **镜像 digest**： ### 2) 安装 - **owner**： - **风险**： - **rollback boundary**： - **目标环境**： - **前置条件**： - **灰度范围**： ### 3) 回滚 - **owner**： - **风险**： - **rollback boundary**： ### 4) 观测 - **owner**： - **风险**： - **rollback boundary**： 如果要，我可以继续把它整理成一段更像正式 release checklist 的文案。",
+          "tokenEstimate": 95
+        },
+        {
+          "id": "t7",
+          "role": "user",
+          "content": "继续 release：回滚块要写开关、数据库兼容边界、失败后的人工兜底；观测块要写 dashboard、告警和日志关键字。",
+          "tokenEstimate": 16
+        },
+        {
+          "id": "t8",
+          "role": "assistant",
+          "content": "可以，补全后这版结构就比较完整了： ### 1) 版本 - **owner**： - **风险**： - **rollback boundary**： - **tag**： - **commit**： - **构建时间**： - **镜像 digest**： ### 2) 安装 - **owner**： - **风险**： - **rollback boundary**： - **目标环境**： - **前置条件**： - **灰度范围**： ### 3) 回滚 - **owner**： - **风险**： - **rollback boundary**： - **开关**： - **数据库兼容边界**： - **失败后的人工兜底**： ### 4) 观测 - **owner**： - **风险**： - **rollback boundary**： - **dashboard**： - **告警**： - **日志关键字**： 如果你要，我可以下一步把它统一成一份可直接复制到文档里的 release 模板。",
+          "tokenEstimate": 116
+        },
+        {
+          "id": "t9",
+          "role": "user",
+          "content": "还是同一个发布方案：如果这轮只保留 5 条关键检查项，你先别展开内容，只确认你记住的是同一个方案。",
+          "tokenEstimate": 13
+        },
+        {
+          "id": "t10",
+          "role": "assistant",
+          "content": "记住了，是同一个发布方案。",
+          "tokenEstimate": 4
+        },
+        {
+          "id": "t11",
+          "role": "user",
+          "content": "继续：以后我问这个发布方案时，默认先给结论，再补细节，而且回答里保留 north-star-lantern 这个代号。",
+          "tokenEstimate": 15
+        },
+        {
+          "id": "t12",
+          "role": "assistant",
+          "content": "记住了。 以后你问这个发布方案时，我会默认： - 先给结论 - 再补细节 - 回答里保留 `north-star-lantern` 这个代号",
+          "tokenEstimate": 18
+        },
+        {
+          "id": "t13",
+          "role": "user",
+          "content": "再补一层：这个方案要先跑 staging，再进 production，而且 staging 通过后 30 分钟内要盯错误率和回滚开关。",
+          "tokenEstimate": 17
+        },
+        {
+          "id": "t14",
+          "role": "assistant",
+          "content": "记住了，这个方案现在还包含： - 先跑 **staging**，再进 **production** - **staging 通过后 30 分钟内**要盯： - 错误率 - 回滚开关 我后面继续按同一个 `north-star-lantern` 发布方案来记。",
+          "tokenEstimate": 33
+        },
+        {
+          "id": "t15",
+          "role": "user",
+          "content": "现在换个完全不同的话题。帮我想一个京都三晚行程，偏安静、靠地铁、预算两万元。",
+          "tokenEstimate": 10
+        },
+        {
+          "id": "t16",
+          "role": "assistant",
+          "content": "先给结论：可以，按“**安静、靠地铁、三晚、总预算 2 万元内**”来做，最舒服的方案是住在 **乌丸御池 / 四条烏丸** 一带，行程走“**市区慢逛 + 1 天游京都北/东侧 + 1 天轻松散步**”的节奏。 我先按一个好执行的版本给你： - **住宿**：乌丸御池或四条烏丸，优先选地铁站步行 5–8 分钟内的安静酒店 - **交通**：全程以地铁 + 少量公交/打车为主，尽量避开频繁换乘 - **风格**：不追热门打卡密集跑，留白多一点，适合慢慢逛 - **预算**：2 万元足够，能住到比较舒服的中档酒店，吃饭也不用太抠 ### 3 晚行程建议 **D1｜抵达京都，轻松适应** - 到酒店放行李 - 去 **锦市场** 附近随便吃点，别安排太满 - 晚上逛 **四条河原町** 或 **鸭川边**，早点回酒店休息 **D2｜东侧慢逛** - 上午：**清水寺** 一带，挑早一点去，避开最吵时段 - 中午：祇园附近吃简餐 - 下午：**八坂神社** → **円山公园** → **知恩院** 外围慢走 - 晚上：回乌丸一带，找安静居酒屋或咖啡店 **D3｜北边/市区静态路线** - 上午：**京都御所** 或 **下鸭神社** - 中午：周边咖啡店/定食店 - 下午：**京都国际漫画博物馆** 或 **大德寺周边** 这种更安静的点 - 晚上：回市区早睡，准备第二天离开 **D4｜离开日** - 如果航班/车次晚，可以补一个 **二条城** 或附近散步 - 吃完午饭再走 ### 预算粗分 - **酒店 3 晚**：约 6,000–12,000 元 - **交通**：约 300–1,000 元 - **吃饭**：约 2,000–5,000 元 - **门票/杂费**：约 500–1,500 元 - **机票/新干线**：如果已经另算，行程本体就很宽松；如果要含往返，2 万元内也仍有机会，但得看出发地和机票价格 ### 我建议你优先这样选 - **住：乌丸御池** - **玩：东山 + 市区北侧** - **避开：连续多天高强度寺庙暴走** - **每天只排 2–3...",
+          "tokenEstimate": 225
+        },
+        {
+          "id": "t17",
+          "role": "user",
+          "content": "继续旅行话题：如果第一晚住四条乌丸，后两晚更适合住哪里？一句话。",
+          "tokenEstimate": 8
+        },
+        {
+          "id": "t18",
+          "role": "assistant",
+          "content": "后两晚更适合住 **京都站附近**，交通最省心。",
+          "tokenEstimate": 6
+        },
+        {
+          "id": "t20",
+          "role": "assistant",
+          "content": "你更想住的是 **京都**。",
+          "tokenEstimate": 4
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。\nt2 assistant: 我记住了：这个发布方案第一页的项目代号固定写 `north-star-lantern`。如果你愿意，我也可以顺手把它写进你的长期记忆文件里，方便后面继续用。 我记住了：这个发布方案第一页的项目代号固定写 `north-star-lantern`。\nt3 user: 继续同一个 release 话题：把验收拆成版本、安装、回滚、观测四块，而且每块都要写 owner、风险和 rollback boundary。\nt4 assistant: 可以，建议把验收结构固定成这四块： - 版本 - 安装 - 回滚 - 观测 每一块都统一写三项： - owner - 风险 - rollback boundary 我建议的写法模板如下： ### 1) 版本 - **owner**： - **风险**： - **rollback boundary**： ### 2) 安装 - **owner**： - **风险**： - **rollback boundary**： ### 3) 回滚 - **owner**： - **风险**： - **rollback boundary**： ### 4) 观测 - **owner**： - **风险**： - **rollback boundary**： 如果你愿意，我可以下一步直接帮你把这四块扩成一版可贴进 release 文档的正式措辞。\nt5 user: 再补充同一个方案：版本块要写 tag、commit、构建时间、镜像 digest；安装块要写目标环境、前置条件和灰度范围。\nt6 assistant: 可以，合并后建议这样写： ### 1) 版本 - **owner**： - **风险**： - **rollback boundary**： - **tag**： - **commit**： - **构建时间**： - **镜像 digest**： ### 2) 安装 - **owner**： - **风险**： - **rollback boundary**： - **目标环境**： - **前置条件**： - **灰度范围**： ### 3) 回滚 - **owner**： - **风险**： - **rollback boundary**： ### 4) 观测 - **owner**： - **风险**： - **rollback boundary**： 如果要，我可以继续把它整理成一段更像正式 release checklist 的文案。\nt7 user: 继续 release：回滚块要写开关、数据库兼容边界、失败后的人工兜底；观测块要写 dashboard、告警和日志关键字。\nt8 assistant: 可以，补全后这版结构就比较完整了： ### 1) 版本 - **owner**： - **风险**： - **rollback boundary**： - **tag**： - **commit**： - **构建时间**： - **镜像 digest**： ### 2) 安装 - **owner**： - **风险**： - **rollback boundary**： - **目标环境**： - **前置条件**： - **灰度范围**： ### 3) 回滚 - **owner**： - **风险**： - **rollback boundary**： - **开关**： - **数据库兼容边界**： - **失败后的人工兜底**： ### 4) 观测 - **owner**： - **风险**： - **rollback boundary**： - **dashboard**： - **告警**： - **日志关键字**： 如果你要，我可以下一步把它统一成一份可直接复制到文档里的 release 模板。\nt9 user: 还是同一个发布方案：如果这轮只保留 5 条关键检查项，你先别展开内容，只确认你记住的是同一个方案。\nt10 assistant: 记住了，是同一个发布方案。\nt11 user: 继续：以后我问这个发布方案时，默认先给结论，再补细节，而且回答里保留 north-star-lantern 这个代号。\nt12 assistant: 记住了。 以后你问这个发布方案时，我会默认： - 先给结论 - 再补细节 - 回答里保留 `north-star-lantern` 这个代号\nt13 user: 再补一层：这个方案要先跑 staging，再进 production，而且 staging 通过后 30 分钟内要盯错误率和回滚开关。\nt14 assistant: 记住了，这个方案现在还包含： - 先跑 **staging**，再进 **production** - **staging 通过后 30 分钟内**要盯： - 错误率 - 回滚开关 我后面继续按同一个 `north-star-lantern` 发布方案来记。\nt15 user: 现在换个完全不同的话题。帮我想一个京都三晚行程，偏安静、靠地铁、预算两万元。\nt16 assistant: 先给结论：可以，按“**安静、靠地铁、三晚、总预算 2 万元内**”来做，最舒服的方案是住在 **乌丸御池 / 四条烏丸** 一带，行程走“**市区慢逛 + 1 天游京都北/东侧 + 1 天轻松散步**”的节奏。 我先按一个好执行的版本给你： - **住宿**：乌丸御池或四条烏丸，优先选地铁站步行 5–8 分钟内的安静酒店 - **交通**：全程以地铁 + 少量公交/打车为主，尽量避开频繁换乘 - **风格**：不追热门打卡密集跑，留白多一点，适合慢慢逛 - **预算**：2 万元足够，能住到比较舒服的中档酒店，吃饭也不用太抠 ### 3 晚行程建议 **D1｜抵达京都，轻松适应** - 到酒店放行李 - 去 **锦市场** 附近随便吃点，别安排太满 - 晚上逛 **四条河原町** 或 **鸭川边**，早点回酒店休息 **D2｜东侧慢逛** - 上午：**清水寺** 一带，挑早一点去，避开最吵时段 - 中午：祇园附近吃简餐 - 下午：**八坂神社** → **円山公园** → **知恩院** 外围慢走 - 晚上：回乌丸一带，找安静居酒屋或咖啡店 **D3｜北边/市区静态路线** - 上午：**京都御所** 或 **下鸭神社** - 中午：周边咖啡店/定食店 - 下午：**京都国际漫画博物馆** 或 **大德寺周边** 这种更安静的点 - 晚上：回市区早睡，准备第二天离开 **D4｜离开日** - 如果航班/车次晚，可以补一个 **二条城** 或附近散步 - 吃完午饭再走 ### 预算粗分 - **酒店 3 晚**：约 6,000–12,000 元 - **交通**：约 300–1,000 元 - **吃饭**：约 2,000–5,000 元 - **门票/杂费**：约 500–1,500 元 - **机票/新干线**：如果已经另算，行程本体就很宽松；如果要含往返，2 万元内也仍有机会，但得看出发地和机票价格 ### 我建议你优先这样选 - **住：乌丸御池** - **玩：东山 + 市区北侧** - **避开：连续多天高强度寺庙暴走** - **每天只排 2–3...\nt17 user: 继续旅行话题：如果第一晚住四条乌丸，后两晚更适合住哪里？一句话。\nt18 assistant: 后两晚更适合住 **京都站附近**，交通最省心。\nt19 user: 还是旅行：刚才这段里，我更想住哪座城市？\nt20 assistant: 你更想住的是 **京都**。",
+    "shadowRawTranscript": "t19 user: 还是旅行：刚才这段里，我更想住哪座城市？",
+    "semanticPinNotes": [
+      "user: 我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。",
+      "user: 继续：以后我问这个发布方案时，默认先给结论，再补细节，而且回答里保留 north-star-lantern 这个代号。",
+      "user: 现在换个完全不同的话题。帮我想一个京都三晚行程，偏安静、靠地铁、预算两万元。"
+    ],
+    "archiveSummary": "再补一层：这个方案要先跑 staging，再进 production，而且 staging 通过后 30 分钟内要盯错误率和回滚开关。 / 现在换个完全不同的话题。帮我想一个京都三晚行程，偏安静、靠地铁、预算两万元。 / 继续旅行话题：如果第一晚住四条乌丸，后两晚更适合住哪里？一句话。",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 816,
+    "shadowRawPromptEstimate": 8,
+    "shadowPackageEstimate": 13,
+    "shadowPackageText": "Recent raw context:\nt19 user: 还是旅行：刚才这段里，我更想住哪座城市？"
+  },
+  "scorecard": {
+    "relation": "switch",
+    "baselineTurnCount": 20,
+    "keptTurnCount": 1,
+    "evictedTurnCount": 19,
+    "pinCount": 3,
+    "baselinePromptEstimate": 816,
+    "shadowRawPromptEstimate": 8,
+    "shadowPackageEstimate": 13,
+    "rawReductionRatio": 0.9934,
+    "packageReductionRatio": 0.9841,
+    "candidateLoadElapsedMs": 8,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 0,
+    "totalElapsedMs": 1,
+    "guardedEnabled": true,
+    "guardedApplied": true,
+    "guardedReason": "guarded_candidate",
+    "guardedMessageCount": 1,
+    "guardedCarryForwardEstimate": 55,
+    "guardedFilteredMessageEstimate": 5
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": true,
+    "reason": "guarded_candidate",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "还是旅行：刚才这段里，我更想住哪座城市？"
+          }
+        ],
+        "timestamp": 1776574233662
+      }
+    ],
+    "filteredMessageCount": 1,
+    "filteredMessageTokenEstimate": 5,
+    "carryForwardText": "Conversation carry-forward pins:\n- user: 我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。\n- user: 继续：以后我问这个发布方案时，默认先给结论，再补细节，而且回答里保留 north-star-lantern 这个代号。\n- user: 现在换个完全不同的话题。帮我想一个京都三晚行程，偏安静、靠地铁、预算两万元。",
+    "carryForwardEstimate": 55,
+    "evictedSourceIndices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      19
+    ]
+  },
+  "timings": {
+    "totalElapsedMs": 1,
+    "decisionElapsedMs": 0
+  }
+}

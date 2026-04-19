@@ -1,0 +1,199 @@
+{
+  "schema_version": "umc.codex-context-minor-gc.v1",
+  "generated_at": "2026-04-19T00:51:24.851Z",
+  "event_id": "shadow-1776559871518-blqpqh-codex-packaged",
+  "session_key": "codex:vscode:019da335-a070-7972-b61e-6ba3a73ff633",
+  "query": "开始测试吧",
+  "status": "captured",
+  "reason": "",
+  "decision_transport": "codex_exec",
+  "relation": "continue",
+  "applied": false,
+  "codex_guard_reason": "reduction_below_min",
+  "prompt_reduction_ratio": 0,
+  "baseline_context_estimate": 300,
+  "packaged_context_estimate": 75,
+  "effective_context_estimate": 300,
+  "shadow_status": "captured",
+  "shadow_guarded_applied": false,
+  "shadow_guarded_reason": "reduction_below_min",
+  "shadow_export_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da335-a070-7972-b61e-6ba3a73ff633-shadow-1776559871518-blqpqh.json",
+  "shadow_summary_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl",
+  "export_path": "exports/codex-vscode-019da335-a070-7972-b61e-6ba3a73ff633-shadow-1776559871518-blqpqh-codex-packaged.json",
+  "effective_context_block": "## Recent Conversation Context\nt1 user: 每次功能改完测试完，自动提交github 每次改完测试完自动部署到本地openclaw ，需要重启openclaw的话，那就自动重启下（可以通过openclaw gateway restart 来重启） 不要硬编码； 有新功能后要及时更新文档，文档要简洁明了，方便后续维护和使用； 测试要覆盖到新功能，测试用例要清晰明了，方便后续维护和使用； 如果context大小超过50%，给个提醒，建议删除过时的内容，保持简洁明了； 如果需要我来测试的话，大字体告诉我要怎么做，需要简明扼要； 目标： 在新的 Codex 线程里重做体感测试，确认 Context Minor GC 现在是否更薄、更稳、切题后更明显收缩。 已完成： - 已修复 timeout 伪装成 continue 的问题；现在 timeout 会明确显示 decision_timeout。 - 已修复 [GC-*] 手工测试被 assistant 指挥话术污染的问题；现在会按 case 前缀只抽同 case 消息。 - 已修复 small working set 被 summary-first 膨胀的问题；raw keep 更轻时会退回 raw context。 - 已把 codex-minor-gc-current-editor-update-after-detour 和 codex-minor-gc-zh-dense-multitopic-return 收进固定回归。 - 最新 codex live eval 已全绿：cases=6, minor-gc passed=6, false activations=0, missed activations=0。 进行中： - 现在要做的是“新线程真实体感测试”，不是继续改代码。 - 需要你直接引导我做最短的 2 组手工 case，并在每组结束后读 gc 指标。 涉及文件： - /Users/redcreen/Project/unified-memory-core/src/structured-decision-runner.js - /Users/redcree...\nt2 assistant: 记忆已恢复，当前我会按“只做新线程体感测试，不改代码”的约束继续。 关键信息我已经对齐： - 当前目标是新 Codex 线程里做 2 组最短手工 case，验证 Context Minor GC 是否更薄、更稳、切题后更明显收缩。 - 顺序固定：先跑“中文多轮切题 case”，再跑“旧值被新值覆盖后再回问”的 case。 - 每组结束后都要执行一次 `npm run codex:vscode:gc --silent`，重点看…\nt3 user: 开始\nt4 user: 开始测试吧",
+  "packaged_context_block": "## Context Minor GC Working Set\nTask state summary:\nKeep the active testing task raw: the user’s long instruction block defines the current goal, constraints, and required procedure for the two manual Context Minor GC cases; the assistant turn contains the distilled exec…\n\nLatest user ask:\n- 开始测试吧",
+  "shadow_event": {
+    "schema_version": "umc.dialogue-working-set-shadow.v1",
+    "event_id": "shadow-1776559871518-blqpqh",
+    "generated_at": "2026-04-19T00:51:11.518Z",
+    "session_key": "codex:vscode:019da335-a070-7972-b61e-6ba3a73ff633",
+    "agent_id": "main",
+    "query": "开始测试吧",
+    "status": "captured",
+    "reason": "",
+    "sampling": {
+      "max_turns": 12,
+      "min_turns": 3,
+      "max_chars_per_turn": 900
+    },
+    "transcript": [
+      {
+        "id": "t1",
+        "role": "user",
+        "content": "每次功能改完测试完，自动提交github 每次改完测试完自动部署到本地openclaw ，需要重启openclaw的话，那就自动重启下（可以通过openclaw gateway restart 来重启） 不要硬编码； 有新功能后要及时更新文档，文档要简洁明了，方便后续维护和使用； 测试要覆盖到新功能，测试用例要清晰明了，方便后续维护和使用； 如果context大小超过50%，给个提醒，建议删除过时的内容，保持简洁明了； 如果需要我来测试的话，大字体告诉我要怎么做，需要简明扼要； 目标： 在新的 Codex 线程里重做体感测试，确认 Context Minor GC 现在是否更薄、更稳、切题后更明显收缩。 已完成： - 已修复 timeout 伪装成 continue 的问题；现在 timeout 会明确显示 decision_timeout。 - 已修复 [GC-*] 手工测试被 assistant 指挥话术污染的问题；现在会按 case 前缀只抽同 case 消息。 - 已修复 small working set 被 summary-first 膨胀的问题；raw keep 更轻时会退回 raw context。 - 已把 codex-minor-gc-current-editor-update-after-detour 和 codex-minor-gc-zh-dense-multitopic-return 收进固定回归。 - 最新 codex live eval 已全绿：cases=6, minor-gc passed=6, false activations=0, missed activations=0。 进行中： - 现在要做的是“新线程真实体感测试”，不是继续改代码。 - 需要你直接引导我做最短的 2 组手工 case，并在每组结束后读 gc 指标。 涉及文件： - /Users/redcreen/Project/unified-memory-core/src/structured-decision-runner.js - /Users/redcree..."
+      },
+      {
+        "id": "t2",
+        "role": "assistant",
+        "content": "记忆已恢复，当前我会按“只做新线程体感测试，不改代码”的约束继续。 关键信息我已经对齐： - 当前目标是新 Codex 线程里做 2 组最短手工 case，验证 Context Minor GC 是否更薄、更稳、切题后更明显收缩。 - 顺序固定：先跑“中文多轮切题 case”，再跑“旧值被新值覆盖后再回问”的 case。 - 每组结束后都要执行一次 `npm run codex:vscode:gc --silent`，重点看…"
+      },
+      {
+        "id": "t3",
+        "role": "user",
+        "content": "开始"
+      },
+      {
+        "id": "t4",
+        "role": "user",
+        "content": "开始测试吧"
+      }
+    ],
+    "decision": {
+      "relation": "continue",
+      "confidence": 0.96,
+      "evict_turn_ids": [
+        "t3"
+      ],
+      "pin_turn_ids": [
+        "t1"
+      ],
+      "archive_summary": "Keep the active testing task raw: the user’s long instruction block defines the current goal, constraints, and required procedure for the two manual Context Minor GC cases; the assistant turn contains the distilled execution plan. The standalone '开始' turn is redundant once the newer '开始测试吧' arrives.",
+      "reasoning_summary": "The latest turn stays on the same active topic: starting the real-thread manual test flow, so relation=continue. The next reply still depends on raw context from t1 and t2 because the testing order, scope, and post-case GC checks remain unresolved and should not be reduced to pin-only form. t3 is a redundant start signal and can leave the next-turn raw working set. t1 should also be semantically pinned because it contains durable operating preferences and workflow rules that may remain useful even if older raw turns are compacted later."
+    },
+    "decision_transport": "codex_exec",
+    "snapshot": {
+      "applied": {
+        "relation": "continue",
+        "confidence": 0.96,
+        "archiveSummary": "Keep the active testing task raw: the user’s long instruction block defines the current goal, constraints, and required procedure for the two manual Context Minor GC cases; the assistant turn contains the distilled execution plan. The standalone '开始' turn is redundant once the newer '开始测试吧' arrives.",
+        "reasoningSummary": "The latest turn stays on the same active topic: starting the real-thread manual test flow, so relation=continue. The next reply still depends on raw context from t1 and t2 because the testing order, scope, and post-case GC checks remain unresolved and should not be reduced to pin-only form. t3 is a redundant start signal and can leave the next-turn raw working set. t1 should also be semantically pinned because it contains durable operating preferences and workflow rules that may remain useful even if older raw turns are compacted later.",
+        "latestUserTurnId": "t4",
+        "pinTurnIds": [
+          "t1"
+        ],
+        "pinnedOnlyTurnIds": [],
+        "requestedEvictTurnIds": [
+          "t3"
+        ],
+        "blockedEvictTurnIds": [],
+        "appliedEvictTurnIds": [
+          "t3"
+        ],
+        "keepTurnIds": [
+          "t1",
+          "t2",
+          "t4"
+        ],
+        "baselineTokens": 282,
+        "keptTokens": 281,
+        "prunedTokens": 1,
+        "reductionRatio": 0.0035460992907801418,
+        "keepTurns": [
+          {
+            "id": "t1",
+            "role": "user",
+            "content": "每次功能改完测试完，自动提交github 每次改完测试完自动部署到本地openclaw ，需要重启openclaw的话，那就自动重启下（可以通过openclaw gateway restart 来重启） 不要硬编码； 有新功能后要及时更新文档，文档要简洁明了，方便后续维护和使用； 测试要覆盖到新功能，测试用例要清晰明了，方便后续维护和使用； 如果context大小超过50%，给个提醒，建议删除过时的内容，保持简洁明了； 如果需要我来测试的话，大字体告诉我要怎么做，需要简明扼要； 目标： 在新的 Codex 线程里重做体感测试，确认 Context Minor GC 现在是否更薄、更稳、切题后更明显收缩。 已完成： - 已修复 timeout 伪装成 continue 的问题；现在 timeout 会明确显示 decision_timeout。 - 已修复 [GC-*] 手工测试被 assistant 指挥话术污染的问题；现在会按 case 前缀只抽同 case 消息。 - 已修复 small working set 被 summary-first 膨胀的问题；raw keep 更轻时会退回 raw context。 - 已把 codex-minor-gc-current-editor-update-after-detour 和 codex-minor-gc-zh-dense-multitopic-return 收进固定回归。 - 最新 codex live eval 已全绿：cases=6, minor-gc passed=6, false activations=0, missed activations=0。 进行中： - 现在要做的是“新线程真实体感测试”，不是继续改代码。 - 需要你直接引导我做最短的 2 组手工 case，并在每组结束后读 gc 指标。 涉及文件： - /Users/redcreen/Project/unified-memory-core/src/structured-decision-runner.js - /Users/redcree...",
+            "tokenEstimate": 225
+          },
+          {
+            "id": "t2",
+            "role": "assistant",
+            "content": "记忆已恢复，当前我会按“只做新线程体感测试，不改代码”的约束继续。 关键信息我已经对齐： - 当前目标是新 Codex 线程里做 2 组最短手工 case，验证 Context Minor GC 是否更薄、更稳、切题后更明显收缩。 - 顺序固定：先跑“中文多轮切题 case”，再跑“旧值被新值覆盖后再回问”的 case。 - 每组结束后都要执行一次 `npm run codex:vscode:gc --silent`，重点看…",
+            "tokenEstimate": 54
+          },
+          {
+            "id": "t4",
+            "role": "user",
+            "content": "开始测试吧",
+            "tokenEstimate": 2
+          }
+        ],
+        "evictedTurns": [
+          {
+            "id": "t3",
+            "role": "user",
+            "content": "开始",
+            "tokenEstimate": 1
+          }
+        ]
+      },
+      "baselineRawTranscript": "t1 user: 每次功能改完测试完，自动提交github 每次改完测试完自动部署到本地openclaw ，需要重启openclaw的话，那就自动重启下（可以通过openclaw gateway restart 来重启） 不要硬编码； 有新功能后要及时更新文档，文档要简洁明了，方便后续维护和使用； 测试要覆盖到新功能，测试用例要清晰明了，方便后续维护和使用； 如果context大小超过50%，给个提醒，建议删除过时的内容，保持简洁明了； 如果需要我来测试的话，大字体告诉我要怎么做，需要简明扼要； 目标： 在新的 Codex 线程里重做体感测试，确认 Context Minor GC 现在是否更薄、更稳、切题后更明显收缩。 已完成： - 已修复 timeout 伪装成 continue 的问题；现在 timeout 会明确显示 decision_timeout。 - 已修复 [GC-*] 手工测试被 assistant 指挥话术污染的问题；现在会按 case 前缀只抽同 case 消息。 - 已修复 small working set 被 summary-first 膨胀的问题；raw keep 更轻时会退回 raw context。 - 已把 codex-minor-gc-current-editor-update-after-detour 和 codex-minor-gc-zh-dense-multitopic-return 收进固定回归。 - 最新 codex live eval 已全绿：cases=6, minor-gc passed=6, false activations=0, missed activations=0。 进行中： - 现在要做的是“新线程真实体感测试”，不是继续改代码。 - 需要你直接引导我做最短的 2 组手工 case，并在每组结束后读 gc 指标。 涉及文件： - /Users/redcreen/Project/unified-memory-core/src/structured-decision-runner.js - /Users/redcree...\nt2 assistant: 记忆已恢复，当前我会按“只做新线程体感测试，不改代码”的约束继续。 关键信息我已经对齐： - 当前目标是新 Codex 线程里做 2 组最短手工 case，验证 Context Minor GC 是否更薄、更稳、切题后更明显收缩。 - 顺序固定：先跑“中文多轮切题 case”，再跑“旧值被新值覆盖后再回问”的 case。 - 每组结束后都要执行一次 `npm run codex:vscode:gc --silent`，重点看…\nt3 user: 开始\nt4 user: 开始测试吧",
+      "shadowRawTranscript": "t1 user: 每次功能改完测试完，自动提交github 每次改完测试完自动部署到本地openclaw ，需要重启openclaw的话，那就自动重启下（可以通过openclaw gateway restart 来重启） 不要硬编码； 有新功能后要及时更新文档，文档要简洁明了，方便后续维护和使用； 测试要覆盖到新功能，测试用例要清晰明了，方便后续维护和使用； 如果context大小超过50%，给个提醒，建议删除过时的内容，保持简洁明了； 如果需要我来测试的话，大字体告诉我要怎么做，需要简明扼要； 目标： 在新的 Codex 线程里重做体感测试，确认 Context Minor GC 现在是否更薄、更稳、切题后更明显收缩。 已完成： - 已修复 timeout 伪装成 continue 的问题；现在 timeout 会明确显示 decision_timeout。 - 已修复 [GC-*] 手工测试被 assistant 指挥话术污染的问题；现在会按 case 前缀只抽同 case 消息。 - 已修复 small working set 被 summary-first 膨胀的问题；raw keep 更轻时会退回 raw context。 - 已把 codex-minor-gc-current-editor-update-after-detour 和 codex-minor-gc-zh-dense-multitopic-return 收进固定回归。 - 最新 codex live eval 已全绿：cases=6, minor-gc passed=6, false activations=0, missed activations=0。 进行中： - 现在要做的是“新线程真实体感测试”，不是继续改代码。 - 需要你直接引导我做最短的 2 组手工 case，并在每组结束后读 gc 指标。 涉及文件： - /Users/redcreen/Project/unified-memory-core/src/structured-decision-runner.js - /Users/redcree...\nt2 assistant: 记忆已恢复，当前我会按“只做新线程体感测试，不改代码”的约束继续。 关键信息我已经对齐： - 当前目标是新 Codex 线程里做 2 组最短手工 case，验证 Context Minor GC 是否更薄、更稳、切题后更明显收缩。 - 顺序固定：先跑“中文多轮切题 case”，再跑“旧值被新值覆盖后再回问”的 case。 - 每组结束后都要执行一次 `npm run codex:vscode:gc --silent`，重点看…\nt4 user: 开始测试吧",
+      "semanticPinNotes": [],
+      "archiveSummary": "Keep the active testing task raw: the user’s long instruction block defines the current goal, constraints, and required procedure for the two manual Context Minor GC cases; the assistant turn contains the distilled execution plan. The standalone '开始' turn is redundant once the newer '开始测试吧' arrives.",
+      "injectedArchiveSummary": "",
+      "baselinePromptEstimate": 292,
+      "shadowRawPromptEstimate": 289,
+      "shadowPackageEstimate": 67,
+      "shadowPackageText": "Task state summary:\nKeep the active testing task raw: the user’s long instruction block defines the current goal, constraints, and required procedure for the two manual Context Minor GC cases; the assistant turn contains the distilled exec…\n\nLatest user ask:\n- 开始测试吧"
+    },
+    "scorecard": {
+      "relation": "continue",
+      "baselineTurnCount": 4,
+      "keptTurnCount": 3,
+      "evictedTurnCount": 1,
+      "pinCount": 1,
+      "baselinePromptEstimate": 292,
+      "shadowRawPromptEstimate": 289,
+      "shadowPackageEstimate": 67,
+      "rawReductionRatio": 0.0035,
+      "packageReductionRatio": 0.7705,
+      "candidateLoadElapsedMs": 0,
+      "assemblyBuildElapsedMs": 0,
+      "decisionElapsedMs": 13332,
+      "totalElapsedMs": 13332,
+      "guardedEnabled": true,
+      "guardedApplied": false,
+      "guardedReason": "reduction_below_min",
+      "guardedMessageCount": 4,
+      "guardedCarryForwardEstimate": 0,
+      "guardedFilteredMessageEstimate": 507
+    },
+    "guarded": {
+      "enabled": true,
+      "applied": false,
+      "reason": "reduction_below_min",
+      "filteredMessages": [
+        {
+          "role": "user",
+          "content": "每次功能改完测试完，自动提交github 每次改完测试完自动部署到本地openclaw ，需要重启openclaw的话，那就自动重启下（可以通过openclaw gateway restart 来重启） 不要硬编码； 有新功能后要及时更新文档，文档要简洁明了，方便后续维护和使用； 测试要覆盖到新功能，测试用例要清晰明了，方便后续维护和使用； 如果context大小超过50%，给个提醒，建议删除过时的内容，保持简洁明了； 如果需要我来测试的话，大字体告诉我要怎么做，需要简明扼要； 目标： 在新的 Codex 线程里重做体感测试，确认 Context Minor GC 现在是否更薄、更稳、切题后更明显收缩。 已完成： - 已修复 timeout 伪装成 continue 的问题；现在 timeout 会明确显示 decision_timeout。 - 已修复 [GC-*] 手工测试被 assistant 指挥话术污染的问题；现在会按 case 前缀只抽同 case 消息。 - 已修复 small working set 被 summary-first 膨胀的问题；raw keep 更轻时会退回 raw context。 - 已把 codex-minor-gc-current-editor-update-after-detour 和 codex-minor-gc-zh-dense-multitopic-return 收进固定回归。 - 最新 codex live eval 已全绿：cases=6, minor-gc passed=6, false activations=0, missed activations=0。 进行中： - 现在要做的是“新线程真实体感测试”，不是继续改代码。 - 需要你直接引导我做最短的 2 组手工 case，并在每组结束后读 gc 指标。 涉及文件： - /Users/redcreen/Project/unified-memory-core/src/structured-decision-runner.js - /Users/redcreen/Project/unified-memory-core/src/dialogue-working-set-runtime-shadow.js - /Users/redcreen/Project/unified-memory-core/src/dialogue-working-set-guarded.js - /Users/redcreen/Project/unified-memory-core/src/dialogue-working-set-shadow.js - /Users/redcreen/Project/unified-memory-core/src/codex-vscode-context-minor-gc.js - /Users/redcreen/Project/unified-memory-core/src/codex-context-minor-gc.js - /Users/redcreen/Project/unified-memory-core/evals/codex-context-minor-gc-live-cases.js - /Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc-live-2026-04-18/report.md 约束： - 不要继续改代码，先只做体感测试。 - 不要用旧线程测试，因为旧线程 context 已很厚，会污染体感。 - 测试时一次只跑一个 case，不要交叉。 - 每组 case 跑完后，读取一次 `npm run codex:vscode:gc --silent`。 - 重点看：applied、relation、promptReductionRatio。 - 目标是确认：答案正确，而且切题后 GC 真正生效。 下一步： - 先带我跑中文多轮切题 case。 - 再带我跑“旧值被新值覆盖后再回问”的 case。 - 每组结束后，帮我判断这次体感是否比旧版本明显改善。 先恢复记忆，等我给你指令在执行"
+        },
+        {
+          "role": "assistant",
+          "content": "记忆已恢复，当前我会按“只做新线程体感测试，不改代码”的约束继续。 关键信息我已经对齐： - 当前目标是新 Codex 线程里做 2 组最短手工 case，验证 Context Minor GC 是否更薄、更稳、切题后更明显收缩。 - 顺序固定：先跑“中文多轮切题 case”，再跑“旧值被新值覆盖后再回问”的 case。 - 每组结束后都要执行一次 `npm run codex:vscode:gc --silent`，重点看…"
+        },
+        {
+          "role": "user",
+          "content": "开始"
+        },
+        {
+          "role": "user",
+          "content": "开始测试吧"
+        }
+      ],
+      "filteredMessageCount": 4,
+      "filteredMessageTokenEstimate": 507,
+      "carryForwardText": "",
+      "carryForwardEstimate": 0,
+      "evictedSourceIndices": []
+    },
+    "timings": {
+      "totalElapsedMs": 13332,
+      "decisionElapsedMs": 13332
+    },
+    "artifact_paths": {
+      "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da335-a070-7972-b61e-6ba3a73ff633-shadow-1776559871518-blqpqh.json",
+      "summary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl"
+    }
+  }
+}

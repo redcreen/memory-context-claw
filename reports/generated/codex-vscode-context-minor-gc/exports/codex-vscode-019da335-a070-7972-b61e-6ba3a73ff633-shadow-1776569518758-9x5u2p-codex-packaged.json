@@ -1,0 +1,321 @@
+{
+  "schema_version": "umc.codex-context-minor-gc.v1",
+  "generated_at": "2026-04-19T03:32:09.837Z",
+  "event_id": "shadow-1776569518758-9x5u2p-codex-packaged",
+  "session_key": "codex:vscode:019da335-a070-7972-b61e-6ba3a73ff633",
+  "query": "这轮修复后，最明显的新问题不是答案错，也不是完全不降，而是：• 采样窗口一放大• guarded/runtime 成本就明显上升• stress 场景跑得很慢\n==》什么原因？",
+  "status": "captured",
+  "reason": "",
+  "decision_transport": "codex_exec",
+  "relation": "continue",
+  "applied": true,
+  "codex_guard_reason": "codex_packaged_guard",
+  "prompt_reduction_ratio": 0.7526,
+  "baseline_context_estimate": 384,
+  "packaged_context_estimate": 95,
+  "effective_context_estimate": 95,
+  "shadow_status": "captured",
+  "shadow_guarded_applied": true,
+  "shadow_guarded_reason": "guarded_candidate",
+  "shadow_export_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da335-a070-7972-b61e-6ba3a73ff633-shadow-1776569518758-9x5u2p.json",
+  "shadow_summary_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl",
+  "export_path": "exports/codex-vscode-019da335-a070-7972-b61e-6ba3a73ff633-shadow-1776569518758-9x5u2p-codex-packaged.json",
+  "effective_context_block": "## Context Minor GC Working Set\nTask state summary:\nEarly status-check block resolved: earlier conclusion was that OpenClaw was not yet clearly user-usable and there was no evidence of obvious context drop after topic switching; a devlog summary was written. Active threa…\n\nLatest user ask:\n- 这轮修复后，最明显的新问题不是答案错，也不是完全不降，而是：• 采样窗口一放大• guarded/runtime 成本就明显上升• stress 场景跑得很慢 ==》什么原因？",
+  "packaged_context_block": "## Context Minor GC Working Set\nTask state summary:\nEarly status-check block resolved: earlier conclusion was that OpenClaw was not yet clearly user-usable and there was no evidence of obvious context drop after topic switching; a devlog summary was written. Active threa…\n\nLatest user ask:\n- 这轮修复后，最明显的新问题不是答案错，也不是完全不降，而是：• 采样窗口一放大• guarded/runtime 成本就明显上升• stress 场景跑得很慢 ==》什么原因？",
+  "shadow_event": {
+    "schema_version": "umc.dialogue-working-set-shadow.v1",
+    "event_id": "shadow-1776569518758-9x5u2p",
+    "generated_at": "2026-04-19T03:31:58.758Z",
+    "session_key": "codex:vscode:019da335-a070-7972-b61e-6ba3a73ff633",
+    "agent_id": "main",
+    "query": "这轮修复后，最明显的新问题不是答案错，也不是完全不降，而是：• 采样窗口一放大• guarded/runtime 成本就明显上升• stress 场景跑得很慢\n==》什么原因？",
+    "status": "captured",
+    "reason": "",
+    "sampling": {
+      "max_turns": 12,
+      "min_turns": 3,
+      "max_chars_per_turn": 900
+    },
+    "transcript": [
+      {
+        "id": "t1",
+        "role": "assistant",
+        "content": "结论：**大概率是，OpenClaw 长对话里最大的那块动态 context，已经被接管了。** 原因很直接："
+      },
+      {
+        "id": "t2",
+        "role": "user",
+        "content": "ok，当前的问题汇总下，写入到开发日志中； 完成后我们开始对openclaw进行测试；"
+      },
+      {
+        "id": "t3",
+        "role": "assistant",
+        "content": "当前问题汇总已经写入开发日志：[2026-04-19-clarify-host-level-context-minor-gc-acceptance-and-openclaw-feasibility.md](/Users/redcreen/Project/unified-memory-core/docs/devlog/2026-04-19-clarify-host-level-context-minor-gc-acceptance-and…"
+      },
+      {
+        "id": "t4",
+        "role": "user",
+        "content": "你刚才验证后，openclaw 是否达到了我们认为的用户端明显可用么/？ 整体的context 大小有明显的下降么？ （切不同话题）"
+      },
+      {
+        "id": "t5",
+        "role": "assistant",
+        "content": "还不能这么说。按我们刚才真正验证到的东西，答案是： - `OpenClaw 还不能判定为“用户端已经明显可用”` - `也没有证据证明整体 context 在切不同话题后有明显下降`"
+      },
+      {
+        "id": "t6",
+        "role": "user",
+        "content": "我们现在的任务是 深入的测试openclaw的 gc，是否能够达标；，尽量更长的对话（可以做临时数据写入，但是不要对我其他文档做写入操作）；做好探针，记录好相关数据；预期是：更长的对话，如果正常情况下，可能要做compact了，但是因为又了gc，实际不需要compact；同时在一个同一话题的长对话后切换话题，应该有明显的context回落；这里的context指的是实际发给llm的数据； 接下来你来策划这个测试，把相关配置都做好，然后就开始测试吧，最终简明扼要的给我结果和分析；"
+      },
+      {
+        "id": "t7",
+        "role": "assistant",
+        "content": "结论先说：**OpenClaw 现在已经能实打实地压住发给 LLM 的 prompt，但还没有达到“用户明显感觉切题后 context 明显回落、基本不用再考虑 compact”的标准。** 这轮我补了专门的长会话探针： - 脚本：[eval-openclaw-guarded-session-probe.js](/Users/redcreen/Project/unified-memory-core/scripts/eval-openc…"
+      },
+      {
+        "id": "t8",
+        "role": "user",
+        "content": "从新review下测试脚本， 没有问题的话，就要分析为什么没有明显回落，分析原因，找到解决方案；然后解决掉；"
+      },
+      {
+        "id": "t9",
+        "role": "assistant",
+        "content": "我先 review 了测试脚本和 guarded 主路径，结论是脚本口径基本没问题，问题主要在实现本身。 核心原因有两个： - [src/dialogue-working-set-runtime-shadow.js](/Users/redcreen/Project/unified-memory-core/src/dialogue-working-set-runtime-shadow.js) 里 `maxTurns=12`…"
+      },
+      {
+        "id": "t10",
+        "role": "user",
+        "content": "为什么是这个建议"
+      },
+      {
+        "id": "t11",
+        "role": "assistant",
+        "content": "因为现在主矛盾已经变了，不是“有没有证据证明方向对”，而是“这个方向的代价能不能接受”。 具体说有三点："
+      },
+      {
+        "id": "t12",
+        "role": "user",
+        "content": "这轮修复后，最明显的新问题不是答案错，也不是完全不降，而是：• 采样窗口一放大• guarded/runtime 成本就明显上升• stress 场景跑得很慢 ==》什么原因？"
+      }
+    ],
+    "decision": {
+      "relation": "continue",
+      "confidence": 0.94,
+      "evict_turn_ids": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5"
+      ],
+      "pin_turn_ids": [
+        "t6"
+      ],
+      "archive_summary": "Early status-check block resolved: earlier conclusion was that OpenClaw was not yet clearly user-usable and there was no evidence of obvious context drop after topic switching; a devlog summary was written. Active thread then shifted into long-conversation GC testing, probe setup, review of the test script, analysis of why context did not drop clearly, and proposed fixes. Preserve the current active evidence chain around the probe results, guarded path/runtime behavior, and the implementation-level diagnosis from the recent turns.",
+      "reasoning_summary": "Use continue because the latest user question asks for the cause of the newly observed performance regression within the same active OpenClaw GC investigation. Keep recent raw turns that the answer depends on: the testing mandate and constraints, the measured probe outcome, the script/runtime review, and the rationale that the main contradiction changed from correctness to cost. Evict the older resolved block about devlog logging and the earlier high-level usability/context-drop status snapshot. Pin t6 because it contains durable task constraints and evaluation criteria that may still matter even if older raw turns are compacted."
+    },
+    "decision_transport": "codex_exec",
+    "snapshot": {
+      "applied": {
+        "relation": "continue",
+        "confidence": 0.94,
+        "archiveSummary": "Early status-check block resolved: earlier conclusion was that OpenClaw was not yet clearly user-usable and there was no evidence of obvious context drop after topic switching; a devlog summary was written. Active thread then shifted into long-conversation GC testing, probe setup, review of the test script, analysis of why context did not drop clearly, and proposed fixes. Preserve the current active evidence chain around the probe results, guarded path/runtime behavior, and the implementation-level diagnosis from the recent turns.",
+        "reasoningSummary": "Use continue because the latest user question asks for the cause of the newly observed performance regression within the same active OpenClaw GC investigation. Keep recent raw turns that the answer depends on: the testing mandate and constraints, the measured probe outcome, the script/runtime review, and the rationale that the main contradiction changed from correctness to cost. Evict the older resolved block about devlog logging and the earlier high-level usability/context-drop status snapshot. Pin t6 because it contains durable task constraints and evaluation criteria that may still matter even if older raw turns are compacted.",
+        "latestUserTurnId": "t12",
+        "pinTurnIds": [
+          "t6"
+        ],
+        "pinnedOnlyTurnIds": [],
+        "requestedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3",
+          "t4",
+          "t5"
+        ],
+        "blockedEvictTurnIds": [],
+        "appliedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3",
+          "t4",
+          "t5"
+        ],
+        "keepTurnIds": [
+          "t6",
+          "t7",
+          "t8",
+          "t9",
+          "t10",
+          "t11",
+          "t12"
+        ],
+        "baselineTokens": 342,
+        "keptTokens": 221,
+        "prunedTokens": 121,
+        "reductionRatio": 0.3538011695906433,
+        "keepTurns": [
+          {
+            "id": "t6",
+            "role": "user",
+            "content": "我们现在的任务是 深入的测试openclaw的 gc，是否能够达标；，尽量更长的对话（可以做临时数据写入，但是不要对我其他文档做写入操作）；做好探针，记录好相关数据；预期是：更长的对话，如果正常情况下，可能要做compact了，但是因为又了gc，实际不需要compact；同时在一个同一话题的长对话后切换话题，应该有明显的context回落；这里的context指的是实际发给llm的数据； 接下来你来策划这个测试，把相关配置都做好，然后就开始测试吧，最终简明扼要的给我结果和分析；",
+            "tokenEstimate": 61
+          },
+          {
+            "id": "t7",
+            "role": "assistant",
+            "content": "结论先说：**OpenClaw 现在已经能实打实地压住发给 LLM 的 prompt，但还没有达到“用户明显感觉切题后 context 明显回落、基本不用再考虑 compact”的标准。** 这轮我补了专门的长会话探针： - 脚本：[eval-openclaw-guarded-session-probe.js](/Users/redcreen/Project/unified-memory-core/scripts/eval-openc…",
+            "tokenEstimate": 55
+          },
+          {
+            "id": "t8",
+            "role": "user",
+            "content": "从新review下测试脚本， 没有问题的话，就要分析为什么没有明显回落，分析原因，找到解决方案；然后解决掉；",
+            "tokenEstimate": 14
+          },
+          {
+            "id": "t9",
+            "role": "assistant",
+            "content": "我先 review 了测试脚本和 guarded 主路径，结论是脚本口径基本没问题，问题主要在实现本身。 核心原因有两个： - [src/dialogue-working-set-runtime-shadow.js](/Users/redcreen/Project/unified-memory-core/src/dialogue-working-set-runtime-shadow.js) 里 `maxTurns=12`…",
+            "tokenEstimate": 54
+          },
+          {
+            "id": "t10",
+            "role": "user",
+            "content": "为什么是这个建议",
+            "tokenEstimate": 2
+          },
+          {
+            "id": "t11",
+            "role": "assistant",
+            "content": "因为现在主矛盾已经变了，不是“有没有证据证明方向对”，而是“这个方向的代价能不能接受”。 具体说有三点：",
+            "tokenEstimate": 13
+          },
+          {
+            "id": "t12",
+            "role": "user",
+            "content": "这轮修复后，最明显的新问题不是答案错，也不是完全不降，而是：• 采样窗口一放大• guarded/runtime 成本就明显上升• stress 场景跑得很慢 ==》什么原因？",
+            "tokenEstimate": 22
+          }
+        ],
+        "evictedTurns": [
+          {
+            "id": "t1",
+            "role": "assistant",
+            "content": "结论：**大概率是，OpenClaw 长对话里最大的那块动态 context，已经被接管了。** 原因很直接：",
+            "tokenEstimate": 14
+          },
+          {
+            "id": "t2",
+            "role": "user",
+            "content": "ok，当前的问题汇总下，写入到开发日志中； 完成后我们开始对openclaw进行测试；",
+            "tokenEstimate": 11
+          },
+          {
+            "id": "t3",
+            "role": "assistant",
+            "content": "当前问题汇总已经写入开发日志：[2026-04-19-clarify-host-level-context-minor-gc-acceptance-and-openclaw-feasibility.md](/Users/redcreen/Project/unified-memory-core/docs/devlog/2026-04-19-clarify-host-level-context-minor-gc-acceptance-and…",
+            "tokenEstimate": 56
+          },
+          {
+            "id": "t4",
+            "role": "user",
+            "content": "你刚才验证后，openclaw 是否达到了我们认为的用户端明显可用么/？ 整体的context 大小有明显的下降么？ （切不同话题）",
+            "tokenEstimate": 17
+          },
+          {
+            "id": "t5",
+            "role": "assistant",
+            "content": "还不能这么说。按我们刚才真正验证到的东西，答案是： - `OpenClaw 还不能判定为“用户端已经明显可用”` - `也没有证据证明整体 context 在切不同话题后有明显下降`",
+            "tokenEstimate": 23
+          }
+        ]
+      },
+      "baselineRawTranscript": "t1 assistant: 结论：**大概率是，OpenClaw 长对话里最大的那块动态 context，已经被接管了。** 原因很直接：\nt2 user: ok，当前的问题汇总下，写入到开发日志中； 完成后我们开始对openclaw进行测试；\nt3 assistant: 当前问题汇总已经写入开发日志：[2026-04-19-clarify-host-level-context-minor-gc-acceptance-and-openclaw-feasibility.md](/Users/redcreen/Project/unified-memory-core/docs/devlog/2026-04-19-clarify-host-level-context-minor-gc-acceptance-and…\nt4 user: 你刚才验证后，openclaw 是否达到了我们认为的用户端明显可用么/？ 整体的context 大小有明显的下降么？ （切不同话题）\nt5 assistant: 还不能这么说。按我们刚才真正验证到的东西，答案是： - `OpenClaw 还不能判定为“用户端已经明显可用”` - `也没有证据证明整体 context 在切不同话题后有明显下降`\nt6 user: 我们现在的任务是 深入的测试openclaw的 gc，是否能够达标；，尽量更长的对话（可以做临时数据写入，但是不要对我其他文档做写入操作）；做好探针，记录好相关数据；预期是：更长的对话，如果正常情况下，可能要做compact了，但是因为又了gc，实际不需要compact；同时在一个同一话题的长对话后切换话题，应该有明显的context回落；这里的context指的是实际发给llm的数据； 接下来你来策划这个测试，把相关配置都做好，然后就开始测试吧，最终简明扼要的给我结果和分析；\nt7 assistant: 结论先说：**OpenClaw 现在已经能实打实地压住发给 LLM 的 prompt，但还没有达到“用户明显感觉切题后 context 明显回落、基本不用再考虑 compact”的标准。** 这轮我补了专门的长会话探针： - 脚本：[eval-openclaw-guarded-session-probe.js](/Users/redcreen/Project/unified-memory-core/scripts/eval-openc…\nt8 user: 从新review下测试脚本， 没有问题的话，就要分析为什么没有明显回落，分析原因，找到解决方案；然后解决掉；\nt9 assistant: 我先 review 了测试脚本和 guarded 主路径，结论是脚本口径基本没问题，问题主要在实现本身。 核心原因有两个： - [src/dialogue-working-set-runtime-shadow.js](/Users/redcreen/Project/unified-memory-core/src/dialogue-working-set-runtime-shadow.js) 里 `maxTurns=12`…\nt10 user: 为什么是这个建议\nt11 assistant: 因为现在主矛盾已经变了，不是“有没有证据证明方向对”，而是“这个方向的代价能不能接受”。 具体说有三点：\nt12 user: 这轮修复后，最明显的新问题不是答案错，也不是完全不降，而是：• 采样窗口一放大• guarded/runtime 成本就明显上升• stress 场景跑得很慢 ==》什么原因？",
+      "shadowRawTranscript": "t6 user: 我们现在的任务是 深入的测试openclaw的 gc，是否能够达标；，尽量更长的对话（可以做临时数据写入，但是不要对我其他文档做写入操作）；做好探针，记录好相关数据；预期是：更长的对话，如果正常情况下，可能要做compact了，但是因为又了gc，实际不需要compact；同时在一个同一话题的长对话后切换话题，应该有明显的context回落；这里的context指的是实际发给llm的数据； 接下来你来策划这个测试，把相关配置都做好，然后就开始测试吧，最终简明扼要的给我结果和分析；\nt7 assistant: 结论先说：**OpenClaw 现在已经能实打实地压住发给 LLM 的 prompt，但还没有达到“用户明显感觉切题后 context 明显回落、基本不用再考虑 compact”的标准。** 这轮我补了专门的长会话探针： - 脚本：[eval-openclaw-guarded-session-probe.js](/Users/redcreen/Project/unified-memory-core/scripts/eval-openc…\nt8 user: 从新review下测试脚本， 没有问题的话，就要分析为什么没有明显回落，分析原因，找到解决方案；然后解决掉；\nt9 assistant: 我先 review 了测试脚本和 guarded 主路径，结论是脚本口径基本没问题，问题主要在实现本身。 核心原因有两个： - [src/dialogue-working-set-runtime-shadow.js](/Users/redcreen/Project/unified-memory-core/src/dialogue-working-set-runtime-shadow.js) 里 `maxTurns=12`…\nt10 user: 为什么是这个建议\nt11 assistant: 因为现在主矛盾已经变了，不是“有没有证据证明方向对”，而是“这个方向的代价能不能接受”。 具体说有三点：\nt12 user: 这轮修复后，最明显的新问题不是答案错，也不是完全不降，而是：• 采样窗口一放大• guarded/runtime 成本就明显上升• stress 场景跑得很慢 ==》什么原因？",
+      "semanticPinNotes": [],
+      "archiveSummary": "Early status-check block resolved: earlier conclusion was that OpenClaw was not yet clearly user-usable and there was no evidence of obvious context drop after topic switching; a devlog summary was written. Active thread then shifted into long-conversation GC testing, probe setup, review of the test script, analysis of why context did not drop clearly, and proposed fixes. Preserve the current active evidence chain around the probe results, guarded path/runtime behavior, and the implementation-level diagnosis from the recent turns.",
+      "injectedArchiveSummary": "",
+      "baselinePromptEstimate": 376,
+      "shadowRawPromptEstimate": 241,
+      "shadowPackageEstimate": 87,
+      "shadowPackageText": "Task state summary:\nEarly status-check block resolved: earlier conclusion was that OpenClaw was not yet clearly user-usable and there was no evidence of obvious context drop after topic switching; a devlog summary was written. Active threa…\n\nLatest user ask:\n- 这轮修复后，最明显的新问题不是答案错，也不是完全不降，而是：• 采样窗口一放大• guarded/runtime 成本就明显上升• stress 场景跑得很慢 ==》什么原因？"
+    },
+    "scorecard": {
+      "relation": "continue",
+      "baselineTurnCount": 12,
+      "keptTurnCount": 7,
+      "evictedTurnCount": 5,
+      "pinCount": 1,
+      "baselinePromptEstimate": 376,
+      "shadowRawPromptEstimate": 241,
+      "shadowPackageEstimate": 87,
+      "rawReductionRatio": 0.3538,
+      "packageReductionRatio": 0.7686,
+      "candidateLoadElapsedMs": 0,
+      "assemblyBuildElapsedMs": 0,
+      "decisionElapsedMs": 11076,
+      "totalElapsedMs": 11079,
+      "guardedEnabled": true,
+      "guardedApplied": true,
+      "guardedReason": "guarded_candidate",
+      "guardedMessageCount": 7,
+      "guardedCarryForwardEstimate": 0,
+      "guardedFilteredMessageEstimate": 221
+    },
+    "guarded": {
+      "enabled": true,
+      "applied": true,
+      "reason": "guarded_candidate",
+      "filteredMessages": [
+        {
+          "role": "user",
+          "content": "我们现在的任务是 深入的测试openclaw的 gc，是否能够达标；，尽量更长的对话（可以做临时数据写入，但是不要对我其他文档做写入操作）；做好探针，记录好相关数据；预期是：更长的对话，如果正常情况下，可能要做compact了，但是因为又了gc，实际不需要compact；同时在一个同一话题的长对话后切换话题，应该有明显的context回落；这里的context指的是实际发给llm的数据； 接下来你来策划这个测试，把相关配置都做好，然后就开始测试吧，最终简明扼要的给我结果和分析；"
+        },
+        {
+          "role": "assistant",
+          "content": "结论先说：**OpenClaw 现在已经能实打实地压住发给 LLM 的 prompt，但还没有达到“用户明显感觉切题后 context 明显回落、基本不用再考虑 compact”的标准。** 这轮我补了专门的长会话探针： - 脚本：[eval-openclaw-guarded-session-probe.js](/Users/redcreen/Project/unified-memory-core/scripts/eval-openc…"
+        },
+        {
+          "role": "user",
+          "content": "从新review下测试脚本， 没有问题的话，就要分析为什么没有明显回落，分析原因，找到解决方案；然后解决掉；"
+        },
+        {
+          "role": "assistant",
+          "content": "我先 review 了测试脚本和 guarded 主路径，结论是脚本口径基本没问题，问题主要在实现本身。 核心原因有两个： - [src/dialogue-working-set-runtime-shadow.js](/Users/redcreen/Project/unified-memory-core/src/dialogue-working-set-runtime-shadow.js) 里 `maxTurns=12`…"
+        },
+        {
+          "role": "user",
+          "content": "为什么是这个建议"
+        },
+        {
+          "role": "assistant",
+          "content": "因为现在主矛盾已经变了，不是“有没有证据证明方向对”，而是“这个方向的代价能不能接受”。 具体说有三点："
+        },
+        {
+          "role": "user",
+          "content": "这轮修复后，最明显的新问题不是答案错，也不是完全不降，而是：• 采样窗口一放大• guarded/runtime 成本就明显上升• stress 场景跑得很慢 ==》什么原因？"
+        }
+      ],
+      "filteredMessageCount": 7,
+      "filteredMessageTokenEstimate": 221,
+      "carryForwardText": "",
+      "carryForwardEstimate": 0,
+      "evictedSourceIndices": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "timings": {
+      "totalElapsedMs": 11079,
+      "decisionElapsedMs": 11076
+    },
+    "artifact_paths": {
+      "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da335-a070-7972-b61e-6ba3a73ff633-shadow-1776569518758-9x5u2p.json",
+      "summary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl"
+    }
+  }
+}

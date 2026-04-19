@@ -1,0 +1,187 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776560409659-jrd70e",
+  "generated_at": "2026-04-19T01:00:09.659Z",
+  "session_key": "codex:vscode:019da33d-4d22-7d62-8623-5237f90e4ec1",
+  "agent_id": "main",
+  "query": "继续代码：如果只取第一个数字分组，写法怎么更短？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "已记下：旅行预算 `2万元`，更想住 `京都`，最好 `靠近地铁站`。后面如果你要我帮你筛酒店、排路线或做预算分配，我会按这个偏好来。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "现在切到代码：给我一个 Python 正则，提取 foo123bar 里的数字。"
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "用这个： ```python r\"\\d+\" ```"
+    },
+    {
+      "id": "t5",
+      "role": "user",
+      "content": "继续代码：如果只取第一个数字分组，写法怎么更短？"
+    }
+  ],
+  "decision": {
+    "relation": "continue",
+    "confidence": 0.95,
+    "evict_turn_ids": [
+      "t1",
+      "t2"
+    ],
+    "pin_turn_ids": [
+      "t1"
+    ],
+    "archive_summary": "Archived durable travel preferences from earlier topic: budget 20,000 RMB, prefers staying in Kyoto, ideally near a subway station. Active raw context remains the Python regex discussion about extracting digits from 'foo123bar' and now shortening the form when only the first numeric group is needed.",
+    "reasoning_summary": "The latest turn is a direct follow-up to the active code topic, so this stays on the same thread as `continue`. The travel topic is currently irrelevant to the regex question and is resolved enough to leave the next-turn raw prompt, but the user's travel preferences are durable and should survive as a compact pin."
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "continue",
+      "confidence": 0.95,
+      "archiveSummary": "Archived durable travel preferences from earlier topic: budget 20,000 RMB, prefers staying in Kyoto, ideally near a subway station. Active raw context remains the Python regex discussion about extracting digits from 'foo123bar' and now shortening the form when only the first numeric group is needed.",
+      "reasoningSummary": "The latest turn is a direct follow-up to the active code topic, so this stays on the same thread as `continue`. The travel topic is currently irrelevant to the regex question and is resolved enough to leave the next-turn raw prompt, but the user's travel preferences are durable and should survive as a compact pin.",
+      "latestUserTurnId": "t5",
+      "pinTurnIds": [
+        "t1"
+      ],
+      "pinnedOnlyTurnIds": [
+        "t1"
+      ],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t2"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t2"
+      ],
+      "keepTurnIds": [
+        "t3",
+        "t4",
+        "t5"
+      ],
+      "baselineTokens": 49,
+      "keptTokens": 23,
+      "prunedTokens": 26,
+      "reductionRatio": 0.5306122448979592,
+      "keepTurns": [
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "现在切到代码：给我一个 Python 正则，提取 foo123bar 里的数字。",
+          "tokenEstimate": 10
+        },
+        {
+          "id": "t4",
+          "role": "assistant",
+          "content": "用这个： ```python r\"\\d+\" ```",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t5",
+          "role": "user",
+          "content": "继续代码：如果只取第一个数字分组，写法怎么更短？",
+          "tokenEstimate": 6
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。",
+          "tokenEstimate": 9
+        },
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "已记下：旅行预算 `2万元`，更想住 `京都`，最好 `靠近地铁站`。后面如果你要我帮你筛酒店、排路线或做预算分配，我会按这个偏好来。",
+          "tokenEstimate": 17
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。\nt2 assistant: 已记下：旅行预算 `2万元`，更想住 `京都`，最好 `靠近地铁站`。后面如果你要我帮你筛酒店、排路线或做预算分配，我会按这个偏好来。\nt3 user: 现在切到代码：给我一个 Python 正则，提取 foo123bar 里的数字。\nt4 assistant: 用这个： ```python r\"\\d+\" ```\nt5 user: 继续代码：如果只取第一个数字分组，写法怎么更短？",
+    "shadowRawTranscript": "t3 user: 现在切到代码：给我一个 Python 正则，提取 foo123bar 里的数字。\nt4 assistant: 用这个： ```python r\"\\d+\" ```\nt5 user: 继续代码：如果只取第一个数字分组，写法怎么更短？",
+    "semanticPinNotes": [
+      "user: 我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。"
+    ],
+    "archiveSummary": "Archived durable travel preferences from earlier topic: budget 20,000 RMB, prefers staying in Kyoto, ideally near a subway station. Active raw context remains the Python regex discussion about extracting digits from 'foo123bar' and now shortening the form when only the first numeric group is needed.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 62,
+    "shadowRawPromptEstimate": 31,
+    "shadowPackageEstimate": 86,
+    "shadowPackageText": "Task state summary:\nArchived durable travel preferences from earlier topic: budget 20,000 RMB, prefers staying in Kyoto, ideally near a subway station. Active raw context remains the Python regex discussion about extracting digits from 'fo…\n\nLatest user ask:\n- 继续代码：如果只取第一个数字分组，写法怎么更短？\n\nSemantic pins:\n- user: 我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。"
+  },
+  "scorecard": {
+    "relation": "continue",
+    "baselineTurnCount": 5,
+    "keptTurnCount": 3,
+    "evictedTurnCount": 2,
+    "pinCount": 1,
+    "baselinePromptEstimate": 62,
+    "shadowRawPromptEstimate": 31,
+    "shadowPackageEstimate": 86,
+    "rawReductionRatio": 0.5306,
+    "packageReductionRatio": -0.3871,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 9947,
+    "totalElapsedMs": 9949,
+    "guardedEnabled": true,
+    "guardedApplied": true,
+    "guardedReason": "guarded_candidate",
+    "guardedMessageCount": 3,
+    "guardedCarryForwardEstimate": 19,
+    "guardedFilteredMessageEstimate": 23
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": true,
+    "reason": "guarded_candidate",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": "现在切到代码：给我一个 Python 正则，提取 foo123bar 里的数字。"
+      },
+      {
+        "role": "assistant",
+        "content": "用这个： ```python r\"\\d+\" ```"
+      },
+      {
+        "role": "user",
+        "content": "继续代码：如果只取第一个数字分组，写法怎么更短？"
+      }
+    ],
+    "filteredMessageCount": 3,
+    "filteredMessageTokenEstimate": 23,
+    "carryForwardText": "Conversation carry-forward pins:\n- user: 我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。",
+    "carryForwardEstimate": 19,
+    "evictedSourceIndices": [
+      0,
+      1
+    ]
+  },
+  "timings": {
+    "totalElapsedMs": 9949,
+    "decisionElapsedMs": 9947
+  }
+}

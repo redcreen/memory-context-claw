@@ -1,0 +1,185 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776560805716-in5t4k",
+  "generated_at": "2026-04-19T01:06:45.716Z",
+  "session_key": "codex:vscode:019da346-335b-7d31-be0e-56a3c1b52ff3",
+  "agent_id": "main",
+  "query": "切个话题。为什么 shadow mode 默认先不开？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "我以前默认编辑器是 Vim。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "记住了。后续如果涉及编辑器习惯，我会默认按你偏向 `Vim`/Vim 风格来处理。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "更新一下：我现在默认编辑器是 Zed。"
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "已更新。后续我会默认按 `Zed` 作为你的编辑器习惯来理解。"
+    },
+    {
+      "id": "t5",
+      "role": "user",
+      "content": "切个话题。为什么 shadow mode 默认先不开？"
+    }
+  ],
+  "decision": {
+    "relation": "switch",
+    "confidence": 0.95,
+    "evict_turn_ids": [
+      "t1",
+      "t2",
+      "t3",
+      "t4"
+    ],
+    "pin_turn_ids": [
+      "t3"
+    ],
+    "archive_summary": "Older editor-preference block is resolved. Preserve the durable user preference that the default editor is now Zed; drop the superseded Vim preference and acknowledgements from the next-turn raw prompt.",
+    "reasoning_summary": "The active topic switched from stored editor preference to a new question about shadow mode defaults. The new turn does not depend on the raw preference exchange, but the updated durable fact from t3 should survive as a compact pin. The earlier Vim block is superseded and safe to evict."
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "switch",
+      "confidence": 0.95,
+      "archiveSummary": "Older editor-preference block is resolved. Preserve the durable user preference that the default editor is now Zed; drop the superseded Vim preference and acknowledgements from the next-turn raw prompt.",
+      "reasoningSummary": "The active topic switched from stored editor preference to a new question about shadow mode defaults. The new turn does not depend on the raw preference exchange, but the updated durable fact from t3 should survive as a compact pin. The earlier Vim block is superseded and safe to evict.",
+      "latestUserTurnId": "t5",
+      "pinTurnIds": [
+        "t3"
+      ],
+      "pinnedOnlyTurnIds": [
+        "t3"
+      ],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ],
+      "keepTurnIds": [
+        "t5"
+      ],
+      "baselineTokens": 35,
+      "keptTokens": 7,
+      "prunedTokens": 28,
+      "reductionRatio": 0.8,
+      "keepTurns": [
+        {
+          "id": "t5",
+          "role": "user",
+          "content": "切个话题。为什么 shadow mode 默认先不开？",
+          "tokenEstimate": 7
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "我以前默认编辑器是 Vim。",
+          "tokenEstimate": 4
+        },
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "记住了。后续如果涉及编辑器习惯，我会默认按你偏向 `Vim`/Vim 风格来处理。",
+          "tokenEstimate": 11
+        },
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "更新一下：我现在默认编辑器是 Zed。",
+          "tokenEstimate": 5
+        },
+        {
+          "id": "t4",
+          "role": "assistant",
+          "content": "已更新。后续我会默认按 `Zed` 作为你的编辑器习惯来理解。",
+          "tokenEstimate": 8
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 我以前默认编辑器是 Vim。\nt2 assistant: 记住了。后续如果涉及编辑器习惯，我会默认按你偏向 `Vim`/Vim 风格来处理。\nt3 user: 更新一下：我现在默认编辑器是 Zed。\nt4 assistant: 已更新。后续我会默认按 `Zed` 作为你的编辑器习惯来理解。\nt5 user: 切个话题。为什么 shadow mode 默认先不开？",
+    "shadowRawTranscript": "t5 user: 切个话题。为什么 shadow mode 默认先不开？",
+    "semanticPinNotes": [
+      "user: 更新一下：我现在默认编辑器是 Zed。"
+    ],
+    "archiveSummary": "Older editor-preference block is resolved. Preserve the durable user preference that the default editor is now Zed; drop the superseded Vim preference and acknowledgements from the next-turn raw prompt.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 48,
+    "shadowRawPromptEstimate": 9,
+    "shadowPackageEstimate": 78,
+    "shadowPackageText": "Task state summary:\nOlder editor-preference block is resolved. Preserve the durable user preference that the default editor is now Zed; drop the superseded Vim preference and acknowledgements from the next-turn raw prompt.\n\nLatest user ask:\n- 切个话题。为什么 shadow mode 默认先不开？\n\nSemantic pins:\n- user: 更新一下：我现在默认编辑器是 Zed。"
+  },
+  "scorecard": {
+    "relation": "switch",
+    "baselineTurnCount": 5,
+    "keptTurnCount": 1,
+    "evictedTurnCount": 4,
+    "pinCount": 1,
+    "baselinePromptEstimate": 48,
+    "shadowRawPromptEstimate": 9,
+    "shadowPackageEstimate": 78,
+    "rawReductionRatio": 0.8,
+    "packageReductionRatio": -0.625,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 7989,
+    "totalElapsedMs": 7991,
+    "guardedEnabled": true,
+    "guardedApplied": true,
+    "guardedReason": "guarded_candidate",
+    "guardedMessageCount": 1,
+    "guardedCarryForwardEstimate": 15,
+    "guardedFilteredMessageEstimate": 7
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": true,
+    "reason": "guarded_candidate",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": "切个话题。为什么 shadow mode 默认先不开？"
+      }
+    ],
+    "filteredMessageCount": 1,
+    "filteredMessageTokenEstimate": 7,
+    "carryForwardText": "Conversation carry-forward pins:\n- user: 更新一下：我现在默认编辑器是 Zed。",
+    "carryForwardEstimate": 15,
+    "evictedSourceIndices": [
+      0,
+      1,
+      2,
+      3
+    ]
+  },
+  "timings": {
+    "totalElapsedMs": 7991,
+    "decisionElapsedMs": 7989
+  }
+}

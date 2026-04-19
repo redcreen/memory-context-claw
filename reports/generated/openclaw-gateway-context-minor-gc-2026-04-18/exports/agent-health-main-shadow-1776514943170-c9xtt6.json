@@ -1,0 +1,250 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776514943170-c9xtt6",
+  "generated_at": "2026-04-18T12:22:23.170Z",
+  "session_key": "agent:health:main",
+  "agent_id": "health",
+  "query": "你现在是升级后的 health agent。只返回 JSON，字段只有 data_root, proactive_family_doctor, first_image_behavior。data_root 写当前默认目录；proactive_family_doctor 写 true/false；first_image_behavior 用一句话说明用户第一次直接发体重图时你会怎么做。",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "task-system runtime context: - session: agent:health:main - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded 你现在是升级后的 health agent。不要做任何外部操作，也不要写入数据。只返回一个 JSON 对象，字段只有 data_root, local_first, skills_seen。data_root 写当前默认健康数据目录；local_first 写 true/false；skills_seen 只列出你当前能看到的 health 相关 skill 名称。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "**Inspecting available skills** I need to focus on producing a JSON object, adhering strictly to that format. I want to examine the skills that are related to health that I have access to. There's no need for any additional tools for this. I'll ensure that I'm drawing data only from the context available to me. It’s about being precise with what needs to be structured in this JSON format. So, I'll create that now! {\"data_root\":\"/Users/redcreen/document/personal health\",\"local_first\":true,\"skills_seen\":[\"health\",\"health-archive\",\"health-reminders\",\"health-review\",\"health-storage-feishu\",\"private-doctor\",\"doctor-brief\"]}"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "task-system runtime context: - session: agent:health:main - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded 只返回 JSON：{\"data_root\": 当前默认健康数据目录}"
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "{\"data_root\":\"/Users/redcreen/document/personal health\"}"
+    }
+  ],
+  "decision": {
+    "relation": "resolve",
+    "confidence": 0.94,
+    "evict_turn_ids": [
+      "t2",
+      "t3",
+      "t4"
+    ],
+    "pin_turn_ids": [
+      "t1"
+    ],
+    "archive_summary": "Resolved prior health-agent setup/query. Durable context to preserve as a compact pin: session is `agent:health:main`; respond with JSON only when asked in that mode; avoid external actions and data writes; default health data directory is `/Users/redcreen/document/personal health`; local-first preference is true; health-related skills previously visible were health, health-archive, health-reminders, health-review, health-storage-feishu, private-doctor, doctor-brief.",
+    "reasoning_summary": "The transcript shows a completed setup + answered query about the default health data directory. No unresolved task remains. Earlier assistant/user turns after the initial setup are solved status snapshots and can leave the next-turn raw prompt. The initial user turn carries durable agent-mode constraints and stable preferences, so it should survive as a semantic pin rather than raw history."
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "resolve",
+      "confidence": 0.94,
+      "archiveSummary": "Resolved prior health-agent setup/query. Durable context to preserve as a compact pin: session is `agent:health:main`; respond with JSON only when asked in that mode; avoid external actions and data writes; default health data directory is `/Users/redcreen/document/personal health`; local-first preference is true; health-related skills previously visible were health, health-archive, health-reminders, health-review, health-storage-feishu, private-doctor, doctor-brief.",
+      "reasoningSummary": "The transcript shows a completed setup + answered query about the default health data directory. No unresolved task remains. Earlier assistant/user turns after the initial setup are solved status snapshots and can leave the next-turn raw prompt. The initial user turn carries durable agent-mode constraints and stable preferences, so it should survive as a semantic pin rather than raw history.",
+      "latestUserTurnId": "t3",
+      "pinTurnIds": [
+        "t1"
+      ],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t2",
+        "t3",
+        "t4"
+      ],
+      "blockedEvictTurnIds": [
+        "t3"
+      ],
+      "appliedEvictTurnIds": [
+        "t2",
+        "t4"
+      ],
+      "keepTurnIds": [
+        "t1",
+        "t3"
+      ],
+      "baselineTokens": 564,
+      "keptTokens": 393,
+      "prunedTokens": 171,
+      "reductionRatio": 0.30319148936170215,
+      "keepTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "task-system runtime context: - session: agent:health:main - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded 你现在是升级后的 health agent。不要做任何外部操作，也不要写入数据。只返回一个 JSON 对象，字段只有 data_root, local_first, skills_seen。data_root 写当前默认健康数据目录；local_first 写 true/false；skills_seen 只列出你当前能看到的 health 相关 skill 名称。",
+          "tokenEstimate": 215
+        },
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "task-system runtime context: - session: agent:health:main - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded 只返回 JSON：{\"data_root\": 当前默认健康数据目录}",
+          "tokenEstimate": 178
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "**Inspecting available skills** I need to focus on producing a JSON object, adhering strictly to that format. I want to examine the skills that are related to health that I have access to. There's no need for any additional tools for this. I'll ensure that I'm drawing data only from the context available to me. It’s about being precise with what needs to be structured in this JSON format. So, I'll create that now! {\"data_root\":\"/Users/redcreen/document/personal health\",\"local_first\":true,\"skills_seen\":[\"health\",\"health-archive\",\"health-reminders\",\"health-review\",\"health-storage-feishu\",\"private-doctor\",\"doctor-brief\"]}",
+          "tokenEstimate": 157
+        },
+        {
+          "id": "t4",
+          "role": "assistant",
+          "content": "{\"data_root\":\"/Users/redcreen/document/personal health\"}",
+          "tokenEstimate": 14
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: task-system runtime context: - session: agent:health:main - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded 你现在是升级后的 health agent。不要做任何外部操作，也不要写入数据。只返回一个 JSON 对象，字段只有 data_root, local_first, skills_seen。data_root 写当前默认健康数据目录；local_first 写 true/false；skills_seen 只列出你当前能看到的 health 相关 skill 名称。\nt2 assistant: **Inspecting available skills** I need to focus on producing a JSON object, adhering strictly to that format. I want to examine the skills that are related to health that I have access to. There's no need for any additional tools for this. I'll ensure that I'm drawing data only from the context available to me. It’s about being precise with what needs to be structured in this JSON format. So, I'll create that now! {\"data_root\":\"/Users/redcreen/document/personal health\",\"local_first\":true,\"skills_seen\":[\"health\",\"health-archive\",\"health-reminders\",\"health-review\",\"health-storage-feishu\",\"private-doctor\",\"doctor-brief\"]}\nt3 user: task-system runtime context: - session: agent:health:main - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded 只返回 JSON：{\"data_root\": 当前默认健康数据目录}\nt4 assistant: {\"data_root\":\"/Users/redcreen/document/personal health\"}",
+    "shadowRawTranscript": "t1 user: task-system runtime context: - session: agent:health:main - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded 你现在是升级后的 health agent。不要做任何外部操作，也不要写入数据。只返回一个 JSON 对象，字段只有 data_root, local_first, skills_seen。data_root 写当前默认健康数据目录；local_first 写 true/false；skills_seen 只列出你当前能看到的 health 相关 skill 名称。\nt3 user: task-system runtime context: - session: agent:health:main - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded 只返回 JSON：{\"data_root\": 当前默认健康数据目录}",
+    "semanticPinNotes": [],
+    "archiveSummary": "Resolved prior health-agent setup/query. Durable context to preserve as a compact pin: session is `agent:health:main`; respond with JSON only when asked in that mode; avoid external actions and data writes; default health data directory is `/Users/redcreen/document/personal health`; local-first preference is true; health-related skills previously visible were health, health-archive, health-reminders, health-review, health-storage-feishu, private-doctor, doctor-brief.",
+    "injectedArchiveSummary": "Resolved prior health-agent setup/query. Durable context to preserve as a compact pin: session i...",
+    "baselinePromptEstimate": 576,
+    "shadowRawPromptEstimate": 398,
+    "shadowPackageEstimate": 432,
+    "shadowPackageText": "Active raw turns:\nt1 user: task-system runtime context: - session: agent:health:main - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded 你现在是升级后的 health agent。不要做任何外部操作，也不要写入数据。只返回一个 JSON 对象，字段只有 data_root, local_first, skills_seen。data_root 写当前默认健康数据目录；local_first 写 true/false；skills_seen 只列出你当前能看到的 health 相关 skill 名称。\nt3 user: task-system runtime context: - session: agent:health:main - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded 只返回 JSON：{\"data_root\": 当前默认健康数据目录}\n\nArchived summary:\nResolved prior health-agent setup/query. Durable context to preserve as a compact pin: session i..."
+  },
+  "scorecard": {
+    "relation": "resolve",
+    "baselineTurnCount": 4,
+    "keptTurnCount": 2,
+    "evictedTurnCount": 2,
+    "pinCount": 1,
+    "baselinePromptEstimate": 576,
+    "shadowRawPromptEstimate": 398,
+    "shadowPackageEstimate": 432,
+    "rawReductionRatio": 0.3032,
+    "packageReductionRatio": 0.25,
+    "candidateLoadElapsedMs": 15,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 20007,
+    "totalElapsedMs": 20012,
+    "guardedEnabled": false,
+    "guardedApplied": false,
+    "guardedReason": "feature_disabled",
+    "guardedMessageCount": 4,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 564
+  },
+  "guarded": {
+    "enabled": false,
+    "applied": false,
+    "reason": "feature_disabled",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "task-system runtime context:\n- session: agent:health:main\n- task: unknown\n- mode: tool-first-after-first-ack\n- follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup\n- future-first default: main_user_content_mode=none\n- runtime chooses none / immediate-summary / full-answer for current-turn business content\n- immediate-summary must be one short business-facing line\n- never expose scheduling, promise, or tool-chain state to users\n- include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work\n- never promise a future reply unless task-system tools succeeded\n\n你现在是升级后的 health agent。不要做任何外部操作，也不要写入数据。只返回一个 JSON 对象，字段只有 data_root, local_first, skills_seen。data_root 写当前默认健康数据目录；local_first 写 true/false；skills_seen 只列出你当前能看到的 health 相关 skill 名称。"
+          }
+        ],
+        "timestamp": 1776513624684
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "thinking",
+            "thinking": "**Inspecting available skills**\n\nI need to focus on producing a JSON object, adhering strictly to that format. I want to examine the skills that are related to health that I have access to. There's no need for any additional tools for this. I'll ensure that I'm drawing data only from the context available to me. It’s about being precise with what needs to be structured in this JSON format. So, I'll create that now!",
+            "thinkingSignature": "{\"id\":\"rs_0440e5ff35d0bdc80169e3726022ec8191a17d042e5570a901\",\"type\":\"reasoning\",\"encrypted_content\":\"gAAAAABp43JiIgACF7bGGO2_fXOr5EyqH6uh5nj25auwW8RUtRx_7Mvk--y7LEpT9GRtdtJKKDi3RuWuw3FUKhVe1Ni7wIGVr3ZiQj8I5lsw8OPCPYTC95i0uooovuHVbD03ClUilgW6ObXuWp47Y0MysCgM4ciE8F9fBBIWf0sJcEEwJpQUwI19Ku7rN0AHWW-sNk13p9g0W0C0lOxE2G1efyADiAqQK-qZf_359AOsP5KgwVgxnfN62spO4YSqmqfct7Xr82WUcSRFzLOivfswCggSDA8Ogu88XH9eGRqwigJMVHYxAQGIW1Hosr-_8th1YL0C48AyrTXel9yTjLtIAZzjwiWSi8T2MqzrwhsGX8gaAWGAXjuFtFN1mBa1KSePRMdkzPPK8OKVp_G05VPpknffigTS8JnWKWcQqb59KitSIz5sxOvQX5-EbIRQcj-M4KJFf6RdQIrO4_XrEor5LppM20dSnGEQovzH8K4_O6DdbLFucvOyyeNE_8FSwpA59W2Lajx4Bh_W3G5l1p-7zNKP6gTmOqwuPE-t6e4xIILIdO6-dvKPI1HnavtX-suL-_Oj4ZjSYBA5yW1e5eDCeuzPSHAufgXjiYgzmmywZCwdwS8WS8RhjN_2_LQjcVe352b0NpVJXtlRjXeTljMTCyQ75y3k670Ed-OuJUqImS8DDPYJ-4ubBBpxpU8gd9i1i9qQ0Bc4Te35yH_YYe_UwPjmehNiz0xgu0ugb09OXgASTBDSKdwrP3gTmvNvhM2aMIckzHy2Tjlv2Qr9Bqet6Q2VbGquOyVOt-lqdB2i5AZ9s41_QuEEmFZ3ZtU3tmb6T_qLy6hTKAHZj_3DQH_t9x4uFOrQqXBhpTWlxwF0Bo3NS0Bgj0Mz0SyoC1tAfS3tjxRvHr_F92sEvID7tQTS08W6q39v3Jvf4P7kVAT-msjdycwvBxEUhUHtB7sO_iWe-CELul16DcsLlwYHnnaJ-eCH6fSA7iJwBtEh5Hfbwu9_KUCnWNwnVBDrtVRZ-aIjaTqnUR_F767gVTWUdHTn9Z5fxmOOVCAAjtnf7dqVomhsYCGCZ-eQ_4TLEkrTHGibHAJzcVOWKBEdaGHahPGsKV-3urJZysLrhHRYB2w8chllNjxrzYwToOjspRl12_F35n3gwvToaXLJ2qAJK0yYoZ304O7UPg==\",\"summary\":[{\"type\":\"summary_text\",\"text\":\"**Inspecting available skills**\\n\\nI need to focus on producing a JSON object, adhering strictly to that format. I want to examine the skills that are related to health that I have access to. There's no need for any additional tools for this. I'll ensure that I'm drawing data only from the context available to me. It’s about being precise with what needs to be structured in this JSON format. So, I'll create that now!\"}]}"
+          },
+          {
+            "type": "text",
+            "text": "{\"data_root\":\"/Users/redcreen/document/personal health\",\"local_first\":true,\"skills_seen\":[\"health\",\"health-archive\",\"health-reminders\",\"health-review\",\"health-storage-feishu\",\"private-doctor\",\"doctor-brief\"]}",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0440e5ff35d0bdc80169e372622ef08191bae25ff750207951\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 36143,
+          "output": 89,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "totalTokens": 36232,
+          "cost": {
+            "input": 0.02710725,
+            "output": 0.00040050000000000003,
+            "cacheRead": 0,
+            "cacheWrite": 0,
+            "total": 0.02750775
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776513624690,
+        "responseId": "resp_0440e5ff35d0bdc80169e3725e6fa881918f0d8e840cdf4442"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "task-system runtime context:\n- session: agent:health:main\n- task: unknown\n- mode: tool-first-after-first-ack\n- follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup\n- future-first default: main_user_content_mode=none\n- runtime chooses none / immediate-summary / full-answer for current-turn business content\n- immediate-summary must be one short business-facing line\n- never expose scheduling, promise, or tool-chain state to users\n- include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work\n- never promise a future reply unless task-system tools succeeded\n\n只返回 JSON：{\"data_root\": 当前默认健康数据目录}"
+          }
+        ],
+        "timestamp": 1776514369046
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "thinkingSignature": "{\"id\":\"rs_0440e5ff35d0bdc80169e375471e60819180e7ad5d9d393997\",\"type\":\"reasoning\",\"encrypted_content\":\"gAAAAABp43VHEkVEv7u2cJoX_uR2kBpGZN9i-uvsPwCaAZfqpQ3vJiPilMLbUia79SwFzmWpzJkk9SZd_rMIRbvKGhRy5aN3WAZVnWZZ9kjD34wQPn79bmRBELLCdVpCKdIRcKtPAUC3Hmx2vK8nfOcsXR55j0LdCTP8sJ5oV0aKt0H8Pxhw2VnvU1hFRjKsvmH--lPXAOrig1k3AjKtidmDw0eibG8j7y4O3mplqnVcbSh83J_inpEID8xndY90NDYD9RjgS_4kLco1MbVWlOsRd5iuvXyIDDKpPcMbDIl2aBguvn-U0ufpj4MSUqf1G0P7N9udU6qli9padzv6IoXuL87iya2QQJDa1ts-ovt_1wUI4y85nhpUI9osiTw49dYxw6uYBgVQLAu5tKigGLtr0TUtjwYz29vRcxaSelZN3ga6VC5w7dmLicGIixHdGOFnOCwt_aa3nHTpBNjN989YdBZZp5I8Hv1OMaeueZcogS_1pPKVtkKnatxsLfexMxJ02PxtN6fxLn2HoXWpvQ57o2U4lrC6OPpD2LhyxVtCmy0nUhlBTMh2MI8mDwDybS6OZimDABN79BANljhdgvmHLwYJxq1dkw0scayOuyLqPkoUu1I4GsMzmQhVsuVnfYDaf924CQcGr8ENCjfjzww9ixD6oDnuW_tfTBTxwg8Ayk86xd8XGf3sPDSZzZZFdmsfki7d6OksFI6BXSabO83QgKfZWdlvMbSDzEWW7RWseLOwP9vVuWjIgi0X9jIbSznDwgLRpyX1GYRJDa1pN3Am-7QeaOcsU9owKy97ZDhV1Dbb4Kp1U8iNgKXEAc2obUcNM-BHlk_d25DxYIwSib89yNr3NYYKisOGf8I5kDrwg7OBim8OU4SJJvYqADUxaeZQvggkgMIiblwXm_iUZdCC1sT9ILig0B_vhgELH-MlzEJm36C6HydAK3qNBNoC416tI9ICEZwoFY3ibWCIP1Ujem079E3d2g==\",\"summary\":[]}"
+          },
+          {
+            "type": "text",
+            "text": "{\"data_root\":\"/Users/redcreen/document/personal health\"}",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0440e5ff35d0bdc80169e3754777f881918975c1c28abd6668\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 19616,
+          "output": 28,
+          "cacheRead": 18432,
+          "cacheWrite": 0,
+          "totalTokens": 38076,
+          "cost": {
+            "input": 0.014712000000000001,
+            "output": 0.000126,
+            "cacheRead": 0.0013824,
+            "cacheWrite": 0,
+            "total": 0.0162204
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776514369052,
+        "responseId": "resp_0440e5ff35d0bdc80169e3754643ec8191bb269b152dcfc952"
+      }
+    ],
+    "filteredMessageCount": 4,
+    "filteredMessageTokenEstimate": 564,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 20012,
+    "decisionElapsedMs": 20007
+  }
+}

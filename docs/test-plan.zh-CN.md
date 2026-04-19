@@ -36,6 +36,8 @@ OpenClaw release bundle 的真实安装验证在 [unified-memory-core/testing/op
 
 “只等人类验收”的一键 CLI 门禁在 [unified-memory-core/testing/release-preflight.zh-CN.md](reference/unified-memory-core/testing/release-preflight.zh-CN.md)。
 
+Codex 对话窗口里的 `Context Minor GC` 手工验收入口在 [unified-memory-core/testing/codex-context-minor-gc-manual.zh-CN.md](reference/unified-memory-core/testing/codex-context-minor-gc-manual.zh-CN.md)。
+
 ## 自动化覆盖
 
 主要自动化测试面：
@@ -61,6 +63,7 @@ OpenClaw release bundle 的真实安装验证在 [unified-memory-core/testing/op
 - [unified-memory-core/testing/openclaw-cli-integration.zh-CN.md](reference/unified-memory-core/testing/openclaw-cli-integration.zh-CN.md)
 - [unified-memory-core/testing/openclaw-bundle-install.zh-CN.md](reference/unified-memory-core/testing/openclaw-bundle-install.zh-CN.md)
 - [unified-memory-core/testing/release-preflight.zh-CN.md](reference/unified-memory-core/testing/release-preflight.zh-CN.md)
+- [unified-memory-core/testing/codex-context-minor-gc-manual.zh-CN.md](reference/unified-memory-core/testing/codex-context-minor-gc-manual.zh-CN.md)
 
 ## 手工检查
 

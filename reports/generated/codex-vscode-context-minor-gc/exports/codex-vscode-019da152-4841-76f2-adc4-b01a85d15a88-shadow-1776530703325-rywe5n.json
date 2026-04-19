@@ -1,0 +1,288 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776530703325-rywe5n",
+  "generated_at": "2026-04-18T16:45:03.325Z",
+  "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+  "agent_id": "main",
+  "query": "[GC-D2] 更新一下：我现在默认编辑器是 Zed。",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "assistant",
+      "content": "Zed。 `Case D` 也是半通过： - 答案正确，说明“新事实覆盖旧事实”成立 - 但 GC 仍然没有真正应用，最终稳定成： - `relation=continue` - `applied=false` - `guard_reason=not_enough_evictions`"
+    },
+    {
+      "id": "t2",
+      "role": "user",
+      "content": "需要"
+    },
+    {
+      "id": "t3",
+      "role": "assistant",
+      "content": "根因基本确认了，不是单纯“模型把 B/D 判成了 `continue`”。 核心问题有两个。"
+    },
+    {
+      "id": "t4",
+      "role": "user",
+      "content": "要； 先做1，然后做2"
+    },
+    {
+      "id": "t5",
+      "role": "assistant",
+      "content": "已经做完，顺序就是你要的 `1 -> 2`。 第 1 条已修： - timeout 不再伪装成 `continue` - 现在会落成 `status=\"error\", reason=\"decision_timeout\"` - 相关改动在 [structured-decision-runner.js](/Users/redcreen/Project/unified-memory-core/src/structured-decision-…"
+    },
+    {
+      "id": "t6",
+      "role": "user",
+      "content": "需要"
+    },
+    {
+      "id": "t7",
+      "role": "assistant",
+      "content": "先重跑短一点的 `Case D`。下一条发这个： ```text [GC-D2] 记一下：我以前默认编辑器是 Vim。 ```"
+    },
+    {
+      "id": "t8",
+      "role": "user",
+      "content": "[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？"
+    },
+    {
+      "id": "t9",
+      "role": "assistant",
+      "content": "Zed。 不过这条还是旧前缀 `GC-D1`，不适合拿来验证修复后的行为。要干净重跑，请下一条改发："
+    },
+    {
+      "id": "t10",
+      "role": "user",
+      "content": "[GC-D2] 记一下：我以前默认编辑器是 Vim。"
+    },
+    {
+      "id": "t11",
+      "role": "assistant",
+      "content": "很好，`GC-D2` 已经是干净样本了。 下一条发："
+    },
+    {
+      "id": "t12",
+      "role": "user",
+      "content": "[GC-D2] 更新一下：我现在默认编辑器是 Zed。"
+    }
+  ],
+  "decision": {
+    "relation": "continue",
+    "confidence": 0.95,
+    "evict_turn_ids": [
+      "t1",
+      "t2",
+      "t3",
+      "t4",
+      "t5",
+      "t6",
+      "t7",
+      "t8",
+      "t9"
+    ],
+    "pin_turn_ids": [
+      "t10"
+    ],
+    "archive_summary": "Earlier turns t1-t9 were about debugging GC behavior and setting up a clean D2 test run; that setup is now complete and no longer needed as raw prompt context. Durable fact from t10: the user previously used Vim as the default editor. Latest user turn t12 updates the current default editor to Zed and will be kept automatically by runtime.",
+    "reasoning_summary": "The active topic is still the editor-preference memory test, so relation=continue. The latest turn depends only on the immediately relevant fact history, not on the earlier GC-debug/status discussion. The old implementation/debugging block is resolved and can leave the next-turn raw working set. Preserve t10 as a semantic pin because 'previously Vim' is durable historical context, while the current fact in t12 remains raw automatically."
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "continue",
+      "confidence": 0.95,
+      "archiveSummary": "Earlier turns t1-t9 were about debugging GC behavior and setting up a clean D2 test run; that setup is now complete and no longer needed as raw prompt context. Durable fact from t10: the user previously used Vim as the default editor. Latest user turn t12 updates the current default editor to Zed and will be kept automatically by runtime.",
+      "reasoningSummary": "The active topic is still the editor-preference memory test, so relation=continue. The latest turn depends only on the immediately relevant fact history, not on the earlier GC-debug/status discussion. The old implementation/debugging block is resolved and can leave the next-turn raw working set. Preserve t10 as a semantic pin because 'previously Vim' is durable historical context, while the current fact in t12 remains raw automatically.",
+      "latestUserTurnId": "t12",
+      "pinTurnIds": [
+        "t10"
+      ],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8",
+        "t9"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8",
+        "t9"
+      ],
+      "keepTurnIds": [
+        "t10",
+        "t11",
+        "t12"
+      ],
+      "baselineTokens": 165,
+      "keptTokens": 21,
+      "prunedTokens": 144,
+      "reductionRatio": 0.8727272727272727,
+      "keepTurns": [
+        {
+          "id": "t10",
+          "role": "user",
+          "content": "[GC-D2] 记一下：我以前默认编辑器是 Vim。",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t11",
+          "role": "assistant",
+          "content": "很好，`GC-D2` 已经是干净样本了。 下一条发：",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t12",
+          "role": "user",
+          "content": "[GC-D2] 更新一下：我现在默认编辑器是 Zed。",
+          "tokenEstimate": 7
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "assistant",
+          "content": "Zed。 `Case D` 也是半通过： - 答案正确，说明“新事实覆盖旧事实”成立 - 但 GC 仍然没有真正应用，最终稳定成： - `relation=continue` - `applied=false` - `guard_reason=not_enough_evictions`",
+          "tokenEstimate": 36
+        },
+        {
+          "id": "t2",
+          "role": "user",
+          "content": "需要",
+          "tokenEstimate": 1
+        },
+        {
+          "id": "t3",
+          "role": "assistant",
+          "content": "根因基本确认了，不是单纯“模型把 B/D 判成了 `continue`”。 核心问题有两个。",
+          "tokenEstimate": 12
+        },
+        {
+          "id": "t4",
+          "role": "user",
+          "content": "要； 先做1，然后做2",
+          "tokenEstimate": 3
+        },
+        {
+          "id": "t5",
+          "role": "assistant",
+          "content": "已经做完，顺序就是你要的 `1 -> 2`。 第 1 条已修： - timeout 不再伪装成 `continue` - 现在会落成 `status=\"error\", reason=\"decision_timeout\"` - 相关改动在 [structured-decision-runner.js](/Users/redcreen/Project/unified-memory-core/src/structured-decision-…",
+          "tokenEstimate": 55
+        },
+        {
+          "id": "t6",
+          "role": "user",
+          "content": "需要",
+          "tokenEstimate": 1
+        },
+        {
+          "id": "t7",
+          "role": "assistant",
+          "content": "先重跑短一点的 `Case D`。下一条发这个： ```text [GC-D2] 记一下：我以前默认编辑器是 Vim。 ```",
+          "tokenEstimate": 16
+        },
+        {
+          "id": "t8",
+          "role": "user",
+          "content": "[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t9",
+          "role": "assistant",
+          "content": "Zed。 不过这条还是旧前缀 `GC-D1`，不适合拿来验证修复后的行为。要干净重跑，请下一条改发：",
+          "tokenEstimate": 13
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 assistant: Zed。 `Case D` 也是半通过： - 答案正确，说明“新事实覆盖旧事实”成立 - 但 GC 仍然没有真正应用，最终稳定成： - `relation=continue` - `applied=false` - `guard_reason=not_enough_evictions`\nt2 user: 需要\nt3 assistant: 根因基本确认了，不是单纯“模型把 B/D 判成了 `continue`”。 核心问题有两个。\nt4 user: 要； 先做1，然后做2\nt5 assistant: 已经做完，顺序就是你要的 `1 -> 2`。 第 1 条已修： - timeout 不再伪装成 `continue` - 现在会落成 `status=\"error\", reason=\"decision_timeout\"` - 相关改动在 [structured-decision-runner.js](/Users/redcreen/Project/unified-memory-core/src/structured-decision-…\nt6 user: 需要\nt7 assistant: 先重跑短一点的 `Case D`。下一条发这个： ```text [GC-D2] 记一下：我以前默认编辑器是 Vim。 ```\nt8 user: [GC-D1] 回到编辑器问题。我现在默认编辑器是什么？\nt9 assistant: Zed。 不过这条还是旧前缀 `GC-D1`，不适合拿来验证修复后的行为。要干净重跑，请下一条改发：\nt10 user: [GC-D2] 记一下：我以前默认编辑器是 Vim。\nt11 assistant: 很好，`GC-D2` 已经是干净样本了。 下一条发：\nt12 user: [GC-D2] 更新一下：我现在默认编辑器是 Zed。",
+    "shadowRawTranscript": "t10 user: [GC-D2] 记一下：我以前默认编辑器是 Vim。\nt11 assistant: 很好，`GC-D2` 已经是干净样本了。 下一条发：\nt12 user: [GC-D2] 更新一下：我现在默认编辑器是 Zed。",
+    "semanticPinNotes": [],
+    "archiveSummary": "Earlier turns t1-t9 were about debugging GC behavior and setting up a clean D2 test run; that setup is now complete and no longer needed as raw prompt context. Durable fact from t10: the user previously used Vim as the default editor. Latest user turn t12 updates the current default editor to Zed and will be kept automatically by runtime.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 199,
+    "shadowRawPromptEstimate": 29,
+    "shadowPackageEstimate": 72,
+    "shadowPackageText": "Task state summary:\nEarlier turns t1-t9 were about debugging GC behavior and setting up a clean D2 test run; that setup is now complete and no longer needed as raw prompt context. Durable fact from t10: the user previously used Vim as the…\n\nLatest user ask:\n- [GC-D2] 更新一下：我现在默认编辑器是 Zed。"
+  },
+  "scorecard": {
+    "relation": "continue",
+    "baselineTurnCount": 12,
+    "keptTurnCount": 3,
+    "evictedTurnCount": 9,
+    "pinCount": 1,
+    "baselinePromptEstimate": 199,
+    "shadowRawPromptEstimate": 29,
+    "shadowPackageEstimate": 72,
+    "rawReductionRatio": 0.8727,
+    "packageReductionRatio": 0.6382,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 17019,
+    "totalElapsedMs": 17019,
+    "guardedEnabled": true,
+    "guardedApplied": true,
+    "guardedReason": "guarded_candidate",
+    "guardedMessageCount": 3,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 21
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": true,
+    "reason": "guarded_candidate",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": "[GC-D2] 记一下：我以前默认编辑器是 Vim。"
+      },
+      {
+        "role": "assistant",
+        "content": "很好，`GC-D2` 已经是干净样本了。 下一条发："
+      },
+      {
+        "role": "user",
+        "content": "[GC-D2] 更新一下：我现在默认编辑器是 Zed。"
+      }
+    ],
+    "filteredMessageCount": 3,
+    "filteredMessageTokenEstimate": 21,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ]
+  },
+  "timings": {
+    "totalElapsedMs": 17019,
+    "decisionElapsedMs": 17019
+  }
+}

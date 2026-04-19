@@ -1,0 +1,288 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776528995131-6gtebu",
+  "generated_at": "2026-04-18T16:16:35.131Z",
+  "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+  "agent_id": "main",
+  "query": "[GC-A1] 代码 detour 已经结束。回到偏好：我坐飞机喜欢什么位置？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "assistant",
+      "content": "不是“每一轮都会压缩”，但现在看起来已经是“每一轮都会评估，满足条件就正常 GC 应用”。 这轮之所以没压，是因为这是新对话，抽出来的 turn 不够。代码里 `minTurns` 默认是 `3`，少于 3 就直接 `not_enough_turns`，见 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/cod…"
+    },
+    {
+      "id": "t2",
+      "role": "user",
+      "content": "那接下来 我要怎么测试 gc 在正常工作，并且明显做了选择，至少一个连续对话里，应该能够控制好 context的大小；或者换了换题之后 context应该减小； 你需要帮我设计一下案例；"
+    },
+    {
+      "id": "t3",
+      "role": "assistant",
+      "content": "可以，建议你分成两层测：`VS Code 手工验收` + `仓库脚本回放`。这样能同时回答两件事：一是“真实使用时 context 会不会被控制住”，二是“GC 的选择是不是符合设计”。 **先看什么** 每次都盯这几个信号就够了："
+    },
+    {
+      "id": "t4",
+      "role": "user",
+      "content": "需要； 我希望是直接在这个窗口来测试，可以么？"
+    },
+    {
+      "id": "t5",
+      "role": "assistant",
+      "content": "可以，直接在这个窗口测。 我已经加了手工验收文档：[codex-context-minor-gc-manual.zh-CN.md](/Users/redcreen/Project/unified-memory-core/docs/reference/unified-memory-core/testing/codex-context-minor-gc-manual.zh-CN.md)，并挂到了…"
+    },
+    {
+      "id": "t6",
+      "role": "user",
+      "content": "[GC-A1] 以后默认给我中文，结论优先。"
+    },
+    {
+      "id": "t7",
+      "role": "assistant",
+      "content": "这一轮已经有信号了。 观测到两条同 query 记录： - 一条是 `relation=resolve, applied=true`，`promptReductionRatio=0.6682`，`214 -> 71` - 另一条是 `relation=branch, applied=false`"
+    },
+    {
+      "id": "t8",
+      "role": "user",
+      "content": "[GC-A1] 再记一下：我坐飞机喜欢靠过道。"
+    },
+    {
+      "id": "t9",
+      "role": "assistant",
+      "content": "这条已经落盘了，结果是先出现两次 `branch + applied=false`，最后稳定到一条更可信的： - `relation=switch` - `applied=true` - `promptReductionRatio=0.6996` - `263 -> 79`"
+    },
+    {
+      "id": "t10",
+      "role": "user",
+      "content": "[GC-A1] 现在切到代码：这轮先只做 shadow，不接管主路径。"
+    },
+    {
+      "id": "t11",
+      "role": "assistant",
+      "content": "这一轮的关键点不是“代码 detour 这句话有没有立刻被压”，而是前一轮已经反复证明两件事： - `靠过道` 这条新事实被保住了 - GC 多次采样后能收敛到 `applied=true`，压缩比大约在 `0.65` 到 `0.74`"
+    },
+    {
+      "id": "t12",
+      "role": "user",
+      "content": "[GC-A1] 代码 detour 已经结束。回到偏好：我坐飞机喜欢什么位置？"
+    }
+  ],
+  "decision": {
+    "relation": "continue",
+    "confidence": 0,
+    "evict_turn_ids": [],
+    "pin_turn_ids": [],
+    "archive_summary": "",
+    "reasoning_summary": ""
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "continue",
+      "confidence": 0,
+      "archiveSummary": "",
+      "reasoningSummary": "",
+      "latestUserTurnId": "t12",
+      "pinTurnIds": [],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [],
+      "keepTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8",
+        "t9",
+        "t10",
+        "t11",
+        "t12"
+      ],
+      "baselineTokens": 297,
+      "keptTokens": 297,
+      "prunedTokens": 0,
+      "reductionRatio": 0,
+      "keepTurns": [
+        {
+          "id": "t1",
+          "role": "assistant",
+          "content": "不是“每一轮都会压缩”，但现在看起来已经是“每一轮都会评估，满足条件就正常 GC 应用”。 这轮之所以没压，是因为这是新对话，抽出来的 turn 不够。代码里 `minTurns` 默认是 `3`，少于 3 就直接 `not_enough_turns`，见 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/cod…",
+          "tokenEstimate": 55
+        },
+        {
+          "id": "t2",
+          "role": "user",
+          "content": "那接下来 我要怎么测试 gc 在正常工作，并且明显做了选择，至少一个连续对话里，应该能够控制好 context的大小；或者换了换题之后 context应该减小； 你需要帮我设计一下案例；",
+          "tokenEstimate": 24
+        },
+        {
+          "id": "t3",
+          "role": "assistant",
+          "content": "可以，建议你分成两层测：`VS Code 手工验收` + `仓库脚本回放`。这样能同时回答两件事：一是“真实使用时 context 会不会被控制住”，二是“GC 的选择是不是符合设计”。 **先看什么** 每次都盯这几个信号就够了：",
+          "tokenEstimate": 29
+        },
+        {
+          "id": "t4",
+          "role": "user",
+          "content": "需要； 我希望是直接在这个窗口来测试，可以么？",
+          "tokenEstimate": 6
+        },
+        {
+          "id": "t5",
+          "role": "assistant",
+          "content": "可以，直接在这个窗口测。 我已经加了手工验收文档：[codex-context-minor-gc-manual.zh-CN.md](/Users/redcreen/Project/unified-memory-core/docs/reference/unified-memory-core/testing/codex-context-minor-gc-manual.zh-CN.md)，并挂到了…",
+          "tokenEstimate": 50
+        },
+        {
+          "id": "t6",
+          "role": "user",
+          "content": "[GC-A1] 以后默认给我中文，结论优先。",
+          "tokenEstimate": 6
+        },
+        {
+          "id": "t7",
+          "role": "assistant",
+          "content": "这一轮已经有信号了。 观测到两条同 query 记录： - 一条是 `relation=resolve, applied=true`，`promptReductionRatio=0.6682`，`214 -> 71` - 另一条是 `relation=branch, applied=false`",
+          "tokenEstimate": 37
+        },
+        {
+          "id": "t8",
+          "role": "user",
+          "content": "[GC-A1] 再记一下：我坐飞机喜欢靠过道。",
+          "tokenEstimate": 6
+        },
+        {
+          "id": "t9",
+          "role": "assistant",
+          "content": "这条已经落盘了，结果是先出现两次 `branch + applied=false`，最后稳定到一条更可信的： - `relation=switch` - `applied=true` - `promptReductionRatio=0.6996` - `263 -> 79`",
+          "tokenEstimate": 35
+        },
+        {
+          "id": "t10",
+          "role": "user",
+          "content": "[GC-A1] 现在切到代码：这轮先只做 shadow，不接管主路径。",
+          "tokenEstimate": 9
+        },
+        {
+          "id": "t11",
+          "role": "assistant",
+          "content": "这一轮的关键点不是“代码 detour 这句话有没有立刻被压”，而是前一轮已经反复证明两件事： - `靠过道` 这条新事实被保住了 - GC 多次采样后能收敛到 `applied=true`，压缩比大约在 `0.65` 到 `0.74`",
+          "tokenEstimate": 30
+        },
+        {
+          "id": "t12",
+          "role": "user",
+          "content": "[GC-A1] 代码 detour 已经结束。回到偏好：我坐飞机喜欢什么位置？",
+          "tokenEstimate": 10
+        }
+      ],
+      "evictedTurns": []
+    },
+    "baselineRawTranscript": "t1 assistant: 不是“每一轮都会压缩”，但现在看起来已经是“每一轮都会评估，满足条件就正常 GC 应用”。 这轮之所以没压，是因为这是新对话，抽出来的 turn 不够。代码里 `minTurns` 默认是 `3`，少于 3 就直接 `not_enough_turns`，见 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/cod…\nt2 user: 那接下来 我要怎么测试 gc 在正常工作，并且明显做了选择，至少一个连续对话里，应该能够控制好 context的大小；或者换了换题之后 context应该减小； 你需要帮我设计一下案例；\nt3 assistant: 可以，建议你分成两层测：`VS Code 手工验收` + `仓库脚本回放`。这样能同时回答两件事：一是“真实使用时 context 会不会被控制住”，二是“GC 的选择是不是符合设计”。 **先看什么** 每次都盯这几个信号就够了：\nt4 user: 需要； 我希望是直接在这个窗口来测试，可以么？\nt5 assistant: 可以，直接在这个窗口测。 我已经加了手工验收文档：[codex-context-minor-gc-manual.zh-CN.md](/Users/redcreen/Project/unified-memory-core/docs/reference/unified-memory-core/testing/codex-context-minor-gc-manual.zh-CN.md)，并挂到了…\nt6 user: [GC-A1] 以后默认给我中文，结论优先。\nt7 assistant: 这一轮已经有信号了。 观测到两条同 query 记录： - 一条是 `relation=resolve, applied=true`，`promptReductionRatio=0.6682`，`214 -> 71` - 另一条是 `relation=branch, applied=false`\nt8 user: [GC-A1] 再记一下：我坐飞机喜欢靠过道。\nt9 assistant: 这条已经落盘了，结果是先出现两次 `branch + applied=false`，最后稳定到一条更可信的： - `relation=switch` - `applied=true` - `promptReductionRatio=0.6996` - `263 -> 79`\nt10 user: [GC-A1] 现在切到代码：这轮先只做 shadow，不接管主路径。\nt11 assistant: 这一轮的关键点不是“代码 detour 这句话有没有立刻被压”，而是前一轮已经反复证明两件事： - `靠过道` 这条新事实被保住了 - GC 多次采样后能收敛到 `applied=true`，压缩比大约在 `0.65` 到 `0.74`\nt12 user: [GC-A1] 代码 detour 已经结束。回到偏好：我坐飞机喜欢什么位置？",
+    "shadowRawTranscript": "t1 assistant: 不是“每一轮都会压缩”，但现在看起来已经是“每一轮都会评估，满足条件就正常 GC 应用”。 这轮之所以没压，是因为这是新对话，抽出来的 turn 不够。代码里 `minTurns` 默认是 `3`，少于 3 就直接 `not_enough_turns`，见 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/cod…\nt2 user: 那接下来 我要怎么测试 gc 在正常工作，并且明显做了选择，至少一个连续对话里，应该能够控制好 context的大小；或者换了换题之后 context应该减小； 你需要帮我设计一下案例；\nt3 assistant: 可以，建议你分成两层测：`VS Code 手工验收` + `仓库脚本回放`。这样能同时回答两件事：一是“真实使用时 context 会不会被控制住”，二是“GC 的选择是不是符合设计”。 **先看什么** 每次都盯这几个信号就够了：\nt4 user: 需要； 我希望是直接在这个窗口来测试，可以么？\nt5 assistant: 可以，直接在这个窗口测。 我已经加了手工验收文档：[codex-context-minor-gc-manual.zh-CN.md](/Users/redcreen/Project/unified-memory-core/docs/reference/unified-memory-core/testing/codex-context-minor-gc-manual.zh-CN.md)，并挂到了…\nt6 user: [GC-A1] 以后默认给我中文，结论优先。\nt7 assistant: 这一轮已经有信号了。 观测到两条同 query 记录： - 一条是 `relation=resolve, applied=true`，`promptReductionRatio=0.6682`，`214 -> 71` - 另一条是 `relation=branch, applied=false`\nt8 user: [GC-A1] 再记一下：我坐飞机喜欢靠过道。\nt9 assistant: 这条已经落盘了，结果是先出现两次 `branch + applied=false`，最后稳定到一条更可信的： - `relation=switch` - `applied=true` - `promptReductionRatio=0.6996` - `263 -> 79`\nt10 user: [GC-A1] 现在切到代码：这轮先只做 shadow，不接管主路径。\nt11 assistant: 这一轮的关键点不是“代码 detour 这句话有没有立刻被压”，而是前一轮已经反复证明两件事： - `靠过道` 这条新事实被保住了 - GC 多次采样后能收敛到 `applied=true`，压缩比大约在 `0.65` 到 `0.74`\nt12 user: [GC-A1] 代码 detour 已经结束。回到偏好：我坐飞机喜欢什么位置？",
+    "semanticPinNotes": [],
+    "archiveSummary": "",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 331,
+    "shadowRawPromptEstimate": 331,
+    "shadowPackageEstimate": 15,
+    "shadowPackageText": "Latest user ask:\n- [GC-A1] 代码 detour 已经结束。回到偏好：我坐飞机喜欢什么位置？"
+  },
+  "scorecard": {
+    "relation": "continue",
+    "baselineTurnCount": 12,
+    "keptTurnCount": 12,
+    "evictedTurnCount": 0,
+    "pinCount": 0,
+    "baselinePromptEstimate": 331,
+    "shadowRawPromptEstimate": 331,
+    "shadowPackageEstimate": 15,
+    "rawReductionRatio": 0,
+    "packageReductionRatio": 0.9547,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 120008,
+    "totalElapsedMs": 120009,
+    "guardedEnabled": true,
+    "guardedApplied": false,
+    "guardedReason": "not_enough_evictions",
+    "guardedMessageCount": 12,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 297
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": false,
+    "reason": "not_enough_evictions",
+    "filteredMessages": [
+      {
+        "role": "assistant",
+        "content": "不是“每一轮都会压缩”，但现在看起来已经是“每一轮都会评估，满足条件就正常 GC 应用”。 这轮之所以没压，是因为这是新对话，抽出来的 turn 不够。代码里 `minTurns` 默认是 `3`，少于 3 就直接 `not_enough_turns`，见 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/cod…"
+      },
+      {
+        "role": "user",
+        "content": "那接下来 我要怎么测试 gc 在正常工作，并且明显做了选择，至少一个连续对话里，应该能够控制好 context的大小；或者换了换题之后 context应该减小； 你需要帮我设计一下案例；"
+      },
+      {
+        "role": "assistant",
+        "content": "可以，建议你分成两层测：`VS Code 手工验收` + `仓库脚本回放`。这样能同时回答两件事：一是“真实使用时 context 会不会被控制住”，二是“GC 的选择是不是符合设计”。 **先看什么** 每次都盯这几个信号就够了："
+      },
+      {
+        "role": "user",
+        "content": "需要； 我希望是直接在这个窗口来测试，可以么？"
+      },
+      {
+        "role": "assistant",
+        "content": "可以，直接在这个窗口测。 我已经加了手工验收文档：[codex-context-minor-gc-manual.zh-CN.md](/Users/redcreen/Project/unified-memory-core/docs/reference/unified-memory-core/testing/codex-context-minor-gc-manual.zh-CN.md)，并挂到了…"
+      },
+      {
+        "role": "user",
+        "content": "[GC-A1] 以后默认给我中文，结论优先。"
+      },
+      {
+        "role": "assistant",
+        "content": "这一轮已经有信号了。 观测到两条同 query 记录： - 一条是 `relation=resolve, applied=true`，`promptReductionRatio=0.6682`，`214 -> 71` - 另一条是 `relation=branch, applied=false`"
+      },
+      {
+        "role": "user",
+        "content": "[GC-A1] 再记一下：我坐飞机喜欢靠过道。"
+      },
+      {
+        "role": "assistant",
+        "content": "这条已经落盘了，结果是先出现两次 `branch + applied=false`，最后稳定到一条更可信的： - `relation=switch` - `applied=true` - `promptReductionRatio=0.6996` - `263 -> 79`"
+      },
+      {
+        "role": "user",
+        "content": "[GC-A1] 现在切到代码：这轮先只做 shadow，不接管主路径。"
+      },
+      {
+        "role": "assistant",
+        "content": "这一轮的关键点不是“代码 detour 这句话有没有立刻被压”，而是前一轮已经反复证明两件事： - `靠过道` 这条新事实被保住了 - GC 多次采样后能收敛到 `applied=true`，压缩比大约在 `0.65` 到 `0.74`"
+      },
+      {
+        "role": "user",
+        "content": "[GC-A1] 代码 detour 已经结束。回到偏好：我坐飞机喜欢什么位置？"
+      }
+    ],
+    "filteredMessageCount": 12,
+    "filteredMessageTokenEstimate": 297,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 120009,
+    "decisionElapsedMs": 120008
+  }
+}

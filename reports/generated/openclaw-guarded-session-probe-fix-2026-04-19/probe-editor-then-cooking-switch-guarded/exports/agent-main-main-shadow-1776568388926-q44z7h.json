@@ -1,0 +1,237 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776568388926-q44z7h",
+  "generated_at": "2026-04-19T03:13:08.926Z",
+  "session_key": "agent:main:main",
+  "agent_id": "main",
+  "query": "更新一下：我现在默认编辑器是 Zed，而且后面都按这个新值算。",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "记一下：我以前默认编辑器是 Vim。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "已记下。"
+    },
+    {
+      "id": "t3",
+      "role": "assistant",
+      "content": "已记下。"
+    }
+  ],
+  "decision": {
+    "relation": "resolve",
+    "confidence": 0.97,
+    "evict_turn_ids": [
+      "t1",
+      "t2",
+      "t3"
+    ],
+    "pin_turn_ids": [],
+    "archive_summary": "User corrected the default editor preference from Vim to Zed; earlier acknowledgment turns are now irrelevant.",
+    "reasoning_summary": "The only durable fact update is carried by the latest user turn, which the runtime retains automatically. The prior Vim note and both acknowledgment turns are fully superseded and can leave the next-turn prompt."
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "resolve",
+      "confidence": 0.97,
+      "archiveSummary": "User corrected the default editor preference from Vim to Zed; earlier acknowledgment turns are now irrelevant.",
+      "reasoningSummary": "The only durable fact update is carried by the latest user turn, which the runtime retains automatically. The prior Vim note and both acknowledgment turns are fully superseded and can leave the next-turn prompt.",
+      "latestUserTurnId": "t1",
+      "pinTurnIds": [],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3"
+      ],
+      "blockedEvictTurnIds": [
+        "t1"
+      ],
+      "appliedEvictTurnIds": [
+        "t2",
+        "t3"
+      ],
+      "keepTurnIds": [
+        "t1"
+      ],
+      "baselineTokens": 7,
+      "keptTokens": 5,
+      "prunedTokens": 2,
+      "reductionRatio": 0.2857142857142857,
+      "keepTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "记一下：我以前默认编辑器是 Vim。",
+          "tokenEstimate": 5
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "已记下。",
+          "tokenEstimate": 1
+        },
+        {
+          "id": "t3",
+          "role": "assistant",
+          "content": "已记下。",
+          "tokenEstimate": 1
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 记一下：我以前默认编辑器是 Vim。\nt2 assistant: 已记下。\nt3 assistant: 已记下。",
+    "shadowRawTranscript": "t1 user: 记一下：我以前默认编辑器是 Vim。",
+    "semanticPinNotes": [],
+    "archiveSummary": "User corrected the default editor preference from Vim to Zed; earlier acknowledgment turns are now irrelevant.",
+    "injectedArchiveSummary": "User corrected the default editor preference from Vim to Zed; earlier acknowledgment turns are n...",
+    "baselinePromptEstimate": 17,
+    "shadowRawPromptEstimate": 7,
+    "shadowPackageEstimate": 12,
+    "shadowPackageText": "Recent raw context:\nt1 user: 记一下：我以前默认编辑器是 Vim。"
+  },
+  "scorecard": {
+    "relation": "resolve",
+    "baselineTurnCount": 3,
+    "keptTurnCount": 1,
+    "evictedTurnCount": 2,
+    "pinCount": 0,
+    "baselinePromptEstimate": 17,
+    "shadowRawPromptEstimate": 7,
+    "shadowPackageEstimate": 12,
+    "rawReductionRatio": 0.2857,
+    "packageReductionRatio": 0.2941,
+    "candidateLoadElapsedMs": 9,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 8912,
+    "totalElapsedMs": 8915,
+    "guardedEnabled": true,
+    "guardedApplied": false,
+    "guardedReason": "no_net_token_gain",
+    "guardedMessageCount": 4,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 20
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": false,
+    "reason": "no_net_token_gain",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "记一下：我以前默认编辑器是 Vim。"
+          }
+        ],
+        "timestamp": 1776568353055
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "已记下。",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0d82fb5ef959a2600169e448228dd08193a72f533f2269ca44\",\"phase\":\"commentary\"}"
+          },
+          {
+            "type": "toolCall",
+            "id": "call_NHDPfCJe5m2ST1AtS2DgHcyR",
+            "name": "write",
+            "arguments": {
+              "path": "memory/2026-04-12.md",
+              "content": "# Daily Memory 2026-04-12\n\n- Confirmed update: Maya以前默认编辑器是 Vim。\n"
+            },
+            "partialJson": "{\"path\":\"memory/2026-04-12.md\",\"content\":\"# Daily Memory 2026-04-12\\n\\n- Confirmed update: Maya以前默认编辑器是 Vim。\\n\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 8491,
+          "output": 65,
+          "cacheRead": 5120,
+          "cacheWrite": 0,
+          "totalTokens": 13676,
+          "cost": {
+            "input": 0.00636825,
+            "output": 0.0002925,
+            "cacheRead": 0.000384,
+            "cacheWrite": 0,
+            "total": 0.00704475
+          }
+        },
+        "stopReason": "toolUse",
+        "timestamp": 1776568353059,
+        "responseId": "resp_0d82fb5ef959a2600169e44821c8988193beca58dc6dff4404"
+      },
+      {
+        "role": "toolResult",
+        "toolCallId": "call_NHDPfCJe5m2ST1AtS2DgHcyR",
+        "toolName": "write",
+        "content": [
+          {
+            "type": "text",
+            "text": "Successfully wrote 65 bytes to memory/2026-04-12.md"
+          }
+        ],
+        "isError": false,
+        "timestamp": 1776568355384
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "已记下。",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0d82fb5ef959a2600169e44825e764819396fa90948c7b3638\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 389,
+          "output": 8,
+          "cacheRead": 13312,
+          "cacheWrite": 0,
+          "totalTokens": 13709,
+          "cost": {
+            "input": 0.00029175,
+            "output": 0.000036,
+            "cacheRead": 0.0009984,
+            "cacheWrite": 0,
+            "total": 0.00132615
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776568355385,
+        "responseId": "resp_0d82fb5ef959a2600169e44824347c8193a8518d3ce22162ce"
+      }
+    ],
+    "filteredMessageCount": 4,
+    "filteredMessageTokenEstimate": 20,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 8915,
+    "decisionElapsedMs": 8912
+  }
+}

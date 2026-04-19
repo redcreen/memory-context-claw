@@ -1,0 +1,320 @@
+{
+  "schema_version": "umc.codex-context-minor-gc.v1",
+  "generated_at": "2026-04-19T03:29:35.731Z",
+  "event_id": "shadow-1776569361579-uevilf-codex-packaged",
+  "session_key": "codex:vscode:019da335-a070-7972-b61e-6ba3a73ff633",
+  "query": "为什么是这个建议",
+  "status": "captured",
+  "reason": "",
+  "decision_transport": "codex_exec",
+  "relation": "continue",
+  "applied": true,
+  "codex_guard_reason": "codex_packaged_guard",
+  "prompt_reduction_ratio": 0.7984,
+  "baseline_context_estimate": 372,
+  "packaged_context_estimate": 75,
+  "effective_context_estimate": 75,
+  "shadow_status": "captured",
+  "shadow_guarded_applied": true,
+  "shadow_guarded_reason": "guarded_candidate",
+  "shadow_export_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da335-a070-7972-b61e-6ba3a73ff633-shadow-1776569361579-uevilf.json",
+  "shadow_summary_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl",
+  "export_path": "exports/codex-vscode-019da335-a070-7972-b61e-6ba3a73ff633-shadow-1776569361579-uevilf-codex-packaged.json",
+  "effective_context_block": "## Context Minor GC Working Set\nTask state summary:\nEarlier discussion established that OpenClaw had not yet shown clear user-visible usability or obvious context drop after topic switches. A devlog summary was written, then the focus shifted to designing and running dee…\n\nLatest user ask:\n- 为什么是这个建议",
+  "packaged_context_block": "## Context Minor GC Working Set\nTask state summary:\nEarlier discussion established that OpenClaw had not yet shown clear user-visible usability or obvious context drop after topic switches. A devlog summary was written, then the focus shifted to designing and running dee…\n\nLatest user ask:\n- 为什么是这个建议",
+  "shadow_event": {
+    "schema_version": "umc.dialogue-working-set-shadow.v1",
+    "event_id": "shadow-1776569361579-uevilf",
+    "generated_at": "2026-04-19T03:29:21.579Z",
+    "session_key": "codex:vscode:019da335-a070-7972-b61e-6ba3a73ff633",
+    "agent_id": "main",
+    "query": "为什么是这个建议",
+    "status": "captured",
+    "reason": "",
+    "sampling": {
+      "max_turns": 12,
+      "min_turns": 3,
+      "max_chars_per_turn": 900
+    },
+    "transcript": [
+      {
+        "id": "t1",
+        "role": "user",
+        "content": "那openclaw 长对话 context 最大的部分 是不是已经被接管了呢？"
+      },
+      {
+        "id": "t2",
+        "role": "assistant",
+        "content": "结论：**大概率是，OpenClaw 长对话里最大的那块动态 context，已经被接管了。** 原因很直接："
+      },
+      {
+        "id": "t3",
+        "role": "user",
+        "content": "ok，当前的问题汇总下，写入到开发日志中； 完成后我们开始对openclaw进行测试；"
+      },
+      {
+        "id": "t4",
+        "role": "assistant",
+        "content": "当前问题汇总已经写入开发日志：[2026-04-19-clarify-host-level-context-minor-gc-acceptance-and-openclaw-feasibility.md](/Users/redcreen/Project/unified-memory-core/docs/devlog/2026-04-19-clarify-host-level-context-minor-gc-acceptance-and…"
+      },
+      {
+        "id": "t5",
+        "role": "user",
+        "content": "你刚才验证后，openclaw 是否达到了我们认为的用户端明显可用么/？ 整体的context 大小有明显的下降么？ （切不同话题）"
+      },
+      {
+        "id": "t6",
+        "role": "assistant",
+        "content": "还不能这么说。按我们刚才真正验证到的东西，答案是： - `OpenClaw 还不能判定为“用户端已经明显可用”` - `也没有证据证明整体 context 在切不同话题后有明显下降`"
+      },
+      {
+        "id": "t7",
+        "role": "user",
+        "content": "我们现在的任务是 深入的测试openclaw的 gc，是否能够达标；，尽量更长的对话（可以做临时数据写入，但是不要对我其他文档做写入操作）；做好探针，记录好相关数据；预期是：更长的对话，如果正常情况下，可能要做compact了，但是因为又了gc，实际不需要compact；同时在一个同一话题的长对话后切换话题，应该有明显的context回落；这里的context指的是实际发给llm的数据； 接下来你来策划这个测试，把相关配置都做好，然后就开始测试吧，最终简明扼要的给我结果和分析；"
+      },
+      {
+        "id": "t8",
+        "role": "assistant",
+        "content": "结论先说：**OpenClaw 现在已经能实打实地压住发给 LLM 的 prompt，但还没有达到“用户明显感觉切题后 context 明显回落、基本不用再考虑 compact”的标准。** 这轮我补了专门的长会话探针： - 脚本：[eval-openclaw-guarded-session-probe.js](/Users/redcreen/Project/unified-memory-core/scripts/eval-openc…"
+      },
+      {
+        "id": "t9",
+        "role": "user",
+        "content": "从新review下测试脚本， 没有问题的话，就要分析为什么没有明显回落，分析原因，找到解决方案；然后解决掉；"
+      },
+      {
+        "id": "t10",
+        "role": "assistant",
+        "content": "我先 review 了测试脚本和 guarded 主路径，结论是脚本口径基本没问题，问题主要在实现本身。 核心原因有两个： - [src/dialogue-working-set-runtime-shadow.js](/Users/redcreen/Project/unified-memory-core/src/dialogue-working-set-runtime-shadow.js) 里 `maxTurns=12`…"
+      },
+      {
+        "id": "t11",
+        "role": "user",
+        "content": "为什么是这个建议"
+      },
+      {
+        "id": "t12",
+        "role": "assistant",
+        "content": "因为现在主矛盾已经变了，不是“有没有证据证明方向对”，而是“这个方向的代价能不能接受”。 具体说有三点："
+      }
+    ],
+    "decision": {
+      "relation": "continue",
+      "confidence": 0.9,
+      "evict_turn_ids": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6"
+      ],
+      "pin_turn_ids": [
+        "t7"
+      ],
+      "archive_summary": "Earlier discussion established that OpenClaw had not yet shown clear user-visible usability or obvious context drop after topic switches. A devlog summary was written, then the focus shifted to designing and running deeper GC tests with probes and data capture. The current active thread is the follow-up review of those test results, why rollback was not obvious, and what solution to apply.",
+      "reasoning_summary": "The latest user question at t11 is a direct follow-up to the recommendation explained in t10, so this is the same active topic rather than a branch or switch. The next turn still depends on the raw evidence in t9-t10, and the broader unresolved task/constraints from t7 remain relevant. The older t1-t6 block is resolved background and is a strong eviction candidate. t7 should be preserved as a compact semantic pin because it contains durable task constraints and success criteria: deep OpenClaw GC testing, long-conversation behavior, topic-switch context drop, temporary data writes allowed, avoid writing other user docs, and deliver concise results."
+    },
+    "decision_transport": "codex_exec",
+    "snapshot": {
+      "applied": {
+        "relation": "continue",
+        "confidence": 0.9,
+        "archiveSummary": "Earlier discussion established that OpenClaw had not yet shown clear user-visible usability or obvious context drop after topic switches. A devlog summary was written, then the focus shifted to designing and running deeper GC tests with probes and data capture. The current active thread is the follow-up review of those test results, why rollback was not obvious, and what solution to apply.",
+        "reasoningSummary": "The latest user question at t11 is a direct follow-up to the recommendation explained in t10, so this is the same active topic rather than a branch or switch. The next turn still depends on the raw evidence in t9-t10, and the broader unresolved task/constraints from t7 remain relevant. The older t1-t6 block is resolved background and is a strong eviction candidate. t7 should be preserved as a compact semantic pin because it contains durable task constraints and success criteria: deep OpenClaw GC testing, long-conversation behavior, topic-switch context drop, temporary data writes allowed, avoid writing other user docs, and deliver concise results.",
+        "latestUserTurnId": "t11",
+        "pinTurnIds": [
+          "t7"
+        ],
+        "pinnedOnlyTurnIds": [],
+        "requestedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3",
+          "t4",
+          "t5",
+          "t6"
+        ],
+        "blockedEvictTurnIds": [],
+        "appliedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3",
+          "t4",
+          "t5",
+          "t6"
+        ],
+        "keepTurnIds": [
+          "t7",
+          "t8",
+          "t9",
+          "t10",
+          "t11",
+          "t12"
+        ],
+        "baselineTokens": 330,
+        "keptTokens": 199,
+        "prunedTokens": 131,
+        "reductionRatio": 0.396969696969697,
+        "keepTurns": [
+          {
+            "id": "t7",
+            "role": "user",
+            "content": "我们现在的任务是 深入的测试openclaw的 gc，是否能够达标；，尽量更长的对话（可以做临时数据写入，但是不要对我其他文档做写入操作）；做好探针，记录好相关数据；预期是：更长的对话，如果正常情况下，可能要做compact了，但是因为又了gc，实际不需要compact；同时在一个同一话题的长对话后切换话题，应该有明显的context回落；这里的context指的是实际发给llm的数据； 接下来你来策划这个测试，把相关配置都做好，然后就开始测试吧，最终简明扼要的给我结果和分析；",
+            "tokenEstimate": 61
+          },
+          {
+            "id": "t8",
+            "role": "assistant",
+            "content": "结论先说：**OpenClaw 现在已经能实打实地压住发给 LLM 的 prompt，但还没有达到“用户明显感觉切题后 context 明显回落、基本不用再考虑 compact”的标准。** 这轮我补了专门的长会话探针： - 脚本：[eval-openclaw-guarded-session-probe.js](/Users/redcreen/Project/unified-memory-core/scripts/eval-openc…",
+            "tokenEstimate": 55
+          },
+          {
+            "id": "t9",
+            "role": "user",
+            "content": "从新review下测试脚本， 没有问题的话，就要分析为什么没有明显回落，分析原因，找到解决方案；然后解决掉；",
+            "tokenEstimate": 14
+          },
+          {
+            "id": "t10",
+            "role": "assistant",
+            "content": "我先 review 了测试脚本和 guarded 主路径，结论是脚本口径基本没问题，问题主要在实现本身。 核心原因有两个： - [src/dialogue-working-set-runtime-shadow.js](/Users/redcreen/Project/unified-memory-core/src/dialogue-working-set-runtime-shadow.js) 里 `maxTurns=12`…",
+            "tokenEstimate": 54
+          },
+          {
+            "id": "t11",
+            "role": "user",
+            "content": "为什么是这个建议",
+            "tokenEstimate": 2
+          },
+          {
+            "id": "t12",
+            "role": "assistant",
+            "content": "因为现在主矛盾已经变了，不是“有没有证据证明方向对”，而是“这个方向的代价能不能接受”。 具体说有三点：",
+            "tokenEstimate": 13
+          }
+        ],
+        "evictedTurns": [
+          {
+            "id": "t1",
+            "role": "user",
+            "content": "那openclaw 长对话 context 最大的部分 是不是已经被接管了呢？",
+            "tokenEstimate": 10
+          },
+          {
+            "id": "t2",
+            "role": "assistant",
+            "content": "结论：**大概率是，OpenClaw 长对话里最大的那块动态 context，已经被接管了。** 原因很直接：",
+            "tokenEstimate": 14
+          },
+          {
+            "id": "t3",
+            "role": "user",
+            "content": "ok，当前的问题汇总下，写入到开发日志中； 完成后我们开始对openclaw进行测试；",
+            "tokenEstimate": 11
+          },
+          {
+            "id": "t4",
+            "role": "assistant",
+            "content": "当前问题汇总已经写入开发日志：[2026-04-19-clarify-host-level-context-minor-gc-acceptance-and-openclaw-feasibility.md](/Users/redcreen/Project/unified-memory-core/docs/devlog/2026-04-19-clarify-host-level-context-minor-gc-acceptance-and…",
+            "tokenEstimate": 56
+          },
+          {
+            "id": "t5",
+            "role": "user",
+            "content": "你刚才验证后，openclaw 是否达到了我们认为的用户端明显可用么/？ 整体的context 大小有明显的下降么？ （切不同话题）",
+            "tokenEstimate": 17
+          },
+          {
+            "id": "t6",
+            "role": "assistant",
+            "content": "还不能这么说。按我们刚才真正验证到的东西，答案是： - `OpenClaw 还不能判定为“用户端已经明显可用”` - `也没有证据证明整体 context 在切不同话题后有明显下降`",
+            "tokenEstimate": 23
+          }
+        ]
+      },
+      "baselineRawTranscript": "t1 user: 那openclaw 长对话 context 最大的部分 是不是已经被接管了呢？\nt2 assistant: 结论：**大概率是，OpenClaw 长对话里最大的那块动态 context，已经被接管了。** 原因很直接：\nt3 user: ok，当前的问题汇总下，写入到开发日志中； 完成后我们开始对openclaw进行测试；\nt4 assistant: 当前问题汇总已经写入开发日志：[2026-04-19-clarify-host-level-context-minor-gc-acceptance-and-openclaw-feasibility.md](/Users/redcreen/Project/unified-memory-core/docs/devlog/2026-04-19-clarify-host-level-context-minor-gc-acceptance-and…\nt5 user: 你刚才验证后，openclaw 是否达到了我们认为的用户端明显可用么/？ 整体的context 大小有明显的下降么？ （切不同话题）\nt6 assistant: 还不能这么说。按我们刚才真正验证到的东西，答案是： - `OpenClaw 还不能判定为“用户端已经明显可用”` - `也没有证据证明整体 context 在切不同话题后有明显下降`\nt7 user: 我们现在的任务是 深入的测试openclaw的 gc，是否能够达标；，尽量更长的对话（可以做临时数据写入，但是不要对我其他文档做写入操作）；做好探针，记录好相关数据；预期是：更长的对话，如果正常情况下，可能要做compact了，但是因为又了gc，实际不需要compact；同时在一个同一话题的长对话后切换话题，应该有明显的context回落；这里的context指的是实际发给llm的数据； 接下来你来策划这个测试，把相关配置都做好，然后就开始测试吧，最终简明扼要的给我结果和分析；\nt8 assistant: 结论先说：**OpenClaw 现在已经能实打实地压住发给 LLM 的 prompt，但还没有达到“用户明显感觉切题后 context 明显回落、基本不用再考虑 compact”的标准。** 这轮我补了专门的长会话探针： - 脚本：[eval-openclaw-guarded-session-probe.js](/Users/redcreen/Project/unified-memory-core/scripts/eval-openc…\nt9 user: 从新review下测试脚本， 没有问题的话，就要分析为什么没有明显回落，分析原因，找到解决方案；然后解决掉；\nt10 assistant: 我先 review 了测试脚本和 guarded 主路径，结论是脚本口径基本没问题，问题主要在实现本身。 核心原因有两个： - [src/dialogue-working-set-runtime-shadow.js](/Users/redcreen/Project/unified-memory-core/src/dialogue-working-set-runtime-shadow.js) 里 `maxTurns=12`…\nt11 user: 为什么是这个建议\nt12 assistant: 因为现在主矛盾已经变了，不是“有没有证据证明方向对”，而是“这个方向的代价能不能接受”。 具体说有三点：",
+      "shadowRawTranscript": "t7 user: 我们现在的任务是 深入的测试openclaw的 gc，是否能够达标；，尽量更长的对话（可以做临时数据写入，但是不要对我其他文档做写入操作）；做好探针，记录好相关数据；预期是：更长的对话，如果正常情况下，可能要做compact了，但是因为又了gc，实际不需要compact；同时在一个同一话题的长对话后切换话题，应该有明显的context回落；这里的context指的是实际发给llm的数据； 接下来你来策划这个测试，把相关配置都做好，然后就开始测试吧，最终简明扼要的给我结果和分析；\nt8 assistant: 结论先说：**OpenClaw 现在已经能实打实地压住发给 LLM 的 prompt，但还没有达到“用户明显感觉切题后 context 明显回落、基本不用再考虑 compact”的标准。** 这轮我补了专门的长会话探针： - 脚本：[eval-openclaw-guarded-session-probe.js](/Users/redcreen/Project/unified-memory-core/scripts/eval-openc…\nt9 user: 从新review下测试脚本， 没有问题的话，就要分析为什么没有明显回落，分析原因，找到解决方案；然后解决掉；\nt10 assistant: 我先 review 了测试脚本和 guarded 主路径，结论是脚本口径基本没问题，问题主要在实现本身。 核心原因有两个： - [src/dialogue-working-set-runtime-shadow.js](/Users/redcreen/Project/unified-memory-core/src/dialogue-working-set-runtime-shadow.js) 里 `maxTurns=12`…\nt11 user: 为什么是这个建议\nt12 assistant: 因为现在主矛盾已经变了，不是“有没有证据证明方向对”，而是“这个方向的代价能不能接受”。 具体说有三点：",
+      "semanticPinNotes": [],
+      "archiveSummary": "Earlier discussion established that OpenClaw had not yet shown clear user-visible usability or obvious context drop after topic switches. A devlog summary was written, then the focus shifted to designing and running deeper GC tests with probes and data capture. The current active thread is the follow-up review of those test results, why rollback was not obvious, and what solution to apply.",
+      "injectedArchiveSummary": "",
+      "baselinePromptEstimate": 364,
+      "shadowRawPromptEstimate": 217,
+      "shadowPackageEstimate": 67,
+      "shadowPackageText": "Task state summary:\nEarlier discussion established that OpenClaw had not yet shown clear user-visible usability or obvious context drop after topic switches. A devlog summary was written, then the focus shifted to designing and running dee…\n\nLatest user ask:\n- 为什么是这个建议"
+    },
+    "scorecard": {
+      "relation": "continue",
+      "baselineTurnCount": 12,
+      "keptTurnCount": 6,
+      "evictedTurnCount": 6,
+      "pinCount": 1,
+      "baselinePromptEstimate": 364,
+      "shadowRawPromptEstimate": 217,
+      "shadowPackageEstimate": 67,
+      "rawReductionRatio": 0.397,
+      "packageReductionRatio": 0.8159,
+      "candidateLoadElapsedMs": 0,
+      "assemblyBuildElapsedMs": 0,
+      "decisionElapsedMs": 14150,
+      "totalElapsedMs": 14152,
+      "guardedEnabled": true,
+      "guardedApplied": true,
+      "guardedReason": "guarded_candidate",
+      "guardedMessageCount": 6,
+      "guardedCarryForwardEstimate": 0,
+      "guardedFilteredMessageEstimate": 199
+    },
+    "guarded": {
+      "enabled": true,
+      "applied": true,
+      "reason": "guarded_candidate",
+      "filteredMessages": [
+        {
+          "role": "user",
+          "content": "我们现在的任务是 深入的测试openclaw的 gc，是否能够达标；，尽量更长的对话（可以做临时数据写入，但是不要对我其他文档做写入操作）；做好探针，记录好相关数据；预期是：更长的对话，如果正常情况下，可能要做compact了，但是因为又了gc，实际不需要compact；同时在一个同一话题的长对话后切换话题，应该有明显的context回落；这里的context指的是实际发给llm的数据； 接下来你来策划这个测试，把相关配置都做好，然后就开始测试吧，最终简明扼要的给我结果和分析；"
+        },
+        {
+          "role": "assistant",
+          "content": "结论先说：**OpenClaw 现在已经能实打实地压住发给 LLM 的 prompt，但还没有达到“用户明显感觉切题后 context 明显回落、基本不用再考虑 compact”的标准。** 这轮我补了专门的长会话探针： - 脚本：[eval-openclaw-guarded-session-probe.js](/Users/redcreen/Project/unified-memory-core/scripts/eval-openc…"
+        },
+        {
+          "role": "user",
+          "content": "从新review下测试脚本， 没有问题的话，就要分析为什么没有明显回落，分析原因，找到解决方案；然后解决掉；"
+        },
+        {
+          "role": "assistant",
+          "content": "我先 review 了测试脚本和 guarded 主路径，结论是脚本口径基本没问题，问题主要在实现本身。 核心原因有两个： - [src/dialogue-working-set-runtime-shadow.js](/Users/redcreen/Project/unified-memory-core/src/dialogue-working-set-runtime-shadow.js) 里 `maxTurns=12`…"
+        },
+        {
+          "role": "user",
+          "content": "为什么是这个建议"
+        },
+        {
+          "role": "assistant",
+          "content": "因为现在主矛盾已经变了，不是“有没有证据证明方向对”，而是“这个方向的代价能不能接受”。 具体说有三点："
+        }
+      ],
+      "filteredMessageCount": 6,
+      "filteredMessageTokenEstimate": 199,
+      "carryForwardText": "",
+      "carryForwardEstimate": 0,
+      "evictedSourceIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    "timings": {
+      "totalElapsedMs": 14152,
+      "decisionElapsedMs": 14150
+    },
+    "artifact_paths": {
+      "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da335-a070-7972-b61e-6ba3a73ff633-shadow-1776569361579-uevilf.json",
+      "summary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl"
+    }
+  }
+}

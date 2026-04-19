@@ -1,0 +1,230 @@
+{
+  "schema_version": "umc.codex-context-minor-gc.v1",
+  "generated_at": "2026-04-19T01:08:21.218Z",
+  "event_id": "shadow-1776560890549-d2qbo9-codex-packaged",
+  "session_key": "codex:vscode:019da346-335b-7d31-be0e-56a3c1b52ff3",
+  "query": "切个话题。为什么 shadow mode 默认先不开？",
+  "status": "captured",
+  "reason": "",
+  "decision_transport": "codex_exec",
+  "relation": "switch",
+  "applied": false,
+  "codex_guard_reason": "no_net_token_gain",
+  "prompt_reduction_ratio": 0,
+  "baseline_context_estimate": 72,
+  "packaged_context_estimate": 85,
+  "effective_context_estimate": 72,
+  "shadow_status": "captured",
+  "shadow_guarded_applied": true,
+  "shadow_guarded_reason": "guarded_candidate",
+  "shadow_export_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da346-335b-7d31-be0e-56a3c1b52ff3-shadow-1776560890549-d2qbo9.json",
+  "shadow_summary_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl",
+  "export_path": "exports/codex-vscode-019da346-335b-7d31-be0e-56a3c1b52ff3-shadow-1776560890549-d2qbo9-codex-packaged.json",
+  "effective_context_block": "## Recent Conversation Context\nt1 user: 我以前默认编辑器是 Vim。\nt2 assistant: 记住了。后续如果涉及编辑器习惯，我会默认按你偏向 `Vim`/Vim 风格来处理。\nt3 user: 更新一下：我现在默认编辑器是 Zed。\nt4 assistant: 已更新。后续我会默认按 `Zed` 作为你的编辑器习惯来理解。\nt5 user: 切个话题。为什么 shadow mode 默认先不开？\nt6 assistant: 因为这个仓库里 `shadow mode` 被定义成“测量面”，不是默认用户路径。 核心原因有四个：",
+  "packaged_context_block": "## Context Minor GC Working Set\nTask state summary:\nOlder editor-preference thread is resolved and unrelated to the current shadow-mode question. Preserve the durable user fact that their default editor is now Zed; prior Vim preference is superseded.\n\nLatest user ask:\n- 切个话题。为什么 shadow mode 默认先不开？\n\nSemantic pins:\n- user: 更新一下：我现在默认编辑器是 Zed。",
+  "shadow_event": {
+    "schema_version": "umc.dialogue-working-set-shadow.v1",
+    "event_id": "shadow-1776560890549-d2qbo9",
+    "generated_at": "2026-04-19T01:08:10.549Z",
+    "session_key": "codex:vscode:019da346-335b-7d31-be0e-56a3c1b52ff3",
+    "agent_id": "main",
+    "query": "切个话题。为什么 shadow mode 默认先不开？",
+    "status": "captured",
+    "reason": "",
+    "sampling": {
+      "max_turns": 12,
+      "min_turns": 3,
+      "max_chars_per_turn": 900
+    },
+    "transcript": [
+      {
+        "id": "t1",
+        "role": "user",
+        "content": "我以前默认编辑器是 Vim。"
+      },
+      {
+        "id": "t2",
+        "role": "assistant",
+        "content": "记住了。后续如果涉及编辑器习惯，我会默认按你偏向 `Vim`/Vim 风格来处理。"
+      },
+      {
+        "id": "t3",
+        "role": "user",
+        "content": "更新一下：我现在默认编辑器是 Zed。"
+      },
+      {
+        "id": "t4",
+        "role": "assistant",
+        "content": "已更新。后续我会默认按 `Zed` 作为你的编辑器习惯来理解。"
+      },
+      {
+        "id": "t5",
+        "role": "user",
+        "content": "切个话题。为什么 shadow mode 默认先不开？"
+      },
+      {
+        "id": "t6",
+        "role": "assistant",
+        "content": "因为这个仓库里 `shadow mode` 被定义成“测量面”，不是默认用户路径。 核心原因有四个："
+      }
+    ],
+    "decision": {
+      "relation": "switch",
+      "confidence": 0.97,
+      "evict_turn_ids": [
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ],
+      "pin_turn_ids": [
+        "t3"
+      ],
+      "archive_summary": "Older editor-preference thread is resolved and unrelated to the current shadow-mode question. Preserve the durable user fact that their default editor is now Zed; prior Vim preference is superseded.",
+      "reasoning_summary": "The active topic switched at t5 from editor preference to shadow mode. The current next turn depends on the raw shadow-mode exchange (t5-t6), not on the older editor discussion. The durable fact from t3 should survive as a semantic pin, while the superseded Vim block and acknowledgements can leave the next-turn raw prompt."
+    },
+    "decision_transport": "codex_exec",
+    "snapshot": {
+      "applied": {
+        "relation": "switch",
+        "confidence": 0.97,
+        "archiveSummary": "Older editor-preference thread is resolved and unrelated to the current shadow-mode question. Preserve the durable user fact that their default editor is now Zed; prior Vim preference is superseded.",
+        "reasoningSummary": "The active topic switched at t5 from editor preference to shadow mode. The current next turn depends on the raw shadow-mode exchange (t5-t6), not on the older editor discussion. The durable fact from t3 should survive as a semantic pin, while the superseded Vim block and acknowledgements can leave the next-turn raw prompt.",
+        "latestUserTurnId": "t5",
+        "pinTurnIds": [
+          "t3"
+        ],
+        "pinnedOnlyTurnIds": [
+          "t3"
+        ],
+        "requestedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3",
+          "t4"
+        ],
+        "blockedEvictTurnIds": [],
+        "appliedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3",
+          "t4"
+        ],
+        "keepTurnIds": [
+          "t5",
+          "t6"
+        ],
+        "baselineTokens": 48,
+        "keptTokens": 20,
+        "prunedTokens": 28,
+        "reductionRatio": 0.5833333333333334,
+        "keepTurns": [
+          {
+            "id": "t5",
+            "role": "user",
+            "content": "切个话题。为什么 shadow mode 默认先不开？",
+            "tokenEstimate": 7
+          },
+          {
+            "id": "t6",
+            "role": "assistant",
+            "content": "因为这个仓库里 `shadow mode` 被定义成“测量面”，不是默认用户路径。 核心原因有四个：",
+            "tokenEstimate": 13
+          }
+        ],
+        "evictedTurns": [
+          {
+            "id": "t1",
+            "role": "user",
+            "content": "我以前默认编辑器是 Vim。",
+            "tokenEstimate": 4
+          },
+          {
+            "id": "t2",
+            "role": "assistant",
+            "content": "记住了。后续如果涉及编辑器习惯，我会默认按你偏向 `Vim`/Vim 风格来处理。",
+            "tokenEstimate": 11
+          },
+          {
+            "id": "t3",
+            "role": "user",
+            "content": "更新一下：我现在默认编辑器是 Zed。",
+            "tokenEstimate": 5
+          },
+          {
+            "id": "t4",
+            "role": "assistant",
+            "content": "已更新。后续我会默认按 `Zed` 作为你的编辑器习惯来理解。",
+            "tokenEstimate": 8
+          }
+        ]
+      },
+      "baselineRawTranscript": "t1 user: 我以前默认编辑器是 Vim。\nt2 assistant: 记住了。后续如果涉及编辑器习惯，我会默认按你偏向 `Vim`/Vim 风格来处理。\nt3 user: 更新一下：我现在默认编辑器是 Zed。\nt4 assistant: 已更新。后续我会默认按 `Zed` 作为你的编辑器习惯来理解。\nt5 user: 切个话题。为什么 shadow mode 默认先不开？\nt6 assistant: 因为这个仓库里 `shadow mode` 被定义成“测量面”，不是默认用户路径。 核心原因有四个：",
+      "shadowRawTranscript": "t5 user: 切个话题。为什么 shadow mode 默认先不开？\nt6 assistant: 因为这个仓库里 `shadow mode` 被定义成“测量面”，不是默认用户路径。 核心原因有四个：",
+      "semanticPinNotes": [
+        "user: 更新一下：我现在默认编辑器是 Zed。"
+      ],
+      "archiveSummary": "Older editor-preference thread is resolved and unrelated to the current shadow-mode question. Preserve the durable user fact that their default editor is now Zed; prior Vim preference is superseded.",
+      "injectedArchiveSummary": "",
+      "baselinePromptEstimate": 64,
+      "shadowRawPromptEstimate": 26,
+      "shadowPackageEstimate": 77,
+      "shadowPackageText": "Task state summary:\nOlder editor-preference thread is resolved and unrelated to the current shadow-mode question. Preserve the durable user fact that their default editor is now Zed; prior Vim preference is superseded.\n\nLatest user ask:\n- 切个话题。为什么 shadow mode 默认先不开？\n\nSemantic pins:\n- user: 更新一下：我现在默认编辑器是 Zed。"
+    },
+    "scorecard": {
+      "relation": "switch",
+      "baselineTurnCount": 6,
+      "keptTurnCount": 2,
+      "evictedTurnCount": 4,
+      "pinCount": 1,
+      "baselinePromptEstimate": 64,
+      "shadowRawPromptEstimate": 26,
+      "shadowPackageEstimate": 77,
+      "rawReductionRatio": 0.5833,
+      "packageReductionRatio": -0.2031,
+      "candidateLoadElapsedMs": 0,
+      "assemblyBuildElapsedMs": 0,
+      "decisionElapsedMs": 10667,
+      "totalElapsedMs": 10668,
+      "guardedEnabled": true,
+      "guardedApplied": true,
+      "guardedReason": "guarded_candidate",
+      "guardedMessageCount": 2,
+      "guardedCarryForwardEstimate": 15,
+      "guardedFilteredMessageEstimate": 20
+    },
+    "guarded": {
+      "enabled": true,
+      "applied": true,
+      "reason": "guarded_candidate",
+      "filteredMessages": [
+        {
+          "role": "user",
+          "content": "切个话题。为什么 shadow mode 默认先不开？"
+        },
+        {
+          "role": "assistant",
+          "content": "因为这个仓库里 `shadow mode` 被定义成“测量面”，不是默认用户路径。 核心原因有四个："
+        }
+      ],
+      "filteredMessageCount": 2,
+      "filteredMessageTokenEstimate": 20,
+      "carryForwardText": "Conversation carry-forward pins:\n- user: 更新一下：我现在默认编辑器是 Zed。",
+      "carryForwardEstimate": 15,
+      "evictedSourceIndices": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    "timings": {
+      "totalElapsedMs": 10668,
+      "decisionElapsedMs": 10667
+    },
+    "artifact_paths": {
+      "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da346-335b-7d31-be0e-56a3c1b52ff3-shadow-1776560890549-d2qbo9.json",
+      "summary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl"
+    }
+  }
+}

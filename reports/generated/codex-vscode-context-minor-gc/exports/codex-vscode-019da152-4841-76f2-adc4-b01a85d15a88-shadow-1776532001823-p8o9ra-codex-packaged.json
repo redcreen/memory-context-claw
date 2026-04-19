@@ -1,0 +1,317 @@
+{
+  "schema_version": "umc.codex-context-minor-gc.v1",
+  "generated_at": "2026-04-18T17:06:56.882Z",
+  "event_id": "shadow-1776532001823-p8o9ra-codex-packaged",
+  "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+  "query": "要；尽量不是白名单，有硬编码嫌疑；",
+  "status": "captured",
+  "reason": "",
+  "decision_transport": "codex_exec",
+  "relation": "continue",
+  "applied": true,
+  "codex_guard_reason": "codex_packaged_guard",
+  "prompt_reduction_ratio": 0.7363,
+  "baseline_context_estimate": 292,
+  "packaged_context_estimate": 77,
+  "effective_context_estimate": 77,
+  "shadow_status": "captured",
+  "shadow_guarded_applied": true,
+  "shadow_guarded_reason": "guarded_candidate",
+  "shadow_export_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da152-4841-76f2-adc4-b01a85d15a88-shadow-1776532001823-p8o9ra.json",
+  "shadow_summary_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl",
+  "export_path": "exports/codex-vscode-019da152-4841-76f2-adc4-b01a85d15a88-shadow-1776532001823-p8o9ra-codex-packaged.json",
+  "effective_context_block": "## Context Minor GC Working Set\nTask state summary:\nEarlier status/next-step chatter and the short spot-check command were resolved. The active thread now centers on adding stronger non-whitelist GC regression/eval coverage for natural Chinese multi-turn topic switching…\n\nLatest user ask:\n- 要；尽量不是白名单，有硬编码嫌疑；",
+  "packaged_context_block": "## Context Minor GC Working Set\nTask state summary:\nEarlier status/next-step chatter and the short spot-check command were resolved. The active thread now centers on adding stronger non-whitelist GC regression/eval coverage for natural Chinese multi-turn topic switching…\n\nLatest user ask:\n- 要；尽量不是白名单，有硬编码嫌疑；",
+  "shadow_event": {
+    "schema_version": "umc.dialogue-working-set-shadow.v1",
+    "event_id": "shadow-1776532001823-p8o9ra",
+    "generated_at": "2026-04-18T17:06:41.823Z",
+    "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+    "agent_id": "main",
+    "query": "要；尽量不是白名单，有硬编码嫌疑；",
+    "status": "captured",
+    "reason": "",
+    "sampling": {
+      "max_turns": 12,
+      "min_turns": 3,
+      "max_chars_per_turn": 900
+    },
+    "transcript": [
+      {
+        "id": "t1",
+        "role": "assistant",
+        "content": "继续之后，第 3 个点也已经基本收住了。 现在状态是："
+      },
+      {
+        "id": "t2",
+        "role": "user",
+        "content": "直接给你一条最短回归命令，方便你以后自己 spot check。"
+      },
+      {
+        "id": "t3",
+        "role": "assistant",
+        "content": "最短 spot check 我建议就这 2 条： ```bash npm run codex:vscode:gc --silent ```"
+      },
+      {
+        "id": "t4",
+        "role": "user",
+        "content": "接下来 我要做蛇呢么？"
+      },
+      {
+        "id": "t5",
+        "role": "assistant",
+        "content": "接下来做这 3 件事就够了。 1. 先留一条最小回归命令 直接用这条做以后 spot check： ```bash npm run codex:vscode:gc --silent ``` 如果怀疑 prompt 没及时落盘，再用： ```bash node scripts/codex-vscode-context-minor-gc.js --format markdown --prompt \"[GC-D2] 回到编辑器问题。…"
+      },
+      {
+        "id": "t6",
+        "role": "user",
+        "content": "或者补一个 repo 内可重复的 smoke/eval case，把 GC-D2 收进固定回归"
+      },
+      {
+        "id": "t7",
+        "role": "assistant",
+        "content": "已经补进去了。 新回归 case 在： - [evals/codex-context-minor-gc-live-cases.js](/Users/redcreen/Project/unified-memory-core/evals/codex-context-minor-gc-live-cases.js)"
+      },
+      {
+        "id": "t8",
+        "role": "user",
+        "content": "要"
+      },
+      {
+        "id": "t9",
+        "role": "assistant",
+        "content": "已经修到全绿了。 我做了两件事： - 把 Codex minor GC 默认允许的 guarded relation 放宽到包含 `continue` - 把 `codex-minor-gc-current-editor-update-after-detour` 收进固定 live eval case"
+      },
+      {
+        "id": "t10",
+        "role": "user",
+        "content": "继续扩 harder cases，把类似 GC-B 的自然中文多轮切题也收进固定回归"
+      },
+      {
+        "id": "t11",
+        "role": "assistant",
+        "content": "已经把 harder case 补进固定回归了。 新增 case： - `codex-minor-gc-zh-dense-multitopic-return` - 文件：[evals/codex-context-minor-gc-live-cases.js](/Users/redcreen/Project/unified-memory-core/evals/codex-context-minor-gc-live-cases.js)"
+      },
+      {
+        "id": "t12",
+        "role": "user",
+        "content": "要；尽量不是白名单，有硬编码嫌疑；"
+      }
+    ],
+    "decision": {
+      "relation": "continue",
+      "confidence": 0.95,
+      "evict_turn_ids": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5"
+      ],
+      "pin_turn_ids": [],
+      "archive_summary": "Earlier status/next-step chatter and the short spot-check command were resolved. The active thread now centers on adding stronger non-whitelist GC regression/eval coverage for natural Chinese multi-turn topic switching and avoiding hardcoded behavior.",
+      "reasoning_summary": "The latest user turn continues the same active task from t6-t11: expanding fixed regression cases and addressing whitelist/hardcoding risk. Keep t6-t11 as raw because they contain the current eval-case direction and recent implementation context. Evict t1-t5 because they are older status updates and procedural guidance that the next turn no longer depends on."
+    },
+    "decision_transport": "codex_exec",
+    "snapshot": {
+      "applied": {
+        "relation": "continue",
+        "confidence": 0.95,
+        "archiveSummary": "Earlier status/next-step chatter and the short spot-check command were resolved. The active thread now centers on adding stronger non-whitelist GC regression/eval coverage for natural Chinese multi-turn topic switching and avoiding hardcoded behavior.",
+        "reasoningSummary": "The latest user turn continues the same active task from t6-t11: expanding fixed regression cases and addressing whitelist/hardcoding risk. Keep t6-t11 as raw because they contain the current eval-case direction and recent implementation context. Evict t1-t5 because they are older status updates and procedural guidance that the next turn no longer depends on.",
+        "latestUserTurnId": "t12",
+        "pinTurnIds": [],
+        "pinnedOnlyTurnIds": [],
+        "requestedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3",
+          "t4",
+          "t5"
+        ],
+        "blockedEvictTurnIds": [],
+        "appliedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3",
+          "t4",
+          "t5"
+        ],
+        "keepTurnIds": [
+          "t6",
+          "t7",
+          "t8",
+          "t9",
+          "t10",
+          "t11",
+          "t12"
+        ],
+        "baselineTokens": 251,
+        "keptTokens": 161,
+        "prunedTokens": 90,
+        "reductionRatio": 0.35856573705179284,
+        "keepTurns": [
+          {
+            "id": "t6",
+            "role": "user",
+            "content": "或者补一个 repo 内可重复的 smoke/eval case，把 GC-D2 收进固定回归",
+            "tokenEstimate": 12
+          },
+          {
+            "id": "t7",
+            "role": "assistant",
+            "content": "已经补进去了。 新回归 case 在： - [evals/codex-context-minor-gc-live-cases.js](/Users/redcreen/Project/unified-memory-core/evals/codex-context-minor-gc-live-cases.js)",
+            "tokenEstimate": 39
+          },
+          {
+            "id": "t8",
+            "role": "user",
+            "content": "要",
+            "tokenEstimate": 1
+          },
+          {
+            "id": "t9",
+            "role": "assistant",
+            "content": "已经修到全绿了。 我做了两件事： - 把 Codex minor GC 默认允许的 guarded relation 放宽到包含 `continue` - 把 `codex-minor-gc-current-editor-update-after-detour` 收进固定 live eval case",
+            "tokenEstimate": 38
+          },
+          {
+            "id": "t10",
+            "role": "user",
+            "content": "继续扩 harder cases，把类似 GC-B 的自然中文多轮切题也收进固定回归",
+            "tokenEstimate": 11
+          },
+          {
+            "id": "t11",
+            "role": "assistant",
+            "content": "已经把 harder case 补进固定回归了。 新增 case： - `codex-minor-gc-zh-dense-multitopic-return` - 文件：[evals/codex-context-minor-gc-live-cases.js](/Users/redcreen/Project/unified-memory-core/evals/codex-context-minor-gc-live-cases.js)",
+            "tokenEstimate": 55
+          },
+          {
+            "id": "t12",
+            "role": "user",
+            "content": "要；尽量不是白名单，有硬编码嫌疑；",
+            "tokenEstimate": 5
+          }
+        ],
+        "evictedTurns": [
+          {
+            "id": "t1",
+            "role": "assistant",
+            "content": "继续之后，第 3 个点也已经基本收住了。 现在状态是：",
+            "tokenEstimate": 7
+          },
+          {
+            "id": "t2",
+            "role": "user",
+            "content": "直接给你一条最短回归命令，方便你以后自己 spot check。",
+            "tokenEstimate": 8
+          },
+          {
+            "id": "t3",
+            "role": "assistant",
+            "content": "最短 spot check 我建议就这 2 条： ```bash npm run codex:vscode:gc --silent ```",
+            "tokenEstimate": 18
+          },
+          {
+            "id": "t4",
+            "role": "user",
+            "content": "接下来 我要做蛇呢么？",
+            "tokenEstimate": 3
+          },
+          {
+            "id": "t5",
+            "role": "assistant",
+            "content": "接下来做这 3 件事就够了。 1. 先留一条最小回归命令 直接用这条做以后 spot check： ```bash npm run codex:vscode:gc --silent ``` 如果怀疑 prompt 没及时落盘，再用： ```bash node scripts/codex-vscode-context-minor-gc.js --format markdown --prompt \"[GC-D2] 回到编辑器问题。…",
+            "tokenEstimate": 54
+          }
+        ]
+      },
+      "baselineRawTranscript": "t1 assistant: 继续之后，第 3 个点也已经基本收住了。 现在状态是：\nt2 user: 直接给你一条最短回归命令，方便你以后自己 spot check。\nt3 assistant: 最短 spot check 我建议就这 2 条： ```bash npm run codex:vscode:gc --silent ```\nt4 user: 接下来 我要做蛇呢么？\nt5 assistant: 接下来做这 3 件事就够了。 1. 先留一条最小回归命令 直接用这条做以后 spot check： ```bash npm run codex:vscode:gc --silent ``` 如果怀疑 prompt 没及时落盘，再用： ```bash node scripts/codex-vscode-context-minor-gc.js --format markdown --prompt \"[GC-D2] 回到编辑器问题。…\nt6 user: 或者补一个 repo 内可重复的 smoke/eval case，把 GC-D2 收进固定回归\nt7 assistant: 已经补进去了。 新回归 case 在： - [evals/codex-context-minor-gc-live-cases.js](/Users/redcreen/Project/unified-memory-core/evals/codex-context-minor-gc-live-cases.js)\nt8 user: 要\nt9 assistant: 已经修到全绿了。 我做了两件事： - 把 Codex minor GC 默认允许的 guarded relation 放宽到包含 `continue` - 把 `codex-minor-gc-current-editor-update-after-detour` 收进固定 live eval case\nt10 user: 继续扩 harder cases，把类似 GC-B 的自然中文多轮切题也收进固定回归\nt11 assistant: 已经把 harder case 补进固定回归了。 新增 case： - `codex-minor-gc-zh-dense-multitopic-return` - 文件：[evals/codex-context-minor-gc-live-cases.js](/Users/redcreen/Project/unified-memory-core/evals/codex-context-minor-gc-live-cases.js)\nt12 user: 要；尽量不是白名单，有硬编码嫌疑；",
+      "shadowRawTranscript": "t6 user: 或者补一个 repo 内可重复的 smoke/eval case，把 GC-D2 收进固定回归\nt7 assistant: 已经补进去了。 新回归 case 在： - [evals/codex-context-minor-gc-live-cases.js](/Users/redcreen/Project/unified-memory-core/evals/codex-context-minor-gc-live-cases.js)\nt8 user: 要\nt9 assistant: 已经修到全绿了。 我做了两件事： - 把 Codex minor GC 默认允许的 guarded relation 放宽到包含 `continue` - 把 `codex-minor-gc-current-editor-update-after-detour` 收进固定 live eval case\nt10 user: 继续扩 harder cases，把类似 GC-B 的自然中文多轮切题也收进固定回归\nt11 assistant: 已经把 harder case 补进固定回归了。 新增 case： - `codex-minor-gc-zh-dense-multitopic-return` - 文件：[evals/codex-context-minor-gc-live-cases.js](/Users/redcreen/Project/unified-memory-core/evals/codex-context-minor-gc-live-cases.js)\nt12 user: 要；尽量不是白名单，有硬编码嫌疑；",
+      "semanticPinNotes": [],
+      "archiveSummary": "Earlier status/next-step chatter and the short spot-check command were resolved. The active thread now centers on adding stronger non-whitelist GC regression/eval coverage for natural Chinese multi-turn topic switching and avoiding hardcoded behavior.",
+      "injectedArchiveSummary": "",
+      "baselinePromptEstimate": 284,
+      "shadowRawPromptEstimate": 179,
+      "shadowPackageEstimate": 69,
+      "shadowPackageText": "Task state summary:\nEarlier status/next-step chatter and the short spot-check command were resolved. The active thread now centers on adding stronger non-whitelist GC regression/eval coverage for natural Chinese multi-turn topic switching…\n\nLatest user ask:\n- 要；尽量不是白名单，有硬编码嫌疑；"
+    },
+    "scorecard": {
+      "relation": "continue",
+      "baselineTurnCount": 12,
+      "keptTurnCount": 7,
+      "evictedTurnCount": 5,
+      "pinCount": 0,
+      "baselinePromptEstimate": 284,
+      "shadowRawPromptEstimate": 179,
+      "shadowPackageEstimate": 69,
+      "rawReductionRatio": 0.3586,
+      "packageReductionRatio": 0.757,
+      "candidateLoadElapsedMs": 0,
+      "assemblyBuildElapsedMs": 0,
+      "decisionElapsedMs": 15057,
+      "totalElapsedMs": 15058,
+      "guardedEnabled": true,
+      "guardedApplied": true,
+      "guardedReason": "guarded_candidate",
+      "guardedMessageCount": 7,
+      "guardedCarryForwardEstimate": 0,
+      "guardedFilteredMessageEstimate": 161
+    },
+    "guarded": {
+      "enabled": true,
+      "applied": true,
+      "reason": "guarded_candidate",
+      "filteredMessages": [
+        {
+          "role": "user",
+          "content": "或者补一个 repo 内可重复的 smoke/eval case，把 GC-D2 收进固定回归"
+        },
+        {
+          "role": "assistant",
+          "content": "已经补进去了。 新回归 case 在： - [evals/codex-context-minor-gc-live-cases.js](/Users/redcreen/Project/unified-memory-core/evals/codex-context-minor-gc-live-cases.js)"
+        },
+        {
+          "role": "user",
+          "content": "要"
+        },
+        {
+          "role": "assistant",
+          "content": "已经修到全绿了。 我做了两件事： - 把 Codex minor GC 默认允许的 guarded relation 放宽到包含 `continue` - 把 `codex-minor-gc-current-editor-update-after-detour` 收进固定 live eval case"
+        },
+        {
+          "role": "user",
+          "content": "继续扩 harder cases，把类似 GC-B 的自然中文多轮切题也收进固定回归"
+        },
+        {
+          "role": "assistant",
+          "content": "已经把 harder case 补进固定回归了。 新增 case： - `codex-minor-gc-zh-dense-multitopic-return` - 文件：[evals/codex-context-minor-gc-live-cases.js](/Users/redcreen/Project/unified-memory-core/evals/codex-context-minor-gc-live-cases.js)"
+        },
+        {
+          "role": "user",
+          "content": "要；尽量不是白名单，有硬编码嫌疑；"
+        }
+      ],
+      "filteredMessageCount": 7,
+      "filteredMessageTokenEstimate": 161,
+      "carryForwardText": "",
+      "carryForwardEstimate": 0,
+      "evictedSourceIndices": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "timings": {
+      "totalElapsedMs": 15058,
+      "decisionElapsedMs": 15057
+    },
+    "artifact_paths": {
+      "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da152-4841-76f2-adc4-b01a85d15a88-shadow-1776532001823-p8o9ra.json",
+      "summary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl"
+    }
+  }
+}

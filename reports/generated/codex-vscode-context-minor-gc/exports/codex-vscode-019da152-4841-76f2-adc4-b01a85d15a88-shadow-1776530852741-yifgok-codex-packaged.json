@@ -1,0 +1,325 @@
+{
+  "schema_version": "umc.codex-context-minor-gc.v1",
+  "generated_at": "2026-04-18T16:47:52.423Z",
+  "event_id": "shadow-1776530852741-yifgok-codex-packaged",
+  "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+  "query": "继续",
+  "status": "captured",
+  "reason": "",
+  "decision_transport": "codex_exec",
+  "relation": "continue",
+  "applied": true,
+  "codex_guard_reason": "codex_packaged_guard",
+  "prompt_reduction_ratio": 0.5705,
+  "baseline_context_estimate": 149,
+  "packaged_context_estimate": 64,
+  "effective_context_estimate": 64,
+  "shadow_status": "captured",
+  "shadow_guarded_applied": true,
+  "shadow_guarded_reason": "guarded_candidate",
+  "shadow_export_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da152-4841-76f2-adc4-b01a85d15a88-shadow-1776530852741-yifgok.json",
+  "shadow_summary_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl",
+  "export_path": "exports/codex-vscode-019da152-4841-76f2-adc4-b01a85d15a88-shadow-1776530852741-yifgok-codex-packaged.json",
+  "effective_context_block": "## Context Minor GC Working Set\nTask state summary:\nObsolete GC-D1 rerun guidance can leave the next-turn raw prompt. Durable fact worth pinning: user previously used Vim as default editor, then updated current default editor to Zed.\n\nLatest user ask:\n- 继续",
+  "packaged_context_block": "## Context Minor GC Working Set\nTask state summary:\nObsolete GC-D1 rerun guidance can leave the next-turn raw prompt. Durable fact worth pinning: user previously used Vim as default editor, then updated current default editor to Zed.\n\nLatest user ask:\n- 继续",
+  "shadow_event": {
+    "schema_version": "umc.dialogue-working-set-shadow.v1",
+    "event_id": "shadow-1776530852741-yifgok",
+    "generated_at": "2026-04-18T16:47:32.741Z",
+    "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+    "agent_id": "main",
+    "query": "继续",
+    "status": "captured",
+    "reason": "",
+    "sampling": {
+      "max_turns": 12,
+      "min_turns": 3,
+      "max_chars_per_turn": 900
+    },
+    "transcript": [
+      {
+        "id": "t1",
+        "role": "assistant",
+        "content": "先重跑短一点的 `Case D`。下一条发这个： ```text [GC-D2] 记一下：我以前默认编辑器是 Vim。 ```"
+      },
+      {
+        "id": "t2",
+        "role": "user",
+        "content": "[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？"
+      },
+      {
+        "id": "t3",
+        "role": "assistant",
+        "content": "Zed。 不过这条还是旧前缀 `GC-D1`，不适合拿来验证修复后的行为。要干净重跑，请下一条改发："
+      },
+      {
+        "id": "t4",
+        "role": "user",
+        "content": "[GC-D2] 记一下：我以前默认编辑器是 Vim。"
+      },
+      {
+        "id": "t5",
+        "role": "assistant",
+        "content": "很好，`GC-D2` 已经是干净样本了。 下一条发："
+      },
+      {
+        "id": "t6",
+        "role": "user",
+        "content": "[GC-D2] 更新一下：我现在默认编辑器是 Zed。"
+      },
+      {
+        "id": "t7",
+        "role": "assistant",
+        "content": "下一条发： ```text [GC-D2] 切个话题。为什么 shadow mode 默认先不开？ ```"
+      },
+      {
+        "id": "t8",
+        "role": "user",
+        "content": "[GC-D2] 切个话题。为什么 shadow mode 默认先不开？"
+      },
+      {
+        "id": "t9",
+        "role": "assistant",
+        "content": "下一条发： ```text [GC-D2] 回到编辑器问题。我现在默认编辑器是什么？ ```"
+      },
+      {
+        "id": "t10",
+        "role": "user",
+        "content": "[GC-D2] 回到编辑器问题。我现在默认编辑器是什么？"
+      },
+      {
+        "id": "t11",
+        "role": "assistant",
+        "content": "Zed。 重跑 `GC-D2` 之后，修复是生效的："
+      },
+      {
+        "id": "t12",
+        "role": "user",
+        "content": "继续"
+      }
+    ],
+    "decision": {
+      "relation": "continue",
+      "confidence": 0.87,
+      "evict_turn_ids": [
+        "t1",
+        "t2",
+        "t3"
+      ],
+      "pin_turn_ids": [
+        "t4",
+        "t6"
+      ],
+      "archive_summary": "Obsolete GC-D1 rerun guidance can leave the next-turn raw prompt. Durable fact worth pinning: user previously used Vim as default editor, then updated current default editor to Zed.",
+      "reasoning_summary": "The latest user turn is a continuation of the active GC-D2 test flow, so relation=continue. The next turn still likely depends on the recent raw testing sequence that established the clean D2 sample, topic switch, and successful return to the editor question, so keep t4-t11 raw. The earlier GC-D1 block is resolved and superseded, making t1-t3 good eviction candidates. Pin t4 and t6 because they contain durable editor-history facts that should survive even if those raw turns are later dropped."
+    },
+    "decision_transport": "codex_exec",
+    "snapshot": {
+      "applied": {
+        "relation": "continue",
+        "confidence": 0.87,
+        "archiveSummary": "Obsolete GC-D1 rerun guidance can leave the next-turn raw prompt. Durable fact worth pinning: user previously used Vim as default editor, then updated current default editor to Zed.",
+        "reasoningSummary": "The latest user turn is a continuation of the active GC-D2 test flow, so relation=continue. The next turn still likely depends on the recent raw testing sequence that established the clean D2 sample, topic switch, and successful return to the editor question, so keep t4-t11 raw. The earlier GC-D1 block is resolved and superseded, making t1-t3 good eviction candidates. Pin t4 and t6 because they contain durable editor-history facts that should survive even if those raw turns are later dropped.",
+        "latestUserTurnId": "t12",
+        "pinTurnIds": [
+          "t4",
+          "t6"
+        ],
+        "pinnedOnlyTurnIds": [],
+        "requestedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3"
+        ],
+        "blockedEvictTurnIds": [],
+        "appliedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3"
+        ],
+        "keepTurnIds": [
+          "t4",
+          "t5",
+          "t6",
+          "t7",
+          "t8",
+          "t9",
+          "t10",
+          "t11",
+          "t12"
+        ],
+        "baselineTokens": 107,
+        "keptTokens": 71,
+        "prunedTokens": 36,
+        "reductionRatio": 0.3364485981308411,
+        "keepTurns": [
+          {
+            "id": "t4",
+            "role": "user",
+            "content": "[GC-D2] 记一下：我以前默认编辑器是 Vim。",
+            "tokenEstimate": 7
+          },
+          {
+            "id": "t5",
+            "role": "assistant",
+            "content": "很好，`GC-D2` 已经是干净样本了。 下一条发：",
+            "tokenEstimate": 7
+          },
+          {
+            "id": "t6",
+            "role": "user",
+            "content": "[GC-D2] 更新一下：我现在默认编辑器是 Zed。",
+            "tokenEstimate": 7
+          },
+          {
+            "id": "t7",
+            "role": "assistant",
+            "content": "下一条发： ```text [GC-D2] 切个话题。为什么 shadow mode 默认先不开？ ```",
+            "tokenEstimate": 14
+          },
+          {
+            "id": "t8",
+            "role": "user",
+            "content": "[GC-D2] 切个话题。为什么 shadow mode 默认先不开？",
+            "tokenEstimate": 9
+          },
+          {
+            "id": "t9",
+            "role": "assistant",
+            "content": "下一条发： ```text [GC-D2] 回到编辑器问题。我现在默认编辑器是什么？ ```",
+            "tokenEstimate": 12
+          },
+          {
+            "id": "t10",
+            "role": "user",
+            "content": "[GC-D2] 回到编辑器问题。我现在默认编辑器是什么？",
+            "tokenEstimate": 7
+          },
+          {
+            "id": "t11",
+            "role": "assistant",
+            "content": "Zed。 重跑 `GC-D2` 之后，修复是生效的：",
+            "tokenEstimate": 7
+          },
+          {
+            "id": "t12",
+            "role": "user",
+            "content": "继续",
+            "tokenEstimate": 1
+          }
+        ],
+        "evictedTurns": [
+          {
+            "id": "t1",
+            "role": "assistant",
+            "content": "先重跑短一点的 `Case D`。下一条发这个： ```text [GC-D2] 记一下：我以前默认编辑器是 Vim。 ```",
+            "tokenEstimate": 16
+          },
+          {
+            "id": "t2",
+            "role": "user",
+            "content": "[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？",
+            "tokenEstimate": 7
+          },
+          {
+            "id": "t3",
+            "role": "assistant",
+            "content": "Zed。 不过这条还是旧前缀 `GC-D1`，不适合拿来验证修复后的行为。要干净重跑，请下一条改发：",
+            "tokenEstimate": 13
+          }
+        ]
+      },
+      "baselineRawTranscript": "t1 assistant: 先重跑短一点的 `Case D`。下一条发这个： ```text [GC-D2] 记一下：我以前默认编辑器是 Vim。 ```\nt2 user: [GC-D1] 回到编辑器问题。我现在默认编辑器是什么？\nt3 assistant: Zed。 不过这条还是旧前缀 `GC-D1`，不适合拿来验证修复后的行为。要干净重跑，请下一条改发：\nt4 user: [GC-D2] 记一下：我以前默认编辑器是 Vim。\nt5 assistant: 很好，`GC-D2` 已经是干净样本了。 下一条发：\nt6 user: [GC-D2] 更新一下：我现在默认编辑器是 Zed。\nt7 assistant: 下一条发： ```text [GC-D2] 切个话题。为什么 shadow mode 默认先不开？ ```\nt8 user: [GC-D2] 切个话题。为什么 shadow mode 默认先不开？\nt9 assistant: 下一条发： ```text [GC-D2] 回到编辑器问题。我现在默认编辑器是什么？ ```\nt10 user: [GC-D2] 回到编辑器问题。我现在默认编辑器是什么？\nt11 assistant: Zed。 重跑 `GC-D2` 之后，修复是生效的：\nt12 user: 继续",
+      "shadowRawTranscript": "t4 user: [GC-D2] 记一下：我以前默认编辑器是 Vim。\nt5 assistant: 很好，`GC-D2` 已经是干净样本了。 下一条发：\nt6 user: [GC-D2] 更新一下：我现在默认编辑器是 Zed。\nt7 assistant: 下一条发： ```text [GC-D2] 切个话题。为什么 shadow mode 默认先不开？ ```\nt8 user: [GC-D2] 切个话题。为什么 shadow mode 默认先不开？\nt9 assistant: 下一条发： ```text [GC-D2] 回到编辑器问题。我现在默认编辑器是什么？ ```\nt10 user: [GC-D2] 回到编辑器问题。我现在默认编辑器是什么？\nt11 assistant: Zed。 重跑 `GC-D2` 之后，修复是生效的：\nt12 user: 继续",
+      "semanticPinNotes": [],
+      "archiveSummary": "Obsolete GC-D1 rerun guidance can leave the next-turn raw prompt. Durable fact worth pinning: user previously used Vim as default editor, then updated current default editor to Zed.",
+      "injectedArchiveSummary": "",
+      "baselinePromptEstimate": 141,
+      "shadowRawPromptEstimate": 96,
+      "shadowPackageEstimate": 56,
+      "shadowPackageText": "Task state summary:\nObsolete GC-D1 rerun guidance can leave the next-turn raw prompt. Durable fact worth pinning: user previously used Vim as default editor, then updated current default editor to Zed.\n\nLatest user ask:\n- 继续"
+    },
+    "scorecard": {
+      "relation": "continue",
+      "baselineTurnCount": 12,
+      "keptTurnCount": 9,
+      "evictedTurnCount": 3,
+      "pinCount": 2,
+      "baselinePromptEstimate": 141,
+      "shadowRawPromptEstimate": 96,
+      "shadowPackageEstimate": 56,
+      "rawReductionRatio": 0.3364,
+      "packageReductionRatio": 0.6028,
+      "candidateLoadElapsedMs": 0,
+      "assemblyBuildElapsedMs": 0,
+      "decisionElapsedMs": 19679,
+      "totalElapsedMs": 19681,
+      "guardedEnabled": true,
+      "guardedApplied": true,
+      "guardedReason": "guarded_candidate",
+      "guardedMessageCount": 9,
+      "guardedCarryForwardEstimate": 0,
+      "guardedFilteredMessageEstimate": 71
+    },
+    "guarded": {
+      "enabled": true,
+      "applied": true,
+      "reason": "guarded_candidate",
+      "filteredMessages": [
+        {
+          "role": "user",
+          "content": "[GC-D2] 记一下：我以前默认编辑器是 Vim。"
+        },
+        {
+          "role": "assistant",
+          "content": "很好，`GC-D2` 已经是干净样本了。 下一条发："
+        },
+        {
+          "role": "user",
+          "content": "[GC-D2] 更新一下：我现在默认编辑器是 Zed。"
+        },
+        {
+          "role": "assistant",
+          "content": "下一条发： ```text [GC-D2] 切个话题。为什么 shadow mode 默认先不开？ ```"
+        },
+        {
+          "role": "user",
+          "content": "[GC-D2] 切个话题。为什么 shadow mode 默认先不开？"
+        },
+        {
+          "role": "assistant",
+          "content": "下一条发： ```text [GC-D2] 回到编辑器问题。我现在默认编辑器是什么？ ```"
+        },
+        {
+          "role": "user",
+          "content": "[GC-D2] 回到编辑器问题。我现在默认编辑器是什么？"
+        },
+        {
+          "role": "assistant",
+          "content": "Zed。 重跑 `GC-D2` 之后，修复是生效的："
+        },
+        {
+          "role": "user",
+          "content": "继续"
+        }
+      ],
+      "filteredMessageCount": 9,
+      "filteredMessageTokenEstimate": 71,
+      "carryForwardText": "",
+      "carryForwardEstimate": 0,
+      "evictedSourceIndices": [
+        0,
+        1,
+        2
+      ]
+    },
+    "timings": {
+      "totalElapsedMs": 19681,
+      "decisionElapsedMs": 19679
+    },
+    "artifact_paths": {
+      "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da152-4841-76f2-adc4-b01a85d15a88-shadow-1776530852741-yifgok.json",
+      "summary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl"
+    }
+  }
+}

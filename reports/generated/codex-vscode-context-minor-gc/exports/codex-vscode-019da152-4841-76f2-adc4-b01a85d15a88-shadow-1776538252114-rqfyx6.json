@@ -1,0 +1,295 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776538252114-rqfyx6",
+  "generated_at": "2026-04-18T18:50:52.114Z",
+  "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+  "agent_id": "main",
+  "query": "能自动跑的，你帮我跑一遍",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "或者补一个 repo 内可重复的 smoke/eval case，把 GC-D2 收进固定回归"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "已经补进去了。 新回归 case 在： - [evals/codex-context-minor-gc-live-cases.js](/Users/redcreen/Project/unified-memory-core/evals/codex-context-minor-gc-live-cases.js)"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "要"
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "已经修到全绿了。 我做了两件事： - 把 Codex minor GC 默认允许的 guarded relation 放宽到包含 `continue` - 把 `codex-minor-gc-current-editor-update-after-detour` 收进固定 live eval case"
+    },
+    {
+      "id": "t5",
+      "role": "user",
+      "content": "继续扩 harder cases，把类似 GC-B 的自然中文多轮切题也收进固定回归"
+    },
+    {
+      "id": "t6",
+      "role": "assistant",
+      "content": "已经把 harder case 补进固定回归了。 新增 case： - `codex-minor-gc-zh-dense-multitopic-return` - 文件：[evals/codex-context-minor-gc-live-cases.js](/Users/redcreen/Project/unified-memory-core/evals/codex-context-minor-gc-live-cases.js)"
+    },
+    {
+      "id": "t7",
+      "role": "user",
+      "content": "要；尽量不是白名单，有硬编码嫌疑；"
+    },
+    {
+      "id": "t8",
+      "role": "assistant",
+      "content": "已经收住了，而且不是靠白名单。 我做了两步： - 把中文多轮切题 harder case 收进固定回归 - 再把 packaged guard 收紧成“不能覆盖 shadow guard 的否决”"
+    },
+    {
+      "id": "t9",
+      "role": "user",
+      "content": "那刚才不通过的测试，可以重新测试，预期是可以通过了对么？"
+    },
+    {
+      "id": "t10",
+      "role": "assistant",
+      "content": "是。 更准确地说："
+    },
+    {
+      "id": "t11",
+      "role": "user",
+      "content": "能自动跑的，你帮我跑一遍"
+    },
+    {
+      "id": "t12",
+      "role": "assistant",
+      "content": "我已经替你自动跑了一遍： ```bash node scripts/eval-codex-context-minor-gc-live.js --format markdown ```"
+    }
+  ],
+  "decision": {
+    "relation": "resolve",
+    "confidence": 0.89,
+    "evict_turn_ids": [
+      "t1",
+      "t2",
+      "t3",
+      "t4",
+      "t5",
+      "t6",
+      "t7",
+      "t8",
+      "t9",
+      "t10"
+    ],
+    "pin_turn_ids": [
+      "t5",
+      "t7"
+    ],
+    "archive_summary": "此前已完成 codex context minor GC 的固定回归增强：加入更难的中文多轮切题 live eval case，并调整 guard 逻辑以避免用白名单/硬编码方式放行；用户对实现方式的偏好是避免白名单式特判。随后围绕“之前失败的测试现在应可通过”达成一致，用户要求自动跑一遍，助手已执行 live eval 脚本。",
+    "reasoning_summary": "最新活跃请求是“帮我自动跑一遍”，且已由助手执行，当前这一段主任务基本收束。更早的实现细节和状态快照已解决，适合从下一轮原始提示中移除；只需保留少量语义针脚，尤其是 harder cases/固定回归方向以及‘避免白名单硬编码’这一实现偏好。"
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "resolve",
+      "confidence": 0.89,
+      "archiveSummary": "此前已完成 codex context minor GC 的固定回归增强：加入更难的中文多轮切题 live eval case，并调整 guard 逻辑以避免用白名单/硬编码方式放行；用户对实现方式的偏好是避免白名单式特判。随后围绕“之前失败的测试现在应可通过”达成一致，用户要求自动跑一遍，助手已执行 live eval 脚本。",
+      "reasoningSummary": "最新活跃请求是“帮我自动跑一遍”，且已由助手执行，当前这一段主任务基本收束。更早的实现细节和状态快照已解决，适合从下一轮原始提示中移除；只需保留少量语义针脚，尤其是 harder cases/固定回归方向以及‘避免白名单硬编码’这一实现偏好。",
+      "latestUserTurnId": "t11",
+      "pinTurnIds": [
+        "t5",
+        "t7"
+      ],
+      "pinnedOnlyTurnIds": [
+        "t5",
+        "t7"
+      ],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8",
+        "t9",
+        "t10"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8",
+        "t9",
+        "t10"
+      ],
+      "keepTurnIds": [
+        "t11",
+        "t12"
+      ],
+      "baselineTokens": 222,
+      "keptTokens": 26,
+      "prunedTokens": 196,
+      "reductionRatio": 0.8828828828828829,
+      "keepTurns": [
+        {
+          "id": "t11",
+          "role": "user",
+          "content": "能自动跑的，你帮我跑一遍",
+          "tokenEstimate": 3
+        },
+        {
+          "id": "t12",
+          "role": "assistant",
+          "content": "我已经替你自动跑了一遍： ```bash node scripts/eval-codex-context-minor-gc-live.js --format markdown ```",
+          "tokenEstimate": 23
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "或者补一个 repo 内可重复的 smoke/eval case，把 GC-D2 收进固定回归",
+          "tokenEstimate": 12
+        },
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "已经补进去了。 新回归 case 在： - [evals/codex-context-minor-gc-live-cases.js](/Users/redcreen/Project/unified-memory-core/evals/codex-context-minor-gc-live-cases.js)",
+          "tokenEstimate": 39
+        },
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "要",
+          "tokenEstimate": 1
+        },
+        {
+          "id": "t4",
+          "role": "assistant",
+          "content": "已经修到全绿了。 我做了两件事： - 把 Codex minor GC 默认允许的 guarded relation 放宽到包含 `continue` - 把 `codex-minor-gc-current-editor-update-after-detour` 收进固定 live eval case",
+          "tokenEstimate": 38
+        },
+        {
+          "id": "t5",
+          "role": "user",
+          "content": "继续扩 harder cases，把类似 GC-B 的自然中文多轮切题也收进固定回归",
+          "tokenEstimate": 11
+        },
+        {
+          "id": "t6",
+          "role": "assistant",
+          "content": "已经把 harder case 补进固定回归了。 新增 case： - `codex-minor-gc-zh-dense-multitopic-return` - 文件：[evals/codex-context-minor-gc-live-cases.js](/Users/redcreen/Project/unified-memory-core/evals/codex-context-minor-gc-live-cases.js)",
+          "tokenEstimate": 55
+        },
+        {
+          "id": "t7",
+          "role": "user",
+          "content": "要；尽量不是白名单，有硬编码嫌疑；",
+          "tokenEstimate": 5
+        },
+        {
+          "id": "t8",
+          "role": "assistant",
+          "content": "已经收住了，而且不是靠白名单。 我做了两步： - 把中文多轮切题 harder case 收进固定回归 - 再把 packaged guard 收紧成“不能覆盖 shadow guard 的否决”",
+          "tokenEstimate": 25
+        },
+        {
+          "id": "t9",
+          "role": "user",
+          "content": "那刚才不通过的测试，可以重新测试，预期是可以通过了对么？",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t10",
+          "role": "assistant",
+          "content": "是。 更准确地说：",
+          "tokenEstimate": 3
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 或者补一个 repo 内可重复的 smoke/eval case，把 GC-D2 收进固定回归\nt2 assistant: 已经补进去了。 新回归 case 在： - [evals/codex-context-minor-gc-live-cases.js](/Users/redcreen/Project/unified-memory-core/evals/codex-context-minor-gc-live-cases.js)\nt3 user: 要\nt4 assistant: 已经修到全绿了。 我做了两件事： - 把 Codex minor GC 默认允许的 guarded relation 放宽到包含 `continue` - 把 `codex-minor-gc-current-editor-update-after-detour` 收进固定 live eval case\nt5 user: 继续扩 harder cases，把类似 GC-B 的自然中文多轮切题也收进固定回归\nt6 assistant: 已经把 harder case 补进固定回归了。 新增 case： - `codex-minor-gc-zh-dense-multitopic-return` - 文件：[evals/codex-context-minor-gc-live-cases.js](/Users/redcreen/Project/unified-memory-core/evals/codex-context-minor-gc-live-cases.js)\nt7 user: 要；尽量不是白名单，有硬编码嫌疑；\nt8 assistant: 已经收住了，而且不是靠白名单。 我做了两步： - 把中文多轮切题 harder case 收进固定回归 - 再把 packaged guard 收紧成“不能覆盖 shadow guard 的否决”\nt9 user: 那刚才不通过的测试，可以重新测试，预期是可以通过了对么？\nt10 assistant: 是。 更准确地说：\nt11 user: 能自动跑的，你帮我跑一遍\nt12 assistant: 我已经替你自动跑了一遍： ```bash node scripts/eval-codex-context-minor-gc-live.js --format markdown ```",
+    "shadowRawTranscript": "t11 user: 能自动跑的，你帮我跑一遍\nt12 assistant: 我已经替你自动跑了一遍： ```bash node scripts/eval-codex-context-minor-gc-live.js --format markdown ```",
+    "semanticPinNotes": [
+      "user: 继续扩 harder cases，把类似 GC-B 的自然中文多轮切题也收进固定回归",
+      "user: 要；尽量不是白名单，有硬编码嫌疑；"
+    ],
+    "archiveSummary": "此前已完成 codex context minor GC 的固定回归增强：加入更难的中文多轮切题 live eval case，并调整 guard 逻辑以避免用白名单/硬编码方式放行；用户对实现方式的偏好是避免白名单式特判。随后围绕“之前失败的测试现在应可通过”达成一致，用户要求自动跑一遍，助手已执行 live eval 脚本。",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 255,
+    "shadowRawPromptEstimate": 33,
+    "shadowPackageEstimate": 78,
+    "shadowPackageText": "Task state summary:\n此前已完成 codex context minor GC 的固定回归增强：加入更难的中文多轮切题 live eval case，并调整 guard 逻辑以避免用白名单/硬编码方式放行；用户对实现方式的偏好是避免白名单式特判。随后围绕“之前失败的测试现在应可通过”达成一致，用户要求自动跑一遍，助手已执行 live eval 脚本。\n\nLatest user ask:\n- 能自动跑的，你帮我跑一遍\n\nSemantic pins:\n- user: 继续扩 harder cases，把类似 GC-B 的自然中文多轮切题也收进固定回归\n- user: 要；尽量不是白名单，有硬编码嫌疑；"
+  },
+  "scorecard": {
+    "relation": "resolve",
+    "baselineTurnCount": 12,
+    "keptTurnCount": 2,
+    "evictedTurnCount": 10,
+    "pinCount": 2,
+    "baselinePromptEstimate": 255,
+    "shadowRawPromptEstimate": 33,
+    "shadowPackageEstimate": 78,
+    "rawReductionRatio": 0.8829,
+    "packageReductionRatio": 0.6941,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 19396,
+    "totalElapsedMs": 19397,
+    "guardedEnabled": true,
+    "guardedApplied": true,
+    "guardedReason": "guarded_candidate",
+    "guardedMessageCount": 2,
+    "guardedCarryForwardEstimate": 28,
+    "guardedFilteredMessageEstimate": 26
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": true,
+    "reason": "guarded_candidate",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": "能自动跑的，你帮我跑一遍"
+      },
+      {
+        "role": "assistant",
+        "content": "我已经替你自动跑了一遍： ```bash node scripts/eval-codex-context-minor-gc-live.js --format markdown ```"
+      }
+    ],
+    "filteredMessageCount": 2,
+    "filteredMessageTokenEstimate": 26,
+    "carryForwardText": "Conversation carry-forward pins:\n- user: 继续扩 harder cases，把类似 GC-B 的自然中文多轮切题也收进固定回归\n- user: 要；尽量不是白名单，有硬编码嫌疑；",
+    "carryForwardEstimate": 28,
+    "evictedSourceIndices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "timings": {
+    "totalElapsedMs": 19397,
+    "decisionElapsedMs": 19396
+  }
+}

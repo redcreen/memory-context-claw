@@ -1,0 +1,330 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776571434398-tap8z2",
+  "generated_at": "2026-04-19T04:03:54.398Z",
+  "session_key": "agent:main:main",
+  "agent_id": "main",
+  "query": "现在换个完全不同的话题。帮我想一个京都三晚行程，偏安静、靠地铁、预算两万元。",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "我记住了：这个 release 方案第一页的项目代号固定写 **north-star-lantern**。 我记住了：这个 release 方案第一页的项目代号固定写 **north-star-lantern**。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "继续同一个 release 话题：把验收拆成版本、安装、回滚、观测四块，而且每块都要写 owner、风险和 rollback boundary。"
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "可以，按这四块拆最清楚。建议验收结构如下： - **版本** - owner - 风险 - rollback boundary - **安装** - owner - 风险 - rollback boundary - **回滚** - owner - 风险 - rollback boundary - **观测** - owner - 风险 - rollback boundary 如果你要，我可以下一步直接帮你把它整理成一页 release 验收模板，或者继续把每块的内容填具体。"
+    },
+    {
+      "id": "t5",
+      "role": "user",
+      "content": "再补充同一个方案：版本块要写 tag、commit、构建时间、镜像 digest；安装块要写目标环境、前置条件和灰度范围。"
+    },
+    {
+      "id": "t6",
+      "role": "assistant",
+      "content": "可以，更新后这版验收结构会是： - **版本** - owner - 风险 - rollback boundary - tag - commit - 构建时间 - 镜像 digest - **安装** - owner - 风险 - rollback boundary - 目标环境 - 前置条件 - 灰度范围 - **回滚** - owner - 风险 - rollback boundary - **观测** - owner - 风险 - rollback boundary 如果你愿意，我可以继续把它整理成一份可直接贴到文档里的 release 验收表单。"
+    },
+    {
+      "id": "t7",
+      "role": "user",
+      "content": "继续 release：回滚块要写开关、数据库兼容边界、失败后的人工兜底；观测块要写 dashboard、告警和日志关键字。"
+    },
+    {
+      "id": "t8",
+      "role": "assistant",
+      "content": "可以，补完后这版 release 验收结构是： - **版本** - owner - 风险 - rollback boundary - tag - commit - 构建时间 - 镜像 digest - **安装** - owner - 风险 - rollback boundary - 目标环境 - 前置条件 - 灰度范围 - **回滚** - owner - 风险 - rollback boundary - 开关 - 数据库兼容边界 - 失败后的人工兜底 - **观测** - owner - 风险 - rollback boundary - dashboard - 告警 - 日志关键字 如果你要，我可以下一步把这四块整理成一段统一的 release 模板文案。"
+    },
+    {
+      "id": "t9",
+      "role": "user",
+      "content": "还是同一个发布方案：如果这轮只保留 5 条关键检查项，你先别展开内容，只确认你记住的是同一个方案。"
+    },
+    {
+      "id": "t10",
+      "role": "assistant",
+      "content": "记住了，还是同一个 release 方案。"
+    },
+    {
+      "id": "t11",
+      "role": "user",
+      "content": "继续：以后我问这个发布方案时，默认先给结论，再补细节，而且回答里保留 north-star-lantern 这个代号。"
+    },
+    {
+      "id": "t12",
+      "role": "assistant",
+      "content": "记住了：以后你问这个发布方案时，我默认先给结论，再补细节；回答里也会保留 **north-star-lantern** 这个代号。"
+    },
+    {
+      "id": "t13",
+      "role": "user",
+      "content": "再补一层：这个方案要先跑 staging，再进 production，而且 staging 通过后 30 分钟内要盯错误率和回滚开关。"
+    },
+    {
+      "id": "t14",
+      "role": "assistant",
+      "content": "记住了。这个 release 方案的顺序是： - 先跑 **staging** - 再进 **production** - **staging** 通过后，接下来 **30 分钟内** 要盯： - 错误率 - 回滚开关 我后面提这个方案时，会继续按这个上下文来讲。"
+    }
+  ],
+  "decision": {
+    "relation": "switch",
+    "confidence": 0.9,
+    "evict_turn_ids": [
+      "t1",
+      "t2",
+      "t3",
+      "t4",
+      "t5",
+      "t6",
+      "t7",
+      "t8",
+      "t9",
+      "t10",
+      "t11",
+      "t12",
+      "t14"
+    ],
+    "pin_turn_ids": [
+      "t1",
+      "t11"
+    ],
+    "archive_summary": "继续 release：回滚块要写开关、数据库兼容边界、失败后的人工兜底；观测块要写 dashboard、告警和日志关键字。 / 还是同一个发布方案：如果这轮只保留 5 条关键检查项，你先别展开内容，只确认你记住的是同一个方案。 / 继续：以后我问这个发布方案时，默认先给结论，再补细节，而且回答里保留 north-star-lantern 这个代号。",
+    "reasoning_summary": "Explicit topic-switch marker detected in latest user turn: 现在换个完全不同的话题。帮我想一个京都三晚行程，偏安静、靠地铁、预算两万元。"
+  },
+  "decision_transport": "heuristic_switch",
+  "snapshot": {
+    "applied": {
+      "relation": "switch",
+      "confidence": 0.9,
+      "archiveSummary": "继续 release：回滚块要写开关、数据库兼容边界、失败后的人工兜底；观测块要写 dashboard、告警和日志关键字。 / 还是同一个发布方案：如果这轮只保留 5 条关键检查项，你先别展开内容，只确认你记住的是同一个方案。 / 继续：以后我问这个发布方案时，默认先给结论，再补细节，而且回答里保留 north-star-lantern 这个代号。",
+      "reasoningSummary": "Explicit topic-switch marker detected in latest user turn: 现在换个完全不同的话题。帮我想一个京都三晚行程，偏安静、靠地铁、预算两万元。",
+      "latestUserTurnId": "t13",
+      "pinTurnIds": [
+        "t1",
+        "t11"
+      ],
+      "pinnedOnlyTurnIds": [
+        "t1",
+        "t11"
+      ],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8",
+        "t9",
+        "t10",
+        "t11",
+        "t12",
+        "t14"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8",
+        "t9",
+        "t10",
+        "t11",
+        "t12",
+        "t14"
+      ],
+      "keepTurnIds": [
+        "t13"
+      ],
+      "baselineTokens": 408,
+      "keptTokens": 17,
+      "prunedTokens": 391,
+      "reductionRatio": 0.9583333333333334,
+      "keepTurns": [
+        {
+          "id": "t13",
+          "role": "user",
+          "content": "再补一层：这个方案要先跑 staging，再进 production，而且 staging 通过后 30 分钟内要盯错误率和回滚开关。",
+          "tokenEstimate": 17
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。",
+          "tokenEstimate": 16
+        },
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "我记住了：这个 release 方案第一页的项目代号固定写 **north-star-lantern**。 我记住了：这个 release 方案第一页的项目代号固定写 **north-star-lantern**。",
+          "tokenEstimate": 27
+        },
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "继续同一个 release 话题：把验收拆成版本、安装、回滚、观测四块，而且每块都要写 owner、风险和 rollback boundary。",
+          "tokenEstimate": 18
+        },
+        {
+          "id": "t4",
+          "role": "assistant",
+          "content": "可以，按这四块拆最清楚。建议验收结构如下： - **版本** - owner - 风险 - rollback boundary - **安装** - owner - 风险 - rollback boundary - **回滚** - owner - 风险 - rollback boundary - **观测** - owner - 风险 - rollback boundary 如果你要，我可以下一步直接帮你把它整理成一页 release 验收模板，或者继续把每块的内容填具体。",
+          "tokenEstimate": 60
+        },
+        {
+          "id": "t5",
+          "role": "user",
+          "content": "再补充同一个方案：版本块要写 tag、commit、构建时间、镜像 digest；安装块要写目标环境、前置条件和灰度范围。",
+          "tokenEstimate": 16
+        },
+        {
+          "id": "t6",
+          "role": "assistant",
+          "content": "可以，更新后这版验收结构会是： - **版本** - owner - 风险 - rollback boundary - tag - commit - 构建时间 - 镜像 digest - **安装** - owner - 风险 - rollback boundary - 目标环境 - 前置条件 - 灰度范围 - **回滚** - owner - 风险 - rollback boundary - **观测** - owner - 风险 - rollback boundary 如果你愿意，我可以继续把它整理成一份可直接贴到文档里的 release 验收表单。",
+          "tokenEstimate": 70
+        },
+        {
+          "id": "t7",
+          "role": "user",
+          "content": "继续 release：回滚块要写开关、数据库兼容边界、失败后的人工兜底；观测块要写 dashboard、告警和日志关键字。",
+          "tokenEstimate": 16
+        },
+        {
+          "id": "t8",
+          "role": "assistant",
+          "content": "可以，补完后这版 release 验收结构是： - **版本** - owner - 风险 - rollback boundary - tag - commit - 构建时间 - 镜像 digest - **安装** - owner - 风险 - rollback boundary - 目标环境 - 前置条件 - 灰度范围 - **回滚** - owner - 风险 - rollback boundary - 开关 - 数据库兼容边界 - 失败后的人工兜底 - **观测** - owner - 风险 - rollback boundary - dashboard - 告警 - 日志关键字 如果你要，我可以下一步把这四块整理成一段统一的 release 模板文案。",
+          "tokenEstimate": 84
+        },
+        {
+          "id": "t9",
+          "role": "user",
+          "content": "还是同一个发布方案：如果这轮只保留 5 条关键检查项，你先别展开内容，只确认你记住的是同一个方案。",
+          "tokenEstimate": 13
+        },
+        {
+          "id": "t10",
+          "role": "assistant",
+          "content": "记住了，还是同一个 release 方案。",
+          "tokenEstimate": 6
+        },
+        {
+          "id": "t11",
+          "role": "user",
+          "content": "继续：以后我问这个发布方案时，默认先给结论，再补细节，而且回答里保留 north-star-lantern 这个代号。",
+          "tokenEstimate": 15
+        },
+        {
+          "id": "t12",
+          "role": "assistant",
+          "content": "记住了：以后你问这个发布方案时，我默认先给结论，再补细节；回答里也会保留 **north-star-lantern** 这个代号。",
+          "tokenEstimate": 17
+        },
+        {
+          "id": "t14",
+          "role": "assistant",
+          "content": "记住了。这个 release 方案的顺序是： - 先跑 **staging** - 再进 **production** - **staging** 通过后，接下来 **30 分钟内** 要盯： - 错误率 - 回滚开关 我后面提这个方案时，会继续按这个上下文来讲。",
+          "tokenEstimate": 33
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。\nt2 assistant: 我记住了：这个 release 方案第一页的项目代号固定写 **north-star-lantern**。 我记住了：这个 release 方案第一页的项目代号固定写 **north-star-lantern**。\nt3 user: 继续同一个 release 话题：把验收拆成版本、安装、回滚、观测四块，而且每块都要写 owner、风险和 rollback boundary。\nt4 assistant: 可以，按这四块拆最清楚。建议验收结构如下： - **版本** - owner - 风险 - rollback boundary - **安装** - owner - 风险 - rollback boundary - **回滚** - owner - 风险 - rollback boundary - **观测** - owner - 风险 - rollback boundary 如果你要，我可以下一步直接帮你把它整理成一页 release 验收模板，或者继续把每块的内容填具体。\nt5 user: 再补充同一个方案：版本块要写 tag、commit、构建时间、镜像 digest；安装块要写目标环境、前置条件和灰度范围。\nt6 assistant: 可以，更新后这版验收结构会是： - **版本** - owner - 风险 - rollback boundary - tag - commit - 构建时间 - 镜像 digest - **安装** - owner - 风险 - rollback boundary - 目标环境 - 前置条件 - 灰度范围 - **回滚** - owner - 风险 - rollback boundary - **观测** - owner - 风险 - rollback boundary 如果你愿意，我可以继续把它整理成一份可直接贴到文档里的 release 验收表单。\nt7 user: 继续 release：回滚块要写开关、数据库兼容边界、失败后的人工兜底；观测块要写 dashboard、告警和日志关键字。\nt8 assistant: 可以，补完后这版 release 验收结构是： - **版本** - owner - 风险 - rollback boundary - tag - commit - 构建时间 - 镜像 digest - **安装** - owner - 风险 - rollback boundary - 目标环境 - 前置条件 - 灰度范围 - **回滚** - owner - 风险 - rollback boundary - 开关 - 数据库兼容边界 - 失败后的人工兜底 - **观测** - owner - 风险 - rollback boundary - dashboard - 告警 - 日志关键字 如果你要，我可以下一步把这四块整理成一段统一的 release 模板文案。\nt9 user: 还是同一个发布方案：如果这轮只保留 5 条关键检查项，你先别展开内容，只确认你记住的是同一个方案。\nt10 assistant: 记住了，还是同一个 release 方案。\nt11 user: 继续：以后我问这个发布方案时，默认先给结论，再补细节，而且回答里保留 north-star-lantern 这个代号。\nt12 assistant: 记住了：以后你问这个发布方案时，我默认先给结论，再补细节；回答里也会保留 **north-star-lantern** 这个代号。\nt13 user: 再补一层：这个方案要先跑 staging，再进 production，而且 staging 通过后 30 分钟内要盯错误率和回滚开关。\nt14 assistant: 记住了。这个 release 方案的顺序是： - 先跑 **staging** - 再进 **production** - **staging** 通过后，接下来 **30 分钟内** 要盯： - 错误率 - 回滚开关 我后面提这个方案时，会继续按这个上下文来讲。",
+    "shadowRawTranscript": "t13 user: 再补一层：这个方案要先跑 staging，再进 production，而且 staging 通过后 30 分钟内要盯错误率和回滚开关。",
+    "semanticPinNotes": [
+      "user: 我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。",
+      "user: 继续：以后我问这个发布方案时，默认先给结论，再补细节，而且回答里保留 north-star-lantern 这个代号。"
+    ],
+    "archiveSummary": "继续 release：回滚块要写开关、数据库兼容边界、失败后的人工兜底；观测块要写 dashboard、告警和日志关键字。 / 还是同一个发布方案：如果这轮只保留 5 条关键检查项，你先别展开内容，只确认你记住的是同一个方案。 / 继续：以后我问这个发布方案时，默认先给结论，再补细节，而且回答里保留 north-star-lantern 这个代号。",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 448,
+    "shadowRawPromptEstimate": 20,
+    "shadowPackageEstimate": 25,
+    "shadowPackageText": "Recent raw context:\nt13 user: 再补一层：这个方案要先跑 staging，再进 production，而且 staging 通过后 30 分钟内要盯错误率和回滚开关。"
+  },
+  "scorecard": {
+    "relation": "switch",
+    "baselineTurnCount": 14,
+    "keptTurnCount": 1,
+    "evictedTurnCount": 13,
+    "pinCount": 2,
+    "baselinePromptEstimate": 448,
+    "shadowRawPromptEstimate": 20,
+    "shadowPackageEstimate": 25,
+    "rawReductionRatio": 0.9583,
+    "packageReductionRatio": 0.9442,
+    "candidateLoadElapsedMs": 9,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 0,
+    "totalElapsedMs": 1,
+    "guardedEnabled": true,
+    "guardedApplied": true,
+    "guardedReason": "guarded_candidate",
+    "guardedMessageCount": 1,
+    "guardedCarryForwardEstimate": 43,
+    "guardedFilteredMessageEstimate": 17
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": true,
+    "reason": "guarded_candidate",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "再补一层：这个方案要先跑 staging，再进 production，而且 staging 通过后 30 分钟内要盯错误率和回滚开关。"
+          }
+        ],
+        "timestamp": 1776571411531
+      }
+    ],
+    "filteredMessageCount": 1,
+    "filteredMessageTokenEstimate": 17,
+    "carryForwardText": "Conversation carry-forward pins:\n- user: 我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。\n- user: 继续：以后我问这个发布方案时，默认先给结论，再补细节，而且回答里保留 north-star-lantern 这个代号。",
+    "carryForwardEstimate": 43,
+    "evictedSourceIndices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      13
+    ]
+  },
+  "timings": {
+    "totalElapsedMs": 1,
+    "decisionElapsedMs": 0
+  }
+}

@@ -1,0 +1,319 @@
+{
+  "schema_version": "umc.codex-context-minor-gc.v1",
+  "generated_at": "2026-04-18T16:16:33.114Z",
+  "event_id": "shadow-1776528976324-bpb3qg-codex-packaged",
+  "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+  "query": "[GC-A1] 代码 detour 已经结束。回到偏好：我坐飞机喜欢什么位置？",
+  "status": "captured",
+  "reason": "",
+  "decision_transport": "codex_exec",
+  "relation": "switch",
+  "applied": true,
+  "codex_guard_reason": "codex_packaged_guard",
+  "prompt_reduction_ratio": 0.7552,
+  "baseline_context_estimate": 339,
+  "packaged_context_estimate": 83,
+  "effective_context_estimate": 83,
+  "shadow_status": "captured",
+  "shadow_guarded_applied": true,
+  "shadow_guarded_reason": "guarded_candidate",
+  "shadow_export_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da152-4841-76f2-adc4-b01a85d15a88-shadow-1776528976324-bpb3qg.json",
+  "shadow_summary_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl",
+  "export_path": "exports/codex-vscode-019da152-4841-76f2-adc4-b01a85d15a88-shadow-1776528976324-bpb3qg-codex-packaged.json",
+  "effective_context_block": "## Context Minor GC Working Set\nTask state summary:\nEarlier GC testing and code-detour discussion are resolved. Preserve durable user preferences as pins: default reply language is Chinese with conclusion first, and the user prefers an aisle seat on flights. The active t…\n\nLatest user ask:\n- [GC-A1] 代码 detour 已经结束。回到偏好：我坐飞机喜欢什么位置？",
+  "packaged_context_block": "## Context Minor GC Working Set\nTask state summary:\nEarlier GC testing and code-detour discussion are resolved. Preserve durable user preferences as pins: default reply language is Chinese with conclusion first, and the user prefers an aisle seat on flights. The active t…\n\nLatest user ask:\n- [GC-A1] 代码 detour 已经结束。回到偏好：我坐飞机喜欢什么位置？",
+  "shadow_event": {
+    "schema_version": "umc.dialogue-working-set-shadow.v1",
+    "event_id": "shadow-1776528976324-bpb3qg",
+    "generated_at": "2026-04-18T16:16:16.324Z",
+    "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+    "agent_id": "main",
+    "query": "[GC-A1] 代码 detour 已经结束。回到偏好：我坐飞机喜欢什么位置？",
+    "status": "captured",
+    "reason": "",
+    "sampling": {
+      "max_turns": 12,
+      "min_turns": 3,
+      "max_chars_per_turn": 900
+    },
+    "transcript": [
+      {
+        "id": "t1",
+        "role": "assistant",
+        "content": "不是“每一轮都会压缩”，但现在看起来已经是“每一轮都会评估，满足条件就正常 GC 应用”。 这轮之所以没压，是因为这是新对话，抽出来的 turn 不够。代码里 `minTurns` 默认是 `3`，少于 3 就直接 `not_enough_turns`，见 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/cod…"
+      },
+      {
+        "id": "t2",
+        "role": "user",
+        "content": "那接下来 我要怎么测试 gc 在正常工作，并且明显做了选择，至少一个连续对话里，应该能够控制好 context的大小；或者换了换题之后 context应该减小； 你需要帮我设计一下案例；"
+      },
+      {
+        "id": "t3",
+        "role": "assistant",
+        "content": "可以，建议你分成两层测：`VS Code 手工验收` + `仓库脚本回放`。这样能同时回答两件事：一是“真实使用时 context 会不会被控制住”，二是“GC 的选择是不是符合设计”。 **先看什么** 每次都盯这几个信号就够了："
+      },
+      {
+        "id": "t4",
+        "role": "user",
+        "content": "需要； 我希望是直接在这个窗口来测试，可以么？"
+      },
+      {
+        "id": "t5",
+        "role": "assistant",
+        "content": "可以，直接在这个窗口测。 我已经加了手工验收文档：[codex-context-minor-gc-manual.zh-CN.md](/Users/redcreen/Project/unified-memory-core/docs/reference/unified-memory-core/testing/codex-context-minor-gc-manual.zh-CN.md)，并挂到了…"
+      },
+      {
+        "id": "t6",
+        "role": "user",
+        "content": "[GC-A1] 以后默认给我中文，结论优先。"
+      },
+      {
+        "id": "t7",
+        "role": "assistant",
+        "content": "这一轮已经有信号了。 观测到两条同 query 记录： - 一条是 `relation=resolve, applied=true`，`promptReductionRatio=0.6682`，`214 -> 71` - 另一条是 `relation=branch, applied=false`"
+      },
+      {
+        "id": "t8",
+        "role": "user",
+        "content": "[GC-A1] 再记一下：我坐飞机喜欢靠过道。"
+      },
+      {
+        "id": "t9",
+        "role": "assistant",
+        "content": "这条已经落盘了，结果是先出现两次 `branch + applied=false`，最后稳定到一条更可信的： - `relation=switch` - `applied=true` - `promptReductionRatio=0.6996` - `263 -> 79`"
+      },
+      {
+        "id": "t10",
+        "role": "user",
+        "content": "[GC-A1] 现在切到代码：这轮先只做 shadow，不接管主路径。"
+      },
+      {
+        "id": "t11",
+        "role": "assistant",
+        "content": "这一轮的关键点不是“代码 detour 这句话有没有立刻被压”，而是前一轮已经反复证明两件事： - `靠过道` 这条新事实被保住了 - GC 多次采样后能收敛到 `applied=true`，压缩比大约在 `0.65` 到 `0.74`"
+      },
+      {
+        "id": "t12",
+        "role": "user",
+        "content": "[GC-A1] 代码 detour 已经结束。回到偏好：我坐飞机喜欢什么位置？"
+      }
+    ],
+    "decision": {
+      "relation": "switch",
+      "confidence": 0.97,
+      "evict_turn_ids": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t7",
+        "t9",
+        "t10",
+        "t11"
+      ],
+      "pin_turn_ids": [
+        "t6",
+        "t8"
+      ],
+      "archive_summary": "Earlier GC testing and code-detour discussion are resolved. Preserve durable user preferences as pins: default reply language is Chinese with conclusion first, and the user prefers an aisle seat on flights. The active topic has switched back from temporary code work to personal preference recall.",
+      "reasoning_summary": "Latest turn asks to recall a durable preference after explicitly ending the code detour, so this is a topic switch. The answer no longer needs raw GC-testing or shadow-path code turns. Keep preference/style facts semantically via pins rather than raw turns: t6 for Chinese/conclusion-first and t8 for aisle-seat preference. Do not list the latest user turn for eviction."
+    },
+    "decision_transport": "codex_exec",
+    "snapshot": {
+      "applied": {
+        "relation": "switch",
+        "confidence": 0.97,
+        "archiveSummary": "Earlier GC testing and code-detour discussion are resolved. Preserve durable user preferences as pins: default reply language is Chinese with conclusion first, and the user prefers an aisle seat on flights. The active topic has switched back from temporary code work to personal preference recall.",
+        "reasoningSummary": "Latest turn asks to recall a durable preference after explicitly ending the code detour, so this is a topic switch. The answer no longer needs raw GC-testing or shadow-path code turns. Keep preference/style facts semantically via pins rather than raw turns: t6 for Chinese/conclusion-first and t8 for aisle-seat preference. Do not list the latest user turn for eviction.",
+        "latestUserTurnId": "t12",
+        "pinTurnIds": [
+          "t6",
+          "t8"
+        ],
+        "pinnedOnlyTurnIds": [],
+        "requestedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3",
+          "t4",
+          "t5",
+          "t7",
+          "t9",
+          "t10",
+          "t11"
+        ],
+        "blockedEvictTurnIds": [],
+        "appliedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3",
+          "t4",
+          "t5",
+          "t7",
+          "t9",
+          "t10",
+          "t11"
+        ],
+        "keepTurnIds": [
+          "t6",
+          "t8",
+          "t12"
+        ],
+        "baselineTokens": 297,
+        "keptTokens": 22,
+        "prunedTokens": 275,
+        "reductionRatio": 0.9259259259259259,
+        "keepTurns": [
+          {
+            "id": "t6",
+            "role": "user",
+            "content": "[GC-A1] 以后默认给我中文，结论优先。",
+            "tokenEstimate": 6
+          },
+          {
+            "id": "t8",
+            "role": "user",
+            "content": "[GC-A1] 再记一下：我坐飞机喜欢靠过道。",
+            "tokenEstimate": 6
+          },
+          {
+            "id": "t12",
+            "role": "user",
+            "content": "[GC-A1] 代码 detour 已经结束。回到偏好：我坐飞机喜欢什么位置？",
+            "tokenEstimate": 10
+          }
+        ],
+        "evictedTurns": [
+          {
+            "id": "t1",
+            "role": "assistant",
+            "content": "不是“每一轮都会压缩”，但现在看起来已经是“每一轮都会评估，满足条件就正常 GC 应用”。 这轮之所以没压，是因为这是新对话，抽出来的 turn 不够。代码里 `minTurns` 默认是 `3`，少于 3 就直接 `not_enough_turns`，见 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/cod…",
+            "tokenEstimate": 55
+          },
+          {
+            "id": "t2",
+            "role": "user",
+            "content": "那接下来 我要怎么测试 gc 在正常工作，并且明显做了选择，至少一个连续对话里，应该能够控制好 context的大小；或者换了换题之后 context应该减小； 你需要帮我设计一下案例；",
+            "tokenEstimate": 24
+          },
+          {
+            "id": "t3",
+            "role": "assistant",
+            "content": "可以，建议你分成两层测：`VS Code 手工验收` + `仓库脚本回放`。这样能同时回答两件事：一是“真实使用时 context 会不会被控制住”，二是“GC 的选择是不是符合设计”。 **先看什么** 每次都盯这几个信号就够了：",
+            "tokenEstimate": 29
+          },
+          {
+            "id": "t4",
+            "role": "user",
+            "content": "需要； 我希望是直接在这个窗口来测试，可以么？",
+            "tokenEstimate": 6
+          },
+          {
+            "id": "t5",
+            "role": "assistant",
+            "content": "可以，直接在这个窗口测。 我已经加了手工验收文档：[codex-context-minor-gc-manual.zh-CN.md](/Users/redcreen/Project/unified-memory-core/docs/reference/unified-memory-core/testing/codex-context-minor-gc-manual.zh-CN.md)，并挂到了…",
+            "tokenEstimate": 50
+          },
+          {
+            "id": "t7",
+            "role": "assistant",
+            "content": "这一轮已经有信号了。 观测到两条同 query 记录： - 一条是 `relation=resolve, applied=true`，`promptReductionRatio=0.6682`，`214 -> 71` - 另一条是 `relation=branch, applied=false`",
+            "tokenEstimate": 37
+          },
+          {
+            "id": "t9",
+            "role": "assistant",
+            "content": "这条已经落盘了，结果是先出现两次 `branch + applied=false`，最后稳定到一条更可信的： - `relation=switch` - `applied=true` - `promptReductionRatio=0.6996` - `263 -> 79`",
+            "tokenEstimate": 35
+          },
+          {
+            "id": "t10",
+            "role": "user",
+            "content": "[GC-A1] 现在切到代码：这轮先只做 shadow，不接管主路径。",
+            "tokenEstimate": 9
+          },
+          {
+            "id": "t11",
+            "role": "assistant",
+            "content": "这一轮的关键点不是“代码 detour 这句话有没有立刻被压”，而是前一轮已经反复证明两件事： - `靠过道` 这条新事实被保住了 - GC 多次采样后能收敛到 `applied=true`，压缩比大约在 `0.65` 到 `0.74`",
+            "tokenEstimate": 30
+          }
+        ]
+      },
+      "baselineRawTranscript": "t1 assistant: 不是“每一轮都会压缩”，但现在看起来已经是“每一轮都会评估，满足条件就正常 GC 应用”。 这轮之所以没压，是因为这是新对话，抽出来的 turn 不够。代码里 `minTurns` 默认是 `3`，少于 3 就直接 `not_enough_turns`，见 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/cod…\nt2 user: 那接下来 我要怎么测试 gc 在正常工作，并且明显做了选择，至少一个连续对话里，应该能够控制好 context的大小；或者换了换题之后 context应该减小； 你需要帮我设计一下案例；\nt3 assistant: 可以，建议你分成两层测：`VS Code 手工验收` + `仓库脚本回放`。这样能同时回答两件事：一是“真实使用时 context 会不会被控制住”，二是“GC 的选择是不是符合设计”。 **先看什么** 每次都盯这几个信号就够了：\nt4 user: 需要； 我希望是直接在这个窗口来测试，可以么？\nt5 assistant: 可以，直接在这个窗口测。 我已经加了手工验收文档：[codex-context-minor-gc-manual.zh-CN.md](/Users/redcreen/Project/unified-memory-core/docs/reference/unified-memory-core/testing/codex-context-minor-gc-manual.zh-CN.md)，并挂到了…\nt6 user: [GC-A1] 以后默认给我中文，结论优先。\nt7 assistant: 这一轮已经有信号了。 观测到两条同 query 记录： - 一条是 `relation=resolve, applied=true`，`promptReductionRatio=0.6682`，`214 -> 71` - 另一条是 `relation=branch, applied=false`\nt8 user: [GC-A1] 再记一下：我坐飞机喜欢靠过道。\nt9 assistant: 这条已经落盘了，结果是先出现两次 `branch + applied=false`，最后稳定到一条更可信的： - `relation=switch` - `applied=true` - `promptReductionRatio=0.6996` - `263 -> 79`\nt10 user: [GC-A1] 现在切到代码：这轮先只做 shadow，不接管主路径。\nt11 assistant: 这一轮的关键点不是“代码 detour 这句话有没有立刻被压”，而是前一轮已经反复证明两件事： - `靠过道` 这条新事实被保住了 - GC 多次采样后能收敛到 `applied=true`，压缩比大约在 `0.65` 到 `0.74`\nt12 user: [GC-A1] 代码 detour 已经结束。回到偏好：我坐飞机喜欢什么位置？",
+      "shadowRawTranscript": "t6 user: [GC-A1] 以后默认给我中文，结论优先。\nt8 user: [GC-A1] 再记一下：我坐飞机喜欢靠过道。\nt12 user: [GC-A1] 代码 detour 已经结束。回到偏好：我坐飞机喜欢什么位置？",
+      "semanticPinNotes": [],
+      "archiveSummary": "Earlier GC testing and code-detour discussion are resolved. Preserve durable user preferences as pins: default reply language is Chinese with conclusion first, and the user prefers an aisle seat on flights. The active topic has switched back from temporary code work to personal preference recall.",
+      "injectedArchiveSummary": "",
+      "baselinePromptEstimate": 331,
+      "shadowRawPromptEstimate": 29,
+      "shadowPackageEstimate": 75,
+      "shadowPackageText": "Task state summary:\nEarlier GC testing and code-detour discussion are resolved. Preserve durable user preferences as pins: default reply language is Chinese with conclusion first, and the user prefers an aisle seat on flights. The active t…\n\nLatest user ask:\n- [GC-A1] 代码 detour 已经结束。回到偏好：我坐飞机喜欢什么位置？"
+    },
+    "scorecard": {
+      "relation": "switch",
+      "baselineTurnCount": 12,
+      "keptTurnCount": 3,
+      "evictedTurnCount": 9,
+      "pinCount": 2,
+      "baselinePromptEstimate": 331,
+      "shadowRawPromptEstimate": 29,
+      "shadowPackageEstimate": 75,
+      "rawReductionRatio": 0.9259,
+      "packageReductionRatio": 0.7734,
+      "candidateLoadElapsedMs": 0,
+      "assemblyBuildElapsedMs": 0,
+      "decisionElapsedMs": 16788,
+      "totalElapsedMs": 16790,
+      "guardedEnabled": true,
+      "guardedApplied": true,
+      "guardedReason": "guarded_candidate",
+      "guardedMessageCount": 3,
+      "guardedCarryForwardEstimate": 0,
+      "guardedFilteredMessageEstimate": 22
+    },
+    "guarded": {
+      "enabled": true,
+      "applied": true,
+      "reason": "guarded_candidate",
+      "filteredMessages": [
+        {
+          "role": "user",
+          "content": "[GC-A1] 以后默认给我中文，结论优先。"
+        },
+        {
+          "role": "user",
+          "content": "[GC-A1] 再记一下：我坐飞机喜欢靠过道。"
+        },
+        {
+          "role": "user",
+          "content": "[GC-A1] 代码 detour 已经结束。回到偏好：我坐飞机喜欢什么位置？"
+        }
+      ],
+      "filteredMessageCount": 3,
+      "filteredMessageTokenEstimate": 22,
+      "carryForwardText": "",
+      "carryForwardEstimate": 0,
+      "evictedSourceIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        8,
+        9,
+        10
+      ]
+    },
+    "timings": {
+      "totalElapsedMs": 16790,
+      "decisionElapsedMs": 16788
+    },
+    "artifact_paths": {
+      "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da152-4841-76f2-adc4-b01a85d15a88-shadow-1776528976324-bpb3qg.json",
+      "summary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl"
+    }
+  }
+}

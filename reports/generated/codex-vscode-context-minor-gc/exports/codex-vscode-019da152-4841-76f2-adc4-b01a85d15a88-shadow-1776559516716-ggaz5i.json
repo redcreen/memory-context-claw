@@ -1,0 +1,298 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776559516716-ggaz5i",
+  "generated_at": "2026-04-19T00:45:16.716Z",
+  "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+  "agent_id": "main",
+  "query": "就此结束，接下来， 我们重新来做测试，看下体感有么有明显改变；",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "assistant",
+      "content": "已经修到全绿了。 我做了两件事： - 把 Codex minor GC 默认允许的 guarded relation 放宽到包含 `continue` - 把 `codex-minor-gc-current-editor-update-after-detour` 收进固定 live eval case"
+    },
+    {
+      "id": "t2",
+      "role": "user",
+      "content": "继续扩 harder cases，把类似 GC-B 的自然中文多轮切题也收进固定回归"
+    },
+    {
+      "id": "t3",
+      "role": "assistant",
+      "content": "已经把 harder case 补进固定回归了。 新增 case： - `codex-minor-gc-zh-dense-multitopic-return` - 文件：[evals/codex-context-minor-gc-live-cases.js](/Users/redcreen/Project/unified-memory-core/evals/codex-context-minor-gc-live-cases.js)"
+    },
+    {
+      "id": "t4",
+      "role": "user",
+      "content": "要；尽量不是白名单，有硬编码嫌疑；"
+    },
+    {
+      "id": "t5",
+      "role": "assistant",
+      "content": "已经收住了，而且不是靠白名单。 我做了两步： - 把中文多轮切题 harder case 收进固定回归 - 再把 packaged guard 收紧成“不能覆盖 shadow guard 的否决”"
+    },
+    {
+      "id": "t6",
+      "role": "user",
+      "content": "那刚才不通过的测试，可以重新测试，预期是可以通过了对么？"
+    },
+    {
+      "id": "t7",
+      "role": "assistant",
+      "content": "是。 更准确地说："
+    },
+    {
+      "id": "t8",
+      "role": "user",
+      "content": "能自动跑的，你帮我跑一遍"
+    },
+    {
+      "id": "t9",
+      "role": "assistant",
+      "content": "我已经替你自动跑了一遍： ```bash node scripts/eval-codex-context-minor-gc-live.js --format markdown ```"
+    },
+    {
+      "id": "t10",
+      "role": "user",
+      "content": "继续"
+    },
+    {
+      "id": "t11",
+      "role": "assistant",
+      "content": "已经收成全绿了。 我继续做的两条通用修正是： - `continue` 下如果有 turn 被降成 `pin-only`，拒绝激活 - `summary-first` 不再强制优先；只要 raw keep 更轻，就统一退回 raw keep"
+    },
+    {
+      "id": "t12",
+      "role": "user",
+      "content": "就此结束，接下来， 我们重新来做测试，看下体感有么有明显改变；"
+    }
+  ],
+  "decision": {
+    "relation": "switch",
+    "confidence": 0.97,
+    "evict_turn_ids": [
+      "t1",
+      "t2",
+      "t3",
+      "t4",
+      "t5",
+      "t6",
+      "t7",
+      "t8",
+      "t9",
+      "t10",
+      "t11"
+    ],
+    "pin_turn_ids": [
+      "t1",
+      "t4",
+      "t11"
+    ],
+    "archive_summary": "Previous thread is resolved: Codex minor GC behavior was adjusted and regression coverage expanded. Durable carry-forward: `continue` is allowed as a guarded relation, activation is rejected if a `continue` path demotes needed turns to pin-only, and `summary-first` is no longer forced when raw-keep is lighter. User preference: avoid whitelist-style or hardcoded handling. The next active topic is a fresh round of testing to check perceived behavior changes.",
+    "reasoning_summary": "The prior implementation/fix thread appears complete, and the latest user turn explicitly closes it and starts a new testing phase. No unresolved implementation request remains that requires keeping earlier raw turns. The important carry-forward is semantic, not verbatim: the key behavior changes plus the user's anti-whitelist preference should survive as pins, while the solved status chatter and intermediate test-run confirmations can leave the next-turn raw working set."
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "switch",
+      "confidence": 0.97,
+      "archiveSummary": "Previous thread is resolved: Codex minor GC behavior was adjusted and regression coverage expanded. Durable carry-forward: `continue` is allowed as a guarded relation, activation is rejected if a `continue` path demotes needed turns to pin-only, and `summary-first` is no longer forced when raw-keep is lighter. User preference: avoid whitelist-style or hardcoded handling. The next active topic is a fresh round of testing to check perceived behavior changes.",
+      "reasoningSummary": "The prior implementation/fix thread appears complete, and the latest user turn explicitly closes it and starts a new testing phase. No unresolved implementation request remains that requires keeping earlier raw turns. The important carry-forward is semantic, not verbatim: the key behavior changes plus the user's anti-whitelist preference should survive as pins, while the solved status chatter and intermediate test-run confirmations can leave the next-turn raw working set.",
+      "latestUserTurnId": "t12",
+      "pinTurnIds": [
+        "t1",
+        "t4",
+        "t11"
+      ],
+      "pinnedOnlyTurnIds": [
+        "t1",
+        "t4",
+        "t11"
+      ],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8",
+        "t9",
+        "t10",
+        "t11"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8",
+        "t9",
+        "t10",
+        "t11"
+      ],
+      "keepTurnIds": [
+        "t12"
+      ],
+      "baselineTokens": 209,
+      "keptTokens": 8,
+      "prunedTokens": 201,
+      "reductionRatio": 0.9617224880382775,
+      "keepTurns": [
+        {
+          "id": "t12",
+          "role": "user",
+          "content": "就此结束，接下来， 我们重新来做测试，看下体感有么有明显改变；",
+          "tokenEstimate": 8
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "assistant",
+          "content": "已经修到全绿了。 我做了两件事： - 把 Codex minor GC 默认允许的 guarded relation 放宽到包含 `continue` - 把 `codex-minor-gc-current-editor-update-after-detour` 收进固定 live eval case",
+          "tokenEstimate": 38
+        },
+        {
+          "id": "t2",
+          "role": "user",
+          "content": "继续扩 harder cases，把类似 GC-B 的自然中文多轮切题也收进固定回归",
+          "tokenEstimate": 11
+        },
+        {
+          "id": "t3",
+          "role": "assistant",
+          "content": "已经把 harder case 补进固定回归了。 新增 case： - `codex-minor-gc-zh-dense-multitopic-return` - 文件：[evals/codex-context-minor-gc-live-cases.js](/Users/redcreen/Project/unified-memory-core/evals/codex-context-minor-gc-live-cases.js)",
+          "tokenEstimate": 55
+        },
+        {
+          "id": "t4",
+          "role": "user",
+          "content": "要；尽量不是白名单，有硬编码嫌疑；",
+          "tokenEstimate": 5
+        },
+        {
+          "id": "t5",
+          "role": "assistant",
+          "content": "已经收住了，而且不是靠白名单。 我做了两步： - 把中文多轮切题 harder case 收进固定回归 - 再把 packaged guard 收紧成“不能覆盖 shadow guard 的否决”",
+          "tokenEstimate": 25
+        },
+        {
+          "id": "t6",
+          "role": "user",
+          "content": "那刚才不通过的测试，可以重新测试，预期是可以通过了对么？",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t7",
+          "role": "assistant",
+          "content": "是。 更准确地说：",
+          "tokenEstimate": 3
+        },
+        {
+          "id": "t8",
+          "role": "user",
+          "content": "能自动跑的，你帮我跑一遍",
+          "tokenEstimate": 3
+        },
+        {
+          "id": "t9",
+          "role": "assistant",
+          "content": "我已经替你自动跑了一遍： ```bash node scripts/eval-codex-context-minor-gc-live.js --format markdown ```",
+          "tokenEstimate": 23
+        },
+        {
+          "id": "t10",
+          "role": "user",
+          "content": "继续",
+          "tokenEstimate": 1
+        },
+        {
+          "id": "t11",
+          "role": "assistant",
+          "content": "已经收成全绿了。 我继续做的两条通用修正是： - `continue` 下如果有 turn 被降成 `pin-only`，拒绝激活 - `summary-first` 不再强制优先；只要 raw keep 更轻，就统一退回 raw keep",
+          "tokenEstimate": 30
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 assistant: 已经修到全绿了。 我做了两件事： - 把 Codex minor GC 默认允许的 guarded relation 放宽到包含 `continue` - 把 `codex-minor-gc-current-editor-update-after-detour` 收进固定 live eval case\nt2 user: 继续扩 harder cases，把类似 GC-B 的自然中文多轮切题也收进固定回归\nt3 assistant: 已经把 harder case 补进固定回归了。 新增 case： - `codex-minor-gc-zh-dense-multitopic-return` - 文件：[evals/codex-context-minor-gc-live-cases.js](/Users/redcreen/Project/unified-memory-core/evals/codex-context-minor-gc-live-cases.js)\nt4 user: 要；尽量不是白名单，有硬编码嫌疑；\nt5 assistant: 已经收住了，而且不是靠白名单。 我做了两步： - 把中文多轮切题 harder case 收进固定回归 - 再把 packaged guard 收紧成“不能覆盖 shadow guard 的否决”\nt6 user: 那刚才不通过的测试，可以重新测试，预期是可以通过了对么？\nt7 assistant: 是。 更准确地说：\nt8 user: 能自动跑的，你帮我跑一遍\nt9 assistant: 我已经替你自动跑了一遍： ```bash node scripts/eval-codex-context-minor-gc-live.js --format markdown ```\nt10 user: 继续\nt11 assistant: 已经收成全绿了。 我继续做的两条通用修正是： - `continue` 下如果有 turn 被降成 `pin-only`，拒绝激活 - `summary-first` 不再强制优先；只要 raw keep 更轻，就统一退回 raw keep\nt12 user: 就此结束，接下来， 我们重新来做测试，看下体感有么有明显改变；",
+    "shadowRawTranscript": "t12 user: 就此结束，接下来， 我们重新来做测试，看下体感有么有明显改变；",
+    "semanticPinNotes": [
+      "assistant: 已经修到全绿了。 我做了两件事： - 把 Codex minor GC 默认允许的 guarded relation 放宽到包含 `continue` - 把 `codex-minor-gc-current-editor-update-after-detour` 收进固定 live eval case",
+      "user: 要；尽量不是白名单，有硬编码嫌疑；",
+      "assistant: 已经收成全绿了。 我继续做的两条通用修正是： - `continue` 下如果有 turn 被降成 `pin-only`，拒绝激活 - `summary-first` 不再强制优先；只要 raw keep 更轻，就统一退回 raw keep"
+    ],
+    "archiveSummary": "Previous thread is resolved: Codex minor GC behavior was adjusted and regression coverage expanded. Durable carry-forward: `continue` is allowed as a guarded relation, activation is rejected if a `continue` path demotes needed turns to pin-only, and `summary-first` is no longer forced when raw-keep is lighter. User preference: avoid whitelist-style or hardcoded handling. The next active topic is a fresh round of testing to check perceived behavior changes.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 243,
+    "shadowRawPromptEstimate": 11,
+    "shadowPackageEstimate": 16,
+    "shadowPackageText": "Recent raw context:\nt12 user: 就此结束，接下来， 我们重新来做测试，看下体感有么有明显改变；"
+  },
+  "scorecard": {
+    "relation": "switch",
+    "baselineTurnCount": 12,
+    "keptTurnCount": 1,
+    "evictedTurnCount": 11,
+    "pinCount": 3,
+    "baselinePromptEstimate": 243,
+    "shadowRawPromptEstimate": 11,
+    "shadowPackageEstimate": 16,
+    "rawReductionRatio": 0.9617,
+    "packageReductionRatio": 0.9342,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 14968,
+    "totalElapsedMs": 14974,
+    "guardedEnabled": true,
+    "guardedApplied": true,
+    "guardedReason": "guarded_candidate",
+    "guardedMessageCount": 1,
+    "guardedCarryForwardEstimate": 90,
+    "guardedFilteredMessageEstimate": 8
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": true,
+    "reason": "guarded_candidate",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": "就此结束，接下来， 我们重新来做测试，看下体感有么有明显改变；"
+      }
+    ],
+    "filteredMessageCount": 1,
+    "filteredMessageTokenEstimate": 8,
+    "carryForwardText": "Conversation carry-forward pins:\n- assistant: 已经修到全绿了。 我做了两件事： - 把 Codex minor GC 默认允许的 guarded relation 放宽到包含 `continue` - 把 `codex-minor-gc-current-editor-update-after-detour` 收进固定 live eval case\n- user: 要；尽量不是白名单，有硬编码嫌疑；\n- assistant: 已经收成全绿了。 我继续做的两条通用修正是： - `continue` 下如果有 turn 被降成 `pin-only`，拒绝激活 - `summary-first` 不再强制优先；只要 raw keep 更轻，就统一退回 raw keep",
+    "carryForwardEstimate": 90,
+    "evictedSourceIndices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ]
+  },
+  "timings": {
+    "totalElapsedMs": 14974,
+    "decisionElapsedMs": 14968
+  }
+}

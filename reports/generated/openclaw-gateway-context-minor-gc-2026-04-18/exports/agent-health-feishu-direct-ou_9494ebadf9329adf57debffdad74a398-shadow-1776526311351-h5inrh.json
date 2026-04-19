@@ -1,0 +1,65 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776526311351-h5inrh",
+  "generated_at": "2026-04-18T15:31:51.351Z",
+  "session_key": "agent:health:feishu:direct:ou_9494ebadf9329adf57debffdad74a398",
+  "agent_id": "health",
+  "query": "System: [2026-04-18 23:31:49 GMT+8] Feishu[feishu5-health] DM | 刘超 (ou_9494ebadf9329adf57debffdad74a398) [msg:om_x100b510e708390a8c344cda4ca1b653]\n\nConversation info (untrusted metadata):\n```json\n{\n  \"message_id\": \"om_x100b510e708390a8c344cda4ca1b653\",\n  \"sender_id\": \"ou_9494ebadf9329adf57debffdad74a398\",\n  \"sender\": \"刘超\",\n  \"timestamp\": \"Sat 2026-04-18 23:31 GMT+8\"\n}\n```\n\nSender (untrusted metadata):\n```json\n{\n  \"label\": \"刘超 (ou_9494ebadf9329adf57debffdad74a398)\",\n  \"id\": \"ou_9494ebadf9329adf57debffdad74a398\",\n  \"name\": \"刘超\"\n}\n```\n\n体重确实还在下降； 我正常下降到多少是比较合理的；",
+  "status": "skipped",
+  "reason": "not_enough_turns",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "task-system runtime context: - session: agent:health:feishu:direct:ou_9494ebadf9329adf57debffdad74a398 - task: unknown - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded [media attached: /Users/redcreen/.openclaw/media/inbound/7a9c6e8a-0317-4b4d-a017-04b23e37913a.jpg (image/jpeg) | /Users/redcreen/.openclaw/media/inbound/7a9c6e8a-0317-4b4d-a017..."
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "Status：archived Recorded：2026-04-18 步数 10,622 步 Saved To：/Users/redcreen/Documents/personal health/records.md 和 /Users/redcreen/Documents/personal health/archive-log.jsonl Doctor Note：今天活动量比平时更高，算是不错的步行日；如果最近体重还在下降，这种量级的日常活动是加分项，继续保持就行。"
+    }
+  ],
+  "decision": null,
+  "decision_transport": "",
+  "snapshot": null,
+  "scorecard": {
+    "relation": "",
+    "baselineTurnCount": 2,
+    "keptTurnCount": 0,
+    "evictedTurnCount": 0,
+    "pinCount": 0,
+    "baselinePromptEstimate": 0,
+    "shadowRawPromptEstimate": 0,
+    "shadowPackageEstimate": 0,
+    "rawReductionRatio": 0,
+    "packageReductionRatio": 0,
+    "candidateLoadElapsedMs": 9,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 0,
+    "totalElapsedMs": 0,
+    "guardedEnabled": false,
+    "guardedApplied": false,
+    "guardedReason": "feature_disabled",
+    "guardedMessageCount": 8,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 0
+  },
+  "guarded": {
+    "enabled": false,
+    "applied": false,
+    "reason": "feature_disabled",
+    "filteredMessageCount": 8,
+    "filteredMessageTokenEstimate": 0,
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 0,
+    "decisionElapsedMs": 0
+  }
+}

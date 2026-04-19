@@ -1,0 +1,156 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776560795679-69akej",
+  "generated_at": "2026-04-19T01:06:35.679Z",
+  "session_key": "codex:vscode:019da346-335b-7d31-be0e-56a3c1b52ff3",
+  "agent_id": "main",
+  "query": "更新一下：我现在默认编辑器是 Zed。",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "我以前默认编辑器是 Vim。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "记住了。后续如果涉及编辑器习惯，我会默认按你偏向 `Vim`/Vim 风格来处理。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "更新一下：我现在默认编辑器是 Zed。"
+    }
+  ],
+  "decision": {
+    "relation": "resolve",
+    "confidence": 0.97,
+    "evict_turn_ids": [
+      "t1",
+      "t2"
+    ],
+    "pin_turn_ids": [
+      "t3"
+    ],
+    "archive_summary": "User preference update: default editor changed from Vim to Zed. Older Vim preference is superseded and can leave the next-turn raw prompt.",
+    "reasoning_summary": "The latest turn is a durable preference update, not an open task. Earlier turns only record the now-obsolete Vim preference and acknowledgement, so they are safe to evict. Keep the new editor preference as a semantic pin for future personalization."
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "resolve",
+      "confidence": 0.97,
+      "archiveSummary": "User preference update: default editor changed from Vim to Zed. Older Vim preference is superseded and can leave the next-turn raw prompt.",
+      "reasoningSummary": "The latest turn is a durable preference update, not an open task. Earlier turns only record the now-obsolete Vim preference and acknowledgement, so they are safe to evict. Keep the new editor preference as a semantic pin for future personalization.",
+      "latestUserTurnId": "t3",
+      "pinTurnIds": [
+        "t3"
+      ],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t2"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t2"
+      ],
+      "keepTurnIds": [
+        "t3"
+      ],
+      "baselineTokens": 20,
+      "keptTokens": 5,
+      "prunedTokens": 15,
+      "reductionRatio": 0.75,
+      "keepTurns": [
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "更新一下：我现在默认编辑器是 Zed。",
+          "tokenEstimate": 5
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "我以前默认编辑器是 Vim。",
+          "tokenEstimate": 4
+        },
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "记住了。后续如果涉及编辑器习惯，我会默认按你偏向 `Vim`/Vim 风格来处理。",
+          "tokenEstimate": 11
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 我以前默认编辑器是 Vim。\nt2 assistant: 记住了。后续如果涉及编辑器习惯，我会默认按你偏向 `Vim`/Vim 风格来处理。\nt3 user: 更新一下：我现在默认编辑器是 Zed。",
+    "shadowRawTranscript": "t3 user: 更新一下：我现在默认编辑器是 Zed。",
+    "semanticPinNotes": [],
+    "archiveSummary": "User preference update: default editor changed from Vim to Zed. Older Vim preference is superseded and can leave the next-turn raw prompt.",
+    "injectedArchiveSummary": "User preference update: default editor changed from Vim to Zed. Older Vim preference is supersed...",
+    "baselinePromptEstimate": 27,
+    "shadowRawPromptEstimate": 7,
+    "shadowPackageEstimate": 50,
+    "shadowPackageText": "Task state summary:\nUser preference update: default editor changed from Vim to Zed. Older Vim preference is superseded and can leave the next-turn raw prompt.\n\nLatest user ask:\n- 更新一下：我现在默认编辑器是 Zed。"
+  },
+  "scorecard": {
+    "relation": "resolve",
+    "baselineTurnCount": 3,
+    "keptTurnCount": 1,
+    "evictedTurnCount": 2,
+    "pinCount": 1,
+    "baselinePromptEstimate": 27,
+    "shadowRawPromptEstimate": 7,
+    "shadowPackageEstimate": 50,
+    "rawReductionRatio": 0.75,
+    "packageReductionRatio": -0.8519,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 8033,
+    "totalElapsedMs": 8034,
+    "guardedEnabled": true,
+    "guardedApplied": false,
+    "guardedReason": "no_net_token_gain",
+    "guardedMessageCount": 3,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 20
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": false,
+    "reason": "no_net_token_gain",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": "我以前默认编辑器是 Vim。"
+      },
+      {
+        "role": "assistant",
+        "content": "记住了。后续如果涉及编辑器习惯，我会默认按你偏向 `Vim`/Vim 风格来处理。"
+      },
+      {
+        "role": "user",
+        "content": "更新一下：我现在默认编辑器是 Zed。"
+      }
+    ],
+    "filteredMessageCount": 3,
+    "filteredMessageTokenEstimate": 20,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 8034,
+    "decisionElapsedMs": 8033
+  }
+}

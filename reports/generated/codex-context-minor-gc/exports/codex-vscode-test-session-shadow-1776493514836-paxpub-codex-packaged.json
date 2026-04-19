@@ -1,0 +1,173 @@
+{
+  "schema_version": "umc.codex-context-minor-gc.v1",
+  "generated_at": "2026-04-18T06:25:34.951Z",
+  "event_id": "shadow-1776493514836-paxpub-codex-packaged",
+  "session_key": "codex:vscode:test-session",
+  "query": "继续收敛当前问题",
+  "status": "captured",
+  "reason": "",
+  "decision_transport": "codex_exec",
+  "relation": "continue",
+  "applied": false,
+  "codex_guard_reason": "not_enough_evictions",
+  "prompt_reduction_ratio": 0,
+  "baseline_context_estimate": 22,
+  "packaged_context_estimate": 26,
+  "effective_context_estimate": 22,
+  "shadow_status": "captured",
+  "shadow_guarded_applied": false,
+  "shadow_guarded_reason": "not_enough_evictions",
+  "shadow_export_path": "/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-codex-gc-ICTF2P/exports/codex-vscode-test-session-shadow-1776493514836-paxpub.json",
+  "shadow_summary_path": "/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-codex-gc-ICTF2P/telemetry.jsonl",
+  "export_path": "exports/codex-vscode-test-session-shadow-1776493514836-paxpub-codex-packaged.json",
+  "effective_context_block": "## Recent Conversation Context\nt1 user: 先确认现状\nt2 assistant: 现状已经确认。\nt3 user: 继续收敛当前问题",
+  "packaged_context_block": "## Context Minor GC Working Set\nActive raw turns:\nt1 user: 先确认现状\nt2 assistant: 现状已经确认。\nt3 user: 继续收敛当前问题",
+  "shadow_event": {
+    "schema_version": "umc.dialogue-working-set-shadow.v1",
+    "event_id": "shadow-1776493514836-paxpub",
+    "generated_at": "2026-04-18T06:25:14.836Z",
+    "session_key": "codex:vscode:test-session",
+    "agent_id": "main",
+    "query": "继续收敛当前问题",
+    "status": "captured",
+    "reason": "",
+    "sampling": {
+      "max_turns": 12,
+      "min_turns": 3,
+      "max_chars_per_turn": 900
+    },
+    "transcript": [
+      {
+        "id": "t1",
+        "role": "user",
+        "content": "先确认现状"
+      },
+      {
+        "id": "t2",
+        "role": "assistant",
+        "content": "现状已经确认。"
+      },
+      {
+        "id": "t3",
+        "role": "user",
+        "content": "继续收敛当前问题"
+      }
+    ],
+    "decision": {
+      "relation": "continue",
+      "confidence": 0.95,
+      "evict_turn_ids": [],
+      "pin_turn_ids": [],
+      "archive_summary": "当前会话仍围绕同一未解决问题继续推进；此前仅确认了“现状已经确认”，没有形成可替代的稳定摘要。",
+      "reasoning_summary": "最新用户话语“继续收敛当前问题”明显延续前文同一任务，不是新分支或切题。现有历史很短，且最新话语对前面的“先确认现状/现状已经确认”仍有直接依赖，因此不应淘汰原始回合，也没有足够独立的 durable 事实可仅以 pin 代替。"
+    },
+    "decision_transport": "codex_exec",
+    "snapshot": {
+      "applied": {
+        "relation": "continue",
+        "confidence": 0.95,
+        "archiveSummary": "当前会话仍围绕同一未解决问题继续推进；此前仅确认了“现状已经确认”，没有形成可替代的稳定摘要。",
+        "reasoningSummary": "最新用户话语“继续收敛当前问题”明显延续前文同一任务，不是新分支或切题。现有历史很短，且最新话语对前面的“先确认现状/现状已经确认”仍有直接依赖，因此不应淘汰原始回合，也没有足够独立的 durable 事实可仅以 pin 代替。",
+        "latestUserTurnId": "t3",
+        "pinTurnIds": [],
+        "pinnedOnlyTurnIds": [],
+        "requestedEvictTurnIds": [],
+        "blockedEvictTurnIds": [],
+        "appliedEvictTurnIds": [],
+        "keepTurnIds": [
+          "t1",
+          "t2",
+          "t3"
+        ],
+        "baselineTokens": 6,
+        "keptTokens": 6,
+        "prunedTokens": 0,
+        "reductionRatio": 0,
+        "keepTurns": [
+          {
+            "id": "t1",
+            "role": "user",
+            "content": "先确认现状",
+            "tokenEstimate": 2
+          },
+          {
+            "id": "t2",
+            "role": "assistant",
+            "content": "现状已经确认。",
+            "tokenEstimate": 2
+          },
+          {
+            "id": "t3",
+            "role": "user",
+            "content": "继续收敛当前问题",
+            "tokenEstimate": 2
+          }
+        ],
+        "evictedTurns": []
+      },
+      "baselineRawTranscript": "t1 user: 先确认现状\nt2 assistant: 现状已经确认。\nt3 user: 继续收敛当前问题",
+      "shadowRawTranscript": "t1 user: 先确认现状\nt2 assistant: 现状已经确认。\nt3 user: 继续收敛当前问题",
+      "semanticPinNotes": [],
+      "archiveSummary": "当前会话仍围绕同一未解决问题继续推进；此前仅确认了“现状已经确认”，没有形成可替代的稳定摘要。",
+      "injectedArchiveSummary": "",
+      "baselinePromptEstimate": 14,
+      "shadowRawPromptEstimate": 14,
+      "shadowPackageEstimate": 18,
+      "shadowPackageText": "Active raw turns:\nt1 user: 先确认现状\nt2 assistant: 现状已经确认。\nt3 user: 继续收敛当前问题"
+    },
+    "scorecard": {
+      "relation": "continue",
+      "baselineTurnCount": 3,
+      "keptTurnCount": 3,
+      "evictedTurnCount": 0,
+      "pinCount": 0,
+      "baselinePromptEstimate": 14,
+      "shadowRawPromptEstimate": 14,
+      "shadowPackageEstimate": 18,
+      "rawReductionRatio": 0,
+      "packageReductionRatio": -0.2857,
+      "candidateLoadElapsedMs": 0,
+      "assemblyBuildElapsedMs": 0,
+      "decisionElapsedMs": 20109,
+      "totalElapsedMs": 20113,
+      "guardedEnabled": true,
+      "guardedApplied": false,
+      "guardedReason": "not_enough_evictions",
+      "guardedMessageCount": 3,
+      "guardedCarryForwardEstimate": 0,
+      "guardedFilteredMessageEstimate": 6
+    },
+    "guarded": {
+      "enabled": true,
+      "applied": false,
+      "reason": "not_enough_evictions",
+      "filteredMessages": [
+        {
+          "role": "user",
+          "content": "先确认现状"
+        },
+        {
+          "role": "assistant",
+          "content": "现状已经确认。"
+        },
+        {
+          "role": "user",
+          "content": "继续收敛当前问题"
+        }
+      ],
+      "filteredMessageCount": 3,
+      "filteredMessageTokenEstimate": 6,
+      "carryForwardText": "",
+      "carryForwardEstimate": 0,
+      "evictedSourceIndices": []
+    },
+    "timings": {
+      "totalElapsedMs": 20114,
+      "decisionElapsedMs": 20109
+    },
+    "artifact_paths": {
+      "export": "/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-codex-gc-ICTF2P/exports/codex-vscode-test-session-shadow-1776493514836-paxpub.json",
+      "summary": "/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-codex-gc-ICTF2P/telemetry.jsonl"
+    }
+  }
+}

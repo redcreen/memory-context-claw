@@ -1,0 +1,176 @@
+{
+  "schema_version": "umc.codex-context-minor-gc.v1",
+  "generated_at": "2026-04-18T13:03:49.497Z",
+  "event_id": "shadow-1776517429494-5kfbng-codex-packaged",
+  "session_key": "codex:vscode:summary-session",
+  "query": "继续收口体感问题",
+  "status": "captured",
+  "reason": "",
+  "decision_transport": "inline",
+  "relation": "continue",
+  "applied": false,
+  "codex_guard_reason": "no_net_token_gain",
+  "prompt_reduction_ratio": 0,
+  "baseline_context_estimate": 34,
+  "packaged_context_estimate": 36,
+  "effective_context_estimate": 34,
+  "shadow_status": "captured",
+  "shadow_guarded_applied": true,
+  "shadow_guarded_reason": "guarded_candidate",
+  "shadow_export_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc/exports/codex-vscode-summary-session-shadow-1776517429494-5kfbng.json",
+  "shadow_summary_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc/telemetry.jsonl",
+  "export_path": "exports/codex-vscode-summary-session-shadow-1776517429494-5kfbng-codex-packaged.json",
+  "effective_context_block": "## Recent Conversation Context\nt1 user: 旧背景和排查步骤 A A A A A A A。\nt2 assistant: 这是很长的旧解释和诊断输出 B B B B B B B。\nt3 user: 现在只关心怎么让用户明显感觉线程更薄。",
+  "packaged_context_block": "## Context Minor GC Working Set\nTask state summary:\n当前只保留用户体感收口、宿主增长源控制和 summary-first carry-forward 三件事。\n\nLatest user ask:\n- 现在只关心怎么让用户明显感觉线程更薄。",
+  "shadow_event": {
+    "schema_version": "umc.dialogue-working-set-shadow.v1",
+    "event_id": "shadow-1776517429494-5kfbng",
+    "generated_at": "2026-04-18T13:03:49.494Z",
+    "session_key": "codex:vscode:summary-session",
+    "agent_id": "main",
+    "query": "继续收口体感问题",
+    "status": "captured",
+    "reason": "",
+    "sampling": {
+      "max_turns": 12,
+      "min_turns": 3,
+      "max_chars_per_turn": 900
+    },
+    "transcript": [
+      {
+        "id": "t1",
+        "role": "user",
+        "content": "旧背景和排查步骤 A A A A A A A。"
+      },
+      {
+        "id": "t2",
+        "role": "assistant",
+        "content": "这是很长的旧解释和诊断输出 B B B B B B B。"
+      },
+      {
+        "id": "t3",
+        "role": "user",
+        "content": "现在只关心怎么让用户明显感觉线程更薄。"
+      }
+    ],
+    "decision": {
+      "relation": "continue",
+      "confidence": 0,
+      "evict_turn_ids": [
+        "t1",
+        "t2"
+      ],
+      "pin_turn_ids": [],
+      "archive_summary": "当前只保留用户体感收口、宿主增长源控制和 summary-first carry-forward 三件事。",
+      "reasoning_summary": ""
+    },
+    "decision_transport": "inline",
+    "snapshot": {
+      "applied": {
+        "relation": "continue",
+        "confidence": 0,
+        "archiveSummary": "当前只保留用户体感收口、宿主增长源控制和 summary-first carry-forward 三件事。",
+        "reasoningSummary": "",
+        "latestUserTurnId": "t3",
+        "pinTurnIds": [],
+        "pinnedOnlyTurnIds": [],
+        "requestedEvictTurnIds": [
+          "t1",
+          "t2"
+        ],
+        "blockedEvictTurnIds": [],
+        "appliedEvictTurnIds": [
+          "t1",
+          "t2"
+        ],
+        "keepTurnIds": [
+          "t3"
+        ],
+        "baselineTokens": 18,
+        "keptTokens": 5,
+        "prunedTokens": 13,
+        "reductionRatio": 0.7222222222222222,
+        "keepTurns": [
+          {
+            "id": "t3",
+            "role": "user",
+            "content": "现在只关心怎么让用户明显感觉线程更薄。",
+            "tokenEstimate": 5
+          }
+        ],
+        "evictedTurns": [
+          {
+            "id": "t1",
+            "role": "user",
+            "content": "旧背景和排查步骤 A A A A A A A。",
+            "tokenEstimate": 6
+          },
+          {
+            "id": "t2",
+            "role": "assistant",
+            "content": "这是很长的旧解释和诊断输出 B B B B B B B。",
+            "tokenEstimate": 7
+          }
+        ]
+      },
+      "baselineRawTranscript": "t1 user: 旧背景和排查步骤 A A A A A A A。\nt2 assistant: 这是很长的旧解释和诊断输出 B B B B B B B。\nt3 user: 现在只关心怎么让用户明显感觉线程更薄。",
+      "shadowRawTranscript": "t3 user: 现在只关心怎么让用户明显感觉线程更薄。",
+      "semanticPinNotes": [],
+      "archiveSummary": "当前只保留用户体感收口、宿主增长源控制和 summary-first carry-forward 三件事。",
+      "injectedArchiveSummary": "",
+      "baselinePromptEstimate": 26,
+      "shadowRawPromptEstimate": 7,
+      "shadowPackageEstimate": 28,
+      "shadowPackageText": "Task state summary:\n当前只保留用户体感收口、宿主增长源控制和 summary-first carry-forward 三件事。\n\nLatest user ask:\n- 现在只关心怎么让用户明显感觉线程更薄。"
+    },
+    "scorecard": {
+      "relation": "continue",
+      "baselineTurnCount": 3,
+      "keptTurnCount": 1,
+      "evictedTurnCount": 2,
+      "pinCount": 0,
+      "baselinePromptEstimate": 26,
+      "shadowRawPromptEstimate": 7,
+      "shadowPackageEstimate": 28,
+      "rawReductionRatio": 0.7222,
+      "packageReductionRatio": -0.0769,
+      "candidateLoadElapsedMs": 0,
+      "assemblyBuildElapsedMs": 0,
+      "decisionElapsedMs": 0,
+      "totalElapsedMs": 2,
+      "guardedEnabled": true,
+      "guardedApplied": true,
+      "guardedReason": "guarded_candidate",
+      "guardedMessageCount": 1,
+      "guardedCarryForwardEstimate": 0,
+      "guardedFilteredMessageEstimate": 5
+    },
+    "guarded": {
+      "enabled": true,
+      "applied": true,
+      "reason": "guarded_candidate",
+      "filteredMessages": [
+        {
+          "role": "user",
+          "content": "现在只关心怎么让用户明显感觉线程更薄。"
+        }
+      ],
+      "filteredMessageCount": 1,
+      "filteredMessageTokenEstimate": 5,
+      "carryForwardText": "",
+      "carryForwardEstimate": 0,
+      "evictedSourceIndices": [
+        0,
+        1
+      ]
+    },
+    "timings": {
+      "totalElapsedMs": 2,
+      "decisionElapsedMs": 0
+    },
+    "artifact_paths": {
+      "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc/exports/codex-vscode-summary-session-shadow-1776517429494-5kfbng.json",
+      "summary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc/telemetry.jsonl"
+    }
+  }
+}

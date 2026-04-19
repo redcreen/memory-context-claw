@@ -1,3 +1,4 @@
+import fs from "node:fs/promises";
 import path from "node:path";
 
 import {
@@ -6,6 +7,7 @@ import {
 } from "./dialogue-working-set-runtime-shadow.js";
 import { mergeSystemPromptAdditions } from "./dialogue-working-set-guarded.js";
 import {
+  buildSummaryFirstWorkingSetText,
   buildSemanticPinNotes,
   renderDialogueTurns
 } from "./dialogue-working-set-shadow.js";
@@ -64,6 +66,14 @@ function buildDefaultOutputDir(outputDir = "") {
   );
 }
 
+function sanitizePathSegment(value, fallback = "artifact") {
+  const normalized = normalizeString(value, fallback)
+    .replace(/[^a-zA-Z0-9._-]+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
+  return normalized || fallback;
+}
+
 function normalizeConversationMessages(messages = []) {
   return (Array.isArray(messages) ? messages : [])
     .flatMap((message) => {
@@ -97,39 +107,93 @@ function buildOptimizedContextBlock(snapshot = {}) {
 
 function buildCodexPackagedContextBlock(snapshot = {}) {
   const applied = snapshot?.applied || {};
-  const keepTurns = Array.isArray(applied?.keepTurns) ? applied.keepTurns : [];
-  const keepTurnsText = renderDialogueTurns(keepTurns);
   const semanticPinNotes = Array.isArray(snapshot?.semanticPinNotes)
     ? snapshot.semanticPinNotes
     : buildSemanticPinNotes({
-      turns: keepTurns,
+      turns: Array.isArray(applied?.keepTurns) ? applied.keepTurns : [],
       pinTurnIds: Array.isArray(applied?.pinnedOnlyTurnIds) ? applied.pinnedOnlyTurnIds : []
     });
-  const sections = [];
-
-  if (keepTurnsText) {
-    sections.push(`Active raw turns:\n${keepTurnsText}`);
-  }
-  if (semanticPinNotes.length > 0) {
-    sections.push([
-      "Semantic pins:",
-      ...semanticPinNotes.map((item) => `- ${normalizeWhitespace(item)}`)
-    ].join("\n"));
-  }
-  if (sections.length === 0) {
+  const summaryFirstText = buildSummaryFirstWorkingSetText({
+    applied,
+    semanticPinNotes
+  });
+  if (!summaryFirstText) {
     return "";
   }
-  return `## Context Minor GC Working Set\n${sections.join("\n\n")}`;
+  return `## Context Minor GC Working Set\n${summaryFirstText}`;
+}
+
+function buildCodexContextMinorGcSummaryEvent(result = {}, exportRelativePath = "") {
+  const event = result.event || {};
+  const shadowArtifactPaths = event.artifact_paths || {};
+
+  return {
+    schema_version: "umc.codex-context-minor-gc.v1",
+    generated_at: new Date().toISOString(),
+    event_id: `${sanitizePathSegment(event.event_id, "shadow")}-codex-packaged`,
+    session_key: normalizeString(result.sessionKey, "codex:minor-gc"),
+    query: normalizeString(result.query),
+    status: normalizeString(result.status, "unknown"),
+    reason: normalizeString(result.reason),
+    decision_transport: normalizeString(result.decisionTransport),
+    relation: normalizeString(result.relation),
+    applied: result.applied === true,
+    codex_guard_reason: normalizeString(result.codexGuardReason),
+    prompt_reduction_ratio: Number(result.promptReductionRatio || 0),
+    baseline_context_estimate: Number(result.baselineContextEstimate || 0),
+    packaged_context_estimate: Number(result.packagedContextEstimate || 0),
+    effective_context_estimate: Number(result.effectiveContextEstimate || 0),
+    shadow_status: normalizeString(event.status),
+    shadow_guarded_applied: event.guarded?.applied === true,
+    shadow_guarded_reason: normalizeString(event.guarded?.reason),
+    shadow_export_path: normalizeString(shadowArtifactPaths.export),
+    shadow_summary_path: normalizeString(shadowArtifactPaths.summary),
+    export_path: exportRelativePath
+  };
+}
+
+async function writeCodexContextMinorGcArtifacts(outputDir = "", result = {}) {
+  const resolvedOutputDir = buildDefaultOutputDir(outputDir);
+  const exportsDir = path.join(resolvedOutputDir, "exports");
+  await fs.mkdir(exportsDir, { recursive: true });
+
+  const sessionSlug = sanitizePathSegment(result.sessionKey, "session");
+  const eventSlug = sanitizePathSegment(result.event?.event_id, `codex-${Date.now()}`);
+  const exportFileName = `${sessionSlug}-${eventSlug}-codex-packaged.json`;
+  const exportPath = path.join(exportsDir, exportFileName);
+  const exportRelativePath = path.relative(resolvedOutputDir, exportPath);
+  const summaryPath = path.join(resolvedOutputDir, "codex-telemetry.jsonl");
+  const summaryEvent = buildCodexContextMinorGcSummaryEvent(result, exportRelativePath);
+  const exportPayload = {
+    ...summaryEvent,
+    effective_context_block: normalizeString(result.effectiveContextBlock),
+    packaged_context_block: normalizeString(result.packagedContextBlock),
+    shadow_event: result.event || null
+  };
+
+  await fs.writeFile(exportPath, `${JSON.stringify(exportPayload, null, 2)}\n`, "utf8");
+  await fs.appendFile(summaryPath, `${JSON.stringify(summaryEvent)}\n`, "utf8");
+
+  return {
+    export: exportPath,
+    summary: summaryPath,
+    shadowExport: normalizeString(result.event?.artifact_paths?.export),
+    shadowSummary: normalizeString(result.event?.artifact_paths?.summary)
+  };
 }
 
 function shouldApplyCodexPackagedGuard({
   snapshot = {},
+  shadowGuarded = {},
   packagedEstimate = 0,
   baselineEstimate = 0,
   guardedConfig = {}
 } = {}) {
   if (guardedConfig?.enabled !== true) {
     return { allowed: false, reason: "feature_disabled" };
+  }
+  if (shadowGuarded?.applied !== true) {
+    return { allowed: false, reason: normalizeString(shadowGuarded?.reason, "shadow_guard_rejected") };
   }
 
   const applied = snapshot?.applied || {};
@@ -196,7 +260,7 @@ export function resolveCodexContextMinorGcConfig(raw = {}) {
       enabled: normalizeBoolean(guarded.enabled ?? raw.guardedEnabled, false),
       allowedRelations: normalizeStringArray(
         guarded.allowedRelations ?? raw.allowedRelations,
-        ["switch", "resolve"]
+        ["switch", "resolve", "continue"]
       ),
       minReductionRatio: Math.max(
         0,
@@ -281,6 +345,7 @@ export async function buildCodexContextMinorGcPackage({
   const packagedContextEstimate = estimateTokenCountFromText(packagedContextBlock);
   const codexGuard = shouldApplyCodexPackagedGuard({
     snapshot: event?.snapshot || {},
+    shadowGuarded: event?.guarded || {},
     packagedEstimate: packagedContextEstimate,
     baselineEstimate: baselineContextEstimate,
     guardedConfig: resolvedConfig.guarded
@@ -291,8 +356,7 @@ export async function buildCodexContextMinorGcPackage({
   const promptReductionRatio = baselineContextEstimate > 0
     ? Number(((baselineContextEstimate - effectiveContextEstimate) / baselineContextEstimate).toFixed(4))
     : 0;
-
-  return {
+  const result = {
     ...baseResult,
     status: normalizeString(event?.status, "error"),
     reason: normalizeString(event?.reason),
@@ -308,6 +372,12 @@ export async function buildCodexContextMinorGcPackage({
     decisionTransport: normalizeString(event?.decision_transport),
     relation: normalizeString(event?.decision?.relation || event?.scorecard?.relation),
     event
+  };
+  const artifactPaths = await writeCodexContextMinorGcArtifacts(resolvedConfig.shadow.outputDir, result);
+
+  return {
+    ...result,
+    artifactPaths
   };
 }
 

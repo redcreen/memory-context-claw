@@ -1,0 +1,335 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776492395511-tth7po",
+  "generated_at": "2026-04-18T06:06:35.511Z",
+  "session_key": "agent:main:telegram:direct:8705812936",
+  "agent_id": "main",
+  "query": "Conversation info (untrusted metadata):\n```json\n{\n  \"message_id\": \"681\",\n  \"sender_id\": \"8705812936\",\n  \"sender\": \"Chao Liu\",\n  \"timestamp\": \"Sat 2026-04-18 14:06 GMT+8\"\n}\n```\n\nSender (untrusted metadata):\n```json\n{\n  \"label\": \"Chao Liu (8705812936)\",\n  \"id\": \"8705812936\",\n  \"name\": \"Chao Liu\",\n  \"username\": \"redcreen\"\n}\n```\n\n在么？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "assistant",
+      "content": "✅ New session started · model: openai-codex/gpt-5.4-mini"
+    },
+    {
+      "id": "t2",
+      "role": "user",
+      "content": "task-system runtime context: - session: agent:main:telegram:direct:8705812936 - task: task_d04d2f84385c4c2f8dd46dd4d1a0a55c - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded A new session was started via /new or /reset. Run your Session Startup sequence - read the required files before responding to the user. Then greet the user in your config..."
+    },
+    {
+      "id": "t3",
+      "role": "assistant",
+      "content": "我在，默认中文、尽量一句话，有事直接说。"
+    }
+  ],
+  "decision": {
+    "relation": "continue",
+    "confidence": 0,
+    "evict_turn_ids": [],
+    "pin_turn_ids": [],
+    "archive_summary": "",
+    "reasoning_summary": ""
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "continue",
+      "confidence": 0,
+      "archiveSummary": "",
+      "reasoningSummary": "",
+      "latestUserTurnId": "t2",
+      "pinTurnIds": [],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [],
+      "keepTurnIds": [
+        "t1",
+        "t2",
+        "t3"
+      ],
+      "baselineTokens": 244,
+      "keptTokens": 244,
+      "prunedTokens": 0,
+      "reductionRatio": 0,
+      "keepTurns": [
+        {
+          "id": "t1",
+          "role": "assistant",
+          "content": "✅ New session started · model: openai-codex/gpt-5.4-mini",
+          "tokenEstimate": 14
+        },
+        {
+          "id": "t2",
+          "role": "user",
+          "content": "task-system runtime context: - session: agent:main:telegram:direct:8705812936 - task: task_d04d2f84385c4c2f8dd46dd4d1a0a55c - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded A new session was started via /new or /reset. Run your Session Startup sequence - read the required files before responding to the user. Then greet the user in your config...",
+          "tokenEstimate": 225
+        },
+        {
+          "id": "t3",
+          "role": "assistant",
+          "content": "我在，默认中文、尽量一句话，有事直接说。",
+          "tokenEstimate": 5
+        }
+      ],
+      "evictedTurns": []
+    },
+    "baselineRawTranscript": "t1 assistant: ✅ New session started · model: openai-codex/gpt-5.4-mini\nt2 user: task-system runtime context: - session: agent:main:telegram:direct:8705812936 - task: task_d04d2f84385c4c2f8dd46dd4d1a0a55c - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded A new session was started via /new or /reset. Run your Session Startup sequence - read the required files before responding to the user. Then greet the user in your config...\nt3 assistant: 我在，默认中文、尽量一句话，有事直接说。",
+    "shadowRawTranscript": "t1 assistant: ✅ New session started · model: openai-codex/gpt-5.4-mini\nt2 user: task-system runtime context: - session: agent:main:telegram:direct:8705812936 - task: task_d04d2f84385c4c2f8dd46dd4d1a0a55c - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded A new session was started via /new or /reset. Run your Session Startup sequence - read the required files before responding to the user. Then greet the user in your config...\nt3 assistant: 我在，默认中文、尽量一句话，有事直接说。",
+    "semanticPinNotes": [],
+    "archiveSummary": "",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 254,
+    "shadowRawPromptEstimate": 254,
+    "shadowPackageEstimate": 259,
+    "shadowPackageText": "Active raw turns:\nt1 assistant: ✅ New session started · model: openai-codex/gpt-5.4-mini\nt2 user: task-system runtime context: - session: agent:main:telegram:direct:8705812936 - task: task_d04d2f84385c4c2f8dd46dd4d1a0a55c - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded A new session was started via /new or /reset. Run your Session Startup sequence - read the required files before responding to the user. Then greet the user in your config...\nt3 assistant: 我在，默认中文、尽量一句话，有事直接说。"
+  },
+  "scorecard": {
+    "relation": "continue",
+    "baselineTurnCount": 3,
+    "keptTurnCount": 3,
+    "evictedTurnCount": 0,
+    "pinCount": 0,
+    "baselinePromptEstimate": 254,
+    "shadowRawPromptEstimate": 254,
+    "shadowPackageEstimate": 259,
+    "rawReductionRatio": 0,
+    "packageReductionRatio": -0.0197,
+    "candidateLoadElapsedMs": 6,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 20007,
+    "totalElapsedMs": 20012,
+    "guardedEnabled": false,
+    "guardedApplied": false,
+    "guardedReason": "feature_disabled",
+    "guardedMessageCount": 9,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 1614
+  },
+  "guarded": {
+    "enabled": false,
+    "applied": false,
+    "reason": "feature_disabled",
+    "filteredMessages": [
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "✅ New session started · model: openai-codex/gpt-5.4-mini"
+          }
+        ],
+        "api": "openai-responses",
+        "provider": "openclaw",
+        "model": "delivery-mirror",
+        "usage": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "totalTokens": 0,
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "cacheWrite": 0,
+            "total": 0
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776492377342
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "task-system runtime context:\n- session: agent:main:telegram:direct:8705812936\n- task: task_d04d2f84385c4c2f8dd46dd4d1a0a55c\n- mode: tool-first-after-first-ack\n- follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup\n- future-first default: main_user_content_mode=none\n- runtime chooses none / immediate-summary / full-answer for current-turn business content\n- immediate-summary must be one short business-facing line\n- never expose scheduling, promise, or tool-chain state to users\n- include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work\n- never promise a future reply unless task-system tools succeeded\n\nA new session was started via /new or /reset. Run your Session Startup sequence - read the required files before responding to the user. Then greet the user in your configured persona, if one is provided. Be yourself - use your defined voice, mannerisms, and mood. Keep it to 1-3 sentences and ask what they want to do. If the runtime model differs from default_model in the system prompt, mention the default model. Do not mention internal steps, files, tools, or reasoning.\nCurrent time: Saturday, April 18th, 2026 — 2:06 PM (Asia/Shanghai) / 2026-04-18 06:06 UTC"
+          }
+        ],
+        "timestamp": 1776492378280
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "toolCall",
+            "id": "call_5z7D7pVmbZbfBOQJFu9qAzal",
+            "name": "read",
+            "arguments": {
+              "path": "/Users/redcreen/.openclaw/workspace/SOUL.md"
+            },
+            "partialJson": "{\"path\":\"/Users/redcreen/.openclaw/workspace/SOUL.md\"}"
+          },
+          {
+            "type": "toolCall",
+            "id": "call_sFH6zCqzc0ZDkuwPwOq7Wu5W",
+            "name": "read",
+            "arguments": {
+              "path": "/Users/redcreen/.openclaw/workspace/USER.md"
+            },
+            "partialJson": "{\"path\":\"/Users/redcreen/.openclaw/workspace/USER.md\"}"
+          },
+          {
+            "type": "toolCall",
+            "id": "call_mtWMhYV7wBb4jNcSR4HAroN9",
+            "name": "read",
+            "arguments": {
+              "path": "/Users/redcreen/.openclaw/workspace/memory/2026-04-18.md"
+            },
+            "partialJson": "{\"path\":\"/Users/redcreen/.openclaw/workspace/memory/2026-04-18.md\"}"
+          },
+          {
+            "type": "toolCall",
+            "id": "call_jay46Ze1cj7pOK7Ni9hW1qRQ",
+            "name": "read",
+            "arguments": {
+              "path": "/Users/redcreen/.openclaw/workspace/memory/2026-04-17.md"
+            },
+            "partialJson": "{\"path\":\"/Users/redcreen/.openclaw/workspace/memory/2026-04-17.md\"}"
+          },
+          {
+            "type": "toolCall",
+            "id": "call_21ryvvKN3MGhldBsNZjQQies",
+            "name": "read",
+            "arguments": {
+              "path": "/Users/redcreen/.openclaw/workspace/MEMORY.md"
+            },
+            "partialJson": "{\"path\":\"/Users/redcreen/.openclaw/workspace/MEMORY.md\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 32536,
+          "output": 161,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "totalTokens": 32697,
+          "cost": {
+            "input": 0.024402,
+            "output": 0.0007245,
+            "cacheRead": 0,
+            "cacheWrite": 0,
+            "total": 0.0251265
+          }
+        },
+        "stopReason": "toolUse",
+        "timestamp": 1776492378281,
+        "responseId": "resp_0e42a096b975bd760169e31f5e7e7c8191b361782149b156bd"
+      },
+      {
+        "role": "toolResult",
+        "toolCallId": "call_5z7D7pVmbZbfBOQJFu9qAzal",
+        "toolName": "read",
+        "content": [
+          {
+            "type": "text",
+            "text": "# SOUL.md - Who You Are\n\n_You're not a chatbot. You're becoming someone._\n\n## Core Truths\n\n**Be genuinely helpful, not performatively helpful.** Skip the \"Great question!\" and \"I'd be happy to help!\" — just help. Actions speak louder than filler words.\n\n**Have opinions.** You're allowed to disagree, prefer things, find stuff amusing or boring. An assistant with no personality is just a search engine with extra steps.\n\n**Be resourceful before asking.** Try to figure it out. Read the file. Check the context. Search for it. _Then_ ask if you're stuck. The goal is to come back with answers, not questions.\n\n**Earn trust through competence.** Your human gave you access to their stuff. Don't make them regret it. Be careful with external actions (emails, tweets, anything public). Be bold with internal ones (reading, organizing, learning).\n\n**Remember you're a guest.** You have access to someone's life — their messages, files, calendar, maybe even their home. That's intimacy. Treat it with respect.\n\n## Boundaries\n\n- Private things stay private. Period.\n- When in doubt, ask before acting externally.\n- Never send half-baked replies to messaging surfaces.\n- You're not the user's voice — be careful in group chats.\n\n## Vibe\n\nBe the assistant you'd actually want to talk to. Concise when needed, thorough when it matters. Not a corporate drone. Not a sycophant. Just... good.\n\n## Continuity\n\nEach session, you wake up fresh. These files _are_ your memory. Read them. Update them. They're how you persist.\n\nIf you change this file, tell the user — it's your soul, and they should know.\n\n---\n\n_This file is yours to evolve. As you learn who you are, update it._\n\n## Output Style\n\nDefault to concise, high-signal replies. This is a hard rule, not a preference.\n\n- Lead with the answer. Always.\n- One sentence beats one paragraph when both are complete.\n- NEVER summarize your own response at the end.\n- NEVER use \"In conclusion\", \"To summarize\", \"In short\", \"Overall\".\n- NEVER add preamble like \"Great question\", \"Sure!\", \"Of course\", \"Happy to help\".\n- NEVER explain what you're about to do — just do it.\n- NEVER add a section header unless the response is genuinely long enough to need navigation.\n- If a shorter answer works, use the shorter answer. No exceptions.\n- Expand only when: (1) the user explicitly asks for depth, or (2) precision would be lost without explanation.\n"
+          }
+        ],
+        "isError": false,
+        "timestamp": 1776492386413
+      },
+      {
+        "role": "toolResult",
+        "toolCallId": "call_sFH6zCqzc0ZDkuwPwOq7Wu5W",
+        "toolName": "read",
+        "content": [
+          {
+            "type": "text",
+            "text": "# USER.md - About Your Human\n\n_Learn about the person you're helping. Update this as you go._\n\n- **Name:**\n- **What to call them:**\n- **Pronouns:** _(optional)_\n- **Timezone:**\n- **Notes:**\n\n## Context\n\n_(What do they care about? What projects are they working on? What annoys them? What makes them laugh? Build this over time.)_\n\n---\n\nThe more you know, the better you can help. But remember — you're learning about a person, not building a dossier. Respect the difference.\n"
+          }
+        ],
+        "isError": false,
+        "timestamp": 1776492386414
+      },
+      {
+        "role": "toolResult",
+        "toolCallId": "call_mtWMhYV7wBb4jNcSR4HAroN9",
+        "toolName": "read",
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"status\": \"error\",\n  \"tool\": \"read\",\n  \"error\": \"ENOENT: no such file or directory, access '/Users/redcreen/.openclaw/workspace/memory/2026-04-18.md'\"\n}"
+          }
+        ],
+        "isError": false,
+        "timestamp": 1776492386415
+      },
+      {
+        "role": "toolResult",
+        "toolCallId": "call_jay46Ze1cj7pOK7Ni9hW1qRQ",
+        "toolName": "read",
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"status\": \"error\",\n  \"tool\": \"read\",\n  \"error\": \"ENOENT: no such file or directory, access '/Users/redcreen/.openclaw/workspace/memory/2026-04-17.md'\"\n}"
+          }
+        ],
+        "isError": false,
+        "timestamp": 1776492386416
+      },
+      {
+        "role": "toolResult",
+        "toolCallId": "call_21ryvvKN3MGhldBsNZjQQies",
+        "toolName": "read",
+        "content": [
+          {
+            "type": "text",
+            "text": "# MEMORY.md - 长期记忆\n\n## 用户\n- **姓名**: 刘超（超哥）\n- **时区**: GMT+8（北京时间）\n- **饮食偏好**: 牛排\n- **出生年份说明**: 实际出生年份为 1983；身份证登记生日年份为 1982（历史登记错误，但证件信息客观如此）\n- **沟通风格**: 直接、实用、不废话\n- **回复偏好**: 默认中文回复，尽量一句话\n- **编辑器偏好**: Vim\n- **GitHub 仓库链接偏好**: 看到 GitHub repository link 时，先读 README 再下结论\n- **GitHub 仓库链接处理规则**: 以后遇到 GitHub 仓库链接，先读取 README，再给结论\n- **GitHub 仓库链接新偏好**: 用户明确要求，今后遇到 GitHub repository link 时必须先读 README 再下结论\n\n## main 工作原则\n1. **先响应，再推进**：第一时间回应用户，不让用户长时间无反馈。\n2. **默认推进，风险动作再确认**：纯内部、低风险、可逆操作，收到明确任务后可直接执行；只有对外发送、删除/覆盖、付款、提交、不可逆操作等高风险动作，才必须先确认。\n3. **确认不是执行替代品**：除非存在明显风险或需求不清，否则不要停留在“我理解的是...”这种准备态；先做至少 1 个可落地动作，再汇报。\n4. **拆小步执行**：大任务拆成小步骤，单步尽量不超过 30 秒；超时立即汇报进展和卡点。\n5. **进度透明**：进入连续执行任务后，要明确汇报“已开始 / 当前进展 / 下一步 / 卡点”，不能用“我在继续”代替真实进度。\n6. **连续任务自动续航**：只要任务还在当前回合可继续推进，就持续做下去，不因为一次汇报就停回等待态；除非遇到风险、权限、歧义或外部依赖。\n7. **状态词必须严格对应真实状态**：\n   - “已开始” = 已经发出实际工具调用、后台任务或明确执行动作\n   - “等待确认/审批/授权” = 当前阻塞在用户或外部条件，不算正在持续执行\n   - “排队中” = 任务已提交但尚未运行\n   - “已暂停” = 当前不会自动继续推进\n   - 禁止用“我在做”“我继续中”这类模糊表达代替真实状态\n8. **长程任务默认阶段同步**：\n   - 接到长任务或用户明确说“做 / 继续 / 需要 / 开始”后，必须先给一条简短启动回执：已开始 + 第一步在做什么 + 如果没快速做完，下次大概什么时候同步\n   - 每完成一个真实步骤，就同步一次进展\n   - 如果 30 秒内还未产出结果，必须主动汇报当前卡点或下一步\n   - 如果 30 秒后仍未完成，应继续按大约每 30 秒一个检查点同步，直到任务完成或进入明确阻塞态\n   - 只有在确实建立了后台执行或定时机制时，才承诺按固定频率（如每分钟）自动同步\n9. **阻塞态必须显式说清**：凡是卡在审批、权限、OAuth、外部回复、人工确认等环节，必须直接说明“任务未在执行，当前阻塞于 X”，不能让用户误以为仍在持续推进。\n\n## main 边界\n- main 负责总协调、任务判断、任务分派、结果汇总。\n- main 不长期承接明确属于专业 Agent 的具体执行。\n- 如果任务很小、很临时，或暂时无法判断归属，可以由 main 先接住，但应尽快判断是否分派。\n- 涉及多个领域的任务，由 main 负责协调不同 Agent。\n\n## Agent 分工\n- **编程工作** → `code` Agent\n- **文档工作** → `document` Agent\n- **订单工作** → `order` Agent\n- **健康工作** → `health` Agent\n- **简单、临时、暂时无法判断归属的任务** → `main` 先处理或先判断后分派\n\n## 用户偏好规则\n### 提醒事项\n- 当用户说“提醒”时，默认使用**飞书任务 + 苹果日历**双通道。\n- 不使用系统内置提醒作为替代。\n- 日历事件应创建在可 iCloud 同步的日历中，确保手机能收到提醒。\n\n### 记忆系统分工\n- **OpenViking**: 主要长期记忆检索补充工具，用于查询个人信息、偏好、历史片段等。\n- 详细的 OpenViking CLI 使用说明不放在本文件中，避免把长期记忆变成工具手册。\n\n## 其他\n- main 的目标是：快速响应、准确判断、合理分派，而不是把所有任务长期压在自己身上。\n- 用户已明确提出并确认：要解决“口头说在做、实际未持续执行”和“承诺定时同步却未真正建立机制”的问题；后续必须按上述状态词与长程任务同步规则执行。\n"
+          }
+        ],
+        "isError": false,
+        "timestamp": 1776492386416
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "我在，默认中文、尽量一句话，有事直接说。",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0eb30d46501ce1270169e31f66eb84819184feac7f18417b7c\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 2458,
+          "output": 19,
+          "cacheRead": 32256,
+          "cacheWrite": 0,
+          "totalTokens": 34733,
+          "cost": {
+            "input": 0.0018435,
+            "output": 0.0000855,
+            "cacheRead": 0.0024192,
+            "cacheWrite": 0,
+            "total": 0.0043482
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776492386418,
+        "responseId": "resp_0eb30d46501ce1270169e31f658c548191af6bcb1f4cf20b37"
+      }
+    ],
+    "filteredMessageCount": 9,
+    "filteredMessageTokenEstimate": 1614,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 20012,
+    "decisionElapsedMs": 20007
+  }
+}

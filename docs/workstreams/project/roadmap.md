@@ -223,24 +223,21 @@ Still ongoing:
 
 ### Primary next engineering focus
 
-**Evaluation-driven optimization: move from `200+` case execution into formal-gate maintenance and answer-level expansion**
+**Stage 11 experience hardening: move `Context Minor GC` from “capability available” to “users can clearly feel on-demand context loading”**
 
 Why this is next:
 
-- the baseline product work is complete, so the next missing piece is not another blind feature addition but a stable formal-gate and optimization program
-- the runnable matrix is now `392` cases, with `211 / 392 = 53.83%` zh-bearing coverage
-- retrieval-heavy formal gating is now green at `250 / 250`
-- the isolated local answer-level formal gate is no longer red; it now passes `12 / 12` through `openclaw agent --local` with the isolated eval agent `umceval65`
-- raw `openclaw memory search` transport now has its own host watchlist; the current formal watch sample is `0 / 8 raw ok`, all `invalid_json`
-- the refreshed main-path baseline now separates the layers cleanly: retrieval / assembly average `85ms`, raw transport average `15127ms`, isolated local answer-level average `39281ms`
-- release-preflight, deployment verification, and the host-neutral root policy still need to stay green, but they are now guardrails rather than the sole mainline objective
+- the truly unfinished part is not “open a new theme”, but the user-visible acceptance gap inside `Stage 11`
+- current live evidence already shows local project-layer pruning, but almost no meaningful host-visible shrinkage
+- what users currently miss is not another operator metric but an obvious “this turn is materially thinner” feel
+- so the mainline should finish host-visible context loading experience first instead of merging `Stage 12` into the same theme
 
 This mainline now includes:
 
-- keeping the `392` case runnable matrix and `50%+` Chinese coverage stable
-- expanding the answer-level formal gate beyond the current `12` stable samples
-- keeping gateway/session-lock noise and raw transport on separate watchlists so host instability does not get misread as algorithm regression
-- optimizing the slowest answer-level layer from the refreshed perf baseline
+- controlling host-thread growth sources so debugging no longer bloats the active thread
+- moving the project layer from raw-turn-first carry-forward to summary-first carry-forward
+- separating operator observability from thread continuation and keeping only short conclusions in-thread
+- redefining `Stage 11` closeout around user-visible experience rather than repo-local capability alone
 
 Key documents:
 
@@ -283,15 +280,15 @@ Key documents:
 
 The next major project move is:
 
-`keep the post-Stage-5 operator baseline stable, then open a fresh enhancement phase only when its prerequisites stay green`
+`finish the Stage 11 user-visible experience gap first, then move into the next separate theme`
 
 Planned project stages from here:
 
-1. keep release-preflight, bundle install verification, host smoke, and `Stage 5` evidence green
-2. keep canonical-root operator policy explicit in CLI, public docs, and the control surface
-3. keep project and workstream roadmaps aligned with the live implementation baseline
-4. keep memory-search in governance mode, with targeted case expansion only when needed
-5. open a fresh enhancement-phase plan only after runtime API / service-mode prerequisites stay green over time
+1. finish `Stage 11 / host-visible experience hardening`
+2. keep release-preflight, bundle install verification, host smoke, and `Stage 5` evidence green
+3. keep canonical-root operator policy explicit in CLI, public docs, and the control surface
+4. keep project and workstream roadmaps aligned with the live implementation baseline
+5. move into `Stage 12` only after `Stage 11` is truly closed under the user-visible bar
 
 ## Architecture Direction
 

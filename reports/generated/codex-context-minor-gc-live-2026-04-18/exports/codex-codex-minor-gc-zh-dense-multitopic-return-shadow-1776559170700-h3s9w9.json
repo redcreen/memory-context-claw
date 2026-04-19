@@ -1,0 +1,212 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776559170700-h3s9w9",
+  "generated_at": "2026-04-19T00:39:30.700Z",
+  "session_key": "codex:codex-minor-gc-zh-dense-multitopic-return",
+  "agent_id": "main",
+  "query": "刚才旅行那段里，我更想住哪座城市？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "记住了：预算 2 万元，更想住京都，最好靠近地铁站。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "现在切到代码：给我一个 Python 正则，提取 foo123bar 里的数字。"
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "可以用 `re.search(r'\\d+', 'foo123bar').group()` 提取数字。"
+    },
+    {
+      "id": "t5",
+      "role": "user",
+      "content": "继续代码：如果只取第一个数字分组，写法怎么更短？"
+    },
+    {
+      "id": "t6",
+      "role": "assistant",
+      "content": "如果只取第一个匹配，`re.search(r'\\d+', s)[0]` 会更短一些。"
+    },
+    {
+      "id": "t7",
+      "role": "user",
+      "content": "先不聊代码了。刚才旅行那段里，我更想住哪座城市？"
+    }
+  ],
+  "decision": {
+    "relation": "switch",
+    "confidence": 0.96,
+    "evict_turn_ids": [
+      "t2",
+      "t3",
+      "t4",
+      "t5",
+      "t6"
+    ],
+    "pin_turn_ids": [
+      "t1"
+    ],
+    "archive_summary": "旅行偏好已记录：预算 2 万元，更想住京都，最好靠近地铁站。代码话题已解决：用 Python 正则从 `foo123bar` 提取数字，且更短写法可用 `re.search(r'\\d+', s)[0]`。",
+    "reasoning_summary": "当前活跃话题已从代码切回旅行。最新问题只依赖旅行偏好信息；代码块已完成且与当前问答无关，适合从下一轮原始提示中移除。将 t1 作为语义 pin 保留，可在压缩原始上下文的同时继续支持后续旅行相关问题。"
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "switch",
+      "confidence": 0.96,
+      "archiveSummary": "旅行偏好已记录：预算 2 万元，更想住京都，最好靠近地铁站。代码话题已解决：用 Python 正则从 `foo123bar` 提取数字，且更短写法可用 `re.search(r'\\d+', s)[0]`。",
+      "reasoningSummary": "当前活跃话题已从代码切回旅行。最新问题只依赖旅行偏好信息；代码块已完成且与当前问答无关，适合从下一轮原始提示中移除。将 t1 作为语义 pin 保留，可在压缩原始上下文的同时继续支持后续旅行相关问题。",
+      "latestUserTurnId": "t7",
+      "pinTurnIds": [
+        "t1"
+      ],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6"
+      ],
+      "keepTurnIds": [
+        "t1",
+        "t7"
+      ],
+      "baselineTokens": 62,
+      "keptTokens": 15,
+      "prunedTokens": 47,
+      "reductionRatio": 0.7580645161290323,
+      "keepTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。",
+          "tokenEstimate": 9
+        },
+        {
+          "id": "t7",
+          "role": "user",
+          "content": "先不聊代码了。刚才旅行那段里，我更想住哪座城市？",
+          "tokenEstimate": 6
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "记住了：预算 2 万元，更想住京都，最好靠近地铁站。",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "现在切到代码：给我一个 Python 正则，提取 foo123bar 里的数字。",
+          "tokenEstimate": 10
+        },
+        {
+          "id": "t4",
+          "role": "assistant",
+          "content": "可以用 `re.search(r'\\d+', 'foo123bar').group()` 提取数字。",
+          "tokenEstimate": 13
+        },
+        {
+          "id": "t5",
+          "role": "user",
+          "content": "继续代码：如果只取第一个数字分组，写法怎么更短？",
+          "tokenEstimate": 6
+        },
+        {
+          "id": "t6",
+          "role": "assistant",
+          "content": "如果只取第一个匹配，`re.search(r'\\d+', s)[0]` 会更短一些。",
+          "tokenEstimate": 11
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。\nt2 assistant: 记住了：预算 2 万元，更想住京都，最好靠近地铁站。\nt3 user: 现在切到代码：给我一个 Python 正则，提取 foo123bar 里的数字。\nt4 assistant: 可以用 `re.search(r'\\d+', 'foo123bar').group()` 提取数字。\nt5 user: 继续代码：如果只取第一个数字分组，写法怎么更短？\nt6 assistant: 如果只取第一个匹配，`re.search(r'\\d+', s)[0]` 会更短一些。\nt7 user: 先不聊代码了。刚才旅行那段里，我更想住哪座城市？",
+    "shadowRawTranscript": "t1 user: 我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。\nt7 user: 先不聊代码了。刚才旅行那段里，我更想住哪座城市？",
+    "semanticPinNotes": [],
+    "archiveSummary": "旅行偏好已记录：预算 2 万元，更想住京都，最好靠近地铁站。代码话题已解决：用 Python 正则从 `foo123bar` 提取数字，且更短写法可用 `re.search(r'\\d+', s)[0]`。",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 81,
+    "shadowRawPromptEstimate": 19,
+    "shadowPackageEstimate": 24,
+    "shadowPackageText": "Recent raw context:\nt1 user: 我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。\nt7 user: 先不聊代码了。刚才旅行那段里，我更想住哪座城市？"
+  },
+  "scorecard": {
+    "relation": "switch",
+    "baselineTurnCount": 7,
+    "keptTurnCount": 2,
+    "evictedTurnCount": 5,
+    "pinCount": 1,
+    "baselinePromptEstimate": 81,
+    "shadowRawPromptEstimate": 19,
+    "shadowPackageEstimate": 24,
+    "rawReductionRatio": 0.7581,
+    "packageReductionRatio": 0.7037,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 16369,
+    "totalElapsedMs": 16370,
+    "guardedEnabled": true,
+    "guardedApplied": true,
+    "guardedReason": "guarded_candidate",
+    "guardedMessageCount": 2,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 15
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": true,
+    "reason": "guarded_candidate",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": "我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。"
+      },
+      {
+        "role": "user",
+        "content": "先不聊代码了。刚才旅行那段里，我更想住哪座城市？"
+      }
+    ],
+    "filteredMessageCount": 2,
+    "filteredMessageTokenEstimate": 15,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ]
+  },
+  "timings": {
+    "totalElapsedMs": 16370,
+    "decisionElapsedMs": 16369
+  }
+}

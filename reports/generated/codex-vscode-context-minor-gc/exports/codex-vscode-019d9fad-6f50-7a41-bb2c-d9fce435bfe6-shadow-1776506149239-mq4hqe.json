@@ -1,0 +1,354 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776506149239-mq4hqe",
+  "generated_at": "2026-04-18T09:55:49.239Z",
+  "session_key": "codex:vscode:019d9fad-6f50-7a41-bb2c-d9fce435bfe6",
+  "agent_id": "main",
+  "query": "如果清理干净了，可以进入下一轮了，如果还没，继续清理；",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "说点儿人话， 我现在第一目标是 要使用起来 很明显的体感，你按照这个要求，把当前问题，和解决方案，整体分析，按照项目助手要求，写文档，给可行性分析和方案，然后补充 gc 这个大项的roadmap 和 plan； 关键是 我的目标的可行性多大？"
+    },
+    {
+      "id": "t2",
+      "role": "user",
+      "content": "不需要新的stage， 仍然在 11里加，看下 12是否也需要合并进去； 一个主题不要开多个stage；"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "做完了么？"
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "Context(估算): 最近一轮输入 200k，无GC估算 200k；窗口口径 258k，压缩比：0.3%（200k/200k），占窗口比例：77.3%（200k/258k） 还没有。 我刚把“不要新开 stage，仍然收回到 `Stage 11`，`Stage 12` 不并入”的分析文档方向改正了一半；接下来还要把 roadmap 和 development plan 一起改到同一套说法，不然文档会互相打架。现在是中途状态，不适合交付。"
+    },
+    {
+      "id": "t5",
+      "role": "user",
+      "content": "继续"
+    },
+    {
+      "id": "t6",
+      "role": "user",
+      "content": "干净了没？"
+    },
+    {
+      "id": "t7",
+      "role": "assistant",
+      "content": "Context(估算): 最近一轮输入 251k，无GC估算 251k；窗口口径 258k，压缩比：0.2%（251k/251k），占窗口比例：97.1%（251k/258k） 还没完全干净。 现在主入口口径已经翻过来了一半，但我刚刚自检到还有残留旧说法，主要是： - `context-minor-gc-experience-gap` 里还残留了 `Stage 13` 的旧句子 - `context-minor-gc` 里还有少量“Stage 11 可以关闭”的旧句子 所以现在不是可交付状态。我下一步就是把这两处残留清干净，然后再做一次 `rg` 自检。"
+    },
+    {
+      "id": "t8",
+      "role": "user",
+      "content": "一次性清理干净，长任务；别在让我介入；"
+    },
+    {
+      "id": "t9",
+      "role": "user",
+      "content": "如果清理干净了，可以进入下一轮了，如果还没，继续清理；"
+    },
+    {
+      "id": "t10",
+      "role": "user",
+      "content": "如果清理干净了，可以进入下一轮了，如果还没，继续清理；"
+    },
+    {
+      "id": "t11",
+      "role": "user",
+      "content": "如果清理干净了，可以进入下一轮了，如果还没，继续清理；"
+    },
+    {
+      "id": "t12",
+      "role": "user",
+      "content": "如果清理干净了，可以进入下一轮了，如果还没，继续清理；"
+    }
+  ],
+  "decision": {
+    "relation": "continue",
+    "confidence": 0.94,
+    "evict_turn_ids": [
+      "t3",
+      "t4",
+      "t5",
+      "t6",
+      "t9",
+      "t10",
+      "t11"
+    ],
+    "pin_turn_ids": [],
+    "archive_summary": "Active task remains the same: finish a thorough cleanup of the Stage/GC documentation so it is internally consistent before moving to the next round. Core requirements from earlier turns still matter: write the analysis/doc around the current problem and solution in a practical, project-assistant style; assess feasibility of the user's goal of a clearly noticeable usage improvement; keep everything under Stage 11 instead of creating a new stage; check whether Stage 12 should be merged, with the rule that one theme should not be split across multiple stages. Latest confirmed status before the repeated nudges: cleanup was not complete because old wording still remained in context-minor-gc-experience-gap (Stage 13 references) and context-minor-gc (some Stage 11 closure wording). The repeated later user turns are just the same instruction to continue cleaning until it is truly clean, then proceed to the next round.",
+    "reasoning_summary": "This is the same active topic, so relation=continue. The next turn still depends on the unresolved cleanup task and the earlier Stage/feasibility constraints, so those should remain in the raw working set rather than being reduced to pins. Several intermediate check-in turns are redundant status chatter or repeated nudges and are good eviction candidates. No separate semantic pin is necessary yet because the active task is still open and its key constraints should stay raw."
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "continue",
+      "confidence": 0.94,
+      "archiveSummary": "Active task remains the same: finish a thorough cleanup of the Stage/GC documentation so it is internally consistent before moving to the next round. Core requirements from earlier turns still matter: write the analysis/doc around the current problem and solution in a practical, project-assistant style; assess feasibility of the user's goal of a clearly noticeable usage improvement; keep everything under Stage 11 instead of creating a new stage; check whether Stage 12 should be merged, with the rule that one theme should not be split across multiple stages. Latest confirmed status before the repeated nudges: cleanup was not complete because old wording still remained in context-minor-gc-experience-gap (Stage 13 references) and context-minor-gc (some Stage 11 closure wording). The repeated later user turns are just the same instruction to continue cleaning until it is truly clean, then proceed to the next round.",
+      "reasoningSummary": "This is the same active topic, so relation=continue. The next turn still depends on the unresolved cleanup task and the earlier Stage/feasibility constraints, so those should remain in the raw working set rather than being reduced to pins. Several intermediate check-in turns are redundant status chatter or repeated nudges and are good eviction candidates. No separate semantic pin is necessary yet because the active task is still open and its key constraints should stay raw.",
+      "latestUserTurnId": "t12",
+      "pinTurnIds": [],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t9",
+        "t10",
+        "t11"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t9",
+        "t10",
+        "t11"
+      ],
+      "keepTurnIds": [
+        "t1",
+        "t2",
+        "t7",
+        "t8",
+        "t12"
+      ],
+      "baselineTokens": 208,
+      "keptTokens": 126,
+      "prunedTokens": 82,
+      "reductionRatio": 0.3942307692307692,
+      "keepTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "说点儿人话， 我现在第一目标是 要使用起来 很明显的体感，你按照这个要求，把当前问题，和解决方案，整体分析，按照项目助手要求，写文档，给可行性分析和方案，然后补充 gc 这个大项的roadmap 和 plan； 关键是 我的目标的可行性多大？",
+          "tokenEstimate": 31
+        },
+        {
+          "id": "t2",
+          "role": "user",
+          "content": "不需要新的stage， 仍然在 11里加，看下 12是否也需要合并进去； 一个主题不要开多个stage；",
+          "tokenEstimate": 13
+        },
+        {
+          "id": "t7",
+          "role": "assistant",
+          "content": "Context(估算): 最近一轮输入 251k，无GC估算 251k；窗口口径 258k，压缩比：0.2%（251k/251k），占窗口比例：97.1%（251k/258k） 还没完全干净。 现在主入口口径已经翻过来了一半，但我刚刚自检到还有残留旧说法，主要是： - `context-minor-gc-experience-gap` 里还残留了 `Stage 13` 的旧句子 - `context-minor-gc` 里还有少量“Stage 11 可以关闭”的旧句子 所以现在不是可交付状态。我下一步就是把这两处残留清干净，然后再做一次 `rg` 自检。",
+          "tokenEstimate": 70
+        },
+        {
+          "id": "t8",
+          "role": "user",
+          "content": "一次性清理干净，长任务；别在让我介入；",
+          "tokenEstimate": 5
+        },
+        {
+          "id": "t12",
+          "role": "user",
+          "content": "如果清理干净了，可以进入下一轮了，如果还没，继续清理；",
+          "tokenEstimate": 7
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "做完了么？",
+          "tokenEstimate": 2
+        },
+        {
+          "id": "t4",
+          "role": "assistant",
+          "content": "Context(估算): 最近一轮输入 200k，无GC估算 200k；窗口口径 258k，压缩比：0.3%（200k/200k），占窗口比例：77.3%（200k/258k） 还没有。 我刚把“不要新开 stage，仍然收回到 `Stage 11`，`Stage 12` 不并入”的分析文档方向改正了一半；接下来还要把 roadmap 和 development plan 一起改到同一套说法，不然文档会互相打架。现在是中途状态，不适合交付。",
+          "tokenEstimate": 56
+        },
+        {
+          "id": "t5",
+          "role": "user",
+          "content": "继续",
+          "tokenEstimate": 1
+        },
+        {
+          "id": "t6",
+          "role": "user",
+          "content": "干净了没？",
+          "tokenEstimate": 2
+        },
+        {
+          "id": "t9",
+          "role": "user",
+          "content": "如果清理干净了，可以进入下一轮了，如果还没，继续清理；",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t10",
+          "role": "user",
+          "content": "如果清理干净了，可以进入下一轮了，如果还没，继续清理；",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t11",
+          "role": "user",
+          "content": "如果清理干净了，可以进入下一轮了，如果还没，继续清理；",
+          "tokenEstimate": 7
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 说点儿人话， 我现在第一目标是 要使用起来 很明显的体感，你按照这个要求，把当前问题，和解决方案，整体分析，按照项目助手要求，写文档，给可行性分析和方案，然后补充 gc 这个大项的roadmap 和 plan； 关键是 我的目标的可行性多大？\nt2 user: 不需要新的stage， 仍然在 11里加，看下 12是否也需要合并进去； 一个主题不要开多个stage；\nt3 user: 做完了么？\nt4 assistant: Context(估算): 最近一轮输入 200k，无GC估算 200k；窗口口径 258k，压缩比：0.3%（200k/200k），占窗口比例：77.3%（200k/258k） 还没有。 我刚把“不要新开 stage，仍然收回到 `Stage 11`，`Stage 12` 不并入”的分析文档方向改正了一半；接下来还要把 roadmap 和 development plan 一起改到同一套说法，不然文档会互相打架。现在是中途状态，不适合交付。\nt5 user: 继续\nt6 user: 干净了没？\nt7 assistant: Context(估算): 最近一轮输入 251k，无GC估算 251k；窗口口径 258k，压缩比：0.2%（251k/251k），占窗口比例：97.1%（251k/258k） 还没完全干净。 现在主入口口径已经翻过来了一半，但我刚刚自检到还有残留旧说法，主要是： - `context-minor-gc-experience-gap` 里还残留了 `Stage 13` 的旧句子 - `context-minor-gc` 里还有少量“Stage 11 可以关闭”的旧句子 所以现在不是可交付状态。我下一步就是把这两处残留清干净，然后再做一次 `rg` 自检。\nt8 user: 一次性清理干净，长任务；别在让我介入；\nt9 user: 如果清理干净了，可以进入下一轮了，如果还没，继续清理；\nt10 user: 如果清理干净了，可以进入下一轮了，如果还没，继续清理；\nt11 user: 如果清理干净了，可以进入下一轮了，如果还没，继续清理；\nt12 user: 如果清理干净了，可以进入下一轮了，如果还没，继续清理；",
+    "shadowRawTranscript": "t1 user: 说点儿人话， 我现在第一目标是 要使用起来 很明显的体感，你按照这个要求，把当前问题，和解决方案，整体分析，按照项目助手要求，写文档，给可行性分析和方案，然后补充 gc 这个大项的roadmap 和 plan； 关键是 我的目标的可行性多大？\nt2 user: 不需要新的stage， 仍然在 11里加，看下 12是否也需要合并进去； 一个主题不要开多个stage；\nt7 assistant: Context(估算): 最近一轮输入 251k，无GC估算 251k；窗口口径 258k，压缩比：0.2%（251k/251k），占窗口比例：97.1%（251k/258k） 还没完全干净。 现在主入口口径已经翻过来了一半，但我刚刚自检到还有残留旧说法，主要是： - `context-minor-gc-experience-gap` 里还残留了 `Stage 13` 的旧句子 - `context-minor-gc` 里还有少量“Stage 11 可以关闭”的旧句子 所以现在不是可交付状态。我下一步就是把这两处残留清干净，然后再做一次 `rg` 自检。\nt8 user: 一次性清理干净，长任务；别在让我介入；\nt12 user: 如果清理干净了，可以进入下一轮了，如果还没，继续清理；",
+    "semanticPinNotes": [],
+    "archiveSummary": "Active task remains the same: finish a thorough cleanup of the Stage/GC documentation so it is internally consistent before moving to the next round. Core requirements from earlier turns still matter: write the analysis/doc around the current problem and solution in a practical, project-assistant style; assess feasibility of the user's goal of a clearly noticeable usage improvement; keep everything under Stage 11 instead of creating a new stage; check whether Stage 12 should be merged, with the rule that one theme should not be split across multiple stages. Latest confirmed status before the repeated nudges: cleanup was not complete because old wording still remained in context-minor-gc-experience-gap (Stage 13 references) and context-minor-gc (some Stage 11 closure wording). The repeated later user turns are just the same instruction to continue cleaning until it is truly clean, then proceed to the next round.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 237,
+    "shadowRawPromptEstimate": 139,
+    "shadowPackageEstimate": 143,
+    "shadowPackageText": "Active raw turns:\nt1 user: 说点儿人话， 我现在第一目标是 要使用起来 很明显的体感，你按照这个要求，把当前问题，和解决方案，整体分析，按照项目助手要求，写文档，给可行性分析和方案，然后补充 gc 这个大项的roadmap 和 plan； 关键是 我的目标的可行性多大？\nt2 user: 不需要新的stage， 仍然在 11里加，看下 12是否也需要合并进去； 一个主题不要开多个stage；\nt7 assistant: Context(估算): 最近一轮输入 251k，无GC估算 251k；窗口口径 258k，压缩比：0.2%（251k/251k），占窗口比例：97.1%（251k/258k） 还没完全干净。 现在主入口口径已经翻过来了一半，但我刚刚自检到还有残留旧说法，主要是： - `context-minor-gc-experience-gap` 里还残留了 `Stage 13` 的旧句子 - `context-minor-gc` 里还有少量“Stage 11 可以关闭”的旧句子 所以现在不是可交付状态。我下一步就是把这两处残留清干净，然后再做一次 `rg` 自检。\nt8 user: 一次性清理干净，长任务；别在让我介入；\nt12 user: 如果清理干净了，可以进入下一轮了，如果还没，继续清理；"
+  },
+  "scorecard": {
+    "relation": "continue",
+    "baselineTurnCount": 12,
+    "keptTurnCount": 5,
+    "evictedTurnCount": 7,
+    "pinCount": 0,
+    "baselinePromptEstimate": 237,
+    "shadowRawPromptEstimate": 139,
+    "shadowPackageEstimate": 143,
+    "rawReductionRatio": 0.3942,
+    "packageReductionRatio": 0.3966,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 22241,
+    "totalElapsedMs": 22245,
+    "guardedEnabled": true,
+    "guardedApplied": false,
+    "guardedReason": "no_net_token_gain",
+    "guardedMessageCount": 24,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 1585
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": false,
+    "reason": "no_net_token_gain",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": "我的合理的方式，不是扩大context window；先改回到258k； 不然无法测试 compat是否会发生；"
+      },
+      {
+        "role": "assistant",
+        "content": "Context(估算): 本轮发送context 71.6k，宿主context 71.6k；窗口总大小 258k，压缩比：0.0%（71.6k/71.6k），占总窗口比例：27.8%（71.6k/258k） 默认口径已经改回 `258k`。现在 VS Code helper 会先把宿主上报的 `model_context_window` clamp 到 `258000` 再算风险和 header，但同时保留原始上报值，避免把真实运行态丢掉。实现点在 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/codex-vscode-context-minor-gc.js:13) 和 [scripts/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/scripts/codex-vscode-context-minor-gc.js:26)。 我也补了回归测试，覆盖“宿主报 `486000` 时默认仍按 `258000` 算”的场景，见 [test/codex-vscode-context-minor-gc.test.js](/Users/redcreen/Project/unified-memory-core/test/codex-vscode-context-minor-gc.test.js:285)。验证已过：`node --test test/codex-vscode-context-minor-gc.test.js`，`4/4` 通过。当前实际 `npm run codex:vscode:gc --silent` 也已显示 `hostContextWindow=258000`、`hostReportedContextWindow=486400`，所以现在可以继续按你要的保守窗口去观察 `compat` 是否会发生。"
+      },
+      {
+        "role": "user",
+        "content": "本轮发送context 和 状态栏不匹配； 每次打开新的codex窗口，状态栏是否没有准确读取 ？ 或者读错了/ 如果两个codex 同时在vscode 打开，好像会有问题；"
+      },
+      {
+        "role": "assistant",
+        "content": "Context(估算): 最近一轮输入 125k，无GC估算 125k；窗口口径 258k，压缩比：0.0%（125k/125k），占窗口比例：48.6%（125k/258k） 是，之前确实有两个问题，而且你说的“两个 Codex 同时在 VS Code 打开会有问题”是对的。 第一，session 选错了。原实现只按同一 `cwd` 下“最新写入的 session 文件”取值，所以两个窗口都开在同一个 repo 时，A 窗口的 header 很可能读到 B 窗口的 session。现在我改成优先绑定当前会话的 `CODEX_THREAD_ID`，也就是当前这条线程自己的 session id，不再靠猜最近文件，见 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/codex-vscode-context-minor-gc.js:219) 和 [scripts/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/scripts/codex-vscode-context-minor-gc.js:19)。我本地环境里已经确认当前线程有 `CODEX_THREAD_ID=019d9fad-...`，helper 现在会锁到这个 session。你截图里右下角的 `251k/486k`，我也核对到了，正好对应另一个同 `cwd` 的旧 session 的最近输入 `250708`。所以之前确实是“状态栏看的是 A，header 读成了 B”。 第二，指标语义也不一样。helper 读的是 session log 里的 `last_token_usage.input_tokens`，这表示“最近一轮请求输入多少”，不是 VS Code 右下角状态栏那种“当前线程占用了多少窗口”。之前 footer 写成“本轮发送context”，很容易让人误以为它等于状态栏。我已经把文案改成“最近一轮输入”，并在 markdown 里明确标注这不是状态栏占用，见 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/codex-vscode-context-minor-gc.js:487)。 验证已经过了：`node --test test/codex-vscode-context-minor-gc.test.js` 现在 `5/5` 通过，其中包括“优先命中精确 session id”的回归测试 [test/codex-vscode-context-minor-gc.test.js](/Users/redcreen/Project/unified-memory-core/test/codex-vscode-context-minor-gc.test.js:73)。结论就是：之前是会串窗口，也会把“最近一轮输入”误说成“状态栏占用”；这两点现在都修了。"
+      },
+      {
+        "role": "user",
+        "content": "context 上涨非常快；"
+      },
+      {
+        "role": "assistant",
+        "content": "Context(估算): 最近一轮输入 135k，无GC估算 135k；窗口口径 258k，压缩比：0.0%（135k/135k），占窗口比例：52.3%（135k/258k） 是，而且这次涨得快不是单纯因为“多聊了几句”，主要是我们上一轮为了排查问题，把很重的调试轨迹也写进了同一条 Codex session。最明显的是直接读 session jsonl 的命令，里面带了大段工具输出，甚至包含图片相关的大 payload。当前这条线程最近 12 次 `last_token_usage.input_tokens` 已经从 `110k` 涨到 `125k+`，所以宿主上下文是在被诊断过程本身推高。 我已经做了一个立刻生效的缓解：`npm run codex:vscode:gc:header --silent` 现在默认会对相同 header 去重，不再每次回复都重复打印同一行；要强制打印可以加 `--always-print-header`。改动在 [scripts/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/scripts/codex-vscode-context-minor-gc.js:1)。核心逻辑测试仍然全过，`node --test test/codex-vscode-context-minor-gc.test.js` 是 `5/5`。 结论很直接：现在 context 快速上涨的主因是宿主 session 里累计了过多工具轨迹，不是 GC helper 本身算错。后续我这边会避免再直接 dump 原始 session 文件，只做摘要读取；这比继续在当前线程里做重型排查更重要。"
+      },
+      {
+        "role": "user",
+        "content": "所以这一轮的context 应该小于135k对么？"
+      },
+      {
+        "role": "assistant",
+        "content": "Context(估算): 最近一轮输入 132k，无GC估算 132k；窗口口径 258k，压缩比：0.0%（132k/132k），占窗口比例：51.2%（132k/258k） 对，按我们现在这个 helper 的口径，这一轮应该是小于 `135k` 的。 更准确地说，它显示的是“最近一轮输入”估算，不是状态栏总占用。刚刚最新读数是 `132k`。所以如果你问的是这次请求本身，答案是对，应该小于 `135k`。如果你问的是 VS Code 右下角状态栏那个累计占用，那不是这个数。"
+      },
+      {
+        "role": "user",
+        "content": "但是并没有比 133k少多少啊，感觉没有啥用啊"
+      },
+      {
+        "role": "assistant",
+        "content": "Context(估算): 最近一轮输入 133k，无GC估算 133k；窗口口径 258k，压缩比：0.0%（133k/133k），占窗口比例：51.6%（133k/258k） 对，基本没用。`135k -> 133k` 这种变化只是噪音级别，说明我刚才那个改动只减少了很小的重复文案，没有碰到真正的大头。 真正的大头是这条宿主线程里已经积累下来的东西：工具轨迹、长 commentary、长 final answer、调试输出。这些是存量；header 去重只能减未来每轮几十到几百字符，不会把已经堆到 `133k` 的宿主 context 明显打下来。 所以结论是： 1. 刚才那个修复解决了“读错窗口/误导文案”，没解决“context 涨得快”。 2. 要有体感，下一步必须直接砍增长源：少写长 commentary，避免把重型调试输出灌进当前线程，必要时把观测改成 repo 外日志摘要而不是直接读 raw session。 3. 当前这条线程里的 `133k` 不会因为小修小补自动掉很多。 如果你要，我下一步就直接改“增长源控制”，而不是再调 header。"
+      },
+      {
+        "role": "user",
+        "content": "你根据现在context数据，和你的分层数据， 仔细分析下，是否真的做到了按需加载context，我的直观感受是并没有；"
+      },
+      {
+        "role": "assistant",
+        "content": "Context(估算): 最近一轮输入 155k，无GC估算 155k；窗口口径 258k，压缩比：0.0%（155k/155k），占窗口比例：60.1%（155k/258k） 结论：你的直觉是对的。按“端到端实际发送的 host context 是否按需变小”这个标准，现在没有做到；只是在项目层做了局部裁剪。 证据有三条。 1. 宿主层几乎没有变小，体感上当然等于没做。 当前最新 `gc` 输出里，project 层是 `baseline_context_estimate=927` 到 `effective_context_estimate=710`，表面裁了 `23.5%`。但宿主层同时是 `hostActualInputTokens=148009`、`hostOriginalInputTokens=148227`，只少了 `218` tokens，压缩比只有 `0.1%`。这说明项目层裁掉的东西，相对宿主整盘子几乎可以忽略。 2. 宿主实际上仍在反复重放大块旧上下文，不是按需取小块。 最新 session 数据里 `cached_input_tokens=133120 / last_input_tokens=133875`，缓存占比 `99.44%`。这说明每轮都在重复发送一个巨大的既有前缀，只是 provider 侧做了 cache；“缓存命中高”不等于“上下文变小”。窗口占用照样高。 3. 项目层自己的“按需”也偏保守，不是 summary-first。 当前 VS Code helper 会把 `user_message` 和 `final_answer` 都收进来，最多保留最近 `48` 条，[src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/codex-vscode-context-minor-gc.js:276)。而真正打包时，默认保留的是 `Active raw turns` 原文，不是先摘要再留，[src/codex-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/codex-context-minor-gc.js:107)。你刚才那份 working set 里，`t6/t8/t10` 这些长 assistant raw turns 还在，这本身就不算激进的按需加载。 所以更准确的分层判断是： - 项目层 `UMC block`：部分做到了。 - 宿主层 `Codex thread`：没做到。 - 用户体感：没做到。 根因也很清楚：这个方案现在只能裁“我们额外注入的那块 context block”，但不能清掉 Codex 宿主已经积累的长回答、工具轨迹、调试输出。于是 project 层虽然在动，host 主盘子基本不动。 如果你的验收标准是“这一轮实际发送给模型的 context 应明显按需下降”，那当前实现不达标。下一步真正该改的不是 header，而是两件事： 1. 把 project 层从 `raw-turn carry-forward` 改成 `summary-first carry-forward`。 2. 把重型观测和调试移出当前 Codex 线程，避免 helper 自己继续污染 host session。 按现在的数据看，不把这两点动掉，继续调现有 helper，不会有明显体感收益。"
+      },
+      {
+        "role": "user",
+        "content": "说点儿人话， 我现在第一目标是 要使用起来 很明显的体感，你按照这个要求，把当前问题，和解决方案，整体分析，按照项目助手要求，写文档，给可行性分析和方案，然后补充 gc 这个大项的roadmap 和 plan； 关键是 我的目标的可行性多大？"
+      },
+      {
+        "role": "user",
+        "content": "不需要新的stage， 仍然在 11里加，看下 12是否也需要合并进去； 一个主题不要开多个stage；"
+      },
+      {
+        "role": "user",
+        "content": "做完了么？"
+      },
+      {
+        "role": "assistant",
+        "content": "Context(估算): 最近一轮输入 200k，无GC估算 200k；窗口口径 258k，压缩比：0.3%（200k/200k），占窗口比例：77.3%（200k/258k） 还没有。 我刚把“不要新开 stage，仍然收回到 `Stage 11`，`Stage 12` 不并入”的分析文档方向改正了一半；接下来还要把 roadmap 和 development plan 一起改到同一套说法，不然文档会互相打架。现在是中途状态，不适合交付。"
+      },
+      {
+        "role": "user",
+        "content": "继续"
+      },
+      {
+        "role": "user",
+        "content": "干净了没？"
+      },
+      {
+        "role": "assistant",
+        "content": "Context(估算): 最近一轮输入 251k，无GC估算 251k；窗口口径 258k，压缩比：0.2%（251k/251k），占窗口比例：97.1%（251k/258k） 还没完全干净。 现在主入口口径已经翻过来了一半，但我刚刚自检到还有残留旧说法，主要是： - `context-minor-gc-experience-gap` 里还残留了 `Stage 13` 的旧句子 - `context-minor-gc` 里还有少量“Stage 11 可以关闭”的旧句子 所以现在不是可交付状态。我下一步就是把这两处残留清干净，然后再做一次 `rg` 自检。"
+      },
+      {
+        "role": "user",
+        "content": "一次性清理干净，长任务；别在让我介入；"
+      },
+      {
+        "role": "user",
+        "content": "如果清理干净了，可以进入下一轮了，如果还没，继续清理；"
+      },
+      {
+        "role": "user",
+        "content": "如果清理干净了，可以进入下一轮了，如果还没，继续清理；"
+      },
+      {
+        "role": "user",
+        "content": "如果清理干净了，可以进入下一轮了，如果还没，继续清理；"
+      },
+      {
+        "role": "user",
+        "content": "如果清理干净了，可以进入下一轮了，如果还没，继续清理；"
+      }
+    ],
+    "filteredMessageCount": 24,
+    "filteredMessageTokenEstimate": 1585,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 22245,
+    "decisionElapsedMs": 22241
+  }
+}

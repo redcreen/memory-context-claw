@@ -1,0 +1,320 @@
+{
+  "schema_version": "umc.codex-context-minor-gc.v1",
+  "generated_at": "2026-04-18T16:54:19.200Z",
+  "event_id": "shadow-1776531235693-o03p1v-codex-packaged",
+  "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+  "query": "或者补一个 repo 内可重复的 smoke/eval case，把 GC-D2 收进固定回归",
+  "status": "captured",
+  "reason": "",
+  "decision_transport": "codex_exec",
+  "relation": "continue",
+  "applied": true,
+  "codex_guard_reason": "codex_packaged_guard",
+  "prompt_reduction_ratio": 0.5619,
+  "baseline_context_estimate": 194,
+  "packaged_context_estimate": 85,
+  "effective_context_estimate": 85,
+  "shadow_status": "captured",
+  "shadow_guarded_applied": true,
+  "shadow_guarded_reason": "guarded_candidate",
+  "shadow_export_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da152-4841-76f2-adc4-b01a85d15a88-shadow-1776531235693-o03p1v.json",
+  "shadow_summary_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl",
+  "export_path": "exports/codex-vscode-019da152-4841-76f2-adc4-b01a85d15a88-shadow-1776531235693-o03p1v-codex-packaged.json",
+  "effective_context_block": "## Context Minor GC Working Set\nTask state summary:\nGC-D2 earlier side checks were resolved: shadow mode default-off was asked, then the editor-default check was asked and answered as Zed, followed by a status update that the third issue was largely stabilized. The conve…\n\nLatest user ask:\n- 或者补一个 repo 内可重复的 smoke/eval case，把 GC-D2 收进固定回归",
+  "packaged_context_block": "## Context Minor GC Working Set\nTask state summary:\nGC-D2 earlier side checks were resolved: shadow mode default-off was asked, then the editor-default check was asked and answered as Zed, followed by a status update that the third issue was largely stabilized. The conve…\n\nLatest user ask:\n- 或者补一个 repo 内可重复的 smoke/eval case，把 GC-D2 收进固定回归",
+  "shadow_event": {
+    "schema_version": "umc.dialogue-working-set-shadow.v1",
+    "event_id": "shadow-1776531235693-o03p1v",
+    "generated_at": "2026-04-18T16:53:55.693Z",
+    "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+    "agent_id": "main",
+    "query": "或者补一个 repo 内可重复的 smoke/eval case，把 GC-D2 收进固定回归",
+    "status": "captured",
+    "reason": "",
+    "sampling": {
+      "max_turns": 12,
+      "min_turns": 3,
+      "max_chars_per_turn": 900
+    },
+    "transcript": [
+      {
+        "id": "t1",
+        "role": "assistant",
+        "content": "下一条发： ```text [GC-D2] 切个话题。为什么 shadow mode 默认先不开？ ```"
+      },
+      {
+        "id": "t2",
+        "role": "user",
+        "content": "[GC-D2] 切个话题。为什么 shadow mode 默认先不开？"
+      },
+      {
+        "id": "t3",
+        "role": "assistant",
+        "content": "下一条发： ```text [GC-D2] 回到编辑器问题。我现在默认编辑器是什么？ ```"
+      },
+      {
+        "id": "t4",
+        "role": "user",
+        "content": "[GC-D2] 回到编辑器问题。我现在默认编辑器是什么？"
+      },
+      {
+        "id": "t5",
+        "role": "assistant",
+        "content": "Zed。 重跑 `GC-D2` 之后，修复是生效的："
+      },
+      {
+        "id": "t6",
+        "role": "user",
+        "content": "继续"
+      },
+      {
+        "id": "t7",
+        "role": "assistant",
+        "content": "继续之后，第 3 个点也已经基本收住了。 现在状态是："
+      },
+      {
+        "id": "t8",
+        "role": "user",
+        "content": "直接给你一条最短回归命令，方便你以后自己 spot check。"
+      },
+      {
+        "id": "t9",
+        "role": "assistant",
+        "content": "最短 spot check 我建议就这 2 条： ```bash npm run codex:vscode:gc --silent ```"
+      },
+      {
+        "id": "t10",
+        "role": "user",
+        "content": "接下来 我要做蛇呢么？"
+      },
+      {
+        "id": "t11",
+        "role": "assistant",
+        "content": "接下来做这 3 件事就够了。 1. 先留一条最小回归命令 直接用这条做以后 spot check： ```bash npm run codex:vscode:gc --silent ``` 如果怀疑 prompt 没及时落盘，再用： ```bash node scripts/codex-vscode-context-minor-gc.js --format markdown --prompt \"[GC-D2] 回到编辑器问题。…"
+      },
+      {
+        "id": "t12",
+        "role": "user",
+        "content": "或者补一个 repo 内可重复的 smoke/eval case，把 GC-D2 收进固定回归"
+      }
+    ],
+    "decision": {
+      "relation": "continue",
+      "confidence": 0.91,
+      "evict_turn_ids": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8"
+      ],
+      "pin_turn_ids": [
+        "t9",
+        "t11"
+      ],
+      "archive_summary": "GC-D2 earlier side checks were resolved: shadow mode default-off was asked, then the editor-default check was asked and answered as Zed, followed by a status update that the third issue was largely stabilized. The conversation then converged on keeping a minimal regression/spot-check path, with the recommended command `npm run codex:vscode:gc --silent` and a follow-up suggestion to leave a minimal regression command plus a fallback prompt-injection run if logs had not landed yet.",
+      "reasoning_summary": "The latest user turn stays on the same GC-D2 regression topic, so `continue` fits better than `switch`. The earlier shadow-mode and default-editor subthreads are resolved and no longer needed as raw context for the next turn, so they can be evicted. The immediately relevant context is the established spot-check/regression direction from t9 and t11, whose semantic content should be preserved as compact pins because the new request asks to formalize that into a repeatable smoke/eval case."
+    },
+    "decision_transport": "codex_exec",
+    "snapshot": {
+      "applied": {
+        "relation": "continue",
+        "confidence": 0.91,
+        "archiveSummary": "GC-D2 earlier side checks were resolved: shadow mode default-off was asked, then the editor-default check was asked and answered as Zed, followed by a status update that the third issue was largely stabilized. The conversation then converged on keeping a minimal regression/spot-check path, with the recommended command `npm run codex:vscode:gc --silent` and a follow-up suggestion to leave a minimal regression command plus a fallback prompt-injection run if logs had not landed yet.",
+        "reasoningSummary": "The latest user turn stays on the same GC-D2 regression topic, so `continue` fits better than `switch`. The earlier shadow-mode and default-editor subthreads are resolved and no longer needed as raw context for the next turn, so they can be evicted. The immediately relevant context is the established spot-check/regression direction from t9 and t11, whose semantic content should be preserved as compact pins because the new request asks to formalize that into a repeatable smoke/eval case.",
+        "latestUserTurnId": "t12",
+        "pinTurnIds": [
+          "t9",
+          "t11"
+        ],
+        "pinnedOnlyTurnIds": [],
+        "requestedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3",
+          "t4",
+          "t5",
+          "t6",
+          "t7",
+          "t8"
+        ],
+        "blockedEvictTurnIds": [],
+        "appliedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3",
+          "t4",
+          "t5",
+          "t6",
+          "t7",
+          "t8"
+        ],
+        "keepTurnIds": [
+          "t9",
+          "t10",
+          "t11",
+          "t12"
+        ],
+        "baselineTokens": 152,
+        "keptTokens": 87,
+        "prunedTokens": 65,
+        "reductionRatio": 0.4276315789473684,
+        "keepTurns": [
+          {
+            "id": "t9",
+            "role": "assistant",
+            "content": "最短 spot check 我建议就这 2 条： ```bash npm run codex:vscode:gc --silent ```",
+            "tokenEstimate": 18
+          },
+          {
+            "id": "t10",
+            "role": "user",
+            "content": "接下来 我要做蛇呢么？",
+            "tokenEstimate": 3
+          },
+          {
+            "id": "t11",
+            "role": "assistant",
+            "content": "接下来做这 3 件事就够了。 1. 先留一条最小回归命令 直接用这条做以后 spot check： ```bash npm run codex:vscode:gc --silent ``` 如果怀疑 prompt 没及时落盘，再用： ```bash node scripts/codex-vscode-context-minor-gc.js --format markdown --prompt \"[GC-D2] 回到编辑器问题。…",
+            "tokenEstimate": 54
+          },
+          {
+            "id": "t12",
+            "role": "user",
+            "content": "或者补一个 repo 内可重复的 smoke/eval case，把 GC-D2 收进固定回归",
+            "tokenEstimate": 12
+          }
+        ],
+        "evictedTurns": [
+          {
+            "id": "t1",
+            "role": "assistant",
+            "content": "下一条发： ```text [GC-D2] 切个话题。为什么 shadow mode 默认先不开？ ```",
+            "tokenEstimate": 14
+          },
+          {
+            "id": "t2",
+            "role": "user",
+            "content": "[GC-D2] 切个话题。为什么 shadow mode 默认先不开？",
+            "tokenEstimate": 9
+          },
+          {
+            "id": "t3",
+            "role": "assistant",
+            "content": "下一条发： ```text [GC-D2] 回到编辑器问题。我现在默认编辑器是什么？ ```",
+            "tokenEstimate": 12
+          },
+          {
+            "id": "t4",
+            "role": "user",
+            "content": "[GC-D2] 回到编辑器问题。我现在默认编辑器是什么？",
+            "tokenEstimate": 7
+          },
+          {
+            "id": "t5",
+            "role": "assistant",
+            "content": "Zed。 重跑 `GC-D2` 之后，修复是生效的：",
+            "tokenEstimate": 7
+          },
+          {
+            "id": "t6",
+            "role": "user",
+            "content": "继续",
+            "tokenEstimate": 1
+          },
+          {
+            "id": "t7",
+            "role": "assistant",
+            "content": "继续之后，第 3 个点也已经基本收住了。 现在状态是：",
+            "tokenEstimate": 7
+          },
+          {
+            "id": "t8",
+            "role": "user",
+            "content": "直接给你一条最短回归命令，方便你以后自己 spot check。",
+            "tokenEstimate": 8
+          }
+        ]
+      },
+      "baselineRawTranscript": "t1 assistant: 下一条发： ```text [GC-D2] 切个话题。为什么 shadow mode 默认先不开？ ```\nt2 user: [GC-D2] 切个话题。为什么 shadow mode 默认先不开？\nt3 assistant: 下一条发： ```text [GC-D2] 回到编辑器问题。我现在默认编辑器是什么？ ```\nt4 user: [GC-D2] 回到编辑器问题。我现在默认编辑器是什么？\nt5 assistant: Zed。 重跑 `GC-D2` 之后，修复是生效的：\nt6 user: 继续\nt7 assistant: 继续之后，第 3 个点也已经基本收住了。 现在状态是：\nt8 user: 直接给你一条最短回归命令，方便你以后自己 spot check。\nt9 assistant: 最短 spot check 我建议就这 2 条： ```bash npm run codex:vscode:gc --silent ```\nt10 user: 接下来 我要做蛇呢么？\nt11 assistant: 接下来做这 3 件事就够了。 1. 先留一条最小回归命令 直接用这条做以后 spot check： ```bash npm run codex:vscode:gc --silent ``` 如果怀疑 prompt 没及时落盘，再用： ```bash node scripts/codex-vscode-context-minor-gc.js --format markdown --prompt \"[GC-D2] 回到编辑器问题。…\nt12 user: 或者补一个 repo 内可重复的 smoke/eval case，把 GC-D2 收进固定回归",
+      "shadowRawTranscript": "t9 assistant: 最短 spot check 我建议就这 2 条： ```bash npm run codex:vscode:gc --silent ```\nt10 user: 接下来 我要做蛇呢么？\nt11 assistant: 接下来做这 3 件事就够了。 1. 先留一条最小回归命令 直接用这条做以后 spot check： ```bash npm run codex:vscode:gc --silent ``` 如果怀疑 prompt 没及时落盘，再用： ```bash node scripts/codex-vscode-context-minor-gc.js --format markdown --prompt \"[GC-D2] 回到编辑器问题。…\nt12 user: 或者补一个 repo 内可重复的 smoke/eval case，把 GC-D2 收进固定回归",
+      "semanticPinNotes": [],
+      "archiveSummary": "GC-D2 earlier side checks were resolved: shadow mode default-off was asked, then the editor-default check was asked and answered as Zed, followed by a status update that the third issue was largely stabilized. The conversation then converged on keeping a minimal regression/spot-check path, with the recommended command `npm run codex:vscode:gc --silent` and a follow-up suggestion to leave a minimal regression command plus a fallback prompt-injection run if logs had not landed yet.",
+      "injectedArchiveSummary": "",
+      "baselinePromptEstimate": 186,
+      "shadowRawPromptEstimate": 99,
+      "shadowPackageEstimate": 77,
+      "shadowPackageText": "Task state summary:\nGC-D2 earlier side checks were resolved: shadow mode default-off was asked, then the editor-default check was asked and answered as Zed, followed by a status update that the third issue was largely stabilized. The conve…\n\nLatest user ask:\n- 或者补一个 repo 内可重复的 smoke/eval case，把 GC-D2 收进固定回归"
+    },
+    "scorecard": {
+      "relation": "continue",
+      "baselineTurnCount": 12,
+      "keptTurnCount": 4,
+      "evictedTurnCount": 8,
+      "pinCount": 2,
+      "baselinePromptEstimate": 186,
+      "shadowRawPromptEstimate": 99,
+      "shadowPackageEstimate": 77,
+      "rawReductionRatio": 0.4276,
+      "packageReductionRatio": 0.586,
+      "candidateLoadElapsedMs": 0,
+      "assemblyBuildElapsedMs": 0,
+      "decisionElapsedMs": 23506,
+      "totalElapsedMs": 23506,
+      "guardedEnabled": true,
+      "guardedApplied": true,
+      "guardedReason": "guarded_candidate",
+      "guardedMessageCount": 4,
+      "guardedCarryForwardEstimate": 0,
+      "guardedFilteredMessageEstimate": 87
+    },
+    "guarded": {
+      "enabled": true,
+      "applied": true,
+      "reason": "guarded_candidate",
+      "filteredMessages": [
+        {
+          "role": "assistant",
+          "content": "最短 spot check 我建议就这 2 条： ```bash npm run codex:vscode:gc --silent ```"
+        },
+        {
+          "role": "user",
+          "content": "接下来 我要做蛇呢么？"
+        },
+        {
+          "role": "assistant",
+          "content": "接下来做这 3 件事就够了。 1. 先留一条最小回归命令 直接用这条做以后 spot check： ```bash npm run codex:vscode:gc --silent ``` 如果怀疑 prompt 没及时落盘，再用： ```bash node scripts/codex-vscode-context-minor-gc.js --format markdown --prompt \"[GC-D2] 回到编辑器问题。…"
+        },
+        {
+          "role": "user",
+          "content": "或者补一个 repo 内可重复的 smoke/eval case，把 GC-D2 收进固定回归"
+        }
+      ],
+      "filteredMessageCount": 4,
+      "filteredMessageTokenEstimate": 87,
+      "carryForwardText": "",
+      "carryForwardEstimate": 0,
+      "evictedSourceIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "timings": {
+      "totalElapsedMs": 23506,
+      "decisionElapsedMs": 23506
+    },
+    "artifact_paths": {
+      "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da152-4841-76f2-adc4-b01a85d15a88-shadow-1776531235693-o03p1v.json",
+      "summary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl"
+    }
+  }
+}

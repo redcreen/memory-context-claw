@@ -215,24 +215,21 @@ flowchart TB
 
 ### 下一条主要工程主线
 
-**评测驱动优化：从 `200+` 扩面执行进入正式门禁维护与 answer-level 扩容**
+**Stage 11 体验补强：把 `Context Minor GC` 从“能力可用”补到“用户明显有体感的按需加载”**
 
 为什么先做这个：
 
-- 基础能力和 Stage 5 收口已经完成，下一步最缺的不是“再加一个功能”，而是把正式门禁和下一轮优化顺序稳定下来
-- runnable matrix 现在已扩到 `392`，其中 zh-bearing case = `211 / 392 = 53.83%`
-- retrieval-heavy 正式 gate 现在是绿的：`250 / 250`
-- isolated local answer-level formal gate 已经不是红线，而是 `12 / 12` 通过；正式路径是 `openclaw agent --local` + isolated eval agent `umceval65`
-- raw `openclaw memory search` transport 已独立成 host watchlist；当前 formal watch 样本是 `0 / 8 raw ok`，全部 `invalid_json`
-- 当前主链路 perf baseline 已把问题边界拆清楚：retrieval / assembly 平均 `85ms`，raw transport 平均 `15127ms`，isolated local answer-level 平均 `39281ms`
-- release-preflight、deployment verification、host-neutral root policy 仍要保持为绿，但它们从主线目标变成并行守护线
+- 当前真正没收完的不是“再开一个新主题”，而是 `Stage 11` 里的用户体感验收
+- 当前 live 证据已经说明：project 层有局部裁剪，但宿主层实际盘子几乎没变薄
+- 用户现在最缺的不是更多 operator 指标，而是“这一轮真的明显更薄了”的体感
+- 所以当前主线应先补“host-visible context loading experience”，而不是把 `Stage 12` 提前并进来
 
 这一条主线具体包含：
 
-- 保持 `392` case runnable matrix 与 `50%+` 中文覆盖持续稳定
-- 把 answer-level formal gate 从当前 `12` 条稳定样本继续扩成更深的稳定矩阵
-- 把 gateway/session-lock 与 raw transport 保持在独立 watchlist，不让宿主噪声污染算法判断
-- 按 perf baseline 优先优化最慢的 answer-level 层
+- 控制宿主线程增长源，避免重型调试输出继续污染当前线程
+- 把 project 层 carry-forward 从 raw-turn-first 推到 summary-first
+- 把 operator 观测与当前线程续写拆开，只把短结论回当前线程
+- 用用户可感知的体验指标重新定义 `Stage 11` 的关闭条件
 
 关键文档：
 
@@ -280,15 +277,15 @@ flowchart TB
 
 项目下一步的大方向是：
 
-`先把 post-Stage-5 的 operator baseline 稳定住，只有在 prerequisites 持续为绿后再单独开启新的增强阶段`
+`先把 Stage 11 的用户体感缺口补齐，再进入下一条独立主题`
 
 从这里开始的计划阶段是：
 
-1. 保持 release-preflight、bundle install verify、host smoke、`Stage 5` evidence 持续为绿
-2. 保持 canonical-root operator policy 在 CLI、公开文档和控制面里持续显式
-3. 保持项目 / workstream roadmap 与 live implementation baseline 同步
-4. 继续把 memory-search 维持在治理模式，只在必要时扩 targeted case
-5. 只有在 runtime API / service-mode prerequisites 持续为绿后，才开启新的 enhancement plan
+1. 先补完 `Stage 11 / host-visible experience hardening`
+2. 保持 release-preflight、bundle install verify、host smoke、`Stage 5` evidence 持续为绿
+3. 保持 canonical-root operator policy 在 CLI、公开文档和控制面里持续显式
+4. 保持项目 / workstream roadmap 与 live implementation baseline 同步
+5. 在 `Stage 11` 真正关闭后，再进入 `Stage 12` 这条独立主题
 
 ## 架构方向
 

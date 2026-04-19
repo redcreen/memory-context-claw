@@ -2,13 +2,13 @@
 
 - Workspace: `/Users/redcreen/Project/unified-memory-core`
 - Ready to continue: `not yet`
-- Current stage: `post-stage10-adoption-closeout`
-- Current slice: `hold-stage10-adoption-proof-stable`
-- Current checkpoint: `Stage 7 closeout evidence、Docker hermetic baseline、release-preflight、canonical-root policy、shared-foundation proof`
+- Current stage: `stage11-context-minor-gc-user-visible-closeout-reopened`
+- Current slice: `group-11g-host-visible-validation-and-closeout`
+- Current checkpoint: `Codex VS Code live telemetry、experience-gap docs、Codex context GC state docs、current host views、targeted Codex GC tests`
 - Next action: `保持 \`npm run umc:stage10 -- --format markdown\` 持续为绿。`
 - Next action source: `status.next-3`
 - Queue: `0 waiting · 0 running · 3 done`
-- Recent session: `评估上下文瘦身双写并行切换可行性}】 (019d93e3-8a09-75a0-88ea-d09749a873fb)`
+- Recent session: `重做 Context Minor GC 体感测试 (019da335-a070-7972-b61e-6ba3a73ff633)`
 
 ## Continue Contract
 
@@ -18,7 +18,7 @@ Do not restart repo-wide discovery unless the durable control surface conflicts 
 
 ## Execution Continuity
 
-- Current checkpoint: `Stage 7 closeout evidence、Docker hermetic baseline、release-preflight、canonical-root policy、shared-foundation proof`
+- Current checkpoint: `Codex VS Code live telemetry、experience-gap docs、Codex context GC state docs、current host views、targeted Codex GC tests`
 - Next action: `保持 \`npm run umc:stage10 -- --format markdown\` 持续为绿。`
 
 Treat that checkpoint as already-established truth and move straight into the next action.
@@ -41,6 +41,6 @@ Unless I explicitly say `做完手上工作停止`, keep going by default.
 ## Suggested First Move
 
 1. Read `continue.md` and `.codex/status.md`.
-2. Continue from checkpoint: `Stage 7 closeout evidence、Docker hermetic baseline、release-preflight、canonical-root policy、shared-foundation proof`.
+2. Continue from checkpoint: `Codex VS Code live telemetry、experience-gap docs、Codex context GC state docs、current host views、targeted Codex GC tests`.
 3. Start with next action: `保持 \`npm run umc:stage10 -- --format markdown\` 持续为绿。`.
 4. Continue implementation instead of asking for another manual resume prompt.

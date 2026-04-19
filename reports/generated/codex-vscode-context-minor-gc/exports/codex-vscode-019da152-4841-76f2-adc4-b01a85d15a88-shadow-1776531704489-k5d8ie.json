@@ -1,0 +1,297 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776531704489-k5d8ie",
+  "generated_at": "2026-04-18T17:01:44.489Z",
+  "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+  "agent_id": "main",
+  "query": "要",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "[GC-D2] 回到编辑器问题。我现在默认编辑器是什么？"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "Zed。 重跑 `GC-D2` 之后，修复是生效的："
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "继续"
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "继续之后，第 3 个点也已经基本收住了。 现在状态是："
+    },
+    {
+      "id": "t5",
+      "role": "user",
+      "content": "直接给你一条最短回归命令，方便你以后自己 spot check。"
+    },
+    {
+      "id": "t6",
+      "role": "assistant",
+      "content": "最短 spot check 我建议就这 2 条： ```bash npm run codex:vscode:gc --silent ```"
+    },
+    {
+      "id": "t7",
+      "role": "user",
+      "content": "接下来 我要做蛇呢么？"
+    },
+    {
+      "id": "t8",
+      "role": "assistant",
+      "content": "接下来做这 3 件事就够了。 1. 先留一条最小回归命令 直接用这条做以后 spot check： ```bash npm run codex:vscode:gc --silent ``` 如果怀疑 prompt 没及时落盘，再用： ```bash node scripts/codex-vscode-context-minor-gc.js --format markdown --prompt \"[GC-D2] 回到编辑器问题。…"
+    },
+    {
+      "id": "t9",
+      "role": "user",
+      "content": "或者补一个 repo 内可重复的 smoke/eval case，把 GC-D2 收进固定回归"
+    },
+    {
+      "id": "t10",
+      "role": "assistant",
+      "content": "已经补进去了。 新回归 case 在： - [evals/codex-context-minor-gc-live-cases.js](/Users/redcreen/Project/unified-memory-core/evals/codex-context-minor-gc-live-cases.js)"
+    },
+    {
+      "id": "t11",
+      "role": "user",
+      "content": "要"
+    },
+    {
+      "id": "t12",
+      "role": "assistant",
+      "content": "已经修到全绿了。 我做了两件事： - 把 Codex minor GC 默认允许的 guarded relation 放宽到包含 `continue` - 把 `codex-minor-gc-current-editor-update-after-detour` 收进固定 live eval case"
+    }
+  ],
+  "decision": {
+    "relation": "continue",
+    "confidence": 0.69,
+    "evict_turn_ids": [
+      "t1",
+      "t2",
+      "t3",
+      "t4",
+      "t5",
+      "t6",
+      "t7",
+      "t8"
+    ],
+    "pin_turn_ids": [
+      "t6",
+      "t10",
+      "t12"
+    ],
+    "archive_summary": "Earlier detour about the default editor being Zed is resolved. A reusable spot-check command was established (`npm run codex:vscode:gc --silent`, with the prompt-form rerun variant if needed). The active work then moved to adding a repeatable repo-local smoke/eval case for GC-D2; the assistant reported it was added under `evals/codex-context-minor-gc-live-cases.js` and later said the suite is green after allowing guarded relation `continue` and adding the live eval case.",
+    "reasoning_summary": "The latest user turn is a terse follow-up on the same GC/editor regression thread, so this stays `continue`. Raw context should keep the immediately relevant regression/eval exchange (`t9`-`t12` except the latest user turn, which runtime keeps automatically). Older editor-status and generic next-step/spot-check discussion is resolved or now better preserved as compact pins rather than raw turns. Pins keep the durable command and the recorded regression-fix outcome without carrying the full older block."
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "continue",
+      "confidence": 0.69,
+      "archiveSummary": "Earlier detour about the default editor being Zed is resolved. A reusable spot-check command was established (`npm run codex:vscode:gc --silent`, with the prompt-form rerun variant if needed). The active work then moved to adding a repeatable repo-local smoke/eval case for GC-D2; the assistant reported it was added under `evals/codex-context-minor-gc-live-cases.js` and later said the suite is green after allowing guarded relation `continue` and adding the live eval case.",
+      "reasoningSummary": "The latest user turn is a terse follow-up on the same GC/editor regression thread, so this stays `continue`. Raw context should keep the immediately relevant regression/eval exchange (`t9`-`t12` except the latest user turn, which runtime keeps automatically). Older editor-status and generic next-step/spot-check discussion is resolved or now better preserved as compact pins rather than raw turns. Pins keep the durable command and the recorded regression-fix outcome without carrying the full older block.",
+      "latestUserTurnId": "t11",
+      "pinTurnIds": [
+        "t6",
+        "t10",
+        "t12"
+      ],
+      "pinnedOnlyTurnIds": [
+        "t6"
+      ],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8"
+      ],
+      "keepTurnIds": [
+        "t9",
+        "t10",
+        "t11",
+        "t12"
+      ],
+      "baselineTokens": 195,
+      "keptTokens": 90,
+      "prunedTokens": 105,
+      "reductionRatio": 0.5384615384615384,
+      "keepTurns": [
+        {
+          "id": "t9",
+          "role": "user",
+          "content": "或者补一个 repo 内可重复的 smoke/eval case，把 GC-D2 收进固定回归",
+          "tokenEstimate": 12
+        },
+        {
+          "id": "t10",
+          "role": "assistant",
+          "content": "已经补进去了。 新回归 case 在： - [evals/codex-context-minor-gc-live-cases.js](/Users/redcreen/Project/unified-memory-core/evals/codex-context-minor-gc-live-cases.js)",
+          "tokenEstimate": 39
+        },
+        {
+          "id": "t11",
+          "role": "user",
+          "content": "要",
+          "tokenEstimate": 1
+        },
+        {
+          "id": "t12",
+          "role": "assistant",
+          "content": "已经修到全绿了。 我做了两件事： - 把 Codex minor GC 默认允许的 guarded relation 放宽到包含 `continue` - 把 `codex-minor-gc-current-editor-update-after-detour` 收进固定 live eval case",
+          "tokenEstimate": 38
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "[GC-D2] 回到编辑器问题。我现在默认编辑器是什么？",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "Zed。 重跑 `GC-D2` 之后，修复是生效的：",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "继续",
+          "tokenEstimate": 1
+        },
+        {
+          "id": "t4",
+          "role": "assistant",
+          "content": "继续之后，第 3 个点也已经基本收住了。 现在状态是：",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t5",
+          "role": "user",
+          "content": "直接给你一条最短回归命令，方便你以后自己 spot check。",
+          "tokenEstimate": 8
+        },
+        {
+          "id": "t6",
+          "role": "assistant",
+          "content": "最短 spot check 我建议就这 2 条： ```bash npm run codex:vscode:gc --silent ```",
+          "tokenEstimate": 18
+        },
+        {
+          "id": "t7",
+          "role": "user",
+          "content": "接下来 我要做蛇呢么？",
+          "tokenEstimate": 3
+        },
+        {
+          "id": "t8",
+          "role": "assistant",
+          "content": "接下来做这 3 件事就够了。 1. 先留一条最小回归命令 直接用这条做以后 spot check： ```bash npm run codex:vscode:gc --silent ``` 如果怀疑 prompt 没及时落盘，再用： ```bash node scripts/codex-vscode-context-minor-gc.js --format markdown --prompt \"[GC-D2] 回到编辑器问题。…",
+          "tokenEstimate": 54
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: [GC-D2] 回到编辑器问题。我现在默认编辑器是什么？\nt2 assistant: Zed。 重跑 `GC-D2` 之后，修复是生效的：\nt3 user: 继续\nt4 assistant: 继续之后，第 3 个点也已经基本收住了。 现在状态是：\nt5 user: 直接给你一条最短回归命令，方便你以后自己 spot check。\nt6 assistant: 最短 spot check 我建议就这 2 条： ```bash npm run codex:vscode:gc --silent ```\nt7 user: 接下来 我要做蛇呢么？\nt8 assistant: 接下来做这 3 件事就够了。 1. 先留一条最小回归命令 直接用这条做以后 spot check： ```bash npm run codex:vscode:gc --silent ``` 如果怀疑 prompt 没及时落盘，再用： ```bash node scripts/codex-vscode-context-minor-gc.js --format markdown --prompt \"[GC-D2] 回到编辑器问题。…\nt9 user: 或者补一个 repo 内可重复的 smoke/eval case，把 GC-D2 收进固定回归\nt10 assistant: 已经补进去了。 新回归 case 在： - [evals/codex-context-minor-gc-live-cases.js](/Users/redcreen/Project/unified-memory-core/evals/codex-context-minor-gc-live-cases.js)\nt11 user: 要\nt12 assistant: 已经修到全绿了。 我做了两件事： - 把 Codex minor GC 默认允许的 guarded relation 放宽到包含 `continue` - 把 `codex-minor-gc-current-editor-update-after-detour` 收进固定 live eval case",
+    "shadowRawTranscript": "t9 user: 或者补一个 repo 内可重复的 smoke/eval case，把 GC-D2 收进固定回归\nt10 assistant: 已经补进去了。 新回归 case 在： - [evals/codex-context-minor-gc-live-cases.js](/Users/redcreen/Project/unified-memory-core/evals/codex-context-minor-gc-live-cases.js)\nt11 user: 要\nt12 assistant: 已经修到全绿了。 我做了两件事： - 把 Codex minor GC 默认允许的 guarded relation 放宽到包含 `continue` - 把 `codex-minor-gc-current-editor-update-after-detour` 收进固定 live eval case",
+    "semanticPinNotes": [
+      "assistant: 最短 spot check 我建议就这 2 条： ```bash npm run codex:vscode:gc --silent ```"
+    ],
+    "archiveSummary": "Earlier detour about the default editor being Zed is resolved. A reusable spot-check command was established (`npm run codex:vscode:gc --silent`, with the prompt-form rerun variant if needed). The active work then moved to adding a repeatable repo-local smoke/eval case for GC-D2; the assistant reported it was added under `evals/codex-context-minor-gc-live-cases.js` and later said the suite is green after allowing guarded relation `continue` and adding the live eval case.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 229,
+    "shadowRawPromptEstimate": 102,
+    "shadowPackageEstimate": 90,
+    "shadowPackageText": "Task state summary:\nEarlier detour about the default editor being Zed is resolved. A reusable spot-check command was established (`npm run codex:vscode:gc --silent`, with the prompt-form rerun variant if needed). The active work then moved…\n\nLatest user ask:\n- 要\n\nSemantic pins:\n- assistant: 最短 spot check 我建议就这 2 条： ```bash npm run codex:vscode:gc --silent ```"
+  },
+  "scorecard": {
+    "relation": "continue",
+    "baselineTurnCount": 12,
+    "keptTurnCount": 4,
+    "evictedTurnCount": 8,
+    "pinCount": 3,
+    "baselinePromptEstimate": 229,
+    "shadowRawPromptEstimate": 102,
+    "shadowPackageEstimate": 90,
+    "rawReductionRatio": 0.5385,
+    "packageReductionRatio": 0.607,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 17159,
+    "totalElapsedMs": 17160,
+    "guardedEnabled": true,
+    "guardedApplied": true,
+    "guardedReason": "guarded_candidate",
+    "guardedMessageCount": 4,
+    "guardedCarryForwardEstimate": 29,
+    "guardedFilteredMessageEstimate": 90
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": true,
+    "reason": "guarded_candidate",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": "或者补一个 repo 内可重复的 smoke/eval case，把 GC-D2 收进固定回归"
+      },
+      {
+        "role": "assistant",
+        "content": "已经补进去了。 新回归 case 在： - [evals/codex-context-minor-gc-live-cases.js](/Users/redcreen/Project/unified-memory-core/evals/codex-context-minor-gc-live-cases.js)"
+      },
+      {
+        "role": "user",
+        "content": "要"
+      },
+      {
+        "role": "assistant",
+        "content": "已经修到全绿了。 我做了两件事： - 把 Codex minor GC 默认允许的 guarded relation 放宽到包含 `continue` - 把 `codex-minor-gc-current-editor-update-after-detour` 收进固定 live eval case"
+      }
+    ],
+    "filteredMessageCount": 4,
+    "filteredMessageTokenEstimate": 90,
+    "carryForwardText": "Conversation carry-forward pins:\n- assistant: 最短 spot check 我建议就这 2 条： ```bash npm run codex:vscode:gc --silent ```",
+    "carryForwardEstimate": 29,
+    "evictedSourceIndices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ]
+  },
+  "timings": {
+    "totalElapsedMs": 17160,
+    "decisionElapsedMs": 17159
+  }
+}

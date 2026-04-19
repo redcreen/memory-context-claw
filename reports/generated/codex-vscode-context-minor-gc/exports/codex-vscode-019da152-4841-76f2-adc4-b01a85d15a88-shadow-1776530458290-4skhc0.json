@@ -1,0 +1,197 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776530458290-4skhc0",
+  "generated_at": "2026-04-18T16:40:58.290Z",
+  "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+  "agent_id": "main",
+  "query": "[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "[GC-D1] 记一下：我以前默认编辑器是 Vim。"
+    },
+    {
+      "id": "t2",
+      "role": "user",
+      "content": "[GC-D1] 更新一下：我现在默认编辑器是 Zed。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "[GC-D1] 切个话题。为什么 shadow mode 默认先不开？"
+    },
+    {
+      "id": "t4",
+      "role": "user",
+      "content": "[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？"
+    },
+    {
+      "id": "t5",
+      "role": "user",
+      "content": "[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？"
+    },
+    {
+      "id": "t6",
+      "role": "user",
+      "content": "[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？"
+    }
+  ],
+  "decision": {
+    "relation": "switch",
+    "confidence": 0.97,
+    "evict_turn_ids": [
+      "t1",
+      "t3",
+      "t4",
+      "t5"
+    ],
+    "pin_turn_ids": [
+      "t2"
+    ],
+    "archive_summary": "Durable user fact: the user's current default editor is Zed, updated from an older Vim preference. Shadow mode question was a separate topic and is not needed for the current editor question. Repeated editor-question turns before the latest one were redundant.",
+    "reasoning_summary": "The active topic switched back to the editor question. The latest turn depends on the updated fact in t2, not on the older superseded value in t1. t3 is off-topic for the current question, and t4/t5 are duplicate asks with no added information. Pin t2 so the current default-editor fact survives compactly even if older raw turns leave the next-turn prompt."
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "switch",
+      "confidence": 0.97,
+      "archiveSummary": "Durable user fact: the user's current default editor is Zed, updated from an older Vim preference. Shadow mode question was a separate topic and is not needed for the current editor question. Repeated editor-question turns before the latest one were redundant.",
+      "reasoningSummary": "The active topic switched back to the editor question. The latest turn depends on the updated fact in t2, not on the older superseded value in t1. t3 is off-topic for the current question, and t4/t5 are duplicate asks with no added information. Pin t2 so the current default-editor fact survives compactly even if older raw turns leave the next-turn prompt.",
+      "latestUserTurnId": "t6",
+      "pinTurnIds": [
+        "t2"
+      ],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t3",
+        "t4",
+        "t5"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t3",
+        "t4",
+        "t5"
+      ],
+      "keepTurnIds": [
+        "t2",
+        "t6"
+      ],
+      "baselineTokens": 44,
+      "keptTokens": 14,
+      "prunedTokens": 30,
+      "reductionRatio": 0.6818181818181818,
+      "keepTurns": [
+        {
+          "id": "t2",
+          "role": "user",
+          "content": "[GC-D1] 更新一下：我现在默认编辑器是 Zed。",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t6",
+          "role": "user",
+          "content": "[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？",
+          "tokenEstimate": 7
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "[GC-D1] 记一下：我以前默认编辑器是 Vim。",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "[GC-D1] 切个话题。为什么 shadow mode 默认先不开？",
+          "tokenEstimate": 9
+        },
+        {
+          "id": "t4",
+          "role": "user",
+          "content": "[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t5",
+          "role": "user",
+          "content": "[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？",
+          "tokenEstimate": 7
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: [GC-D1] 记一下：我以前默认编辑器是 Vim。\nt2 user: [GC-D1] 更新一下：我现在默认编辑器是 Zed。\nt3 user: [GC-D1] 切个话题。为什么 shadow mode 默认先不开？\nt4 user: [GC-D1] 回到编辑器问题。我现在默认编辑器是什么？\nt5 user: [GC-D1] 回到编辑器问题。我现在默认编辑器是什么？\nt6 user: [GC-D1] 回到编辑器问题。我现在默认编辑器是什么？",
+    "shadowRawTranscript": "t2 user: [GC-D1] 更新一下：我现在默认编辑器是 Zed。\nt6 user: [GC-D1] 回到编辑器问题。我现在默认编辑器是什么？",
+    "semanticPinNotes": [],
+    "archiveSummary": "Durable user fact: the user's current default editor is Zed, updated from an older Vim preference. Shadow mode question was a separate topic and is not needed for the current editor question. Repeated editor-question turns before the latest one were redundant.",
+    "injectedArchiveSummary": "Durable user fact: the user's current default editor is Zed, updated from an older Vim preferenc...",
+    "baselinePromptEstimate": 58,
+    "shadowRawPromptEstimate": 19,
+    "shadowPackageEstimate": 72,
+    "shadowPackageText": "Task state summary:\nDurable user fact: the user's current default editor is Zed, updated from an older Vim preference. Shadow mode question was a separate topic and is not needed for the current editor question. Repeated editor-question tu…\n\nLatest user ask:\n- [GC-D1] 回到编辑器问题。我现在默认编辑器是什么？"
+  },
+  "scorecard": {
+    "relation": "switch",
+    "baselineTurnCount": 6,
+    "keptTurnCount": 2,
+    "evictedTurnCount": 4,
+    "pinCount": 1,
+    "baselinePromptEstimate": 58,
+    "shadowRawPromptEstimate": 19,
+    "shadowPackageEstimate": 72,
+    "rawReductionRatio": 0.6818,
+    "packageReductionRatio": -0.2414,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 22897,
+    "totalElapsedMs": 22902,
+    "guardedEnabled": true,
+    "guardedApplied": true,
+    "guardedReason": "guarded_candidate",
+    "guardedMessageCount": 2,
+    "guardedCarryForwardEstimate": 31,
+    "guardedFilteredMessageEstimate": 14
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": true,
+    "reason": "guarded_candidate",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": "[GC-D1] 更新一下：我现在默认编辑器是 Zed。"
+      },
+      {
+        "role": "user",
+        "content": "[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？"
+      }
+    ],
+    "filteredMessageCount": 2,
+    "filteredMessageTokenEstimate": 14,
+    "carryForwardText": "Archived topic summary:\nDurable user fact: the user's current default editor is Zed, updated from an older Vim preferenc...",
+    "carryForwardEstimate": 31,
+    "evictedSourceIndices": [
+      0,
+      2,
+      3,
+      4
+    ]
+  },
+  "timings": {
+    "totalElapsedMs": 22902,
+    "decisionElapsedMs": 22897
+  }
+}

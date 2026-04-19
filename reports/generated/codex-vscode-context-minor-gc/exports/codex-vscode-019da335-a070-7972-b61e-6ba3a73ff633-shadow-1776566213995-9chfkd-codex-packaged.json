@@ -1,0 +1,317 @@
+{
+  "schema_version": "umc.codex-context-minor-gc.v1",
+  "generated_at": "2026-04-19T02:37:35.875Z",
+  "event_id": "shadow-1776566213995-9chfkd-codex-packaged",
+  "session_key": "codex:vscode:019da335-a070-7972-b61e-6ba3a73ff633",
+  "query": "我们现在的任务是 深入的测试openclaw的 gc，是否能够达标；，尽量更长的对话（可以做临时数据写入，但是不要对我其他文档做写入操作）；做好探针，记录好相关数据；预期是：更长的对话，如果正常情况下，可能要做compact了，但是因为又了gc，实际不需要compact；同时在一个同一话题的长对话后切换话题，应该有明显的context回落；这里的context指的是实际发给llm的数据； \n接下来你来策划这个测试，把相关配置都做好，然后就开始测试吧，最终简明扼要的给我结果和分析；",
+  "status": "captured",
+  "reason": "",
+  "decision_transport": "codex_exec",
+  "relation": "continue",
+  "applied": true,
+  "codex_guard_reason": "codex_packaged_guard",
+  "prompt_reduction_ratio": 0.7097,
+  "baseline_context_estimate": 372,
+  "packaged_context_estimate": 108,
+  "effective_context_estimate": 108,
+  "shadow_status": "captured",
+  "shadow_guarded_applied": true,
+  "shadow_guarded_reason": "guarded_candidate",
+  "shadow_export_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da335-a070-7972-b61e-6ba3a73ff633-shadow-1776566213995-9chfkd.json",
+  "shadow_summary_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl",
+  "export_path": "exports/codex-vscode-019da335-a070-7972-b61e-6ba3a73ff633-shadow-1776566213995-9chfkd-codex-packaged.json",
+  "effective_context_block": "## Context Minor GC Working Set\nTask state summary:\nActive topic is the ongoing OpenClaw GC evaluation. Earlier discussion established that OpenClaw likely controls the largest dynamic portion of long-chat context, but there was not yet evidence that it achieved clearly…\n\nLatest user ask:\n- 我们现在的任务是 深入的测试openclaw的 gc，是否能够达标；，尽量更长的对话（可以做临时数据写入，但是不要对我其他文档做写入操作）；做好探针，记录好相关数据；预期是：更长的对话，如果正常情况下，可能要做compact了，但是因为又了gc，实际不需要compact；同时在…",
+  "packaged_context_block": "## Context Minor GC Working Set\nTask state summary:\nActive topic is the ongoing OpenClaw GC evaluation. Earlier discussion established that OpenClaw likely controls the largest dynamic portion of long-chat context, but there was not yet evidence that it achieved clearly…\n\nLatest user ask:\n- 我们现在的任务是 深入的测试openclaw的 gc，是否能够达标；，尽量更长的对话（可以做临时数据写入，但是不要对我其他文档做写入操作）；做好探针，记录好相关数据；预期是：更长的对话，如果正常情况下，可能要做compact了，但是因为又了gc，实际不需要compact；同时在…",
+  "shadow_event": {
+    "schema_version": "umc.dialogue-working-set-shadow.v1",
+    "event_id": "shadow-1776566213995-9chfkd",
+    "generated_at": "2026-04-19T02:36:53.995Z",
+    "session_key": "codex:vscode:019da335-a070-7972-b61e-6ba3a73ff633",
+    "agent_id": "main",
+    "query": "我们现在的任务是 深入的测试openclaw的 gc，是否能够达标；，尽量更长的对话（可以做临时数据写入，但是不要对我其他文档做写入操作）；做好探针，记录好相关数据；预期是：更长的对话，如果正常情况下，可能要做compact了，但是因为又了gc，实际不需要compact；同时在一个同一话题的长对话后切换话题，应该有明显的context回落；这里的context指的是实际发给llm的数据； \n接下来你来策划这个测试，把相关配置都做好，然后就开始测试吧，最终简明扼要的给我结果和分析；",
+    "status": "captured",
+    "reason": "",
+    "sampling": {
+      "max_turns": 12,
+      "min_turns": 3,
+      "max_chars_per_turn": 900
+    },
+    "transcript": [
+      {
+        "id": "t1",
+        "role": "user",
+        "content": "需要，并且现在需要评估下 宿主端 codex openclaw 两个，是否能够达到这个目标；"
+      },
+      {
+        "id": "t2",
+        "role": "assistant",
+        "content": "对。如果把“project 层 working-set 变薄”当成“最终产品目标已达成”，那就是在骗自己。你的最终目标写得很清楚：**用户体感要明显变化，正常使用时不需要 `compact`**。按这个标准，当前 Codex 这条路径还没过。 **可落文案** 可以直接放进文档："
+      },
+      {
+        "id": "t3",
+        "role": "user",
+        "content": "现在openclaw的实现来看，是否从实现思路上 已经达到了 控制整个propmt？"
+      },
+      {
+        "id": "t4",
+        "role": "assistant",
+        "content": "结论：**从实现思路上，OpenClaw 已经达到了“控制 prompt 主干”的位置；但还没达到“控制宿主最终整个 prompt 的全部组成”。** 更准确地说，OpenClaw 现在控制的是这三块："
+      },
+      {
+        "id": "t5",
+        "role": "user",
+        "content": "那openclaw 长对话 context 最大的部分 是不是已经被接管了呢？"
+      },
+      {
+        "id": "t6",
+        "role": "assistant",
+        "content": "结论：**大概率是，OpenClaw 长对话里最大的那块动态 context，已经被接管了。** 原因很直接："
+      },
+      {
+        "id": "t7",
+        "role": "user",
+        "content": "ok，当前的问题汇总下，写入到开发日志中； 完成后我们开始对openclaw进行测试；"
+      },
+      {
+        "id": "t8",
+        "role": "assistant",
+        "content": "当前问题汇总已经写入开发日志：[2026-04-19-clarify-host-level-context-minor-gc-acceptance-and-openclaw-feasibility.md](/Users/redcreen/Project/unified-memory-core/docs/devlog/2026-04-19-clarify-host-level-context-minor-gc-acceptance-and…"
+      },
+      {
+        "id": "t9",
+        "role": "user",
+        "content": "你刚才验证后，openclaw 是否达到了我们认为的用户端明显可用么/？ 整体的context 大小有明显的下降么？ （切不同话题）"
+      },
+      {
+        "id": "t10",
+        "role": "assistant",
+        "content": "还不能这么说。按我们刚才真正验证到的东西，答案是： - `OpenClaw 还不能判定为“用户端已经明显可用”` - `也没有证据证明整体 context 在切不同话题后有明显下降`"
+      },
+      {
+        "id": "t11",
+        "role": "user",
+        "content": "我们现在的任务是 深入的测试openclaw的 gc，是否能够达标；，尽量更长的对话（可以做临时数据写入，但是不要对我其他文档做写入操作）；做好探针，记录好相关数据；预期是：更长的对话，如果正常情况下，可能要做compact了，但是因为又了gc，实际不需要compact；同时在一个同一话题的长对话后切换话题，应该有明显的context回落；这里的context指的是实际发给llm的数据； 接下来你来策划这个测试，把相关配置都做好，然后就开始测试吧，最终简明扼要的给我结果和分析；"
+      },
+      {
+        "id": "t12",
+        "role": "assistant",
+        "content": "结论先说：**OpenClaw 现在已经能实打实地压住发给 LLM 的 prompt，但还没有达到“用户明显感觉切题后 context 明显回落、基本不用再考虑 compact”的标准。** 这轮我补了专门的长会话探针： - 脚本：[eval-openclaw-guarded-session-probe.js](/Users/redcreen/Project/unified-memory-core/scripts/eval-openc…"
+      }
+    ],
+    "decision": {
+      "relation": "continue",
+      "confidence": 0.9,
+      "evict_turn_ids": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8",
+        "t9"
+      ],
+      "pin_turn_ids": [
+        "t10"
+      ],
+      "archive_summary": "Active topic is the ongoing OpenClaw GC evaluation. Earlier discussion established that OpenClaw likely controls the largest dynamic portion of long-chat context, but there was not yet evidence that it achieved clearly usable user-facing improvement or obvious context drop on topic switch. A devlog summary was already written. The current task is the deeper test plan/execution for OpenClaw GC under long conversations.",
+      "reasoning_summary": "Keep the conversation on the same active topic, so relation is continue. The next turn mainly depends on the current testing task and latest assistant state, which are carried by t11 and t12; older exploratory Q&A is resolved background. Preserve the key pre-test baseline from t10 as a semantic pin because it remains relevant context, while evicting older solved turns to shrink the raw prompt."
+    },
+    "decision_transport": "codex_exec",
+    "snapshot": {
+      "applied": {
+        "relation": "continue",
+        "confidence": 0.9,
+        "archiveSummary": "Active topic is the ongoing OpenClaw GC evaluation. Earlier discussion established that OpenClaw likely controls the largest dynamic portion of long-chat context, but there was not yet evidence that it achieved clearly usable user-facing improvement or obvious context drop on topic switch. A devlog summary was already written. The current task is the deeper test plan/execution for OpenClaw GC under long conversations.",
+        "reasoningSummary": "Keep the conversation on the same active topic, so relation is continue. The next turn mainly depends on the current testing task and latest assistant state, which are carried by t11 and t12; older exploratory Q&A is resolved background. Preserve the key pre-test baseline from t10 as a semantic pin because it remains relevant context, while evicting older solved turns to shrink the raw prompt.",
+        "latestUserTurnId": "t11",
+        "pinTurnIds": [
+          "t10"
+        ],
+        "pinnedOnlyTurnIds": [],
+        "requestedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3",
+          "t4",
+          "t5",
+          "t6",
+          "t7",
+          "t8",
+          "t9"
+        ],
+        "blockedEvictTurnIds": [],
+        "appliedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3",
+          "t4",
+          "t5",
+          "t6",
+          "t7",
+          "t8",
+          "t9"
+        ],
+        "keepTurnIds": [
+          "t10",
+          "t11",
+          "t12"
+        ],
+        "baselineTokens": 331,
+        "keptTokens": 139,
+        "prunedTokens": 192,
+        "reductionRatio": 0.5800604229607251,
+        "keepTurns": [
+          {
+            "id": "t10",
+            "role": "assistant",
+            "content": "还不能这么说。按我们刚才真正验证到的东西，答案是： - `OpenClaw 还不能判定为“用户端已经明显可用”` - `也没有证据证明整体 context 在切不同话题后有明显下降`",
+            "tokenEstimate": 23
+          },
+          {
+            "id": "t11",
+            "role": "user",
+            "content": "我们现在的任务是 深入的测试openclaw的 gc，是否能够达标；，尽量更长的对话（可以做临时数据写入，但是不要对我其他文档做写入操作）；做好探针，记录好相关数据；预期是：更长的对话，如果正常情况下，可能要做compact了，但是因为又了gc，实际不需要compact；同时在一个同一话题的长对话后切换话题，应该有明显的context回落；这里的context指的是实际发给llm的数据； 接下来你来策划这个测试，把相关配置都做好，然后就开始测试吧，最终简明扼要的给我结果和分析；",
+            "tokenEstimate": 61
+          },
+          {
+            "id": "t12",
+            "role": "assistant",
+            "content": "结论先说：**OpenClaw 现在已经能实打实地压住发给 LLM 的 prompt，但还没有达到“用户明显感觉切题后 context 明显回落、基本不用再考虑 compact”的标准。** 这轮我补了专门的长会话探针： - 脚本：[eval-openclaw-guarded-session-probe.js](/Users/redcreen/Project/unified-memory-core/scripts/eval-openc…",
+            "tokenEstimate": 55
+          }
+        ],
+        "evictedTurns": [
+          {
+            "id": "t1",
+            "role": "user",
+            "content": "需要，并且现在需要评估下 宿主端 codex openclaw 两个，是否能够达到这个目标；",
+            "tokenEstimate": 12
+          },
+          {
+            "id": "t2",
+            "role": "assistant",
+            "content": "对。如果把“project 层 working-set 变薄”当成“最终产品目标已达成”，那就是在骗自己。你的最终目标写得很清楚：**用户体感要明显变化，正常使用时不需要 `compact`**。按这个标准，当前 Codex 这条路径还没过。 **可落文案** 可以直接放进文档：",
+            "tokenEstimate": 35
+          },
+          {
+            "id": "t3",
+            "role": "user",
+            "content": "现在openclaw的实现来看，是否从实现思路上 已经达到了 控制整个propmt？",
+            "tokenEstimate": 11
+          },
+          {
+            "id": "t4",
+            "role": "assistant",
+            "content": "结论：**从实现思路上，OpenClaw 已经达到了“控制 prompt 主干”的位置；但还没达到“控制宿主最终整个 prompt 的全部组成”。** 更准确地说，OpenClaw 现在控制的是这三块：",
+            "tokenEstimate": 26
+          },
+          {
+            "id": "t5",
+            "role": "user",
+            "content": "那openclaw 长对话 context 最大的部分 是不是已经被接管了呢？",
+            "tokenEstimate": 10
+          },
+          {
+            "id": "t6",
+            "role": "assistant",
+            "content": "结论：**大概率是，OpenClaw 长对话里最大的那块动态 context，已经被接管了。** 原因很直接：",
+            "tokenEstimate": 14
+          },
+          {
+            "id": "t7",
+            "role": "user",
+            "content": "ok，当前的问题汇总下，写入到开发日志中； 完成后我们开始对openclaw进行测试；",
+            "tokenEstimate": 11
+          },
+          {
+            "id": "t8",
+            "role": "assistant",
+            "content": "当前问题汇总已经写入开发日志：[2026-04-19-clarify-host-level-context-minor-gc-acceptance-and-openclaw-feasibility.md](/Users/redcreen/Project/unified-memory-core/docs/devlog/2026-04-19-clarify-host-level-context-minor-gc-acceptance-and…",
+            "tokenEstimate": 56
+          },
+          {
+            "id": "t9",
+            "role": "user",
+            "content": "你刚才验证后，openclaw 是否达到了我们认为的用户端明显可用么/？ 整体的context 大小有明显的下降么？ （切不同话题）",
+            "tokenEstimate": 17
+          }
+        ]
+      },
+      "baselineRawTranscript": "t1 user: 需要，并且现在需要评估下 宿主端 codex openclaw 两个，是否能够达到这个目标；\nt2 assistant: 对。如果把“project 层 working-set 变薄”当成“最终产品目标已达成”，那就是在骗自己。你的最终目标写得很清楚：**用户体感要明显变化，正常使用时不需要 `compact`**。按这个标准，当前 Codex 这条路径还没过。 **可落文案** 可以直接放进文档：\nt3 user: 现在openclaw的实现来看，是否从实现思路上 已经达到了 控制整个propmt？\nt4 assistant: 结论：**从实现思路上，OpenClaw 已经达到了“控制 prompt 主干”的位置；但还没达到“控制宿主最终整个 prompt 的全部组成”。** 更准确地说，OpenClaw 现在控制的是这三块：\nt5 user: 那openclaw 长对话 context 最大的部分 是不是已经被接管了呢？\nt6 assistant: 结论：**大概率是，OpenClaw 长对话里最大的那块动态 context，已经被接管了。** 原因很直接：\nt7 user: ok，当前的问题汇总下，写入到开发日志中； 完成后我们开始对openclaw进行测试；\nt8 assistant: 当前问题汇总已经写入开发日志：[2026-04-19-clarify-host-level-context-minor-gc-acceptance-and-openclaw-feasibility.md](/Users/redcreen/Project/unified-memory-core/docs/devlog/2026-04-19-clarify-host-level-context-minor-gc-acceptance-and…\nt9 user: 你刚才验证后，openclaw 是否达到了我们认为的用户端明显可用么/？ 整体的context 大小有明显的下降么？ （切不同话题）\nt10 assistant: 还不能这么说。按我们刚才真正验证到的东西，答案是： - `OpenClaw 还不能判定为“用户端已经明显可用”` - `也没有证据证明整体 context 在切不同话题后有明显下降`\nt11 user: 我们现在的任务是 深入的测试openclaw的 gc，是否能够达标；，尽量更长的对话（可以做临时数据写入，但是不要对我其他文档做写入操作）；做好探针，记录好相关数据；预期是：更长的对话，如果正常情况下，可能要做compact了，但是因为又了gc，实际不需要compact；同时在一个同一话题的长对话后切换话题，应该有明显的context回落；这里的context指的是实际发给llm的数据； 接下来你来策划这个测试，把相关配置都做好，然后就开始测试吧，最终简明扼要的给我结果和分析；\nt12 assistant: 结论先说：**OpenClaw 现在已经能实打实地压住发给 LLM 的 prompt，但还没有达到“用户明显感觉切题后 context 明显回落、基本不用再考虑 compact”的标准。** 这轮我补了专门的长会话探针： - 脚本：[eval-openclaw-guarded-session-probe.js](/Users/redcreen/Project/unified-memory-core/scripts/eval-openc…",
+      "shadowRawTranscript": "t10 assistant: 还不能这么说。按我们刚才真正验证到的东西，答案是： - `OpenClaw 还不能判定为“用户端已经明显可用”` - `也没有证据证明整体 context 在切不同话题后有明显下降`\nt11 user: 我们现在的任务是 深入的测试openclaw的 gc，是否能够达标；，尽量更长的对话（可以做临时数据写入，但是不要对我其他文档做写入操作）；做好探针，记录好相关数据；预期是：更长的对话，如果正常情况下，可能要做compact了，但是因为又了gc，实际不需要compact；同时在一个同一话题的长对话后切换话题，应该有明显的context回落；这里的context指的是实际发给llm的数据； 接下来你来策划这个测试，把相关配置都做好，然后就开始测试吧，最终简明扼要的给我结果和分析；\nt12 assistant: 结论先说：**OpenClaw 现在已经能实打实地压住发给 LLM 的 prompt，但还没有达到“用户明显感觉切题后 context 明显回落、基本不用再考虑 compact”的标准。** 这轮我补了专门的长会话探针： - 脚本：[eval-openclaw-guarded-session-probe.js](/Users/redcreen/Project/unified-memory-core/scripts/eval-openc…",
+      "semanticPinNotes": [],
+      "archiveSummary": "Active topic is the ongoing OpenClaw GC evaluation. Earlier discussion established that OpenClaw likely controls the largest dynamic portion of long-chat context, but there was not yet evidence that it achieved clearly usable user-facing improvement or obvious context drop on topic switch. A devlog summary was already written. The current task is the deeper test plan/execution for OpenClaw GC under long conversations.",
+      "injectedArchiveSummary": "",
+      "baselinePromptEstimate": 365,
+      "shadowRawPromptEstimate": 149,
+      "shadowPackageEstimate": 100,
+      "shadowPackageText": "Task state summary:\nActive topic is the ongoing OpenClaw GC evaluation. Earlier discussion established that OpenClaw likely controls the largest dynamic portion of long-chat context, but there was not yet evidence that it achieved clearly…\n\nLatest user ask:\n- 我们现在的任务是 深入的测试openclaw的 gc，是否能够达标；，尽量更长的对话（可以做临时数据写入，但是不要对我其他文档做写入操作）；做好探针，记录好相关数据；预期是：更长的对话，如果正常情况下，可能要做compact了，但是因为又了gc，实际不需要compact；同时在…"
+    },
+    "scorecard": {
+      "relation": "continue",
+      "baselineTurnCount": 12,
+      "keptTurnCount": 3,
+      "evictedTurnCount": 9,
+      "pinCount": 1,
+      "baselinePromptEstimate": 365,
+      "shadowRawPromptEstimate": 149,
+      "shadowPackageEstimate": 100,
+      "rawReductionRatio": 0.5801,
+      "packageReductionRatio": 0.726,
+      "candidateLoadElapsedMs": 0,
+      "assemblyBuildElapsedMs": 0,
+      "decisionElapsedMs": 41878,
+      "totalElapsedMs": 41880,
+      "guardedEnabled": true,
+      "guardedApplied": true,
+      "guardedReason": "guarded_candidate",
+      "guardedMessageCount": 3,
+      "guardedCarryForwardEstimate": 0,
+      "guardedFilteredMessageEstimate": 139
+    },
+    "guarded": {
+      "enabled": true,
+      "applied": true,
+      "reason": "guarded_candidate",
+      "filteredMessages": [
+        {
+          "role": "assistant",
+          "content": "还不能这么说。按我们刚才真正验证到的东西，答案是： - `OpenClaw 还不能判定为“用户端已经明显可用”` - `也没有证据证明整体 context 在切不同话题后有明显下降`"
+        },
+        {
+          "role": "user",
+          "content": "我们现在的任务是 深入的测试openclaw的 gc，是否能够达标；，尽量更长的对话（可以做临时数据写入，但是不要对我其他文档做写入操作）；做好探针，记录好相关数据；预期是：更长的对话，如果正常情况下，可能要做compact了，但是因为又了gc，实际不需要compact；同时在一个同一话题的长对话后切换话题，应该有明显的context回落；这里的context指的是实际发给llm的数据； 接下来你来策划这个测试，把相关配置都做好，然后就开始测试吧，最终简明扼要的给我结果和分析；"
+        },
+        {
+          "role": "assistant",
+          "content": "结论先说：**OpenClaw 现在已经能实打实地压住发给 LLM 的 prompt，但还没有达到“用户明显感觉切题后 context 明显回落、基本不用再考虑 compact”的标准。** 这轮我补了专门的长会话探针： - 脚本：[eval-openclaw-guarded-session-probe.js](/Users/redcreen/Project/unified-memory-core/scripts/eval-openc…"
+        }
+      ],
+      "filteredMessageCount": 3,
+      "filteredMessageTokenEstimate": 139,
+      "carryForwardText": "",
+      "carryForwardEstimate": 0,
+      "evictedSourceIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    "timings": {
+      "totalElapsedMs": 41880,
+      "decisionElapsedMs": 41878
+    },
+    "artifact_paths": {
+      "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da335-a070-7972-b61e-6ba3a73ff633-shadow-1776566213995-9chfkd.json",
+      "summary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl"
+    }
+  }
+}

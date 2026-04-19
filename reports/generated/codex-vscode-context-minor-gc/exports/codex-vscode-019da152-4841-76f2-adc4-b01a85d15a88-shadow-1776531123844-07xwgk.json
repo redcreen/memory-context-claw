@@ -1,0 +1,290 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776531123844-07xwgk",
+  "generated_at": "2026-04-18T16:52:03.844Z",
+  "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+  "agent_id": "main",
+  "query": "接下来 我要做蛇呢么？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "assistant",
+      "content": "很好，`GC-D2` 已经是干净样本了。 下一条发："
+    },
+    {
+      "id": "t2",
+      "role": "user",
+      "content": "[GC-D2] 更新一下：我现在默认编辑器是 Zed。"
+    },
+    {
+      "id": "t3",
+      "role": "assistant",
+      "content": "下一条发： ```text [GC-D2] 切个话题。为什么 shadow mode 默认先不开？ ```"
+    },
+    {
+      "id": "t4",
+      "role": "user",
+      "content": "[GC-D2] 切个话题。为什么 shadow mode 默认先不开？"
+    },
+    {
+      "id": "t5",
+      "role": "assistant",
+      "content": "下一条发： ```text [GC-D2] 回到编辑器问题。我现在默认编辑器是什么？ ```"
+    },
+    {
+      "id": "t6",
+      "role": "user",
+      "content": "[GC-D2] 回到编辑器问题。我现在默认编辑器是什么？"
+    },
+    {
+      "id": "t7",
+      "role": "assistant",
+      "content": "Zed。 重跑 `GC-D2` 之后，修复是生效的："
+    },
+    {
+      "id": "t8",
+      "role": "user",
+      "content": "继续"
+    },
+    {
+      "id": "t9",
+      "role": "assistant",
+      "content": "继续之后，第 3 个点也已经基本收住了。 现在状态是："
+    },
+    {
+      "id": "t10",
+      "role": "user",
+      "content": "直接给你一条最短回归命令，方便你以后自己 spot check。"
+    },
+    {
+      "id": "t11",
+      "role": "assistant",
+      "content": "最短 spot check 我建议就这 2 条： ```bash npm run codex:vscode:gc --silent ```"
+    },
+    {
+      "id": "t12",
+      "role": "user",
+      "content": "接下来 我要做蛇呢么？"
+    }
+  ],
+  "decision": {
+    "relation": "continue",
+    "confidence": 0.9,
+    "evict_turn_ids": [
+      "t1",
+      "t3",
+      "t4",
+      "t5",
+      "t6",
+      "t7",
+      "t8"
+    ],
+    "pin_turn_ids": [
+      "t2"
+    ],
+    "archive_summary": "GC-D2 regression check established that the remembered default editor is Zed. The shadow mode side-question was asked and answered, then the editor-memory check was revisited and confirmed working. The conversation then moved on to current status and a minimal spot-check command.",
+    "reasoning_summary": "The latest user turn asks what to do next within the same active GC/regression-testing workflow, so this is a continue. Keep the recent raw status/next-step context around t9-t11. Earlier GC-D2 sample/setup turns and the resolved shadow-mode/editor recall exchange can leave the next-turn raw prompt. Preserve the durable user fact that their default editor is Zed as a semantic pin."
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "continue",
+      "confidence": 0.9,
+      "archiveSummary": "GC-D2 regression check established that the remembered default editor is Zed. The shadow mode side-question was asked and answered, then the editor-memory check was revisited and confirmed working. The conversation then moved on to current status and a minimal spot-check command.",
+      "reasoningSummary": "The latest user turn asks what to do next within the same active GC/regression-testing workflow, so this is a continue. Keep the recent raw status/next-step context around t9-t11. Earlier GC-D2 sample/setup turns and the resolved shadow-mode/editor recall exchange can leave the next-turn raw prompt. Preserve the durable user fact that their default editor is Zed as a semantic pin.",
+      "latestUserTurnId": "t12",
+      "pinTurnIds": [
+        "t2"
+      ],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8"
+      ],
+      "keepTurnIds": [
+        "t2",
+        "t9",
+        "t10",
+        "t11",
+        "t12"
+      ],
+      "baselineTokens": 100,
+      "keptTokens": 43,
+      "prunedTokens": 57,
+      "reductionRatio": 0.57,
+      "keepTurns": [
+        {
+          "id": "t2",
+          "role": "user",
+          "content": "[GC-D2] 更新一下：我现在默认编辑器是 Zed。",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t9",
+          "role": "assistant",
+          "content": "继续之后，第 3 个点也已经基本收住了。 现在状态是：",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t10",
+          "role": "user",
+          "content": "直接给你一条最短回归命令，方便你以后自己 spot check。",
+          "tokenEstimate": 8
+        },
+        {
+          "id": "t11",
+          "role": "assistant",
+          "content": "最短 spot check 我建议就这 2 条： ```bash npm run codex:vscode:gc --silent ```",
+          "tokenEstimate": 18
+        },
+        {
+          "id": "t12",
+          "role": "user",
+          "content": "接下来 我要做蛇呢么？",
+          "tokenEstimate": 3
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "assistant",
+          "content": "很好，`GC-D2` 已经是干净样本了。 下一条发：",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t3",
+          "role": "assistant",
+          "content": "下一条发： ```text [GC-D2] 切个话题。为什么 shadow mode 默认先不开？ ```",
+          "tokenEstimate": 14
+        },
+        {
+          "id": "t4",
+          "role": "user",
+          "content": "[GC-D2] 切个话题。为什么 shadow mode 默认先不开？",
+          "tokenEstimate": 9
+        },
+        {
+          "id": "t5",
+          "role": "assistant",
+          "content": "下一条发： ```text [GC-D2] 回到编辑器问题。我现在默认编辑器是什么？ ```",
+          "tokenEstimate": 12
+        },
+        {
+          "id": "t6",
+          "role": "user",
+          "content": "[GC-D2] 回到编辑器问题。我现在默认编辑器是什么？",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t7",
+          "role": "assistant",
+          "content": "Zed。 重跑 `GC-D2` 之后，修复是生效的：",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t8",
+          "role": "user",
+          "content": "继续",
+          "tokenEstimate": 1
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 assistant: 很好，`GC-D2` 已经是干净样本了。 下一条发：\nt2 user: [GC-D2] 更新一下：我现在默认编辑器是 Zed。\nt3 assistant: 下一条发： ```text [GC-D2] 切个话题。为什么 shadow mode 默认先不开？ ```\nt4 user: [GC-D2] 切个话题。为什么 shadow mode 默认先不开？\nt5 assistant: 下一条发： ```text [GC-D2] 回到编辑器问题。我现在默认编辑器是什么？ ```\nt6 user: [GC-D2] 回到编辑器问题。我现在默认编辑器是什么？\nt7 assistant: Zed。 重跑 `GC-D2` 之后，修复是生效的：\nt8 user: 继续\nt9 assistant: 继续之后，第 3 个点也已经基本收住了。 现在状态是：\nt10 user: 直接给你一条最短回归命令，方便你以后自己 spot check。\nt11 assistant: 最短 spot check 我建议就这 2 条： ```bash npm run codex:vscode:gc --silent ```\nt12 user: 接下来 我要做蛇呢么？",
+    "shadowRawTranscript": "t2 user: [GC-D2] 更新一下：我现在默认编辑器是 Zed。\nt9 assistant: 继续之后，第 3 个点也已经基本收住了。 现在状态是：\nt10 user: 直接给你一条最短回归命令，方便你以后自己 spot check。\nt11 assistant: 最短 spot check 我建议就这 2 条： ```bash npm run codex:vscode:gc --silent ```\nt12 user: 接下来 我要做蛇呢么？",
+    "semanticPinNotes": [],
+    "archiveSummary": "GC-D2 regression check established that the remembered default editor is Zed. The shadow mode side-question was asked and answered, then the editor-memory check was revisited and confirmed working. The conversation then moved on to current status and a minimal spot-check command.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 134,
+    "shadowRawPromptEstimate": 57,
+    "shadowPackageEstimate": 68,
+    "shadowPackageText": "Task state summary:\nGC-D2 regression check established that the remembered default editor is Zed. The shadow mode side-question was asked and answered, then the editor-memory check was revisited and confirmed working. The conversation then…\n\nLatest user ask:\n- 接下来 我要做蛇呢么？"
+  },
+  "scorecard": {
+    "relation": "continue",
+    "baselineTurnCount": 12,
+    "keptTurnCount": 5,
+    "evictedTurnCount": 7,
+    "pinCount": 1,
+    "baselinePromptEstimate": 134,
+    "shadowRawPromptEstimate": 57,
+    "shadowPackageEstimate": 68,
+    "rawReductionRatio": 0.57,
+    "packageReductionRatio": 0.4925,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 18360,
+    "totalElapsedMs": 18365,
+    "guardedEnabled": true,
+    "guardedApplied": true,
+    "guardedReason": "guarded_candidate",
+    "guardedMessageCount": 5,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 43
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": true,
+    "reason": "guarded_candidate",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": "[GC-D2] 更新一下：我现在默认编辑器是 Zed。"
+      },
+      {
+        "role": "assistant",
+        "content": "继续之后，第 3 个点也已经基本收住了。 现在状态是："
+      },
+      {
+        "role": "user",
+        "content": "直接给你一条最短回归命令，方便你以后自己 spot check。"
+      },
+      {
+        "role": "assistant",
+        "content": "最短 spot check 我建议就这 2 条： ```bash npm run codex:vscode:gc --silent ```"
+      },
+      {
+        "role": "user",
+        "content": "接下来 我要做蛇呢么？"
+      }
+    ],
+    "filteredMessageCount": 5,
+    "filteredMessageTokenEstimate": 43,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": [
+      0,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ]
+  },
+  "timings": {
+    "totalElapsedMs": 18365,
+    "decisionElapsedMs": 18360
+  }
+}

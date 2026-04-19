@@ -1,0 +1,176 @@
+{
+  "schema_version": "umc.codex-context-minor-gc.v1",
+  "generated_at": "2026-04-18T16:04:30.846Z",
+  "event_id": "shadow-1776528244725-1ev5p2-codex-packaged",
+  "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+  "query": "现在每一轮的context 已经能够正常gc了么",
+  "status": "captured",
+  "reason": "",
+  "decision_transport": "codex_exec",
+  "relation": "resolve",
+  "applied": true,
+  "codex_guard_reason": "codex_packaged_guard",
+  "prompt_reduction_ratio": 0.0814,
+  "baseline_context_estimate": 86,
+  "packaged_context_estimate": 79,
+  "effective_context_estimate": 79,
+  "shadow_status": "captured",
+  "shadow_guarded_applied": true,
+  "shadow_guarded_reason": "guarded_candidate",
+  "shadow_export_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da152-4841-76f2-adc4-b01a85d15a88-shadow-1776528244725-1ev5p2.json",
+  "shadow_summary_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl",
+  "export_path": "exports/codex-vscode-019da152-4841-76f2-adc4-b01a85d15a88-shadow-1776528244725-1ev5p2-codex-packaged.json",
+  "effective_context_block": "## Context Minor GC Working Set\nTask state summary:\nUser asked why context data looked wrong in a new UMC chat, then clarified whether per-turn context GC is now working normally. Assistant answered that GC is evaluated each turn but only applied when conditions are met;…\n\nLatest user ask:\n- 现在每一轮的context 已经能够正常gc了么",
+  "packaged_context_block": "## Context Minor GC Working Set\nTask state summary:\nUser asked why context data looked wrong in a new UMC chat, then clarified whether per-turn context GC is now working normally. Assistant answered that GC is evaluated each turn but only applied when conditions are met;…\n\nLatest user ask:\n- 现在每一轮的context 已经能够正常gc了么",
+  "shadow_event": {
+    "schema_version": "umc.dialogue-working-set-shadow.v1",
+    "event_id": "shadow-1776528244725-1ev5p2",
+    "generated_at": "2026-04-18T16:04:04.725Z",
+    "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+    "agent_id": "main",
+    "query": "现在每一轮的context 已经能够正常gc了么",
+    "status": "captured",
+    "reason": "",
+    "sampling": {
+      "max_turns": 12,
+      "min_turns": 3,
+      "max_chars_per_turn": 900
+    },
+    "transcript": [
+      {
+        "id": "t1",
+        "role": "user",
+        "content": "新的对话，也还是在umc项目里， 为什么context数据不对；"
+      },
+      {
+        "id": "t2",
+        "role": "user",
+        "content": "现在每一轮的context 已经能够正常gc了么"
+      },
+      {
+        "id": "t3",
+        "role": "assistant",
+        "content": "不是“每一轮都会压缩”，但现在看起来已经是“每一轮都会评估，满足条件就正常 GC 应用”。 这轮之所以没压，是因为这是新对话，抽出来的 turn 不够。代码里 `minTurns` 默认是 `3`，少于 3 就直接 `not_enough_turns`，见 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/cod…"
+      }
+    ],
+    "decision": {
+      "relation": "resolve",
+      "confidence": 0.93,
+      "evict_turn_ids": [
+        "t1",
+        "t3"
+      ],
+      "pin_turn_ids": [],
+      "archive_summary": "User asked why context data looked wrong in a new UMC chat, then clarified whether per-turn context GC is now working normally. Assistant answered that GC is evaluated each turn but only applied when conditions are met; in this case it did not compress because the new conversation had too few turns and hit the default `minTurns=3` / `not_enough_turns` path.",
+      "reasoning_summary": "The active question appears answered, with no remaining implementation task or follow-up dependency. The latest user turn `t2` is automatically kept, and older raw turns are not needed for the next turn. There are no durable user preferences or standing instructions in this transcript that need semantic pinning."
+    },
+    "decision_transport": "codex_exec",
+    "snapshot": {
+      "applied": {
+        "relation": "resolve",
+        "confidence": 0.93,
+        "archiveSummary": "User asked why context data looked wrong in a new UMC chat, then clarified whether per-turn context GC is now working normally. Assistant answered that GC is evaluated each turn but only applied when conditions are met; in this case it did not compress because the new conversation had too few turns and hit the default `minTurns=3` / `not_enough_turns` path.",
+        "reasoningSummary": "The active question appears answered, with no remaining implementation task or follow-up dependency. The latest user turn `t2` is automatically kept, and older raw turns are not needed for the next turn. There are no durable user preferences or standing instructions in this transcript that need semantic pinning.",
+        "latestUserTurnId": "t2",
+        "pinTurnIds": [],
+        "pinnedOnlyTurnIds": [],
+        "requestedEvictTurnIds": [
+          "t1",
+          "t3"
+        ],
+        "blockedEvictTurnIds": [],
+        "appliedEvictTurnIds": [
+          "t1",
+          "t3"
+        ],
+        "keepTurnIds": [
+          "t2"
+        ],
+        "baselineTokens": 69,
+        "keptTokens": 6,
+        "prunedTokens": 63,
+        "reductionRatio": 0.9130434782608695,
+        "keepTurns": [
+          {
+            "id": "t2",
+            "role": "user",
+            "content": "现在每一轮的context 已经能够正常gc了么",
+            "tokenEstimate": 6
+          }
+        ],
+        "evictedTurns": [
+          {
+            "id": "t1",
+            "role": "user",
+            "content": "新的对话，也还是在umc项目里， 为什么context数据不对；",
+            "tokenEstimate": 8
+          },
+          {
+            "id": "t3",
+            "role": "assistant",
+            "content": "不是“每一轮都会压缩”，但现在看起来已经是“每一轮都会评估，满足条件就正常 GC 应用”。 这轮之所以没压，是因为这是新对话，抽出来的 turn 不够。代码里 `minTurns` 默认是 `3`，少于 3 就直接 `not_enough_turns`，见 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/cod…",
+            "tokenEstimate": 55
+          }
+        ]
+      },
+      "baselineRawTranscript": "t1 user: 新的对话，也还是在umc项目里， 为什么context数据不对；\nt2 user: 现在每一轮的context 已经能够正常gc了么\nt3 assistant: 不是“每一轮都会压缩”，但现在看起来已经是“每一轮都会评估，满足条件就正常 GC 应用”。 这轮之所以没压，是因为这是新对话，抽出来的 turn 不够。代码里 `minTurns` 默认是 `3`，少于 3 就直接 `not_enough_turns`，见 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/cod…",
+      "shadowRawTranscript": "t2 user: 现在每一轮的context 已经能够正常gc了么",
+      "semanticPinNotes": [],
+      "archiveSummary": "User asked why context data looked wrong in a new UMC chat, then clarified whether per-turn context GC is now working normally. Assistant answered that GC is evaluated each turn but only applied when conditions are met; in this case it did not compress because the new conversation had too few turns and hit the default `minTurns=3` / `not_enough_turns` path.",
+      "injectedArchiveSummary": "User asked why context data looked wrong in a new UMC chat, then clarified whether per-turn cont...",
+      "baselinePromptEstimate": 78,
+      "shadowRawPromptEstimate": 9,
+      "shadowPackageEstimate": 71,
+      "shadowPackageText": "Task state summary:\nUser asked why context data looked wrong in a new UMC chat, then clarified whether per-turn context GC is now working normally. Assistant answered that GC is evaluated each turn but only applied when conditions are met;…\n\nLatest user ask:\n- 现在每一轮的context 已经能够正常gc了么"
+    },
+    "scorecard": {
+      "relation": "resolve",
+      "baselineTurnCount": 3,
+      "keptTurnCount": 1,
+      "evictedTurnCount": 2,
+      "pinCount": 0,
+      "baselinePromptEstimate": 78,
+      "shadowRawPromptEstimate": 9,
+      "shadowPackageEstimate": 71,
+      "rawReductionRatio": 0.913,
+      "packageReductionRatio": 0.0897,
+      "candidateLoadElapsedMs": 0,
+      "assemblyBuildElapsedMs": 0,
+      "decisionElapsedMs": 26121,
+      "totalElapsedMs": 26121,
+      "guardedEnabled": true,
+      "guardedApplied": true,
+      "guardedReason": "guarded_candidate",
+      "guardedMessageCount": 1,
+      "guardedCarryForwardEstimate": 31,
+      "guardedFilteredMessageEstimate": 6
+    },
+    "guarded": {
+      "enabled": true,
+      "applied": true,
+      "reason": "guarded_candidate",
+      "filteredMessages": [
+        {
+          "role": "user",
+          "content": "现在每一轮的context 已经能够正常gc了么"
+        }
+      ],
+      "filteredMessageCount": 1,
+      "filteredMessageTokenEstimate": 6,
+      "carryForwardText": "Archived topic summary:\nUser asked why context data looked wrong in a new UMC chat, then clarified whether per-turn cont...",
+      "carryForwardEstimate": 31,
+      "evictedSourceIndices": [
+        0,
+        2
+      ]
+    },
+    "timings": {
+      "totalElapsedMs": 26121,
+      "decisionElapsedMs": 26121
+    },
+    "artifact_paths": {
+      "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da152-4841-76f2-adc4-b01a85d15a88-shadow-1776528244725-1ev5p2.json",
+      "summary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl"
+    }
+  }
+}

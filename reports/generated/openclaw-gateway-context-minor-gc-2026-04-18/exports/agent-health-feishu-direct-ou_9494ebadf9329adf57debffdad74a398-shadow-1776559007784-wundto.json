@@ -1,0 +1,65 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776559007784-wundto",
+  "generated_at": "2026-04-19T00:36:47.784Z",
+  "session_key": "agent:health:feishu:direct:ou_9494ebadf9329adf57debffdad74a398",
+  "agent_id": "health",
+  "query": "System: [2026-04-19 08:36:46 GMT+8] Feishu[feishu5-health] DM | 刘超 (ou_9494ebadf9329adf57debffdad74a398) [msg:om_x100b5176771b64a4c3435d431e322bf]\n\nConversation info (untrusted metadata):\n```json\n{\n  \"message_id\": \"om_x100b5176771b64a4c3435d431e322bf\",\n  \"sender_id\": \"ou_9494ebadf9329adf57debffdad74a398\",\n  \"sender\": \"刘超\",\n  \"timestamp\": \"Sun 2026-04-19 08:36 GMT+8\"\n}\n```\n\nSender (untrusted metadata):\n```json\n{\n  \"label\": \"刘超 (ou_9494ebadf9329adf57debffdad74a398)\",\n  \"id\": \"ou_9494ebadf9329adf57debffdad74a398\",\n  \"name\": \"刘超\"\n}\n```\n\n阿齐沙坦 现在的用量是。40mg分成3次吃； 其他每天还在吃的有，匹伐他汀2mg；维生素B1；血塞通；",
+  "status": "skipped",
+  "reason": "not_enough_turns",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "task-system runtime context: - session: agent:health:feishu:direct:ou_9494ebadf9329adf57debffdad74a398 - task: task_4ece872386fd4ce681dcf39f177d83fe - mode: tool-first-after-first-ack - follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup - future-first default: main_user_content_mode=none - runtime chooses none / immediate-summary / full-answer for current-turn business content - immediate-summary must be one short business-facing line - never expose scheduling, promise, or tool-chain state to users - include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work - never promise a future reply unless task-system tools succeeded System: [2026-04-19 08:34:44 GMT+8] Feishu[feishu5-health] DM | 刘超 (ou_9494ebadf9329adf57debffdad74a398) [msg:om_x100b51767c8d98a8c2baf6a59dcf9c8]..."
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "你的医疗档案我记得这版重点： - **姓名**：刘超（超哥） - **年龄**：44岁 - **身高**：178cm - **近期体重**：2026-03-01 约 93.25kg → 2026-04-02 83.8kg - **饮食**：已从偏面食、饮料，调整为高蛋白、蔬菜为主，基本停饮料 - **生活方式**：已戒烟、戒酒；作息明显提前 - **运动**：饭后慢走约 2 公里，准备逐步加量 - **用药背景**：有降压、降脂等用药；阿齐沙坦目前约 20mg/日，匹伐他汀 2mg 睡前 如果你要，我可以下一步直接给你整理成一版 **“医生易读的医疗档案摘要”**。"
+    }
+  ],
+  "decision": null,
+  "decision_transport": "",
+  "snapshot": null,
+  "scorecard": {
+    "relation": "",
+    "baselineTurnCount": 2,
+    "keptTurnCount": 0,
+    "evictedTurnCount": 0,
+    "pinCount": 0,
+    "baselinePromptEstimate": 0,
+    "shadowRawPromptEstimate": 0,
+    "shadowPackageEstimate": 0,
+    "rawReductionRatio": 0,
+    "packageReductionRatio": 0,
+    "candidateLoadElapsedMs": 10,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 0,
+    "totalElapsedMs": 0,
+    "guardedEnabled": false,
+    "guardedApplied": false,
+    "guardedReason": "feature_disabled",
+    "guardedMessageCount": 7,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 0
+  },
+  "guarded": {
+    "enabled": false,
+    "applied": false,
+    "reason": "feature_disabled",
+    "filteredMessageCount": 7,
+    "filteredMessageTokenEstimate": 0,
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 0,
+    "decisionElapsedMs": 0
+  }
+}

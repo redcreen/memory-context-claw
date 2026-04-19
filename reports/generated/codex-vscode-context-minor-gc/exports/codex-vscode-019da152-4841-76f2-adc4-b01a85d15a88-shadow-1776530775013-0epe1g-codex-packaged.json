@@ -1,0 +1,197 @@
+{
+  "schema_version": "umc.codex-context-minor-gc.v1",
+  "generated_at": "2026-04-18T16:46:34.898Z",
+  "event_id": "shadow-1776530775013-0epe1g-codex-packaged",
+  "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+  "query": "[GC-D2] 回到编辑器问题。我现在默认编辑器是什么？",
+  "status": "captured",
+  "reason": "",
+  "decision_transport": "codex_exec",
+  "relation": "switch",
+  "applied": false,
+  "codex_guard_reason": "no_net_token_gain",
+  "prompt_reduction_ratio": 0,
+  "baseline_context_estimate": 47,
+  "packaged_context_estimate": 76,
+  "effective_context_estimate": 47,
+  "shadow_status": "captured",
+  "shadow_guarded_applied": true,
+  "shadow_guarded_reason": "guarded_candidate",
+  "shadow_export_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da152-4841-76f2-adc4-b01a85d15a88-shadow-1776530775013-0epe1g.json",
+  "shadow_summary_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl",
+  "export_path": "exports/codex-vscode-019da152-4841-76f2-adc4-b01a85d15a88-shadow-1776530775013-0epe1g-codex-packaged.json",
+  "effective_context_block": "## Recent Conversation Context\nt1 user: [GC-D2] 记一下：我以前默认编辑器是 Vim。\nt2 user: [GC-D2] 更新一下：我现在默认编辑器是 Zed。\nt3 user: [GC-D2] 切个话题。为什么 shadow mode 默认先不开？\nt4 user: [GC-D2] 回到编辑器问题。我现在默认编辑器是什么？",
+  "packaged_context_block": "## Context Minor GC Working Set\nTask state summary:\nUser's default editor was updated from Vim to Zed. A later side-topic question about why shadow mode is off by default is unrelated to the current editor question and can leave the next-turn raw prompt.\n\nLatest user ask:\n- [GC-D2] 回到编辑器问题。我现在默认编辑器是什么？",
+  "shadow_event": {
+    "schema_version": "umc.dialogue-working-set-shadow.v1",
+    "event_id": "shadow-1776530775013-0epe1g",
+    "generated_at": "2026-04-18T16:46:15.013Z",
+    "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+    "agent_id": "main",
+    "query": "[GC-D2] 回到编辑器问题。我现在默认编辑器是什么？",
+    "status": "captured",
+    "reason": "",
+    "sampling": {
+      "max_turns": 12,
+      "min_turns": 3,
+      "max_chars_per_turn": 900
+    },
+    "transcript": [
+      {
+        "id": "t1",
+        "role": "user",
+        "content": "[GC-D2] 记一下：我以前默认编辑器是 Vim。"
+      },
+      {
+        "id": "t2",
+        "role": "user",
+        "content": "[GC-D2] 更新一下：我现在默认编辑器是 Zed。"
+      },
+      {
+        "id": "t3",
+        "role": "user",
+        "content": "[GC-D2] 切个话题。为什么 shadow mode 默认先不开？"
+      },
+      {
+        "id": "t4",
+        "role": "user",
+        "content": "[GC-D2] 回到编辑器问题。我现在默认编辑器是什么？"
+      }
+    ],
+    "decision": {
+      "relation": "switch",
+      "confidence": 0.97,
+      "evict_turn_ids": [
+        "t3"
+      ],
+      "pin_turn_ids": [
+        "t2"
+      ],
+      "archive_summary": "User's default editor was updated from Vim to Zed. A later side-topic question about why shadow mode is off by default is unrelated to the current editor question and can leave the next-turn raw prompt.",
+      "reasoning_summary": "The latest turn returns to the earlier editor topic, so the shadow-mode detour is not needed in raw context. Keep the earlier editor turns raw because the answer depends on that update history, especially the correction from Vim to Zed. Pin t2 as the durable current preference/fact: the user's default editor is Zed."
+    },
+    "decision_transport": "codex_exec",
+    "snapshot": {
+      "applied": {
+        "relation": "switch",
+        "confidence": 0.97,
+        "archiveSummary": "User's default editor was updated from Vim to Zed. A later side-topic question about why shadow mode is off by default is unrelated to the current editor question and can leave the next-turn raw prompt.",
+        "reasoningSummary": "The latest turn returns to the earlier editor topic, so the shadow-mode detour is not needed in raw context. Keep the earlier editor turns raw because the answer depends on that update history, especially the correction from Vim to Zed. Pin t2 as the durable current preference/fact: the user's default editor is Zed.",
+        "latestUserTurnId": "t4",
+        "pinTurnIds": [
+          "t2"
+        ],
+        "pinnedOnlyTurnIds": [],
+        "requestedEvictTurnIds": [
+          "t3"
+        ],
+        "blockedEvictTurnIds": [],
+        "appliedEvictTurnIds": [
+          "t3"
+        ],
+        "keepTurnIds": [
+          "t1",
+          "t2",
+          "t4"
+        ],
+        "baselineTokens": 30,
+        "keptTokens": 21,
+        "prunedTokens": 9,
+        "reductionRatio": 0.3,
+        "keepTurns": [
+          {
+            "id": "t1",
+            "role": "user",
+            "content": "[GC-D2] 记一下：我以前默认编辑器是 Vim。",
+            "tokenEstimate": 7
+          },
+          {
+            "id": "t2",
+            "role": "user",
+            "content": "[GC-D2] 更新一下：我现在默认编辑器是 Zed。",
+            "tokenEstimate": 7
+          },
+          {
+            "id": "t4",
+            "role": "user",
+            "content": "[GC-D2] 回到编辑器问题。我现在默认编辑器是什么？",
+            "tokenEstimate": 7
+          }
+        ],
+        "evictedTurns": [
+          {
+            "id": "t3",
+            "role": "user",
+            "content": "[GC-D2] 切个话题。为什么 shadow mode 默认先不开？",
+            "tokenEstimate": 9
+          }
+        ]
+      },
+      "baselineRawTranscript": "t1 user: [GC-D2] 记一下：我以前默认编辑器是 Vim。\nt2 user: [GC-D2] 更新一下：我现在默认编辑器是 Zed。\nt3 user: [GC-D2] 切个话题。为什么 shadow mode 默认先不开？\nt4 user: [GC-D2] 回到编辑器问题。我现在默认编辑器是什么？",
+      "shadowRawTranscript": "t1 user: [GC-D2] 记一下：我以前默认编辑器是 Vim。\nt2 user: [GC-D2] 更新一下：我现在默认编辑器是 Zed。\nt4 user: [GC-D2] 回到编辑器问题。我现在默认编辑器是什么？",
+      "semanticPinNotes": [],
+      "archiveSummary": "User's default editor was updated from Vim to Zed. A later side-topic question about why shadow mode is off by default is unrelated to the current editor question and can leave the next-turn raw prompt.",
+      "injectedArchiveSummary": "",
+      "baselinePromptEstimate": 39,
+      "shadowRawPromptEstimate": 28,
+      "shadowPackageEstimate": 68,
+      "shadowPackageText": "Task state summary:\nUser's default editor was updated from Vim to Zed. A later side-topic question about why shadow mode is off by default is unrelated to the current editor question and can leave the next-turn raw prompt.\n\nLatest user ask:\n- [GC-D2] 回到编辑器问题。我现在默认编辑器是什么？"
+    },
+    "scorecard": {
+      "relation": "switch",
+      "baselineTurnCount": 4,
+      "keptTurnCount": 3,
+      "evictedTurnCount": 1,
+      "pinCount": 1,
+      "baselinePromptEstimate": 39,
+      "shadowRawPromptEstimate": 28,
+      "shadowPackageEstimate": 68,
+      "rawReductionRatio": 0.3,
+      "packageReductionRatio": -0.7436,
+      "candidateLoadElapsedMs": 0,
+      "assemblyBuildElapsedMs": 0,
+      "decisionElapsedMs": 19880,
+      "totalElapsedMs": 19883,
+      "guardedEnabled": true,
+      "guardedApplied": true,
+      "guardedReason": "guarded_candidate",
+      "guardedMessageCount": 3,
+      "guardedCarryForwardEstimate": 0,
+      "guardedFilteredMessageEstimate": 21
+    },
+    "guarded": {
+      "enabled": true,
+      "applied": true,
+      "reason": "guarded_candidate",
+      "filteredMessages": [
+        {
+          "role": "user",
+          "content": "[GC-D2] 记一下：我以前默认编辑器是 Vim。"
+        },
+        {
+          "role": "user",
+          "content": "[GC-D2] 更新一下：我现在默认编辑器是 Zed。"
+        },
+        {
+          "role": "user",
+          "content": "[GC-D2] 回到编辑器问题。我现在默认编辑器是什么？"
+        }
+      ],
+      "filteredMessageCount": 3,
+      "filteredMessageTokenEstimate": 21,
+      "carryForwardText": "",
+      "carryForwardEstimate": 0,
+      "evictedSourceIndices": [
+        2
+      ]
+    },
+    "timings": {
+      "totalElapsedMs": 19884,
+      "decisionElapsedMs": 19880
+    },
+    "artifact_paths": {
+      "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da152-4841-76f2-adc4-b01a85d15a88-shadow-1776530775013-0epe1g.json",
+      "summary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl"
+    }
+  }
+}

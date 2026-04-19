@@ -1,0 +1,326 @@
+{
+  "schema_version": "umc.codex-context-minor-gc.v1",
+  "generated_at": "2026-04-19T07:28:56.254Z",
+  "event_id": "shadow-1776583723156-c50jmu-codex-packaged",
+  "session_key": "codex:vscode:019da335-a070-7972-b61e-6ba3a73ff633",
+  "query": "可以发布一个中版本了 项目助手",
+  "status": "captured",
+  "reason": "",
+  "decision_transport": "codex_exec",
+  "relation": "switch",
+  "applied": true,
+  "codex_guard_reason": "codex_packaged_guard",
+  "prompt_reduction_ratio": 0.8828,
+  "baseline_context_estimate": 273,
+  "packaged_context_estimate": 32,
+  "effective_context_estimate": 32,
+  "shadow_status": "captured",
+  "shadow_guarded_applied": true,
+  "shadow_guarded_reason": "guarded_candidate",
+  "shadow_export_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da335-a070-7972-b61e-6ba3a73ff633-shadow-1776583723156-c50jmu.json",
+  "shadow_summary_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl",
+  "export_path": "exports/codex-vscode-019da335-a070-7972-b61e-6ba3a73ff633-shadow-1776583723156-c50jmu-codex-packaged.json",
+  "effective_context_block": "## Context Minor GC Working Set\nRecent raw context:\nt3 assistant: 现在我可以给明确结论了： **Stage 11 已经真正收口。**\nt12 user: 可以发布一个中版本了 项目助手",
+  "packaged_context_block": "## Context Minor GC Working Set\nRecent raw context:\nt3 assistant: 现在我可以给明确结论了： **Stage 11 已经真正收口。**\nt12 user: 可以发布一个中版本了 项目助手",
+  "shadow_event": {
+    "schema_version": "umc.dialogue-working-set-shadow.v1",
+    "event_id": "shadow-1776583723156-c50jmu",
+    "generated_at": "2026-04-19T07:28:43.156Z",
+    "session_key": "codex:vscode:019da335-a070-7972-b61e-6ba3a73ff633",
+    "agent_id": "main",
+    "query": "可以发布一个中版本了 项目助手",
+    "status": "captured",
+    "reason": "",
+    "sampling": {
+      "max_turns": 12,
+      "min_turns": 3,
+      "max_chars_per_turn": 900
+    },
+    "transcript": [
+      {
+        "id": "t1",
+        "role": "user",
+        "content": "继续，知道 Stage 11 真正收口"
+      },
+      {
+        "id": "t2",
+        "role": "user",
+        "content": "继续，知道 Stage 11 真正收口 （codex部分先忽略掉）"
+      },
+      {
+        "id": "t3",
+        "role": "assistant",
+        "content": "现在我可以给明确结论了： **Stage 11 已经真正收口。**"
+      },
+      {
+        "id": "t4",
+        "role": "user",
+        "content": "你接下来再做一个新的测试， 比如context 在268k的80%要压缩（你调整为实际情况） ，策划一个案例，做一个ab测试， 看看在超长对话下，能否做到不compact（没有使用这个功能的话，会多久compact，使用了这个功能后是什么样的）；"
+      },
+      {
+        "id": "t5",
+        "role": "assistant",
+        "content": "现在可以明确说： **Stage 11 已经真正收口。**"
+      },
+      {
+        "id": "t6",
+        "role": "user",
+        "content": "你接下来再做一个新的测试， 比如context 在268k的80%要压缩（你调整为实际情况） ，策划一个案例，做一个ab测试， 看看在超长对话下，能否做到不compact（没有使用这个功能的话，会多久compact，使用了这个功能后是什么样的）；"
+      },
+      {
+        "id": "t7",
+        "role": "assistant",
+        "content": "结果出来了。这轮我没有按字面去硬跑 `268k * 80% = 214.4k`，而是按你允许的“调整为实际情况”做了一个 **practical compact proxy**：把这条 hermetic OpenClaw 长会话链路的 danger line 设成 `16000 promptTokens`。原因很直接，这条评测链路本身单轮 prompt 不会自然长到 214k，但 `16k` 已经能把 baseline…"
+      },
+      {
+        "id": "t8",
+        "role": "user",
+        "content": "很不错， 这一项是memory core的 非常棒的能力； 需要在文档中重点说明下； 同时这条线也会是持续优化的主线之一；"
+      },
+      {
+        "id": "t9",
+        "role": "assistant",
+        "content": "做完了，文档已经把这条能力明确抬起来了，并且同步成最新口径。 这次重点更新了 4 组公开入口，中英双语都对齐： - `README`：把“长对话接近 compact danger zone 时，GC 能把实际 prompt 拉回阈值下方”写成明确产品能力，并加上 threshold Docker A/B 报告入口。 - `Context Minor GC` 架构页：从“能力已成但 Stage 11 未收口”的旧口径，改成“Stage…"
+      },
+      {
+        "id": "t10",
+        "role": "user",
+        "content": "目前这套gc方案和 记忆提取冲突么？"
+      },
+      {
+        "id": "t11",
+        "role": "assistant",
+        "content": "目前看，**不冲突，设计上是互补的**。 最直接的边界是："
+      },
+      {
+        "id": "t12",
+        "role": "user",
+        "content": "可以发布一个中版本了 项目助手"
+      }
+    ],
+    "decision": {
+      "relation": "switch",
+      "confidence": 0.92,
+      "evict_turn_ids": [
+        "t1",
+        "t2",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8",
+        "t9",
+        "t10",
+        "t11"
+      ],
+      "pin_turn_ids": [
+        "t3",
+        "t9",
+        "t11"
+      ],
+      "archive_summary": "Stage 11 was confirmed truly closed. A practical A/B test for Context Minor GC under long conversations was completed and documented as a key Memory Core capability, with emphasis that this line should remain a main optimization track. The GC approach was concluded to be complementary with memory extraction rather than conflicting.",
+      "reasoning_summary": "The latest user turn starts a new release-oriented topic, so this is a topic switch. Earlier Stage 11 closure, long-context A/B testing, documentation updates, and the GC-vs-memory-extraction answer are all resolved background. Raw turns for those solved blocks can leave the next-turn working set, while their durable conclusions should survive as compact pins: Stage 11 is closed, the GC capability/result was documented and positioned as important, and GC is compatible with memory extraction."
+    },
+    "decision_transport": "codex_exec",
+    "snapshot": {
+      "applied": {
+        "relation": "switch",
+        "confidence": 0.92,
+        "archiveSummary": "Stage 11 was confirmed truly closed. A practical A/B test for Context Minor GC under long conversations was completed and documented as a key Memory Core capability, with emphasis that this line should remain a main optimization track. The GC approach was concluded to be complementary with memory extraction rather than conflicting.",
+        "reasoningSummary": "The latest user turn starts a new release-oriented topic, so this is a topic switch. Earlier Stage 11 closure, long-context A/B testing, documentation updates, and the GC-vs-memory-extraction answer are all resolved background. Raw turns for those solved blocks can leave the next-turn working set, while their durable conclusions should survive as compact pins: Stage 11 is closed, the GC capability/result was documented and positioned as important, and GC is compatible with memory extraction.",
+        "latestUserTurnId": "t12",
+        "pinTurnIds": [
+          "t3",
+          "t9",
+          "t11"
+        ],
+        "pinnedOnlyTurnIds": [
+          "t9",
+          "t11"
+        ],
+        "requestedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t4",
+          "t5",
+          "t6",
+          "t7",
+          "t8",
+          "t9",
+          "t10",
+          "t11"
+        ],
+        "blockedEvictTurnIds": [],
+        "appliedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t4",
+          "t5",
+          "t6",
+          "t7",
+          "t8",
+          "t9",
+          "t10",
+          "t11"
+        ],
+        "keepTurnIds": [
+          "t3",
+          "t12"
+        ],
+        "baselineTokens": 234,
+        "keptTokens": 13,
+        "prunedTokens": 221,
+        "reductionRatio": 0.9444444444444444,
+        "keepTurns": [
+          {
+            "id": "t3",
+            "role": "assistant",
+            "content": "现在我可以给明确结论了： **Stage 11 已经真正收口。**",
+            "tokenEstimate": 9
+          },
+          {
+            "id": "t12",
+            "role": "user",
+            "content": "可以发布一个中版本了 项目助手",
+            "tokenEstimate": 4
+          }
+        ],
+        "evictedTurns": [
+          {
+            "id": "t1",
+            "role": "user",
+            "content": "继续，知道 Stage 11 真正收口",
+            "tokenEstimate": 5
+          },
+          {
+            "id": "t2",
+            "role": "user",
+            "content": "继续，知道 Stage 11 真正收口 （codex部分先忽略掉）",
+            "tokenEstimate": 9
+          },
+          {
+            "id": "t4",
+            "role": "user",
+            "content": "你接下来再做一个新的测试， 比如context 在268k的80%要压缩（你调整为实际情况） ，策划一个案例，做一个ab测试， 看看在超长对话下，能否做到不compact（没有使用这个功能的话，会多久compact，使用了这个功能后是什么样的）；",
+            "tokenEstimate": 31
+          },
+          {
+            "id": "t5",
+            "role": "assistant",
+            "content": "现在可以明确说： **Stage 11 已经真正收口。**",
+            "tokenEstimate": 8
+          },
+          {
+            "id": "t6",
+            "role": "user",
+            "content": "你接下来再做一个新的测试， 比如context 在268k的80%要压缩（你调整为实际情况） ，策划一个案例，做一个ab测试， 看看在超长对话下，能否做到不compact（没有使用这个功能的话，会多久compact，使用了这个功能后是什么样的）；",
+            "tokenEstimate": 31
+          },
+          {
+            "id": "t7",
+            "role": "assistant",
+            "content": "结果出来了。这轮我没有按字面去硬跑 `268k * 80% = 214.4k`，而是按你允许的“调整为实际情况”做了一个 **practical compact proxy**：把这条 hermetic OpenClaw 长会话链路的 danger line 设成 `16000 promptTokens`。原因很直接，这条评测链路本身单轮 prompt 不会自然长到 214k，但 `16k` 已经能把 baseline…",
+            "tokenEstimate": 53
+          },
+          {
+            "id": "t8",
+            "role": "user",
+            "content": "很不错， 这一项是memory core的 非常棒的能力； 需要在文档中重点说明下； 同时这条线也会是持续优化的主线之一；",
+            "tokenEstimate": 16
+          },
+          {
+            "id": "t9",
+            "role": "assistant",
+            "content": "做完了，文档已经把这条能力明确抬起来了，并且同步成最新口径。 这次重点更新了 4 组公开入口，中英双语都对齐： - `README`：把“长对话接近 compact danger zone 时，GC 能把实际 prompt 拉回阈值下方”写成明确产品能力，并加上 threshold Docker A/B 报告入口。 - `Context Minor GC` 架构页：从“能力已成但 Stage 11 未收口”的旧口径，改成“Stage…",
+            "tokenEstimate": 55
+          },
+          {
+            "id": "t10",
+            "role": "user",
+            "content": "目前这套gc方案和 记忆提取冲突么？",
+            "tokenEstimate": 5
+          },
+          {
+            "id": "t11",
+            "role": "assistant",
+            "content": "目前看，**不冲突，设计上是互补的**。 最直接的边界是：",
+            "tokenEstimate": 8
+          }
+        ]
+      },
+      "baselineRawTranscript": "t1 user: 继续，知道 Stage 11 真正收口\nt2 user: 继续，知道 Stage 11 真正收口 （codex部分先忽略掉）\nt3 assistant: 现在我可以给明确结论了： **Stage 11 已经真正收口。**\nt4 user: 你接下来再做一个新的测试， 比如context 在268k的80%要压缩（你调整为实际情况） ，策划一个案例，做一个ab测试， 看看在超长对话下，能否做到不compact（没有使用这个功能的话，会多久compact，使用了这个功能后是什么样的）；\nt5 assistant: 现在可以明确说： **Stage 11 已经真正收口。**\nt6 user: 你接下来再做一个新的测试， 比如context 在268k的80%要压缩（你调整为实际情况） ，策划一个案例，做一个ab测试， 看看在超长对话下，能否做到不compact（没有使用这个功能的话，会多久compact，使用了这个功能后是什么样的）；\nt7 assistant: 结果出来了。这轮我没有按字面去硬跑 `268k * 80% = 214.4k`，而是按你允许的“调整为实际情况”做了一个 **practical compact proxy**：把这条 hermetic OpenClaw 长会话链路的 danger line 设成 `16000 promptTokens`。原因很直接，这条评测链路本身单轮 prompt 不会自然长到 214k，但 `16k` 已经能把 baseline…\nt8 user: 很不错， 这一项是memory core的 非常棒的能力； 需要在文档中重点说明下； 同时这条线也会是持续优化的主线之一；\nt9 assistant: 做完了，文档已经把这条能力明确抬起来了，并且同步成最新口径。 这次重点更新了 4 组公开入口，中英双语都对齐： - `README`：把“长对话接近 compact danger zone 时，GC 能把实际 prompt 拉回阈值下方”写成明确产品能力，并加上 threshold Docker A/B 报告入口。 - `Context Minor GC` 架构页：从“能力已成但 Stage 11 未收口”的旧口径，改成“Stage…\nt10 user: 目前这套gc方案和 记忆提取冲突么？\nt11 assistant: 目前看，**不冲突，设计上是互补的**。 最直接的边界是：\nt12 user: 可以发布一个中版本了 项目助手",
+      "shadowRawTranscript": "t3 assistant: 现在我可以给明确结论了： **Stage 11 已经真正收口。**\nt12 user: 可以发布一个中版本了 项目助手",
+      "semanticPinNotes": [
+        "assistant: 做完了，文档已经把这条能力明确抬起来了，并且同步成最新口径。 这次重点更新了 4 组公开入口，中英双语都对齐： - `README`：把“长对话接近 compact danger zone 时，GC 能把实际 prompt 拉回阈值下方”写成明确产品能力，并加上 threshold Docker A/B 报告入口。 - `Context Minor GC` 架构页：从“能力已成但 Stage 11 未收口”的旧口径，改成“Stage…",
+        "assistant: 目前看，**不冲突，设计上是互补的**。 最直接的边界是："
+      ],
+      "archiveSummary": "Stage 11 was confirmed truly closed. A practical A/B test for Context Minor GC under long conversations was completed and documented as a key Memory Core capability, with emphasis that this line should remain a main optimization track. The GC approach was concluded to be complementary with memory extraction rather than conflicting.",
+      "injectedArchiveSummary": "",
+      "baselinePromptEstimate": 266,
+      "shadowRawPromptEstimate": 19,
+      "shadowPackageEstimate": 24,
+      "shadowPackageText": "Recent raw context:\nt3 assistant: 现在我可以给明确结论了： **Stage 11 已经真正收口。**\nt12 user: 可以发布一个中版本了 项目助手"
+    },
+    "scorecard": {
+      "relation": "switch",
+      "baselineTurnCount": 12,
+      "keptTurnCount": 2,
+      "evictedTurnCount": 10,
+      "pinCount": 3,
+      "baselinePromptEstimate": 266,
+      "shadowRawPromptEstimate": 19,
+      "shadowPackageEstimate": 24,
+      "rawReductionRatio": 0.9444,
+      "packageReductionRatio": 0.9098,
+      "candidateLoadElapsedMs": 0,
+      "assemblyBuildElapsedMs": 0,
+      "decisionElapsedMs": 13091,
+      "totalElapsedMs": 13096,
+      "guardedEnabled": true,
+      "guardedApplied": true,
+      "guardedReason": "guarded_candidate",
+      "guardedMessageCount": 2,
+      "guardedCarryForwardEstimate": 50,
+      "guardedFilteredMessageEstimate": 13
+    },
+    "guarded": {
+      "enabled": true,
+      "applied": true,
+      "reason": "guarded_candidate",
+      "filteredMessages": [
+        {
+          "role": "assistant",
+          "content": "现在我可以给明确结论了： **Stage 11 已经真正收口。**"
+        },
+        {
+          "role": "user",
+          "content": "可以发布一个中版本了 项目助手"
+        }
+      ],
+      "filteredMessageCount": 2,
+      "filteredMessageTokenEstimate": 13,
+      "carryForwardText": "Conversation carry-forward pins:\n- assistant: 做完了，文档已经把这条能力明确抬起来了，并且同步成最新口径。 这次重点更新了 4 组公开入口，中英双语都对齐： - `README`：把“长对话接近 compact danger zone 时，GC 能把实际 pro…\n- assistant: 目前看，**不冲突，设计上是互补的**。 最直接的边界是：",
+      "carryForwardEstimate": 50,
+      "evictedSourceIndices": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    "timings": {
+      "totalElapsedMs": 13096,
+      "decisionElapsedMs": 13091
+    },
+    "artifact_paths": {
+      "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da335-a070-7972-b61e-6ba3a73ff633-shadow-1776583723156-c50jmu.json",
+      "summary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl"
+    }
+  }
+}

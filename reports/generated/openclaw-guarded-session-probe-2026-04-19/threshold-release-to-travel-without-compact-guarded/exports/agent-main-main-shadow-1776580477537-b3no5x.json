@@ -1,0 +1,115 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776580477537-b3no5x",
+  "generated_at": "2026-04-19T06:34:37.537Z",
+  "session_key": "agent:main:main",
+  "agent_id": "main",
+  "query": "继续：灰度范围块要写 staging、pre-prod、production-canary、production-25%、production-full 这 5 个阶段，每个阶段要写进入条件、退出条件、观察时间、回滚边界。",
+  "status": "skipped",
+  "reason": "explicit_continue_marker",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "我们先只聊 release 执行稿。记住首页固定代号是 north-star-lantern，后面如果我回问首页代号，必须直接回答这个值，不要改写。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "我会把这个记进长期记忆，并按你的要求以后直接原样回答。"
+    },
+    {
+      "id": "t3",
+      "role": "assistant",
+      "content": "记住了：`north-star-lantern`。以后问首页代号，我会直接原样回答这个值。"
+    },
+    {
+      "id": "t4",
+      "role": "user",
+      "content": "继续同一话题：这份执行稿不是面向产品和运营，而是面向值班工程师、发布 owner、数据库 owner、网关 owner，所以默认用执行、边界、风险、回滚、证据的写法，不要写成宣讲稿。"
+    },
+    {
+      "id": "t5",
+      "role": "assistant",
+      "content": "明白。后续这份 release 执行稿我会按下面的写法来： - 面向对象：值班工程师、发布 owner、数据库 owner、网关 owner - 默认结构：执行、边界、风险、回滚、证据 - 风格要求：直接、可操作、少宣讲，不写成产品/运营口径 如果你要，我可以接着把这份稿子整理成这个口径的模板。"
+    },
+    {
+      "id": "t6",
+      "role": "user",
+      "content": "还是同一话题：首页摘要必须固定包含 5 行，分别是版本标识、变更范围、风险等级、灰度范围、回滚开关；每一行都要能让值班人 30 秒内做出 go 或 no-go 判断。"
+    },
+    {
+      "id": "t7",
+      "role": "user",
+      "content": "继续：版本标识部分要同时记录 tag、commit、构建时间、镜像 digest、制品校验方式、构建机器、发布审批号；如果后面我追问版本块，你默认先给 tag 和 digest，再补别的字段。"
+    },
+    {
+      "id": "t8",
+      "role": "assistant",
+      "content": "记住了。 - 版本标识块必须包含：tag、commit、构建时间、镜像 digest、制品校验方式、构建机器、发布审批号 - 你后面追问“版本块”时，我默认先给 `tag` 和 `digest`，再补其他字段 你如果愿意，我可以下一步直接把“首页摘要 5 行”的固定模板也按这个规则写出来。"
+    },
+    {
+      "id": "t9",
+      "role": "user",
+      "content": "继续：变更范围部分要写 API、job、数据库 schema、缓存 key、消息队列 topic、前端静态资源这 6 类，并且每类都要写“是否兼容旧版本”和“是否需要灰度隔离”。"
+    },
+    {
+      "id": "t10",
+      "role": "assistant",
+      "content": "记住了。 变更范围部分以后固定写这 6 类： - API - job - 数据库 schema - 缓存 key - 消息队列 topic - 前端静态资源 并且每一类都要补两项： - 是否兼容旧版本 - 是否需要灰度隔离 如果你愿意，我可以继续把“风险等级 / 灰度范围 / 回滚开关”三行也定成同一套硬规则。"
+    },
+    {
+      "id": "t11",
+      "role": "user",
+      "content": "继续：风险等级部分不要只写高中低，还要写触发条件、放大路径、最坏影响面、首个观测信号、第一响应人；如果某一项没有明确 owner，就直接标成 blocker。"
+    },
+    {
+      "id": "t12",
+      "role": "assistant",
+      "content": "记住了。 风险等级部分以后要包含： - 风险等级 - 触发条件 - 放大路径 - 最坏影响面 - 首个观测信号 - 第一响应人 另外： - 任何一项没有明确 owner，就直接标成 `blocker` 我可以继续把“灰度范围”和“回滚开关”也按同样的执行稿口径补齐。"
+    }
+  ],
+  "decision": null,
+  "decision_transport": "",
+  "snapshot": null,
+  "scorecard": {
+    "relation": "",
+    "baselineTurnCount": 12,
+    "keptTurnCount": 0,
+    "evictedTurnCount": 0,
+    "pinCount": 0,
+    "baselinePromptEstimate": 0,
+    "shadowRawPromptEstimate": 0,
+    "shadowPackageEstimate": 0,
+    "rawReductionRatio": 0,
+    "packageReductionRatio": 0,
+    "candidateLoadElapsedMs": 8,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 0,
+    "totalElapsedMs": 1,
+    "guardedEnabled": true,
+    "guardedApplied": false,
+    "guardedReason": "not_evaluated",
+    "guardedMessageCount": 15,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 0
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": false,
+    "reason": "not_evaluated",
+    "filteredMessageCount": 15,
+    "filteredMessageTokenEstimate": 0,
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 1,
+    "decisionElapsedMs": 0
+  }
+}

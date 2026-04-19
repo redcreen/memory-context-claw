@@ -1,0 +1,287 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776582304869-yvkup8",
+  "generated_at": "2026-04-19T07:05:04.869Z",
+  "session_key": "codex:vscode:019da335-a070-7972-b61e-6ba3a73ff633",
+  "agent_id": "main",
+  "query": "目前这套gc方案和 记忆提取冲突么？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "继续，知道 Stage 11 收口"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "还**不能正式收口**。 原因很明确，`Stage 11` 现在卡的不是 OpenClaw 主线，而是“用户体感收口”这条总标准还没同时满足两侧："
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "继续，知道 Stage 11 真正收口"
+    },
+    {
+      "id": "t4",
+      "role": "user",
+      "content": "继续，知道 Stage 11 真正收口 （codex部分先忽略掉）"
+    },
+    {
+      "id": "t5",
+      "role": "assistant",
+      "content": "现在我可以给明确结论了： **Stage 11 已经真正收口。**"
+    },
+    {
+      "id": "t6",
+      "role": "user",
+      "content": "你接下来再做一个新的测试， 比如context 在268k的80%要压缩（你调整为实际情况） ，策划一个案例，做一个ab测试， 看看在超长对话下，能否做到不compact（没有使用这个功能的话，会多久compact，使用了这个功能后是什么样的）；"
+    },
+    {
+      "id": "t7",
+      "role": "assistant",
+      "content": "现在可以明确说： **Stage 11 已经真正收口。**"
+    },
+    {
+      "id": "t8",
+      "role": "user",
+      "content": "你接下来再做一个新的测试， 比如context 在268k的80%要压缩（你调整为实际情况） ，策划一个案例，做一个ab测试， 看看在超长对话下，能否做到不compact（没有使用这个功能的话，会多久compact，使用了这个功能后是什么样的）；"
+    },
+    {
+      "id": "t9",
+      "role": "assistant",
+      "content": "结果出来了。这轮我没有按字面去硬跑 `268k * 80% = 214.4k`，而是按你允许的“调整为实际情况”做了一个 **practical compact proxy**：把这条 hermetic OpenClaw 长会话链路的 danger line 设成 `16000 promptTokens`。原因很直接，这条评测链路本身单轮 prompt 不会自然长到 214k，但 `16k` 已经能把 baseline…"
+    },
+    {
+      "id": "t10",
+      "role": "user",
+      "content": "很不错， 这一项是memory core的 非常棒的能力； 需要在文档中重点说明下； 同时这条线也会是持续优化的主线之一；"
+    },
+    {
+      "id": "t11",
+      "role": "assistant",
+      "content": "做完了，文档已经把这条能力明确抬起来了，并且同步成最新口径。 这次重点更新了 4 组公开入口，中英双语都对齐： - `README`：把“长对话接近 compact danger zone 时，GC 能把实际 prompt 拉回阈值下方”写成明确产品能力，并加上 threshold Docker A/B 报告入口。 - `Context Minor GC` 架构页：从“能力已成但 Stage 11 未收口”的旧口径，改成“Stage…"
+    },
+    {
+      "id": "t12",
+      "role": "user",
+      "content": "目前这套gc方案和 记忆提取冲突么？"
+    }
+  ],
+  "decision": {
+    "relation": "switch",
+    "confidence": 0.9,
+    "evict_turn_ids": [
+      "t1",
+      "t2",
+      "t3",
+      "t4",
+      "t5",
+      "t6",
+      "t7",
+      "t8",
+      "t9",
+      "t11"
+    ],
+    "pin_turn_ids": [
+      "t10"
+    ],
+    "archive_summary": "Stage 11 was concluded as truly closed after excluding the Codex-side issue. A follow-up A/B test was proposed and executed around Context Minor GC under long-context pressure using a practical threshold proxy rather than literal 268k*80%. The reported result was that GC could pull prompt usage back below a danger threshold and delay/avoid compaction versus the baseline. The user marked this as a key Memory Core capability, asked for it to be emphasized in documentation, and identified it as an ongoing optimization mainline. Documentation was then said to be updated accordingly.",
+    "reasoning_summary": "The latest turn shifts from the finished Stage 11 / A-B test / documentation thread to a new design question: whether the current GC scheme conflicts with memory extraction. The earlier execution thread appears resolved, so its raw turns can leave the next-turn prompt. The only durable item worth preserving as a semantic pin is the user's product-direction preference that this GC capability should be highlighted in docs and treated as a continuing optimization focus."
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "switch",
+      "confidence": 0.9,
+      "archiveSummary": "Stage 11 was concluded as truly closed after excluding the Codex-side issue. A follow-up A/B test was proposed and executed around Context Minor GC under long-context pressure using a practical threshold proxy rather than literal 268k*80%. The reported result was that GC could pull prompt usage back below a danger threshold and delay/avoid compaction versus the baseline. The user marked this as a key Memory Core capability, asked for it to be emphasized in documentation, and identified it as an ongoing optimization mainline. Documentation was then said to be updated accordingly.",
+      "reasoningSummary": "The latest turn shifts from the finished Stage 11 / A-B test / documentation thread to a new design question: whether the current GC scheme conflicts with memory extraction. The earlier execution thread appears resolved, so its raw turns can leave the next-turn prompt. The only durable item worth preserving as a semantic pin is the user's product-direction preference that this GC capability should be highlighted in docs and treated as a continuing optimization focus.",
+      "latestUserTurnId": "t12",
+      "pinTurnIds": [
+        "t10"
+      ],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8",
+        "t9",
+        "t11"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8",
+        "t9",
+        "t11"
+      ],
+      "keepTurnIds": [
+        "t10",
+        "t12"
+      ],
+      "baselineTokens": 246,
+      "keptTokens": 21,
+      "prunedTokens": 225,
+      "reductionRatio": 0.9146341463414634,
+      "keepTurns": [
+        {
+          "id": "t10",
+          "role": "user",
+          "content": "很不错， 这一项是memory core的 非常棒的能力； 需要在文档中重点说明下； 同时这条线也会是持续优化的主线之一；",
+          "tokenEstimate": 16
+        },
+        {
+          "id": "t12",
+          "role": "user",
+          "content": "目前这套gc方案和 记忆提取冲突么？",
+          "tokenEstimate": 5
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "继续，知道 Stage 11 收口",
+          "tokenEstimate": 5
+        },
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "还**不能正式收口**。 原因很明确，`Stage 11` 现在卡的不是 OpenClaw 主线，而是“用户体感收口”这条总标准还没同时满足两侧：",
+          "tokenEstimate": 19
+        },
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "继续，知道 Stage 11 真正收口",
+          "tokenEstimate": 5
+        },
+        {
+          "id": "t4",
+          "role": "user",
+          "content": "继续，知道 Stage 11 真正收口 （codex部分先忽略掉）",
+          "tokenEstimate": 9
+        },
+        {
+          "id": "t5",
+          "role": "assistant",
+          "content": "现在我可以给明确结论了： **Stage 11 已经真正收口。**",
+          "tokenEstimate": 9
+        },
+        {
+          "id": "t6",
+          "role": "user",
+          "content": "你接下来再做一个新的测试， 比如context 在268k的80%要压缩（你调整为实际情况） ，策划一个案例，做一个ab测试， 看看在超长对话下，能否做到不compact（没有使用这个功能的话，会多久compact，使用了这个功能后是什么样的）；",
+          "tokenEstimate": 31
+        },
+        {
+          "id": "t7",
+          "role": "assistant",
+          "content": "现在可以明确说： **Stage 11 已经真正收口。**",
+          "tokenEstimate": 8
+        },
+        {
+          "id": "t8",
+          "role": "user",
+          "content": "你接下来再做一个新的测试， 比如context 在268k的80%要压缩（你调整为实际情况） ，策划一个案例，做一个ab测试， 看看在超长对话下，能否做到不compact（没有使用这个功能的话，会多久compact，使用了这个功能后是什么样的）；",
+          "tokenEstimate": 31
+        },
+        {
+          "id": "t9",
+          "role": "assistant",
+          "content": "结果出来了。这轮我没有按字面去硬跑 `268k * 80% = 214.4k`，而是按你允许的“调整为实际情况”做了一个 **practical compact proxy**：把这条 hermetic OpenClaw 长会话链路的 danger line 设成 `16000 promptTokens`。原因很直接，这条评测链路本身单轮 prompt 不会自然长到 214k，但 `16k` 已经能把 baseline…",
+          "tokenEstimate": 53
+        },
+        {
+          "id": "t11",
+          "role": "assistant",
+          "content": "做完了，文档已经把这条能力明确抬起来了，并且同步成最新口径。 这次重点更新了 4 组公开入口，中英双语都对齐： - `README`：把“长对话接近 compact danger zone 时，GC 能把实际 prompt 拉回阈值下方”写成明确产品能力，并加上 threshold Docker A/B 报告入口。 - `Context Minor GC` 架构页：从“能力已成但 Stage 11 未收口”的旧口径，改成“Stage…",
+          "tokenEstimate": 55
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 继续，知道 Stage 11 收口\nt2 assistant: 还**不能正式收口**。 原因很明确，`Stage 11` 现在卡的不是 OpenClaw 主线，而是“用户体感收口”这条总标准还没同时满足两侧：\nt3 user: 继续，知道 Stage 11 真正收口\nt4 user: 继续，知道 Stage 11 真正收口 （codex部分先忽略掉）\nt5 assistant: 现在我可以给明确结论了： **Stage 11 已经真正收口。**\nt6 user: 你接下来再做一个新的测试， 比如context 在268k的80%要压缩（你调整为实际情况） ，策划一个案例，做一个ab测试， 看看在超长对话下，能否做到不compact（没有使用这个功能的话，会多久compact，使用了这个功能后是什么样的）；\nt7 assistant: 现在可以明确说： **Stage 11 已经真正收口。**\nt8 user: 你接下来再做一个新的测试， 比如context 在268k的80%要压缩（你调整为实际情况） ，策划一个案例，做一个ab测试， 看看在超长对话下，能否做到不compact（没有使用这个功能的话，会多久compact，使用了这个功能后是什么样的）；\nt9 assistant: 结果出来了。这轮我没有按字面去硬跑 `268k * 80% = 214.4k`，而是按你允许的“调整为实际情况”做了一个 **practical compact proxy**：把这条 hermetic OpenClaw 长会话链路的 danger line 设成 `16000 promptTokens`。原因很直接，这条评测链路本身单轮 prompt 不会自然长到 214k，但 `16k` 已经能把 baseline…\nt10 user: 很不错， 这一项是memory core的 非常棒的能力； 需要在文档中重点说明下； 同时这条线也会是持续优化的主线之一；\nt11 assistant: 做完了，文档已经把这条能力明确抬起来了，并且同步成最新口径。 这次重点更新了 4 组公开入口，中英双语都对齐： - `README`：把“长对话接近 compact danger zone 时，GC 能把实际 prompt 拉回阈值下方”写成明确产品能力，并加上 threshold Docker A/B 报告入口。 - `Context Minor GC` 架构页：从“能力已成但 Stage 11 未收口”的旧口径，改成“Stage…\nt12 user: 目前这套gc方案和 记忆提取冲突么？",
+    "shadowRawTranscript": "t10 user: 很不错， 这一项是memory core的 非常棒的能力； 需要在文档中重点说明下； 同时这条线也会是持续优化的主线之一；\nt12 user: 目前这套gc方案和 记忆提取冲突么？",
+    "semanticPinNotes": [],
+    "archiveSummary": "Stage 11 was concluded as truly closed after excluding the Codex-side issue. A follow-up A/B test was proposed and executed around Context Minor GC under long-context pressure using a practical threshold proxy rather than literal 268k*80%. The reported result was that GC could pull prompt usage back below a danger threshold and delay/avoid compaction versus the baseline. The user marked this as a key Memory Core capability, asked for it to be emphasized in documentation, and identified it as an ongoing optimization mainline. Documentation was then said to be updated accordingly.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 277,
+    "shadowRawPromptEstimate": 25,
+    "shadowPackageEstimate": 30,
+    "shadowPackageText": "Recent raw context:\nt10 user: 很不错， 这一项是memory core的 非常棒的能力； 需要在文档中重点说明下； 同时这条线也会是持续优化的主线之一；\nt12 user: 目前这套gc方案和 记忆提取冲突么？"
+  },
+  "scorecard": {
+    "relation": "switch",
+    "baselineTurnCount": 12,
+    "keptTurnCount": 2,
+    "evictedTurnCount": 10,
+    "pinCount": 1,
+    "baselinePromptEstimate": 277,
+    "shadowRawPromptEstimate": 25,
+    "shadowPackageEstimate": 30,
+    "rawReductionRatio": 0.9146,
+    "packageReductionRatio": 0.8917,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 15858,
+    "totalElapsedMs": 15861,
+    "guardedEnabled": true,
+    "guardedApplied": true,
+    "guardedReason": "guarded_candidate",
+    "guardedMessageCount": 2,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 21
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": true,
+    "reason": "guarded_candidate",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": "很不错， 这一项是memory core的 非常棒的能力； 需要在文档中重点说明下； 同时这条线也会是持续优化的主线之一；"
+      },
+      {
+        "role": "user",
+        "content": "目前这套gc方案和 记忆提取冲突么？"
+      }
+    ],
+    "filteredMessageCount": 2,
+    "filteredMessageTokenEstimate": 21,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      10
+    ]
+  },
+  "timings": {
+    "totalElapsedMs": 15862,
+    "decisionElapsedMs": 15858
+  }
+}

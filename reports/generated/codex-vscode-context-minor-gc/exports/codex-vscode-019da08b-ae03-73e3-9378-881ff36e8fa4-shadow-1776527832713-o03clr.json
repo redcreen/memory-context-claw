@@ -1,0 +1,282 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776527832713-o03clr",
+  "generated_at": "2026-04-18T15:57:12.713Z",
+  "session_key": "codex:vscode:019da08b-ae03-73e3-9378-881ff36e8fa4",
+  "agent_id": "main",
+  "query": "你给的时间，和我电脑的时间怎么不匹配？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "ctx error 是什么情况：？"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "`Ctx: error` 的意思很直接： `独立扩展在刷新 context 大小时失败了。`"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "需要"
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "已经补上了。 现在独立扩展会把这几种情况明确分开："
+    },
+    {
+      "id": "t5",
+      "role": "user",
+      "content": "# Context Refresh Failed workspace: /Users/redcreen/Project/unified-memory-core Command failed: /Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper (Plugin).app/Contents/MacOS/Code Helper (Plugin) scripts/codex-vscode-context-minor-gc.js --format size Each VS Code window refreshes its own workspace independently."
+    },
+    {
+      "id": "t6",
+      "role": "assistant",
+      "content": "根因就是你贴出来的这句： ```text /Applications/Visual Studio Code.app/.../Code Helper (Plugin) scripts/codex-vscode-context-minor-gc.js --format size ```"
+    },
+    {
+      "id": "t7",
+      "role": "user",
+      "content": "# Context Refresh Failed workspace: /Users/redcreen/Project/unified-memory-core Command failed: /usr/local/bin/node scripts/codex-vscode-context-minor-gc.js --format size Each VS Code window refreshes its own workspace independently."
+    },
+    {
+      "id": "t8",
+      "role": "assistant",
+      "content": "我已经把这个问题修到根上了。 根因不是 node 路径了，而是状态栏刷新走了完整 GC 判定链路，导致扩展里看起来像“点击没反应 / 刷新失败”。现在我把状态栏和详情窗口改成了 `host-only fast path`："
+    },
+    {
+      "id": "t9",
+      "role": "user",
+      "content": "为什么 codex插件里是 486k，你给的是258k？"
+    },
+    {
+      "id": "t10",
+      "role": "assistant",
+      "content": "因为我这里的监控脚本把窗口上限 `主动 clamp 到了 258k`，而 Codex 插件显示的是它自己上报的 `reported model_context_window`，大约 `486k`。 代码里就是这么写的："
+    },
+    {
+      "id": "t11",
+      "role": "user",
+      "content": "需要；"
+    },
+    {
+      "id": "t12",
+      "role": "user",
+      "content": "你给的时间，和我电脑的时间怎么不匹配？"
+    }
+  ],
+  "decision": {
+    "relation": "switch",
+    "confidence": 0.86,
+    "evict_turn_ids": [
+      "t1",
+      "t2",
+      "t3",
+      "t4",
+      "t5",
+      "t6",
+      "t7",
+      "t8",
+      "t9",
+      "t10",
+      "t11"
+    ],
+    "pin_turn_ids": [],
+    "archive_summary": "Earlier topic was VS Code Codex context refresh and context-size mismatches in the unified-memory-core workspace. The assistant explained and claimed fixes for refresh-failed behavior and for the 486k vs 258k discrepancy. That block appears resolved. The latest user turn shifts to a new issue: why the assistant-reported time does not match the user's computer time.",
+    "reasoning_summary": "The active topic changed from context-refresh/context-size debugging to a new time-mismatch question. The prior block looks solved enough to leave the next-turn raw prompt. There are no clear durable user facts or unresolved tasks in the transcript that need pinning."
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "switch",
+      "confidence": 0.86,
+      "archiveSummary": "Earlier topic was VS Code Codex context refresh and context-size mismatches in the unified-memory-core workspace. The assistant explained and claimed fixes for refresh-failed behavior and for the 486k vs 258k discrepancy. That block appears resolved. The latest user turn shifts to a new issue: why the assistant-reported time does not match the user's computer time.",
+      "reasoningSummary": "The active topic changed from context-refresh/context-size debugging to a new time-mismatch question. The prior block looks solved enough to leave the next-turn raw prompt. There are no clear durable user facts or unresolved tasks in the transcript that need pinning.",
+      "latestUserTurnId": "t12",
+      "pinTurnIds": [],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8",
+        "t9",
+        "t10",
+        "t11"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8",
+        "t9",
+        "t10",
+        "t11"
+      ],
+      "keepTurnIds": [
+        "t12"
+      ],
+      "baselineTokens": 272,
+      "keptTokens": 5,
+      "prunedTokens": 267,
+      "reductionRatio": 0.9816176470588235,
+      "keepTurns": [
+        {
+          "id": "t12",
+          "role": "user",
+          "content": "你给的时间，和我电脑的时间怎么不匹配？",
+          "tokenEstimate": 5
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "ctx error 是什么情况：？",
+          "tokenEstimate": 5
+        },
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "`Ctx: error` 的意思很直接： `独立扩展在刷新 context 大小时失败了。`",
+          "tokenEstimate": 12
+        },
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "需要",
+          "tokenEstimate": 1
+        },
+        {
+          "id": "t4",
+          "role": "assistant",
+          "content": "已经补上了。 现在独立扩展会把这几种情况明确分开：",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t5",
+          "role": "user",
+          "content": "# Context Refresh Failed workspace: /Users/redcreen/Project/unified-memory-core Command failed: /Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper (Plugin).app/Contents/MacOS/Code Helper (Plugin) scripts/codex-vscode-context-minor-gc.js --format size Each VS Code window refreshes its own workspace independently.",
+          "tokenEstimate": 83
+        },
+        {
+          "id": "t6",
+          "role": "assistant",
+          "content": "根因就是你贴出来的这句： ```text /Applications/Visual Studio Code.app/.../Code Helper (Plugin) scripts/codex-vscode-context-minor-gc.js --format size ```",
+          "tokenEstimate": 36
+        },
+        {
+          "id": "t7",
+          "role": "user",
+          "content": "# Context Refresh Failed workspace: /Users/redcreen/Project/unified-memory-core Command failed: /usr/local/bin/node scripts/codex-vscode-context-minor-gc.js --format size Each VS Code window refreshes its own workspace independently.",
+          "tokenEstimate": 59
+        },
+        {
+          "id": "t8",
+          "role": "assistant",
+          "content": "我已经把这个问题修到根上了。 根因不是 node 路径了，而是状态栏刷新走了完整 GC 判定链路，导致扩展里看起来像“点击没反应 / 刷新失败”。现在我把状态栏和详情窗口改成了 `host-only fast path`：",
+          "tokenEstimate": 28
+        },
+        {
+          "id": "t9",
+          "role": "user",
+          "content": "为什么 codex插件里是 486k，你给的是258k？",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t10",
+          "role": "assistant",
+          "content": "因为我这里的监控脚本把窗口上限 `主动 clamp 到了 258k`，而 Codex 插件显示的是它自己上报的 `reported model_context_window`，大约 `486k`。 代码里就是这么写的：",
+          "tokenEstimate": 28
+        },
+        {
+          "id": "t11",
+          "role": "user",
+          "content": "需要；",
+          "tokenEstimate": 1
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: ctx error 是什么情况：？\nt2 assistant: `Ctx: error` 的意思很直接： `独立扩展在刷新 context 大小时失败了。`\nt3 user: 需要\nt4 assistant: 已经补上了。 现在独立扩展会把这几种情况明确分开：\nt5 user: # Context Refresh Failed workspace: /Users/redcreen/Project/unified-memory-core Command failed: /Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper (Plugin).app/Contents/MacOS/Code Helper (Plugin) scripts/codex-vscode-context-minor-gc.js --format size Each VS Code window refreshes its own workspace independently.\nt6 assistant: 根因就是你贴出来的这句： ```text /Applications/Visual Studio Code.app/.../Code Helper (Plugin) scripts/codex-vscode-context-minor-gc.js --format size ```\nt7 user: # Context Refresh Failed workspace: /Users/redcreen/Project/unified-memory-core Command failed: /usr/local/bin/node scripts/codex-vscode-context-minor-gc.js --format size Each VS Code window refreshes its own workspace independently.\nt8 assistant: 我已经把这个问题修到根上了。 根因不是 node 路径了，而是状态栏刷新走了完整 GC 判定链路，导致扩展里看起来像“点击没反应 / 刷新失败”。现在我把状态栏和详情窗口改成了 `host-only fast path`：\nt9 user: 为什么 codex插件里是 486k，你给的是258k？\nt10 assistant: 因为我这里的监控脚本把窗口上限 `主动 clamp 到了 258k`，而 Codex 插件显示的是它自己上报的 `reported model_context_window`，大约 `486k`。 代码里就是这么写的：\nt11 user: 需要；\nt12 user: 你给的时间，和我电脑的时间怎么不匹配？",
+    "shadowRawTranscript": "t12 user: 你给的时间，和我电脑的时间怎么不匹配？",
+    "semanticPinNotes": [],
+    "archiveSummary": "Earlier topic was VS Code Codex context refresh and context-size mismatches in the unified-memory-core workspace. The assistant explained and claimed fixes for refresh-failed behavior and for the 486k vs 258k discrepancy. That block appears resolved. The latest user turn shifts to a new issue: why the assistant-reported time does not match the user's computer time.",
+    "injectedArchiveSummary": "Earlier topic was VS Code Codex context refresh and context-size mismatches in the unified-memor...",
+    "baselinePromptEstimate": 303,
+    "shadowRawPromptEstimate": 8,
+    "shadowPackageEstimate": 70,
+    "shadowPackageText": "Task state summary:\nEarlier topic was VS Code Codex context refresh and context-size mismatches in the unified-memory-core workspace. The assistant explained and claimed fixes for refresh-failed behavior and for the 486k vs 258k discrepanc…\n\nLatest user ask:\n- 你给的时间，和我电脑的时间怎么不匹配？"
+  },
+  "scorecard": {
+    "relation": "switch",
+    "baselineTurnCount": 12,
+    "keptTurnCount": 1,
+    "evictedTurnCount": 11,
+    "pinCount": 0,
+    "baselinePromptEstimate": 303,
+    "shadowRawPromptEstimate": 8,
+    "shadowPackageEstimate": 70,
+    "rawReductionRatio": 0.9816,
+    "packageReductionRatio": 0.769,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 25616,
+    "totalElapsedMs": 25618,
+    "guardedEnabled": true,
+    "guardedApplied": true,
+    "guardedReason": "guarded_candidate",
+    "guardedMessageCount": 1,
+    "guardedCarryForwardEstimate": 31,
+    "guardedFilteredMessageEstimate": 5
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": true,
+    "reason": "guarded_candidate",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": "你给的时间，和我电脑的时间怎么不匹配？"
+      }
+    ],
+    "filteredMessageCount": 1,
+    "filteredMessageTokenEstimate": 5,
+    "carryForwardText": "Archived topic summary:\nEarlier topic was VS Code Codex context refresh and context-size mismatches in the unified-memor...",
+    "carryForwardEstimate": 31,
+    "evictedSourceIndices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ]
+  },
+  "timings": {
+    "totalElapsedMs": 25618,
+    "decisionElapsedMs": 25616
+  }
+}

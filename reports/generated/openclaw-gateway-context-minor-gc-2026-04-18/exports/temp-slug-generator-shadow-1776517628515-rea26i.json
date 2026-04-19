@@ -1,0 +1,54 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776517628515-rea26i",
+  "generated_at": "2026-04-18T13:07:08.515Z",
+  "session_key": "temp:slug-generator",
+  "agent_id": "main",
+  "query": "Based on this conversation, generate a short 1-2 word filename slug (lowercase, hyphen-separated, no file extension).\n\nConversation summary:\nuser: task-system runtime context:\n- session: agent:health:feishu:direct:ou_9494ebadf9329adf57debffdad74a398\n- task: task_87332cc746ac438082e58fd37ebc709c\n- mode: tool-first-after-first-ack\n- follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup\n- future-first default: main_user_content_mode=none\n- runtime chooses none / immediate-summary / full-answer for current-turn business content\n- immediate-summary must be one short business-facing line\n- never expose scheduling, promise, or tool-chain state to users\n- include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work\n- never promise a future reply unless task-system tools succeeded\n\nSystem: [2026-04-18 10:37:26 GMT+8] Feishu[feishu5-health] DM | 刘超 (ou_9494ebadf9329adf57debffdad74a398) [msg:om_x100b511aa89dfca0c10ed900b6e697c]\n\nConversation info (untrusted metadata):\n```json\n{\n  \"message_id\": \"om_x100b511aa89dfca0c10ed900b6e697c\",\n  \"sender_id\": \"ou_9494ebadf9329adf57debffdad74a398\",\n  \"sender\": \"刘超\",\n  \"timestamp\": \"Sat 2026-04-18 10:37 GMT+8\"\n}\n```\n\nSender (untrusted metadata):\n```json\n{\n  \"label\": \"刘超 (ou_9494ebadf9329adf57debffdad74a398)\",\n  \"id\": \"ou_9494ebadf9329adf57debffdad74a398\",\n  \"name\": \"刘超\"\n}\n```\n\n在\nassistant: 在。\nuser: task-system runtime context:\n- session: agent:health:feishu:direct:ou_9494ebadf9329adf57debffdad74a398\n- task: task_f9acbd6661e747269c8eeca967c1b62b\n- mode: tool-first-after-first-ack\n- follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup\n- future-first default: main_user_content_mode=none\n- runtime chooses none / immediate-summary / full-answer for current-turn business content\n- immediate-summary must be one short business-facing line\n- never expose scheduling, promise, or tool-chain state to users\n- include followup_summary and absolute RFC3339 followup_due_at when planning follow-up w\n\nReply with ONLY the slug, nothing else. Examples: \"vendor-pitch\", \"api-design\", \"bug-fix\"",
+  "status": "skipped",
+  "reason": "not_enough_turns",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [],
+  "decision": null,
+  "decision_transport": "",
+  "snapshot": null,
+  "scorecard": {
+    "relation": "",
+    "baselineTurnCount": 0,
+    "keptTurnCount": 0,
+    "evictedTurnCount": 0,
+    "pinCount": 0,
+    "baselinePromptEstimate": 0,
+    "shadowRawPromptEstimate": 0,
+    "shadowPackageEstimate": 0,
+    "rawReductionRatio": 0,
+    "packageReductionRatio": 0,
+    "candidateLoadElapsedMs": 14,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 0,
+    "totalElapsedMs": 0,
+    "guardedEnabled": false,
+    "guardedApplied": false,
+    "guardedReason": "feature_disabled",
+    "guardedMessageCount": 0,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 0
+  },
+  "guarded": {
+    "enabled": false,
+    "applied": false,
+    "reason": "feature_disabled",
+    "filteredMessageCount": 0,
+    "filteredMessageTokenEstimate": 0,
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 0,
+    "decisionElapsedMs": 0
+  }
+}

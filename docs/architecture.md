@@ -37,15 +37,16 @@ At this point the repo has two top-priority milestone tracks:
 
 The second track is now first-class. It is not just an adapter polish item.
 
-From the roadmap perspective, that line has now closed as `Stage 11`, and the repo has moved into:
+From the roadmap perspective, that line has now reopened `Stage 11`, and the repo is still in:
 
-- `Stage 12: Realtime Memory Intent Productization`
+- `Stage 11: Context Minor GC And Codex Integration`
 
 That boundary matters:
 
 - Stage 6 / 7 / 9 remain completed historical OpenClaw-side themes
-- `Stage 11` already closed `Context Minor GC` across OpenClaw + Codex
-- the most important new item is no longer the Codex bridge; it is productizing realtime governed memory intake
+- `Stage 11` already proved the capability side of `Context Minor GC` across OpenClaw + Codex
+- the current blocker is that users still do not feel it clearly enough
+- `Stage 12` remains the next separate theme rather than the current mainline
 
 Context optimization currently means several coordinated architecture surfaces:
 
@@ -65,8 +66,8 @@ Current state:
 - Stage 6 remains `default-off` and shadow-only as the measurement surface
 - Stage 9 guarded smart-path is also closed, but stays `default-off` / opt-in only
 - the public workstream name for this turn-by-turn context path is now `Context Minor GC`
-- `Stage 11` is now closed: GC is usable and users can already see clear gain
-- the current umbrella stage is `Stage 12`: turn realtime `memory_intent` / `memory_extraction` / accepted-action into one clearer product surface
+- `Stage 11` is now reopened: GC is usable, but the earlier “users can already clearly feel the gain” conclusion has been rolled back
+- the current umbrella stage is still `Stage 11`; `Stage 12` remains the next separate product line
 - the preferred implementation path is no longer an OpenClaw patch first; it is to turn the `memory + context decision` transport / scorecard / guarded seam into a cross-host contract
 - the daily-product target is now explicit: normal sessions should stay sustainable through per-turn context management instead of treating compat / compact as a normal hot-path dependency; compat / compact remains only a nightly or background safety net
 

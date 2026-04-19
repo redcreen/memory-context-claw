@@ -1,0 +1,223 @@
+{
+  "schema_version": "umc.codex-context-minor-gc.v1",
+  "generated_at": "2026-04-18T16:09:35.948Z",
+  "event_id": "shadow-1776528558786-sb1vrv-codex-packaged",
+  "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+  "query": "需要； 我希望是直接在这个窗口来测试，可以么？",
+  "status": "captured",
+  "reason": "",
+  "decision_transport": "codex_exec",
+  "relation": "continue",
+  "applied": true,
+  "codex_guard_reason": "codex_packaged_guard",
+  "prompt_reduction_ratio": 0.4803,
+  "baseline_context_estimate": 152,
+  "packaged_context_estimate": 79,
+  "effective_context_estimate": 79,
+  "shadow_status": "captured",
+  "shadow_guarded_applied": true,
+  "shadow_guarded_reason": "guarded_candidate",
+  "shadow_export_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da152-4841-76f2-adc4-b01a85d15a88-shadow-1776528558786-sb1vrv.json",
+  "shadow_summary_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl",
+  "export_path": "exports/codex-vscode-019da152-4841-76f2-adc4-b01a85d15a88-shadow-1776528558786-sb1vrv-codex-packaged.json",
+  "effective_context_block": "## Context Minor GC Working Set\nTask state summary:\nEarlier resolved block: user asked why context data looked wrong and whether GC now runs every turn; answer explained GC is evaluated each turn but only applied when conditions are met, and a new conversation with too f…\n\nLatest user ask:\n- 需要； 我希望是直接在这个窗口来测试，可以么？",
+  "packaged_context_block": "## Context Minor GC Working Set\nTask state summary:\nEarlier resolved block: user asked why context data looked wrong and whether GC now runs every turn; answer explained GC is evaluated each turn but only applied when conditions are met, and a new conversation with too f…\n\nLatest user ask:\n- 需要； 我希望是直接在这个窗口来测试，可以么？",
+  "shadow_event": {
+    "schema_version": "umc.dialogue-working-set-shadow.v1",
+    "event_id": "shadow-1776528558786-sb1vrv",
+    "generated_at": "2026-04-18T16:09:18.786Z",
+    "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+    "agent_id": "main",
+    "query": "需要； 我希望是直接在这个窗口来测试，可以么？",
+    "status": "captured",
+    "reason": "",
+    "sampling": {
+      "max_turns": 12,
+      "min_turns": 3,
+      "max_chars_per_turn": 900
+    },
+    "transcript": [
+      {
+        "id": "t1",
+        "role": "user",
+        "content": "新的对话，也还是在umc项目里， 为什么context数据不对；"
+      },
+      {
+        "id": "t2",
+        "role": "user",
+        "content": "现在每一轮的context 已经能够正常gc了么"
+      },
+      {
+        "id": "t3",
+        "role": "assistant",
+        "content": "不是“每一轮都会压缩”，但现在看起来已经是“每一轮都会评估，满足条件就正常 GC 应用”。 这轮之所以没压，是因为这是新对话，抽出来的 turn 不够。代码里 `minTurns` 默认是 `3`，少于 3 就直接 `not_enough_turns`，见 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/cod…"
+      },
+      {
+        "id": "t4",
+        "role": "user",
+        "content": "那接下来 我要怎么测试 gc 在正常工作，并且明显做了选择，至少一个连续对话里，应该能够控制好 context的大小；或者换了换题之后 context应该减小； 你需要帮我设计一下案例；"
+      },
+      {
+        "id": "t5",
+        "role": "assistant",
+        "content": "可以，建议你分成两层测：`VS Code 手工验收` + `仓库脚本回放`。这样能同时回答两件事：一是“真实使用时 context 会不会被控制住”，二是“GC 的选择是不是符合设计”。 **先看什么** 每次都盯这几个信号就够了："
+      },
+      {
+        "id": "t6",
+        "role": "user",
+        "content": "需要； 我希望是直接在这个窗口来测试，可以么？"
+      }
+    ],
+    "decision": {
+      "relation": "continue",
+      "confidence": 0.95,
+      "evict_turn_ids": [
+        "t1",
+        "t2",
+        "t3"
+      ],
+      "pin_turn_ids": [],
+      "archive_summary": "Earlier resolved block: user asked why context data looked wrong and whether GC now runs every turn; answer explained GC is evaluated each turn but only applied when conditions are met, and a new conversation with too few turns can skip compression because minTurns defaults to 3. Active unresolved topic remains designing a direct in-window test scenario for verifying GC behavior and visible context-size reduction.",
+      "reasoning_summary": "The latest user turn continues the active GC-testing thread from t4-t5, specifically asking whether the proposed test can be run directly in this same window. t4 and t5 should remain raw because the next response depends on that testing-plan context. t1-t3 are a resolved diagnostic subthread and are not needed to answer the current question."
+    },
+    "decision_transport": "codex_exec",
+    "snapshot": {
+      "applied": {
+        "relation": "continue",
+        "confidence": 0.95,
+        "archiveSummary": "Earlier resolved block: user asked why context data looked wrong and whether GC now runs every turn; answer explained GC is evaluated each turn but only applied when conditions are met, and a new conversation with too few turns can skip compression because minTurns defaults to 3. Active unresolved topic remains designing a direct in-window test scenario for verifying GC behavior and visible context-size reduction.",
+        "reasoningSummary": "The latest user turn continues the active GC-testing thread from t4-t5, specifically asking whether the proposed test can be run directly in this same window. t4 and t5 should remain raw because the next response depends on that testing-plan context. t1-t3 are a resolved diagnostic subthread and are not needed to answer the current question.",
+        "latestUserTurnId": "t6",
+        "pinTurnIds": [],
+        "pinnedOnlyTurnIds": [],
+        "requestedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3"
+        ],
+        "blockedEvictTurnIds": [],
+        "appliedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3"
+        ],
+        "keepTurnIds": [
+          "t4",
+          "t5",
+          "t6"
+        ],
+        "baselineTokens": 128,
+        "keptTokens": 59,
+        "prunedTokens": 69,
+        "reductionRatio": 0.5390625,
+        "keepTurns": [
+          {
+            "id": "t4",
+            "role": "user",
+            "content": "那接下来 我要怎么测试 gc 在正常工作，并且明显做了选择，至少一个连续对话里，应该能够控制好 context的大小；或者换了换题之后 context应该减小； 你需要帮我设计一下案例；",
+            "tokenEstimate": 24
+          },
+          {
+            "id": "t5",
+            "role": "assistant",
+            "content": "可以，建议你分成两层测：`VS Code 手工验收` + `仓库脚本回放`。这样能同时回答两件事：一是“真实使用时 context 会不会被控制住”，二是“GC 的选择是不是符合设计”。 **先看什么** 每次都盯这几个信号就够了：",
+            "tokenEstimate": 29
+          },
+          {
+            "id": "t6",
+            "role": "user",
+            "content": "需要； 我希望是直接在这个窗口来测试，可以么？",
+            "tokenEstimate": 6
+          }
+        ],
+        "evictedTurns": [
+          {
+            "id": "t1",
+            "role": "user",
+            "content": "新的对话，也还是在umc项目里， 为什么context数据不对；",
+            "tokenEstimate": 8
+          },
+          {
+            "id": "t2",
+            "role": "user",
+            "content": "现在每一轮的context 已经能够正常gc了么",
+            "tokenEstimate": 6
+          },
+          {
+            "id": "t3",
+            "role": "assistant",
+            "content": "不是“每一轮都会压缩”，但现在看起来已经是“每一轮都会评估，满足条件就正常 GC 应用”。 这轮之所以没压，是因为这是新对话，抽出来的 turn 不够。代码里 `minTurns` 默认是 `3`，少于 3 就直接 `not_enough_turns`，见 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/cod…",
+            "tokenEstimate": 55
+          }
+        ]
+      },
+      "baselineRawTranscript": "t1 user: 新的对话，也还是在umc项目里， 为什么context数据不对；\nt2 user: 现在每一轮的context 已经能够正常gc了么\nt3 assistant: 不是“每一轮都会压缩”，但现在看起来已经是“每一轮都会评估，满足条件就正常 GC 应用”。 这轮之所以没压，是因为这是新对话，抽出来的 turn 不够。代码里 `minTurns` 默认是 `3`，少于 3 就直接 `not_enough_turns`，见 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/cod…\nt4 user: 那接下来 我要怎么测试 gc 在正常工作，并且明显做了选择，至少一个连续对话里，应该能够控制好 context的大小；或者换了换题之后 context应该减小； 你需要帮我设计一下案例；\nt5 assistant: 可以，建议你分成两层测：`VS Code 手工验收` + `仓库脚本回放`。这样能同时回答两件事：一是“真实使用时 context 会不会被控制住”，二是“GC 的选择是不是符合设计”。 **先看什么** 每次都盯这几个信号就够了：\nt6 user: 需要； 我希望是直接在这个窗口来测试，可以么？",
+      "shadowRawTranscript": "t4 user: 那接下来 我要怎么测试 gc 在正常工作，并且明显做了选择，至少一个连续对话里，应该能够控制好 context的大小；或者换了换题之后 context应该减小； 你需要帮我设计一下案例；\nt5 assistant: 可以，建议你分成两层测：`VS Code 手工验收` + `仓库脚本回放`。这样能同时回答两件事：一是“真实使用时 context 会不会被控制住”，二是“GC 的选择是不是符合设计”。 **先看什么** 每次都盯这几个信号就够了：\nt6 user: 需要； 我希望是直接在这个窗口来测试，可以么？",
+      "semanticPinNotes": [],
+      "archiveSummary": "Earlier resolved block: user asked why context data looked wrong and whether GC now runs every turn; answer explained GC is evaluated each turn but only applied when conditions are met, and a new conversation with too few turns can skip compression because minTurns defaults to 3. Active unresolved topic remains designing a direct in-window test scenario for verifying GC behavior and visible context-size reduction.",
+      "injectedArchiveSummary": "",
+      "baselinePromptEstimate": 145,
+      "shadowRawPromptEstimate": 67,
+      "shadowPackageEstimate": 71,
+      "shadowPackageText": "Task state summary:\nEarlier resolved block: user asked why context data looked wrong and whether GC now runs every turn; answer explained GC is evaluated each turn but only applied when conditions are met, and a new conversation with too f…\n\nLatest user ask:\n- 需要； 我希望是直接在这个窗口来测试，可以么？"
+    },
+    "scorecard": {
+      "relation": "continue",
+      "baselineTurnCount": 6,
+      "keptTurnCount": 3,
+      "evictedTurnCount": 3,
+      "pinCount": 0,
+      "baselinePromptEstimate": 145,
+      "shadowRawPromptEstimate": 67,
+      "shadowPackageEstimate": 71,
+      "rawReductionRatio": 0.5391,
+      "packageReductionRatio": 0.5103,
+      "candidateLoadElapsedMs": 0,
+      "assemblyBuildElapsedMs": 0,
+      "decisionElapsedMs": 17159,
+      "totalElapsedMs": 17161,
+      "guardedEnabled": true,
+      "guardedApplied": true,
+      "guardedReason": "guarded_candidate",
+      "guardedMessageCount": 3,
+      "guardedCarryForwardEstimate": 0,
+      "guardedFilteredMessageEstimate": 59
+    },
+    "guarded": {
+      "enabled": true,
+      "applied": true,
+      "reason": "guarded_candidate",
+      "filteredMessages": [
+        {
+          "role": "user",
+          "content": "那接下来 我要怎么测试 gc 在正常工作，并且明显做了选择，至少一个连续对话里，应该能够控制好 context的大小；或者换了换题之后 context应该减小； 你需要帮我设计一下案例；"
+        },
+        {
+          "role": "assistant",
+          "content": "可以，建议你分成两层测：`VS Code 手工验收` + `仓库脚本回放`。这样能同时回答两件事：一是“真实使用时 context 会不会被控制住”，二是“GC 的选择是不是符合设计”。 **先看什么** 每次都盯这几个信号就够了："
+        },
+        {
+          "role": "user",
+          "content": "需要； 我希望是直接在这个窗口来测试，可以么？"
+        }
+      ],
+      "filteredMessageCount": 3,
+      "filteredMessageTokenEstimate": 59,
+      "carryForwardText": "",
+      "carryForwardEstimate": 0,
+      "evictedSourceIndices": [
+        0,
+        1,
+        2
+      ]
+    },
+    "timings": {
+      "totalElapsedMs": 17161,
+      "decisionElapsedMs": 17159
+    },
+    "artifact_paths": {
+      "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da152-4841-76f2-adc4-b01a85d15a88-shadow-1776528558786-sb1vrv.json",
+      "summary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl"
+    }
+  }
+}

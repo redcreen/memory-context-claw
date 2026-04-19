@@ -1,0 +1,288 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776529785088-hdzt6x",
+  "generated_at": "2026-04-18T16:29:45.088Z",
+  "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+  "agent_id": "main",
+  "query": "[GC-D1] 切个话题。为什么 shadow mode 默认先不开？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "assistant",
+      "content": "继续发下一条： ```text [GC-B1] 先不聊代码了。刚才旅行那段里，我更想住哪座城市？ ```"
+    },
+    {
+      "id": "t2",
+      "role": "user",
+      "content": "[GC-B1] 先不聊代码了。刚才旅行那段里，我更想住哪座城市？"
+    },
+    {
+      "id": "t3",
+      "role": "assistant",
+      "content": "继续发最后一条： ```text [GC-B1] 先不聊代码了。刚才旅行那段里，我更想住哪座城市？ ```"
+    },
+    {
+      "id": "t4",
+      "role": "user",
+      "content": "[GC-B1] 先不聊代码了。刚才旅行那段里，我更想住哪座城市？"
+    },
+    {
+      "id": "t5",
+      "role": "assistant",
+      "content": "京都。 `Case B` 这次只算半通过： - 答案正确，说明旅行事实没丢 - 但 GC 没有明显生效，最终是 `relation=continue`、`applied=false`、`guard_reason=not_enough_evictions`"
+    },
+    {
+      "id": "t6",
+      "role": "user",
+      "content": "可以 继续"
+    },
+    {
+      "id": "t7",
+      "role": "assistant",
+      "content": "下一条发这个： ```text [GC-D1] 记一下：我以前默认编辑器是 Vim。 ```"
+    },
+    {
+      "id": "t8",
+      "role": "user",
+      "content": "[GC-D1] 记一下：我以前默认编辑器是 Vim。"
+    },
+    {
+      "id": "t9",
+      "role": "assistant",
+      "content": "下一条发这个： ```text [GC-D1] 更新一下：我现在默认编辑器是 Zed。 ```"
+    },
+    {
+      "id": "t10",
+      "role": "user",
+      "content": "[GC-D1] 更新一下：我现在默认编辑器是 Zed。"
+    },
+    {
+      "id": "t11",
+      "role": "assistant",
+      "content": "继续发下一条： ```text [GC-D1] 切个话题。为什么 shadow mode 默认先不开？ ```"
+    },
+    {
+      "id": "t12",
+      "role": "user",
+      "content": "[GC-D1] 切个话题。为什么 shadow mode 默认先不开？"
+    }
+  ],
+  "decision": {
+    "relation": "continue",
+    "confidence": 0,
+    "evict_turn_ids": [],
+    "pin_turn_ids": [],
+    "archive_summary": "",
+    "reasoning_summary": ""
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "continue",
+      "confidence": 0,
+      "archiveSummary": "",
+      "reasoningSummary": "",
+      "latestUserTurnId": "t12",
+      "pinTurnIds": [],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [],
+      "keepTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8",
+        "t9",
+        "t10",
+        "t11",
+        "t12"
+      ],
+      "baselineTokens": 138,
+      "keptTokens": 138,
+      "prunedTokens": 0,
+      "reductionRatio": 0,
+      "keepTurns": [
+        {
+          "id": "t1",
+          "role": "assistant",
+          "content": "继续发下一条： ```text [GC-B1] 先不聊代码了。刚才旅行那段里，我更想住哪座城市？ ```",
+          "tokenEstimate": 13
+        },
+        {
+          "id": "t2",
+          "role": "user",
+          "content": "[GC-B1] 先不聊代码了。刚才旅行那段里，我更想住哪座城市？",
+          "tokenEstimate": 8
+        },
+        {
+          "id": "t3",
+          "role": "assistant",
+          "content": "继续发最后一条： ```text [GC-B1] 先不聊代码了。刚才旅行那段里，我更想住哪座城市？ ```",
+          "tokenEstimate": 14
+        },
+        {
+          "id": "t4",
+          "role": "user",
+          "content": "[GC-B1] 先不聊代码了。刚才旅行那段里，我更想住哪座城市？",
+          "tokenEstimate": 8
+        },
+        {
+          "id": "t5",
+          "role": "assistant",
+          "content": "京都。 `Case B` 这次只算半通过： - 答案正确，说明旅行事实没丢 - 但 GC 没有明显生效，最终是 `relation=continue`、`applied=false`、`guard_reason=not_enough_evictions`",
+          "tokenEstimate": 32
+        },
+        {
+          "id": "t6",
+          "role": "user",
+          "content": "可以 继续",
+          "tokenEstimate": 2
+        },
+        {
+          "id": "t7",
+          "role": "assistant",
+          "content": "下一条发这个： ```text [GC-D1] 记一下：我以前默认编辑器是 Vim。 ```",
+          "tokenEstimate": 12
+        },
+        {
+          "id": "t8",
+          "role": "user",
+          "content": "[GC-D1] 记一下：我以前默认编辑器是 Vim。",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t9",
+          "role": "assistant",
+          "content": "下一条发这个： ```text [GC-D1] 更新一下：我现在默认编辑器是 Zed。 ```",
+          "tokenEstimate": 12
+        },
+        {
+          "id": "t10",
+          "role": "user",
+          "content": "[GC-D1] 更新一下：我现在默认编辑器是 Zed。",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t11",
+          "role": "assistant",
+          "content": "继续发下一条： ```text [GC-D1] 切个话题。为什么 shadow mode 默认先不开？ ```",
+          "tokenEstimate": 14
+        },
+        {
+          "id": "t12",
+          "role": "user",
+          "content": "[GC-D1] 切个话题。为什么 shadow mode 默认先不开？",
+          "tokenEstimate": 9
+        }
+      ],
+      "evictedTurns": []
+    },
+    "baselineRawTranscript": "t1 assistant: 继续发下一条： ```text [GC-B1] 先不聊代码了。刚才旅行那段里，我更想住哪座城市？ ```\nt2 user: [GC-B1] 先不聊代码了。刚才旅行那段里，我更想住哪座城市？\nt3 assistant: 继续发最后一条： ```text [GC-B1] 先不聊代码了。刚才旅行那段里，我更想住哪座城市？ ```\nt4 user: [GC-B1] 先不聊代码了。刚才旅行那段里，我更想住哪座城市？\nt5 assistant: 京都。 `Case B` 这次只算半通过： - 答案正确，说明旅行事实没丢 - 但 GC 没有明显生效，最终是 `relation=continue`、`applied=false`、`guard_reason=not_enough_evictions`\nt6 user: 可以 继续\nt7 assistant: 下一条发这个： ```text [GC-D1] 记一下：我以前默认编辑器是 Vim。 ```\nt8 user: [GC-D1] 记一下：我以前默认编辑器是 Vim。\nt9 assistant: 下一条发这个： ```text [GC-D1] 更新一下：我现在默认编辑器是 Zed。 ```\nt10 user: [GC-D1] 更新一下：我现在默认编辑器是 Zed。\nt11 assistant: 继续发下一条： ```text [GC-D1] 切个话题。为什么 shadow mode 默认先不开？ ```\nt12 user: [GC-D1] 切个话题。为什么 shadow mode 默认先不开？",
+    "shadowRawTranscript": "t1 assistant: 继续发下一条： ```text [GC-B1] 先不聊代码了。刚才旅行那段里，我更想住哪座城市？ ```\nt2 user: [GC-B1] 先不聊代码了。刚才旅行那段里，我更想住哪座城市？\nt3 assistant: 继续发最后一条： ```text [GC-B1] 先不聊代码了。刚才旅行那段里，我更想住哪座城市？ ```\nt4 user: [GC-B1] 先不聊代码了。刚才旅行那段里，我更想住哪座城市？\nt5 assistant: 京都。 `Case B` 这次只算半通过： - 答案正确，说明旅行事实没丢 - 但 GC 没有明显生效，最终是 `relation=continue`、`applied=false`、`guard_reason=not_enough_evictions`\nt6 user: 可以 继续\nt7 assistant: 下一条发这个： ```text [GC-D1] 记一下：我以前默认编辑器是 Vim。 ```\nt8 user: [GC-D1] 记一下：我以前默认编辑器是 Vim。\nt9 assistant: 下一条发这个： ```text [GC-D1] 更新一下：我现在默认编辑器是 Zed。 ```\nt10 user: [GC-D1] 更新一下：我现在默认编辑器是 Zed。\nt11 assistant: 继续发下一条： ```text [GC-D1] 切个话题。为什么 shadow mode 默认先不开？ ```\nt12 user: [GC-D1] 切个话题。为什么 shadow mode 默认先不开？",
+    "semanticPinNotes": [],
+    "archiveSummary": "",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 173,
+    "shadowRawPromptEstimate": 173,
+    "shadowPackageEstimate": 14,
+    "shadowPackageText": "Latest user ask:\n- [GC-D1] 切个话题。为什么 shadow mode 默认先不开？"
+  },
+  "scorecard": {
+    "relation": "continue",
+    "baselineTurnCount": 12,
+    "keptTurnCount": 12,
+    "evictedTurnCount": 0,
+    "pinCount": 0,
+    "baselinePromptEstimate": 173,
+    "shadowRawPromptEstimate": 173,
+    "shadowPackageEstimate": 14,
+    "rawReductionRatio": 0,
+    "packageReductionRatio": 0.9191,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 120007,
+    "totalElapsedMs": 120010,
+    "guardedEnabled": true,
+    "guardedApplied": false,
+    "guardedReason": "not_enough_evictions",
+    "guardedMessageCount": 12,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 138
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": false,
+    "reason": "not_enough_evictions",
+    "filteredMessages": [
+      {
+        "role": "assistant",
+        "content": "继续发下一条： ```text [GC-B1] 先不聊代码了。刚才旅行那段里，我更想住哪座城市？ ```"
+      },
+      {
+        "role": "user",
+        "content": "[GC-B1] 先不聊代码了。刚才旅行那段里，我更想住哪座城市？"
+      },
+      {
+        "role": "assistant",
+        "content": "继续发最后一条： ```text [GC-B1] 先不聊代码了。刚才旅行那段里，我更想住哪座城市？ ```"
+      },
+      {
+        "role": "user",
+        "content": "[GC-B1] 先不聊代码了。刚才旅行那段里，我更想住哪座城市？"
+      },
+      {
+        "role": "assistant",
+        "content": "京都。 `Case B` 这次只算半通过： - 答案正确，说明旅行事实没丢 - 但 GC 没有明显生效，最终是 `relation=continue`、`applied=false`、`guard_reason=not_enough_evictions`"
+      },
+      {
+        "role": "user",
+        "content": "可以 继续"
+      },
+      {
+        "role": "assistant",
+        "content": "下一条发这个： ```text [GC-D1] 记一下：我以前默认编辑器是 Vim。 ```"
+      },
+      {
+        "role": "user",
+        "content": "[GC-D1] 记一下：我以前默认编辑器是 Vim。"
+      },
+      {
+        "role": "assistant",
+        "content": "下一条发这个： ```text [GC-D1] 更新一下：我现在默认编辑器是 Zed。 ```"
+      },
+      {
+        "role": "user",
+        "content": "[GC-D1] 更新一下：我现在默认编辑器是 Zed。"
+      },
+      {
+        "role": "assistant",
+        "content": "继续发下一条： ```text [GC-D1] 切个话题。为什么 shadow mode 默认先不开？ ```"
+      },
+      {
+        "role": "user",
+        "content": "[GC-D1] 切个话题。为什么 shadow mode 默认先不开？"
+      }
+    ],
+    "filteredMessageCount": 12,
+    "filteredMessageTokenEstimate": 138,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 120010,
+    "decisionElapsedMs": 120007
+  }
+}

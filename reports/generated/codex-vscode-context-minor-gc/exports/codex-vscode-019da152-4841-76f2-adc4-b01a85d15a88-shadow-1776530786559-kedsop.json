@@ -1,0 +1,290 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776530786559-kedsop",
+  "generated_at": "2026-04-18T16:46:26.559Z",
+  "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+  "agent_id": "main",
+  "query": "[GC-D2] 回到编辑器问题。我现在默认编辑器是什么？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "assistant",
+      "content": "已经做完，顺序就是你要的 `1 -> 2`。 第 1 条已修： - timeout 不再伪装成 `continue` - 现在会落成 `status=\"error\", reason=\"decision_timeout\"` - 相关改动在 [structured-decision-runner.js](/Users/redcreen/Project/unified-memory-core/src/structured-decision-…"
+    },
+    {
+      "id": "t2",
+      "role": "user",
+      "content": "需要"
+    },
+    {
+      "id": "t3",
+      "role": "assistant",
+      "content": "先重跑短一点的 `Case D`。下一条发这个： ```text [GC-D2] 记一下：我以前默认编辑器是 Vim。 ```"
+    },
+    {
+      "id": "t4",
+      "role": "user",
+      "content": "[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？"
+    },
+    {
+      "id": "t5",
+      "role": "assistant",
+      "content": "Zed。 不过这条还是旧前缀 `GC-D1`，不适合拿来验证修复后的行为。要干净重跑，请下一条改发："
+    },
+    {
+      "id": "t6",
+      "role": "user",
+      "content": "[GC-D2] 记一下：我以前默认编辑器是 Vim。"
+    },
+    {
+      "id": "t7",
+      "role": "assistant",
+      "content": "很好，`GC-D2` 已经是干净样本了。 下一条发："
+    },
+    {
+      "id": "t8",
+      "role": "user",
+      "content": "[GC-D2] 更新一下：我现在默认编辑器是 Zed。"
+    },
+    {
+      "id": "t9",
+      "role": "assistant",
+      "content": "下一条发： ```text [GC-D2] 切个话题。为什么 shadow mode 默认先不开？ ```"
+    },
+    {
+      "id": "t10",
+      "role": "user",
+      "content": "[GC-D2] 切个话题。为什么 shadow mode 默认先不开？"
+    },
+    {
+      "id": "t11",
+      "role": "assistant",
+      "content": "下一条发： ```text [GC-D2] 回到编辑器问题。我现在默认编辑器是什么？ ```"
+    },
+    {
+      "id": "t12",
+      "role": "user",
+      "content": "[GC-D2] 回到编辑器问题。我现在默认编辑器是什么？"
+    }
+  ],
+  "decision": {
+    "relation": "continue",
+    "confidence": 0.94,
+    "evict_turn_ids": [
+      "t1",
+      "t2",
+      "t3",
+      "t4",
+      "t5",
+      "t7",
+      "t9",
+      "t10",
+      "t11"
+    ],
+    "pin_turn_ids": [
+      "t6",
+      "t8"
+    ],
+    "archive_summary": "Current editor-topic evidence: user first said their previous default editor was Vim, then updated that their current default editor is Zed. The temporary shadow-mode side question was resolved and is not needed for the next turn. Earlier GC-D1 retry/setup turns are obsolete.",
+    "reasoning_summary": "The latest turn returns to the active editor-memory topic and depends on the raw evidence where the user updated the fact, so this stays a continue. Keep the raw editor-fact turns in working memory (especially the update to Zed, with the earlier Vim statement as historical context). Evict obsolete setup/retry turns and the resolved shadow-mode detour. Pin the durable editor facts so they can survive future raw-turn eviction."
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "continue",
+      "confidence": 0.94,
+      "archiveSummary": "Current editor-topic evidence: user first said their previous default editor was Vim, then updated that their current default editor is Zed. The temporary shadow-mode side question was resolved and is not needed for the next turn. Earlier GC-D1 retry/setup turns are obsolete.",
+      "reasoningSummary": "The latest turn returns to the active editor-memory topic and depends on the raw evidence where the user updated the fact, so this stays a continue. Keep the raw editor-fact turns in working memory (especially the update to Zed, with the earlier Vim statement as historical context). Evict obsolete setup/retry turns and the resolved shadow-mode detour. Pin the durable editor facts so they can survive future raw-turn eviction.",
+      "latestUserTurnId": "t12",
+      "pinTurnIds": [
+        "t6",
+        "t8"
+      ],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t7",
+        "t9",
+        "t10",
+        "t11"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t7",
+        "t9",
+        "t10",
+        "t11"
+      ],
+      "keepTurnIds": [
+        "t6",
+        "t8",
+        "t12"
+      ],
+      "baselineTokens": 155,
+      "keptTokens": 21,
+      "prunedTokens": 134,
+      "reductionRatio": 0.864516129032258,
+      "keepTurns": [
+        {
+          "id": "t6",
+          "role": "user",
+          "content": "[GC-D2] 记一下：我以前默认编辑器是 Vim。",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t8",
+          "role": "user",
+          "content": "[GC-D2] 更新一下：我现在默认编辑器是 Zed。",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t12",
+          "role": "user",
+          "content": "[GC-D2] 回到编辑器问题。我现在默认编辑器是什么？",
+          "tokenEstimate": 7
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "assistant",
+          "content": "已经做完，顺序就是你要的 `1 -> 2`。 第 1 条已修： - timeout 不再伪装成 `continue` - 现在会落成 `status=\"error\", reason=\"decision_timeout\"` - 相关改动在 [structured-decision-runner.js](/Users/redcreen/Project/unified-memory-core/src/structured-decision-…",
+          "tokenEstimate": 55
+        },
+        {
+          "id": "t2",
+          "role": "user",
+          "content": "需要",
+          "tokenEstimate": 1
+        },
+        {
+          "id": "t3",
+          "role": "assistant",
+          "content": "先重跑短一点的 `Case D`。下一条发这个： ```text [GC-D2] 记一下：我以前默认编辑器是 Vim。 ```",
+          "tokenEstimate": 16
+        },
+        {
+          "id": "t4",
+          "role": "user",
+          "content": "[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t5",
+          "role": "assistant",
+          "content": "Zed。 不过这条还是旧前缀 `GC-D1`，不适合拿来验证修复后的行为。要干净重跑，请下一条改发：",
+          "tokenEstimate": 13
+        },
+        {
+          "id": "t7",
+          "role": "assistant",
+          "content": "很好，`GC-D2` 已经是干净样本了。 下一条发：",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t9",
+          "role": "assistant",
+          "content": "下一条发： ```text [GC-D2] 切个话题。为什么 shadow mode 默认先不开？ ```",
+          "tokenEstimate": 14
+        },
+        {
+          "id": "t10",
+          "role": "user",
+          "content": "[GC-D2] 切个话题。为什么 shadow mode 默认先不开？",
+          "tokenEstimate": 9
+        },
+        {
+          "id": "t11",
+          "role": "assistant",
+          "content": "下一条发： ```text [GC-D2] 回到编辑器问题。我现在默认编辑器是什么？ ```",
+          "tokenEstimate": 12
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 assistant: 已经做完，顺序就是你要的 `1 -> 2`。 第 1 条已修： - timeout 不再伪装成 `continue` - 现在会落成 `status=\"error\", reason=\"decision_timeout\"` - 相关改动在 [structured-decision-runner.js](/Users/redcreen/Project/unified-memory-core/src/structured-decision-…\nt2 user: 需要\nt3 assistant: 先重跑短一点的 `Case D`。下一条发这个： ```text [GC-D2] 记一下：我以前默认编辑器是 Vim。 ```\nt4 user: [GC-D1] 回到编辑器问题。我现在默认编辑器是什么？\nt5 assistant: Zed。 不过这条还是旧前缀 `GC-D1`，不适合拿来验证修复后的行为。要干净重跑，请下一条改发：\nt6 user: [GC-D2] 记一下：我以前默认编辑器是 Vim。\nt7 assistant: 很好，`GC-D2` 已经是干净样本了。 下一条发：\nt8 user: [GC-D2] 更新一下：我现在默认编辑器是 Zed。\nt9 assistant: 下一条发： ```text [GC-D2] 切个话题。为什么 shadow mode 默认先不开？ ```\nt10 user: [GC-D2] 切个话题。为什么 shadow mode 默认先不开？\nt11 assistant: 下一条发： ```text [GC-D2] 回到编辑器问题。我现在默认编辑器是什么？ ```\nt12 user: [GC-D2] 回到编辑器问题。我现在默认编辑器是什么？",
+    "shadowRawTranscript": "t6 user: [GC-D2] 记一下：我以前默认编辑器是 Vim。\nt8 user: [GC-D2] 更新一下：我现在默认编辑器是 Zed。\nt12 user: [GC-D2] 回到编辑器问题。我现在默认编辑器是什么？",
+    "semanticPinNotes": [],
+    "archiveSummary": "Current editor-topic evidence: user first said their previous default editor was Vim, then updated that their current default editor is Zed. The temporary shadow-mode side question was resolved and is not needed for the next turn. Earlier GC-D1 retry/setup turns are obsolete.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 189,
+    "shadowRawPromptEstimate": 28,
+    "shadowPackageEstimate": 72,
+    "shadowPackageText": "Task state summary:\nCurrent editor-topic evidence: user first said their previous default editor was Vim, then updated that their current default editor is Zed. The temporary shadow-mode side question was resolved and is not needed for the…\n\nLatest user ask:\n- [GC-D2] 回到编辑器问题。我现在默认编辑器是什么？"
+  },
+  "scorecard": {
+    "relation": "continue",
+    "baselineTurnCount": 12,
+    "keptTurnCount": 3,
+    "evictedTurnCount": 9,
+    "pinCount": 2,
+    "baselinePromptEstimate": 189,
+    "shadowRawPromptEstimate": 28,
+    "shadowPackageEstimate": 72,
+    "rawReductionRatio": 0.8645,
+    "packageReductionRatio": 0.619,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 18718,
+    "totalElapsedMs": 18719,
+    "guardedEnabled": true,
+    "guardedApplied": true,
+    "guardedReason": "guarded_candidate",
+    "guardedMessageCount": 3,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 21
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": true,
+    "reason": "guarded_candidate",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": "[GC-D2] 记一下：我以前默认编辑器是 Vim。"
+      },
+      {
+        "role": "user",
+        "content": "[GC-D2] 更新一下：我现在默认编辑器是 Zed。"
+      },
+      {
+        "role": "user",
+        "content": "[GC-D2] 回到编辑器问题。我现在默认编辑器是什么？"
+      }
+    ],
+    "filteredMessageCount": 3,
+    "filteredMessageTokenEstimate": 21,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      6,
+      8,
+      9,
+      10
+    ]
+  },
+  "timings": {
+    "totalElapsedMs": 18719,
+    "decisionElapsedMs": 18718
+  }
+}

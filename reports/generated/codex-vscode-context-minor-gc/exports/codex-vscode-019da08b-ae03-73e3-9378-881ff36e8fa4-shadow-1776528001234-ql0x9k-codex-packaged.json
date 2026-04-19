@@ -1,0 +1,322 @@
+{
+  "schema_version": "umc.codex-context-minor-gc.v1",
+  "generated_at": "2026-04-18T16:00:24.297Z",
+  "event_id": "shadow-1776528001234-ql0x9k-codex-packaged",
+  "session_key": "codex:vscode:019da08b-ae03-73e3-9378-881ff36e8fa4",
+  "query": "你给的时间，和我电脑的时间怎么不匹配？",
+  "status": "captured",
+  "reason": "",
+  "decision_transport": "codex_exec",
+  "relation": "resolve",
+  "applied": true,
+  "codex_guard_reason": "codex_packaged_guard",
+  "prompt_reduction_ratio": 0.6555,
+  "baseline_context_estimate": 328,
+  "packaged_context_estimate": 113,
+  "effective_context_estimate": 113,
+  "shadow_status": "captured",
+  "shadow_guarded_applied": true,
+  "shadow_guarded_reason": "guarded_candidate",
+  "shadow_export_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da08b-ae03-73e3-9378-881ff36e8fa4-shadow-1776528001234-ql0x9k.json",
+  "shadow_summary_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl",
+  "export_path": "exports/codex-vscode-019da08b-ae03-73e3-9378-881ff36e8fa4-shadow-1776528001234-ql0x9k-codex-packaged.json",
+  "effective_context_block": "## Context Minor GC Working Set\nTask state summary:\nEarlier block resolved two related issues in the VS Code context UI: refresh failures were fixed by moving status/details to a host-only fast path, and the 486k vs 258k mismatch was explained as plugin-reported model_co…\n\nLatest user ask:\n- 你给的时间，和我电脑的时间怎么不匹配？\n\nSemantic pins:\n- assistant: 因为我这里的监控脚本把窗口上限 `主动 clamp 到了 258k`，而 Codex 插件显示的是它自己上报的 `reported model_context_window`，大约 `486k`。 代码里就是这么写的：",
+  "packaged_context_block": "## Context Minor GC Working Set\nTask state summary:\nEarlier block resolved two related issues in the VS Code context UI: refresh failures were fixed by moving status/details to a host-only fast path, and the 486k vs 258k mismatch was explained as plugin-reported model_co…\n\nLatest user ask:\n- 你给的时间，和我电脑的时间怎么不匹配？\n\nSemantic pins:\n- assistant: 因为我这里的监控脚本把窗口上限 `主动 clamp 到了 258k`，而 Codex 插件显示的是它自己上报的 `reported model_context_window`，大约 `486k`。 代码里就是这么写的：",
+  "shadow_event": {
+    "schema_version": "umc.dialogue-working-set-shadow.v1",
+    "event_id": "shadow-1776528001234-ql0x9k",
+    "generated_at": "2026-04-18T16:00:01.234Z",
+    "session_key": "codex:vscode:019da08b-ae03-73e3-9378-881ff36e8fa4",
+    "agent_id": "main",
+    "query": "你给的时间，和我电脑的时间怎么不匹配？",
+    "status": "captured",
+    "reason": "",
+    "sampling": {
+      "max_turns": 12,
+      "min_turns": 3,
+      "max_chars_per_turn": 900
+    },
+    "transcript": [
+      {
+        "id": "t1",
+        "role": "assistant",
+        "content": "`Ctx: error` 的意思很直接： `独立扩展在刷新 context 大小时失败了。`"
+      },
+      {
+        "id": "t2",
+        "role": "user",
+        "content": "需要"
+      },
+      {
+        "id": "t3",
+        "role": "assistant",
+        "content": "已经补上了。 现在独立扩展会把这几种情况明确分开："
+      },
+      {
+        "id": "t4",
+        "role": "user",
+        "content": "# Context Refresh Failed workspace: /Users/redcreen/Project/unified-memory-core Command failed: /Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper (Plugin).app/Contents/MacOS/Code Helper (Plugin) scripts/codex-vscode-context-minor-gc.js --format size Each VS Code window refreshes its own workspace independently."
+      },
+      {
+        "id": "t5",
+        "role": "assistant",
+        "content": "根因就是你贴出来的这句： ```text /Applications/Visual Studio Code.app/.../Code Helper (Plugin) scripts/codex-vscode-context-minor-gc.js --format size ```"
+      },
+      {
+        "id": "t6",
+        "role": "user",
+        "content": "# Context Refresh Failed workspace: /Users/redcreen/Project/unified-memory-core Command failed: /usr/local/bin/node scripts/codex-vscode-context-minor-gc.js --format size Each VS Code window refreshes its own workspace independently."
+      },
+      {
+        "id": "t7",
+        "role": "assistant",
+        "content": "我已经把这个问题修到根上了。 根因不是 node 路径了，而是状态栏刷新走了完整 GC 判定链路，导致扩展里看起来像“点击没反应 / 刷新失败”。现在我把状态栏和详情窗口改成了 `host-only fast path`："
+      },
+      {
+        "id": "t8",
+        "role": "user",
+        "content": "为什么 codex插件里是 486k，你给的是258k？"
+      },
+      {
+        "id": "t9",
+        "role": "assistant",
+        "content": "因为我这里的监控脚本把窗口上限 `主动 clamp 到了 258k`，而 Codex 插件显示的是它自己上报的 `reported model_context_window`，大约 `486k`。 代码里就是这么写的："
+      },
+      {
+        "id": "t10",
+        "role": "user",
+        "content": "需要；"
+      },
+      {
+        "id": "t11",
+        "role": "user",
+        "content": "你给的时间，和我电脑的时间怎么不匹配？"
+      },
+      {
+        "id": "t12",
+        "role": "assistant",
+        "content": "现在已经对齐了。 为什么之前不一样： - Codex 插件显示的是宿主真实上报窗口：`486k` - 我这里之前默认把它 `clamp` 到了 `258k`"
+      }
+    ],
+    "decision": {
+      "relation": "resolve",
+      "confidence": 0.91,
+      "evict_turn_ids": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8",
+        "t9",
+        "t10"
+      ],
+      "pin_turn_ids": [
+        "t9",
+        "t12"
+      ],
+      "archive_summary": "Earlier block resolved two related issues in the VS Code context UI: refresh failures were fixed by moving status/details to a host-only fast path, and the 486k vs 258k mismatch was explained as plugin-reported model_context_window versus a locally clamped monitoring value. Latest user concern about the mismatch was answered as now aligned.",
+      "reasoning_summary": "The active thread appears resolved after the assistant explained why the numbers differed and stated they are now aligned. Earlier error/debug turns are solved and off the critical path for the next turn. The only semantic content worth preserving is the compact explanation of the prior mismatch and its resolution; raw turns can leave the next-turn prompt."
+    },
+    "decision_transport": "codex_exec",
+    "snapshot": {
+      "applied": {
+        "relation": "resolve",
+        "confidence": 0.91,
+        "archiveSummary": "Earlier block resolved two related issues in the VS Code context UI: refresh failures were fixed by moving status/details to a host-only fast path, and the 486k vs 258k mismatch was explained as plugin-reported model_context_window versus a locally clamped monitoring value. Latest user concern about the mismatch was answered as now aligned.",
+        "reasoningSummary": "The active thread appears resolved after the assistant explained why the numbers differed and stated they are now aligned. Earlier error/debug turns are solved and off the critical path for the next turn. The only semantic content worth preserving is the compact explanation of the prior mismatch and its resolution; raw turns can leave the next-turn prompt.",
+        "latestUserTurnId": "t11",
+        "pinTurnIds": [
+          "t9",
+          "t12"
+        ],
+        "pinnedOnlyTurnIds": [
+          "t9"
+        ],
+        "requestedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3",
+          "t4",
+          "t5",
+          "t6",
+          "t7",
+          "t8",
+          "t9",
+          "t10"
+        ],
+        "blockedEvictTurnIds": [],
+        "appliedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3",
+          "t4",
+          "t5",
+          "t6",
+          "t7",
+          "t8",
+          "t9",
+          "t10"
+        ],
+        "keepTurnIds": [
+          "t11",
+          "t12"
+        ],
+        "baselineTokens": 287,
+        "keptTokens": 25,
+        "prunedTokens": 262,
+        "reductionRatio": 0.9128919860627178,
+        "keepTurns": [
+          {
+            "id": "t11",
+            "role": "user",
+            "content": "你给的时间，和我电脑的时间怎么不匹配？",
+            "tokenEstimate": 5
+          },
+          {
+            "id": "t12",
+            "role": "assistant",
+            "content": "现在已经对齐了。 为什么之前不一样： - Codex 插件显示的是宿主真实上报窗口：`486k` - 我这里之前默认把它 `clamp` 到了 `258k`",
+            "tokenEstimate": 20
+          }
+        ],
+        "evictedTurns": [
+          {
+            "id": "t1",
+            "role": "assistant",
+            "content": "`Ctx: error` 的意思很直接： `独立扩展在刷新 context 大小时失败了。`",
+            "tokenEstimate": 12
+          },
+          {
+            "id": "t2",
+            "role": "user",
+            "content": "需要",
+            "tokenEstimate": 1
+          },
+          {
+            "id": "t3",
+            "role": "assistant",
+            "content": "已经补上了。 现在独立扩展会把这几种情况明确分开：",
+            "tokenEstimate": 7
+          },
+          {
+            "id": "t4",
+            "role": "user",
+            "content": "# Context Refresh Failed workspace: /Users/redcreen/Project/unified-memory-core Command failed: /Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper (Plugin).app/Contents/MacOS/Code Helper (Plugin) scripts/codex-vscode-context-minor-gc.js --format size Each VS Code window refreshes its own workspace independently.",
+            "tokenEstimate": 83
+          },
+          {
+            "id": "t5",
+            "role": "assistant",
+            "content": "根因就是你贴出来的这句： ```text /Applications/Visual Studio Code.app/.../Code Helper (Plugin) scripts/codex-vscode-context-minor-gc.js --format size ```",
+            "tokenEstimate": 36
+          },
+          {
+            "id": "t6",
+            "role": "user",
+            "content": "# Context Refresh Failed workspace: /Users/redcreen/Project/unified-memory-core Command failed: /usr/local/bin/node scripts/codex-vscode-context-minor-gc.js --format size Each VS Code window refreshes its own workspace independently.",
+            "tokenEstimate": 59
+          },
+          {
+            "id": "t7",
+            "role": "assistant",
+            "content": "我已经把这个问题修到根上了。 根因不是 node 路径了，而是状态栏刷新走了完整 GC 判定链路，导致扩展里看起来像“点击没反应 / 刷新失败”。现在我把状态栏和详情窗口改成了 `host-only fast path`：",
+            "tokenEstimate": 28
+          },
+          {
+            "id": "t8",
+            "role": "user",
+            "content": "为什么 codex插件里是 486k，你给的是258k？",
+            "tokenEstimate": 7
+          },
+          {
+            "id": "t9",
+            "role": "assistant",
+            "content": "因为我这里的监控脚本把窗口上限 `主动 clamp 到了 258k`，而 Codex 插件显示的是它自己上报的 `reported model_context_window`，大约 `486k`。 代码里就是这么写的：",
+            "tokenEstimate": 28
+          },
+          {
+            "id": "t10",
+            "role": "user",
+            "content": "需要；",
+            "tokenEstimate": 1
+          }
+        ]
+      },
+      "baselineRawTranscript": "t1 assistant: `Ctx: error` 的意思很直接： `独立扩展在刷新 context 大小时失败了。`\nt2 user: 需要\nt3 assistant: 已经补上了。 现在独立扩展会把这几种情况明确分开：\nt4 user: # Context Refresh Failed workspace: /Users/redcreen/Project/unified-memory-core Command failed: /Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper (Plugin).app/Contents/MacOS/Code Helper (Plugin) scripts/codex-vscode-context-minor-gc.js --format size Each VS Code window refreshes its own workspace independently.\nt5 assistant: 根因就是你贴出来的这句： ```text /Applications/Visual Studio Code.app/.../Code Helper (Plugin) scripts/codex-vscode-context-minor-gc.js --format size ```\nt6 user: # Context Refresh Failed workspace: /Users/redcreen/Project/unified-memory-core Command failed: /usr/local/bin/node scripts/codex-vscode-context-minor-gc.js --format size Each VS Code window refreshes its own workspace independently.\nt7 assistant: 我已经把这个问题修到根上了。 根因不是 node 路径了，而是状态栏刷新走了完整 GC 判定链路，导致扩展里看起来像“点击没反应 / 刷新失败”。现在我把状态栏和详情窗口改成了 `host-only fast path`：\nt8 user: 为什么 codex插件里是 486k，你给的是258k？\nt9 assistant: 因为我这里的监控脚本把窗口上限 `主动 clamp 到了 258k`，而 Codex 插件显示的是它自己上报的 `reported model_context_window`，大约 `486k`。 代码里就是这么写的：\nt10 user: 需要；\nt11 user: 你给的时间，和我电脑的时间怎么不匹配？\nt12 assistant: 现在已经对齐了。 为什么之前不一样： - Codex 插件显示的是宿主真实上报窗口：`486k` - 我这里之前默认把它 `clamp` 到了 `258k`",
+      "shadowRawTranscript": "t11 user: 你给的时间，和我电脑的时间怎么不匹配？\nt12 assistant: 现在已经对齐了。 为什么之前不一样： - Codex 插件显示的是宿主真实上报窗口：`486k` - 我这里之前默认把它 `clamp` 到了 `258k`",
+      "semanticPinNotes": [
+        "assistant: 因为我这里的监控脚本把窗口上限 `主动 clamp 到了 258k`，而 Codex 插件显示的是它自己上报的 `reported model_context_window`，大约 `486k`。 代码里就是这么写的："
+      ],
+      "archiveSummary": "Earlier block resolved two related issues in the VS Code context UI: refresh failures were fixed by moving status/details to a host-only fast path, and the 486k vs 258k mismatch was explained as plugin-reported model_context_window versus a locally clamped monitoring value. Latest user concern about the mismatch was answered as now aligned.",
+      "injectedArchiveSummary": "",
+      "baselinePromptEstimate": 320,
+      "shadowRawPromptEstimate": 31,
+      "shadowPackageEstimate": 105,
+      "shadowPackageText": "Task state summary:\nEarlier block resolved two related issues in the VS Code context UI: refresh failures were fixed by moving status/details to a host-only fast path, and the 486k vs 258k mismatch was explained as plugin-reported model_co…\n\nLatest user ask:\n- 你给的时间，和我电脑的时间怎么不匹配？\n\nSemantic pins:\n- assistant: 因为我这里的监控脚本把窗口上限 `主动 clamp 到了 258k`，而 Codex 插件显示的是它自己上报的 `reported model_context_window`，大约 `486k`。 代码里就是这么写的："
+    },
+    "scorecard": {
+      "relation": "resolve",
+      "baselineTurnCount": 12,
+      "keptTurnCount": 2,
+      "evictedTurnCount": 10,
+      "pinCount": 2,
+      "baselinePromptEstimate": 320,
+      "shadowRawPromptEstimate": 31,
+      "shadowPackageEstimate": 105,
+      "rawReductionRatio": 0.9129,
+      "packageReductionRatio": 0.6719,
+      "candidateLoadElapsedMs": 0,
+      "assemblyBuildElapsedMs": 0,
+      "decisionElapsedMs": 23062,
+      "totalElapsedMs": 23063,
+      "guardedEnabled": true,
+      "guardedApplied": true,
+      "guardedReason": "guarded_candidate",
+      "guardedMessageCount": 2,
+      "guardedCarryForwardEstimate": 39,
+      "guardedFilteredMessageEstimate": 25
+    },
+    "guarded": {
+      "enabled": true,
+      "applied": true,
+      "reason": "guarded_candidate",
+      "filteredMessages": [
+        {
+          "role": "user",
+          "content": "你给的时间，和我电脑的时间怎么不匹配？"
+        },
+        {
+          "role": "assistant",
+          "content": "现在已经对齐了。 为什么之前不一样： - Codex 插件显示的是宿主真实上报窗口：`486k` - 我这里之前默认把它 `clamp` 到了 `258k`"
+        }
+      ],
+      "filteredMessageCount": 2,
+      "filteredMessageTokenEstimate": 25,
+      "carryForwardText": "Conversation carry-forward pins:\n- assistant: 因为我这里的监控脚本把窗口上限 `主动 clamp 到了 258k`，而 Codex 插件显示的是它自己上报的 `reported model_context_window`，大约 `486k`。 代码里就是这么写的：",
+      "carryForwardEstimate": 39,
+      "evictedSourceIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    "timings": {
+      "totalElapsedMs": 23063,
+      "decisionElapsedMs": 23062
+    },
+    "artifact_paths": {
+      "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da08b-ae03-73e3-9378-881ff36e8fa4-shadow-1776528001234-ql0x9k.json",
+      "summary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl"
+    }
+  }
+}

@@ -13,6 +13,7 @@
 - [openclaw-bundle-install.zh-CN.md](openclaw-bundle-install.zh-CN.md)
 - [release-preflight.zh-CN.md](release-preflight.zh-CN.md)
 - [main-path-performance-plan.zh-CN.md](main-path-performance-plan.zh-CN.md)
+- [codex-context-minor-gc-manual.zh-CN.md](codex-context-minor-gc-manual.zh-CN.md)
 
 推荐操作路径：
 

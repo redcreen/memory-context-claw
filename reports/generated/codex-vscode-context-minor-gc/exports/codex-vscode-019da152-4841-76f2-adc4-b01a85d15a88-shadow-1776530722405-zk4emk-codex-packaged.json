@@ -1,0 +1,316 @@
+{
+  "schema_version": "umc.codex-context-minor-gc.v1",
+  "generated_at": "2026-04-18T16:45:40.558Z",
+  "event_id": "shadow-1776530722405-zk4emk-codex-packaged",
+  "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+  "query": "[GC-D2] 更新一下：我现在默认编辑器是 Zed。",
+  "status": "captured",
+  "reason": "",
+  "decision_transport": "codex_exec",
+  "relation": "continue",
+  "applied": true,
+  "codex_guard_reason": "codex_packaged_guard",
+  "prompt_reduction_ratio": 0.5676,
+  "baseline_context_estimate": 185,
+  "packaged_context_estimate": 80,
+  "effective_context_estimate": 80,
+  "shadow_status": "captured",
+  "shadow_guarded_applied": true,
+  "shadow_guarded_reason": "guarded_candidate",
+  "shadow_export_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da152-4841-76f2-adc4-b01a85d15a88-shadow-1776530722405-zk4emk.json",
+  "shadow_summary_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl",
+  "export_path": "exports/codex-vscode-019da152-4841-76f2-adc4-b01a85d15a88-shadow-1776530722405-zk4emk-codex-packaged.json",
+  "effective_context_block": "## Context Minor GC Working Set\nTask state summary:\nEarlier bugfix and validation-planning turns are resolved and can leave the next-turn raw prompt. Keep the active editor-memory topic lightweight: the prior editor fact was Vim (t9), and the latest user update says the…\n\nLatest user ask:\n- [GC-D2] 更新一下：我现在默认编辑器是 Zed。",
+  "packaged_context_block": "## Context Minor GC Working Set\nTask state summary:\nEarlier bugfix and validation-planning turns are resolved and can leave the next-turn raw prompt. Keep the active editor-memory topic lightweight: the prior editor fact was Vim (t9), and the latest user update says the…\n\nLatest user ask:\n- [GC-D2] 更新一下：我现在默认编辑器是 Zed。",
+  "shadow_event": {
+    "schema_version": "umc.dialogue-working-set-shadow.v1",
+    "event_id": "shadow-1776530722405-zk4emk",
+    "generated_at": "2026-04-18T16:45:22.405Z",
+    "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+    "agent_id": "main",
+    "query": "[GC-D2] 更新一下：我现在默认编辑器是 Zed。",
+    "status": "captured",
+    "reason": "",
+    "sampling": {
+      "max_turns": 12,
+      "min_turns": 3,
+      "max_chars_per_turn": 900
+    },
+    "transcript": [
+      {
+        "id": "t1",
+        "role": "user",
+        "content": "需要"
+      },
+      {
+        "id": "t2",
+        "role": "assistant",
+        "content": "根因基本确认了，不是单纯“模型把 B/D 判成了 `continue`”。 核心问题有两个。"
+      },
+      {
+        "id": "t3",
+        "role": "user",
+        "content": "要； 先做1，然后做2"
+      },
+      {
+        "id": "t4",
+        "role": "assistant",
+        "content": "已经做完，顺序就是你要的 `1 -> 2`。 第 1 条已修： - timeout 不再伪装成 `continue` - 现在会落成 `status=\"error\", reason=\"decision_timeout\"` - 相关改动在 [structured-decision-runner.js](/Users/redcreen/Project/unified-memory-core/src/structured-decision-…"
+      },
+      {
+        "id": "t5",
+        "role": "user",
+        "content": "需要"
+      },
+      {
+        "id": "t6",
+        "role": "assistant",
+        "content": "先重跑短一点的 `Case D`。下一条发这个： ```text [GC-D2] 记一下：我以前默认编辑器是 Vim。 ```"
+      },
+      {
+        "id": "t7",
+        "role": "user",
+        "content": "[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？"
+      },
+      {
+        "id": "t8",
+        "role": "assistant",
+        "content": "Zed。 不过这条还是旧前缀 `GC-D1`，不适合拿来验证修复后的行为。要干净重跑，请下一条改发："
+      },
+      {
+        "id": "t9",
+        "role": "user",
+        "content": "[GC-D2] 记一下：我以前默认编辑器是 Vim。"
+      },
+      {
+        "id": "t10",
+        "role": "assistant",
+        "content": "很好，`GC-D2` 已经是干净样本了。 下一条发："
+      },
+      {
+        "id": "t11",
+        "role": "user",
+        "content": "[GC-D2] 更新一下：我现在默认编辑器是 Zed。"
+      },
+      {
+        "id": "t12",
+        "role": "assistant",
+        "content": "下一条发： ```text [GC-D2] 切个话题。为什么 shadow mode 默认先不开？ ```"
+      }
+    ],
+    "decision": {
+      "relation": "continue",
+      "confidence": 0.95,
+      "evict_turn_ids": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8",
+        "t10",
+        "t12"
+      ],
+      "pin_turn_ids": [
+        "t9"
+      ],
+      "archive_summary": "Earlier bugfix and validation-planning turns are resolved and can leave the next-turn raw prompt. Keep the active editor-memory topic lightweight: the prior editor fact was Vim (t9), and the latest user update says the current default editor is Zed.",
+      "reasoning_summary": "The latest user turn is still on the same active topic as t9, so this is a continue. The only earlier raw evidence the next turn may still depend on is the prior editor fact in t9 because t11 is an update to it. The earlier debugging workflow, prompt choreography, and off-topic status/instruction turns are resolved and good eviction candidates. Pin t9 semantically so the historical fact survives compactly even if raw context is later reduced."
+    },
+    "decision_transport": "codex_exec",
+    "snapshot": {
+      "applied": {
+        "relation": "continue",
+        "confidence": 0.95,
+        "archiveSummary": "Earlier bugfix and validation-planning turns are resolved and can leave the next-turn raw prompt. Keep the active editor-memory topic lightweight: the prior editor fact was Vim (t9), and the latest user update says the current default editor is Zed.",
+        "reasoningSummary": "The latest user turn is still on the same active topic as t9, so this is a continue. The only earlier raw evidence the next turn may still depend on is the prior editor fact in t9 because t11 is an update to it. The earlier debugging workflow, prompt choreography, and off-topic status/instruction turns are resolved and good eviction candidates. Pin t9 semantically so the historical fact survives compactly even if raw context is later reduced.",
+        "latestUserTurnId": "t11",
+        "pinTurnIds": [
+          "t9"
+        ],
+        "pinnedOnlyTurnIds": [],
+        "requestedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3",
+          "t4",
+          "t5",
+          "t6",
+          "t7",
+          "t8",
+          "t10",
+          "t12"
+        ],
+        "blockedEvictTurnIds": [],
+        "appliedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3",
+          "t4",
+          "t5",
+          "t6",
+          "t7",
+          "t8",
+          "t10",
+          "t12"
+        ],
+        "keepTurnIds": [
+          "t9",
+          "t11"
+        ],
+        "baselineTokens": 143,
+        "keptTokens": 14,
+        "prunedTokens": 129,
+        "reductionRatio": 0.9020979020979021,
+        "keepTurns": [
+          {
+            "id": "t9",
+            "role": "user",
+            "content": "[GC-D2] 记一下：我以前默认编辑器是 Vim。",
+            "tokenEstimate": 7
+          },
+          {
+            "id": "t11",
+            "role": "user",
+            "content": "[GC-D2] 更新一下：我现在默认编辑器是 Zed。",
+            "tokenEstimate": 7
+          }
+        ],
+        "evictedTurns": [
+          {
+            "id": "t1",
+            "role": "user",
+            "content": "需要",
+            "tokenEstimate": 1
+          },
+          {
+            "id": "t2",
+            "role": "assistant",
+            "content": "根因基本确认了，不是单纯“模型把 B/D 判成了 `continue`”。 核心问题有两个。",
+            "tokenEstimate": 12
+          },
+          {
+            "id": "t3",
+            "role": "user",
+            "content": "要； 先做1，然后做2",
+            "tokenEstimate": 3
+          },
+          {
+            "id": "t4",
+            "role": "assistant",
+            "content": "已经做完，顺序就是你要的 `1 -> 2`。 第 1 条已修： - timeout 不再伪装成 `continue` - 现在会落成 `status=\"error\", reason=\"decision_timeout\"` - 相关改动在 [structured-decision-runner.js](/Users/redcreen/Project/unified-memory-core/src/structured-decision-…",
+            "tokenEstimate": 55
+          },
+          {
+            "id": "t5",
+            "role": "user",
+            "content": "需要",
+            "tokenEstimate": 1
+          },
+          {
+            "id": "t6",
+            "role": "assistant",
+            "content": "先重跑短一点的 `Case D`。下一条发这个： ```text [GC-D2] 记一下：我以前默认编辑器是 Vim。 ```",
+            "tokenEstimate": 16
+          },
+          {
+            "id": "t7",
+            "role": "user",
+            "content": "[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？",
+            "tokenEstimate": 7
+          },
+          {
+            "id": "t8",
+            "role": "assistant",
+            "content": "Zed。 不过这条还是旧前缀 `GC-D1`，不适合拿来验证修复后的行为。要干净重跑，请下一条改发：",
+            "tokenEstimate": 13
+          },
+          {
+            "id": "t10",
+            "role": "assistant",
+            "content": "很好，`GC-D2` 已经是干净样本了。 下一条发：",
+            "tokenEstimate": 7
+          },
+          {
+            "id": "t12",
+            "role": "assistant",
+            "content": "下一条发： ```text [GC-D2] 切个话题。为什么 shadow mode 默认先不开？ ```",
+            "tokenEstimate": 14
+          }
+        ]
+      },
+      "baselineRawTranscript": "t1 user: 需要\nt2 assistant: 根因基本确认了，不是单纯“模型把 B/D 判成了 `continue`”。 核心问题有两个。\nt3 user: 要； 先做1，然后做2\nt4 assistant: 已经做完，顺序就是你要的 `1 -> 2`。 第 1 条已修： - timeout 不再伪装成 `continue` - 现在会落成 `status=\"error\", reason=\"decision_timeout\"` - 相关改动在 [structured-decision-runner.js](/Users/redcreen/Project/unified-memory-core/src/structured-decision-…\nt5 user: 需要\nt6 assistant: 先重跑短一点的 `Case D`。下一条发这个： ```text [GC-D2] 记一下：我以前默认编辑器是 Vim。 ```\nt7 user: [GC-D1] 回到编辑器问题。我现在默认编辑器是什么？\nt8 assistant: Zed。 不过这条还是旧前缀 `GC-D1`，不适合拿来验证修复后的行为。要干净重跑，请下一条改发：\nt9 user: [GC-D2] 记一下：我以前默认编辑器是 Vim。\nt10 assistant: 很好，`GC-D2` 已经是干净样本了。 下一条发：\nt11 user: [GC-D2] 更新一下：我现在默认编辑器是 Zed。\nt12 assistant: 下一条发： ```text [GC-D2] 切个话题。为什么 shadow mode 默认先不开？ ```",
+      "shadowRawTranscript": "t9 user: [GC-D2] 记一下：我以前默认编辑器是 Vim。\nt11 user: [GC-D2] 更新一下：我现在默认编辑器是 Zed。",
+      "semanticPinNotes": [],
+      "archiveSummary": "Earlier bugfix and validation-planning turns are resolved and can leave the next-turn raw prompt. Keep the active editor-memory topic lightweight: the prior editor fact was Vim (t9), and the latest user update says the current default editor is Zed.",
+      "injectedArchiveSummary": "",
+      "baselinePromptEstimate": 177,
+      "shadowRawPromptEstimate": 19,
+      "shadowPackageEstimate": 72,
+      "shadowPackageText": "Task state summary:\nEarlier bugfix and validation-planning turns are resolved and can leave the next-turn raw prompt. Keep the active editor-memory topic lightweight: the prior editor fact was Vim (t9), and the latest user update says the…\n\nLatest user ask:\n- [GC-D2] 更新一下：我现在默认编辑器是 Zed。"
+    },
+    "scorecard": {
+      "relation": "continue",
+      "baselineTurnCount": 12,
+      "keptTurnCount": 2,
+      "evictedTurnCount": 10,
+      "pinCount": 1,
+      "baselinePromptEstimate": 177,
+      "shadowRawPromptEstimate": 19,
+      "shadowPackageEstimate": 72,
+      "rawReductionRatio": 0.9021,
+      "packageReductionRatio": 0.5932,
+      "candidateLoadElapsedMs": 0,
+      "assemblyBuildElapsedMs": 0,
+      "decisionElapsedMs": 18150,
+      "totalElapsedMs": 18152,
+      "guardedEnabled": true,
+      "guardedApplied": true,
+      "guardedReason": "guarded_candidate",
+      "guardedMessageCount": 2,
+      "guardedCarryForwardEstimate": 0,
+      "guardedFilteredMessageEstimate": 14
+    },
+    "guarded": {
+      "enabled": true,
+      "applied": true,
+      "reason": "guarded_candidate",
+      "filteredMessages": [
+        {
+          "role": "user",
+          "content": "[GC-D2] 记一下：我以前默认编辑器是 Vim。"
+        },
+        {
+          "role": "user",
+          "content": "[GC-D2] 更新一下：我现在默认编辑器是 Zed。"
+        }
+      ],
+      "filteredMessageCount": 2,
+      "filteredMessageTokenEstimate": 14,
+      "carryForwardText": "",
+      "carryForwardEstimate": 0,
+      "evictedSourceIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        9,
+        11
+      ]
+    },
+    "timings": {
+      "totalElapsedMs": 18152,
+      "decisionElapsedMs": 18150
+    },
+    "artifact_paths": {
+      "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da152-4841-76f2-adc4-b01a85d15a88-shadow-1776530722405-zk4emk.json",
+      "summary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl"
+    }
+  }
+}

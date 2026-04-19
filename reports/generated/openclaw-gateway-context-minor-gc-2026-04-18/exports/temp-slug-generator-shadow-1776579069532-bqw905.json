@@ -1,0 +1,54 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776579069532-bqw905",
+  "generated_at": "2026-04-19T06:11:09.532Z",
+  "session_key": "temp:slug-generator",
+  "agent_id": "main",
+  "query": "Based on this conversation, generate a short 1-2 word filename slug (lowercase, hyphen-separated, no file extension).\n\nConversation summary:\nassistant: 你的医疗档案我记得这版重点：\n\n- **姓名**：刘超（超哥）\n- **年龄**：44岁\n- **身高**：178cm\n- **近期体重**：2026-03-01 约 93.25kg → 2026-04-02 83.8kg\n- **饮食**：已从偏面食、饮料，调整为高蛋白、蔬菜为主，基本停饮料\n- **生活方式**：已戒烟、戒酒；作息明显提前\n- **运动**：饭后慢走约 2 公里，准备逐步加量\n- **用药背景**：有降压、降脂等用药；阿齐沙坦目前约 20mg/日，匹伐他汀 2mg 睡前\n\n如果你要，我可以下一步直接给你整理成一版 **“医生易读的医疗档案摘要”**。\nuser: task-system runtime context:\n- session: agent:health:feishu:direct:ou_9494ebadf9329adf57debffdad74a398\n- task: task_a72d6e4b1cff4908ae8d002f092cb5b0\n- mode: tool-first-after-first-ack\n- follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup\n- future-first default: main_user_content_mode=none\n- runtime chooses none / immediate-summary / full-answer for current-turn business content\n- immediate-summary must be one short business-facing line\n- never expose scheduling, promise, or tool-chain state to users\n- include followup_summary and absolute RFC3339 followup_due_at when planning follow-up work\n- never promise a future reply unless task-system tools succeeded\n\nSystem: [2026-04-19 08:36:46 GMT+8] Feishu[feishu5-health] DM | 刘超 (ou_9494ebadf9329adf57debffdad74a398) [msg:om_x100b5176771b64a4c3435d431e322bf]\n\nConversation info (untrusted metadata):\n```json\n{\n  \"message_id\": \"om_x100b5176771b64a4c3435d431e322bf\",\n  \"sender_id\": \"ou_9494ebadf9329adf57debffdad74a398\",\n  \"sender\": \"刘超\",\n  \"timestamp\": \"Sun 2026-04-19 08:36 GMT+8\"\n}\n```\n\nSender (untrusted metadata):\n```json\n{\n  \"label\": \"刘超 (ou_9494ebadf9329adf57debffdad74a398)\",\n  \"id\": \"ou_9494ebadf9329adf57debffdad74a398\",\n  \"name\": \"刘超\"\n}\n```\n\n阿齐沙坦 现在的用量是。40mg分成3次吃； 其他每天还在吃的有，匹伐他汀2mg；维生素B1；血塞通；\nuser: task-system runtime context:\n- session: agent:health:feishu:direct:ou_9494ebadf9329adf57debffdad74a398\n- task: task_8220437c1ef14a618f8b1e420ba237f7\n- mode: tool-first-after-first-ack\n- follow-up tool order: ts_attach_promise_guard -> ts_create_followup_plan -> ts_schedule_followup_from_plan -> ts_finalize_planned_followup\n- future-first defau\n\nReply with ONLY the slug, nothing else. Examples: \"vendor-pitch\", \"api-design\", \"bug-fix\"",
+  "status": "skipped",
+  "reason": "not_enough_turns",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [],
+  "decision": null,
+  "decision_transport": "",
+  "snapshot": null,
+  "scorecard": {
+    "relation": "",
+    "baselineTurnCount": 0,
+    "keptTurnCount": 0,
+    "evictedTurnCount": 0,
+    "pinCount": 0,
+    "baselinePromptEstimate": 0,
+    "shadowRawPromptEstimate": 0,
+    "shadowPackageEstimate": 0,
+    "rawReductionRatio": 0,
+    "packageReductionRatio": 0,
+    "candidateLoadElapsedMs": 8,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 0,
+    "totalElapsedMs": 0,
+    "guardedEnabled": false,
+    "guardedApplied": false,
+    "guardedReason": "feature_disabled",
+    "guardedMessageCount": 0,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 0
+  },
+  "guarded": {
+    "enabled": false,
+    "applied": false,
+    "reason": "feature_disabled",
+    "filteredMessageCount": 0,
+    "filteredMessageTokenEstimate": 0,
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 0,
+    "decisionElapsedMs": 0
+  }
+}

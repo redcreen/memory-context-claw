@@ -1,0 +1,182 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776560865877-udzvdk",
+  "generated_at": "2026-04-19T01:07:45.877Z",
+  "session_key": "codex:vscode:019da346-335b-7d31-be0e-56a3c1b52ff3",
+  "agent_id": "main",
+  "query": "切个话题。为什么 shadow mode 默认先不开？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "我以前默认编辑器是 Vim。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "记住了。后续如果涉及编辑器习惯，我会默认按你偏向 `Vim`/Vim 风格来处理。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "更新一下：我现在默认编辑器是 Zed。"
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "已更新。后续我会默认按 `Zed` 作为你的编辑器习惯来理解。"
+    },
+    {
+      "id": "t5",
+      "role": "user",
+      "content": "切个话题。为什么 shadow mode 默认先不开？"
+    }
+  ],
+  "decision": {
+    "relation": "switch",
+    "confidence": 0.97,
+    "evict_turn_ids": [
+      "t1",
+      "t2",
+      "t4"
+    ],
+    "pin_turn_ids": [
+      "t3"
+    ],
+    "archive_summary": "Previous topic established a durable user preference update: the user's default editor is now Zed (superseding the earlier Vim preference). That preference can be preserved as a compact pin; the raw exchange is not needed for the next turn about shadow mode defaults.",
+    "reasoning_summary": "The latest user turn starts a new topic explicitly ('切个话题') and does not depend on the earlier editor-preference exchange. This is a topic switch, so the old raw block can leave the next-turn prompt. The updated durable fact from t3 should survive as a semantic pin, while the superseded Vim preference and acknowledgements are safe to evict."
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "switch",
+      "confidence": 0.97,
+      "archiveSummary": "Previous topic established a durable user preference update: the user's default editor is now Zed (superseding the earlier Vim preference). That preference can be preserved as a compact pin; the raw exchange is not needed for the next turn about shadow mode defaults.",
+      "reasoningSummary": "The latest user turn starts a new topic explicitly ('切个话题') and does not depend on the earlier editor-preference exchange. This is a topic switch, so the old raw block can leave the next-turn prompt. The updated durable fact from t3 should survive as a semantic pin, while the superseded Vim preference and acknowledgements are safe to evict.",
+      "latestUserTurnId": "t5",
+      "pinTurnIds": [
+        "t3"
+      ],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t4"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t4"
+      ],
+      "keepTurnIds": [
+        "t3",
+        "t5"
+      ],
+      "baselineTokens": 35,
+      "keptTokens": 12,
+      "prunedTokens": 23,
+      "reductionRatio": 0.6571428571428571,
+      "keepTurns": [
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "更新一下：我现在默认编辑器是 Zed。",
+          "tokenEstimate": 5
+        },
+        {
+          "id": "t5",
+          "role": "user",
+          "content": "切个话题。为什么 shadow mode 默认先不开？",
+          "tokenEstimate": 7
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "我以前默认编辑器是 Vim。",
+          "tokenEstimate": 4
+        },
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "记住了。后续如果涉及编辑器习惯，我会默认按你偏向 `Vim`/Vim 风格来处理。",
+          "tokenEstimate": 11
+        },
+        {
+          "id": "t4",
+          "role": "assistant",
+          "content": "已更新。后续我会默认按 `Zed` 作为你的编辑器习惯来理解。",
+          "tokenEstimate": 8
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 我以前默认编辑器是 Vim。\nt2 assistant: 记住了。后续如果涉及编辑器习惯，我会默认按你偏向 `Vim`/Vim 风格来处理。\nt3 user: 更新一下：我现在默认编辑器是 Zed。\nt4 assistant: 已更新。后续我会默认按 `Zed` 作为你的编辑器习惯来理解。\nt5 user: 切个话题。为什么 shadow mode 默认先不开？",
+    "shadowRawTranscript": "t3 user: 更新一下：我现在默认编辑器是 Zed。\nt5 user: 切个话题。为什么 shadow mode 默认先不开？",
+    "semanticPinNotes": [],
+    "archiveSummary": "Previous topic established a durable user preference update: the user's default editor is now Zed (superseding the earlier Vim preference). That preference can be preserved as a compact pin; the raw exchange is not needed for the next turn about shadow mode defaults.",
+    "injectedArchiveSummary": "Previous topic established a durable user preference update: the user's default editor is now Ze...",
+    "baselinePromptEstimate": 48,
+    "shadowRawPromptEstimate": 17,
+    "shadowPackageEstimate": 72,
+    "shadowPackageText": "Task state summary:\nPrevious topic established a durable user preference update: the user's default editor is now Zed (superseding the earlier Vim preference). That preference can be preserved as a compact pin; the raw exchange is not need…\n\nLatest user ask:\n- 切个话题。为什么 shadow mode 默认先不开？"
+  },
+  "scorecard": {
+    "relation": "switch",
+    "baselineTurnCount": 5,
+    "keptTurnCount": 2,
+    "evictedTurnCount": 3,
+    "pinCount": 1,
+    "baselinePromptEstimate": 48,
+    "shadowRawPromptEstimate": 17,
+    "shadowPackageEstimate": 72,
+    "rawReductionRatio": 0.6571,
+    "packageReductionRatio": -0.5,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 9202,
+    "totalElapsedMs": 9203,
+    "guardedEnabled": true,
+    "guardedApplied": true,
+    "guardedReason": "guarded_candidate",
+    "guardedMessageCount": 2,
+    "guardedCarryForwardEstimate": 31,
+    "guardedFilteredMessageEstimate": 12
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": true,
+    "reason": "guarded_candidate",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": "更新一下：我现在默认编辑器是 Zed。"
+      },
+      {
+        "role": "user",
+        "content": "切个话题。为什么 shadow mode 默认先不开？"
+      }
+    ],
+    "filteredMessageCount": 2,
+    "filteredMessageTokenEstimate": 12,
+    "carryForwardText": "Archived topic summary:\nPrevious topic established a durable user preference update: the user's default editor is now Ze...",
+    "carryForwardEstimate": 31,
+    "evictedSourceIndices": [
+      0,
+      1,
+      3
+    ]
+  },
+  "timings": {
+    "totalElapsedMs": 9203,
+    "decisionElapsedMs": 9202
+  }
+}

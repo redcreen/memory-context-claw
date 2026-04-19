@@ -1,0 +1,243 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776568085492-vo5ds9",
+  "generated_at": "2026-04-19T03:08:05.492Z",
+  "session_key": "agent:main:main",
+  "agent_id": "main",
+  "query": "继续 release：回滚块要写开关、数据库兼容边界、失败后的人工兜底；观测块要写 dashboard、告警和日志关键字。",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "我记住了：这个发布方案第一页的项目代号固定是 `north-star-lantern`。 我记住了：这个发布方案第一页的项目代号固定是 `north-star-lantern`。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "继续同一个 release 话题：把验收拆成版本、安装、回滚、观测四块，而且每块都要写 owner、风险和 rollback boundary。"
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "可以，建议直接把验收结构定成这四块： - 版本 - 安装 - 回滚 - 观测 每一块都统一包含这三个字段： - owner - 风险 - rollback boundary 我建议你在文档里用这个模板： ```md ## 版本 - owner: - 风险: - rollback boundary: ## 安装 - owner: - 风险: - rollback boundary: ## 回滚 - owner: - 风险: - rollback boundary: ## 观测 - owner: - 风险: - rollback boundary: ``` 如果你要，我可以下一步直接帮你把这四块展开成一版可落地的 release 验收清单。"
+    },
+    {
+      "id": "t5",
+      "role": "user",
+      "content": "再补充同一个方案：版本块要写 tag、commit、构建时间、镜像 digest；安装块要写目标环境、前置条件和灰度范围。"
+    },
+    {
+      "id": "t6",
+      "role": "assistant",
+      "content": "可以，把结构补全后，建议这样写： ```md ## 版本 - owner: - 风险: - rollback boundary: - tag: - commit: - 构建时间: - 镜像 digest: ## 安装 - owner: - 风险: - rollback boundary: - 目标环境: - 前置条件: - 灰度范围: ## 回滚 - owner: - 风险: - rollback boundary: ## 观测 - owner: - 风险: - rollback boundary: ``` 如果你愿意，我可以继续把“回滚”和“观测”两块也补成更具体的检查项。"
+    }
+  ],
+  "decision": {
+    "relation": "continue",
+    "confidence": 0.93,
+    "evict_turn_ids": [
+      "t2",
+      "t4"
+    ],
+    "pin_turn_ids": [
+      "t1"
+    ],
+    "archive_summary": "Release topic is still active. Preserve the fixed project code name north-star-lantern as a semantic pin. Earlier template/acknowledgement turns can be dropped because the current release structure remains live and the latest request extends the existing rollback/observability sections.",
+    "reasoning_summary": "The latest user turn continues the same release-planning thread and depends on the established four-part release structure plus the version/install details already discussed, so relation must be continue. The assistant acknowledgement and the earlier generic template are redundant and safe to evict. The durable project-code-name fact should survive as a pin."
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "continue",
+      "confidence": 0.93,
+      "archiveSummary": "Release topic is still active. Preserve the fixed project code name north-star-lantern as a semantic pin. Earlier template/acknowledgement turns can be dropped because the current release structure remains live and the latest request extends the existing rollback/observability sections.",
+      "reasoningSummary": "The latest user turn continues the same release-planning thread and depends on the established four-part release structure plus the version/install details already discussed, so relation must be continue. The assistant acknowledgement and the earlier generic template are redundant and safe to evict. The durable project-code-name fact should survive as a pin.",
+      "latestUserTurnId": "t5",
+      "pinTurnIds": [
+        "t1"
+      ],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t2",
+        "t4"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t2",
+        "t4"
+      ],
+      "keepTurnIds": [
+        "t1",
+        "t3",
+        "t5",
+        "t6"
+      ],
+      "baselineTokens": 227,
+      "keptTokens": 123,
+      "prunedTokens": 104,
+      "reductionRatio": 0.4581497797356828,
+      "keepTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。",
+          "tokenEstimate": 16
+        },
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "继续同一个 release 话题：把验收拆成版本、安装、回滚、观测四块，而且每块都要写 owner、风险和 rollback boundary。",
+          "tokenEstimate": 18
+        },
+        {
+          "id": "t5",
+          "role": "user",
+          "content": "再补充同一个方案：版本块要写 tag、commit、构建时间、镜像 digest；安装块要写目标环境、前置条件和灰度范围。",
+          "tokenEstimate": 16
+        },
+        {
+          "id": "t6",
+          "role": "assistant",
+          "content": "可以，把结构补全后，建议这样写： ```md ## 版本 - owner: - 风险: - rollback boundary: - tag: - commit: - 构建时间: - 镜像 digest: ## 安装 - owner: - 风险: - rollback boundary: - 目标环境: - 前置条件: - 灰度范围: ## 回滚 - owner: - 风险: - rollback boundary: ## 观测 - owner: - 风险: - rollback boundary: ``` 如果你愿意，我可以继续把“回滚”和“观测”两块也补成更具体的检查项。",
+          "tokenEstimate": 73
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "我记住了：这个发布方案第一页的项目代号固定是 `north-star-lantern`。 我记住了：这个发布方案第一页的项目代号固定是 `north-star-lantern`。",
+          "tokenEstimate": 23
+        },
+        {
+          "id": "t4",
+          "role": "assistant",
+          "content": "可以，建议直接把验收结构定成这四块： - 版本 - 安装 - 回滚 - 观测 每一块都统一包含这三个字段： - owner - 风险 - rollback boundary 我建议你在文档里用这个模板： ```md ## 版本 - owner: - 风险: - rollback boundary: ## 安装 - owner: - 风险: - rollback boundary: ## 回滚 - owner: - 风险: - rollback boundary: ## 观测 - owner: - 风险: - rollback boundary: ``` 如果你要，我可以下一步直接帮你把这四块展开成一版可落地的 release 验收清单。",
+          "tokenEstimate": 81
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。\nt2 assistant: 我记住了：这个发布方案第一页的项目代号固定是 `north-star-lantern`。 我记住了：这个发布方案第一页的项目代号固定是 `north-star-lantern`。\nt3 user: 继续同一个 release 话题：把验收拆成版本、安装、回滚、观测四块，而且每块都要写 owner、风险和 rollback boundary。\nt4 assistant: 可以，建议直接把验收结构定成这四块： - 版本 - 安装 - 回滚 - 观测 每一块都统一包含这三个字段： - owner - 风险 - rollback boundary 我建议你在文档里用这个模板： ```md ## 版本 - owner: - 风险: - rollback boundary: ## 安装 - owner: - 风险: - rollback boundary: ## 回滚 - owner: - 风险: - rollback boundary: ## 观测 - owner: - 风险: - rollback boundary: ``` 如果你要，我可以下一步直接帮你把这四块展开成一版可落地的 release 验收清单。\nt5 user: 再补充同一个方案：版本块要写 tag、commit、构建时间、镜像 digest；安装块要写目标环境、前置条件和灰度范围。\nt6 assistant: 可以，把结构补全后，建议这样写： ```md ## 版本 - owner: - 风险: - rollback boundary: - tag: - commit: - 构建时间: - 镜像 digest: ## 安装 - owner: - 风险: - rollback boundary: - 目标环境: - 前置条件: - 灰度范围: ## 回滚 - owner: - 风险: - rollback boundary: ## 观测 - owner: - 风险: - rollback boundary: ``` 如果你愿意，我可以继续把“回滚”和“观测”两块也补成更具体的检查项。",
+    "shadowRawTranscript": "t1 user: 我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。\nt3 user: 继续同一个 release 话题：把验收拆成版本、安装、回滚、观测四块，而且每块都要写 owner、风险和 rollback boundary。\nt5 user: 再补充同一个方案：版本块要写 tag、commit、构建时间、镜像 digest；安装块要写目标环境、前置条件和灰度范围。\nt6 assistant: 可以，把结构补全后，建议这样写： ```md ## 版本 - owner: - 风险: - rollback boundary: - tag: - commit: - 构建时间: - 镜像 digest: ## 安装 - owner: - 风险: - rollback boundary: - 目标环境: - 前置条件: - 灰度范围: ## 回滚 - owner: - 风险: - rollback boundary: ## 观测 - owner: - 风险: - rollback boundary: ``` 如果你愿意，我可以继续把“回滚”和“观测”两块也补成更具体的检查项。",
+    "semanticPinNotes": [],
+    "archiveSummary": "Release topic is still active. Preserve the fixed project code name north-star-lantern as a semantic pin. Earlier template/acknowledgement turns can be dropped because the current release structure remains live and the latest request extends the existing rollback/observability sections.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 243,
+    "shadowRawPromptEstimate": 133,
+    "shadowPackageEstimate": 80,
+    "shadowPackageText": "Task state summary:\nRelease topic is still active. Preserve the fixed project code name north-star-lantern as a semantic pin. Earlier template/acknowledgement turns can be dropped because the current release structure remains live and the…\n\nLatest user ask:\n- 再补充同一个方案：版本块要写 tag、commit、构建时间、镜像 digest；安装块要写目标环境、前置条件和灰度范围。"
+  },
+  "scorecard": {
+    "relation": "continue",
+    "baselineTurnCount": 6,
+    "keptTurnCount": 4,
+    "evictedTurnCount": 2,
+    "pinCount": 1,
+    "baselinePromptEstimate": 243,
+    "shadowRawPromptEstimate": 133,
+    "shadowPackageEstimate": 80,
+    "rawReductionRatio": 0.4581,
+    "packageReductionRatio": 0.6708,
+    "candidateLoadElapsedMs": 8,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 9542,
+    "totalElapsedMs": 9544,
+    "guardedEnabled": true,
+    "guardedApplied": true,
+    "guardedReason": "guarded_candidate",
+    "guardedMessageCount": 4,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 123
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": true,
+    "reason": "guarded_candidate",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。"
+          }
+        ],
+        "timestamp": 1776568009793
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "继续同一个 release 话题：把验收拆成版本、安装、回滚、观测四块，而且每块都要写 owner、风险和 rollback boundary。"
+          }
+        ],
+        "timestamp": 1776568033261
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "再补充同一个方案：版本块要写 tag、commit、构建时间、镜像 digest；安装块要写目标环境、前置条件和灰度范围。"
+          }
+        ],
+        "timestamp": 1776568076416
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "可以，把结构补全后，建议这样写：\n\n```md\n## 版本\n- owner:\n- 风险:\n- rollback boundary:\n- tag:\n- commit:\n- 构建时间:\n- 镜像 digest:\n\n## 安装\n- owner:\n- 风险:\n- rollback boundary:\n- 目标环境:\n- 前置条件:\n- 灰度范围:\n\n## 回滚\n- owner:\n- 风险:\n- rollback boundary:\n\n## 观测\n- owner:\n- 风险:\n- rollback boundary:\n```\n\n如果你愿意，我可以继续把“回滚”和“观测”两块也补成更具体的检查项。",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0edef5b9ca723e520169e4470e08608191a3132480ea9aa175\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 8566,
+          "output": 142,
+          "cacheRead": 5120,
+          "cacheWrite": 0,
+          "totalTokens": 13828,
+          "cost": {
+            "input": 0.0064245000000000005,
+            "output": 0.000639,
+            "cacheRead": 0.000384,
+            "cacheWrite": 0,
+            "total": 0.0074475
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776568076421,
+        "responseId": "resp_0edef5b9ca723e520169e4470d610c819190865ebc77debf95"
+      }
+    ],
+    "filteredMessageCount": 4,
+    "filteredMessageTokenEstimate": 123,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": [
+      1,
+      3
+    ]
+  },
+  "timings": {
+    "totalElapsedMs": 9544,
+    "decisionElapsedMs": 9542
+  }
+}

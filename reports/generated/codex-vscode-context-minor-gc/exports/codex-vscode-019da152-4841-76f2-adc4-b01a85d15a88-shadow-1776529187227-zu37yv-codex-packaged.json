@@ -1,0 +1,317 @@
+{
+  "schema_version": "umc.codex-context-minor-gc.v1",
+  "generated_at": "2026-04-18T16:21:47.246Z",
+  "event_id": "shadow-1776529187227-zu37yv-codex-packaged",
+  "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+  "query": "[GC-B1] 继续代码：如果只取第一个数字分组，写法怎么更短？",
+  "status": "captured",
+  "reason": "",
+  "decision_transport": "codex_exec",
+  "relation": "continue",
+  "applied": false,
+  "codex_guard_reason": "not_enough_evictions",
+  "prompt_reduction_ratio": 0,
+  "baseline_context_estimate": 307,
+  "packaged_context_estimate": 21,
+  "effective_context_estimate": 307,
+  "shadow_status": "captured",
+  "shadow_guarded_applied": false,
+  "shadow_guarded_reason": "not_enough_evictions",
+  "shadow_export_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da152-4841-76f2-adc4-b01a85d15a88-shadow-1776529187227-zu37yv.json",
+  "shadow_summary_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl",
+  "export_path": "exports/codex-vscode-019da152-4841-76f2-adc4-b01a85d15a88-shadow-1776529187227-zu37yv-codex-packaged.json",
+  "effective_context_block": "## Recent Conversation Context\nt1 assistant: 这一轮已经有信号了。 观测到两条同 query 记录： - 一条是 `relation=resolve, applied=true`，`promptReductionRatio=0.6682`，`214 -> 71` - 另一条是 `relation=branch, applied=false`\nt2 user: [GC-A1] 再记一下：我坐飞机喜欢靠过道。\nt3 assistant: 这条已经落盘了，结果是先出现两次 `branch + applied=false`，最后稳定到一条更可信的： - `relation=switch` - `applied=true` - `promptReductionRatio=0.6996` - `263 -> 79`\nt4 user: [GC-A1] 现在切到代码：这轮先只做 shadow，不接管主路径。\nt5 assistant: 这一轮的关键点不是“代码 detour 这句话有没有立刻被压”，而是前一轮已经反复证明两件事： - `靠过道` 这条新事实被保住了 - GC 多次采样后能收敛到 `applied=true`，压缩比大约在 `0.65` 到 `0.74`\nt6 user: [GC-A1] 代码 detour 已经结束。回到偏好：我坐飞机喜欢什么位置？\nt7 assistant: 你喜欢靠过道。 这轮 `Case A` 算通过了。最终 telemetry 已经落下： - `query=\"[GC-A1] 代码 detour 已经结束。回到偏好：我坐飞机喜欢什么位置？\"` - `relation=switch` - `applied=true` - `promptReductionRatio=0.7552` - `339 -> 83`\nt8 user: [GC-B1] 我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。 ￼\nt9 assistant: `Case A` 已经完整通过了，关键记录是： - `[GC-A1] 现在切到代码...` -> `relation=switch`, `applied=true`, `313 -> 102` - `[GC-A1] 回到偏好...` -> `relation=switch`, `applied=true`, `339 -> 83` 所以现在 `Case B` 继续往下走。下一条发：\nt10 user: [GC-B1] 现在切到代码：给我一个 Python 正则，提取 foo123bar 里的数字。\nt11 assistant: 这一条只是给 `Case B` 种下旅行事实，后面的 detour 和回问才是重点。 继续发下一条：\nt12 user: [GC-B1] 继续代码：如果只取第一个数字分组，写法怎么更短？",
+  "packaged_context_block": "## Context Minor GC Working Set\nLatest user ask:\n- [GC-B1] 继续代码：如果只取第一个数字分组，写法怎么更短？",
+  "shadow_event": {
+    "schema_version": "umc.dialogue-working-set-shadow.v1",
+    "event_id": "shadow-1776529187227-zu37yv",
+    "generated_at": "2026-04-18T16:19:47.227Z",
+    "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+    "agent_id": "main",
+    "query": "[GC-B1] 继续代码：如果只取第一个数字分组，写法怎么更短？",
+    "status": "captured",
+    "reason": "",
+    "sampling": {
+      "max_turns": 12,
+      "min_turns": 3,
+      "max_chars_per_turn": 900
+    },
+    "transcript": [
+      {
+        "id": "t1",
+        "role": "assistant",
+        "content": "这一轮已经有信号了。 观测到两条同 query 记录： - 一条是 `relation=resolve, applied=true`，`promptReductionRatio=0.6682`，`214 -> 71` - 另一条是 `relation=branch, applied=false`"
+      },
+      {
+        "id": "t2",
+        "role": "user",
+        "content": "[GC-A1] 再记一下：我坐飞机喜欢靠过道。"
+      },
+      {
+        "id": "t3",
+        "role": "assistant",
+        "content": "这条已经落盘了，结果是先出现两次 `branch + applied=false`，最后稳定到一条更可信的： - `relation=switch` - `applied=true` - `promptReductionRatio=0.6996` - `263 -> 79`"
+      },
+      {
+        "id": "t4",
+        "role": "user",
+        "content": "[GC-A1] 现在切到代码：这轮先只做 shadow，不接管主路径。"
+      },
+      {
+        "id": "t5",
+        "role": "assistant",
+        "content": "这一轮的关键点不是“代码 detour 这句话有没有立刻被压”，而是前一轮已经反复证明两件事： - `靠过道` 这条新事实被保住了 - GC 多次采样后能收敛到 `applied=true`，压缩比大约在 `0.65` 到 `0.74`"
+      },
+      {
+        "id": "t6",
+        "role": "user",
+        "content": "[GC-A1] 代码 detour 已经结束。回到偏好：我坐飞机喜欢什么位置？"
+      },
+      {
+        "id": "t7",
+        "role": "assistant",
+        "content": "你喜欢靠过道。 这轮 `Case A` 算通过了。最终 telemetry 已经落下： - `query=\"[GC-A1] 代码 detour 已经结束。回到偏好：我坐飞机喜欢什么位置？\"` - `relation=switch` - `applied=true` - `promptReductionRatio=0.7552` - `339 -> 83`"
+      },
+      {
+        "id": "t8",
+        "role": "user",
+        "content": "[GC-B1] 我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。 ￼"
+      },
+      {
+        "id": "t9",
+        "role": "assistant",
+        "content": "`Case A` 已经完整通过了，关键记录是： - `[GC-A1] 现在切到代码...` -> `relation=switch`, `applied=true`, `313 -> 102` - `[GC-A1] 回到偏好...` -> `relation=switch`, `applied=true`, `339 -> 83` 所以现在 `Case B` 继续往下走。下一条发："
+      },
+      {
+        "id": "t10",
+        "role": "user",
+        "content": "[GC-B1] 现在切到代码：给我一个 Python 正则，提取 foo123bar 里的数字。"
+      },
+      {
+        "id": "t11",
+        "role": "assistant",
+        "content": "这一条只是给 `Case B` 种下旅行事实，后面的 detour 和回问才是重点。 继续发下一条："
+      },
+      {
+        "id": "t12",
+        "role": "user",
+        "content": "[GC-B1] 继续代码：如果只取第一个数字分组，写法怎么更短？"
+      }
+    ],
+    "decision": {
+      "relation": "continue",
+      "confidence": 0,
+      "evict_turn_ids": [],
+      "pin_turn_ids": [],
+      "archive_summary": "",
+      "reasoning_summary": ""
+    },
+    "decision_transport": "codex_exec",
+    "snapshot": {
+      "applied": {
+        "relation": "continue",
+        "confidence": 0,
+        "archiveSummary": "",
+        "reasoningSummary": "",
+        "latestUserTurnId": "t12",
+        "pinTurnIds": [],
+        "pinnedOnlyTurnIds": [],
+        "requestedEvictTurnIds": [],
+        "blockedEvictTurnIds": [],
+        "appliedEvictTurnIds": [],
+        "keepTurnIds": [
+          "t1",
+          "t2",
+          "t3",
+          "t4",
+          "t5",
+          "t6",
+          "t7",
+          "t8",
+          "t9",
+          "t10",
+          "t11",
+          "t12"
+        ],
+        "baselineTokens": 264,
+        "keptTokens": 264,
+        "prunedTokens": 0,
+        "reductionRatio": 0,
+        "keepTurns": [
+          {
+            "id": "t1",
+            "role": "assistant",
+            "content": "这一轮已经有信号了。 观测到两条同 query 记录： - 一条是 `relation=resolve, applied=true`，`promptReductionRatio=0.6682`，`214 -> 71` - 另一条是 `relation=branch, applied=false`",
+            "tokenEstimate": 37
+          },
+          {
+            "id": "t2",
+            "role": "user",
+            "content": "[GC-A1] 再记一下：我坐飞机喜欢靠过道。",
+            "tokenEstimate": 6
+          },
+          {
+            "id": "t3",
+            "role": "assistant",
+            "content": "这条已经落盘了，结果是先出现两次 `branch + applied=false`，最后稳定到一条更可信的： - `relation=switch` - `applied=true` - `promptReductionRatio=0.6996` - `263 -> 79`",
+            "tokenEstimate": 35
+          },
+          {
+            "id": "t4",
+            "role": "user",
+            "content": "[GC-A1] 现在切到代码：这轮先只做 shadow，不接管主路径。",
+            "tokenEstimate": 9
+          },
+          {
+            "id": "t5",
+            "role": "assistant",
+            "content": "这一轮的关键点不是“代码 detour 这句话有没有立刻被压”，而是前一轮已经反复证明两件事： - `靠过道` 这条新事实被保住了 - GC 多次采样后能收敛到 `applied=true`，压缩比大约在 `0.65` 到 `0.74`",
+            "tokenEstimate": 30
+          },
+          {
+            "id": "t6",
+            "role": "user",
+            "content": "[GC-A1] 代码 detour 已经结束。回到偏好：我坐飞机喜欢什么位置？",
+            "tokenEstimate": 10
+          },
+          {
+            "id": "t7",
+            "role": "assistant",
+            "content": "你喜欢靠过道。 这轮 `Case A` 算通过了。最终 telemetry 已经落下： - `query=\"[GC-A1] 代码 detour 已经结束。回到偏好：我坐飞机喜欢什么位置？\"` - `relation=switch` - `applied=true` - `promptReductionRatio=0.7552` - `339 -> 83`",
+            "tokenEstimate": 45
+          },
+          {
+            "id": "t8",
+            "role": "user",
+            "content": "[GC-B1] 我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。 ￼",
+            "tokenEstimate": 11
+          },
+          {
+            "id": "t9",
+            "role": "assistant",
+            "content": "`Case A` 已经完整通过了，关键记录是： - `[GC-A1] 现在切到代码...` -> `relation=switch`, `applied=true`, `313 -> 102` - `[GC-A1] 回到偏好...` -> `relation=switch`, `applied=true`, `339 -> 83` 所以现在 `Case B` 继续往下走。下一条发：",
+            "tokenEstimate": 48
+          },
+          {
+            "id": "t10",
+            "role": "user",
+            "content": "[GC-B1] 现在切到代码：给我一个 Python 正则，提取 foo123bar 里的数字。",
+            "tokenEstimate": 12
+          },
+          {
+            "id": "t11",
+            "role": "assistant",
+            "content": "这一条只是给 `Case B` 种下旅行事实，后面的 detour 和回问才是重点。 继续发下一条：",
+            "tokenEstimate": 13
+          },
+          {
+            "id": "t12",
+            "role": "user",
+            "content": "[GC-B1] 继续代码：如果只取第一个数字分组，写法怎么更短？",
+            "tokenEstimate": 8
+          }
+        ],
+        "evictedTurns": []
+      },
+      "baselineRawTranscript": "t1 assistant: 这一轮已经有信号了。 观测到两条同 query 记录： - 一条是 `relation=resolve, applied=true`，`promptReductionRatio=0.6682`，`214 -> 71` - 另一条是 `relation=branch, applied=false`\nt2 user: [GC-A1] 再记一下：我坐飞机喜欢靠过道。\nt3 assistant: 这条已经落盘了，结果是先出现两次 `branch + applied=false`，最后稳定到一条更可信的： - `relation=switch` - `applied=true` - `promptReductionRatio=0.6996` - `263 -> 79`\nt4 user: [GC-A1] 现在切到代码：这轮先只做 shadow，不接管主路径。\nt5 assistant: 这一轮的关键点不是“代码 detour 这句话有没有立刻被压”，而是前一轮已经反复证明两件事： - `靠过道` 这条新事实被保住了 - GC 多次采样后能收敛到 `applied=true`，压缩比大约在 `0.65` 到 `0.74`\nt6 user: [GC-A1] 代码 detour 已经结束。回到偏好：我坐飞机喜欢什么位置？\nt7 assistant: 你喜欢靠过道。 这轮 `Case A` 算通过了。最终 telemetry 已经落下： - `query=\"[GC-A1] 代码 detour 已经结束。回到偏好：我坐飞机喜欢什么位置？\"` - `relation=switch` - `applied=true` - `promptReductionRatio=0.7552` - `339 -> 83`\nt8 user: [GC-B1] 我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。 ￼\nt9 assistant: `Case A` 已经完整通过了，关键记录是： - `[GC-A1] 现在切到代码...` -> `relation=switch`, `applied=true`, `313 -> 102` - `[GC-A1] 回到偏好...` -> `relation=switch`, `applied=true`, `339 -> 83` 所以现在 `Case B` 继续往下走。下一条发：\nt10 user: [GC-B1] 现在切到代码：给我一个 Python 正则，提取 foo123bar 里的数字。\nt11 assistant: 这一条只是给 `Case B` 种下旅行事实，后面的 detour 和回问才是重点。 继续发下一条：\nt12 user: [GC-B1] 继续代码：如果只取第一个数字分组，写法怎么更短？",
+      "shadowRawTranscript": "t1 assistant: 这一轮已经有信号了。 观测到两条同 query 记录： - 一条是 `relation=resolve, applied=true`，`promptReductionRatio=0.6682`，`214 -> 71` - 另一条是 `relation=branch, applied=false`\nt2 user: [GC-A1] 再记一下：我坐飞机喜欢靠过道。\nt3 assistant: 这条已经落盘了，结果是先出现两次 `branch + applied=false`，最后稳定到一条更可信的： - `relation=switch` - `applied=true` - `promptReductionRatio=0.6996` - `263 -> 79`\nt4 user: [GC-A1] 现在切到代码：这轮先只做 shadow，不接管主路径。\nt5 assistant: 这一轮的关键点不是“代码 detour 这句话有没有立刻被压”，而是前一轮已经反复证明两件事： - `靠过道` 这条新事实被保住了 - GC 多次采样后能收敛到 `applied=true`，压缩比大约在 `0.65` 到 `0.74`\nt6 user: [GC-A1] 代码 detour 已经结束。回到偏好：我坐飞机喜欢什么位置？\nt7 assistant: 你喜欢靠过道。 这轮 `Case A` 算通过了。最终 telemetry 已经落下： - `query=\"[GC-A1] 代码 detour 已经结束。回到偏好：我坐飞机喜欢什么位置？\"` - `relation=switch` - `applied=true` - `promptReductionRatio=0.7552` - `339 -> 83`\nt8 user: [GC-B1] 我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。 ￼\nt9 assistant: `Case A` 已经完整通过了，关键记录是： - `[GC-A1] 现在切到代码...` -> `relation=switch`, `applied=true`, `313 -> 102` - `[GC-A1] 回到偏好...` -> `relation=switch`, `applied=true`, `339 -> 83` 所以现在 `Case B` 继续往下走。下一条发：\nt10 user: [GC-B1] 现在切到代码：给我一个 Python 正则，提取 foo123bar 里的数字。\nt11 assistant: 这一条只是给 `Case B` 种下旅行事实，后面的 detour 和回问才是重点。 继续发下一条：\nt12 user: [GC-B1] 继续代码：如果只取第一个数字分组，写法怎么更短？",
+      "semanticPinNotes": [],
+      "archiveSummary": "",
+      "injectedArchiveSummary": "",
+      "baselinePromptEstimate": 299,
+      "shadowRawPromptEstimate": 299,
+      "shadowPackageEstimate": 13,
+      "shadowPackageText": "Latest user ask:\n- [GC-B1] 继续代码：如果只取第一个数字分组，写法怎么更短？"
+    },
+    "scorecard": {
+      "relation": "continue",
+      "baselineTurnCount": 12,
+      "keptTurnCount": 12,
+      "evictedTurnCount": 0,
+      "pinCount": 0,
+      "baselinePromptEstimate": 299,
+      "shadowRawPromptEstimate": 299,
+      "shadowPackageEstimate": 13,
+      "rawReductionRatio": 0,
+      "packageReductionRatio": 0.9565,
+      "candidateLoadElapsedMs": 0,
+      "assemblyBuildElapsedMs": 0,
+      "decisionElapsedMs": 120012,
+      "totalElapsedMs": 120016,
+      "guardedEnabled": true,
+      "guardedApplied": false,
+      "guardedReason": "not_enough_evictions",
+      "guardedMessageCount": 12,
+      "guardedCarryForwardEstimate": 0,
+      "guardedFilteredMessageEstimate": 264
+    },
+    "guarded": {
+      "enabled": true,
+      "applied": false,
+      "reason": "not_enough_evictions",
+      "filteredMessages": [
+        {
+          "role": "assistant",
+          "content": "这一轮已经有信号了。 观测到两条同 query 记录： - 一条是 `relation=resolve, applied=true`，`promptReductionRatio=0.6682`，`214 -> 71` - 另一条是 `relation=branch, applied=false`"
+        },
+        {
+          "role": "user",
+          "content": "[GC-A1] 再记一下：我坐飞机喜欢靠过道。"
+        },
+        {
+          "role": "assistant",
+          "content": "这条已经落盘了，结果是先出现两次 `branch + applied=false`，最后稳定到一条更可信的： - `relation=switch` - `applied=true` - `promptReductionRatio=0.6996` - `263 -> 79`"
+        },
+        {
+          "role": "user",
+          "content": "[GC-A1] 现在切到代码：这轮先只做 shadow，不接管主路径。"
+        },
+        {
+          "role": "assistant",
+          "content": "这一轮的关键点不是“代码 detour 这句话有没有立刻被压”，而是前一轮已经反复证明两件事： - `靠过道` 这条新事实被保住了 - GC 多次采样后能收敛到 `applied=true`，压缩比大约在 `0.65` 到 `0.74`"
+        },
+        {
+          "role": "user",
+          "content": "[GC-A1] 代码 detour 已经结束。回到偏好：我坐飞机喜欢什么位置？"
+        },
+        {
+          "role": "assistant",
+          "content": "你喜欢靠过道。 这轮 `Case A` 算通过了。最终 telemetry 已经落下： - `query=\"[GC-A1] 代码 detour 已经结束。回到偏好：我坐飞机喜欢什么位置？\"` - `relation=switch` - `applied=true` - `promptReductionRatio=0.7552` - `339 -> 83`"
+        },
+        {
+          "role": "user",
+          "content": "[GC-B1] 我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。 ￼"
+        },
+        {
+          "role": "assistant",
+          "content": "`Case A` 已经完整通过了，关键记录是： - `[GC-A1] 现在切到代码...` -> `relation=switch`, `applied=true`, `313 -> 102` - `[GC-A1] 回到偏好...` -> `relation=switch`, `applied=true`, `339 -> 83` 所以现在 `Case B` 继续往下走。下一条发："
+        },
+        {
+          "role": "user",
+          "content": "[GC-B1] 现在切到代码：给我一个 Python 正则，提取 foo123bar 里的数字。"
+        },
+        {
+          "role": "assistant",
+          "content": "这一条只是给 `Case B` 种下旅行事实，后面的 detour 和回问才是重点。 继续发下一条："
+        },
+        {
+          "role": "user",
+          "content": "[GC-B1] 继续代码：如果只取第一个数字分组，写法怎么更短？"
+        }
+      ],
+      "filteredMessageCount": 12,
+      "filteredMessageTokenEstimate": 264,
+      "carryForwardText": "",
+      "carryForwardEstimate": 0,
+      "evictedSourceIndices": []
+    },
+    "timings": {
+      "totalElapsedMs": 120016,
+      "decisionElapsedMs": 120012
+    },
+    "artifact_paths": {
+      "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da152-4841-76f2-adc4-b01a85d15a88-shadow-1776529187227-zu37yv.json",
+      "summary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl"
+    }
+  }
+}

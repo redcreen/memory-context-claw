@@ -1,0 +1,443 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776568575990-tz7o5v",
+  "generated_at": "2026-04-19T03:16:15.990Z",
+  "session_key": "agent:main:main",
+  "agent_id": "main",
+  "query": "现在回到编辑器问题。我现在默认编辑器是什么？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "记一下：我以前默认编辑器是 Vim。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "已记下。"
+    },
+    {
+      "id": "t3",
+      "role": "assistant",
+      "content": "已记下。"
+    },
+    {
+      "id": "t4",
+      "role": "user",
+      "content": "更新一下：我现在默认编辑器是 Zed，而且后面都按这个新值算。"
+    },
+    {
+      "id": "t5",
+      "role": "assistant",
+      "content": "已更新，后面按 Zed 记。"
+    },
+    {
+      "id": "t6",
+      "role": "user",
+      "content": "继续同一个编辑器话题：我把日常工作拆成代码导航、批量替换、Git 操作、预览四块，你先记住这是同一个 workflow。"
+    },
+    {
+      "id": "t7",
+      "role": "assistant",
+      "content": "记住了：默认编辑器现在按 Zed 算，而且代码导航、批量替换、Git 操作、预览这四块我会当成同一个日常 workflow 来理解。"
+    },
+    {
+      "id": "t8",
+      "role": "user",
+      "content": "再补充：代码导航要快，批量替换要可回滚，Git 操作要偏命令行，预览要尽量轻量。"
+    },
+    {
+      "id": "t9",
+      "role": "assistant",
+      "content": "记住了：这四块我会按同一个 workflow 处理。 - 代码导航：要快 - 批量替换：要可回滚 - Git 操作：偏命令行 - 预览：尽量轻量 后面我会按这个默认值来。"
+    },
+    {
+      "id": "t10",
+      "role": "user",
+      "content": "还是同一个 workflow：如果以后我问编辑器选择，默认先给结论，再说明原因，不要把旧值 Vim 当成当前值。"
+    },
+    {
+      "id": "t11",
+      "role": "assistant",
+      "content": "记住了。以后问编辑器选择，我会先给结论，再补原因，并且不会把 Vim 当成当前值。"
+    },
+    {
+      "id": "t12",
+      "role": "user",
+      "content": "继续：这个 workflow 主要服务于 Node.js 和文档维护，不是为了写长篇文章。"
+    },
+    {
+      "id": "t13",
+      "role": "assistant",
+      "content": "记住了。这个 workflow 我会按 Node.js 和文档维护来理解，不会默认往长篇写作方向带。"
+    },
+    {
+      "id": "t14",
+      "role": "user",
+      "content": "再补一条：我切题之后再回来问当前编辑器，你也应该优先回答现在这个新值。"
+    },
+    {
+      "id": "t15",
+      "role": "assistant",
+      "content": "记住了。以后你再回头问当前编辑器，我会优先按现在这个新值回答。"
+    },
+    {
+      "id": "t16",
+      "role": "user",
+      "content": "现在换个完全不同的话题。给我一个适合工作日晚饭的番茄牛肉炖菜思路，要求一锅做完。"
+    },
+    {
+      "id": "t17",
+      "role": "assistant",
+      "content": "可以，做成**一锅版番茄牛肉炖菜**，思路就是：先把牛肉煎出香味，再把蔬菜和番茄一起炖，最后顺手把主食也塞进同一锅里。 ### 配方思路 适合 2-3 人，工作日晚饭够省事： - 牛腩 / 牛肩肉：400-500g，切块 - 洋葱：1 个 - 胡萝卜：1-2 根 - 土豆：1-2 个 - 蒜：3-4 瓣 - 番茄：2-3 个，或者 1 罐番茄碎 - 番茄膏：1-2 勺，有的话更浓 - 红酒：少许，可省 - 牛肉高汤 / 清水：足量没过食材 - 月桂叶、黑胡椒、盐 - 橄榄油 ### 做法 1. **煎牛肉** - 牛肉擦干，撒盐和黑胡椒。 - 锅里下油，分批把牛肉煎到表面上色。 - 先盛出。 2. **炒香底味** - 同一锅下洋葱、蒜、胡萝卜，炒软。 - 加番茄膏炒 30 秒。 - 加切块番茄或番茄碎，炒到出汁。 3. **回锅炖** - 把牛肉倒回去。 - 加高汤或水，没过食材。 - 加月桂叶，烧开后转小火炖 60-90 分钟。 4. **加土豆** - 牛肉炖到开始变软后，加土豆块。 - 继续炖 20-30 分钟，直到土豆和牛肉都软。 5. **收尾** - 开盖稍微收浓汤汁。 - 调盐、黑胡椒。 - 想更顺口可以加一点黄油或者一点点糖平衡酸味。 ### 想更像“工作日晚饭”的省事版 - 直接用**番茄罐头**，省去处理番茄 - 牛肉可以换成**牛腩、牛腱子、牛肩肉** - 想一锅把主食也做了，可以最后 10 分钟加： - 熟意面 - 米饭另盛 - 或者加一点珍珠麦 / 大麦粒一起炖 ### 口味方向 - **更家常**：番茄多一点，汤多一点 - **更浓郁**：加番茄膏、少许红酒、最后黄油收尾 - **更快**：牛肉切小块，压力锅/电压力锅更适合 如果你愿意，我可以直接给你写一个**30 分钟版本**，或者按你家现有食材改成“冰箱清库存版”。"
+    },
+    {
+      "id": "t18",
+      "role": "user",
+      "content": "继续做饭话题：如果我只有番茄、牛腩、洋葱和土豆，最应该先处理哪一步？一句话。"
+    },
+    {
+      "id": "t19",
+      "role": "assistant",
+      "content": "先把牛腩切块擦干并下锅煎上色。"
+    },
+    {
+      "id": "t20",
+      "role": "user",
+      "content": "还是做饭：刚才这道菜里，主要肉类是什么？"
+    },
+    {
+      "id": "t21",
+      "role": "assistant",
+      "content": "牛腩。"
+    }
+  ],
+  "decision": {
+    "relation": "resolve",
+    "confidence": 0.95,
+    "evict_turn_ids": [
+      "t1",
+      "t2",
+      "t3",
+      "t4",
+      "t5",
+      "t6",
+      "t7",
+      "t8",
+      "t9",
+      "t10",
+      "t11",
+      "t12",
+      "t13",
+      "t14",
+      "t15",
+      "t16",
+      "t17",
+      "t18",
+      "t19",
+      "t20",
+      "t21"
+    ],
+    "pin_turn_ids": [
+      "t1",
+      "t4",
+      "t5"
+    ],
+    "archive_summary": "User’s durable editor preference changed from Vim to Zed, and Zed is the current default. Vim should no longer be treated as current. The newer workflow/editor-selection preferences are not needed for the immediate question.",
+    "reasoning_summary": "The conversation has moved from an older editor-preference thread to an unrelated cooking topic and back to a simple status question. The next turn only needs the current default editor fact, which is durable and can survive as a compact pin. All prior raw turns can leave the prompt; the latest user turn remains in runtime by default."
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "resolve",
+      "confidence": 0.95,
+      "archiveSummary": "User’s durable editor preference changed from Vim to Zed, and Zed is the current default. Vim should no longer be treated as current. The newer workflow/editor-selection preferences are not needed for the immediate question.",
+      "reasoningSummary": "The conversation has moved from an older editor-preference thread to an unrelated cooking topic and back to a simple status question. The next turn only needs the current default editor fact, which is durable and can survive as a compact pin. All prior raw turns can leave the prompt; the latest user turn remains in runtime by default.",
+      "latestUserTurnId": "t20",
+      "pinTurnIds": [
+        "t1",
+        "t4",
+        "t5"
+      ],
+      "pinnedOnlyTurnIds": [
+        "t1",
+        "t4",
+        "t5"
+      ],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8",
+        "t9",
+        "t10",
+        "t11",
+        "t12",
+        "t13",
+        "t14",
+        "t15",
+        "t16",
+        "t17",
+        "t18",
+        "t19",
+        "t20",
+        "t21"
+      ],
+      "blockedEvictTurnIds": [
+        "t20"
+      ],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8",
+        "t9",
+        "t10",
+        "t11",
+        "t12",
+        "t13",
+        "t14",
+        "t15",
+        "t16",
+        "t17",
+        "t18",
+        "t19",
+        "t21"
+      ],
+      "keepTurnIds": [
+        "t20"
+      ],
+      "baselineTokens": 377,
+      "keptTokens": 5,
+      "prunedTokens": 372,
+      "reductionRatio": 0.986737400530504,
+      "keepTurns": [
+        {
+          "id": "t20",
+          "role": "user",
+          "content": "还是做饭：刚才这道菜里，主要肉类是什么？",
+          "tokenEstimate": 5
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "记一下：我以前默认编辑器是 Vim。",
+          "tokenEstimate": 5
+        },
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "已记下。",
+          "tokenEstimate": 1
+        },
+        {
+          "id": "t3",
+          "role": "assistant",
+          "content": "已记下。",
+          "tokenEstimate": 1
+        },
+        {
+          "id": "t4",
+          "role": "user",
+          "content": "更新一下：我现在默认编辑器是 Zed，而且后面都按这个新值算。",
+          "tokenEstimate": 8
+        },
+        {
+          "id": "t5",
+          "role": "assistant",
+          "content": "已更新，后面按 Zed 记。",
+          "tokenEstimate": 4
+        },
+        {
+          "id": "t6",
+          "role": "user",
+          "content": "继续同一个编辑器话题：我把日常工作拆成代码导航、批量替换、Git 操作、预览四块，你先记住这是同一个 workflow。",
+          "tokenEstimate": 15
+        },
+        {
+          "id": "t7",
+          "role": "assistant",
+          "content": "记住了：默认编辑器现在按 Zed 算，而且代码导航、批量替换、Git 操作、预览这四块我会当成同一个日常 workflow 来理解。",
+          "tokenEstimate": 17
+        },
+        {
+          "id": "t8",
+          "role": "user",
+          "content": "再补充：代码导航要快，批量替换要可回滚，Git 操作要偏命令行，预览要尽量轻量。",
+          "tokenEstimate": 10
+        },
+        {
+          "id": "t9",
+          "role": "assistant",
+          "content": "记住了：这四块我会按同一个 workflow 处理。 - 代码导航：要快 - 批量替换：要可回滚 - Git 操作：偏命令行 - 预览：尽量轻量 后面我会按这个默认值来。",
+          "tokenEstimate": 22
+        },
+        {
+          "id": "t10",
+          "role": "user",
+          "content": "还是同一个 workflow：如果以后我问编辑器选择，默认先给结论，再说明原因，不要把旧值 Vim 当成当前值。",
+          "tokenEstimate": 14
+        },
+        {
+          "id": "t11",
+          "role": "assistant",
+          "content": "记住了。以后问编辑器选择，我会先给结论，再补原因，并且不会把 Vim 当成当前值。",
+          "tokenEstimate": 11
+        },
+        {
+          "id": "t12",
+          "role": "user",
+          "content": "继续：这个 workflow 主要服务于 Node.js 和文档维护，不是为了写长篇文章。",
+          "tokenEstimate": 12
+        },
+        {
+          "id": "t13",
+          "role": "assistant",
+          "content": "记住了。这个 workflow 我会按 Node.js 和文档维护来理解，不会默认往长篇写作方向带。",
+          "tokenEstimate": 13
+        },
+        {
+          "id": "t14",
+          "role": "user",
+          "content": "再补一条：我切题之后再回来问当前编辑器，你也应该优先回答现在这个新值。",
+          "tokenEstimate": 9
+        },
+        {
+          "id": "t15",
+          "role": "assistant",
+          "content": "记住了。以后你再回头问当前编辑器，我会优先按现在这个新值回答。",
+          "tokenEstimate": 8
+        },
+        {
+          "id": "t16",
+          "role": "user",
+          "content": "现在换个完全不同的话题。给我一个适合工作日晚饭的番茄牛肉炖菜思路，要求一锅做完。",
+          "tokenEstimate": 10
+        },
+        {
+          "id": "t17",
+          "role": "assistant",
+          "content": "可以，做成**一锅版番茄牛肉炖菜**，思路就是：先把牛肉煎出香味，再把蔬菜和番茄一起炖，最后顺手把主食也塞进同一锅里。 ### 配方思路 适合 2-3 人，工作日晚饭够省事： - 牛腩 / 牛肩肉：400-500g，切块 - 洋葱：1 个 - 胡萝卜：1-2 根 - 土豆：1-2 个 - 蒜：3-4 瓣 - 番茄：2-3 个，或者 1 罐番茄碎 - 番茄膏：1-2 勺，有的话更浓 - 红酒：少许，可省 - 牛肉高汤 / 清水：足量没过食材 - 月桂叶、黑胡椒、盐 - 橄榄油 ### 做法 1. **煎牛肉** - 牛肉擦干，撒盐和黑胡椒。 - 锅里下油，分批把牛肉煎到表面上色。 - 先盛出。 2. **炒香底味** - 同一锅下洋葱、蒜、胡萝卜，炒软。 - 加番茄膏炒 30 秒。 - 加切块番茄或番茄碎，炒到出汁。 3. **回锅炖** - 把牛肉倒回去。 - 加高汤或水，没过食材。 - 加月桂叶，烧开后转小火炖 60-90 分钟。 4. **加土豆** - 牛肉炖到开始变软后，加土豆块。 - 继续炖 20-30 分钟，直到土豆和牛肉都软。 5. **收尾** - 开盖稍微收浓汤汁。 - 调盐、黑胡椒。 - 想更顺口可以加一点黄油或者一点点糖平衡酸味。 ### 想更像“工作日晚饭”的省事版 - 直接用**番茄罐头**，省去处理番茄 - 牛肉可以换成**牛腩、牛腱子、牛肩肉** - 想一锅把主食也做了，可以最后 10 分钟加： - 熟意面 - 米饭另盛 - 或者加一点珍珠麦 / 大麦粒一起炖 ### 口味方向 - **更家常**：番茄多一点，汤多一点 - **更浓郁**：加番茄膏、少许红酒、最后黄油收尾 - **更快**：牛肉切小块，压力锅/电压力锅更适合 如果你愿意，我可以直接给你写一个**30 分钟版本**，或者按你家现有食材改成“冰箱清库存版”。",
+          "tokenEstimate": 197
+        },
+        {
+          "id": "t18",
+          "role": "user",
+          "content": "继续做饭话题：如果我只有番茄、牛腩、洋葱和土豆，最应该先处理哪一步？一句话。",
+          "tokenEstimate": 10
+        },
+        {
+          "id": "t19",
+          "role": "assistant",
+          "content": "先把牛腩切块擦干并下锅煎上色。",
+          "tokenEstimate": 4
+        },
+        {
+          "id": "t21",
+          "role": "assistant",
+          "content": "牛腩。",
+          "tokenEstimate": 1
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 记一下：我以前默认编辑器是 Vim。\nt2 assistant: 已记下。\nt3 assistant: 已记下。\nt4 user: 更新一下：我现在默认编辑器是 Zed，而且后面都按这个新值算。\nt5 assistant: 已更新，后面按 Zed 记。\nt6 user: 继续同一个编辑器话题：我把日常工作拆成代码导航、批量替换、Git 操作、预览四块，你先记住这是同一个 workflow。\nt7 assistant: 记住了：默认编辑器现在按 Zed 算，而且代码导航、批量替换、Git 操作、预览这四块我会当成同一个日常 workflow 来理解。\nt8 user: 再补充：代码导航要快，批量替换要可回滚，Git 操作要偏命令行，预览要尽量轻量。\nt9 assistant: 记住了：这四块我会按同一个 workflow 处理。 - 代码导航：要快 - 批量替换：要可回滚 - Git 操作：偏命令行 - 预览：尽量轻量 后面我会按这个默认值来。\nt10 user: 还是同一个 workflow：如果以后我问编辑器选择，默认先给结论，再说明原因，不要把旧值 Vim 当成当前值。\nt11 assistant: 记住了。以后问编辑器选择，我会先给结论，再补原因，并且不会把 Vim 当成当前值。\nt12 user: 继续：这个 workflow 主要服务于 Node.js 和文档维护，不是为了写长篇文章。\nt13 assistant: 记住了。这个 workflow 我会按 Node.js 和文档维护来理解，不会默认往长篇写作方向带。\nt14 user: 再补一条：我切题之后再回来问当前编辑器，你也应该优先回答现在这个新值。\nt15 assistant: 记住了。以后你再回头问当前编辑器，我会优先按现在这个新值回答。\nt16 user: 现在换个完全不同的话题。给我一个适合工作日晚饭的番茄牛肉炖菜思路，要求一锅做完。\nt17 assistant: 可以，做成**一锅版番茄牛肉炖菜**，思路就是：先把牛肉煎出香味，再把蔬菜和番茄一起炖，最后顺手把主食也塞进同一锅里。 ### 配方思路 适合 2-3 人，工作日晚饭够省事： - 牛腩 / 牛肩肉：400-500g，切块 - 洋葱：1 个 - 胡萝卜：1-2 根 - 土豆：1-2 个 - 蒜：3-4 瓣 - 番茄：2-3 个，或者 1 罐番茄碎 - 番茄膏：1-2 勺，有的话更浓 - 红酒：少许，可省 - 牛肉高汤 / 清水：足量没过食材 - 月桂叶、黑胡椒、盐 - 橄榄油 ### 做法 1. **煎牛肉** - 牛肉擦干，撒盐和黑胡椒。 - 锅里下油，分批把牛肉煎到表面上色。 - 先盛出。 2. **炒香底味** - 同一锅下洋葱、蒜、胡萝卜，炒软。 - 加番茄膏炒 30 秒。 - 加切块番茄或番茄碎，炒到出汁。 3. **回锅炖** - 把牛肉倒回去。 - 加高汤或水，没过食材。 - 加月桂叶，烧开后转小火炖 60-90 分钟。 4. **加土豆** - 牛肉炖到开始变软后，加土豆块。 - 继续炖 20-30 分钟，直到土豆和牛肉都软。 5. **收尾** - 开盖稍微收浓汤汁。 - 调盐、黑胡椒。 - 想更顺口可以加一点黄油或者一点点糖平衡酸味。 ### 想更像“工作日晚饭”的省事版 - 直接用**番茄罐头**，省去处理番茄 - 牛肉可以换成**牛腩、牛腱子、牛肩肉** - 想一锅把主食也做了，可以最后 10 分钟加： - 熟意面 - 米饭另盛 - 或者加一点珍珠麦 / 大麦粒一起炖 ### 口味方向 - **更家常**：番茄多一点，汤多一点 - **更浓郁**：加番茄膏、少许红酒、最后黄油收尾 - **更快**：牛肉切小块，压力锅/电压力锅更适合 如果你愿意，我可以直接给你写一个**30 分钟版本**，或者按你家现有食材改成“冰箱清库存版”。\nt18 user: 继续做饭话题：如果我只有番茄、牛腩、洋葱和土豆，最应该先处理哪一步？一句话。\nt19 assistant: 先把牛腩切块擦干并下锅煎上色。\nt20 user: 还是做饭：刚才这道菜里，主要肉类是什么？\nt21 assistant: 牛腩。",
+    "shadowRawTranscript": "t20 user: 还是做饭：刚才这道菜里，主要肉类是什么？",
+    "semanticPinNotes": [
+      "user: 记一下：我以前默认编辑器是 Vim。",
+      "user: 更新一下：我现在默认编辑器是 Zed，而且后面都按这个新值算。",
+      "assistant: 已更新，后面按 Zed 记。"
+    ],
+    "archiveSummary": "User’s durable editor preference changed from Vim to Zed, and Zed is the current default. Vim should no longer be treated as current. The newer workflow/editor-selection preferences are not needed for the immediate question.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 440,
+    "shadowRawPromptEstimate": 8,
+    "shadowPackageEstimate": 13,
+    "shadowPackageText": "Recent raw context:\nt20 user: 还是做饭：刚才这道菜里，主要肉类是什么？"
+  },
+  "scorecard": {
+    "relation": "resolve",
+    "baselineTurnCount": 21,
+    "keptTurnCount": 1,
+    "evictedTurnCount": 20,
+    "pinCount": 3,
+    "baselinePromptEstimate": 440,
+    "shadowRawPromptEstimate": 8,
+    "shadowPackageEstimate": 13,
+    "rawReductionRatio": 0.9867,
+    "packageReductionRatio": 0.9705,
+    "candidateLoadElapsedMs": 11,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 13590,
+    "totalElapsedMs": 13592,
+    "guardedEnabled": true,
+    "guardedApplied": true,
+    "guardedReason": "guarded_candidate",
+    "guardedMessageCount": 1,
+    "guardedCarryForwardEstimate": 32,
+    "guardedFilteredMessageEstimate": 5
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": true,
+    "reason": "guarded_candidate",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "还是做饭：刚才这道菜里，主要肉类是什么？"
+          }
+        ],
+        "timestamp": 1776568567341
+      }
+    ],
+    "filteredMessageCount": 1,
+    "filteredMessageTokenEstimate": 5,
+    "carryForwardText": "Conversation carry-forward pins:\n- user: 记一下：我以前默认编辑器是 Vim。\n- user: 更新一下：我现在默认编辑器是 Zed，而且后面都按这个新值算。\n- assistant: 已更新，后面按 Zed 记。",
+    "carryForwardEstimate": 32,
+    "evictedSourceIndices": [
+      0,
+      1,
+      3,
+      4,
+      9,
+      10,
+      15,
+      16,
+      19,
+      20,
+      23,
+      24,
+      27,
+      28,
+      31,
+      32,
+      33,
+      34,
+      35,
+      37
+    ]
+  },
+  "timings": {
+    "totalElapsedMs": 13592,
+    "decisionElapsedMs": 13590
+  }
+}

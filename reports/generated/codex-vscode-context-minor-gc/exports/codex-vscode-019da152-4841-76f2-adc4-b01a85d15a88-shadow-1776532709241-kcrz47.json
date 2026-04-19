@@ -1,0 +1,298 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776532709241-kcrz47",
+  "generated_at": "2026-04-18T17:18:29.241Z",
+  "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+  "agent_id": "main",
+  "query": "能自动跑的，你帮我跑一遍",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "assistant",
+      "content": "接下来做这 3 件事就够了。 1. 先留一条最小回归命令 直接用这条做以后 spot check： ```bash npm run codex:vscode:gc --silent ``` 如果怀疑 prompt 没及时落盘，再用： ```bash node scripts/codex-vscode-context-minor-gc.js --format markdown --prompt \"[GC-D2] 回到编辑器问题。…"
+    },
+    {
+      "id": "t2",
+      "role": "user",
+      "content": "或者补一个 repo 内可重复的 smoke/eval case，把 GC-D2 收进固定回归"
+    },
+    {
+      "id": "t3",
+      "role": "assistant",
+      "content": "已经补进去了。 新回归 case 在： - [evals/codex-context-minor-gc-live-cases.js](/Users/redcreen/Project/unified-memory-core/evals/codex-context-minor-gc-live-cases.js)"
+    },
+    {
+      "id": "t4",
+      "role": "user",
+      "content": "要"
+    },
+    {
+      "id": "t5",
+      "role": "assistant",
+      "content": "已经修到全绿了。 我做了两件事： - 把 Codex minor GC 默认允许的 guarded relation 放宽到包含 `continue` - 把 `codex-minor-gc-current-editor-update-after-detour` 收进固定 live eval case"
+    },
+    {
+      "id": "t6",
+      "role": "user",
+      "content": "继续扩 harder cases，把类似 GC-B 的自然中文多轮切题也收进固定回归"
+    },
+    {
+      "id": "t7",
+      "role": "assistant",
+      "content": "已经把 harder case 补进固定回归了。 新增 case： - `codex-minor-gc-zh-dense-multitopic-return` - 文件：[evals/codex-context-minor-gc-live-cases.js](/Users/redcreen/Project/unified-memory-core/evals/codex-context-minor-gc-live-cases.js)"
+    },
+    {
+      "id": "t8",
+      "role": "user",
+      "content": "要；尽量不是白名单，有硬编码嫌疑；"
+    },
+    {
+      "id": "t9",
+      "role": "assistant",
+      "content": "已经收住了，而且不是靠白名单。 我做了两步： - 把中文多轮切题 harder case 收进固定回归 - 再把 packaged guard 收紧成“不能覆盖 shadow guard 的否决”"
+    },
+    {
+      "id": "t10",
+      "role": "user",
+      "content": "那刚才不通过的测试，可以重新测试，预期是可以通过了对么？"
+    },
+    {
+      "id": "t11",
+      "role": "assistant",
+      "content": "是。 更准确地说："
+    },
+    {
+      "id": "t12",
+      "role": "user",
+      "content": "能自动跑的，你帮我跑一遍"
+    }
+  ],
+  "decision": {
+    "relation": "continue",
+    "confidence": 0.89,
+    "evict_turn_ids": [
+      "t1",
+      "t2",
+      "t3",
+      "t4",
+      "t5"
+    ],
+    "pin_turn_ids": [
+      "t6",
+      "t7",
+      "t8",
+      "t9"
+    ],
+    "archive_summary": "Conversation established and completed earlier GC regression work: a repo-reproducible smoke/eval case was added, guarded relation handling was adjusted to include continue, and an earlier failing path was fixed to green. Then the focus moved to harder Chinese multi-topic detour cases, adding a fixed regression case and tightening the packaged guard so it cannot override a shadow-guard veto. These completed edits are useful as compact background but do not all need to remain raw for the next turn.",
+    "reasoning_summary": "The latest user turn asks to run the now-expected-to-pass test suite for the current active topic, so this is a continue. The immediately relevant raw dependency is the recent exchange establishing that the previously failing test should now pass. Older setup and already-completed earlier fixes can leave the next-turn raw prompt. The harder-case additions and anti-whitelist/shadow-guard rationale should survive as semantic pins because they are still relevant background for interpreting test results, but they do not all need to stay raw."
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "continue",
+      "confidence": 0.89,
+      "archiveSummary": "Conversation established and completed earlier GC regression work: a repo-reproducible smoke/eval case was added, guarded relation handling was adjusted to include continue, and an earlier failing path was fixed to green. Then the focus moved to harder Chinese multi-topic detour cases, adding a fixed regression case and tightening the packaged guard so it cannot override a shadow-guard veto. These completed edits are useful as compact background but do not all need to remain raw for the next turn.",
+      "reasoningSummary": "The latest user turn asks to run the now-expected-to-pass test suite for the current active topic, so this is a continue. The immediately relevant raw dependency is the recent exchange establishing that the previously failing test should now pass. Older setup and already-completed earlier fixes can leave the next-turn raw prompt. The harder-case additions and anti-whitelist/shadow-guard rationale should survive as semantic pins because they are still relevant background for interpreting test results, but they do not all need to stay raw.",
+      "latestUserTurnId": "t12",
+      "pinTurnIds": [
+        "t6",
+        "t7",
+        "t8",
+        "t9"
+      ],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5"
+      ],
+      "keepTurnIds": [
+        "t6",
+        "t7",
+        "t8",
+        "t9",
+        "t10",
+        "t11",
+        "t12"
+      ],
+      "baselineTokens": 253,
+      "keptTokens": 109,
+      "prunedTokens": 144,
+      "reductionRatio": 0.5691699604743083,
+      "keepTurns": [
+        {
+          "id": "t6",
+          "role": "user",
+          "content": "继续扩 harder cases，把类似 GC-B 的自然中文多轮切题也收进固定回归",
+          "tokenEstimate": 11
+        },
+        {
+          "id": "t7",
+          "role": "assistant",
+          "content": "已经把 harder case 补进固定回归了。 新增 case： - `codex-minor-gc-zh-dense-multitopic-return` - 文件：[evals/codex-context-minor-gc-live-cases.js](/Users/redcreen/Project/unified-memory-core/evals/codex-context-minor-gc-live-cases.js)",
+          "tokenEstimate": 55
+        },
+        {
+          "id": "t8",
+          "role": "user",
+          "content": "要；尽量不是白名单，有硬编码嫌疑；",
+          "tokenEstimate": 5
+        },
+        {
+          "id": "t9",
+          "role": "assistant",
+          "content": "已经收住了，而且不是靠白名单。 我做了两步： - 把中文多轮切题 harder case 收进固定回归 - 再把 packaged guard 收紧成“不能覆盖 shadow guard 的否决”",
+          "tokenEstimate": 25
+        },
+        {
+          "id": "t10",
+          "role": "user",
+          "content": "那刚才不通过的测试，可以重新测试，预期是可以通过了对么？",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t11",
+          "role": "assistant",
+          "content": "是。 更准确地说：",
+          "tokenEstimate": 3
+        },
+        {
+          "id": "t12",
+          "role": "user",
+          "content": "能自动跑的，你帮我跑一遍",
+          "tokenEstimate": 3
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "assistant",
+          "content": "接下来做这 3 件事就够了。 1. 先留一条最小回归命令 直接用这条做以后 spot check： ```bash npm run codex:vscode:gc --silent ``` 如果怀疑 prompt 没及时落盘，再用： ```bash node scripts/codex-vscode-context-minor-gc.js --format markdown --prompt \"[GC-D2] 回到编辑器问题。…",
+          "tokenEstimate": 54
+        },
+        {
+          "id": "t2",
+          "role": "user",
+          "content": "或者补一个 repo 内可重复的 smoke/eval case，把 GC-D2 收进固定回归",
+          "tokenEstimate": 12
+        },
+        {
+          "id": "t3",
+          "role": "assistant",
+          "content": "已经补进去了。 新回归 case 在： - [evals/codex-context-minor-gc-live-cases.js](/Users/redcreen/Project/unified-memory-core/evals/codex-context-minor-gc-live-cases.js)",
+          "tokenEstimate": 39
+        },
+        {
+          "id": "t4",
+          "role": "user",
+          "content": "要",
+          "tokenEstimate": 1
+        },
+        {
+          "id": "t5",
+          "role": "assistant",
+          "content": "已经修到全绿了。 我做了两件事： - 把 Codex minor GC 默认允许的 guarded relation 放宽到包含 `continue` - 把 `codex-minor-gc-current-editor-update-after-detour` 收进固定 live eval case",
+          "tokenEstimate": 38
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 assistant: 接下来做这 3 件事就够了。 1. 先留一条最小回归命令 直接用这条做以后 spot check： ```bash npm run codex:vscode:gc --silent ``` 如果怀疑 prompt 没及时落盘，再用： ```bash node scripts/codex-vscode-context-minor-gc.js --format markdown --prompt \"[GC-D2] 回到编辑器问题。…\nt2 user: 或者补一个 repo 内可重复的 smoke/eval case，把 GC-D2 收进固定回归\nt3 assistant: 已经补进去了。 新回归 case 在： - [evals/codex-context-minor-gc-live-cases.js](/Users/redcreen/Project/unified-memory-core/evals/codex-context-minor-gc-live-cases.js)\nt4 user: 要\nt5 assistant: 已经修到全绿了。 我做了两件事： - 把 Codex minor GC 默认允许的 guarded relation 放宽到包含 `continue` - 把 `codex-minor-gc-current-editor-update-after-detour` 收进固定 live eval case\nt6 user: 继续扩 harder cases，把类似 GC-B 的自然中文多轮切题也收进固定回归\nt7 assistant: 已经把 harder case 补进固定回归了。 新增 case： - `codex-minor-gc-zh-dense-multitopic-return` - 文件：[evals/codex-context-minor-gc-live-cases.js](/Users/redcreen/Project/unified-memory-core/evals/codex-context-minor-gc-live-cases.js)\nt8 user: 要；尽量不是白名单，有硬编码嫌疑；\nt9 assistant: 已经收住了，而且不是靠白名单。 我做了两步： - 把中文多轮切题 harder case 收进固定回归 - 再把 packaged guard 收紧成“不能覆盖 shadow guard 的否决”\nt10 user: 那刚才不通过的测试，可以重新测试，预期是可以通过了对么？\nt11 assistant: 是。 更准确地说：\nt12 user: 能自动跑的，你帮我跑一遍",
+    "shadowRawTranscript": "t6 user: 继续扩 harder cases，把类似 GC-B 的自然中文多轮切题也收进固定回归\nt7 assistant: 已经把 harder case 补进固定回归了。 新增 case： - `codex-minor-gc-zh-dense-multitopic-return` - 文件：[evals/codex-context-minor-gc-live-cases.js](/Users/redcreen/Project/unified-memory-core/evals/codex-context-minor-gc-live-cases.js)\nt8 user: 要；尽量不是白名单，有硬编码嫌疑；\nt9 assistant: 已经收住了，而且不是靠白名单。 我做了两步： - 把中文多轮切题 harder case 收进固定回归 - 再把 packaged guard 收紧成“不能覆盖 shadow guard 的否决”\nt10 user: 那刚才不通过的测试，可以重新测试，预期是可以通过了对么？\nt11 assistant: 是。 更准确地说：\nt12 user: 能自动跑的，你帮我跑一遍",
+    "semanticPinNotes": [],
+    "archiveSummary": "Conversation established and completed earlier GC regression work: a repo-reproducible smoke/eval case was added, guarded relation handling was adjusted to include continue, and an earlier failing path was fixed to green. Then the focus moved to harder Chinese multi-topic detour cases, adding a fixed regression case and tightening the packaged guard so it cannot override a shadow-guard veto. These completed edits are useful as compact background but do not all need to remain raw for the next turn.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 286,
+    "shadowRawPromptEstimate": 128,
+    "shadowPackageEstimate": 68,
+    "shadowPackageText": "Task state summary:\nConversation established and completed earlier GC regression work: a repo-reproducible smoke/eval case was added, guarded relation handling was adjusted to include continue, and an earlier failing path was fixed to gree…\n\nLatest user ask:\n- 能自动跑的，你帮我跑一遍"
+  },
+  "scorecard": {
+    "relation": "continue",
+    "baselineTurnCount": 12,
+    "keptTurnCount": 7,
+    "evictedTurnCount": 5,
+    "pinCount": 4,
+    "baselinePromptEstimate": 286,
+    "shadowRawPromptEstimate": 128,
+    "shadowPackageEstimate": 68,
+    "rawReductionRatio": 0.5692,
+    "packageReductionRatio": 0.7622,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 14117,
+    "totalElapsedMs": 14118,
+    "guardedEnabled": true,
+    "guardedApplied": true,
+    "guardedReason": "guarded_candidate",
+    "guardedMessageCount": 7,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 109
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": true,
+    "reason": "guarded_candidate",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": "继续扩 harder cases，把类似 GC-B 的自然中文多轮切题也收进固定回归"
+      },
+      {
+        "role": "assistant",
+        "content": "已经把 harder case 补进固定回归了。 新增 case： - `codex-minor-gc-zh-dense-multitopic-return` - 文件：[evals/codex-context-minor-gc-live-cases.js](/Users/redcreen/Project/unified-memory-core/evals/codex-context-minor-gc-live-cases.js)"
+      },
+      {
+        "role": "user",
+        "content": "要；尽量不是白名单，有硬编码嫌疑；"
+      },
+      {
+        "role": "assistant",
+        "content": "已经收住了，而且不是靠白名单。 我做了两步： - 把中文多轮切题 harder case 收进固定回归 - 再把 packaged guard 收紧成“不能覆盖 shadow guard 的否决”"
+      },
+      {
+        "role": "user",
+        "content": "那刚才不通过的测试，可以重新测试，预期是可以通过了对么？"
+      },
+      {
+        "role": "assistant",
+        "content": "是。 更准确地说："
+      },
+      {
+        "role": "user",
+        "content": "能自动跑的，你帮我跑一遍"
+      }
+    ],
+    "filteredMessageCount": 7,
+    "filteredMessageTokenEstimate": 109,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ]
+  },
+  "timings": {
+    "totalElapsedMs": 14118,
+    "decisionElapsedMs": 14117
+  }
+}

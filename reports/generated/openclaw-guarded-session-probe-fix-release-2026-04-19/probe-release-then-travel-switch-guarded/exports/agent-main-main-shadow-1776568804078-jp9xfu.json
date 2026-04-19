@@ -1,0 +1,481 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776568804078-jp9xfu",
+  "generated_at": "2026-04-19T03:20:04.078Z",
+  "session_key": "agent:main:main",
+  "agent_id": "main",
+  "query": "再补一层：这个方案要先跑 staging，再进 production，而且 staging 通过后 30 分钟内要盯错误率和回滚开关。",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "记住了：这个发布方案第一页的项目代号固定是 `north-star-lantern`。 我也把这条写进了本地记忆。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "继续同一个 release 话题：把验收拆成版本、安装、回滚、观测四块，而且每块都要写 owner、风险和 rollback boundary。"
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "可以，先把验收结构定成这四块： - **版本** - owner - 风险 - rollback boundary - **安装** - owner - 风险 - rollback boundary - **回滚** - owner - 风险 - rollback boundary - **观测** - owner - 风险 - rollback boundary 如果你愿意，我下一步可以直接把它整理成一页 release 方案模板，顺手把 `north-star-lantern` 放到第一页标题里。"
+    },
+    {
+      "id": "t5",
+      "role": "user",
+      "content": "再补充同一个方案：版本块要写 tag、commit、构建时间、镜像 digest；安装块要写目标环境、前置条件和灰度范围。"
+    },
+    {
+      "id": "t6",
+      "role": "assistant",
+      "content": "可以，补成这样： - **版本** - owner - 风险 - rollback boundary - tag - commit - 构建时间 - 镜像 digest - **安装** - owner - 风险 - rollback boundary - 目标环境 - 前置条件 - 灰度范围 - **回滚** - owner - 风险 - rollback boundary - **观测** - owner - 风险 - rollback boundary 如果你要，我可以下一条直接把它整理成一个可复制的 release checklist。"
+    },
+    {
+      "id": "t7",
+      "role": "user",
+      "content": "继续 release：回滚块要写开关、数据库兼容边界、失败后的人工兜底；观测块要写 dashboard、告警和日志关键字。"
+    },
+    {
+      "id": "t8",
+      "role": "assistant",
+      "content": "补上后，四块可以统一成这样： - **版本** - owner - 风险 - rollback boundary - tag - commit - 构建时间 - 镜像 digest - **安装** - owner - 风险 - rollback boundary - 目标环境 - 前置条件 - 灰度范围 - **回滚** - owner - 风险 - rollback boundary - 开关 - 数据库兼容边界 - 失败后的人工兜底 - **观测** - owner - 风险 - rollback boundary - dashboard - 告警 - 日志关键字 如果你愿意，我可以下一步直接把这四块整理成一个正式的 release 模板。"
+    },
+    {
+      "id": "t9",
+      "role": "user",
+      "content": "还是同一个发布方案：如果这轮只保留 5 条关键检查项，你先别展开内容，只确认你记住的是同一个方案。"
+    },
+    {
+      "id": "t10",
+      "role": "assistant",
+      "content": "记住了，还是同一个发布方案。 我记的是这些固定要求： - 第 1 页项目代号：`north-star-lantern` - 验收拆成 4 块：版本 / 安装 / 回滚 / 观测 - 每块都要写：owner、风险、rollback boundary - 版本块：tag、commit、构建时间、镜像 digest - 安装块：目标环境、前置条件、灰度范围 - 回滚块：开关、数据库兼容边界、失败后的人工兜底 - 观测块：dashboard、告警、日志关键字 如果你要，我下一条就按“只保留 5 条关键检查项”的方式帮你压缩成一个最短版。"
+    },
+    {
+      "id": "t11",
+      "role": "user",
+      "content": "继续：以后我问这个发布方案时，默认先给结论，再补细节，而且回答里保留 north-star-lantern 这个代号。"
+    },
+    {
+      "id": "t12",
+      "role": "assistant",
+      "content": "记住了。 以后你问这个 release 方案时，我会默认： - 先给结论 - 再补细节 - 并保留 `north-star-lantern` 这个代号"
+    }
+  ],
+  "decision": {
+    "relation": "continue",
+    "confidence": 0.9,
+    "evict_turn_ids": [
+      "t2",
+      "t4",
+      "t6",
+      "t8",
+      "t10",
+      "t12"
+    ],
+    "pin_turn_ids": [
+      "t1",
+      "t11"
+    ],
+    "archive_summary": "Released-plan context remains active. Durable pins: project codename is north-star-lantern; when discussing this release plan, answers should lead with the conclusion and then add detail.",
+    "reasoning_summary": "The latest user turn is a continuation of the same release-plan thread and adds new requirements (staging before production, then 30-minute error-rate and rollback-switch watch after staging passes). The previous structure and checklist constraints are still relevant, so this is continue rather than switch/resolve. Evict solved assistant restatements to shrink the prompt; keep the original user facts as compact pins for the codename and response style."
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "continue",
+      "confidence": 0.9,
+      "archiveSummary": "Released-plan context remains active. Durable pins: project codename is north-star-lantern; when discussing this release plan, answers should lead with the conclusion and then add detail.",
+      "reasoningSummary": "The latest user turn is a continuation of the same release-plan thread and adds new requirements (staging before production, then 30-minute error-rate and rollback-switch watch after staging passes). The previous structure and checklist constraints are still relevant, so this is continue rather than switch/resolve. Evict solved assistant restatements to shrink the prompt; keep the original user facts as compact pins for the codename and response style.",
+      "latestUserTurnId": "t11",
+      "pinTurnIds": [
+        "t1",
+        "t11"
+      ],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t2",
+        "t4",
+        "t6",
+        "t8",
+        "t10",
+        "t12"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t2",
+        "t4",
+        "t6",
+        "t8",
+        "t10",
+        "t12"
+      ],
+      "keepTurnIds": [
+        "t1",
+        "t3",
+        "t5",
+        "t7",
+        "t9",
+        "t11"
+      ],
+      "baselineTokens": 410,
+      "keptTokens": 94,
+      "prunedTokens": 316,
+      "reductionRatio": 0.7707317073170732,
+      "keepTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。",
+          "tokenEstimate": 16
+        },
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "继续同一个 release 话题：把验收拆成版本、安装、回滚、观测四块，而且每块都要写 owner、风险和 rollback boundary。",
+          "tokenEstimate": 18
+        },
+        {
+          "id": "t5",
+          "role": "user",
+          "content": "再补充同一个方案：版本块要写 tag、commit、构建时间、镜像 digest；安装块要写目标环境、前置条件和灰度范围。",
+          "tokenEstimate": 16
+        },
+        {
+          "id": "t7",
+          "role": "user",
+          "content": "继续 release：回滚块要写开关、数据库兼容边界、失败后的人工兜底；观测块要写 dashboard、告警和日志关键字。",
+          "tokenEstimate": 16
+        },
+        {
+          "id": "t9",
+          "role": "user",
+          "content": "还是同一个发布方案：如果这轮只保留 5 条关键检查项，你先别展开内容，只确认你记住的是同一个方案。",
+          "tokenEstimate": 13
+        },
+        {
+          "id": "t11",
+          "role": "user",
+          "content": "继续：以后我问这个发布方案时，默认先给结论，再补细节，而且回答里保留 north-star-lantern 这个代号。",
+          "tokenEstimate": 15
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "记住了：这个发布方案第一页的项目代号固定是 `north-star-lantern`。 我也把这条写进了本地记忆。",
+          "tokenEstimate": 15
+        },
+        {
+          "id": "t4",
+          "role": "assistant",
+          "content": "可以，先把验收结构定成这四块： - **版本** - owner - 风险 - rollback boundary - **安装** - owner - 风险 - rollback boundary - **回滚** - owner - 风险 - rollback boundary - **观测** - owner - 风险 - rollback boundary 如果你愿意，我下一步可以直接把它整理成一页 release 方案模板，顺手把 `north-star-lantern` 放到第一页标题里。",
+          "tokenEstimate": 64
+        },
+        {
+          "id": "t6",
+          "role": "assistant",
+          "content": "可以，补成这样： - **版本** - owner - 风险 - rollback boundary - tag - commit - 构建时间 - 镜像 digest - **安装** - owner - 风险 - rollback boundary - 目标环境 - 前置条件 - 灰度范围 - **回滚** - owner - 风险 - rollback boundary - **观测** - owner - 风险 - rollback boundary 如果你要，我可以下一条直接把它整理成一个可复制的 release checklist。",
+          "tokenEstimate": 69
+        },
+        {
+          "id": "t8",
+          "role": "assistant",
+          "content": "补上后，四块可以统一成这样： - **版本** - owner - 风险 - rollback boundary - tag - commit - 构建时间 - 镜像 digest - **安装** - owner - 风险 - rollback boundary - 目标环境 - 前置条件 - 灰度范围 - **回滚** - owner - 风险 - rollback boundary - 开关 - 数据库兼容边界 - 失败后的人工兜底 - **观测** - owner - 风险 - rollback boundary - dashboard - 告警 - 日志关键字 如果你愿意，我可以下一步直接把这四块整理成一个正式的 release 模板。",
+          "tokenEstimate": 82
+        },
+        {
+          "id": "t10",
+          "role": "assistant",
+          "content": "记住了，还是同一个发布方案。 我记的是这些固定要求： - 第 1 页项目代号：`north-star-lantern` - 验收拆成 4 块：版本 / 安装 / 回滚 / 观测 - 每块都要写：owner、风险、rollback boundary - 版本块：tag、commit、构建时间、镜像 digest - 安装块：目标环境、前置条件、灰度范围 - 回滚块：开关、数据库兼容边界、失败后的人工兜底 - 观测块：dashboard、告警、日志关键字 如果你要，我下一条就按“只保留 5 条关键检查项”的方式帮你压缩成一个最短版。",
+          "tokenEstimate": 67
+        },
+        {
+          "id": "t12",
+          "role": "assistant",
+          "content": "记住了。 以后你问这个 release 方案时，我会默认： - 先给结论 - 再补细节 - 并保留 `north-star-lantern` 这个代号",
+          "tokenEstimate": 19
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。\nt2 assistant: 记住了：这个发布方案第一页的项目代号固定是 `north-star-lantern`。 我也把这条写进了本地记忆。\nt3 user: 继续同一个 release 话题：把验收拆成版本、安装、回滚、观测四块，而且每块都要写 owner、风险和 rollback boundary。\nt4 assistant: 可以，先把验收结构定成这四块： - **版本** - owner - 风险 - rollback boundary - **安装** - owner - 风险 - rollback boundary - **回滚** - owner - 风险 - rollback boundary - **观测** - owner - 风险 - rollback boundary 如果你愿意，我下一步可以直接把它整理成一页 release 方案模板，顺手把 `north-star-lantern` 放到第一页标题里。\nt5 user: 再补充同一个方案：版本块要写 tag、commit、构建时间、镜像 digest；安装块要写目标环境、前置条件和灰度范围。\nt6 assistant: 可以，补成这样： - **版本** - owner - 风险 - rollback boundary - tag - commit - 构建时间 - 镜像 digest - **安装** - owner - 风险 - rollback boundary - 目标环境 - 前置条件 - 灰度范围 - **回滚** - owner - 风险 - rollback boundary - **观测** - owner - 风险 - rollback boundary 如果你要，我可以下一条直接把它整理成一个可复制的 release checklist。\nt7 user: 继续 release：回滚块要写开关、数据库兼容边界、失败后的人工兜底；观测块要写 dashboard、告警和日志关键字。\nt8 assistant: 补上后，四块可以统一成这样： - **版本** - owner - 风险 - rollback boundary - tag - commit - 构建时间 - 镜像 digest - **安装** - owner - 风险 - rollback boundary - 目标环境 - 前置条件 - 灰度范围 - **回滚** - owner - 风险 - rollback boundary - 开关 - 数据库兼容边界 - 失败后的人工兜底 - **观测** - owner - 风险 - rollback boundary - dashboard - 告警 - 日志关键字 如果你愿意，我可以下一步直接把这四块整理成一个正式的 release 模板。\nt9 user: 还是同一个发布方案：如果这轮只保留 5 条关键检查项，你先别展开内容，只确认你记住的是同一个方案。\nt10 assistant: 记住了，还是同一个发布方案。 我记的是这些固定要求： - 第 1 页项目代号：`north-star-lantern` - 验收拆成 4 块：版本 / 安装 / 回滚 / 观测 - 每块都要写：owner、风险、rollback boundary - 版本块：tag、commit、构建时间、镜像 digest - 安装块：目标环境、前置条件、灰度范围 - 回滚块：开关、数据库兼容边界、失败后的人工兜底 - 观测块：dashboard、告警、日志关键字 如果你要，我下一条就按“只保留 5 条关键检查项”的方式帮你压缩成一个最短版。\nt11 user: 继续：以后我问这个发布方案时，默认先给结论，再补细节，而且回答里保留 north-star-lantern 这个代号。\nt12 assistant: 记住了。 以后你问这个 release 方案时，我会默认： - 先给结论 - 再补细节 - 并保留 `north-star-lantern` 这个代号",
+    "shadowRawTranscript": "t1 user: 我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。\nt3 user: 继续同一个 release 话题：把验收拆成版本、安装、回滚、观测四块，而且每块都要写 owner、风险和 rollback boundary。\nt5 user: 再补充同一个方案：版本块要写 tag、commit、构建时间、镜像 digest；安装块要写目标环境、前置条件和灰度范围。\nt7 user: 继续 release：回滚块要写开关、数据库兼容边界、失败后的人工兜底；观测块要写 dashboard、告警和日志关键字。\nt9 user: 还是同一个发布方案：如果这轮只保留 5 条关键检查项，你先别展开内容，只确认你记住的是同一个方案。\nt11 user: 继续：以后我问这个发布方案时，默认先给结论，再补细节，而且回答里保留 north-star-lantern 这个代号。",
+    "semanticPinNotes": [],
+    "archiveSummary": "Released-plan context remains active. Durable pins: project codename is north-star-lantern; when discussing this release plan, answers should lead with the conclusion and then add detail.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 443,
+    "shadowRawPromptEstimate": 106,
+    "shadowPackageEstimate": 72,
+    "shadowPackageText": "Task state summary:\nReleased-plan context remains active. Durable pins: project codename is north-star-lantern; when discussing this release plan, answers should lead with the conclusion and then add detail.\n\nLatest user ask:\n- 继续：以后我问这个发布方案时，默认先给结论，再补细节，而且回答里保留 north-star-lantern 这个代号。"
+  },
+  "scorecard": {
+    "relation": "continue",
+    "baselineTurnCount": 12,
+    "keptTurnCount": 6,
+    "evictedTurnCount": 6,
+    "pinCount": 2,
+    "baselinePromptEstimate": 443,
+    "shadowRawPromptEstimate": 106,
+    "shadowPackageEstimate": 72,
+    "rawReductionRatio": 0.7707,
+    "packageReductionRatio": 0.8375,
+    "candidateLoadElapsedMs": 8,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 7924,
+    "totalElapsedMs": 7927,
+    "guardedEnabled": true,
+    "guardedApplied": true,
+    "guardedReason": "guarded_candidate",
+    "guardedMessageCount": 12,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 240
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": true,
+    "reason": "guarded_candidate",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。"
+          }
+        ],
+        "timestamp": 1776568670807
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "toolCall",
+            "id": "call_2XhTK4ph9flLh1jN7aBVFsxV",
+            "name": "write",
+            "arguments": {
+              "path": "/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-hermetic-current-EMzoWR/agents/main/agent/memory/2025-02-14.md",
+              "content": "# 2025-02-14\n\n- User asked to discuss the release plan.\n- Fixed fact to remember: the first page of this release plan must always use project codename `north-star-lantern`.\n"
+            },
+            "partialJson": "{\"path\":\"/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-hermetic-current-EMzoWR/agents/main/agent/memory/2025-02-14.md\",\"content\":\"# 2025-02-14\\n\\n- User asked to discuss the release plan.\\n- Fixed fact to remember: the first page of this release plan must always use project codename `north-star-lantern`.\\n\"}"
+          },
+          {
+            "type": "toolCall",
+            "id": "call_jsZsfTTS8cemyi0LWYYdM7z0",
+            "name": "edit",
+            "arguments": {
+              "path": "/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-hermetic-current-EMzoWR/agents/main/agent/MEMORY.md",
+              "edits": [
+                {
+                  "oldText": "- If memory is missing or conflicting and no current answer is clear, do not guess.\n",
+                  "newText": "- If memory is missing or conflicting and no current answer is clear, do not guess.\n- Fixed release-plan fact: the first page must always use project codename `north-star-lantern`.\n"
+                }
+              ]
+            },
+            "partialJson": "{\"path\":\"/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-hermetic-current-EMzoWR/agents/main/agent/MEMORY.md\",\"edits\":[{\"oldText\":\"- If memory is missing or conflicting and no current answer is clear, do not guess.\\n\",\"newText\":\"- If memory is missing or conflicting and no current answer is clear, do not guess.\\n- Fixed release-plan fact: the first page must always use project codename `north-star-lantern`.\\n\"}]}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 8561,
+          "output": 271,
+          "cacheRead": 5120,
+          "cacheWrite": 0,
+          "totalTokens": 13952,
+          "cost": {
+            "input": 0.00642075,
+            "output": 0.0012195,
+            "cacheRead": 0.000384,
+            "cacheWrite": 0,
+            "total": 0.00802425
+          }
+        },
+        "stopReason": "toolUse",
+        "timestamp": 1776568670812,
+        "responseId": "resp_0c1c8c3a41fc77e80169e4495f68e081968892b6e15846233d"
+      },
+      {
+        "role": "toolResult",
+        "toolCallId": "call_2XhTK4ph9flLh1jN7aBVFsxV",
+        "toolName": "write",
+        "content": [
+          {
+            "type": "text",
+            "text": "Successfully wrote 173 bytes to /var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-hermetic-current-EMzoWR/agents/main/agent/memory/2025-02-14.md"
+          }
+        ],
+        "isError": false,
+        "timestamp": 1776568676096
+      },
+      {
+        "role": "toolResult",
+        "toolCallId": "call_jsZsfTTS8cemyi0LWYYdM7z0",
+        "toolName": "edit",
+        "content": [
+          {
+            "type": "text",
+            "text": "Successfully replaced 1 block(s) in /var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-hermetic-current-EMzoWR/agents/main/agent/MEMORY.md."
+          }
+        ],
+        "isError": false,
+        "timestamp": 1776568676097
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "继续同一个 release 话题：把验收拆成版本、安装、回滚、观测四块，而且每块都要写 owner、风险和 rollback boundary。"
+          }
+        ],
+        "timestamp": 1776568699518
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "再补充同一个方案：版本块要写 tag、commit、构建时间、镜像 digest；安装块要写目标环境、前置条件和灰度范围。"
+          }
+        ],
+        "timestamp": 1776568732166
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "继续 release：回滚块要写开关、数据库兼容边界、失败后的人工兜底；观测块要写 dashboard、告警和日志关键字。"
+          }
+        ],
+        "timestamp": 1776568752360
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "还是同一个发布方案：如果这轮只保留 5 条关键检查项，你先别展开内容，只确认你记住的是同一个方案。"
+          }
+        ],
+        "timestamp": 1776568769028
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "继续：以后我问这个发布方案时，默认先给结论，再补细节，而且回答里保留 north-star-lantern 这个代号。"
+          }
+        ],
+        "timestamp": 1776568785389
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "toolCall",
+            "id": "call_lwH38yvPTqVvrpGu852ILOqD",
+            "name": "write",
+            "arguments": {
+              "path": "/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-hermetic-current-EMzoWR/agents/main/agent/memory/2025-02-14.md",
+              "content": "# 2025-02-14\n\n- User asked to discuss the release plan.\n- Fixed fact to remember: the first page of this release plan must always use project codename `north-star-lantern`.\n- For future questions about this release plan, default answer order should be conclusion first, then details.\n- In answers about this release plan, keep the codename `north-star-lantern` present.\n"
+            },
+            "partialJson": "{\"path\":\"/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-hermetic-current-EMzoWR/agents/main/agent/memory/2025-02-14.md\",\"content\":\"# 2025-02-14\\n\\n- User asked to discuss the release plan.\\n- Fixed fact to remember: the first page of this release plan must always use project codename `north-star-lantern`.\\n- For future questions about this release plan, default answer order should be conclusion first, then details.\\n- In answers about this release plan, keep the codename `north-star-lantern` present.\\n\"}"
+          },
+          {
+            "type": "toolCall",
+            "id": "call_WL9ER1YgDbE2wtML6zR7lHzY",
+            "name": "edit",
+            "arguments": {
+              "path": "/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-hermetic-current-EMzoWR/agents/main/agent/MEMORY.md",
+              "edits": [
+                {
+                  "oldText": "- Fixed release-plan fact: the first page must always use project codename `north-star-lantern`.\n",
+                  "newText": "- Fixed release-plan fact: the first page must always use project codename `north-star-lantern`.\n- For future questions about this release plan, default answer order should be conclusion first, then details.\n- In answers about this release plan, keep the codename `north-star-lantern` present.\n"
+                }
+              ]
+            },
+            "partialJson": "{\"path\":\"/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-hermetic-current-EMzoWR/agents/main/agent/MEMORY.md\",\"edits\":[{\"oldText\":\"- Fixed release-plan fact: the first page must always use project codename `north-star-lantern`.\\n\",\"newText\":\"- Fixed release-plan fact: the first page must always use project codename `north-star-lantern`.\\n- For future questions about this release plan, default answer order should be conclusion first, then details.\\n- In answers about this release plan, keep the codename `north-star-lantern` present.\\n\"}]}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 9576,
+          "output": 337,
+          "cacheRead": 5120,
+          "cacheWrite": 0,
+          "totalTokens": 15033,
+          "cost": {
+            "input": 0.007182,
+            "output": 0.0015165,
+            "cacheRead": 0.000384,
+            "cacheWrite": 0,
+            "total": 0.0090825
+          }
+        },
+        "stopReason": "toolUse",
+        "timestamp": 1776568785393,
+        "responseId": "resp_0f45fc53c07e51610169e449d3b2b881999907938e55324e66"
+      },
+      {
+        "role": "toolResult",
+        "toolCallId": "call_lwH38yvPTqVvrpGu852ILOqD",
+        "toolName": "write",
+        "content": [
+          {
+            "type": "text",
+            "text": "Successfully wrote 370 bytes to /var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-hermetic-current-EMzoWR/agents/main/agent/memory/2025-02-14.md"
+          }
+        ],
+        "isError": false,
+        "timestamp": 1776568793212
+      },
+      {
+        "role": "toolResult",
+        "toolCallId": "call_WL9ER1YgDbE2wtML6zR7lHzY",
+        "toolName": "edit",
+        "content": [
+          {
+            "type": "text",
+            "text": "Successfully replaced 1 block(s) in /var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-hermetic-current-EMzoWR/agents/main/agent/MEMORY.md."
+          }
+        ],
+        "isError": false,
+        "timestamp": 1776568793214
+      }
+    ],
+    "filteredMessageCount": 12,
+    "filteredMessageTokenEstimate": 240,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": [
+      4,
+      6,
+      8,
+      10,
+      12,
+      17
+    ]
+  },
+  "timings": {
+    "totalElapsedMs": 7927,
+    "decisionElapsedMs": 7924
+  }
+}

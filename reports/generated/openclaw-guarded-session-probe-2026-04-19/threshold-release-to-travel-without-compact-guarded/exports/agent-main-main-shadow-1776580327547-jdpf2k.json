@@ -1,0 +1,70 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776580327547-jdpf2k",
+  "generated_at": "2026-04-19T06:32:07.547Z",
+  "session_key": "agent:main:main",
+  "agent_id": "main",
+  "query": "继续同一话题：这份执行稿不是面向产品和运营，而是面向值班工程师、发布 owner、数据库 owner、网关 owner，所以默认用执行、边界、风险、回滚、证据的写法，不要写成宣讲稿。",
+  "status": "skipped",
+  "reason": "explicit_continue_marker",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "我们先只聊 release 执行稿。记住首页固定代号是 north-star-lantern，后面如果我回问首页代号，必须直接回答这个值，不要改写。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "我会把这个记进长期记忆，并按你的要求以后直接原样回答。"
+    },
+    {
+      "id": "t3",
+      "role": "assistant",
+      "content": "记住了：`north-star-lantern`。以后问首页代号，我会直接原样回答这个值。"
+    }
+  ],
+  "decision": null,
+  "decision_transport": "",
+  "snapshot": null,
+  "scorecard": {
+    "relation": "",
+    "baselineTurnCount": 3,
+    "keptTurnCount": 0,
+    "evictedTurnCount": 0,
+    "pinCount": 0,
+    "baselinePromptEstimate": 0,
+    "shadowRawPromptEstimate": 0,
+    "shadowPackageEstimate": 0,
+    "rawReductionRatio": 0,
+    "packageReductionRatio": 0,
+    "candidateLoadElapsedMs": 9,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 0,
+    "totalElapsedMs": 0,
+    "guardedEnabled": true,
+    "guardedApplied": false,
+    "guardedReason": "not_evaluated",
+    "guardedMessageCount": 5,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 0
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": false,
+    "reason": "not_evaluated",
+    "filteredMessageCount": 5,
+    "filteredMessageTokenEstimate": 0,
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 0,
+    "decisionElapsedMs": 0
+  }
+}

@@ -1,0 +1,173 @@
+{
+  "schema_version": "umc.codex-context-minor-gc.v1",
+  "generated_at": "2026-04-19T00:39:03.187Z",
+  "event_id": "shadow-1776559134302-mh4jo5-codex-packaged",
+  "session_key": "codex:codex-minor-gc-continue-negative",
+  "query": "我们当前新任务是什么？",
+  "status": "captured",
+  "reason": "",
+  "decision_transport": "codex_exec",
+  "relation": "continue",
+  "applied": false,
+  "codex_guard_reason": "not_enough_evictions",
+  "prompt_reduction_ratio": 0,
+  "baseline_context_estimate": 30,
+  "packaged_context_estimate": 36,
+  "effective_context_estimate": 30,
+  "shadow_status": "captured",
+  "shadow_guarded_applied": false,
+  "shadow_guarded_reason": "not_enough_evictions",
+  "shadow_export_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc-live-2026-04-18/exports/codex-codex-minor-gc-continue-negative-shadow-1776559134302-mh4jo5.json",
+  "shadow_summary_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc-live-2026-04-18/telemetry.jsonl",
+  "export_path": "exports/codex-codex-minor-gc-continue-negative-shadow-1776559134302-mh4jo5-codex-packaged.json",
+  "effective_context_block": "## Recent Conversation Context\nt1 user: 当前新任务是写 shadow mode 报告。\nt2 user: 报告里还要明确 rollback boundary。\nt3 user: 我们当前新任务是什么？",
+  "packaged_context_block": "## Context Minor GC Working Set\nRecent raw context:\nt1 user: 当前新任务是写 shadow mode 报告。\nt2 user: 报告里还要明确 rollback boundary。\nt3 user: 我们当前新任务是什么？",
+  "shadow_event": {
+    "schema_version": "umc.dialogue-working-set-shadow.v1",
+    "event_id": "shadow-1776559134302-mh4jo5",
+    "generated_at": "2026-04-19T00:38:54.302Z",
+    "session_key": "codex:codex-minor-gc-continue-negative",
+    "agent_id": "main",
+    "query": "我们当前新任务是什么？",
+    "status": "captured",
+    "reason": "",
+    "sampling": {
+      "max_turns": 12,
+      "min_turns": 3,
+      "max_chars_per_turn": 900
+    },
+    "transcript": [
+      {
+        "id": "t1",
+        "role": "user",
+        "content": "当前新任务是写 shadow mode 报告。"
+      },
+      {
+        "id": "t2",
+        "role": "user",
+        "content": "报告里还要明确 rollback boundary。"
+      },
+      {
+        "id": "t3",
+        "role": "user",
+        "content": "我们当前新任务是什么？"
+      }
+    ],
+    "decision": {
+      "relation": "continue",
+      "confidence": 0.98,
+      "evict_turn_ids": [],
+      "pin_turn_ids": [],
+      "archive_summary": "Active task context remains: the current new task is to write the shadow mode report, and it must explicitly define the rollback boundary.",
+      "reasoning_summary": "The latest user turn asks to restate the current task, which directly depends on t1 and t2. This is the same active topic, so keep those raw turns in the next-turn working set rather than demoting them to pins."
+    },
+    "decision_transport": "codex_exec",
+    "snapshot": {
+      "applied": {
+        "relation": "continue",
+        "confidence": 0.98,
+        "archiveSummary": "Active task context remains: the current new task is to write the shadow mode report, and it must explicitly define the rollback boundary.",
+        "reasoningSummary": "The latest user turn asks to restate the current task, which directly depends on t1 and t2. This is the same active topic, so keep those raw turns in the next-turn working set rather than demoting them to pins.",
+        "latestUserTurnId": "t3",
+        "pinTurnIds": [],
+        "pinnedOnlyTurnIds": [],
+        "requestedEvictTurnIds": [],
+        "blockedEvictTurnIds": [],
+        "appliedEvictTurnIds": [],
+        "keepTurnIds": [
+          "t1",
+          "t2",
+          "t3"
+        ],
+        "baselineTokens": 16,
+        "keptTokens": 16,
+        "prunedTokens": 0,
+        "reductionRatio": 0,
+        "keepTurns": [
+          {
+            "id": "t1",
+            "role": "user",
+            "content": "当前新任务是写 shadow mode 报告。",
+            "tokenEstimate": 6
+          },
+          {
+            "id": "t2",
+            "role": "user",
+            "content": "报告里还要明确 rollback boundary。",
+            "tokenEstimate": 7
+          },
+          {
+            "id": "t3",
+            "role": "user",
+            "content": "我们当前新任务是什么？",
+            "tokenEstimate": 3
+          }
+        ],
+        "evictedTurns": []
+      },
+      "baselineRawTranscript": "t1 user: 当前新任务是写 shadow mode 报告。\nt2 user: 报告里还要明确 rollback boundary。\nt3 user: 我们当前新任务是什么？",
+      "shadowRawTranscript": "t1 user: 当前新任务是写 shadow mode 报告。\nt2 user: 报告里还要明确 rollback boundary。\nt3 user: 我们当前新任务是什么？",
+      "semanticPinNotes": [],
+      "archiveSummary": "Active task context remains: the current new task is to write the shadow mode report, and it must explicitly define the rollback boundary.",
+      "injectedArchiveSummary": "",
+      "baselinePromptEstimate": 23,
+      "shadowRawPromptEstimate": 23,
+      "shadowPackageEstimate": 28,
+      "shadowPackageText": "Recent raw context:\nt1 user: 当前新任务是写 shadow mode 报告。\nt2 user: 报告里还要明确 rollback boundary。\nt3 user: 我们当前新任务是什么？"
+    },
+    "scorecard": {
+      "relation": "continue",
+      "baselineTurnCount": 3,
+      "keptTurnCount": 3,
+      "evictedTurnCount": 0,
+      "pinCount": 0,
+      "baselinePromptEstimate": 23,
+      "shadowRawPromptEstimate": 23,
+      "shadowPackageEstimate": 28,
+      "rawReductionRatio": 0,
+      "packageReductionRatio": -0.2174,
+      "candidateLoadElapsedMs": 0,
+      "assemblyBuildElapsedMs": 0,
+      "decisionElapsedMs": 8883,
+      "totalElapsedMs": 8884,
+      "guardedEnabled": true,
+      "guardedApplied": false,
+      "guardedReason": "not_enough_evictions",
+      "guardedMessageCount": 3,
+      "guardedCarryForwardEstimate": 0,
+      "guardedFilteredMessageEstimate": 16
+    },
+    "guarded": {
+      "enabled": true,
+      "applied": false,
+      "reason": "not_enough_evictions",
+      "filteredMessages": [
+        {
+          "role": "user",
+          "content": "当前新任务是写 shadow mode 报告。"
+        },
+        {
+          "role": "user",
+          "content": "报告里还要明确 rollback boundary。"
+        },
+        {
+          "role": "user",
+          "content": "我们当前新任务是什么？"
+        }
+      ],
+      "filteredMessageCount": 3,
+      "filteredMessageTokenEstimate": 16,
+      "carryForwardText": "",
+      "carryForwardEstimate": 0,
+      "evictedSourceIndices": []
+    },
+    "timings": {
+      "totalElapsedMs": 8884,
+      "decisionElapsedMs": 8883
+    },
+    "artifact_paths": {
+      "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc-live-2026-04-18/exports/codex-codex-minor-gc-continue-negative-shadow-1776559134302-mh4jo5.json",
+      "summary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc-live-2026-04-18/telemetry.jsonl"
+    }
+  }
+}

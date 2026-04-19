@@ -1,0 +1,313 @@
+{
+  "schema_version": "umc.codex-context-minor-gc.v1",
+  "generated_at": "2026-04-19T05:12:13.128Z",
+  "event_id": "shadow-1776575512629-kwb9v6-codex-packaged",
+  "session_key": "codex:vscode:019da335-a070-7972-b61e-6ba3a73ff633",
+  "query": "需要给我默认安装，尽量少配置，说明文档可以把可能的配置项说清楚；",
+  "status": "captured",
+  "reason": "",
+  "decision_transport": "codex_exec",
+  "relation": "continue",
+  "applied": true,
+  "codex_guard_reason": "codex_packaged_guard",
+  "prompt_reduction_ratio": 0.7781,
+  "baseline_context_estimate": 365,
+  "packaged_context_estimate": 81,
+  "effective_context_estimate": 81,
+  "shadow_status": "captured",
+  "shadow_guarded_applied": true,
+  "shadow_guarded_reason": "guarded_candidate",
+  "shadow_export_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da335-a070-7972-b61e-6ba3a73ff633-shadow-1776575512629-kwb9v6.json",
+  "shadow_summary_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl",
+  "export_path": "exports/codex-vscode-019da335-a070-7972-b61e-6ba3a73ff633-shadow-1776575512629-kwb9v6-codex-packaged.json",
+  "effective_context_block": "## Context Minor GC Working Set\nTask state summary:\nEarlier GC work focused on reducing switch-turn latency: added fast paths for obvious continue/switch cases, continue-after-switch handling, and skipping retrieval/loading on explicit first-turn switches. That optimizat…\n\nLatest user ask:\n- 需要给我默认安装，尽量少配置，说明文档可以把可能的配置项说清楚；",
+  "packaged_context_block": "## Context Minor GC Working Set\nTask state summary:\nEarlier GC work focused on reducing switch-turn latency: added fast paths for obvious continue/switch cases, continue-after-switch handling, and skipping retrieval/loading on explicit first-turn switches. That optimizat…\n\nLatest user ask:\n- 需要给我默认安装，尽量少配置，说明文档可以把可能的配置项说清楚；",
+  "shadow_event": {
+    "schema_version": "umc.dialogue-working-set-shadow.v1",
+    "event_id": "shadow-1776575512629-kwb9v6",
+    "generated_at": "2026-04-19T05:11:52.629Z",
+    "session_key": "codex:vscode:019da335-a070-7972-b61e-6ba3a73ff633",
+    "agent_id": "main",
+    "query": "需要给我默认安装，尽量少配置，说明文档可以把可能的配置项说清楚；",
+    "status": "captured",
+    "reason": "",
+    "sampling": {
+      "max_turns": 12,
+      "min_turns": 3,
+      "max_chars_per_turn": 900
+    },
+    "transcript": [
+      {
+        "id": "t1",
+        "role": "assistant",
+        "content": "这轮继续做完了，重点是压 `switch` 当轮的 decision 成本，而不是扩测试面。 我加了两个 fast path： - 明显 `continue` 的轮次直接跳过 shadow decision - 明显 `switch` 的轮次走本地 heuristic switch，不再调用 `codex_exec`"
+      },
+      {
+        "id": "t2",
+        "role": "user",
+        "content": "继续 只压 switch 当轮时延"
+      },
+      {
+        "id": "t3",
+        "role": "assistant",
+        "content": "继续做完了，这轮只压 `switch` 当轮时延，并顺手解决了“切题后下一轮又弹回去”的问题。 做的事： - `continue` 明显同题轮：直接 skip shadow decision - `switch` 明显切题轮：走本地 heuristic switch - `switch` 后的 `continue` 轮：走本地 heuristic continue-after-switch，不再把旧前缀重新带回来"
+      },
+      {
+        "id": "t4",
+        "role": "user",
+        "content": "压 t8 这种第一次切题问答本身的回答时延 继续"
+      },
+      {
+        "id": "t5",
+        "role": "assistant",
+        "content": "继续做了，范围只压 `switch` 当轮时延，没有扩测试面。 这轮新增了两个 fast path： - 明显 `switch` 的用户输入：直接走本地 `heuristic_switch`，不再调用 `codex_exec` decision - `switch` 之后的明显 `continue`：走本地 `heuristic_continue_after_switch`，不再回到重 decision"
+      },
+      {
+        "id": "t6",
+        "role": "user",
+        "content": "压 t8 回答阶段本身的回答时延，例如减少切题首轮的检索/装配负担或限制回答形态 =》继续"
+      },
+      {
+        "id": "t7",
+        "role": "assistant",
+        "content": "继续做完了，这轮只压 `t8` 这种第一次切题问答的回答阶段时延。 我做的改动： - 对显式 `switch` 首轮，直接跳过 retrieval/loading - 这样切题首轮不再为普通新话题做完整记忆候选装配"
+      },
+      {
+        "id": "t8",
+        "role": "user",
+        "content": "那么现在 关于 gc 的工作还能继续做那些？ 文档是哪个？"
+      },
+      {
+        "id": "t9",
+        "role": "assistant",
+        "content": "还能继续做，主要剩 4 条线，按优先级我建议这样排： **还能做什么** - 压 `switch` 首轮回答时延。 现在 GC 判断和检索降载已经做了一轮，下一步更像是压“回答阶段本身”，例如切题首轮默认更短答、更少展开。 - 压切题后的 `rebound`。 现在切题后已经会回落，但后两轮还有回弹，可以继续做“新话题短窗口保护”，让新话题前 2 到 3 轮维持更薄。 - 做自适应预算。 现在很多阈值还是固定的，可以按…"
+      },
+      {
+        "id": "t10",
+        "role": "user",
+        "content": "现在可以安装到openclaw 安全使用么？"
+      },
+      {
+        "id": "t11",
+        "role": "assistant",
+        "content": "可以，**现在已经可以安装到 OpenClaw 做正常使用**，前提是你接受下面这个边界： - **可以安全装**：不会因为这轮 GC 改动去乱写你的其他文档；我这轮验证和 probe 都是用 hermetic/临时状态做的，实际部署也已经成功跑过本地 `deploy + gateway restart`。 - **可以正常用**：OpenClaw 上的 `Context Minor GC` 现在已经能在切题后让真实 prompt…"
+      },
+      {
+        "id": "t12",
+        "role": "user",
+        "content": "需要给我默认安装，尽量少配置，说明文档可以把可能的配置项说清楚；"
+      }
+    ],
+    "decision": {
+      "relation": "continue",
+      "confidence": 0.9,
+      "evict_turn_ids": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8",
+        "t9"
+      ],
+      "pin_turn_ids": [],
+      "archive_summary": "Earlier GC work focused on reducing switch-turn latency: added fast paths for obvious continue/switch cases, continue-after-switch handling, and skipping retrieval/loading on explicit first-turn switches. That optimization track is resolved for now and is no longer needed for the next turn. The active raw context should stay on the newer OpenClaw deployment topic: whether the current GC build is safe to install/use there, and the new request for a default-install path with minimal configuration plus documentation that clearly explains optional configuration items.",
+      "reasoning_summary": "The latest user turn continues the current OpenClaw installation/documentation topic introduced in t10-t11, so relation=continue. The next answer likely depends on the recent install-safety/deployment context in t10-t11, which should remain raw. Older latency-optimization discussion in t1-t7 is solved and off-topic for the next turn. The t8-t9 GC roadmap/doc question is superseded by the newer installation/docs request and can leave the next-turn raw prompt."
+    },
+    "decision_transport": "codex_exec",
+    "snapshot": {
+      "applied": {
+        "relation": "continue",
+        "confidence": 0.9,
+        "archiveSummary": "Earlier GC work focused on reducing switch-turn latency: added fast paths for obvious continue/switch cases, continue-after-switch handling, and skipping retrieval/loading on explicit first-turn switches. That optimization track is resolved for now and is no longer needed for the next turn. The active raw context should stay on the newer OpenClaw deployment topic: whether the current GC build is safe to install/use there, and the new request for a default-install path with minimal configuration plus documentation that clearly explains optional configuration items.",
+        "reasoningSummary": "The latest user turn continues the current OpenClaw installation/documentation topic introduced in t10-t11, so relation=continue. The next answer likely depends on the recent install-safety/deployment context in t10-t11, which should remain raw. Older latency-optimization discussion in t1-t7 is solved and off-topic for the next turn. The t8-t9 GC roadmap/doc question is superseded by the newer installation/docs request and can leave the next-turn raw prompt.",
+        "latestUserTurnId": "t12",
+        "pinTurnIds": [],
+        "pinnedOnlyTurnIds": [],
+        "requestedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3",
+          "t4",
+          "t5",
+          "t6",
+          "t7",
+          "t8",
+          "t9"
+        ],
+        "blockedEvictTurnIds": [],
+        "appliedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3",
+          "t4",
+          "t5",
+          "t6",
+          "t7",
+          "t8",
+          "t9"
+        ],
+        "keepTurnIds": [
+          "t10",
+          "t11",
+          "t12"
+        ],
+        "baselineTokens": 323,
+        "keptTokens": 69,
+        "prunedTokens": 254,
+        "reductionRatio": 0.7863777089783281,
+        "keepTurns": [
+          {
+            "id": "t10",
+            "role": "user",
+            "content": "现在可以安装到openclaw 安全使用么？",
+            "tokenEstimate": 6
+          },
+          {
+            "id": "t11",
+            "role": "assistant",
+            "content": "可以，**现在已经可以安装到 OpenClaw 做正常使用**，前提是你接受下面这个边界： - **可以安全装**：不会因为这轮 GC 改动去乱写你的其他文档；我这轮验证和 probe 都是用 hermetic/临时状态做的，实际部署也已经成功跑过本地 `deploy + gateway restart`。 - **可以正常用**：OpenClaw 上的 `Context Minor GC` 现在已经能在切题后让真实 prompt…",
+            "tokenEstimate": 55
+          },
+          {
+            "id": "t12",
+            "role": "user",
+            "content": "需要给我默认安装，尽量少配置，说明文档可以把可能的配置项说清楚；",
+            "tokenEstimate": 8
+          }
+        ],
+        "evictedTurns": [
+          {
+            "id": "t1",
+            "role": "assistant",
+            "content": "这轮继续做完了，重点是压 `switch` 当轮的 decision 成本，而不是扩测试面。 我加了两个 fast path： - 明显 `continue` 的轮次直接跳过 shadow decision - 明显 `switch` 的轮次走本地 heuristic switch，不再调用 `codex_exec`",
+            "tokenEstimate": 40
+          },
+          {
+            "id": "t2",
+            "role": "user",
+            "content": "继续 只压 switch 当轮时延",
+            "tokenEstimate": 5
+          },
+          {
+            "id": "t3",
+            "role": "assistant",
+            "content": "继续做完了，这轮只压 `switch` 当轮时延，并顺手解决了“切题后下一轮又弹回去”的问题。 做的事： - `continue` 明显同题轮：直接 skip shadow decision - `switch` 明显切题轮：走本地 heuristic switch - `switch` 后的 `continue` 轮：走本地 heuristic continue-after-switch，不再把旧前缀重新带回来",
+            "tokenEstimate": 52
+          },
+          {
+            "id": "t4",
+            "role": "user",
+            "content": "压 t8 这种第一次切题问答本身的回答时延 继续",
+            "tokenEstimate": 6
+          },
+          {
+            "id": "t5",
+            "role": "assistant",
+            "content": "继续做了，范围只压 `switch` 当轮时延，没有扩测试面。 这轮新增了两个 fast path： - 明显 `switch` 的用户输入：直接走本地 `heuristic_switch`，不再调用 `codex_exec` decision - `switch` 之后的明显 `continue`：走本地 `heuristic_continue_after_switch`，不再回到重 decision",
+            "tokenEstimate": 51
+          },
+          {
+            "id": "t6",
+            "role": "user",
+            "content": "压 t8 回答阶段本身的回答时延，例如减少切题首轮的检索/装配负担或限制回答形态 =》继续",
+            "tokenEstimate": 12
+          },
+          {
+            "id": "t7",
+            "role": "assistant",
+            "content": "继续做完了，这轮只压 `t8` 这种第一次切题问答的回答阶段时延。 我做的改动： - 对显式 `switch` 首轮，直接跳过 retrieval/loading - 这样切题首轮不再为普通新话题做完整记忆候选装配",
+            "tokenEstimate": 27
+          },
+          {
+            "id": "t8",
+            "role": "user",
+            "content": "那么现在 关于 gc 的工作还能继续做那些？ 文档是哪个？",
+            "tokenEstimate": 8
+          },
+          {
+            "id": "t9",
+            "role": "assistant",
+            "content": "还能继续做，主要剩 4 条线，按优先级我建议这样排： **还能做什么** - 压 `switch` 首轮回答时延。 现在 GC 判断和检索降载已经做了一轮，下一步更像是压“回答阶段本身”，例如切题首轮默认更短答、更少展开。 - 压切题后的 `rebound`。 现在切题后已经会回落，但后两轮还有回弹，可以继续做“新话题短窗口保护”，让新话题前 2 到 3 轮维持更薄。 - 做自适应预算。 现在很多阈值还是固定的，可以按…",
+            "tokenEstimate": 53
+          }
+        ]
+      },
+      "baselineRawTranscript": "t1 assistant: 这轮继续做完了，重点是压 `switch` 当轮的 decision 成本，而不是扩测试面。 我加了两个 fast path： - 明显 `continue` 的轮次直接跳过 shadow decision - 明显 `switch` 的轮次走本地 heuristic switch，不再调用 `codex_exec`\nt2 user: 继续 只压 switch 当轮时延\nt3 assistant: 继续做完了，这轮只压 `switch` 当轮时延，并顺手解决了“切题后下一轮又弹回去”的问题。 做的事： - `continue` 明显同题轮：直接 skip shadow decision - `switch` 明显切题轮：走本地 heuristic switch - `switch` 后的 `continue` 轮：走本地 heuristic continue-after-switch，不再把旧前缀重新带回来\nt4 user: 压 t8 这种第一次切题问答本身的回答时延 继续\nt5 assistant: 继续做了，范围只压 `switch` 当轮时延，没有扩测试面。 这轮新增了两个 fast path： - 明显 `switch` 的用户输入：直接走本地 `heuristic_switch`，不再调用 `codex_exec` decision - `switch` 之后的明显 `continue`：走本地 `heuristic_continue_after_switch`，不再回到重 decision\nt6 user: 压 t8 回答阶段本身的回答时延，例如减少切题首轮的检索/装配负担或限制回答形态 =》继续\nt7 assistant: 继续做完了，这轮只压 `t8` 这种第一次切题问答的回答阶段时延。 我做的改动： - 对显式 `switch` 首轮，直接跳过 retrieval/loading - 这样切题首轮不再为普通新话题做完整记忆候选装配\nt8 user: 那么现在 关于 gc 的工作还能继续做那些？ 文档是哪个？\nt9 assistant: 还能继续做，主要剩 4 条线，按优先级我建议这样排： **还能做什么** - 压 `switch` 首轮回答时延。 现在 GC 判断和检索降载已经做了一轮，下一步更像是压“回答阶段本身”，例如切题首轮默认更短答、更少展开。 - 压切题后的 `rebound`。 现在切题后已经会回落，但后两轮还有回弹，可以继续做“新话题短窗口保护”，让新话题前 2 到 3 轮维持更薄。 - 做自适应预算。 现在很多阈值还是固定的，可以按…\nt10 user: 现在可以安装到openclaw 安全使用么？\nt11 assistant: 可以，**现在已经可以安装到 OpenClaw 做正常使用**，前提是你接受下面这个边界： - **可以安全装**：不会因为这轮 GC 改动去乱写你的其他文档；我这轮验证和 probe 都是用 hermetic/临时状态做的，实际部署也已经成功跑过本地 `deploy + gateway restart`。 - **可以正常用**：OpenClaw 上的 `Context Minor GC` 现在已经能在切题后让真实 prompt…\nt12 user: 需要给我默认安装，尽量少配置，说明文档可以把可能的配置项说清楚；",
+      "shadowRawTranscript": "t10 user: 现在可以安装到openclaw 安全使用么？\nt11 assistant: 可以，**现在已经可以安装到 OpenClaw 做正常使用**，前提是你接受下面这个边界： - **可以安全装**：不会因为这轮 GC 改动去乱写你的其他文档；我这轮验证和 probe 都是用 hermetic/临时状态做的，实际部署也已经成功跑过本地 `deploy + gateway restart`。 - **可以正常用**：OpenClaw 上的 `Context Minor GC` 现在已经能在切题后让真实 prompt…\nt12 user: 需要给我默认安装，尽量少配置，说明文档可以把可能的配置项说清楚；",
+      "semanticPinNotes": [],
+      "archiveSummary": "Earlier GC work focused on reducing switch-turn latency: added fast paths for obvious continue/switch cases, continue-after-switch handling, and skipping retrieval/loading on explicit first-turn switches. That optimization track is resolved for now and is no longer needed for the next turn. The active raw context should stay on the newer OpenClaw deployment topic: whether the current GC build is safe to install/use there, and the new request for a default-install path with minimal configuration plus documentation that clearly explains optional configuration items.",
+      "injectedArchiveSummary": "",
+      "baselinePromptEstimate": 357,
+      "shadowRawPromptEstimate": 78,
+      "shadowPackageEstimate": 73,
+      "shadowPackageText": "Task state summary:\nEarlier GC work focused on reducing switch-turn latency: added fast paths for obvious continue/switch cases, continue-after-switch handling, and skipping retrieval/loading on explicit first-turn switches. That optimizat…\n\nLatest user ask:\n- 需要给我默认安装，尽量少配置，说明文档可以把可能的配置项说清楚；"
+    },
+    "scorecard": {
+      "relation": "continue",
+      "baselineTurnCount": 12,
+      "keptTurnCount": 3,
+      "evictedTurnCount": 9,
+      "pinCount": 0,
+      "baselinePromptEstimate": 357,
+      "shadowRawPromptEstimate": 78,
+      "shadowPackageEstimate": 73,
+      "rawReductionRatio": 0.7864,
+      "packageReductionRatio": 0.7955,
+      "candidateLoadElapsedMs": 0,
+      "assemblyBuildElapsedMs": 0,
+      "decisionElapsedMs": 20492,
+      "totalElapsedMs": 20498,
+      "guardedEnabled": true,
+      "guardedApplied": true,
+      "guardedReason": "guarded_candidate",
+      "guardedMessageCount": 3,
+      "guardedCarryForwardEstimate": 0,
+      "guardedFilteredMessageEstimate": 69
+    },
+    "guarded": {
+      "enabled": true,
+      "applied": true,
+      "reason": "guarded_candidate",
+      "filteredMessages": [
+        {
+          "role": "user",
+          "content": "现在可以安装到openclaw 安全使用么？"
+        },
+        {
+          "role": "assistant",
+          "content": "可以，**现在已经可以安装到 OpenClaw 做正常使用**，前提是你接受下面这个边界： - **可以安全装**：不会因为这轮 GC 改动去乱写你的其他文档；我这轮验证和 probe 都是用 hermetic/临时状态做的，实际部署也已经成功跑过本地 `deploy + gateway restart`。 - **可以正常用**：OpenClaw 上的 `Context Minor GC` 现在已经能在切题后让真实 prompt…"
+        },
+        {
+          "role": "user",
+          "content": "需要给我默认安装，尽量少配置，说明文档可以把可能的配置项说清楚；"
+        }
+      ],
+      "filteredMessageCount": 3,
+      "filteredMessageTokenEstimate": 69,
+      "carryForwardText": "",
+      "carryForwardEstimate": 0,
+      "evictedSourceIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    "timings": {
+      "totalElapsedMs": 20498,
+      "decisionElapsedMs": 20492
+    },
+    "artifact_paths": {
+      "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da335-a070-7972-b61e-6ba3a73ff633-shadow-1776575512629-kwb9v6.json",
+      "summary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl"
+    }
+  }
+}

@@ -1,0 +1,328 @@
+{
+  "schema_version": "umc.codex-context-minor-gc.v1",
+  "generated_at": "2026-04-19T04:05:05.007Z",
+  "event_id": "shadow-1776571490823-jmi62l-codex-packaged",
+  "session_key": "codex:vscode:019da335-a070-7972-b61e-6ba3a73ff633",
+  "query": "把 switch 当轮 decision 延迟再往下压，而不是再扩测试面。",
+  "status": "captured",
+  "reason": "",
+  "decision_transport": "codex_exec",
+  "relation": "continue",
+  "applied": true,
+  "codex_guard_reason": "codex_packaged_guard",
+  "prompt_reduction_ratio": 0.5964,
+  "baseline_context_estimate": 332,
+  "packaged_context_estimate": 134,
+  "effective_context_estimate": 134,
+  "shadow_status": "captured",
+  "shadow_guarded_applied": true,
+  "shadow_guarded_reason": "guarded_candidate",
+  "shadow_export_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da335-a070-7972-b61e-6ba3a73ff633-shadow-1776571490823-jmi62l.json",
+  "shadow_summary_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl",
+  "export_path": "exports/codex-vscode-019da335-a070-7972-b61e-6ba3a73ff633-shadow-1776571490823-jmi62l-codex-packaged.json",
+  "effective_context_block": "## Context Minor GC Working Set\nTask state summary:\nActive thread remains the GC/runtime optimization work: after fixing prompt fallback, the main issue shifted to larger sampling windows increasing guarded/runtime cost and slowing stress scenarios. Prior analysis attrib…\n\nLatest user ask:\n- 把 switch 当轮 decision 延迟再往下压，而不是再扩测试面。\n\nSemantic pins:\n- user: codex 中的 每轮context中写的Context(估算) 可以去掉了\n- assistant: 已经去掉了。现在 `npm run codex:vscode:gc:header --silent` 默认空输出，所以 Codex 每轮不会再自动写 `Context(估算)`。 我保留了手动观测入口： - `npm run codex:vscode:gc…",
+  "packaged_context_block": "## Context Minor GC Working Set\nTask state summary:\nActive thread remains the GC/runtime optimization work: after fixing prompt fallback, the main issue shifted to larger sampling windows increasing guarded/runtime cost and slowing stress scenarios. Prior analysis attrib…\n\nLatest user ask:\n- 把 switch 当轮 decision 延迟再往下压，而不是再扩测试面。\n\nSemantic pins:\n- user: codex 中的 每轮context中写的Context(估算) 可以去掉了\n- assistant: 已经去掉了。现在 `npm run codex:vscode:gc:header --silent` 默认空输出，所以 Codex 每轮不会再自动写 `Context(估算)`。 我保留了手动观测入口： - `npm run codex:vscode:gc…",
+  "shadow_event": {
+    "schema_version": "umc.dialogue-working-set-shadow.v1",
+    "event_id": "shadow-1776571490823-jmi62l",
+    "generated_at": "2026-04-19T04:04:50.823Z",
+    "session_key": "codex:vscode:019da335-a070-7972-b61e-6ba3a73ff633",
+    "agent_id": "main",
+    "query": "把 switch 当轮 decision 延迟再往下压，而不是再扩测试面。",
+    "status": "captured",
+    "reason": "",
+    "sampling": {
+      "max_turns": 12,
+      "min_turns": 3,
+      "max_chars_per_turn": 900
+    },
+    "transcript": [
+      {
+        "id": "t1",
+        "role": "assistant",
+        "content": "因为现在主矛盾已经变了，不是“有没有证据证明方向对”，而是“这个方向的代价能不能接受”。 具体说有三点："
+      },
+      {
+        "id": "t2",
+        "role": "user",
+        "content": "这轮修复后，最明显的新问题不是答案错，也不是完全不降，而是：• 采样窗口一放大• guarded/runtime 成本就明显上升• stress 场景跑得很慢 ==》什么原因？"
+      },
+      {
+        "id": "t3",
+        "role": "assistant",
+        "content": "主要有 4 个原因。 1. `maxTurns` 修正后，shadow 输入直接变大了。 在 [dialogue-working-set-runtime-shadow.js](/Users/redcreen/Project/unified-memory-core/src/dialogue-working-set-runtime-shadow.js:88) 里，原来实际上只取最近 `12` 条消息；修正后变成最近 `12`…"
+      },
+      {
+        "id": "t4",
+        "role": "user",
+        "content": "可以，继续一口气长任务把刚才你说的做完；"
+      },
+      {
+        "id": "t5",
+        "role": "user",
+        "content": "你觉得已经做完了，就给一个测试报告；"
+      },
+      {
+        "id": "t6",
+        "role": "assistant",
+        "content": "**测试报告** 这轮我把 OpenClaw 的 GC 当成“宿主端真实 prompt 控制”来测，不再只看 shadow telemetry。 结论是：**已经明显比修复前更好，但还不建议宣称“最终完全达标”**。"
+      },
+      {
+        "id": "t7",
+        "role": "user",
+        "content": "codex 中的 每轮context中写的Context(估算) 可以去掉了"
+      },
+      {
+        "id": "t8",
+        "role": "assistant",
+        "content": "**OpenClaw GC 测试报告** **结论** - 这轮已经把“切题后几乎不回落”的主问题修掉了。 - 修复后，真实发给 LLM 的 prompt 在关键 case 上出现了**明确回落**，而不是只“止涨”。 - 但我不建议现在就宣布“最终完全达标”，因为放大采样窗口后，runtime 成本明显上升，性能还需要继续压。"
+      },
+      {
+        "id": "t9",
+        "role": "assistant",
+        "content": "我先 review 了测试脚本，结论是：**脚本口径基本没问题，问题主要在实现**。 原因有两个： - `maxTurns` 原来按“消息条数”算，长会话的大头经常根本没进 decision 视野。 - guarded 每轮都跑 shadow/decision，很多明显“继续同一话题”的轮次也在付完整成本，但最后并不会 apply。"
+      },
+      {
+        "id": "t10",
+        "role": "user",
+        "content": "codex 中的 每轮context中写的Context(估算) 可以去掉了"
+      },
+      {
+        "id": "t11",
+        "role": "assistant",
+        "content": "已经去掉了。现在 `npm run codex:vscode:gc:header --silent` 默认空输出，所以 Codex 每轮不会再自动写 `Context(估算)`。 我保留了手动观测入口： - `npm run codex:vscode:gc:footer --silent` - `npm run codex:vscode:gc:size --silent` - `npm run…"
+      },
+      {
+        "id": "t12",
+        "role": "user",
+        "content": "把 switch 当轮 decision 延迟再往下压，而不是再扩测试面。"
+      }
+    ],
+    "decision": {
+      "relation": "continue",
+      "confidence": 0.93,
+      "evict_turn_ids": [
+        "t1",
+        "t5",
+        "t7",
+        "t8",
+        "t10",
+        "t11"
+      ],
+      "pin_turn_ids": [
+        "t7",
+        "t11"
+      ],
+      "archive_summary": "Active thread remains the GC/runtime optimization work: after fixing prompt fallback, the main issue shifted to larger sampling windows increasing guarded/runtime cost and slowing stress scenarios. Prior analysis attributes this to larger shadow inputs after maxTurns correction and paying full shadow/decision cost on many obvious same-topic turns. The user wants implementation to keep pushing down cost by delaying/compressing switch current-turn decision rather than broadening the test surface. Separate resolved side topic: remove the Codex per-turn 'Context(估算)' header; assistant says it was removed and manual observability commands remain.",
+      "reasoning_summary": "The latest user turn continues the existing optimization task, so relation is continue. Raw context that still matters is the problem statement and causal analysis around runtime cost plus the ongoing long-task directive; resolved side work about removing the context estimate header can leave the next-turn prompt, but its semantic outcome should persist as a pin. Testing/reporting turns that do not add unique active-task evidence are good eviction candidates."
+    },
+    "decision_transport": "codex_exec",
+    "snapshot": {
+      "applied": {
+        "relation": "continue",
+        "confidence": 0.93,
+        "archiveSummary": "Active thread remains the GC/runtime optimization work: after fixing prompt fallback, the main issue shifted to larger sampling windows increasing guarded/runtime cost and slowing stress scenarios. Prior analysis attributes this to larger shadow inputs after maxTurns correction and paying full shadow/decision cost on many obvious same-topic turns. The user wants implementation to keep pushing down cost by delaying/compressing switch current-turn decision rather than broadening the test surface. Separate resolved side topic: remove the Codex per-turn 'Context(估算)' header; assistant says it was removed and manual observability commands remain.",
+        "reasoningSummary": "The latest user turn continues the existing optimization task, so relation is continue. Raw context that still matters is the problem statement and causal analysis around runtime cost plus the ongoing long-task directive; resolved side work about removing the context estimate header can leave the next-turn prompt, but its semantic outcome should persist as a pin. Testing/reporting turns that do not add unique active-task evidence are good eviction candidates.",
+        "latestUserTurnId": "t12",
+        "pinTurnIds": [
+          "t7",
+          "t11"
+        ],
+        "pinnedOnlyTurnIds": [
+          "t7",
+          "t11"
+        ],
+        "requestedEvictTurnIds": [
+          "t1",
+          "t5",
+          "t7",
+          "t8",
+          "t10",
+          "t11"
+        ],
+        "blockedEvictTurnIds": [],
+        "appliedEvictTurnIds": [
+          "t1",
+          "t5",
+          "t7",
+          "t8",
+          "t10",
+          "t11"
+        ],
+        "keepTurnIds": [
+          "t2",
+          "t3",
+          "t4",
+          "t6",
+          "t9",
+          "t12"
+        ],
+        "baselineTokens": 290,
+        "keptTokens": 160,
+        "prunedTokens": 130,
+        "reductionRatio": 0.4482758620689655,
+        "keepTurns": [
+          {
+            "id": "t2",
+            "role": "user",
+            "content": "这轮修复后，最明显的新问题不是答案错，也不是完全不降，而是：• 采样窗口一放大• guarded/runtime 成本就明显上升• stress 场景跑得很慢 ==》什么原因？",
+            "tokenEstimate": 22
+          },
+          {
+            "id": "t3",
+            "role": "assistant",
+            "content": "主要有 4 个原因。 1. `maxTurns` 修正后，shadow 输入直接变大了。 在 [dialogue-working-set-runtime-shadow.js](/Users/redcreen/Project/unified-memory-core/src/dialogue-working-set-runtime-shadow.js:88) 里，原来实际上只取最近 `12` 条消息；修正后变成最近 `12`…",
+            "tokenEstimate": 54
+          },
+          {
+            "id": "t4",
+            "role": "user",
+            "content": "可以，继续一口气长任务把刚才你说的做完；",
+            "tokenEstimate": 5
+          },
+          {
+            "id": "t6",
+            "role": "assistant",
+            "content": "**测试报告** 这轮我把 OpenClaw 的 GC 当成“宿主端真实 prompt 控制”来测，不再只看 shadow telemetry。 结论是：**已经明显比修复前更好，但还不建议宣称“最终完全达标”**。",
+            "tokenEstimate": 27
+          },
+          {
+            "id": "t9",
+            "role": "assistant",
+            "content": "我先 review 了测试脚本，结论是：**脚本口径基本没问题，问题主要在实现**。 原因有两个： - `maxTurns` 原来按“消息条数”算，长会话的大头经常根本没进 decision 视野。 - guarded 每轮都跑 shadow/decision，很多明显“继续同一话题”的轮次也在付完整成本，但最后并不会 apply。",
+            "tokenEstimate": 42
+          },
+          {
+            "id": "t12",
+            "role": "user",
+            "content": "把 switch 当轮 decision 延迟再往下压，而不是再扩测试面。",
+            "tokenEstimate": 10
+          }
+        ],
+        "evictedTurns": [
+          {
+            "id": "t1",
+            "role": "assistant",
+            "content": "因为现在主矛盾已经变了，不是“有没有证据证明方向对”，而是“这个方向的代价能不能接受”。 具体说有三点：",
+            "tokenEstimate": 13
+          },
+          {
+            "id": "t5",
+            "role": "user",
+            "content": "你觉得已经做完了，就给一个测试报告；",
+            "tokenEstimate": 5
+          },
+          {
+            "id": "t7",
+            "role": "user",
+            "content": "codex 中的 每轮context中写的Context(估算) 可以去掉了",
+            "tokenEstimate": 10
+          },
+          {
+            "id": "t8",
+            "role": "assistant",
+            "content": "**OpenClaw GC 测试报告** **结论** - 这轮已经把“切题后几乎不回落”的主问题修掉了。 - 修复后，真实发给 LLM 的 prompt 在关键 case 上出现了**明确回落**，而不是只“止涨”。 - 但我不建议现在就宣布“最终完全达标”，因为放大采样窗口后，runtime 成本明显上升，性能还需要继续压。",
+            "tokenEstimate": 42
+          },
+          {
+            "id": "t10",
+            "role": "user",
+            "content": "codex 中的 每轮context中写的Context(估算) 可以去掉了",
+            "tokenEstimate": 10
+          },
+          {
+            "id": "t11",
+            "role": "assistant",
+            "content": "已经去掉了。现在 `npm run codex:vscode:gc:header --silent` 默认空输出，所以 Codex 每轮不会再自动写 `Context(估算)`。 我保留了手动观测入口： - `npm run codex:vscode:gc:footer --silent` - `npm run codex:vscode:gc:size --silent` - `npm run…",
+            "tokenEstimate": 50
+          }
+        ]
+      },
+      "baselineRawTranscript": "t1 assistant: 因为现在主矛盾已经变了，不是“有没有证据证明方向对”，而是“这个方向的代价能不能接受”。 具体说有三点：\nt2 user: 这轮修复后，最明显的新问题不是答案错，也不是完全不降，而是：• 采样窗口一放大• guarded/runtime 成本就明显上升• stress 场景跑得很慢 ==》什么原因？\nt3 assistant: 主要有 4 个原因。 1. `maxTurns` 修正后，shadow 输入直接变大了。 在 [dialogue-working-set-runtime-shadow.js](/Users/redcreen/Project/unified-memory-core/src/dialogue-working-set-runtime-shadow.js:88) 里，原来实际上只取最近 `12` 条消息；修正后变成最近 `12`…\nt4 user: 可以，继续一口气长任务把刚才你说的做完；\nt5 user: 你觉得已经做完了，就给一个测试报告；\nt6 assistant: **测试报告** 这轮我把 OpenClaw 的 GC 当成“宿主端真实 prompt 控制”来测，不再只看 shadow telemetry。 结论是：**已经明显比修复前更好，但还不建议宣称“最终完全达标”**。\nt7 user: codex 中的 每轮context中写的Context(估算) 可以去掉了\nt8 assistant: **OpenClaw GC 测试报告** **结论** - 这轮已经把“切题后几乎不回落”的主问题修掉了。 - 修复后，真实发给 LLM 的 prompt 在关键 case 上出现了**明确回落**，而不是只“止涨”。 - 但我不建议现在就宣布“最终完全达标”，因为放大采样窗口后，runtime 成本明显上升，性能还需要继续压。\nt9 assistant: 我先 review 了测试脚本，结论是：**脚本口径基本没问题，问题主要在实现**。 原因有两个： - `maxTurns` 原来按“消息条数”算，长会话的大头经常根本没进 decision 视野。 - guarded 每轮都跑 shadow/decision，很多明显“继续同一话题”的轮次也在付完整成本，但最后并不会 apply。\nt10 user: codex 中的 每轮context中写的Context(估算) 可以去掉了\nt11 assistant: 已经去掉了。现在 `npm run codex:vscode:gc:header --silent` 默认空输出，所以 Codex 每轮不会再自动写 `Context(估算)`。 我保留了手动观测入口： - `npm run codex:vscode:gc:footer --silent` - `npm run codex:vscode:gc:size --silent` - `npm run…\nt12 user: 把 switch 当轮 decision 延迟再往下压，而不是再扩测试面。",
+      "shadowRawTranscript": "t2 user: 这轮修复后，最明显的新问题不是答案错，也不是完全不降，而是：• 采样窗口一放大• guarded/runtime 成本就明显上升• stress 场景跑得很慢 ==》什么原因？\nt3 assistant: 主要有 4 个原因。 1. `maxTurns` 修正后，shadow 输入直接变大了。 在 [dialogue-working-set-runtime-shadow.js](/Users/redcreen/Project/unified-memory-core/src/dialogue-working-set-runtime-shadow.js:88) 里，原来实际上只取最近 `12` 条消息；修正后变成最近 `12`…\nt4 user: 可以，继续一口气长任务把刚才你说的做完；\nt6 assistant: **测试报告** 这轮我把 OpenClaw 的 GC 当成“宿主端真实 prompt 控制”来测，不再只看 shadow telemetry。 结论是：**已经明显比修复前更好，但还不建议宣称“最终完全达标”**。\nt9 assistant: 我先 review 了测试脚本，结论是：**脚本口径基本没问题，问题主要在实现**。 原因有两个： - `maxTurns` 原来按“消息条数”算，长会话的大头经常根本没进 decision 视野。 - guarded 每轮都跑 shadow/decision，很多明显“继续同一话题”的轮次也在付完整成本，但最后并不会 apply。\nt12 user: 把 switch 当轮 decision 延迟再往下压，而不是再扩测试面。",
+      "semanticPinNotes": [
+        "user: codex 中的 每轮context中写的Context(估算) 可以去掉了",
+        "assistant: 已经去掉了。现在 `npm run codex:vscode:gc:header --silent` 默认空输出，所以 Codex 每轮不会再自动写 `Context(估算)`。 我保留了手动观测入口： - `npm run codex:vscode:gc:footer --silent` - `npm run codex:vscode:gc:size --silent` - `npm run…"
+      ],
+      "archiveSummary": "Active thread remains the GC/runtime optimization work: after fixing prompt fallback, the main issue shifted to larger sampling windows increasing guarded/runtime cost and slowing stress scenarios. Prior analysis attributes this to larger shadow inputs after maxTurns correction and paying full shadow/decision cost on many obvious same-topic turns. The user wants implementation to keep pushing down cost by delaying/compressing switch current-turn decision rather than broadening the test surface. Separate resolved side topic: remove the Codex per-turn 'Context(估算)' header; assistant says it was removed and manual observability commands remain.",
+      "injectedArchiveSummary": "",
+      "baselinePromptEstimate": 324,
+      "shadowRawPromptEstimate": 177,
+      "shadowPackageEstimate": 126,
+      "shadowPackageText": "Task state summary:\nActive thread remains the GC/runtime optimization work: after fixing prompt fallback, the main issue shifted to larger sampling windows increasing guarded/runtime cost and slowing stress scenarios. Prior analysis attrib…\n\nLatest user ask:\n- 把 switch 当轮 decision 延迟再往下压，而不是再扩测试面。\n\nSemantic pins:\n- user: codex 中的 每轮context中写的Context(估算) 可以去掉了\n- assistant: 已经去掉了。现在 `npm run codex:vscode:gc:header --silent` 默认空输出，所以 Codex 每轮不会再自动写 `Context(估算)`。 我保留了手动观测入口： - `npm run codex:vscode:gc…"
+    },
+    "scorecard": {
+      "relation": "continue",
+      "baselineTurnCount": 12,
+      "keptTurnCount": 6,
+      "evictedTurnCount": 6,
+      "pinCount": 2,
+      "baselinePromptEstimate": 324,
+      "shadowRawPromptEstimate": 177,
+      "shadowPackageEstimate": 126,
+      "rawReductionRatio": 0.4483,
+      "packageReductionRatio": 0.6111,
+      "candidateLoadElapsedMs": 0,
+      "assemblyBuildElapsedMs": 0,
+      "decisionElapsedMs": 14183,
+      "totalElapsedMs": 14184,
+      "guardedEnabled": true,
+      "guardedApplied": true,
+      "guardedReason": "guarded_candidate",
+      "guardedMessageCount": 6,
+      "guardedCarryForwardEstimate": 73,
+      "guardedFilteredMessageEstimate": 160
+    },
+    "guarded": {
+      "enabled": true,
+      "applied": true,
+      "reason": "guarded_candidate",
+      "filteredMessages": [
+        {
+          "role": "user",
+          "content": "这轮修复后，最明显的新问题不是答案错，也不是完全不降，而是：• 采样窗口一放大• guarded/runtime 成本就明显上升• stress 场景跑得很慢 ==》什么原因？"
+        },
+        {
+          "role": "assistant",
+          "content": "主要有 4 个原因。 1. `maxTurns` 修正后，shadow 输入直接变大了。 在 [dialogue-working-set-runtime-shadow.js](/Users/redcreen/Project/unified-memory-core/src/dialogue-working-set-runtime-shadow.js:88) 里，原来实际上只取最近 `12` 条消息；修正后变成最近 `12`…"
+        },
+        {
+          "role": "user",
+          "content": "可以，继续一口气长任务把刚才你说的做完；"
+        },
+        {
+          "role": "assistant",
+          "content": "**测试报告** 这轮我把 OpenClaw 的 GC 当成“宿主端真实 prompt 控制”来测，不再只看 shadow telemetry。 结论是：**已经明显比修复前更好，但还不建议宣称“最终完全达标”**。"
+        },
+        {
+          "role": "assistant",
+          "content": "我先 review 了测试脚本，结论是：**脚本口径基本没问题，问题主要在实现**。 原因有两个： - `maxTurns` 原来按“消息条数”算，长会话的大头经常根本没进 decision 视野。 - guarded 每轮都跑 shadow/decision，很多明显“继续同一话题”的轮次也在付完整成本，但最后并不会 apply。"
+        },
+        {
+          "role": "user",
+          "content": "把 switch 当轮 decision 延迟再往下压，而不是再扩测试面。"
+        }
+      ],
+      "filteredMessageCount": 6,
+      "filteredMessageTokenEstimate": 160,
+      "carryForwardText": "Conversation carry-forward pins:\n- user: codex 中的 每轮context中写的Context(估算) 可以去掉了\n- assistant: 已经去掉了。现在 `npm run codex:vscode:gc:header --silent` 默认空输出，所以 Codex 每轮不会再自动写 `Context(估算)`。 我保留了手动观测入口： - `npm run codex:vscode:gc:footer --silent` - `npm run codex:vscode:gc:size --silent` - `npm run…",
+      "carryForwardEstimate": 73,
+      "evictedSourceIndices": [
+        0,
+        4,
+        6,
+        7,
+        9,
+        10
+      ]
+    },
+    "timings": {
+      "totalElapsedMs": 14184,
+      "decisionElapsedMs": 14183
+    },
+    "artifact_paths": {
+      "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da335-a070-7972-b61e-6ba3a73ff633-shadow-1776571490823-jmi62l.json",
+      "summary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl"
+    }
+  }
+}

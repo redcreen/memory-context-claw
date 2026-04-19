@@ -1,0 +1,284 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776581187004-fzxbpv",
+  "generated_at": "2026-04-19T06:46:27.004Z",
+  "session_key": "codex:vscode:019da335-a070-7972-b61e-6ba3a73ff633",
+  "agent_id": "main",
+  "query": "很不错， 这一项是memory core的 非常棒的能力； 需要在文档中重点说明下； 同时这条线也会是持续优化的主线之一；",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "Stage 11 能收口了么？ 还是还没有完成？"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "还**不能正式收口**。 更准确地说："
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "继续，知道 Stage 11 收口"
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "还**不能正式收口**。 原因很明确，`Stage 11` 现在卡的不是 OpenClaw 主线，而是“用户体感收口”这条总标准还没同时满足两侧："
+    },
+    {
+      "id": "t5",
+      "role": "user",
+      "content": "继续，知道 Stage 11 真正收口"
+    },
+    {
+      "id": "t6",
+      "role": "user",
+      "content": "继续，知道 Stage 11 真正收口 （codex部分先忽略掉）"
+    },
+    {
+      "id": "t7",
+      "role": "assistant",
+      "content": "现在我可以给明确结论了： **Stage 11 已经真正收口。**"
+    },
+    {
+      "id": "t8",
+      "role": "user",
+      "content": "你接下来再做一个新的测试， 比如context 在268k的80%要压缩（你调整为实际情况） ，策划一个案例，做一个ab测试， 看看在超长对话下，能否做到不compact（没有使用这个功能的话，会多久compact，使用了这个功能后是什么样的）；"
+    },
+    {
+      "id": "t9",
+      "role": "assistant",
+      "content": "现在可以明确说： **Stage 11 已经真正收口。**"
+    },
+    {
+      "id": "t10",
+      "role": "user",
+      "content": "你接下来再做一个新的测试， 比如context 在268k的80%要压缩（你调整为实际情况） ，策划一个案例，做一个ab测试， 看看在超长对话下，能否做到不compact（没有使用这个功能的话，会多久compact，使用了这个功能后是什么样的）；"
+    },
+    {
+      "id": "t11",
+      "role": "assistant",
+      "content": "结果出来了。这轮我没有按字面去硬跑 `268k * 80% = 214.4k`，而是按你允许的“调整为实际情况”做了一个 **practical compact proxy**：把这条 hermetic OpenClaw 长会话链路的 danger line 设成 `16000 promptTokens`。原因很直接，这条评测链路本身单轮 prompt 不会自然长到 214k，但 `16k` 已经能把 baseline…"
+    },
+    {
+      "id": "t12",
+      "role": "user",
+      "content": "很不错， 这一项是memory core的 非常棒的能力； 需要在文档中重点说明下； 同时这条线也会是持续优化的主线之一；"
+    }
+  ],
+  "decision": {
+    "relation": "continue",
+    "confidence": 0.92,
+    "evict_turn_ids": [
+      "t1",
+      "t2",
+      "t3",
+      "t4",
+      "t5",
+      "t6",
+      "t7",
+      "t8",
+      "t9"
+    ],
+    "pin_turn_ids": [],
+    "archive_summary": "Stage 11 closure discussion is resolved: after earlier uncertainty, assistant concluded Stage 11 had truly closed, with codex-specific parts temporarily ignored. The conversation then moved to a new test idea: design an A/B test for long-context behavior and compare compaction timing with and without the memory-core feature. The duplicate initial A/B-test request can be dropped because a later duplicate remains in raw context.",
+    "reasoning_summary": "The latest user turn is still on the same active topic as the immediately preceding exchange: the value of the memory-core anti-compaction capability demonstrated by the A/B test. Raw context should keep the latest test request and its result so the next turn can act on the documentation/optimization instruction. The older Stage 11 block is resolved and no longer needed as raw evidence. One duplicate A/B-test request can also be evicted because the later duplicate plus the result are sufficient."
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "continue",
+      "confidence": 0.92,
+      "archiveSummary": "Stage 11 closure discussion is resolved: after earlier uncertainty, assistant concluded Stage 11 had truly closed, with codex-specific parts temporarily ignored. The conversation then moved to a new test idea: design an A/B test for long-context behavior and compare compaction timing with and without the memory-core feature. The duplicate initial A/B-test request can be dropped because a later duplicate remains in raw context.",
+      "reasoningSummary": "The latest user turn is still on the same active topic as the immediately preceding exchange: the value of the memory-core anti-compaction capability demonstrated by the A/B test. Raw context should keep the latest test request and its result so the next turn can act on the documentation/optimization instruction. The older Stage 11 block is resolved and no longer needed as raw evidence. One duplicate A/B-test request can also be evicted because the later duplicate plus the result are sufficient.",
+      "latestUserTurnId": "t12",
+      "pinTurnIds": [],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8",
+        "t9"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8",
+        "t9"
+      ],
+      "keepTurnIds": [
+        "t10",
+        "t11",
+        "t12"
+      ],
+      "baselineTokens": 197,
+      "keptTokens": 100,
+      "prunedTokens": 97,
+      "reductionRatio": 0.49238578680203043,
+      "keepTurns": [
+        {
+          "id": "t10",
+          "role": "user",
+          "content": "你接下来再做一个新的测试， 比如context 在268k的80%要压缩（你调整为实际情况） ，策划一个案例，做一个ab测试， 看看在超长对话下，能否做到不compact（没有使用这个功能的话，会多久compact，使用了这个功能后是什么样的）；",
+          "tokenEstimate": 31
+        },
+        {
+          "id": "t11",
+          "role": "assistant",
+          "content": "结果出来了。这轮我没有按字面去硬跑 `268k * 80% = 214.4k`，而是按你允许的“调整为实际情况”做了一个 **practical compact proxy**：把这条 hermetic OpenClaw 长会话链路的 danger line 设成 `16000 promptTokens`。原因很直接，这条评测链路本身单轮 prompt 不会自然长到 214k，但 `16k` 已经能把 baseline…",
+          "tokenEstimate": 53
+        },
+        {
+          "id": "t12",
+          "role": "user",
+          "content": "很不错， 这一项是memory core的 非常棒的能力； 需要在文档中重点说明下； 同时这条线也会是持续优化的主线之一；",
+          "tokenEstimate": 16
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "Stage 11 能收口了么？ 还是还没有完成？",
+          "tokenEstimate": 6
+        },
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "还**不能正式收口**。 更准确地说：",
+          "tokenEstimate": 5
+        },
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "继续，知道 Stage 11 收口",
+          "tokenEstimate": 5
+        },
+        {
+          "id": "t4",
+          "role": "assistant",
+          "content": "还**不能正式收口**。 原因很明确，`Stage 11` 现在卡的不是 OpenClaw 主线，而是“用户体感收口”这条总标准还没同时满足两侧：",
+          "tokenEstimate": 19
+        },
+        {
+          "id": "t5",
+          "role": "user",
+          "content": "继续，知道 Stage 11 真正收口",
+          "tokenEstimate": 5
+        },
+        {
+          "id": "t6",
+          "role": "user",
+          "content": "继续，知道 Stage 11 真正收口 （codex部分先忽略掉）",
+          "tokenEstimate": 9
+        },
+        {
+          "id": "t7",
+          "role": "assistant",
+          "content": "现在我可以给明确结论了： **Stage 11 已经真正收口。**",
+          "tokenEstimate": 9
+        },
+        {
+          "id": "t8",
+          "role": "user",
+          "content": "你接下来再做一个新的测试， 比如context 在268k的80%要压缩（你调整为实际情况） ，策划一个案例，做一个ab测试， 看看在超长对话下，能否做到不compact（没有使用这个功能的话，会多久compact，使用了这个功能后是什么样的）；",
+          "tokenEstimate": 31
+        },
+        {
+          "id": "t9",
+          "role": "assistant",
+          "content": "现在可以明确说： **Stage 11 已经真正收口。**",
+          "tokenEstimate": 8
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: Stage 11 能收口了么？ 还是还没有完成？\nt2 assistant: 还**不能正式收口**。 更准确地说：\nt3 user: 继续，知道 Stage 11 收口\nt4 assistant: 还**不能正式收口**。 原因很明确，`Stage 11` 现在卡的不是 OpenClaw 主线，而是“用户体感收口”这条总标准还没同时满足两侧：\nt5 user: 继续，知道 Stage 11 真正收口\nt6 user: 继续，知道 Stage 11 真正收口 （codex部分先忽略掉）\nt7 assistant: 现在我可以给明确结论了： **Stage 11 已经真正收口。**\nt8 user: 你接下来再做一个新的测试， 比如context 在268k的80%要压缩（你调整为实际情况） ，策划一个案例，做一个ab测试， 看看在超长对话下，能否做到不compact（没有使用这个功能的话，会多久compact，使用了这个功能后是什么样的）；\nt9 assistant: 现在可以明确说： **Stage 11 已经真正收口。**\nt10 user: 你接下来再做一个新的测试， 比如context 在268k的80%要压缩（你调整为实际情况） ，策划一个案例，做一个ab测试， 看看在超长对话下，能否做到不compact（没有使用这个功能的话，会多久compact，使用了这个功能后是什么样的）；\nt11 assistant: 结果出来了。这轮我没有按字面去硬跑 `268k * 80% = 214.4k`，而是按你允许的“调整为实际情况”做了一个 **practical compact proxy**：把这条 hermetic OpenClaw 长会话链路的 danger line 设成 `16000 promptTokens`。原因很直接，这条评测链路本身单轮 prompt 不会自然长到 214k，但 `16k` 已经能把 baseline…\nt12 user: 很不错， 这一项是memory core的 非常棒的能力； 需要在文档中重点说明下； 同时这条线也会是持续优化的主线之一；",
+    "shadowRawTranscript": "t10 user: 你接下来再做一个新的测试， 比如context 在268k的80%要压缩（你调整为实际情况） ，策划一个案例，做一个ab测试， 看看在超长对话下，能否做到不compact（没有使用这个功能的话，会多久compact，使用了这个功能后是什么样的）；\nt11 assistant: 结果出来了。这轮我没有按字面去硬跑 `268k * 80% = 214.4k`，而是按你允许的“调整为实际情况”做了一个 **practical compact proxy**：把这条 hermetic OpenClaw 长会话链路的 danger line 设成 `16000 promptTokens`。原因很直接，这条评测链路本身单轮 prompt 不会自然长到 214k，但 `16k` 已经能把 baseline…\nt12 user: 很不错， 这一项是memory core的 非常棒的能力； 需要在文档中重点说明下； 同时这条线也会是持续优化的主线之一；",
+    "semanticPinNotes": [],
+    "archiveSummary": "Stage 11 closure discussion is resolved: after earlier uncertainty, assistant concluded Stage 11 had truly closed, with codex-specific parts temporarily ignored. The conversation then moved to a new test idea: design an A/B test for long-context behavior and compare compaction timing with and without the memory-core feature. The duplicate initial A/B-test request can be dropped because a later duplicate remains in raw context.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 229,
+    "shadowRawPromptEstimate": 109,
+    "shadowPackageEstimate": 81,
+    "shadowPackageText": "Task state summary:\nStage 11 closure discussion is resolved: after earlier uncertainty, assistant concluded Stage 11 had truly closed, with codex-specific parts temporarily ignored. The conversation then moved to a new test idea: design an…\n\nLatest user ask:\n- 很不错， 这一项是memory core的 非常棒的能力； 需要在文档中重点说明下； 同时这条线也会是持续优化的主线之一；"
+  },
+  "scorecard": {
+    "relation": "continue",
+    "baselineTurnCount": 12,
+    "keptTurnCount": 3,
+    "evictedTurnCount": 9,
+    "pinCount": 0,
+    "baselinePromptEstimate": 229,
+    "shadowRawPromptEstimate": 109,
+    "shadowPackageEstimate": 81,
+    "rawReductionRatio": 0.4924,
+    "packageReductionRatio": 0.6463,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 16721,
+    "totalElapsedMs": 16725,
+    "guardedEnabled": true,
+    "guardedApplied": true,
+    "guardedReason": "guarded_candidate",
+    "guardedMessageCount": 3,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 100
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": true,
+    "reason": "guarded_candidate",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": "你接下来再做一个新的测试， 比如context 在268k的80%要压缩（你调整为实际情况） ，策划一个案例，做一个ab测试， 看看在超长对话下，能否做到不compact（没有使用这个功能的话，会多久compact，使用了这个功能后是什么样的）；"
+      },
+      {
+        "role": "assistant",
+        "content": "结果出来了。这轮我没有按字面去硬跑 `268k * 80% = 214.4k`，而是按你允许的“调整为实际情况”做了一个 **practical compact proxy**：把这条 hermetic OpenClaw 长会话链路的 danger line 设成 `16000 promptTokens`。原因很直接，这条评测链路本身单轮 prompt 不会自然长到 214k，但 `16k` 已经能把 baseline…"
+      },
+      {
+        "role": "user",
+        "content": "很不错， 这一项是memory core的 非常棒的能力； 需要在文档中重点说明下； 同时这条线也会是持续优化的主线之一；"
+      }
+    ],
+    "filteredMessageCount": 3,
+    "filteredMessageTokenEstimate": 100,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ]
+  },
+  "timings": {
+    "totalElapsedMs": 16726,
+    "decisionElapsedMs": 16721
+  }
+}

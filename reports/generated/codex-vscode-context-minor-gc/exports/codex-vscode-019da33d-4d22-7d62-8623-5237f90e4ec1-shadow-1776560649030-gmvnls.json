@@ -1,0 +1,230 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776560649030-gmvnls",
+  "generated_at": "2026-04-19T01:04:09.030Z",
+  "session_key": "codex:vscode:019da33d-4d22-7d62-8623-5237f90e4ec1",
+  "agent_id": "main",
+  "query": "先不聊代码了。刚才旅行那段里，我更想住哪座城市？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "已记下：旅行预算 `2万元`，更想住 `京都`，最好 `靠近地铁站`。后面如果你要我帮你筛酒店、排路线或做预算分配，我会按这个偏好来。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "现在切到代码：给我一个 Python 正则，提取 foo123bar 里的数字。"
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "用这个： ```python r\"\\d+\" ```"
+    },
+    {
+      "id": "t5",
+      "role": "user",
+      "content": "继续代码：如果只取第一个数字分组，写法怎么更短？"
+    },
+    {
+      "id": "t6",
+      "role": "assistant",
+      "content": "可以直接写成： ```python re.search(r\"(\\d+)\", s).group(1) ```"
+    },
+    {
+      "id": "t7",
+      "role": "user",
+      "content": "先不聊代码了。刚才旅行那段里，我更想住哪座城市？"
+    },
+    {
+      "id": "t8",
+      "role": "assistant",
+      "content": "你刚才说更想住 `京都`。"
+    }
+  ],
+  "decision": {
+    "relation": "resolve",
+    "confidence": 0.94,
+    "evict_turn_ids": [
+      "t1",
+      "t2",
+      "t3",
+      "t4",
+      "t5",
+      "t6",
+      "t8"
+    ],
+    "pin_turn_ids": [
+      "t1"
+    ],
+    "archive_summary": "Durable travel preferences captured: budget 20,000 RMB, prefers staying in Kyoto, ideally near a subway station. A brief code detour about Python regex for extracting digits was answered and is no longer active. The later travel follow-up asked which city was preferred; it was answered as Kyoto.",
+    "reasoning_summary": "The active code topic is resolved and no longer relevant. The latest user turn is a short follow-up on the earlier travel topic and has already been answered, so the conversation mostly closes. The durable travel preferences from t1 should survive as a compact pin, while the raw travel and code turns can leave the next-turn working set. Per instruction, the latest user turn t7 is not listed for eviction."
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "resolve",
+      "confidence": 0.94,
+      "archiveSummary": "Durable travel preferences captured: budget 20,000 RMB, prefers staying in Kyoto, ideally near a subway station. A brief code detour about Python regex for extracting digits was answered and is no longer active. The later travel follow-up asked which city was preferred; it was answered as Kyoto.",
+      "reasoningSummary": "The active code topic is resolved and no longer relevant. The latest user turn is a short follow-up on the earlier travel topic and has already been answered, so the conversation mostly closes. The durable travel preferences from t1 should survive as a compact pin, while the raw travel and code turns can leave the next-turn working set. Per instruction, the latest user turn t7 is not listed for eviction.",
+      "latestUserTurnId": "t7",
+      "pinTurnIds": [
+        "t1"
+      ],
+      "pinnedOnlyTurnIds": [
+        "t1"
+      ],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t8"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t8"
+      ],
+      "keepTurnIds": [
+        "t7"
+      ],
+      "baselineTokens": 73,
+      "keptTokens": 6,
+      "prunedTokens": 67,
+      "reductionRatio": 0.9178082191780822,
+      "keepTurns": [
+        {
+          "id": "t7",
+          "role": "user",
+          "content": "先不聊代码了。刚才旅行那段里，我更想住哪座城市？",
+          "tokenEstimate": 6
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。",
+          "tokenEstimate": 9
+        },
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "已记下：旅行预算 `2万元`，更想住 `京都`，最好 `靠近地铁站`。后面如果你要我帮你筛酒店、排路线或做预算分配，我会按这个偏好来。",
+          "tokenEstimate": 17
+        },
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "现在切到代码：给我一个 Python 正则，提取 foo123bar 里的数字。",
+          "tokenEstimate": 10
+        },
+        {
+          "id": "t4",
+          "role": "assistant",
+          "content": "用这个： ```python r\"\\d+\" ```",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t5",
+          "role": "user",
+          "content": "继续代码：如果只取第一个数字分组，写法怎么更短？",
+          "tokenEstimate": 6
+        },
+        {
+          "id": "t6",
+          "role": "assistant",
+          "content": "可以直接写成： ```python re.search(r\"(\\d+)\", s).group(1) ```",
+          "tokenEstimate": 14
+        },
+        {
+          "id": "t8",
+          "role": "assistant",
+          "content": "你刚才说更想住 `京都`。",
+          "tokenEstimate": 4
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。\nt2 assistant: 已记下：旅行预算 `2万元`，更想住 `京都`，最好 `靠近地铁站`。后面如果你要我帮你筛酒店、排路线或做预算分配，我会按这个偏好来。\nt3 user: 现在切到代码：给我一个 Python 正则，提取 foo123bar 里的数字。\nt4 assistant: 用这个： ```python r\"\\d+\" ```\nt5 user: 继续代码：如果只取第一个数字分组，写法怎么更短？\nt6 assistant: 可以直接写成： ```python re.search(r\"(\\d+)\", s).group(1) ```\nt7 user: 先不聊代码了。刚才旅行那段里，我更想住哪座城市？\nt8 assistant: 你刚才说更想住 `京都`。",
+    "shadowRawTranscript": "t7 user: 先不聊代码了。刚才旅行那段里，我更想住哪座城市？",
+    "semanticPinNotes": [
+      "user: 我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。"
+    ],
+    "archiveSummary": "Durable travel preferences captured: budget 20,000 RMB, prefers staying in Kyoto, ideally near a subway station. A brief code detour about Python regex for extracting digits was answered and is no longer active. The later travel follow-up asked which city was preferred; it was answered as Kyoto.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 95,
+    "shadowRawPromptEstimate": 9,
+    "shadowPackageEstimate": 86,
+    "shadowPackageText": "Task state summary:\nDurable travel preferences captured: budget 20,000 RMB, prefers staying in Kyoto, ideally near a subway station. A brief code detour about Python regex for extracting digits was answered and is no longer active. The lat…\n\nLatest user ask:\n- 先不聊代码了。刚才旅行那段里，我更想住哪座城市？\n\nSemantic pins:\n- user: 我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。"
+  },
+  "scorecard": {
+    "relation": "resolve",
+    "baselineTurnCount": 8,
+    "keptTurnCount": 1,
+    "evictedTurnCount": 7,
+    "pinCount": 1,
+    "baselinePromptEstimate": 95,
+    "shadowRawPromptEstimate": 9,
+    "shadowPackageEstimate": 86,
+    "rawReductionRatio": 0.9178,
+    "packageReductionRatio": 0.0947,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 14999,
+    "totalElapsedMs": 14999,
+    "guardedEnabled": true,
+    "guardedApplied": true,
+    "guardedReason": "guarded_candidate",
+    "guardedMessageCount": 1,
+    "guardedCarryForwardEstimate": 19,
+    "guardedFilteredMessageEstimate": 6
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": true,
+    "reason": "guarded_candidate",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": "先不聊代码了。刚才旅行那段里，我更想住哪座城市？"
+      }
+    ],
+    "filteredMessageCount": 1,
+    "filteredMessageTokenEstimate": 6,
+    "carryForwardText": "Conversation carry-forward pins:\n- user: 我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。",
+    "carryForwardEstimate": 19,
+    "evictedSourceIndices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      7
+    ]
+  },
+  "timings": {
+    "totalElapsedMs": 14999,
+    "decisionElapsedMs": 14999
+  }
+}

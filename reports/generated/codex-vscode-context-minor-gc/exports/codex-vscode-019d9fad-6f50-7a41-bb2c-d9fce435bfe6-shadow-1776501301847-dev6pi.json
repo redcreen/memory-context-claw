@@ -1,0 +1,192 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776501301847-dev6pi",
+  "generated_at": "2026-04-18T08:35:01.847Z",
+  "session_key": "codex:vscode:019d9fad-6f50-7a41-bb2c-d9fce435bfe6",
+  "agent_id": "main",
+  "query": "context 上涨非常快；",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "我的合理的方式，不是扩大context window；先改回到258k； 不然无法测试 compat是否会发生；"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "Context(估算): 本轮发送context 71.6k，宿主context 71.6k；窗口总大小 258k，压缩比：0.0%（71.6k/71.6k），占总窗口比例：27.8%（71.6k/258k） 默认口径已经改回 `258k`。现在 VS Code helper 会先把宿主上报的 `model_context_window` clamp 到 `258000` 再算风险和 header，但同时保留原始上报值，避免把真实运行态丢掉。实现点在 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/codex-vscode-context-minor-gc.js:13) 和 [scripts/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/scripts/codex-vscode-context-minor-gc.js:26)。 我也补了回归测试，覆盖“宿主报 `486000` 时默认仍按 `258000` 算”的场景，见 [test/codex-vscode-context-minor-gc.test.js](/Users/redcreen/Project/unified-memory-core/test/codex-vscode-context-minor-gc.test.js:285)。验证已过：`node --test test/codex-vscode-context-minor-gc.test.js`，`4/4` 通过。当前实际 `npm run codex:vscode:gc --silent` 也已显示 `hostContextWindow=258000`、`hostReportedContextWindow=486400`，所以现在可以继续按你要的保守窗口去观察 `compat` 是否会发生。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "本轮发送context 和 状态栏不匹配； 每次打开新的codex窗口，状态栏是否没有准确读取 ？ 或者读错了/ 如果两个codex 同时在vscode 打开，好像会有问题；"
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "Context(估算): 最近一轮输入 125k，无GC估算 125k；窗口口径 258k，压缩比：0.0%（125k/125k），占窗口比例：48.6%（125k/258k） 是，之前确实有两个问题，而且你说的“两个 Codex 同时在 VS Code 打开会有问题”是对的。 第一，session 选错了。原实现只按同一 `cwd` 下“最新写入的 session 文件”取值，所以两个窗口都开在同一个 repo 时，A 窗口的 header 很可能读到 B 窗口的 session。现在我改成优先绑定当前会话的 `CODEX_THREAD_ID`，也就是当前这条线程自己的 session id，不再靠猜最近文件，见 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/codex-vscode-context-minor-gc.js:219) 和 [scripts/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/scripts/codex-vscode-context-minor-gc.js:19)。我本地环境里已经确认当前线程有 `CODEX_THREAD_ID=019d9fad-...`，helper 现在会锁到这个 session。你截图里右下角的 `251k/486k`，我也核对到了，正好对应另一个同 `cwd` 的旧 session 的最近输入 `250708`。所以之前确实是“状态栏看的是 A，header 读成了 B”。 第二，指标语义也不一样。helper 读的是 session log 里的 `last_token_usage.input_tokens`，这表示“最近一轮请求输入多少”，不是 VS Code 右下角状态栏那种“当前线程占用了多少窗口”。之前 footer 写成“本轮发送context”，很容易让人误以为它等..."
+    },
+    {
+      "id": "t5",
+      "role": "user",
+      "content": "context 上涨非常快；"
+    }
+  ],
+  "decision": {
+    "relation": "continue",
+    "confidence": 0.83,
+    "evict_turn_ids": [
+      "t1",
+      "t2"
+    ],
+    "pin_turn_ids": [
+      "t2"
+    ],
+    "archive_summary": "Earlier subtask resolved: default context-window accounting was clamped back to 258k for safety/compat testing, with tests added and verified. Current active thread is still debugging fast context growth and VS Code/session-context accounting behavior, especially mismatch between helper/header and status bar and possible cross-window/session mixups.",
+    "reasoning_summary": "The latest user turn stays on the same active topic as t3-t4: investigating context accounting behavior. t3-t4 remain raw because the new complaint likely depends on the recent diagnosis about session selection and metric semantics. t1-t2 are an older resolved subtask about reverting the default window to 258k; that detail may still matter as durable context, so keep it as a compact pin rather than raw turns."
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "continue",
+      "confidence": 0.83,
+      "archiveSummary": "Earlier subtask resolved: default context-window accounting was clamped back to 258k for safety/compat testing, with tests added and verified. Current active thread is still debugging fast context growth and VS Code/session-context accounting behavior, especially mismatch between helper/header and status bar and possible cross-window/session mixups.",
+      "reasoningSummary": "The latest user turn stays on the same active topic as t3-t4: investigating context accounting behavior. t3-t4 remain raw because the new complaint likely depends on the recent diagnosis about session selection and metric semantics. t1-t2 are an older resolved subtask about reverting the default window to 258k; that detail may still matter as durable context, so keep it as a compact pin rather than raw turns.",
+      "latestUserTurnId": "t5",
+      "pinTurnIds": [
+        "t2"
+      ],
+      "pinnedOnlyTurnIds": [
+        "t2"
+      ],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t2"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t2"
+      ],
+      "keepTurnIds": [
+        "t3",
+        "t4",
+        "t5"
+      ],
+      "baselineTokens": 487,
+      "keptTokens": 251,
+      "prunedTokens": 236,
+      "reductionRatio": 0.48459958932238195,
+      "keepTurns": [
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "本轮发送context 和 状态栏不匹配； 每次打开新的codex窗口，状态栏是否没有准确读取 ？ 或者读错了/ 如果两个codex 同时在vscode 打开，好像会有问题；",
+          "tokenEstimate": 22
+        },
+        {
+          "id": "t4",
+          "role": "assistant",
+          "content": "Context(估算): 最近一轮输入 125k，无GC估算 125k；窗口口径 258k，压缩比：0.0%（125k/125k），占窗口比例：48.6%（125k/258k） 是，之前确实有两个问题，而且你说的“两个 Codex 同时在 VS Code 打开会有问题”是对的。 第一，session 选错了。原实现只按同一 `cwd` 下“最新写入的 session 文件”取值，所以两个窗口都开在同一个 repo 时，A 窗口的 header 很可能读到 B 窗口的 session。现在我改成优先绑定当前会话的 `CODEX_THREAD_ID`，也就是当前这条线程自己的 session id，不再靠猜最近文件，见 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/codex-vscode-context-minor-gc.js:219) 和 [scripts/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/scripts/codex-vscode-context-minor-gc.js:19)。我本地环境里已经确认当前线程有 `CODEX_THREAD_ID=019d9fad-...`，helper 现在会锁到这个 session。你截图里右下角的 `251k/486k`，我也核对到了，正好对应另一个同 `cwd` 的旧 session 的最近输入 `250708`。所以之前确实是“状态栏看的是 A，header 读成了 B”。 第二，指标语义也不一样。helper 读的是 session log 里的 `last_token_usage.input_tokens`，这表示“最近一轮请求输入多少”，不是 VS Code 右下角状态栏那种“当前线程占用了多少窗口”。之前 footer 写成“本轮发送context”，很容易让人误以为它等...",
+          "tokenEstimate": 225
+        },
+        {
+          "id": "t5",
+          "role": "user",
+          "content": "context 上涨非常快；",
+          "tokenEstimate": 4
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "我的合理的方式，不是扩大context window；先改回到258k； 不然无法测试 compat是否会发生；",
+          "tokenEstimate": 14
+        },
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "Context(估算): 本轮发送context 71.6k，宿主context 71.6k；窗口总大小 258k，压缩比：0.0%（71.6k/71.6k），占总窗口比例：27.8%（71.6k/258k） 默认口径已经改回 `258k`。现在 VS Code helper 会先把宿主上报的 `model_context_window` clamp 到 `258000` 再算风险和 header，但同时保留原始上报值，避免把真实运行态丢掉。实现点在 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/codex-vscode-context-minor-gc.js:13) 和 [scripts/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/scripts/codex-vscode-context-minor-gc.js:26)。 我也补了回归测试，覆盖“宿主报 `486000` 时默认仍按 `258000` 算”的场景，见 [test/codex-vscode-context-minor-gc.test.js](/Users/redcreen/Project/unified-memory-core/test/codex-vscode-context-minor-gc.test.js:285)。验证已过：`node --test test/codex-vscode-context-minor-gc.test.js`，`4/4` 通过。当前实际 `npm run codex:vscode:gc --silent` 也已显示 `hostContextWindow=258000`、`hostReportedContextWindow=486400`，所以现在可以继续按你要的保守窗口去观察 `compat` 是否会发生。",
+          "tokenEstimate": 222
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 我的合理的方式，不是扩大context window；先改回到258k； 不然无法测试 compat是否会发生；\nt2 assistant: Context(估算): 本轮发送context 71.6k，宿主context 71.6k；窗口总大小 258k，压缩比：0.0%（71.6k/71.6k），占总窗口比例：27.8%（71.6k/258k） 默认口径已经改回 `258k`。现在 VS Code helper 会先把宿主上报的 `model_context_window` clamp 到 `258000` 再算风险和 header，但同时保留原始上报值，避免把真实运行态丢掉。实现点在 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/codex-vscode-context-minor-gc.js:13) 和 [scripts/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/scripts/codex-vscode-context-minor-gc.js:26)。 我也补了回归测试，覆盖“宿主报 `486000` 时默认仍按 `258000` 算”的场景，见 [test/codex-vscode-context-minor-gc.test.js](/Users/redcreen/Project/unified-memory-core/test/codex-vscode-context-minor-gc.test.js:285)。验证已过：`node --test test/codex-vscode-context-minor-gc.test.js`，`4/4` 通过。当前实际 `npm run codex:vscode:gc --silent` 也已显示 `hostContextWindow=258000`、`hostReportedContextWindow=486400`，所以现在可以继续按你要的保守窗口去观察 `compat` 是否会发生。\nt3 user: 本轮发送context 和 状态栏不匹配； 每次打开新的codex窗口，状态栏是否没有准确读取 ？ 或者读错了/ 如果两个codex 同时在vscode 打开，好像会有问题；\nt4 assistant: Context(估算): 最近一轮输入 125k，无GC估算 125k；窗口口径 258k，压缩比：0.0%（125k/125k），占窗口比例：48.6%（125k/258k） 是，之前确实有两个问题，而且你说的“两个 Codex 同时在 VS Code 打开会有问题”是对的。 第一，session 选错了。原实现只按同一 `cwd` 下“最新写入的 session 文件”取值，所以两个窗口都开在同一个 repo 时，A 窗口的 header 很可能读到 B 窗口的 session。现在我改成优先绑定当前会话的 `CODEX_THREAD_ID`，也就是当前这条线程自己的 session id，不再靠猜最近文件，见 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/codex-vscode-context-minor-gc.js:219) 和 [scripts/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/scripts/codex-vscode-context-minor-gc.js:19)。我本地环境里已经确认当前线程有 `CODEX_THREAD_ID=019d9fad-...`，helper 现在会锁到这个 session。你截图里右下角的 `251k/486k`，我也核对到了，正好对应另一个同 `cwd` 的旧 session 的最近输入 `250708`。所以之前确实是“状态栏看的是 A，header 读成了 B”。 第二，指标语义也不一样。helper 读的是 session log 里的 `last_token_usage.input_tokens`，这表示“最近一轮请求输入多少”，不是 VS Code 右下角状态栏那种“当前线程占用了多少窗口”。之前 footer 写成“本轮发送context”，很容易让人误以为它等...\nt5 user: context 上涨非常快；",
+    "shadowRawTranscript": "t3 user: 本轮发送context 和 状态栏不匹配； 每次打开新的codex窗口，状态栏是否没有准确读取 ？ 或者读错了/ 如果两个codex 同时在vscode 打开，好像会有问题；\nt4 assistant: Context(估算): 最近一轮输入 125k，无GC估算 125k；窗口口径 258k，压缩比：0.0%（125k/125k），占窗口比例：48.6%（125k/258k） 是，之前确实有两个问题，而且你说的“两个 Codex 同时在 VS Code 打开会有问题”是对的。 第一，session 选错了。原实现只按同一 `cwd` 下“最新写入的 session 文件”取值，所以两个窗口都开在同一个 repo 时，A 窗口的 header 很可能读到 B 窗口的 session。现在我改成优先绑定当前会话的 `CODEX_THREAD_ID`，也就是当前这条线程自己的 session id，不再靠猜最近文件，见 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/codex-vscode-context-minor-gc.js:219) 和 [scripts/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/scripts/codex-vscode-context-minor-gc.js:19)。我本地环境里已经确认当前线程有 `CODEX_THREAD_ID=019d9fad-...`，helper 现在会锁到这个 session。你截图里右下角的 `251k/486k`，我也核对到了，正好对应另一个同 `cwd` 的旧 session 的最近输入 `250708`。所以之前确实是“状态栏看的是 A，header 读成了 B”。 第二，指标语义也不一样。helper 读的是 session log 里的 `last_token_usage.input_tokens`，这表示“最近一轮请求输入多少”，不是 VS Code 右下角状态栏那种“当前线程占用了多少窗口”。之前 footer 写成“本轮发送context”，很容易让人误以为它等...\nt5 user: context 上涨非常快；",
+    "semanticPinNotes": [
+      "assistant: Context(估算): 本轮发送context 71.6k，宿主context 71.6k；窗口总大小 258k，压缩比：0.0%（71.6k/71.6k），占总窗口比例：27.8%（71.6k/258k） 默认口径已经改回 `258k`。现在 VS Code helper 会先把宿主上报的 `model_context_window` clamp 到 `258000` 再算风险和 header，但同时保留原始上报值，避免把真实运行态丢掉。实现点在 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/codex-vscode-context-minor-gc.js:13) 和 [scripts/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/scripts/codex-vscode-context-minor-gc.js:26)。 我也补了回归测试，覆盖“宿主报 `486000` 时默认仍按 `258000` 算”的场景，见 [test/codex-vscode-context-minor-gc.test.js](/Users/redcreen/Project/unified-memory-core/test/codex-vscode-context-minor-gc.test.js:285)。验证已过：`node --test test/codex-vscode-context-minor-gc.test.js`，`4/4` 通过。当前实际 `npm run codex:vscode:gc --silent` 也已显示 `hostContextWindow=258000`、`hostReportedContextWindow=486400`，所以现在可以继续按你要的保守窗口去观察 `compat` 是否会发生。"
+    ],
+    "archiveSummary": "Earlier subtask resolved: default context-window accounting was clamped back to 258k for safety/compat testing, with tests added and verified. Current active thread is still debugging fast context growth and VS Code/session-context accounting behavior, especially mismatch between helper/header and status bar and possible cross-window/session mixups.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 501,
+    "shadowRawPromptEstimate": 259,
+    "shadowPackageEstimate": 492,
+    "shadowPackageText": "Active raw turns:\nt3 user: 本轮发送context 和 状态栏不匹配； 每次打开新的codex窗口，状态栏是否没有准确读取 ？ 或者读错了/ 如果两个codex 同时在vscode 打开，好像会有问题；\nt4 assistant: Context(估算): 最近一轮输入 125k，无GC估算 125k；窗口口径 258k，压缩比：0.0%（125k/125k），占窗口比例：48.6%（125k/258k） 是，之前确实有两个问题，而且你说的“两个 Codex 同时在 VS Code 打开会有问题”是对的。 第一，session 选错了。原实现只按同一 `cwd` 下“最新写入的 session 文件”取值，所以两个窗口都开在同一个 repo 时，A 窗口的 header 很可能读到 B 窗口的 session。现在我改成优先绑定当前会话的 `CODEX_THREAD_ID`，也就是当前这条线程自己的 session id，不再靠猜最近文件，见 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/codex-vscode-context-minor-gc.js:219) 和 [scripts/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/scripts/codex-vscode-context-minor-gc.js:19)。我本地环境里已经确认当前线程有 `CODEX_THREAD_ID=019d9fad-...`，helper 现在会锁到这个 session。你截图里右下角的 `251k/486k`，我也核对到了，正好对应另一个同 `cwd` 的旧 session 的最近输入 `250708`。所以之前确实是“状态栏看的是 A，header 读成了 B”。 第二，指标语义也不一样。helper 读的是 session log 里的 `last_token_usage.input_tokens`，这表示“最近一轮请求输入多少”，不是 VS Code 右下角状态栏那种“当前线程占用了多少窗口”。之前 footer 写成“本轮发送context”，很容易让人误以为它等...\nt5 user: context 上涨非常快；\n\nSemantic pins:\nassistant: Context(估算): 本轮发送context 71.6k，宿主context 71.6k；窗口总大小 258k，压缩比：0.0%（71.6k/71.6k），占总窗口比例：27.8%（71.6k/258k） 默认口径已经改回 `258k`。现在 VS Code helper 会先把宿主上报的 `model_context_window` clamp 到 `258000` 再算风险和 header，但同时保留原始上报值，避免把真实运行态丢掉。实现点在 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/codex-vscode-context-minor-gc.js:13) 和 [scripts/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/scripts/codex-vscode-context-minor-gc.js:26)。 我也补了回归测试，覆盖“宿主报 `486000` 时默认仍按 `258000` 算”的场景，见 [test/codex-vscode-context-minor-gc.test.js](/Users/redcreen/Project/unified-memory-core/test/codex-vscode-context-minor-gc.test.js:285)。验证已过：`node --test test/codex-vscode-context-minor-gc.test.js`，`4/4` 通过。当前实际 `npm run codex:vscode:gc --silent` 也已显示 `hostContextWindow=258000`、`hostReportedContextWindow=486400`，所以现在可以继续按你要的保守窗口去观察 `compat` 是否会发生。"
+  },
+  "scorecard": {
+    "relation": "continue",
+    "baselineTurnCount": 5,
+    "keptTurnCount": 3,
+    "evictedTurnCount": 2,
+    "pinCount": 1,
+    "baselinePromptEstimate": 501,
+    "shadowRawPromptEstimate": 259,
+    "shadowPackageEstimate": 492,
+    "rawReductionRatio": 0.4846,
+    "packageReductionRatio": 0.018,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 18549,
+    "totalElapsedMs": 18553,
+    "guardedEnabled": true,
+    "guardedApplied": false,
+    "guardedReason": "no_net_token_gain",
+    "guardedMessageCount": 5,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 602
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": false,
+    "reason": "no_net_token_gain",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": "我的合理的方式，不是扩大context window；先改回到258k； 不然无法测试 compat是否会发生；"
+      },
+      {
+        "role": "assistant",
+        "content": "Context(估算): 本轮发送context 71.6k，宿主context 71.6k；窗口总大小 258k，压缩比：0.0%（71.6k/71.6k），占总窗口比例：27.8%（71.6k/258k） 默认口径已经改回 `258k`。现在 VS Code helper 会先把宿主上报的 `model_context_window` clamp 到 `258000` 再算风险和 header，但同时保留原始上报值，避免把真实运行态丢掉。实现点在 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/codex-vscode-context-minor-gc.js:13) 和 [scripts/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/scripts/codex-vscode-context-minor-gc.js:26)。 我也补了回归测试，覆盖“宿主报 `486000` 时默认仍按 `258000` 算”的场景，见 [test/codex-vscode-context-minor-gc.test.js](/Users/redcreen/Project/unified-memory-core/test/codex-vscode-context-minor-gc.test.js:285)。验证已过：`node --test test/codex-vscode-context-minor-gc.test.js`，`4/4` 通过。当前实际 `npm run codex:vscode:gc --silent` 也已显示 `hostContextWindow=258000`、`hostReportedContextWindow=486400`，所以现在可以继续按你要的保守窗口去观察 `compat` 是否会发生。"
+      },
+      {
+        "role": "user",
+        "content": "本轮发送context 和 状态栏不匹配； 每次打开新的codex窗口，状态栏是否没有准确读取 ？ 或者读错了/ 如果两个codex 同时在vscode 打开，好像会有问题；"
+      },
+      {
+        "role": "assistant",
+        "content": "Context(估算): 最近一轮输入 125k，无GC估算 125k；窗口口径 258k，压缩比：0.0%（125k/125k），占窗口比例：48.6%（125k/258k） 是，之前确实有两个问题，而且你说的“两个 Codex 同时在 VS Code 打开会有问题”是对的。 第一，session 选错了。原实现只按同一 `cwd` 下“最新写入的 session 文件”取值，所以两个窗口都开在同一个 repo 时，A 窗口的 header 很可能读到 B 窗口的 session。现在我改成优先绑定当前会话的 `CODEX_THREAD_ID`，也就是当前这条线程自己的 session id，不再靠猜最近文件，见 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/codex-vscode-context-minor-gc.js:219) 和 [scripts/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/scripts/codex-vscode-context-minor-gc.js:19)。我本地环境里已经确认当前线程有 `CODEX_THREAD_ID=019d9fad-...`，helper 现在会锁到这个 session。你截图里右下角的 `251k/486k`，我也核对到了，正好对应另一个同 `cwd` 的旧 session 的最近输入 `250708`。所以之前确实是“状态栏看的是 A，header 读成了 B”。 第二，指标语义也不一样。helper 读的是 session log 里的 `last_token_usage.input_tokens`，这表示“最近一轮请求输入多少”，不是 VS Code 右下角状态栏那种“当前线程占用了多少窗口”。之前 footer 写成“本轮发送context”，很容易让人误以为它等于状态栏。我已经把文案改成“最近一轮输入”，并在 markdown 里明确标注这不是状态栏占用，见 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/codex-vscode-context-minor-gc.js:487)。 验证已经过了：`node --test test/codex-vscode-context-minor-gc.test.js` 现在 `5/5` 通过，其中包括“优先命中精确 session id”的回归测试 [test/codex-vscode-context-minor-gc.test.js](/Users/redcreen/Project/unified-memory-core/test/codex-vscode-context-minor-gc.test.js:73)。结论就是：之前是会串窗口，也会把“最近一轮输入”误说成“状态栏占用”；这两点现在都修了。"
+      },
+      {
+        "role": "user",
+        "content": "context 上涨非常快；"
+      }
+    ],
+    "filteredMessageCount": 5,
+    "filteredMessageTokenEstimate": 602,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 18553,
+    "decisionElapsedMs": 18549
+  }
+}

@@ -1,0 +1,195 @@
+{
+  "schema_version": "umc.codex-context-minor-gc.v1",
+  "generated_at": "2026-04-18T16:07:26.631Z",
+  "event_id": "shadow-1776528424053-9bh2tn-codex-packaged",
+  "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+  "query": "那接下来 我要怎么测试 gc 在正常工作，并且明显做了选择，至少一个连续对话里，应该能够控制好 context的大小；或者换了换题之后 context应该减小； 你需要帮我设计一下案例；",
+  "status": "captured",
+  "reason": "",
+  "decision_transport": "codex_exec",
+  "relation": "continue",
+  "applied": false,
+  "codex_guard_reason": "reduction_below_min",
+  "prompt_reduction_ratio": 0,
+  "baseline_context_estimate": 111,
+  "packaged_context_estimate": 96,
+  "effective_context_estimate": 111,
+  "shadow_status": "captured",
+  "shadow_guarded_applied": false,
+  "shadow_guarded_reason": "reduction_below_min",
+  "shadow_export_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da152-4841-76f2-adc4-b01a85d15a88-shadow-1776528424053-9bh2tn.json",
+  "shadow_summary_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl",
+  "export_path": "exports/codex-vscode-019da152-4841-76f2-adc4-b01a85d15a88-shadow-1776528424053-9bh2tn-codex-packaged.json",
+  "effective_context_block": "## Recent Conversation Context\nt1 user: 新的对话，也还是在umc项目里， 为什么context数据不对；\nt2 user: 现在每一轮的context 已经能够正常gc了么\nt3 assistant: 不是“每一轮都会压缩”，但现在看起来已经是“每一轮都会评估，满足条件就正常 GC 应用”。 这轮之所以没压，是因为这是新对话，抽出来的 turn 不够。代码里 `minTurns` 默认是 `3`，少于 3 就直接 `not_enough_turns`，见 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/cod…\nt4 user: 那接下来 我要怎么测试 gc 在正常工作，并且明显做了选择，至少一个连续对话里，应该能够控制好 context的大小；或者换了换题之后 context应该减小； 你需要帮我设计一下案例；",
+  "packaged_context_block": "## Context Minor GC Working Set\nTask state summary:\nEarlier context-mismatch complaint can leave the next-turn raw prompt. Active topic is now how to design test cases that verify GC works, shows clear selection, controls context size across continuous conversation, and…\n\nLatest user ask:\n- 那接下来 我要怎么测试 gc 在正常工作，并且明显做了选择，至少一个连续对话里，应该能够控制好 context的大小；或者换了换题之后 context应该减小； 你需要帮我设计一下案例；",
+  "shadow_event": {
+    "schema_version": "umc.dialogue-working-set-shadow.v1",
+    "event_id": "shadow-1776528424053-9bh2tn",
+    "generated_at": "2026-04-18T16:07:04.053Z",
+    "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+    "agent_id": "main",
+    "query": "那接下来 我要怎么测试 gc 在正常工作，并且明显做了选择，至少一个连续对话里，应该能够控制好 context的大小；或者换了换题之后 context应该减小； 你需要帮我设计一下案例；",
+    "status": "captured",
+    "reason": "",
+    "sampling": {
+      "max_turns": 12,
+      "min_turns": 3,
+      "max_chars_per_turn": 900
+    },
+    "transcript": [
+      {
+        "id": "t1",
+        "role": "user",
+        "content": "新的对话，也还是在umc项目里， 为什么context数据不对；"
+      },
+      {
+        "id": "t2",
+        "role": "user",
+        "content": "现在每一轮的context 已经能够正常gc了么"
+      },
+      {
+        "id": "t3",
+        "role": "assistant",
+        "content": "不是“每一轮都会压缩”，但现在看起来已经是“每一轮都会评估，满足条件就正常 GC 应用”。 这轮之所以没压，是因为这是新对话，抽出来的 turn 不够。代码里 `minTurns` 默认是 `3`，少于 3 就直接 `not_enough_turns`，见 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/cod…"
+      },
+      {
+        "id": "t4",
+        "role": "user",
+        "content": "那接下来 我要怎么测试 gc 在正常工作，并且明显做了选择，至少一个连续对话里，应该能够控制好 context的大小；或者换了换题之后 context应该减小； 你需要帮我设计一下案例；"
+      }
+    ],
+    "decision": {
+      "relation": "continue",
+      "confidence": 0.93,
+      "evict_turn_ids": [
+        "t1"
+      ],
+      "pin_turn_ids": [],
+      "archive_summary": "Earlier context-mismatch complaint can leave the next-turn raw prompt. Active topic is now how to design test cases that verify GC works, shows clear selection, controls context size across continuous conversation, and shrinks after topic switches.",
+      "reasoning_summary": "The latest user turn stays on the same GC-testing topic introduced in t2 and grounded by t3's explanation of current behavior (`minTurns`, conditional GC). Those turns should remain raw because the next answer will build directly on them. t1 is an older diagnostic complaint and is no longer needed to answer the current request, so it is a good eviction candidate. No semantic pin is needed because t1 does not contain durable user preferences or unresolved requirements beyond the active raw context."
+    },
+    "decision_transport": "codex_exec",
+    "snapshot": {
+      "applied": {
+        "relation": "continue",
+        "confidence": 0.93,
+        "archiveSummary": "Earlier context-mismatch complaint can leave the next-turn raw prompt. Active topic is now how to design test cases that verify GC works, shows clear selection, controls context size across continuous conversation, and shrinks after topic switches.",
+        "reasoningSummary": "The latest user turn stays on the same GC-testing topic introduced in t2 and grounded by t3's explanation of current behavior (`minTurns`, conditional GC). Those turns should remain raw because the next answer will build directly on them. t1 is an older diagnostic complaint and is no longer needed to answer the current request, so it is a good eviction candidate. No semantic pin is needed because t1 does not contain durable user preferences or unresolved requirements beyond the active raw context.",
+        "latestUserTurnId": "t4",
+        "pinTurnIds": [],
+        "pinnedOnlyTurnIds": [],
+        "requestedEvictTurnIds": [
+          "t1"
+        ],
+        "blockedEvictTurnIds": [],
+        "appliedEvictTurnIds": [
+          "t1"
+        ],
+        "keepTurnIds": [
+          "t2",
+          "t3",
+          "t4"
+        ],
+        "baselineTokens": 93,
+        "keptTokens": 85,
+        "prunedTokens": 8,
+        "reductionRatio": 0.08602150537634409,
+        "keepTurns": [
+          {
+            "id": "t2",
+            "role": "user",
+            "content": "现在每一轮的context 已经能够正常gc了么",
+            "tokenEstimate": 6
+          },
+          {
+            "id": "t3",
+            "role": "assistant",
+            "content": "不是“每一轮都会压缩”，但现在看起来已经是“每一轮都会评估，满足条件就正常 GC 应用”。 这轮之所以没压，是因为这是新对话，抽出来的 turn 不够。代码里 `minTurns` 默认是 `3`，少于 3 就直接 `not_enough_turns`，见 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/cod…",
+            "tokenEstimate": 55
+          },
+          {
+            "id": "t4",
+            "role": "user",
+            "content": "那接下来 我要怎么测试 gc 在正常工作，并且明显做了选择，至少一个连续对话里，应该能够控制好 context的大小；或者换了换题之后 context应该减小； 你需要帮我设计一下案例；",
+            "tokenEstimate": 24
+          }
+        ],
+        "evictedTurns": [
+          {
+            "id": "t1",
+            "role": "user",
+            "content": "新的对话，也还是在umc项目里， 为什么context数据不对；",
+            "tokenEstimate": 8
+          }
+        ]
+      },
+      "baselineRawTranscript": "t1 user: 新的对话，也还是在umc项目里， 为什么context数据不对；\nt2 user: 现在每一轮的context 已经能够正常gc了么\nt3 assistant: 不是“每一轮都会压缩”，但现在看起来已经是“每一轮都会评估，满足条件就正常 GC 应用”。 这轮之所以没压，是因为这是新对话，抽出来的 turn 不够。代码里 `minTurns` 默认是 `3`，少于 3 就直接 `not_enough_turns`，见 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/cod…\nt4 user: 那接下来 我要怎么测试 gc 在正常工作，并且明显做了选择，至少一个连续对话里，应该能够控制好 context的大小；或者换了换题之后 context应该减小； 你需要帮我设计一下案例；",
+      "shadowRawTranscript": "t2 user: 现在每一轮的context 已经能够正常gc了么\nt3 assistant: 不是“每一轮都会压缩”，但现在看起来已经是“每一轮都会评估，满足条件就正常 GC 应用”。 这轮之所以没压，是因为这是新对话，抽出来的 turn 不够。代码里 `minTurns` 默认是 `3`，少于 3 就直接 `not_enough_turns`，见 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/cod…\nt4 user: 那接下来 我要怎么测试 gc 在正常工作，并且明显做了选择，至少一个连续对话里，应该能够控制好 context的大小；或者换了换题之后 context应该减小； 你需要帮我设计一下案例；",
+      "semanticPinNotes": [],
+      "archiveSummary": "Earlier context-mismatch complaint can leave the next-turn raw prompt. Active topic is now how to design test cases that verify GC works, shows clear selection, controls context size across continuous conversation, and shrinks after topic switches.",
+      "injectedArchiveSummary": "",
+      "baselinePromptEstimate": 104,
+      "shadowRawPromptEstimate": 93,
+      "shadowPackageEstimate": 88,
+      "shadowPackageText": "Task state summary:\nEarlier context-mismatch complaint can leave the next-turn raw prompt. Active topic is now how to design test cases that verify GC works, shows clear selection, controls context size across continuous conversation, and…\n\nLatest user ask:\n- 那接下来 我要怎么测试 gc 在正常工作，并且明显做了选择，至少一个连续对话里，应该能够控制好 context的大小；或者换了换题之后 context应该减小； 你需要帮我设计一下案例；"
+    },
+    "scorecard": {
+      "relation": "continue",
+      "baselineTurnCount": 4,
+      "keptTurnCount": 3,
+      "evictedTurnCount": 1,
+      "pinCount": 0,
+      "baselinePromptEstimate": 104,
+      "shadowRawPromptEstimate": 93,
+      "shadowPackageEstimate": 88,
+      "rawReductionRatio": 0.086,
+      "packageReductionRatio": 0.1538,
+      "candidateLoadElapsedMs": 0,
+      "assemblyBuildElapsedMs": 0,
+      "decisionElapsedMs": 22577,
+      "totalElapsedMs": 22578,
+      "guardedEnabled": true,
+      "guardedApplied": false,
+      "guardedReason": "reduction_below_min",
+      "guardedMessageCount": 4,
+      "guardedCarryForwardEstimate": 0,
+      "guardedFilteredMessageEstimate": 93
+    },
+    "guarded": {
+      "enabled": true,
+      "applied": false,
+      "reason": "reduction_below_min",
+      "filteredMessages": [
+        {
+          "role": "user",
+          "content": "新的对话，也还是在umc项目里， 为什么context数据不对；"
+        },
+        {
+          "role": "user",
+          "content": "现在每一轮的context 已经能够正常gc了么"
+        },
+        {
+          "role": "assistant",
+          "content": "不是“每一轮都会压缩”，但现在看起来已经是“每一轮都会评估，满足条件就正常 GC 应用”。 这轮之所以没压，是因为这是新对话，抽出来的 turn 不够。代码里 `minTurns` 默认是 `3`，少于 3 就直接 `not_enough_turns`，见 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/cod…"
+        },
+        {
+          "role": "user",
+          "content": "那接下来 我要怎么测试 gc 在正常工作，并且明显做了选择，至少一个连续对话里，应该能够控制好 context的大小；或者换了换题之后 context应该减小； 你需要帮我设计一下案例；"
+        }
+      ],
+      "filteredMessageCount": 4,
+      "filteredMessageTokenEstimate": 93,
+      "carryForwardText": "",
+      "carryForwardEstimate": 0,
+      "evictedSourceIndices": []
+    },
+    "timings": {
+      "totalElapsedMs": 22578,
+      "decisionElapsedMs": 22577
+    },
+    "artifact_paths": {
+      "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da152-4841-76f2-adc4-b01a85d15a88-shadow-1776528424053-9bh2tn.json",
+      "summary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl"
+    }
+  }
+}

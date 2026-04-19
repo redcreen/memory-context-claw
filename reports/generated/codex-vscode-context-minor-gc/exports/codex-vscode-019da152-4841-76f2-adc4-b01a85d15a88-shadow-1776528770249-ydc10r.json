@@ -1,0 +1,226 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776528770249-ydc10r",
+  "generated_at": "2026-04-18T16:12:50.249Z",
+  "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+  "agent_id": "main",
+  "query": "[GC-A1] 以后默认给我中文，结论优先。",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "新的对话，也还是在umc项目里， 为什么context数据不对；"
+    },
+    {
+      "id": "t2",
+      "role": "user",
+      "content": "现在每一轮的context 已经能够正常gc了么"
+    },
+    {
+      "id": "t3",
+      "role": "assistant",
+      "content": "不是“每一轮都会压缩”，但现在看起来已经是“每一轮都会评估，满足条件就正常 GC 应用”。 这轮之所以没压，是因为这是新对话，抽出来的 turn 不够。代码里 `minTurns` 默认是 `3`，少于 3 就直接 `not_enough_turns`，见 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/cod…"
+    },
+    {
+      "id": "t4",
+      "role": "user",
+      "content": "那接下来 我要怎么测试 gc 在正常工作，并且明显做了选择，至少一个连续对话里，应该能够控制好 context的大小；或者换了换题之后 context应该减小； 你需要帮我设计一下案例；"
+    },
+    {
+      "id": "t5",
+      "role": "assistant",
+      "content": "可以，建议你分成两层测：`VS Code 手工验收` + `仓库脚本回放`。这样能同时回答两件事：一是“真实使用时 context 会不会被控制住”，二是“GC 的选择是不是符合设计”。 **先看什么** 每次都盯这几个信号就够了："
+    },
+    {
+      "id": "t6",
+      "role": "user",
+      "content": "需要； 我希望是直接在这个窗口来测试，可以么？"
+    },
+    {
+      "id": "t7",
+      "role": "assistant",
+      "content": "可以，直接在这个窗口测。 我已经加了手工验收文档：[codex-context-minor-gc-manual.zh-CN.md](/Users/redcreen/Project/unified-memory-core/docs/reference/unified-memory-core/testing/codex-context-minor-gc-manual.zh-CN.md)，并挂到了…"
+    },
+    {
+      "id": "t8",
+      "role": "user",
+      "content": "[GC-A1] 以后默认给我中文，结论优先。"
+    }
+  ],
+  "decision": {
+    "relation": "resolve",
+    "confidence": 0.96,
+    "evict_turn_ids": [
+      "t1",
+      "t2",
+      "t3",
+      "t4",
+      "t5",
+      "t6",
+      "t7"
+    ],
+    "pin_turn_ids": [
+      "t8"
+    ],
+    "archive_summary": "在 umc 项目里，先前话题围绕 Codex/VS Code context minor GC 是否按轮评估、何时触发、以及如何在当前窗口设计手工验收案例来验证连续对话与换题后的 context 收缩。该块当前已基本收束，可从下一轮原始提示中移除；如后续再谈 GC 测试，只需保留“此前讨论过 GC 工作机制与手工测试方案”这一背景即可。",
+    "reasoning_summary": "最新用户输入不是继续追问 GC，而是给出长期沟通偏好：默认中文、结论优先。这属于 durable preference，适合转为语义 pin。此前 GC 机制与测试方案话题没有在最新一轮继续推进，且当前没有明确未完成动作需要保留为原始上下文，因此用 resolve 最合适；下一轮只需保留该偏好 pin 和最新用户轮次。"
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "resolve",
+      "confidence": 0.96,
+      "archiveSummary": "在 umc 项目里，先前话题围绕 Codex/VS Code context minor GC 是否按轮评估、何时触发、以及如何在当前窗口设计手工验收案例来验证连续对话与换题后的 context 收缩。该块当前已基本收束，可从下一轮原始提示中移除；如后续再谈 GC 测试，只需保留“此前讨论过 GC 工作机制与手工测试方案”这一背景即可。",
+      "reasoningSummary": "最新用户输入不是继续追问 GC，而是给出长期沟通偏好：默认中文、结论优先。这属于 durable preference，适合转为语义 pin。此前 GC 机制与测试方案话题没有在最新一轮继续推进，且当前没有明确未完成动作需要保留为原始上下文，因此用 resolve 最合适；下一轮只需保留该偏好 pin 和最新用户轮次。",
+      "latestUserTurnId": "t8",
+      "pinTurnIds": [
+        "t8"
+      ],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7"
+      ],
+      "keepTurnIds": [
+        "t8"
+      ],
+      "baselineTokens": 184,
+      "keptTokens": 6,
+      "prunedTokens": 178,
+      "reductionRatio": 0.967391304347826,
+      "keepTurns": [
+        {
+          "id": "t8",
+          "role": "user",
+          "content": "[GC-A1] 以后默认给我中文，结论优先。",
+          "tokenEstimate": 6
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "新的对话，也还是在umc项目里， 为什么context数据不对；",
+          "tokenEstimate": 8
+        },
+        {
+          "id": "t2",
+          "role": "user",
+          "content": "现在每一轮的context 已经能够正常gc了么",
+          "tokenEstimate": 6
+        },
+        {
+          "id": "t3",
+          "role": "assistant",
+          "content": "不是“每一轮都会压缩”，但现在看起来已经是“每一轮都会评估，满足条件就正常 GC 应用”。 这轮之所以没压，是因为这是新对话，抽出来的 turn 不够。代码里 `minTurns` 默认是 `3`，少于 3 就直接 `not_enough_turns`，见 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/cod…",
+          "tokenEstimate": 55
+        },
+        {
+          "id": "t4",
+          "role": "user",
+          "content": "那接下来 我要怎么测试 gc 在正常工作，并且明显做了选择，至少一个连续对话里，应该能够控制好 context的大小；或者换了换题之后 context应该减小； 你需要帮我设计一下案例；",
+          "tokenEstimate": 24
+        },
+        {
+          "id": "t5",
+          "role": "assistant",
+          "content": "可以，建议你分成两层测：`VS Code 手工验收` + `仓库脚本回放`。这样能同时回答两件事：一是“真实使用时 context 会不会被控制住”，二是“GC 的选择是不是符合设计”。 **先看什么** 每次都盯这几个信号就够了：",
+          "tokenEstimate": 29
+        },
+        {
+          "id": "t6",
+          "role": "user",
+          "content": "需要； 我希望是直接在这个窗口来测试，可以么？",
+          "tokenEstimate": 6
+        },
+        {
+          "id": "t7",
+          "role": "assistant",
+          "content": "可以，直接在这个窗口测。 我已经加了手工验收文档：[codex-context-minor-gc-manual.zh-CN.md](/Users/redcreen/Project/unified-memory-core/docs/reference/unified-memory-core/testing/codex-context-minor-gc-manual.zh-CN.md)，并挂到了…",
+          "tokenEstimate": 50
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 新的对话，也还是在umc项目里， 为什么context数据不对；\nt2 user: 现在每一轮的context 已经能够正常gc了么\nt3 assistant: 不是“每一轮都会压缩”，但现在看起来已经是“每一轮都会评估，满足条件就正常 GC 应用”。 这轮之所以没压，是因为这是新对话，抽出来的 turn 不够。代码里 `minTurns` 默认是 `3`，少于 3 就直接 `not_enough_turns`，见 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/cod…\nt4 user: 那接下来 我要怎么测试 gc 在正常工作，并且明显做了选择，至少一个连续对话里，应该能够控制好 context的大小；或者换了换题之后 context应该减小； 你需要帮我设计一下案例；\nt5 assistant: 可以，建议你分成两层测：`VS Code 手工验收` + `仓库脚本回放`。这样能同时回答两件事：一是“真实使用时 context 会不会被控制住”，二是“GC 的选择是不是符合设计”。 **先看什么** 每次都盯这几个信号就够了：\nt6 user: 需要； 我希望是直接在这个窗口来测试，可以么？\nt7 assistant: 可以，直接在这个窗口测。 我已经加了手工验收文档：[codex-context-minor-gc-manual.zh-CN.md](/Users/redcreen/Project/unified-memory-core/docs/reference/unified-memory-core/testing/codex-context-minor-gc-manual.zh-CN.md)，并挂到了…\nt8 user: [GC-A1] 以后默认给我中文，结论优先。",
+    "shadowRawTranscript": "t8 user: [GC-A1] 以后默认给我中文，结论优先。",
+    "semanticPinNotes": [],
+    "archiveSummary": "在 umc 项目里，先前话题围绕 Codex/VS Code context minor GC 是否按轮评估、何时触发、以及如何在当前窗口设计手工验收案例来验证连续对话与换题后的 context 收缩。该块当前已基本收束，可从下一轮原始提示中移除；如后续再谈 GC 测试，只需保留“此前讨论过 GC 工作机制与手工测试方案”这一背景即可。",
+    "injectedArchiveSummary": "在 umc 项目里，先前话题围绕 Codex/VS Code context minor GC 是否按轮评估、何时触发、以及如何在当前窗口设计手工验收案例来验证连续对话与换题后的 contex...",
+    "baselinePromptEstimate": 206,
+    "shadowRawPromptEstimate": 8,
+    "shadowPackageEstimate": 58,
+    "shadowPackageText": "Task state summary:\n在 umc 项目里，先前话题围绕 Codex/VS Code context minor GC 是否按轮评估、何时触发、以及如何在当前窗口设计手工验收案例来验证连续对话与换题后的 context 收缩。该块当前已基本收束，可从下一轮原始提示中移除；如后续再谈 GC 测试，只需保留“此前讨论过 GC 工作机制与手工测试方案”这一背景即可。\n\nLatest user ask:\n- [GC-A1] 以后默认给我中文，结论优先。"
+  },
+  "scorecard": {
+    "relation": "resolve",
+    "baselineTurnCount": 8,
+    "keptTurnCount": 1,
+    "evictedTurnCount": 7,
+    "pinCount": 1,
+    "baselinePromptEstimate": 206,
+    "shadowRawPromptEstimate": 8,
+    "shadowPackageEstimate": 58,
+    "rawReductionRatio": 0.9674,
+    "packageReductionRatio": 0.7184,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 18028,
+    "totalElapsedMs": 18029,
+    "guardedEnabled": true,
+    "guardedApplied": true,
+    "guardedReason": "guarded_candidate",
+    "guardedMessageCount": 1,
+    "guardedCarryForwardEstimate": 31,
+    "guardedFilteredMessageEstimate": 6
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": true,
+    "reason": "guarded_candidate",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": "[GC-A1] 以后默认给我中文，结论优先。"
+      }
+    ],
+    "filteredMessageCount": 1,
+    "filteredMessageTokenEstimate": 6,
+    "carryForwardText": "Archived topic summary:\n在 umc 项目里，先前话题围绕 Codex/VS Code context minor GC 是否按轮评估、何时触发、以及如何在当前窗口设计手工验收案例来验证连续对话与换题后的 contex...",
+    "carryForwardEstimate": 31,
+    "evictedSourceIndices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ]
+  },
+  "timings": {
+    "totalElapsedMs": 18029,
+    "decisionElapsedMs": 18028
+  }
+}

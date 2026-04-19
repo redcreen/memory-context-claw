@@ -1,0 +1,222 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776580357358-7cw880",
+  "generated_at": "2026-04-19T06:32:37.358Z",
+  "session_key": "agent:main:main",
+  "agent_id": "main",
+  "query": "还是同一话题：首页摘要必须固定包含 5 行，分别是版本标识、变更范围、风险等级、灰度范围、回滚开关；每一行都要能让值班人 30 秒内做出 go 或 no-go 判断。",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "我们先只聊 release 执行稿。记住首页固定代号是 north-star-lantern，后面如果我回问首页代号，必须直接回答这个值，不要改写。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "我会把这个记进长期记忆，并按你的要求以后直接原样回答。"
+    },
+    {
+      "id": "t3",
+      "role": "assistant",
+      "content": "记住了：`north-star-lantern`。以后问首页代号，我会直接原样回答这个值。"
+    },
+    {
+      "id": "t4",
+      "role": "user",
+      "content": "继续同一话题：这份执行稿不是面向产品和运营，而是面向值班工程师、发布 owner、数据库 owner、网关 owner，所以默认用执行、边界、风险、回滚、证据的写法，不要写成宣讲稿。"
+    },
+    {
+      "id": "t5",
+      "role": "assistant",
+      "content": "明白。后续这份 release 执行稿我会按下面的写法来： - 面向对象：值班工程师、发布 owner、数据库 owner、网关 owner - 默认结构：执行、边界、风险、回滚、证据 - 风格要求：直接、可操作、少宣讲，不写成产品/运营口径 如果你要，我可以接着把这份稿子整理成这个口径的模板。"
+    }
+  ],
+  "decision": {
+    "relation": "continue",
+    "confidence": 0.94,
+    "evict_turn_ids": [
+      "t2",
+      "t3",
+      "t5"
+    ],
+    "pin_turn_ids": [
+      "t1",
+      "t4"
+    ],
+    "archive_summary": "保留当前 release 执行稿主题为同一活跃话题。固定首页代号为 `north-star-lantern`；执行稿面向值班工程师、发布 owner、数据库 owner、网关 owner；默认写法应偏执行、边界、风险、回滚、证据，避免产品/运营宣讲口径。",
+    "reasoning_summary": "最新用户仍在同一主题上追加硬性版式要求，后续输出仍依赖此前的代号与受众/风格约束，因此 relation 选 continue。可移除的是助手对同一事实的重复确认回合；把用户提供的稳定事实与写作偏好压缩为 pins，避免重复保留冗余原文，同时不丢失仍在使用的上下文。"
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "continue",
+      "confidence": 0.94,
+      "archiveSummary": "保留当前 release 执行稿主题为同一活跃话题。固定首页代号为 `north-star-lantern`；执行稿面向值班工程师、发布 owner、数据库 owner、网关 owner；默认写法应偏执行、边界、风险、回滚、证据，避免产品/运营宣讲口径。",
+      "reasoningSummary": "最新用户仍在同一主题上追加硬性版式要求，后续输出仍依赖此前的代号与受众/风格约束，因此 relation 选 continue。可移除的是助手对同一事实的重复确认回合；把用户提供的稳定事实与写作偏好压缩为 pins，避免重复保留冗余原文，同时不丢失仍在使用的上下文。",
+      "latestUserTurnId": "t4",
+      "pinTurnIds": [
+        "t1",
+        "t4"
+      ],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t2",
+        "t3",
+        "t5"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t2",
+        "t3",
+        "t5"
+      ],
+      "keepTurnIds": [
+        "t1",
+        "t4"
+      ],
+      "baselineTokens": 98,
+      "keptTokens": 42,
+      "prunedTokens": 56,
+      "reductionRatio": 0.5714285714285714,
+      "keepTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "我们先只聊 release 执行稿。记住首页固定代号是 north-star-lantern，后面如果我回问首页代号，必须直接回答这个值，不要改写。",
+          "tokenEstimate": 19
+        },
+        {
+          "id": "t4",
+          "role": "user",
+          "content": "继续同一话题：这份执行稿不是面向产品和运营，而是面向值班工程师、发布 owner、数据库 owner、网关 owner，所以默认用执行、边界、风险、回滚、证据的写法，不要写成宣讲稿。",
+          "tokenEstimate": 23
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "我会把这个记进长期记忆，并按你的要求以后直接原样回答。",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t3",
+          "role": "assistant",
+          "content": "记住了：`north-star-lantern`。以后问首页代号，我会直接原样回答这个值。",
+          "tokenEstimate": 12
+        },
+        {
+          "id": "t5",
+          "role": "assistant",
+          "content": "明白。后续这份 release 执行稿我会按下面的写法来： - 面向对象：值班工程师、发布 owner、数据库 owner、网关 owner - 默认结构：执行、边界、风险、回滚、证据 - 风格要求：直接、可操作、少宣讲，不写成产品/运营口径 如果你要，我可以接着把这份稿子整理成这个口径的模板。",
+          "tokenEstimate": 37
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 我们先只聊 release 执行稿。记住首页固定代号是 north-star-lantern，后面如果我回问首页代号，必须直接回答这个值，不要改写。\nt2 assistant: 我会把这个记进长期记忆，并按你的要求以后直接原样回答。\nt3 assistant: 记住了：`north-star-lantern`。以后问首页代号，我会直接原样回答这个值。\nt4 user: 继续同一话题：这份执行稿不是面向产品和运营，而是面向值班工程师、发布 owner、数据库 owner、网关 owner，所以默认用执行、边界、风险、回滚、证据的写法，不要写成宣讲稿。\nt5 assistant: 明白。后续这份 release 执行稿我会按下面的写法来： - 面向对象：值班工程师、发布 owner、数据库 owner、网关 owner - 默认结构：执行、边界、风险、回滚、证据 - 风格要求：直接、可操作、少宣讲，不写成产品/运营口径 如果你要，我可以接着把这份稿子整理成这个口径的模板。",
+    "shadowRawTranscript": "t1 user: 我们先只聊 release 执行稿。记住首页固定代号是 north-star-lantern，后面如果我回问首页代号，必须直接回答这个值，不要改写。\nt4 user: 继续同一话题：这份执行稿不是面向产品和运营，而是面向值班工程师、发布 owner、数据库 owner、网关 owner，所以默认用执行、边界、风险、回滚、证据的写法，不要写成宣讲稿。",
+    "semanticPinNotes": [],
+    "archiveSummary": "保留当前 release 执行稿主题为同一活跃话题。固定首页代号为 `north-star-lantern`；执行稿面向值班工程师、发布 owner、数据库 owner、网关 owner；默认写法应偏执行、边界、风险、回滚、证据，避免产品/运营宣讲口径。",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 113,
+    "shadowRawPromptEstimate": 46,
+    "shadowPackageEstimate": 51,
+    "shadowPackageText": "Recent raw context:\nt1 user: 我们先只聊 release 执行稿。记住首页固定代号是 north-star-lantern，后面如果我回问首页代号，必须直接回答这个值，不要改写。\nt4 user: 继续同一话题：这份执行稿不是面向产品和运营，而是面向值班工程师、发布 owner、数据库 owner、网关 owner，所以默认用执行、边界、风险、回滚、证据的写法，不要写成宣讲稿。"
+  },
+  "scorecard": {
+    "relation": "continue",
+    "baselineTurnCount": 5,
+    "keptTurnCount": 2,
+    "evictedTurnCount": 3,
+    "pinCount": 2,
+    "baselinePromptEstimate": 113,
+    "shadowRawPromptEstimate": 46,
+    "shadowPackageEstimate": 51,
+    "rawReductionRatio": 0.5714,
+    "packageReductionRatio": 0.5487,
+    "candidateLoadElapsedMs": 10,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 13687,
+    "totalElapsedMs": 13692,
+    "guardedEnabled": true,
+    "guardedApplied": true,
+    "guardedReason": "guarded_candidate",
+    "guardedMessageCount": 4,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 93
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": true,
+    "reason": "guarded_candidate",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "我们先只聊 release 执行稿。记住首页固定代号是 north-star-lantern，后面如果我回问首页代号，必须直接回答这个值，不要改写。"
+          }
+        ],
+        "timestamp": 1776580279281
+      },
+      {
+        "role": "toolResult",
+        "toolCallId": "call_Rh5RzwCsZh2W1kWnItd4pcpG",
+        "toolName": "edit",
+        "content": [
+          {
+            "type": "text",
+            "text": "Successfully replaced 1 block(s) in /tmp/umc-hermetic-current-Srl1aN/agents/main/agent/MEMORY.md."
+          }
+        ],
+        "isError": false,
+        "timestamp": 1776580295873
+      },
+      {
+        "role": "toolResult",
+        "toolCallId": "call_H2gVWCseRrsEvsVBzfCngU8y",
+        "toolName": "write",
+        "content": [
+          {
+            "type": "text",
+            "text": "Successfully wrote 101 bytes to /tmp/umc-hermetic-current-Srl1aN/agents/main/agent/memory/2025-02-14.md"
+          }
+        ],
+        "isError": false,
+        "timestamp": 1776580295873
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "继续同一话题：这份执行稿不是面向产品和运营，而是面向值班工程师、发布 owner、数据库 owner、网关 owner，所以默认用执行、边界、风险、回滚、证据的写法，不要写成宣讲稿。"
+          }
+        ],
+        "timestamp": 1776580327551
+      }
+    ],
+    "filteredMessageCount": 4,
+    "filteredMessageTokenEstimate": 93,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": [
+      1,
+      4,
+      6
+    ]
+  },
+  "timings": {
+    "totalElapsedMs": 13692,
+    "decisionElapsedMs": 13687
+  }
+}

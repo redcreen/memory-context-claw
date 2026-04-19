@@ -1,0 +1,115 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776577207644-okz4js",
+  "generated_at": "2026-04-19T05:40:07.644Z",
+  "session_key": "codex:vscode:019da335-a070-7972-b61e-6ba3a73ff633",
+  "agent_id": "main",
+  "query": "继续，知道 Stage 11 真正收口 （codex部分先忽略掉）",
+  "status": "skipped",
+  "reason": "explicit_continue_marker",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "需要给我默认安装，尽量少配置，说明文档可以把可能的配置项说清楚；"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "继续做了，这轮专门压 `t8` 这种“第一次切题问答”的回答阶段时延。 我做的事： - 对显式 `switch` 首轮，除了跳过 retrieval 之外，再加一个瞬时回答约束： - 只答新话题 - 更直接 - 更短 - 不复述旧话题"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "需要给我默认安装，尽量少配置，说明文档可以把可能的配置项说清楚； =》做完了么？ 做完了的话，就安装好，我要开始使用了；"
+    },
+    {
+      "id": "t4",
+      "role": "user",
+      "content": "最好你打一些日志，方便你查看问题；"
+    },
+    {
+      "id": "t5",
+      "role": "assistant",
+      "content": "已经加上了，而且这轮也按流程做完了。 我加的是**可控调试日志**，默认不会打爆普通使用；要排查问题时再开。日志覆盖这些关键点： - shadow sampling 是否被跳过，以及原因 - 是否命中 `heuristic_switch` - 是否命中 `heuristic_continue_after_switch` - 是否命中 `explicit_continue_marker` - 是否跳过 retrieval fast…"
+    },
+    {
+      "id": "t6",
+      "role": "user",
+      "content": "你在docker里做一下测试，最好可以context大一些，多轮对话后验证是否会有明显效果；"
+    },
+    {
+      "id": "t7",
+      "role": "user",
+      "content": "Stage 11 能收口了么？ 还是还没有完成？"
+    },
+    {
+      "id": "t8",
+      "role": "assistant",
+      "content": "还**不能正式收口**。 更准确地说："
+    },
+    {
+      "id": "t9",
+      "role": "user",
+      "content": "继续，知道 Stage 11 收口"
+    },
+    {
+      "id": "t10",
+      "role": "assistant",
+      "content": "还**不能正式收口**。 原因很明确，`Stage 11` 现在卡的不是 OpenClaw 主线，而是“用户体感收口”这条总标准还没同时满足两侧："
+    },
+    {
+      "id": "t11",
+      "role": "user",
+      "content": "继续，知道 Stage 11 真正收口"
+    },
+    {
+      "id": "t12",
+      "role": "user",
+      "content": "继续，知道 Stage 11 真正收口 （codex部分先忽略掉）"
+    }
+  ],
+  "decision": null,
+  "decision_transport": "",
+  "snapshot": null,
+  "scorecard": {
+    "relation": "",
+    "baselineTurnCount": 12,
+    "keptTurnCount": 0,
+    "evictedTurnCount": 0,
+    "pinCount": 0,
+    "baselinePromptEstimate": 0,
+    "shadowRawPromptEstimate": 0,
+    "shadowPackageEstimate": 0,
+    "rawReductionRatio": 0,
+    "packageReductionRatio": 0,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 0,
+    "totalElapsedMs": 1,
+    "guardedEnabled": true,
+    "guardedApplied": false,
+    "guardedReason": "not_evaluated",
+    "guardedMessageCount": 12,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 0
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": false,
+    "reason": "not_evaluated",
+    "filteredMessageCount": 12,
+    "filteredMessageTokenEstimate": 0,
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 1,
+    "decisionElapsedMs": 0
+  }
+}

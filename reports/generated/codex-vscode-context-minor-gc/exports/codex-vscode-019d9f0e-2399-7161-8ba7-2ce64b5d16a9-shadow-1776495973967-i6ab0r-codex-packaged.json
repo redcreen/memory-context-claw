@@ -1,0 +1,144 @@
+{
+  "schema_version": "umc.codex-context-minor-gc.v1",
+  "generated_at": "2026-04-18T07:06:14.015Z",
+  "event_id": "shadow-1776495973967-i6ab0r-codex-packaged",
+  "session_key": "codex:vscode:019d9f0e-2399-7161-8ba7-2ce64b5d16a9",
+  "query": "另外，你的context也需要注意，每个模型的上下文大小有限制，你最大不能超过这个context的 90%； todo",
+  "status": "error",
+  "reason": "Error: no structured decision transport succeeded (codex_exec: codex exec exited with code 101)",
+  "decision_transport": "",
+  "relation": "",
+  "applied": false,
+  "codex_guard_reason": "not_enough_evictions",
+  "prompt_reduction_ratio": 0,
+  "baseline_context_estimate": 1061,
+  "packaged_context_estimate": 1061,
+  "effective_context_estimate": 1061,
+  "shadow_status": "error",
+  "shadow_guarded_applied": false,
+  "shadow_guarded_reason": "not_evaluated",
+  "shadow_export_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019d9f0e-2399-7161-8ba7-2ce64b5d16a9-shadow-1776495973967-i6ab0r.json",
+  "shadow_summary_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl",
+  "export_path": "exports/codex-vscode-019d9f0e-2399-7161-8ba7-2ce64b5d16a9-shadow-1776495973967-i6ab0r-codex-packaged.json",
+  "effective_context_block": "## Recent Conversation Context\nt1 assistant: 是，这按产品直觉算是个真实问题，但更准确地说，是“我们这层 GC 默认策略过于保守”，不是“系统完全没有 GC”。 - 宿主层的 Codex 已经在做原生 compaction。OpenAI 官方说明过：Codex 在上下文逼近阈值后，会把先前的 `input` 替换成更小的一组 items 继续对话，而不是把 UI 里那一整坨原样继续发出去。来源：OpenAI 官方《Unrolling the Codex agent loop》 https://openai.com/pt-BR/index/unrolling-the-codex-agent-loop/ - 项目层的 UMC GC 这边，当前确实存在“看得到潜在收益，但经常不实际落地”的问题。我刚对你这条消息跑了最新一轮，[latest export](/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019d9f0e-2399-7161-8ba7-2ce64b5d16a9-shadow-1776492790962-n6nc98.json:1) 显示： `baselineContextEstimate=1277` `packagedContextEstimate=786` 理论可降约 `38.7%` 但 `relation=continue`、`guarded_applied=false` 所以最终 `effectiveContextEstimate` 还是 `1277` 这和代码一致：当前默认只允许 `switch` / `resolve` 才真正 apply，[src/codex-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/codex-context-minor-gc.js:125)；否则就回退 baseline，[src/codex-cont...\nt2 user: 认可；继续\nt3 assistant: 已经继续做完了。repo 级 VS Code GC 现在不再把 `continue` 挡在门外，而且运维面也补成了“看最终结果”而不是只看原始 shadow。 关键改动在 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/codex-vscode-context-minor-gc.js:260) 和 [src/codex-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/codex-context-minor-gc.js:134)。前者把 VS Code 这条默认 guarded 关系放宽到 `[\"switch\",\"resolve\",\"continue\"]`，后者新增了 Codex 最终落盘 telemetry/export，[src/codex-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/codex-context-minor-gc.js:163) [src/codex-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/codex-context-minor-gc.js:379)。测试也补了，[test/codex-context-minor-gc.test.js](/Users/redcreen/Project/unified-memory-core/test/codex-context-minor-gc.test.js:9) 和 [test/codex-vscode-context-minor-gc.test.js](/Users/redcreen/Project/unified-memory-core/test/codex-vscode-context-minor-gc...\nt4 user: 你在检查下，生效了没？ 然后简明扼要的和我讲清楚；\nt5 assistant: 生效了。 我刚按你这条消息实时重跑了一次，结果是： - `applied=true` - `relation=continue` - `baselineContextEstimate=1459` - `effectiveContextEstimate=512` - `promptReductionRatio=0.6491` 这表示：这次不是只做判定，而是真的把这个项目层要发送的 UMC context 压缩了，降幅大约 `64.9%`。最终结果已经写进 [codex-telemetry.jsonl](/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/codex-telemetry.jsonl:1)，当前这轮 export 在 [codex-packaged.json](/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019d9f0e-2399-7161-8ba7-2ce64b5d16a9-shadow-1776494688463-hsq5tw-codex-packaged.json:1)。 一句话总结：`VS Code 这个项目里的 Codex GC 现在已经实际生效，不再只是 shadow 记录。`\nt6 user: 你给的这两个文件我看不懂， 你帮我单独生成一个临时中文文档，结合你说的json文件，讲清楚现在的逻辑； （同时可否在每次回复中加入一个当前发送的context大小，这样更加直观的知道）\nt7 assistant: 已经检查，生效了。 这次最新实跑结果是： - `applied=true` - 裁剪前约 `1415 tokens` - 裁剪后约 `446 tokens` - 实际减少约 `68.5%` 我也单独给你生成了一份中文临时说明文档，直接对照现在的 `json` 文件解释逻辑，文档在这里： [临时说明-当前GC逻辑-2026-04-18.zh-CN.md](</Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/临时说明-当前GC逻辑-2026-04-18.zh-CN.md:1>) 另外，“每次回复带当前发送 context 大小”这件事我也加了 repo 级默认约定。以后在这个项目里，我会尽量在回复最后附上一行当前项目层 context 摘要。这个数是“项目层 UMC context 的估算值”，不是 VS Code 右下角那个宿主总 context。 当前项目层 Context(估算): 446 / 1415 tokens，已裁剪 68.5%\nt8 user: 那能否在我每次对话的时候，我都能显示的知道，a/o a表示实际发送的context大小，o表示原有逻辑发送的context大小； o正常应该是和图里的保持一致的； 同时告知我压缩比，用人类可读的方式来显示； 而不是通过tail，但在哪里显示我不清楚怎么样更好；\nt9 user: 另外，你的context也需要注意，每个模型的上下文大小有限制，你最大不能超过这个context的 90%； todo\nt10 assistant: 可以，已经做了。 - 显示位置我定成“每次回复的最后一行 footer”，这是这个仓库里最稳妥的方案；直接改 VS Code 原生那个 context 气泡，这个仓库做不到。 - 我现在会同时显示两层：`宿主层 a/o` 和 `项目层 a/o`。实现放在 `src/codex-vscode-context-minor-gc.js:78`、`src/codex-vscode-context-minor-gc.js:402`，repo 级默认约定在 `AGENTS.md:19`。 - `宿主层 a` 是当前实际发送给 Codex 宿主的大盘子 context 估算；`宿主层 o` 是按“如果没有 UMC GC，本轮原逻辑会多发多少”推算出来的原始值，所以它应当大致贴近你截图那类数字。 - `项目层 a/o` 只看 UMC 自己这块 working set，能更直观看到我们这层到底压了多少。 - 中文说明文档我也补好了，在 `reports/generated/codex-vscode-context-minor-gc/临时说明-当前GC逻辑-2026-04-18.zh-CN.md:1`。测试已过，`4/4` 通过。 宿主层 a/o: 211k / 212k，压缩 0.4%，窗口 258k；项目层 a/o: 253 / 1145，压缩 77.9%\nt11 user: 你在运行过程汇总，这个compat 可能还是会不断增大，然后会进入 停止所有工作等待compact，但是现在gc 实际发送的数据已经不需要做这个compat了， 这里就出现了一个矛盾；本来不需要compact，但实际做了compact； 并且不出意外，这个compact 马上就要发生了，我又要等了， 怎么解决这个问题；\nt12 user: 另外，你的context也需要注意，每个模型的上下文大小有限制，你最大不能超过这个context的 90%； todo",
+  "packaged_context_block": "## Recent Conversation Context\nt1 assistant: 是，这按产品直觉算是个真实问题，但更准确地说，是“我们这层 GC 默认策略过于保守”，不是“系统完全没有 GC”。 - 宿主层的 Codex 已经在做原生 compaction。OpenAI 官方说明过：Codex 在上下文逼近阈值后，会把先前的 `input` 替换成更小的一组 items 继续对话，而不是把 UI 里那一整坨原样继续发出去。来源：OpenAI 官方《Unrolling the Codex agent loop》 https://openai.com/pt-BR/index/unrolling-the-codex-agent-loop/ - 项目层的 UMC GC 这边，当前确实存在“看得到潜在收益，但经常不实际落地”的问题。我刚对你这条消息跑了最新一轮，[latest export](/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019d9f0e-2399-7161-8ba7-2ce64b5d16a9-shadow-1776492790962-n6nc98.json:1) 显示： `baselineContextEstimate=1277` `packagedContextEstimate=786` 理论可降约 `38.7%` 但 `relation=continue`、`guarded_applied=false` 所以最终 `effectiveContextEstimate` 还是 `1277` 这和代码一致：当前默认只允许 `switch` / `resolve` 才真正 apply，[src/codex-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/codex-context-minor-gc.js:125)；否则就回退 baseline，[src/codex-cont...\nt2 user: 认可；继续\nt3 assistant: 已经继续做完了。repo 级 VS Code GC 现在不再把 `continue` 挡在门外，而且运维面也补成了“看最终结果”而不是只看原始 shadow。 关键改动在 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/codex-vscode-context-minor-gc.js:260) 和 [src/codex-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/codex-context-minor-gc.js:134)。前者把 VS Code 这条默认 guarded 关系放宽到 `[\"switch\",\"resolve\",\"continue\"]`，后者新增了 Codex 最终落盘 telemetry/export，[src/codex-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/codex-context-minor-gc.js:163) [src/codex-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/codex-context-minor-gc.js:379)。测试也补了，[test/codex-context-minor-gc.test.js](/Users/redcreen/Project/unified-memory-core/test/codex-context-minor-gc.test.js:9) 和 [test/codex-vscode-context-minor-gc.test.js](/Users/redcreen/Project/unified-memory-core/test/codex-vscode-context-minor-gc...\nt4 user: 你在检查下，生效了没？ 然后简明扼要的和我讲清楚；\nt5 assistant: 生效了。 我刚按你这条消息实时重跑了一次，结果是： - `applied=true` - `relation=continue` - `baselineContextEstimate=1459` - `effectiveContextEstimate=512` - `promptReductionRatio=0.6491` 这表示：这次不是只做判定，而是真的把这个项目层要发送的 UMC context 压缩了，降幅大约 `64.9%`。最终结果已经写进 [codex-telemetry.jsonl](/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/codex-telemetry.jsonl:1)，当前这轮 export 在 [codex-packaged.json](/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019d9f0e-2399-7161-8ba7-2ce64b5d16a9-shadow-1776494688463-hsq5tw-codex-packaged.json:1)。 一句话总结：`VS Code 这个项目里的 Codex GC 现在已经实际生效，不再只是 shadow 记录。`\nt6 user: 你给的这两个文件我看不懂， 你帮我单独生成一个临时中文文档，结合你说的json文件，讲清楚现在的逻辑； （同时可否在每次回复中加入一个当前发送的context大小，这样更加直观的知道）\nt7 assistant: 已经检查，生效了。 这次最新实跑结果是： - `applied=true` - 裁剪前约 `1415 tokens` - 裁剪后约 `446 tokens` - 实际减少约 `68.5%` 我也单独给你生成了一份中文临时说明文档，直接对照现在的 `json` 文件解释逻辑，文档在这里： [临时说明-当前GC逻辑-2026-04-18.zh-CN.md](</Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/临时说明-当前GC逻辑-2026-04-18.zh-CN.md:1>) 另外，“每次回复带当前发送 context 大小”这件事我也加了 repo 级默认约定。以后在这个项目里，我会尽量在回复最后附上一行当前项目层 context 摘要。这个数是“项目层 UMC context 的估算值”，不是 VS Code 右下角那个宿主总 context。 当前项目层 Context(估算): 446 / 1415 tokens，已裁剪 68.5%\nt8 user: 那能否在我每次对话的时候，我都能显示的知道，a/o a表示实际发送的context大小，o表示原有逻辑发送的context大小； o正常应该是和图里的保持一致的； 同时告知我压缩比，用人类可读的方式来显示； 而不是通过tail，但在哪里显示我不清楚怎么样更好；\nt9 user: 另外，你的context也需要注意，每个模型的上下文大小有限制，你最大不能超过这个context的 90%； todo\nt10 assistant: 可以，已经做了。 - 显示位置我定成“每次回复的最后一行 footer”，这是这个仓库里最稳妥的方案；直接改 VS Code 原生那个 context 气泡，这个仓库做不到。 - 我现在会同时显示两层：`宿主层 a/o` 和 `项目层 a/o`。实现放在 `src/codex-vscode-context-minor-gc.js:78`、`src/codex-vscode-context-minor-gc.js:402`，repo 级默认约定在 `AGENTS.md:19`。 - `宿主层 a` 是当前实际发送给 Codex 宿主的大盘子 context 估算；`宿主层 o` 是按“如果没有 UMC GC，本轮原逻辑会多发多少”推算出来的原始值，所以它应当大致贴近你截图那类数字。 - `项目层 a/o` 只看 UMC 自己这块 working set，能更直观看到我们这层到底压了多少。 - 中文说明文档我也补好了，在 `reports/generated/codex-vscode-context-minor-gc/临时说明-当前GC逻辑-2026-04-18.zh-CN.md:1`。测试已过，`4/4` 通过。 宿主层 a/o: 211k / 212k，压缩 0.4%，窗口 258k；项目层 a/o: 253 / 1145，压缩 77.9%\nt11 user: 你在运行过程汇总，这个compat 可能还是会不断增大，然后会进入 停止所有工作等待compact，但是现在gc 实际发送的数据已经不需要做这个compat了， 这里就出现了一个矛盾；本来不需要compact，但实际做了compact； 并且不出意外，这个compact 马上就要发生了，我又要等了， 怎么解决这个问题；\nt12 user: 另外，你的context也需要注意，每个模型的上下文大小有限制，你最大不能超过这个context的 90%； todo",
+  "shadow_event": {
+    "schema_version": "umc.dialogue-working-set-shadow.v1",
+    "event_id": "shadow-1776495973967-i6ab0r",
+    "generated_at": "2026-04-18T07:06:13.968Z",
+    "session_key": "codex:vscode:019d9f0e-2399-7161-8ba7-2ce64b5d16a9",
+    "agent_id": "main",
+    "query": "另外，你的context也需要注意，每个模型的上下文大小有限制，你最大不能超过这个context的 90%； todo",
+    "status": "error",
+    "reason": "Error: no structured decision transport succeeded (codex_exec: codex exec exited with code 101)",
+    "sampling": {
+      "max_turns": 12,
+      "min_turns": 3,
+      "max_chars_per_turn": 900
+    },
+    "transcript": [
+      {
+        "id": "t1",
+        "role": "assistant",
+        "content": "是，这按产品直觉算是个真实问题，但更准确地说，是“我们这层 GC 默认策略过于保守”，不是“系统完全没有 GC”。 - 宿主层的 Codex 已经在做原生 compaction。OpenAI 官方说明过：Codex 在上下文逼近阈值后，会把先前的 `input` 替换成更小的一组 items 继续对话，而不是把 UI 里那一整坨原样继续发出去。来源：OpenAI 官方《Unrolling the Codex agent loop》 https://openai.com/pt-BR/index/unrolling-the-codex-agent-loop/ - 项目层的 UMC GC 这边，当前确实存在“看得到潜在收益，但经常不实际落地”的问题。我刚对你这条消息跑了最新一轮，[latest export](/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019d9f0e-2399-7161-8ba7-2ce64b5d16a9-shadow-1776492790962-n6nc98.json:1) 显示： `baselineContextEstimate=1277` `packagedContextEstimate=786` 理论可降约 `38.7%` 但 `relation=continue`、`guarded_applied=false` 所以最终 `effectiveContextEstimate` 还是 `1277` 这和代码一致：当前默认只允许 `switch` / `resolve` 才真正 apply，[src/codex-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/codex-context-minor-gc.js:125)；否则就回退 baseline，[src/codex-cont..."
+      },
+      {
+        "id": "t2",
+        "role": "user",
+        "content": "认可；继续"
+      },
+      {
+        "id": "t3",
+        "role": "assistant",
+        "content": "已经继续做完了。repo 级 VS Code GC 现在不再把 `continue` 挡在门外，而且运维面也补成了“看最终结果”而不是只看原始 shadow。 关键改动在 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/codex-vscode-context-minor-gc.js:260) 和 [src/codex-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/codex-context-minor-gc.js:134)。前者把 VS Code 这条默认 guarded 关系放宽到 `[\"switch\",\"resolve\",\"continue\"]`，后者新增了 Codex 最终落盘 telemetry/export，[src/codex-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/codex-context-minor-gc.js:163) [src/codex-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/codex-context-minor-gc.js:379)。测试也补了，[test/codex-context-minor-gc.test.js](/Users/redcreen/Project/unified-memory-core/test/codex-context-minor-gc.test.js:9) 和 [test/codex-vscode-context-minor-gc.test.js](/Users/redcreen/Project/unified-memory-core/test/codex-vscode-context-minor-gc..."
+      },
+      {
+        "id": "t4",
+        "role": "user",
+        "content": "你在检查下，生效了没？ 然后简明扼要的和我讲清楚；"
+      },
+      {
+        "id": "t5",
+        "role": "assistant",
+        "content": "生效了。 我刚按你这条消息实时重跑了一次，结果是： - `applied=true` - `relation=continue` - `baselineContextEstimate=1459` - `effectiveContextEstimate=512` - `promptReductionRatio=0.6491` 这表示：这次不是只做判定，而是真的把这个项目层要发送的 UMC context 压缩了，降幅大约 `64.9%`。最终结果已经写进 [codex-telemetry.jsonl](/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/codex-telemetry.jsonl:1)，当前这轮 export 在 [codex-packaged.json](/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019d9f0e-2399-7161-8ba7-2ce64b5d16a9-shadow-1776494688463-hsq5tw-codex-packaged.json:1)。 一句话总结：`VS Code 这个项目里的 Codex GC 现在已经实际生效，不再只是 shadow 记录。`"
+      },
+      {
+        "id": "t6",
+        "role": "user",
+        "content": "你给的这两个文件我看不懂， 你帮我单独生成一个临时中文文档，结合你说的json文件，讲清楚现在的逻辑； （同时可否在每次回复中加入一个当前发送的context大小，这样更加直观的知道）"
+      },
+      {
+        "id": "t7",
+        "role": "assistant",
+        "content": "已经检查，生效了。 这次最新实跑结果是： - `applied=true` - 裁剪前约 `1415 tokens` - 裁剪后约 `446 tokens` - 实际减少约 `68.5%` 我也单独给你生成了一份中文临时说明文档，直接对照现在的 `json` 文件解释逻辑，文档在这里： [临时说明-当前GC逻辑-2026-04-18.zh-CN.md](</Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/临时说明-当前GC逻辑-2026-04-18.zh-CN.md:1>) 另外，“每次回复带当前发送 context 大小”这件事我也加了 repo 级默认约定。以后在这个项目里，我会尽量在回复最后附上一行当前项目层 context 摘要。这个数是“项目层 UMC context 的估算值”，不是 VS Code 右下角那个宿主总 context。 当前项目层 Context(估算): 446 / 1415 tokens，已裁剪 68.5%"
+      },
+      {
+        "id": "t8",
+        "role": "user",
+        "content": "那能否在我每次对话的时候，我都能显示的知道，a/o a表示实际发送的context大小，o表示原有逻辑发送的context大小； o正常应该是和图里的保持一致的； 同时告知我压缩比，用人类可读的方式来显示； 而不是通过tail，但在哪里显示我不清楚怎么样更好；"
+      },
+      {
+        "id": "t9",
+        "role": "user",
+        "content": "另外，你的context也需要注意，每个模型的上下文大小有限制，你最大不能超过这个context的 90%； todo"
+      },
+      {
+        "id": "t10",
+        "role": "assistant",
+        "content": "可以，已经做了。 - 显示位置我定成“每次回复的最后一行 footer”，这是这个仓库里最稳妥的方案；直接改 VS Code 原生那个 context 气泡，这个仓库做不到。 - 我现在会同时显示两层：`宿主层 a/o` 和 `项目层 a/o`。实现放在 `src/codex-vscode-context-minor-gc.js:78`、`src/codex-vscode-context-minor-gc.js:402`，repo 级默认约定在 `AGENTS.md:19`。 - `宿主层 a` 是当前实际发送给 Codex 宿主的大盘子 context 估算；`宿主层 o` 是按“如果没有 UMC GC，本轮原逻辑会多发多少”推算出来的原始值，所以它应当大致贴近你截图那类数字。 - `项目层 a/o` 只看 UMC 自己这块 working set，能更直观看到我们这层到底压了多少。 - 中文说明文档我也补好了，在 `reports/generated/codex-vscode-context-minor-gc/临时说明-当前GC逻辑-2026-04-18.zh-CN.md:1`。测试已过，`4/4` 通过。 宿主层 a/o: 211k / 212k，压缩 0.4%，窗口 258k；项目层 a/o: 253 / 1145，压缩 77.9%"
+      },
+      {
+        "id": "t11",
+        "role": "user",
+        "content": "你在运行过程汇总，这个compat 可能还是会不断增大，然后会进入 停止所有工作等待compact，但是现在gc 实际发送的数据已经不需要做这个compat了， 这里就出现了一个矛盾；本来不需要compact，但实际做了compact； 并且不出意外，这个compact 马上就要发生了，我又要等了， 怎么解决这个问题；"
+      },
+      {
+        "id": "t12",
+        "role": "user",
+        "content": "另外，你的context也需要注意，每个模型的上下文大小有限制，你最大不能超过这个context的 90%； todo"
+      }
+    ],
+    "decision": null,
+    "decision_transport": "",
+    "snapshot": null,
+    "scorecard": {
+      "relation": "",
+      "baselineTurnCount": 12,
+      "keptTurnCount": 0,
+      "evictedTurnCount": 0,
+      "pinCount": 0,
+      "baselinePromptEstimate": 0,
+      "shadowRawPromptEstimate": 0,
+      "shadowPackageEstimate": 0,
+      "rawReductionRatio": 0,
+      "packageReductionRatio": 0,
+      "candidateLoadElapsedMs": 0,
+      "assemblyBuildElapsedMs": 0,
+      "decisionElapsedMs": 0,
+      "totalElapsedMs": 47,
+      "guardedEnabled": true,
+      "guardedApplied": false,
+      "guardedReason": "not_evaluated",
+      "guardedMessageCount": 25,
+      "guardedCarryForwardEstimate": 0,
+      "guardedFilteredMessageEstimate": 0
+    },
+    "guarded": {
+      "enabled": true,
+      "applied": false,
+      "reason": "not_evaluated",
+      "filteredMessageCount": 25,
+      "filteredMessageTokenEstimate": 0,
+      "carryForwardEstimate": 0,
+      "evictedSourceIndices": []
+    },
+    "timings": {
+      "totalElapsedMs": 47,
+      "decisionElapsedMs": 0
+    },
+    "artifact_paths": {
+      "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019d9f0e-2399-7161-8ba7-2ce64b5d16a9-shadow-1776495973967-i6ab0r.json",
+      "summary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl"
+    }
+  }
+}

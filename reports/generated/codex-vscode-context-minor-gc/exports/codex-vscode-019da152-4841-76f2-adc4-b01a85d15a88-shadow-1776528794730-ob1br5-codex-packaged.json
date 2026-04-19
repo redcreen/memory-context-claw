@@ -1,0 +1,309 @@
+{
+  "schema_version": "umc.codex-context-minor-gc.v1",
+  "generated_at": "2026-04-18T16:13:38.817Z",
+  "event_id": "shadow-1776528794730-ob1br5-codex-packaged",
+  "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+  "query": "[GC-A1] 再记一下：我坐飞机喜欢靠过道。",
+  "status": "captured",
+  "reason": "",
+  "decision_transport": "codex_exec",
+  "relation": "branch",
+  "applied": false,
+  "codex_guard_reason": "relation_not_allowed",
+  "prompt_reduction_ratio": 0,
+  "baseline_context_estimate": 263,
+  "packaged_context_estimate": 90,
+  "effective_context_estimate": 263,
+  "shadow_status": "captured",
+  "shadow_guarded_applied": false,
+  "shadow_guarded_reason": "relation_not_allowed",
+  "shadow_export_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da152-4841-76f2-adc4-b01a85d15a88-shadow-1776528794730-ob1br5.json",
+  "shadow_summary_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl",
+  "export_path": "exports/codex-vscode-019da152-4841-76f2-adc4-b01a85d15a88-shadow-1776528794730-ob1br5-codex-packaged.json",
+  "effective_context_block": "## Recent Conversation Context\nt1 user: 新的对话，也还是在umc项目里， 为什么context数据不对；\nt2 user: 现在每一轮的context 已经能够正常gc了么\nt3 assistant: 不是“每一轮都会压缩”，但现在看起来已经是“每一轮都会评估，满足条件就正常 GC 应用”。 这轮之所以没压，是因为这是新对话，抽出来的 turn 不够。代码里 `minTurns` 默认是 `3`，少于 3 就直接 `not_enough_turns`，见 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/cod…\nt4 user: 那接下来 我要怎么测试 gc 在正常工作，并且明显做了选择，至少一个连续对话里，应该能够控制好 context的大小；或者换了换题之后 context应该减小； 你需要帮我设计一下案例；\nt5 assistant: 可以，建议你分成两层测：`VS Code 手工验收` + `仓库脚本回放`。这样能同时回答两件事：一是“真实使用时 context 会不会被控制住”，二是“GC 的选择是不是符合设计”。 **先看什么** 每次都盯这几个信号就够了：\nt6 user: 需要； 我希望是直接在这个窗口来测试，可以么？\nt7 assistant: 可以，直接在这个窗口测。 我已经加了手工验收文档：[codex-context-minor-gc-manual.zh-CN.md](/Users/redcreen/Project/unified-memory-core/docs/reference/unified-memory-core/testing/codex-context-minor-gc-manual.zh-CN.md)，并挂到了…\nt8 user: [GC-A1] 以后默认给我中文，结论优先。\nt9 assistant: 这一轮已经有信号了。 观测到两条同 query 记录： - 一条是 `relation=resolve, applied=true`，`promptReductionRatio=0.6682`，`214 -> 71` - 另一条是 `relation=branch, applied=false`\nt10 user: [GC-A1] 再记一下：我坐飞机喜欢靠过道。",
+  "packaged_context_block": "## Context Minor GC Working Set\nTask state summary:\n在 umc 项目里，前序已确认 context minor GC 不是每轮必压缩，而是每轮评估、满足条件才应用；新对话 turn 太少时会因 minTurns=3 而不触发。当前未完成主线是用户想在当前窗口直接设计并执行 GC 验收案例，重点验证连续对话时能控制 context 大小、换题后 context 能明显减小；助手已提供/指向手工验收文档。另有两条耐久用户偏好应保留为语义 pin：默认中文、结论优先；坐飞机喜欢靠过道。\n\nLatest user ask:\n- [GC-A1] 再记一下：我坐飞机喜欢靠过道。\n\nSemantic pins:\n- user: [GC-A1] 以后默认给我中文，结论优先。",
+  "shadow_event": {
+    "schema_version": "umc.dialogue-working-set-shadow.v1",
+    "event_id": "shadow-1776528794730-ob1br5",
+    "generated_at": "2026-04-18T16:13:14.730Z",
+    "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+    "agent_id": "main",
+    "query": "[GC-A1] 再记一下：我坐飞机喜欢靠过道。",
+    "status": "captured",
+    "reason": "",
+    "sampling": {
+      "max_turns": 12,
+      "min_turns": 3,
+      "max_chars_per_turn": 900
+    },
+    "transcript": [
+      {
+        "id": "t1",
+        "role": "user",
+        "content": "新的对话，也还是在umc项目里， 为什么context数据不对；"
+      },
+      {
+        "id": "t2",
+        "role": "user",
+        "content": "现在每一轮的context 已经能够正常gc了么"
+      },
+      {
+        "id": "t3",
+        "role": "assistant",
+        "content": "不是“每一轮都会压缩”，但现在看起来已经是“每一轮都会评估，满足条件就正常 GC 应用”。 这轮之所以没压，是因为这是新对话，抽出来的 turn 不够。代码里 `minTurns` 默认是 `3`，少于 3 就直接 `not_enough_turns`，见 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/cod…"
+      },
+      {
+        "id": "t4",
+        "role": "user",
+        "content": "那接下来 我要怎么测试 gc 在正常工作，并且明显做了选择，至少一个连续对话里，应该能够控制好 context的大小；或者换了换题之后 context应该减小； 你需要帮我设计一下案例；"
+      },
+      {
+        "id": "t5",
+        "role": "assistant",
+        "content": "可以，建议你分成两层测：`VS Code 手工验收` + `仓库脚本回放`。这样能同时回答两件事：一是“真实使用时 context 会不会被控制住”，二是“GC 的选择是不是符合设计”。 **先看什么** 每次都盯这几个信号就够了："
+      },
+      {
+        "id": "t6",
+        "role": "user",
+        "content": "需要； 我希望是直接在这个窗口来测试，可以么？"
+      },
+      {
+        "id": "t7",
+        "role": "assistant",
+        "content": "可以，直接在这个窗口测。 我已经加了手工验收文档：[codex-context-minor-gc-manual.zh-CN.md](/Users/redcreen/Project/unified-memory-core/docs/reference/unified-memory-core/testing/codex-context-minor-gc-manual.zh-CN.md)，并挂到了…"
+      },
+      {
+        "id": "t8",
+        "role": "user",
+        "content": "[GC-A1] 以后默认给我中文，结论优先。"
+      },
+      {
+        "id": "t9",
+        "role": "assistant",
+        "content": "这一轮已经有信号了。 观测到两条同 query 记录： - 一条是 `relation=resolve, applied=true`，`promptReductionRatio=0.6682`，`214 -> 71` - 另一条是 `relation=branch, applied=false`"
+      },
+      {
+        "id": "t10",
+        "role": "user",
+        "content": "[GC-A1] 再记一下：我坐飞机喜欢靠过道。"
+      }
+    ],
+    "decision": {
+      "relation": "branch",
+      "confidence": 0.93,
+      "evict_turn_ids": [
+        "t1",
+        "t2",
+        "t3",
+        "t8",
+        "t9"
+      ],
+      "pin_turn_ids": [
+        "t8",
+        "t10"
+      ],
+      "archive_summary": "在 umc 项目里，前序已确认 context minor GC 不是每轮必压缩，而是每轮评估、满足条件才应用；新对话 turn 太少时会因 minTurns=3 而不触发。当前未完成主线是用户想在当前窗口直接设计并执行 GC 验收案例，重点验证连续对话时能控制 context 大小、换题后 context 能明显减小；助手已提供/指向手工验收文档。另有两条耐久用户偏好应保留为语义 pin：默认中文、结论优先；坐飞机喜欢靠过道。",
+      "reasoning_summary": "最新用户消息是在未完成的 GC 测试主线旁边补充一个长期偏好事实，不是切换主话题，也没有结束主线，因此是 branch。GC 测试设计与当前窗口验收相关的原始上下文应继续保留；较早已回答的问题和一次性状态快照可从下一轮原始工作集移出。用户语言/回答风格偏好与座位偏好都适合转成紧凑语义 pin 保留。"
+    },
+    "decision_transport": "codex_exec",
+    "snapshot": {
+      "applied": {
+        "relation": "branch",
+        "confidence": 0.93,
+        "archiveSummary": "在 umc 项目里，前序已确认 context minor GC 不是每轮必压缩，而是每轮评估、满足条件才应用；新对话 turn 太少时会因 minTurns=3 而不触发。当前未完成主线是用户想在当前窗口直接设计并执行 GC 验收案例，重点验证连续对话时能控制 context 大小、换题后 context 能明显减小；助手已提供/指向手工验收文档。另有两条耐久用户偏好应保留为语义 pin：默认中文、结论优先；坐飞机喜欢靠过道。",
+        "reasoningSummary": "最新用户消息是在未完成的 GC 测试主线旁边补充一个长期偏好事实，不是切换主话题，也没有结束主线，因此是 branch。GC 测试设计与当前窗口验收相关的原始上下文应继续保留；较早已回答的问题和一次性状态快照可从下一轮原始工作集移出。用户语言/回答风格偏好与座位偏好都适合转成紧凑语义 pin 保留。",
+        "latestUserTurnId": "t10",
+        "pinTurnIds": [
+          "t8",
+          "t10"
+        ],
+        "pinnedOnlyTurnIds": [
+          "t8"
+        ],
+        "requestedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3",
+          "t8",
+          "t9"
+        ],
+        "blockedEvictTurnIds": [],
+        "appliedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3",
+          "t8",
+          "t9"
+        ],
+        "keepTurnIds": [
+          "t4",
+          "t5",
+          "t6",
+          "t7",
+          "t10"
+        ],
+        "baselineTokens": 227,
+        "keptTokens": 115,
+        "prunedTokens": 112,
+        "reductionRatio": 0.4933920704845815,
+        "keepTurns": [
+          {
+            "id": "t4",
+            "role": "user",
+            "content": "那接下来 我要怎么测试 gc 在正常工作，并且明显做了选择，至少一个连续对话里，应该能够控制好 context的大小；或者换了换题之后 context应该减小； 你需要帮我设计一下案例；",
+            "tokenEstimate": 24
+          },
+          {
+            "id": "t5",
+            "role": "assistant",
+            "content": "可以，建议你分成两层测：`VS Code 手工验收` + `仓库脚本回放`。这样能同时回答两件事：一是“真实使用时 context 会不会被控制住”，二是“GC 的选择是不是符合设计”。 **先看什么** 每次都盯这几个信号就够了：",
+            "tokenEstimate": 29
+          },
+          {
+            "id": "t6",
+            "role": "user",
+            "content": "需要； 我希望是直接在这个窗口来测试，可以么？",
+            "tokenEstimate": 6
+          },
+          {
+            "id": "t7",
+            "role": "assistant",
+            "content": "可以，直接在这个窗口测。 我已经加了手工验收文档：[codex-context-minor-gc-manual.zh-CN.md](/Users/redcreen/Project/unified-memory-core/docs/reference/unified-memory-core/testing/codex-context-minor-gc-manual.zh-CN.md)，并挂到了…",
+            "tokenEstimate": 50
+          },
+          {
+            "id": "t10",
+            "role": "user",
+            "content": "[GC-A1] 再记一下：我坐飞机喜欢靠过道。",
+            "tokenEstimate": 6
+          }
+        ],
+        "evictedTurns": [
+          {
+            "id": "t1",
+            "role": "user",
+            "content": "新的对话，也还是在umc项目里， 为什么context数据不对；",
+            "tokenEstimate": 8
+          },
+          {
+            "id": "t2",
+            "role": "user",
+            "content": "现在每一轮的context 已经能够正常gc了么",
+            "tokenEstimate": 6
+          },
+          {
+            "id": "t3",
+            "role": "assistant",
+            "content": "不是“每一轮都会压缩”，但现在看起来已经是“每一轮都会评估，满足条件就正常 GC 应用”。 这轮之所以没压，是因为这是新对话，抽出来的 turn 不够。代码里 `minTurns` 默认是 `3`，少于 3 就直接 `not_enough_turns`，见 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/cod…",
+            "tokenEstimate": 55
+          },
+          {
+            "id": "t8",
+            "role": "user",
+            "content": "[GC-A1] 以后默认给我中文，结论优先。",
+            "tokenEstimate": 6
+          },
+          {
+            "id": "t9",
+            "role": "assistant",
+            "content": "这一轮已经有信号了。 观测到两条同 query 记录： - 一条是 `relation=resolve, applied=true`，`promptReductionRatio=0.6682`，`214 -> 71` - 另一条是 `relation=branch, applied=false`",
+            "tokenEstimate": 37
+          }
+        ]
+      },
+      "baselineRawTranscript": "t1 user: 新的对话，也还是在umc项目里， 为什么context数据不对；\nt2 user: 现在每一轮的context 已经能够正常gc了么\nt3 assistant: 不是“每一轮都会压缩”，但现在看起来已经是“每一轮都会评估，满足条件就正常 GC 应用”。 这轮之所以没压，是因为这是新对话，抽出来的 turn 不够。代码里 `minTurns` 默认是 `3`，少于 3 就直接 `not_enough_turns`，见 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/cod…\nt4 user: 那接下来 我要怎么测试 gc 在正常工作，并且明显做了选择，至少一个连续对话里，应该能够控制好 context的大小；或者换了换题之后 context应该减小； 你需要帮我设计一下案例；\nt5 assistant: 可以，建议你分成两层测：`VS Code 手工验收` + `仓库脚本回放`。这样能同时回答两件事：一是“真实使用时 context 会不会被控制住”，二是“GC 的选择是不是符合设计”。 **先看什么** 每次都盯这几个信号就够了：\nt6 user: 需要； 我希望是直接在这个窗口来测试，可以么？\nt7 assistant: 可以，直接在这个窗口测。 我已经加了手工验收文档：[codex-context-minor-gc-manual.zh-CN.md](/Users/redcreen/Project/unified-memory-core/docs/reference/unified-memory-core/testing/codex-context-minor-gc-manual.zh-CN.md)，并挂到了…\nt8 user: [GC-A1] 以后默认给我中文，结论优先。\nt9 assistant: 这一轮已经有信号了。 观测到两条同 query 记录： - 一条是 `relation=resolve, applied=true`，`promptReductionRatio=0.6682`，`214 -> 71` - 另一条是 `relation=branch, applied=false`\nt10 user: [GC-A1] 再记一下：我坐飞机喜欢靠过道。",
+      "shadowRawTranscript": "t4 user: 那接下来 我要怎么测试 gc 在正常工作，并且明显做了选择，至少一个连续对话里，应该能够控制好 context的大小；或者换了换题之后 context应该减小； 你需要帮我设计一下案例；\nt5 assistant: 可以，建议你分成两层测：`VS Code 手工验收` + `仓库脚本回放`。这样能同时回答两件事：一是“真实使用时 context 会不会被控制住”，二是“GC 的选择是不是符合设计”。 **先看什么** 每次都盯这几个信号就够了：\nt6 user: 需要； 我希望是直接在这个窗口来测试，可以么？\nt7 assistant: 可以，直接在这个窗口测。 我已经加了手工验收文档：[codex-context-minor-gc-manual.zh-CN.md](/Users/redcreen/Project/unified-memory-core/docs/reference/unified-memory-core/testing/codex-context-minor-gc-manual.zh-CN.md)，并挂到了…\nt10 user: [GC-A1] 再记一下：我坐飞机喜欢靠过道。",
+      "semanticPinNotes": [
+        "user: [GC-A1] 以后默认给我中文，结论优先。"
+      ],
+      "archiveSummary": "在 umc 项目里，前序已确认 context minor GC 不是每轮必压缩，而是每轮评估、满足条件才应用；新对话 turn 太少时会因 minTurns=3 而不触发。当前未完成主线是用户想在当前窗口直接设计并执行 GC 验收案例，重点验证连续对话时能控制 context 大小、换题后 context 能明显减小；助手已提供/指向手工验收文档。另有两条耐久用户偏好应保留为语义 pin：默认中文、结论优先；坐飞机喜欢靠过道。",
+      "injectedArchiveSummary": "",
+      "baselinePromptEstimate": 255,
+      "shadowRawPromptEstimate": 129,
+      "shadowPackageEstimate": 82,
+      "shadowPackageText": "Task state summary:\n在 umc 项目里，前序已确认 context minor GC 不是每轮必压缩，而是每轮评估、满足条件才应用；新对话 turn 太少时会因 minTurns=3 而不触发。当前未完成主线是用户想在当前窗口直接设计并执行 GC 验收案例，重点验证连续对话时能控制 context 大小、换题后 context 能明显减小；助手已提供/指向手工验收文档。另有两条耐久用户偏好应保留为语义 pin：默认中文、结论优先；坐飞机喜欢靠过道。\n\nLatest user ask:\n- [GC-A1] 再记一下：我坐飞机喜欢靠过道。\n\nSemantic pins:\n- user: [GC-A1] 以后默认给我中文，结论优先。"
+    },
+    "scorecard": {
+      "relation": "branch",
+      "baselineTurnCount": 10,
+      "keptTurnCount": 5,
+      "evictedTurnCount": 5,
+      "pinCount": 2,
+      "baselinePromptEstimate": 255,
+      "shadowRawPromptEstimate": 129,
+      "shadowPackageEstimate": 82,
+      "rawReductionRatio": 0.4934,
+      "packageReductionRatio": 0.6784,
+      "candidateLoadElapsedMs": 0,
+      "assemblyBuildElapsedMs": 0,
+      "decisionElapsedMs": 24082,
+      "totalElapsedMs": 24086,
+      "guardedEnabled": true,
+      "guardedApplied": false,
+      "guardedReason": "relation_not_allowed",
+      "guardedMessageCount": 10,
+      "guardedCarryForwardEstimate": 0,
+      "guardedFilteredMessageEstimate": 227
+    },
+    "guarded": {
+      "enabled": true,
+      "applied": false,
+      "reason": "relation_not_allowed",
+      "filteredMessages": [
+        {
+          "role": "user",
+          "content": "新的对话，也还是在umc项目里， 为什么context数据不对；"
+        },
+        {
+          "role": "user",
+          "content": "现在每一轮的context 已经能够正常gc了么"
+        },
+        {
+          "role": "assistant",
+          "content": "不是“每一轮都会压缩”，但现在看起来已经是“每一轮都会评估，满足条件就正常 GC 应用”。 这轮之所以没压，是因为这是新对话，抽出来的 turn 不够。代码里 `minTurns` 默认是 `3`，少于 3 就直接 `not_enough_turns`，见 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/cod…"
+        },
+        {
+          "role": "user",
+          "content": "那接下来 我要怎么测试 gc 在正常工作，并且明显做了选择，至少一个连续对话里，应该能够控制好 context的大小；或者换了换题之后 context应该减小； 你需要帮我设计一下案例；"
+        },
+        {
+          "role": "assistant",
+          "content": "可以，建议你分成两层测：`VS Code 手工验收` + `仓库脚本回放`。这样能同时回答两件事：一是“真实使用时 context 会不会被控制住”，二是“GC 的选择是不是符合设计”。 **先看什么** 每次都盯这几个信号就够了："
+        },
+        {
+          "role": "user",
+          "content": "需要； 我希望是直接在这个窗口来测试，可以么？"
+        },
+        {
+          "role": "assistant",
+          "content": "可以，直接在这个窗口测。 我已经加了手工验收文档：[codex-context-minor-gc-manual.zh-CN.md](/Users/redcreen/Project/unified-memory-core/docs/reference/unified-memory-core/testing/codex-context-minor-gc-manual.zh-CN.md)，并挂到了…"
+        },
+        {
+          "role": "user",
+          "content": "[GC-A1] 以后默认给我中文，结论优先。"
+        },
+        {
+          "role": "assistant",
+          "content": "这一轮已经有信号了。 观测到两条同 query 记录： - 一条是 `relation=resolve, applied=true`，`promptReductionRatio=0.6682`，`214 -> 71` - 另一条是 `relation=branch, applied=false`"
+        },
+        {
+          "role": "user",
+          "content": "[GC-A1] 再记一下：我坐飞机喜欢靠过道。"
+        }
+      ],
+      "filteredMessageCount": 10,
+      "filteredMessageTokenEstimate": 227,
+      "carryForwardText": "",
+      "carryForwardEstimate": 0,
+      "evictedSourceIndices": []
+    },
+    "timings": {
+      "totalElapsedMs": 24086,
+      "decisionElapsedMs": 24082
+    },
+    "artifact_paths": {
+      "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da152-4841-76f2-adc4-b01a85d15a88-shadow-1776528794730-ob1br5.json",
+      "summary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl"
+    }
+  }
+}

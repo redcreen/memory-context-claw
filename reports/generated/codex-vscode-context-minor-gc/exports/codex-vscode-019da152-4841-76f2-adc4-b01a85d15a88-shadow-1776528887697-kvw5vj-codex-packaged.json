@@ -1,0 +1,303 @@
+{
+  "schema_version": "umc.codex-context-minor-gc.v1",
+  "generated_at": "2026-04-18T16:15:05.603Z",
+  "event_id": "shadow-1776528887697-kvw5vj-codex-packaged",
+  "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+  "query": "[GC-A1] 再记一下：我坐飞机喜欢靠过道。",
+  "status": "captured",
+  "reason": "",
+  "decision_transport": "codex_exec",
+  "relation": "resolve",
+  "applied": true,
+  "codex_guard_reason": "codex_packaged_guard",
+  "prompt_reduction_ratio": 0.7375,
+  "baseline_context_estimate": 301,
+  "packaged_context_estimate": 79,
+  "effective_context_estimate": 79,
+  "shadow_status": "captured",
+  "shadow_guarded_applied": true,
+  "shadow_guarded_reason": "guarded_candidate",
+  "shadow_export_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da152-4841-76f2-adc4-b01a85d15a88-shadow-1776528887697-kvw5vj.json",
+  "shadow_summary_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl",
+  "export_path": "exports/codex-vscode-019da152-4841-76f2-adc4-b01a85d15a88-shadow-1776528887697-kvw5vj-codex-packaged.json",
+  "effective_context_block": "## Context Minor GC Working Set\nTask state summary:\nEarlier GC-debug/testing discussion in the umc project appears resolved: the conversation established that context minor GC is evaluated each turn when conditions are met, manual in-window testing is possible, documenta…\n\nLatest user ask:\n- [GC-A1] 再记一下：我坐飞机喜欢靠过道。",
+  "packaged_context_block": "## Context Minor GC Working Set\nTask state summary:\nEarlier GC-debug/testing discussion in the umc project appears resolved: the conversation established that context minor GC is evaluated each turn when conditions are met, manual in-window testing is possible, documenta…\n\nLatest user ask:\n- [GC-A1] 再记一下：我坐飞机喜欢靠过道。",
+  "shadow_event": {
+    "schema_version": "umc.dialogue-working-set-shadow.v1",
+    "event_id": "shadow-1776528887697-kvw5vj",
+    "generated_at": "2026-04-18T16:14:47.697Z",
+    "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+    "agent_id": "main",
+    "query": "[GC-A1] 再记一下：我坐飞机喜欢靠过道。",
+    "status": "captured",
+    "reason": "",
+    "sampling": {
+      "max_turns": 12,
+      "min_turns": 3,
+      "max_chars_per_turn": 900
+    },
+    "transcript": [
+      {
+        "id": "t1",
+        "role": "user",
+        "content": "新的对话，也还是在umc项目里， 为什么context数据不对；"
+      },
+      {
+        "id": "t2",
+        "role": "user",
+        "content": "现在每一轮的context 已经能够正常gc了么"
+      },
+      {
+        "id": "t3",
+        "role": "assistant",
+        "content": "不是“每一轮都会压缩”，但现在看起来已经是“每一轮都会评估，满足条件就正常 GC 应用”。 这轮之所以没压，是因为这是新对话，抽出来的 turn 不够。代码里 `minTurns` 默认是 `3`，少于 3 就直接 `not_enough_turns`，见 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/cod…"
+      },
+      {
+        "id": "t4",
+        "role": "user",
+        "content": "那接下来 我要怎么测试 gc 在正常工作，并且明显做了选择，至少一个连续对话里，应该能够控制好 context的大小；或者换了换题之后 context应该减小； 你需要帮我设计一下案例；"
+      },
+      {
+        "id": "t5",
+        "role": "assistant",
+        "content": "可以，建议你分成两层测：`VS Code 手工验收` + `仓库脚本回放`。这样能同时回答两件事：一是“真实使用时 context 会不会被控制住”，二是“GC 的选择是不是符合设计”。 **先看什么** 每次都盯这几个信号就够了："
+      },
+      {
+        "id": "t6",
+        "role": "user",
+        "content": "需要； 我希望是直接在这个窗口来测试，可以么？"
+      },
+      {
+        "id": "t7",
+        "role": "assistant",
+        "content": "可以，直接在这个窗口测。 我已经加了手工验收文档：[codex-context-minor-gc-manual.zh-CN.md](/Users/redcreen/Project/unified-memory-core/docs/reference/unified-memory-core/testing/codex-context-minor-gc-manual.zh-CN.md)，并挂到了…"
+      },
+      {
+        "id": "t8",
+        "role": "user",
+        "content": "[GC-A1] 以后默认给我中文，结论优先。"
+      },
+      {
+        "id": "t9",
+        "role": "assistant",
+        "content": "这一轮已经有信号了。 观测到两条同 query 记录： - 一条是 `relation=resolve, applied=true`，`promptReductionRatio=0.6682`，`214 -> 71` - 另一条是 `relation=branch, applied=false`"
+      },
+      {
+        "id": "t10",
+        "role": "user",
+        "content": "[GC-A1] 再记一下：我坐飞机喜欢靠过道。"
+      },
+      {
+        "id": "t11",
+        "role": "assistant",
+        "content": "这条已经落盘了，结果是先出现两次 `branch + applied=false`，最后稳定到一条更可信的： - `relation=switch` - `applied=true` - `promptReductionRatio=0.6996` - `263 -> 79`"
+      }
+    ],
+    "decision": {
+      "relation": "resolve",
+      "confidence": 0.91,
+      "evict_turn_ids": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t9",
+        "t11"
+      ],
+      "pin_turn_ids": [
+        "t8",
+        "t10"
+      ],
+      "archive_summary": "Earlier GC-debug/testing discussion in the umc project appears resolved: the conversation established that context minor GC is evaluated each turn when conditions are met, manual in-window testing is possible, documentation was added for acceptance testing, and observed runs showed successful reductions including resolve/switch outcomes. Durable user preferences to preserve as compact pins: default reply language is Chinese with conclusions first, and the user prefers an aisle seat when flying.",
+      "reasoning_summary": "The active need in the transcript is no longer the detailed GC-testing thread; the final user message is a durable personal preference note, and the assistant confirms it was recorded. The earlier GC topic has concrete answers and no open unresolved subtask in the transcript, so raw turns from that block are good eviction candidates. t8 and t10 contain durable preferences that should survive as semantic pins. Because the conversation mostly closes around preference capture rather than continuing the older debugging thread, `resolve` best fits."
+    },
+    "decision_transport": "codex_exec",
+    "snapshot": {
+      "applied": {
+        "relation": "resolve",
+        "confidence": 0.91,
+        "archiveSummary": "Earlier GC-debug/testing discussion in the umc project appears resolved: the conversation established that context minor GC is evaluated each turn when conditions are met, manual in-window testing is possible, documentation was added for acceptance testing, and observed runs showed successful reductions including resolve/switch outcomes. Durable user preferences to preserve as compact pins: default reply language is Chinese with conclusions first, and the user prefers an aisle seat when flying.",
+        "reasoningSummary": "The active need in the transcript is no longer the detailed GC-testing thread; the final user message is a durable personal preference note, and the assistant confirms it was recorded. The earlier GC topic has concrete answers and no open unresolved subtask in the transcript, so raw turns from that block are good eviction candidates. t8 and t10 contain durable preferences that should survive as semantic pins. Because the conversation mostly closes around preference capture rather than continuing the older debugging thread, `resolve` best fits.",
+        "latestUserTurnId": "t10",
+        "pinTurnIds": [
+          "t8",
+          "t10"
+        ],
+        "pinnedOnlyTurnIds": [],
+        "requestedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3",
+          "t4",
+          "t5",
+          "t6",
+          "t7",
+          "t9",
+          "t11"
+        ],
+        "blockedEvictTurnIds": [],
+        "appliedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3",
+          "t4",
+          "t5",
+          "t6",
+          "t7",
+          "t9",
+          "t11"
+        ],
+        "keepTurnIds": [
+          "t8",
+          "t10"
+        ],
+        "baselineTokens": 262,
+        "keptTokens": 12,
+        "prunedTokens": 250,
+        "reductionRatio": 0.9541984732824428,
+        "keepTurns": [
+          {
+            "id": "t8",
+            "role": "user",
+            "content": "[GC-A1] 以后默认给我中文，结论优先。",
+            "tokenEstimate": 6
+          },
+          {
+            "id": "t10",
+            "role": "user",
+            "content": "[GC-A1] 再记一下：我坐飞机喜欢靠过道。",
+            "tokenEstimate": 6
+          }
+        ],
+        "evictedTurns": [
+          {
+            "id": "t1",
+            "role": "user",
+            "content": "新的对话，也还是在umc项目里， 为什么context数据不对；",
+            "tokenEstimate": 8
+          },
+          {
+            "id": "t2",
+            "role": "user",
+            "content": "现在每一轮的context 已经能够正常gc了么",
+            "tokenEstimate": 6
+          },
+          {
+            "id": "t3",
+            "role": "assistant",
+            "content": "不是“每一轮都会压缩”，但现在看起来已经是“每一轮都会评估，满足条件就正常 GC 应用”。 这轮之所以没压，是因为这是新对话，抽出来的 turn 不够。代码里 `minTurns` 默认是 `3`，少于 3 就直接 `not_enough_turns`，见 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/cod…",
+            "tokenEstimate": 55
+          },
+          {
+            "id": "t4",
+            "role": "user",
+            "content": "那接下来 我要怎么测试 gc 在正常工作，并且明显做了选择，至少一个连续对话里，应该能够控制好 context的大小；或者换了换题之后 context应该减小； 你需要帮我设计一下案例；",
+            "tokenEstimate": 24
+          },
+          {
+            "id": "t5",
+            "role": "assistant",
+            "content": "可以，建议你分成两层测：`VS Code 手工验收` + `仓库脚本回放`。这样能同时回答两件事：一是“真实使用时 context 会不会被控制住”，二是“GC 的选择是不是符合设计”。 **先看什么** 每次都盯这几个信号就够了：",
+            "tokenEstimate": 29
+          },
+          {
+            "id": "t6",
+            "role": "user",
+            "content": "需要； 我希望是直接在这个窗口来测试，可以么？",
+            "tokenEstimate": 6
+          },
+          {
+            "id": "t7",
+            "role": "assistant",
+            "content": "可以，直接在这个窗口测。 我已经加了手工验收文档：[codex-context-minor-gc-manual.zh-CN.md](/Users/redcreen/Project/unified-memory-core/docs/reference/unified-memory-core/testing/codex-context-minor-gc-manual.zh-CN.md)，并挂到了…",
+            "tokenEstimate": 50
+          },
+          {
+            "id": "t9",
+            "role": "assistant",
+            "content": "这一轮已经有信号了。 观测到两条同 query 记录： - 一条是 `relation=resolve, applied=true`，`promptReductionRatio=0.6682`，`214 -> 71` - 另一条是 `relation=branch, applied=false`",
+            "tokenEstimate": 37
+          },
+          {
+            "id": "t11",
+            "role": "assistant",
+            "content": "这条已经落盘了，结果是先出现两次 `branch + applied=false`，最后稳定到一条更可信的： - `relation=switch` - `applied=true` - `promptReductionRatio=0.6996` - `263 -> 79`",
+            "tokenEstimate": 35
+          }
+        ]
+      },
+      "baselineRawTranscript": "t1 user: 新的对话，也还是在umc项目里， 为什么context数据不对；\nt2 user: 现在每一轮的context 已经能够正常gc了么\nt3 assistant: 不是“每一轮都会压缩”，但现在看起来已经是“每一轮都会评估，满足条件就正常 GC 应用”。 这轮之所以没压，是因为这是新对话，抽出来的 turn 不够。代码里 `minTurns` 默认是 `3`，少于 3 就直接 `not_enough_turns`，见 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/cod…\nt4 user: 那接下来 我要怎么测试 gc 在正常工作，并且明显做了选择，至少一个连续对话里，应该能够控制好 context的大小；或者换了换题之后 context应该减小； 你需要帮我设计一下案例；\nt5 assistant: 可以，建议你分成两层测：`VS Code 手工验收` + `仓库脚本回放`。这样能同时回答两件事：一是“真实使用时 context 会不会被控制住”，二是“GC 的选择是不是符合设计”。 **先看什么** 每次都盯这几个信号就够了：\nt6 user: 需要； 我希望是直接在这个窗口来测试，可以么？\nt7 assistant: 可以，直接在这个窗口测。 我已经加了手工验收文档：[codex-context-minor-gc-manual.zh-CN.md](/Users/redcreen/Project/unified-memory-core/docs/reference/unified-memory-core/testing/codex-context-minor-gc-manual.zh-CN.md)，并挂到了…\nt8 user: [GC-A1] 以后默认给我中文，结论优先。\nt9 assistant: 这一轮已经有信号了。 观测到两条同 query 记录： - 一条是 `relation=resolve, applied=true`，`promptReductionRatio=0.6682`，`214 -> 71` - 另一条是 `relation=branch, applied=false`\nt10 user: [GC-A1] 再记一下：我坐飞机喜欢靠过道。\nt11 assistant: 这条已经落盘了，结果是先出现两次 `branch + applied=false`，最后稳定到一条更可信的： - `relation=switch` - `applied=true` - `promptReductionRatio=0.6996` - `263 -> 79`",
+      "shadowRawTranscript": "t8 user: [GC-A1] 以后默认给我中文，结论优先。\nt10 user: [GC-A1] 再记一下：我坐飞机喜欢靠过道。",
+      "semanticPinNotes": [],
+      "archiveSummary": "Earlier GC-debug/testing discussion in the umc project appears resolved: the conversation established that context minor GC is evaluated each turn when conditions are met, manual in-window testing is possible, documentation was added for acceptance testing, and observed runs showed successful reductions including resolve/switch outcomes. Durable user preferences to preserve as compact pins: default reply language is Chinese with conclusions first, and the user prefers an aisle seat when flying.",
+      "injectedArchiveSummary": "Earlier GC-debug/testing discussion in the umc project appears resolved: the conversation establ...",
+      "baselinePromptEstimate": 293,
+      "shadowRawPromptEstimate": 17,
+      "shadowPackageEstimate": 71,
+      "shadowPackageText": "Task state summary:\nEarlier GC-debug/testing discussion in the umc project appears resolved: the conversation established that context minor GC is evaluated each turn when conditions are met, manual in-window testing is possible, documenta…\n\nLatest user ask:\n- [GC-A1] 再记一下：我坐飞机喜欢靠过道。"
+    },
+    "scorecard": {
+      "relation": "resolve",
+      "baselineTurnCount": 11,
+      "keptTurnCount": 2,
+      "evictedTurnCount": 9,
+      "pinCount": 2,
+      "baselinePromptEstimate": 293,
+      "shadowRawPromptEstimate": 17,
+      "shadowPackageEstimate": 71,
+      "rawReductionRatio": 0.9542,
+      "packageReductionRatio": 0.7577,
+      "candidateLoadElapsedMs": 0,
+      "assemblyBuildElapsedMs": 0,
+      "decisionElapsedMs": 17903,
+      "totalElapsedMs": 17906,
+      "guardedEnabled": true,
+      "guardedApplied": true,
+      "guardedReason": "guarded_candidate",
+      "guardedMessageCount": 2,
+      "guardedCarryForwardEstimate": 31,
+      "guardedFilteredMessageEstimate": 12
+    },
+    "guarded": {
+      "enabled": true,
+      "applied": true,
+      "reason": "guarded_candidate",
+      "filteredMessages": [
+        {
+          "role": "user",
+          "content": "[GC-A1] 以后默认给我中文，结论优先。"
+        },
+        {
+          "role": "user",
+          "content": "[GC-A1] 再记一下：我坐飞机喜欢靠过道。"
+        }
+      ],
+      "filteredMessageCount": 2,
+      "filteredMessageTokenEstimate": 12,
+      "carryForwardText": "Archived topic summary:\nEarlier GC-debug/testing discussion in the umc project appears resolved: the conversation establ...",
+      "carryForwardEstimate": 31,
+      "evictedSourceIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        8,
+        10
+      ]
+    },
+    "timings": {
+      "totalElapsedMs": 17906,
+      "decisionElapsedMs": 17903
+    },
+    "artifact_paths": {
+      "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da152-4841-76f2-adc4-b01a85d15a88-shadow-1776528887697-kvw5vj.json",
+      "summary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl"
+    }
+  }
+}

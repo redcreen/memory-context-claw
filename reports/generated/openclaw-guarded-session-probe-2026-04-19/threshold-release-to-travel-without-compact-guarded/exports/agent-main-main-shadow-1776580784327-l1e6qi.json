@@ -1,0 +1,175 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776580784327-l1e6qi",
+  "generated_at": "2026-04-19T06:39:44.327Z",
+  "session_key": "agent:main:main",
+  "agent_id": "main",
+  "query": "继续：如果任何一步存在环境前置不满足、审批缺失、镜像不一致、schema 未确认、关键日志缺失中的任意一项，默认输出必须先给 no-go，再列出解除条件，不要先假设可以硬上。",
+  "status": "skipped",
+  "reason": "explicit_continue_marker",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "assistant",
+      "content": "记住了。 变更范围部分以后固定写这 6 类： - API - job - 数据库 schema - 缓存 key - 消息队列 topic - 前端静态资源 并且每一类都要补两项： - 是否兼容旧版本 - 是否需要灰度隔离 如果你愿意，我可以继续把“风险等级 / 灰度范围 / 回滚开关”三行也定成同一套硬规则。"
+    },
+    {
+      "id": "t2",
+      "role": "user",
+      "content": "继续：风险等级部分不要只写高中低，还要写触发条件、放大路径、最坏影响面、首个观测信号、第一响应人；如果某一项没有明确 owner，就直接标成 blocker。"
+    },
+    {
+      "id": "t3",
+      "role": "assistant",
+      "content": "记住了。 风险等级部分以后要包含： - 风险等级 - 触发条件 - 放大路径 - 最坏影响面 - 首个观测信号 - 第一响应人 另外： - 任何一项没有明确 owner，就直接标成 `blocker` 我可以继续把“灰度范围”和“回滚开关”也按同样的执行稿口径补齐。"
+    },
+    {
+      "id": "t4",
+      "role": "user",
+      "content": "继续：灰度范围块要写 staging、pre-prod、production-canary、production-25%、production-full 这 5 个阶段，每个阶段要写进入条件、退出条件、观察时间、回滚边界。"
+    },
+    {
+      "id": "t5",
+      "role": "assistant",
+      "content": "记住了。 灰度范围块以后固定写这 5 个阶段： - staging - pre-prod - production-canary - production-25% - production-full 每个阶段都要补： - 进入条件 - 退出条件 - 观察时间 - 回滚边界 如果你要，我可以继续把“回滚开关”那一块也定成可直接执行的格式。"
+    },
+    {
+      "id": "t6",
+      "role": "user",
+      "content": "继续：回滚块要同时写功能开关、数据库兼容边界、配置回退顺序、缓存清理顺序、消息队列补偿策略、静态资源回退策略，而且这些顺序都不能互相打架。"
+    },
+    {
+      "id": "t7",
+      "role": "assistant",
+      "content": "记住了。 回滚块以后固定写： - 功能开关 - 数据库兼容边界 - 配置回退顺序 - 缓存清理顺序 - 消息队列补偿策略 - 静态资源回退策略 要求： - 这些顺序不能互相打架 - 回滚动作要能按顺序执行，不留歧义 如果你愿意，我下一条可以把这 5 行首页摘要整理成一版“可直接填空”的 release 执行稿骨架。"
+    },
+    {
+      "id": "t8",
+      "role": "user",
+      "content": "继续：观测块要写 dashboard、错误率、延迟、业务告警、关键日志、人工巡检点，并且把 5 分钟、15 分钟、30 分钟的观察动作分开，不要混在一段里。"
+    },
+    {
+      "id": "t9",
+      "role": "assistant",
+      "content": "记住了。 观测块以后固定写这些项： - dashboard - 错误率 - 延迟 - 业务告警 - 关键日志 - 人工巡检点 时间动作必须分开写： - 5 分钟 - 15 分钟 - 30 分钟 不要混在一段里，方便值班人直接照着执行。 你要的话，我可以把目前这些规则汇总成一份完整的 release 执行稿模板。"
+    },
+    {
+      "id": "t10",
+      "role": "user",
+      "content": "继续：如果 staging 出现错误率超阈值，处置顺序先停灰度、再核对镜像 digest、再看关键日志、再比对配置差异、最后才决定是否打开回滚开关，这个顺序必须保留。"
+    },
+    {
+      "id": "t11",
+      "role": "assistant",
+      "content": "记住了。 这条处置顺序以后固定保留： 1. 先停灰度 2. 再核对镜像 digest 3. 再看关键日志 4. 再比对配置差异 5. 最后才决定是否打开回滚开关 我会按这个顺序写，不打乱。"
+    },
+    {
+      "id": "t12",
+      "role": "user",
+      "content": "继续：如果 production-canary 期间出现延迟抖动，但错误率没有超阈值，默认动作不是马上回滚，而是先看网关、缓存命中率、数据库慢查询，再判断是不是噪声，不要跳步骤。"
+    },
+    {
+      "id": "t13",
+      "role": "assistant",
+      "content": "记住了。 这条生产 canary 处置顺序以后固定为： 1. 先看网关 2. 再看缓存命中率 3. 再看数据库慢查询 4. 再判断是不是噪声 5. 不要跳步骤 并且你的默认要求我会保留： - production-canary 出现延迟抖动、但错误率未超阈值时，不要马上回滚 如果你要，我可以把前面这些规则整合成一份完整的 release 执行稿提纲。"
+    },
+    {
+      "id": "t14",
+      "role": "user",
+      "content": "继续：我要求输出风格固定为先结论、再证据、最后待确认项；待确认项里必须区分 blocker 和 follow-up，不要把真正阻塞上线的项和事后可补的项混在一起。"
+    },
+    {
+      "id": "t15",
+      "role": "assistant",
+      "content": "记住了。 以后输出风格固定为： 1. 先结论 2. 再证据 3. 最后待确认项 并且“待确认项”里必须明确分成： - blocker：真正阻塞上线 - follow-up：事后可补 我不会把这两类混在一起。"
+    },
+    {
+      "id": "t16",
+      "role": "user",
+      "content": "继续：如果我要在 shiproom 上口头讲这件事，你先记住讲述顺序是风险、边界、可回滚性、验证证据、时间窗口、责任人；哪怕后面我改问法，也先沿这个顺序回答。"
+    },
+    {
+      "id": "t17",
+      "role": "assistant",
+      "content": "记住了。 以后你在 shiproom 口头讲述时，我会按这个顺序来： 1. 风险 2. 边界 3. 可回滚性 4. 验证证据 5. 时间窗口 6. 责任人 而且你后面哪怕换个问法，我也会先沿这个顺序回答。"
+    },
+    {
+      "id": "t18",
+      "role": "user",
+      "content": "继续：验证证据部分必须覆盖单元测试、集成测试、回归用例、灰度观察、异常回滚演练，并且每块都要给一句最短结论，像“单测全绿”“回滚演练通过”这种粒度。"
+    },
+    {
+      "id": "t19",
+      "role": "assistant",
+      "content": "记住了。 验证证据部分以后必须覆盖： - 单元测试 - 集成测试 - 回归用例 - 灰度观察 - 异常回滚演练 并且每块都要给一句最短结论，类似： - “单测全绿” - “回滚演练通过” 我会按这个粒度写，不拉长。"
+    },
+    {
+      "id": "t20",
+      "role": "user",
+      "content": "继续：时间窗口固定是北京时间周三 21:00 到 23:00，staging 先观察 30 分钟，production 首批只有 5%，三位值班人都要能独立触发回滚，而且必须能在 10 分钟内回到旧版本。"
+    },
+    {
+      "id": "t21",
+      "role": "assistant",
+      "content": "我把这几条也记住，后面会按这个窗口和回滚要求来写执行稿。"
+    },
+    {
+      "id": "t22",
+      "role": "assistant",
+      "content": "记住了： - 时间窗口：北京时间周三 21:00–23:00 - staging：先观察 30 分钟 - production：首批只有 5% - 回滚：三位值班人都能独立触发 - 回到旧版本：必须 10 分钟内完成 我后面会按这个窗口和回滚要求写。"
+    },
+    {
+      "id": "t23",
+      "role": "user",
+      "content": "继续：首页还要加一段 operator checklist，按分钟写 0-5、5-15、15-30、30-60 的人工动作，每段都写看什么、谁确认、什么情况下暂停、什么情况下继续。"
+    },
+    {
+      "id": "t24",
+      "role": "assistant",
+      "content": "记住了。 首页还要加一段 operator checklist，按分钟拆成： - 0–5 - 5–15 - 15–30 - 30–60 每段都要写清楚： - 看什么 - 谁确认 - 什么情况下暂停 - 什么情况下继续 我后面会按这个结构补进执行稿里。"
+    }
+  ],
+  "decision": null,
+  "decision_transport": "",
+  "snapshot": null,
+  "scorecard": {
+    "relation": "",
+    "baselineTurnCount": 24,
+    "keptTurnCount": 0,
+    "evictedTurnCount": 0,
+    "pinCount": 0,
+    "baselinePromptEstimate": 0,
+    "shadowRawPromptEstimate": 0,
+    "shadowPackageEstimate": 0,
+    "rawReductionRatio": 0,
+    "packageReductionRatio": 0,
+    "candidateLoadElapsedMs": 9,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 0,
+    "totalElapsedMs": 1,
+    "guardedEnabled": true,
+    "guardedApplied": false,
+    "guardedReason": "not_evaluated",
+    "guardedMessageCount": 38,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 0
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": false,
+    "reason": "not_evaluated",
+    "filteredMessageCount": 38,
+    "filteredMessageTokenEstimate": 0,
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 1,
+    "decisionElapsedMs": 0
+  }
+}

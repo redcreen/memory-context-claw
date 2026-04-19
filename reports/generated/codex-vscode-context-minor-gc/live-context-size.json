@@ -1,0 +1,241 @@
+{
+  "status": "ok",
+  "query": "另外， readme中的版本还是老的",
+  "session": {
+    "filePath": "/Users/redcreen/.codex/sessions/2026/04/19/rollout-2026-04-19T08-48-14-019da335-a070-7972-b61e-6ba3a73ff633.jsonl",
+    "sessionId": "019da335-a070-7972-b61e-6ba3a73ff633",
+    "originator": "codex_vscode",
+    "cwd": "/Users/redcreen/Project/unified-memory-core",
+    "timestamp": "2026-04-19T00:48:14.037Z"
+  },
+  "extractedMessageCount": 12,
+  "recentMessages": [
+    {
+      "role": "assistant",
+      "content": "结果出来了。这轮我没有按字面去硬跑 `268k * 80% = 214.4k`，而是按你允许的“调整为实际情况”做了一个 **practical compact proxy**：把这条 hermetic OpenClaw 长会话链路的 danger line 设成 `16000 promptTokens`。原因很直接，这条评测链路本身单轮 prompt 不会自然长到 214k，但 `16k` 已经能把 baseline…"
+    },
+    {
+      "role": "user",
+      "content": "很不错， 这一项是memory core的 非常棒的能力； 需要在文档中重点说明下； 同时这条线也会是持续优化的主线之一；"
+    },
+    {
+      "role": "assistant",
+      "content": "做完了，文档已经把这条能力明确抬起来了，并且同步成最新口径。\n\n这次重点更新了 4 组公开入口，中英双语都对齐：\n- `README`：把“长对话接近 compact danger zone 时，GC 能把实际 prompt 拉回阈值下方”写成明确产品能力，并加上 threshold Docker A/B 报告入口。\n- `Context Minor GC` 架构页：从“能力已成但 Stage 11 未收口”的旧口径，改成“Stage…"
+    },
+    {
+      "role": "user",
+      "content": "目前这套gc方案和 记忆提取冲突么？"
+    },
+    {
+      "role": "assistant",
+      "content": "目前看，**不冲突，设计上是互补的**。\n\n最直接的边界是："
+    },
+    {
+      "role": "user",
+      "content": "可以发布一个中版本了 项目助手"
+    },
+    {
+      "role": "assistant",
+      "content": "中版本已经发了，版本是 `v0.3.0`。\n\n这次我是从一个临时 clean worktree 发的版，没有碰你当前这个脏工作区。已经完成：\n- release commit：`c9fbb52` `Release v0.3.0`\n- tag：`v0.3.0`\n- 已推送到 `origin/main`\n- 已推送 tag `v0.3.0`"
+    },
+    {
+      "role": "user",
+      "content": "工作区没有提交，你发布的版本，内容是全的么？"
+    },
+    {
+      "role": "user",
+      "content": "工作区没有提交，你发布的版本，内容是全的么"
+    },
+    {
+      "role": "assistant",
+      "content": "不是“全的”，如果你指的是**当前这个主工作区里所有未提交改动**的话。\n\n准确说法是："
+    },
+    {
+      "role": "user",
+      "content": "全量提交一次，然后发成 0.3.1"
+    },
+    {
+      "role": "user",
+      "content": "另外， readme中的版本还是老的"
+    }
+  ],
+  "contextMinorGc": {
+    "enabled": false,
+    "status": "host_only",
+    "reason": "host_only_fast_path",
+    "applied": false,
+    "relation": "",
+    "decisionTransport": "",
+    "promptReductionRatio": 0,
+    "baselineContextEstimate": 0,
+    "effectiveContextEstimate": 0,
+    "effectiveContextBlock": "",
+    "exportPath": "",
+    "summaryPath": "",
+    "hostHistory": [
+      {
+        "timestamp": "2026-04-19T07:52:28.003Z",
+        "inputTokens": 240400,
+        "modelContextWindow": 486400,
+        "actualWindowRatio": 0.4942,
+        "riskLevel": "normal"
+      },
+      {
+        "timestamp": "2026-04-19T07:52:49.322Z",
+        "inputTokens": 240752,
+        "modelContextWindow": 486400,
+        "actualWindowRatio": 0.495,
+        "riskLevel": "normal"
+      },
+      {
+        "timestamp": "2026-04-19T07:53:19.879Z",
+        "inputTokens": 240752,
+        "modelContextWindow": 486400,
+        "actualWindowRatio": 0.495,
+        "riskLevel": "normal"
+      },
+      {
+        "timestamp": "2026-04-19T07:53:46.444Z",
+        "inputTokens": 241165,
+        "modelContextWindow": 486400,
+        "actualWindowRatio": 0.4958,
+        "riskLevel": "normal"
+      },
+      {
+        "timestamp": "2026-04-19T07:53:51.968Z",
+        "inputTokens": 247703,
+        "modelContextWindow": 486400,
+        "actualWindowRatio": 0.5093,
+        "riskLevel": "normal"
+      },
+      {
+        "timestamp": "2026-04-19T07:53:57.415Z",
+        "inputTokens": 247703,
+        "modelContextWindow": 486400,
+        "actualWindowRatio": 0.5093,
+        "riskLevel": "normal"
+      },
+      {
+        "timestamp": "2026-04-19T07:54:10.171Z",
+        "inputTokens": 247802,
+        "modelContextWindow": 486400,
+        "actualWindowRatio": 0.5095,
+        "riskLevel": "normal"
+      },
+      {
+        "timestamp": "2026-04-19T07:54:34.095Z",
+        "inputTokens": 249052,
+        "modelContextWindow": 486400,
+        "actualWindowRatio": 0.512,
+        "riskLevel": "normal"
+      }
+    ],
+    "hostContext": {
+      "actualInputTokens": 249052,
+      "originalInputTokens": 249052,
+      "savedTokens": 0,
+      "modelContextWindow": 486400,
+      "reportedModelContextWindow": 486400,
+      "modelContextWindowCapped": false,
+      "softLimitRatio": 0.9,
+      "softLimitTokenCount": 437760,
+      "actualWindowRatio": 0.512,
+      "originalWindowRatio": 0.512,
+      "actualSoftLimitExceeded": false,
+      "originalSoftLimitExceeded": false,
+      "reductionRatio": 0,
+      "riskLevel": "normal",
+      "recommendedAction": "continue"
+    }
+  },
+  "rawContextMinorGc": {
+    "enabled": false,
+    "status": "host_only",
+    "reason": "host_only_fast_path",
+    "applied": false,
+    "relation": "",
+    "decisionTransport": "",
+    "promptReductionRatio": 0,
+    "baselineContextEstimate": 0,
+    "effectiveContextEstimate": 0,
+    "effectiveContextBlock": "",
+    "artifactPaths": {},
+    "hostContext": {
+      "actualInputTokens": 249052,
+      "originalInputTokens": 249052,
+      "savedTokens": 0,
+      "cachedInputTokens": 248192,
+      "modelContextWindow": 486400,
+      "reportedModelContextWindow": 486400,
+      "modelContextWindowCapped": false,
+      "softLimitRatio": 0.9,
+      "softLimitTokenCount": 437760,
+      "actualWindowRatio": 0.512,
+      "originalWindowRatio": 0.512,
+      "actualSoftLimitExceeded": false,
+      "originalSoftLimitExceeded": false,
+      "reductionRatio": 0,
+      "riskLevel": "normal",
+      "recommendedAction": "continue",
+      "timestamp": "2026-04-19T07:54:34.095Z"
+    },
+    "hostHistory": [
+      {
+        "timestamp": "2026-04-19T07:52:28.003Z",
+        "inputTokens": 240400,
+        "modelContextWindow": 486400,
+        "actualWindowRatio": 0.4942,
+        "riskLevel": "normal"
+      },
+      {
+        "timestamp": "2026-04-19T07:52:49.322Z",
+        "inputTokens": 240752,
+        "modelContextWindow": 486400,
+        "actualWindowRatio": 0.495,
+        "riskLevel": "normal"
+      },
+      {
+        "timestamp": "2026-04-19T07:53:19.879Z",
+        "inputTokens": 240752,
+        "modelContextWindow": 486400,
+        "actualWindowRatio": 0.495,
+        "riskLevel": "normal"
+      },
+      {
+        "timestamp": "2026-04-19T07:53:46.444Z",
+        "inputTokens": 241165,
+        "modelContextWindow": 486400,
+        "actualWindowRatio": 0.4958,
+        "riskLevel": "normal"
+      },
+      {
+        "timestamp": "2026-04-19T07:53:51.968Z",
+        "inputTokens": 247703,
+        "modelContextWindow": 486400,
+        "actualWindowRatio": 0.5093,
+        "riskLevel": "normal"
+      },
+      {
+        "timestamp": "2026-04-19T07:53:57.415Z",
+        "inputTokens": 247703,
+        "modelContextWindow": 486400,
+        "actualWindowRatio": 0.5093,
+        "riskLevel": "normal"
+      },
+      {
+        "timestamp": "2026-04-19T07:54:10.171Z",
+        "inputTokens": 247802,
+        "modelContextWindow": 486400,
+        "actualWindowRatio": 0.5095,
+        "riskLevel": "normal"
+      },
+      {
+        "timestamp": "2026-04-19T07:54:34.095Z",
+        "inputTokens": 249052,
+        "modelContextWindow": 486400,
+        "actualWindowRatio": 0.512,
+        "riskLevel": "normal"
+      }
+    ]
+  }
+}

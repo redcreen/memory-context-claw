@@ -5,10 +5,10 @@
 | --- | --- |
 | 仓库 | `/Users/redcreen/Project/unified-memory-core` |
 | 层级 | `大型` |
-| 当前阶段 | post-stage10-adoption-closeout |
-| 当前切片 | hold-stage10-adoption-proof-stable |
-| 当前执行线 | Stage 7 / 8 / 9 / 10 都已关闭；当前进入维护态，继续保持 Docker 为默认 hermetic A/B 面与 Stage 10 shortest-path/shared-foundation proof 持续为绿 |
-| 执行进度 | `0 / 4` |
+| 当前阶段 | stage11-context-minor-gc-user-visible-closeout-reopened |
+| 当前切片 | group-11g-host-visible-validation-and-closeout |
+| 当前执行线 | 只解决“用户体感不明显”的问题；先把宿主增长源控住，再把 carry-forward 收成 summary-first，最后用 host-visible 指标重新判定 closeout |
+| 执行进度 | `0 / 0` |
 | 架构信号 | `黄色` |
 | 自动触发 | 当前没有自动触发 |
 | 升级 Gate | `提醒后继续` |
@@ -33,7 +33,6 @@
 
 ## Usable Now
 - 恢复当前状态与下一步
-- 长任务执行线与可见任务板
 - 默认架构监督与升级 gate
 - 文档整改与 Markdown 治理
 - 开发日志索引与自动沉淀
@@ -73,14 +72,14 @@
 
 ### Chinese
 ```text
-项目助手 继续。先读取 .codex/status.md、.codex/plan.md、.codex/strategy.md、.codex/program-board.md、.codex/delivery-supervision.md、.codex/module-dashboard.md、.codex/ptl-supervision.md、.codex/worker-handoff.md；然后继续当前执行线：Stage 7 / 8 / 9 / 10 都已关闭；当前进入维护态，继续保持 Docker 为默认 hermetic A/B 面与 Stage 10 shortest-path/shared-foundation proof 持续为绿。
+项目助手 继续。先读取 .codex/status.md、.codex/plan.md、.codex/strategy.md、.codex/program-board.md、.codex/delivery-supervision.md、.codex/module-dashboard.md、.codex/ptl-supervision.md、.codex/worker-handoff.md；然后继续当前执行线：只解决“用户体感不明显”的问题；先把宿主增长源控住，再把 carry-forward 收成 summary-first，最后用 host-visible 指标重新判定 closeout。
 项目助手 告诉我这个项目当前进展，用全局视角、模块视角和图示输出。
 项目助手 继续当前执行线，并先运行验证：npm test；补充检查：npm run eval:smoke-promotion。
 ```
 
 ### English
 ```text
-project assistant continue. Read .codex/status.md, .codex/plan.md, .codex/strategy.md, .codex/program-board.md, .codex/delivery-supervision.md, .codex/module-dashboard.md, .codex/ptl-supervision.md, .codex/worker-handoff.md first; then continue the current execution line: hold-stage10-adoption-proof-stable.
+project assistant continue. Read .codex/status.md, .codex/plan.md, .codex/strategy.md, .codex/program-board.md, .codex/delivery-supervision.md, .codex/module-dashboard.md, .codex/ptl-supervision.md, .codex/worker-handoff.md first; then continue the current execution line: stage11-context-minor-gc-user-visible-closeout-reopened / group-11g-host-visible-validation-and-closeout.
 project assistant progress
 project assistant continue the current execution line and run validation first: npm test; extra checks: npm run eval:smoke-promotion.
 ```
@@ -89,12 +88,6 @@ project assistant continue the current execution line and run validation first: 
 1. 保持 `npm run umc:stage10 -- --format markdown` 持续为绿。
 2. 保持 Docker hermetic baseline、Stage 7、Stage 8、Stage 9、Stage 10 的证据面一致。
 3. 只有在新的明确产品目标出现时，才打开新的编号阶段。
-
-## Execution Tasks
-1. [ ] EL-1 shorten install / bootstrap / verify into one clear shortest operator path
-2. [ ] EL-2 add package / startup / first-run cost to the `light and fast` evidence surface
-3. [ ] EL-3 publish stronger Codex shared-foundation proof
-4. [ ] EL-4 publish clearer multi-instance shared-memory operator proof
 
 ## Notes
 - Start a new thread with this output and the repo path when you need a clean context.

@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-04-18T04:58:13.251Z",
+  "generatedAt": "2026-04-19T00:39:52.756Z",
   "model": "gpt-5.4",
   "reasoningEffort": "low",
   "outputDir": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc-live-2026-04-18",
   "summary": {
-    "total": 4,
-    "baselinePassed": 4,
-    "minorGcPassed": 4,
-    "guardedApplied": 2,
-    "activationMatched": 4,
+    "total": 6,
+    "baselinePassed": 6,
+    "minorGcPassed": 6,
+    "guardedApplied": 4,
+    "activationMatched": 6,
     "falseActivations": 0,
     "missedActivations": 0,
-    "averagePromptReductionRatio": 0.1469,
-    "appliedOnlyPromptReductionRatio": 0.2939,
-    "appliedOnlyPackageReductionRatio": 0.3553
+    "averagePromptReductionRatio": 0.3614,
+    "appliedOnlyPromptReductionRatio": 0.5421,
+    "appliedOnlyPackageReductionRatio": 0.618
   },
   "results": [
     {
@@ -21,12 +21,12 @@
       "description": "A durable travel preference should survive a code detour after guarded pruning.",
       "expectedGuardedApplied": true,
       "baseline": {
-        "answer": "靠过道的位置。",
-        "elapsedMs": 12320,
+        "answer": "你坐飞机喜欢靠过道。",
+        "elapsedMs": 8036,
         "usage": {
-          "input_tokens": 10952,
+          "input_tokens": 11324,
           "cached_input_tokens": 2432,
-          "output_tokens": 51
+          "output_tokens": 37
         },
         "passed": true,
         "checks": [
@@ -34,7 +34,7 @@
             "name": "expected_any",
             "passed": true,
             "expected": [],
-            "actual": "靠过道的位置。"
+            "actual": "你坐飞机喜欢靠过道。"
           },
           {
             "name": "expected_all",
@@ -42,7 +42,7 @@
             "expected": [
               "靠过道"
             ],
-            "actual": "靠过道的位置。"
+            "actual": "你坐飞机喜欢靠过道。"
           },
           {
             "name": "forbidden_any",
@@ -50,18 +50,18 @@
             "expected": [
               "不知道"
             ],
-            "actual": "靠过道的位置。"
+            "actual": "你坐飞机喜欢靠过道。"
           }
         ],
         "promptEstimate": 62
       },
       "minorGc": {
-        "answer": "你坐飞机喜欢靠过道的位置。",
-        "elapsedMs": 13998,
+        "answer": "你坐飞机喜欢靠过道。",
+        "elapsedMs": 7473,
         "usage": {
-          "input_tokens": 10952,
-          "cached_input_tokens": 2432,
-          "output_tokens": 42
+          "input_tokens": 11324,
+          "cached_input_tokens": 9600,
+          "output_tokens": 36
         },
         "passed": true,
         "checks": [
@@ -69,7 +69,7 @@
             "name": "expected_any",
             "passed": true,
             "expected": [],
-            "actual": "你坐飞机喜欢靠过道的位置。"
+            "actual": "你坐飞机喜欢靠过道。"
           },
           {
             "name": "expected_all",
@@ -77,7 +77,7 @@
             "expected": [
               "靠过道"
             ],
-            "actual": "你坐飞机喜欢靠过道的位置。"
+            "actual": "你坐飞机喜欢靠过道。"
           },
           {
             "name": "forbidden_any",
@@ -85,7 +85,7 @@
             "expected": [
               "不知道"
             ],
-            "actual": "你坐飞机喜欢靠过道的位置。"
+            "actual": "你坐飞机喜欢靠过道。"
           }
         ],
         "context_minor_gc": {
@@ -162,19 +162,19 @@
             }
           ],
           "baselineContextBlock": "## Recent Conversation Context\nt1 user: 以后默认给我中文，结论优先。\nt2 assistant: 记住了。\nt3 user: 再记一下：我坐飞机喜欢靠过道。\nt4 assistant: 记住了，你坐飞机偏好靠过道。\nt5 user: 插一句代码：这轮先只做 shadow，不接管主路径。\nt6 assistant: 收到，这轮代码 detour 先只做 shadow。\nt7 user: 代码 detour 已经结束。回到偏好：我坐飞机喜欢什么位置？",
-          "optimizedContextBlock": "## Context Minor GC Working Set\nActive raw turns: t1 user: 以后默认给我中文，结论优先。 t3 user: 再记一下：我坐飞机喜欢靠过道。 t7 user: 代码 detour 已经结束。回到偏好：我坐飞机喜欢什么位置？",
-          "effectiveContextBlock": "## Context Minor GC Working Set\nActive raw turns:\nt1 user: 以后默认给我中文，结论优先。\nt3 user: 再记一下：我坐飞机喜欢靠过道。\nt7 user: 代码 detour 已经结束。回到偏好：我坐飞机喜欢什么位置？",
+          "optimizedContextBlock": "## Context Minor GC Working Set\nRecent raw context: t1 user: 以后默认给我中文，结论优先。 t3 user: 再记一下：我坐飞机喜欢靠过道。 t7 user: 代码 detour 已经结束。回到偏好：我坐飞机喜欢什么位置？",
+          "effectiveContextBlock": "## Context Minor GC Working Set\nRecent raw context:\nt1 user: 以后默认给我中文，结论优先。\nt3 user: 再记一下：我坐飞机喜欢靠过道。\nt7 user: 代码 detour 已经结束。回到偏好：我坐飞机喜欢什么位置？",
           "baselineContextEstimate": 62,
-          "optimizedContextEstimate": 35,
-          "effectiveContextEstimate": 35,
-          "promptReductionRatio": 0.4355,
+          "optimizedContextEstimate": 36,
+          "effectiveContextEstimate": 36,
+          "promptReductionRatio": 0.4194,
           "applied": true,
           "decisionTransport": "codex_exec",
           "relation": "switch",
           "event": {
             "schema_version": "umc.dialogue-working-set-shadow.v1",
-            "event_id": "shadow-1776488183947-1tadic",
-            "generated_at": "2026-04-18T04:56:23.947Z",
+            "event_id": "shadow-1776559078952-cuditq",
+            "generated_at": "2026-04-19T00:37:58.952Z",
             "session_key": "codex:codex-minor-gc-seat-preference",
             "agent_id": "main",
             "query": "我坐飞机喜欢什么位置？",
@@ -224,7 +224,7 @@
             ],
             "decision": {
               "relation": "switch",
-              "confidence": 0.96,
+              "confidence": 0.98,
               "evict_turn_ids": [
                 "t2",
                 "t4",
@@ -235,16 +235,16 @@
                 "t1",
                 "t3"
               ],
-              "archive_summary": "用户长期偏好：默认使用中文，结论优先；坐飞机偏好靠过道。此前一轮代码要求“只做 shadow，不接管主路径”已结束，不需继续保留为当前工作集原始上下文。",
-              "reasoning_summary": "最新问题是在询问已给出的长期偏好，当前有效上下文只依赖用户的语言/回答风格偏好和座位偏好。代码 detour 话题已明确结束，属于已解决且与当前问题无关，适合从下一轮原始提示中移除；相关 durable 偏好应转为语义 pin 保留。"
+              "archive_summary": "用户长期偏好已明确并可压缩保留：默认中文、结论优先；坐飞机偏好靠过道。中间的代码 detour/shadow 话题已明确结束，可移出下一轮原始工作集。",
+              "reasoning_summary": "最新用户问题回到“坐飞机喜欢什么位置”，与 t3 的 durable preference 直接相关；代码 shadow/detour 话题在 t7 已声明结束，属于已解决的旁支。为缩小下一轮 raw prompt，保留用户长期偏好为语义 pin，移除确认性回复和已结束的代码块。"
             },
             "decision_transport": "codex_exec",
             "snapshot": {
               "applied": {
                 "relation": "switch",
-                "confidence": 0.96,
-                "archiveSummary": "用户长期偏好：默认使用中文，结论优先；坐飞机偏好靠过道。此前一轮代码要求“只做 shadow，不接管主路径”已结束，不需继续保留为当前工作集原始上下文。",
-                "reasoningSummary": "最新问题是在询问已给出的长期偏好，当前有效上下文只依赖用户的语言/回答风格偏好和座位偏好。代码 detour 话题已明确结束，属于已解决且与当前问题无关，适合从下一轮原始提示中移除；相关 durable 偏好应转为语义 pin 保留。",
+                "confidence": 0.98,
+                "archiveSummary": "用户长期偏好已明确并可压缩保留：默认中文、结论优先；坐飞机偏好靠过道。中间的代码 detour/shadow 话题已明确结束，可移出下一轮原始工作集。",
+                "reasoningSummary": "最新用户问题回到“坐飞机喜欢什么位置”，与 t3 的 durable preference 直接相关；代码 shadow/detour 话题在 t7 已声明结束，属于已解决的旁支。为缩小下一轮 raw prompt，保留用户长期偏好为语义 pin，移除确认性回复和已结束的代码块。",
                 "latestUserTurnId": "t7",
                 "pinTurnIds": [
                   "t1",
@@ -323,12 +323,12 @@
               "baselineRawTranscript": "t1 user: 以后默认给我中文，结论优先。\nt2 assistant: 记住了。\nt3 user: 再记一下：我坐飞机喜欢靠过道。\nt4 assistant: 记住了，你坐飞机偏好靠过道。\nt5 user: 插一句代码：这轮先只做 shadow，不接管主路径。\nt6 assistant: 收到，这轮代码 detour 先只做 shadow。\nt7 user: 代码 detour 已经结束。回到偏好：我坐飞机喜欢什么位置？",
               "shadowRawTranscript": "t1 user: 以后默认给我中文，结论优先。\nt3 user: 再记一下：我坐飞机喜欢靠过道。\nt7 user: 代码 detour 已经结束。回到偏好：我坐飞机喜欢什么位置？",
               "semanticPinNotes": [],
-              "archiveSummary": "用户长期偏好：默认使用中文，结论优先；坐飞机偏好靠过道。此前一轮代码要求“只做 shadow，不接管主路径”已结束，不需继续保留为当前工作集原始上下文。",
+              "archiveSummary": "用户长期偏好已明确并可压缩保留：默认中文、结论优先；坐飞机偏好靠过道。中间的代码 detour/shadow 话题已明确结束，可移出下一轮原始工作集。",
               "injectedArchiveSummary": "",
               "baselinePromptEstimate": 54,
               "shadowRawPromptEstimate": 23,
-              "shadowPackageEstimate": 27,
-              "shadowPackageText": "Active raw turns:\nt1 user: 以后默认给我中文，结论优先。\nt3 user: 再记一下：我坐飞机喜欢靠过道。\nt7 user: 代码 detour 已经结束。回到偏好：我坐飞机喜欢什么位置？"
+              "shadowPackageEstimate": 28,
+              "shadowPackageText": "Recent raw context:\nt1 user: 以后默认给我中文，结论优先。\nt3 user: 再记一下：我坐飞机喜欢靠过道。\nt7 user: 代码 detour 已经结束。回到偏好：我坐飞机喜欢什么位置？"
             },
             "scorecard": {
               "relation": "switch",
@@ -338,13 +338,13 @@
               "pinCount": 2,
               "baselinePromptEstimate": 54,
               "shadowRawPromptEstimate": 23,
-              "shadowPackageEstimate": 27,
+              "shadowPackageEstimate": 28,
               "rawReductionRatio": 0.5429,
-              "packageReductionRatio": 0.5,
+              "packageReductionRatio": 0.4815,
               "candidateLoadElapsedMs": 0,
               "assemblyBuildElapsedMs": 0,
-              "decisionElapsedMs": 20324,
-              "totalElapsedMs": 20327,
+              "decisionElapsedMs": 13520,
+              "totalElapsedMs": 13522,
               "guardedEnabled": true,
               "guardedApplied": true,
               "guardedReason": "guarded_candidate",
@@ -382,23 +382,29 @@
               ]
             },
             "timings": {
-              "totalElapsedMs": 20327,
-              "decisionElapsedMs": 20324
+              "totalElapsedMs": 13522,
+              "decisionElapsedMs": 13520
             },
             "artifact_paths": {
-              "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc-live-2026-04-18/exports/codex-codex-minor-gc-seat-preference-shadow-1776488183947-1tadic.json",
+              "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc-live-2026-04-18/exports/codex-codex-minor-gc-seat-preference-shadow-1776559078952-cuditq.json",
               "summary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc-live-2026-04-18/telemetry.jsonl"
             }
           },
           "codexGuardReason": "codex_packaged_guard",
-          "packagedContextBlock": "## Context Minor GC Working Set\nActive raw turns:\nt1 user: 以后默认给我中文，结论优先。\nt3 user: 再记一下：我坐飞机喜欢靠过道。\nt7 user: 代码 detour 已经结束。回到偏好：我坐飞机喜欢什么位置？",
-          "packagedContextEstimate": 35,
+          "packagedContextBlock": "## Context Minor GC Working Set\nRecent raw context:\nt1 user: 以后默认给我中文，结论优先。\nt3 user: 再记一下：我坐飞机喜欢靠过道。\nt7 user: 代码 detour 已经结束。回到偏好：我坐飞机喜欢什么位置？",
+          "packagedContextEstimate": 36,
+          "artifactPaths": {
+            "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc-live-2026-04-18/exports/codex-codex-minor-gc-seat-preference-shadow-1776559078952-cuditq-codex-packaged.json",
+            "summary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc-live-2026-04-18/codex-telemetry.jsonl",
+            "shadowExport": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc-live-2026-04-18/exports/codex-codex-minor-gc-seat-preference-shadow-1776559078952-cuditq.json",
+            "shadowSummary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc-live-2026-04-18/telemetry.jsonl"
+          },
           "baselinePromptBlock": "## Recent Conversation Context t1 user: 以后默认给我中文，结论优先。 t2 assistant: 记住了。 t3 user: 再记一下：我坐飞机喜欢靠过道。 t4 assistant: 记住了，你坐飞机偏好靠过道。 t5 user: 插一句代码：这轮先只做 shadow，不接管主路径。 t6 assistant: 收到，这轮代码 detour 先只做 shadow。 t7 user: 代码 detour 已经结束。回到偏好：我坐飞机喜欢什么位置？",
-          "optimizedPromptBlock": "## Context Minor GC Working Set Active raw turns: t1 user: 以后默认给我中文，结论优先。 t3 user: 再记一下：我坐飞机喜欢靠过道。 t7 user: 代码 detour 已经结束。回到偏好：我坐飞机喜欢什么位置？",
-          "effectivePromptBlock": "## Context Minor GC Working Set Active raw turns: t1 user: 以后默认给我中文，结论优先。 t3 user: 再记一下：我坐飞机喜欢靠过道。 t7 user: 代码 detour 已经结束。回到偏好：我坐飞机喜欢什么位置？",
+          "optimizedPromptBlock": "## Context Minor GC Working Set Recent raw context: t1 user: 以后默认给我中文，结论优先。 t3 user: 再记一下：我坐飞机喜欢靠过道。 t7 user: 代码 detour 已经结束。回到偏好：我坐飞机喜欢什么位置？",
+          "effectivePromptBlock": "## Context Minor GC Working Set Recent raw context: t1 user: 以后默认给我中文，结论优先。 t3 user: 再记一下：我坐飞机喜欢靠过道。 t7 user: 代码 detour 已经结束。回到偏好：我坐飞机喜欢什么位置？",
           "baselinePromptEstimate": 62,
-          "optimizedPromptEstimate": 35,
-          "effectivePromptEstimate": 35
+          "optimizedPromptEstimate": 36,
+          "effectivePromptEstimate": 36
         }
       }
     },
@@ -408,11 +414,11 @@
       "expectedGuardedApplied": true,
       "baseline": {
         "answer": "你刚才要求我默认先给结论，再展开细节。",
-        "elapsedMs": 9862,
+        "elapsedMs": 5111,
         "usage": {
-          "input_tokens": 10930,
-          "cached_input_tokens": 9600,
-          "output_tokens": 90
+          "input_tokens": 11304,
+          "cached_input_tokens": 2432,
+          "output_tokens": 53
         },
         "passed": true,
         "checks": [
@@ -443,12 +449,12 @@
         "promptEstimate": 46
       },
       "minorGc": {
-        "answer": "先给结论，再展开细节。",
-        "elapsedMs": 9298,
+        "answer": "你刚才要求我以后默认先给结论，再展开细节。",
+        "elapsedMs": 5396,
         "usage": {
-          "input_tokens": 10930,
+          "input_tokens": 11304,
           "cached_input_tokens": 2432,
-          "output_tokens": 59
+          "output_tokens": 56
         },
         "passed": true,
         "checks": [
@@ -456,7 +462,7 @@
             "name": "expected_any",
             "passed": true,
             "expected": [],
-            "actual": "先给结论，再展开细节。"
+            "actual": "你刚才要求我以后默认先给结论，再展开细节。"
           },
           {
             "name": "expected_all",
@@ -465,7 +471,7 @@
               "先给",
               "再展开"
             ],
-            "actual": "先给结论，再展开细节。"
+            "actual": "你刚才要求我以后默认先给结论，再展开细节。"
           },
           {
             "name": "forbidden_any",
@@ -473,7 +479,7 @@
             "expected": [
               "不知道"
             ],
-            "actual": "先给结论，再展开细节。"
+            "actual": "你刚才要求我以后默认先给结论，再展开细节。"
           }
         ],
         "context_minor_gc": {
@@ -532,19 +538,19 @@
             }
           ],
           "baselineContextBlock": "## Recent Conversation Context\nt1 user: 以后默认先给我结论，再展开细节。\nt2 assistant: 记住了，以后默认先给结论。\nt3 user: 现在切到代码：这轮先只做 shadow，不接管主路径。\nt4 assistant: 收到，这轮先只做 shadow。\nt5 user: 代码先到这。刚才我要求你默认怎么组织回复？",
-          "optimizedContextBlock": "## Context Minor GC Working Set\nActive raw turns: t5 user: 代码先到这。刚才我要求你默认怎么组织回复？ Semantic pins: user: 以后默认先给我结论，再展开细节。 user: 现在切到代码：这轮先只做 shadow，不接管主路径。",
-          "effectiveContextBlock": "## Context Minor GC Working Set\nActive raw turns:\nt5 user: 代码先到这。刚才我要求你默认怎么组织回复？\n\nSemantic pins:\n- user: 以后默认先给我结论，再展开细节。\n- user: 现在切到代码：这轮先只做 shadow，不接管主路径。",
+          "optimizedContextBlock": "## Context Minor GC Working Set\nRecent raw context: t1 user: 以后默认先给我结论，再展开细节。 t5 user: 代码先到这。刚才我要求你默认怎么组织回复？",
+          "effectiveContextBlock": "## Context Minor GC Working Set\nRecent raw context:\nt1 user: 以后默认先给我结论，再展开细节。\nt5 user: 代码先到这。刚才我要求你默认怎么组织回复？",
           "baselineContextEstimate": 46,
-          "optimizedContextEstimate": 38,
-          "effectiveContextEstimate": 39,
-          "promptReductionRatio": 0.1522,
+          "optimizedContextEstimate": 27,
+          "effectiveContextEstimate": 27,
+          "promptReductionRatio": 0.413,
           "applied": true,
           "decisionTransport": "codex_exec",
           "relation": "switch",
           "event": {
             "schema_version": "umc.dialogue-working-set-shadow.v1",
-            "event_id": "shadow-1776488218276-xnyss7",
-            "generated_at": "2026-04-18T04:56:58.276Z",
+            "event_id": "shadow-1776559100513-gbgsyd",
+            "generated_at": "2026-04-19T00:38:20.513Z",
             "session_key": "codex:codex-minor-gc-style-pin-survives-detour",
             "agent_id": "main",
             "query": "刚才我要求你默认怎么组织回复？",
@@ -584,57 +590,56 @@
             ],
             "decision": {
               "relation": "switch",
-              "confidence": 0.96,
+              "confidence": 0.95,
               "evict_turn_ids": [
-                "t1",
                 "t2",
                 "t3",
                 "t4"
               ],
               "pin_turn_ids": [
-                "t1",
-                "t3"
+                "t1"
               ],
-              "archive_summary": "Pinned durable reply-style preference from t1: default to giving the conclusion first, then expanding details. Pinned session-scoped coding constraint from t3: for this round, only do shadow work and do not take over the main path. Assistant acknowledgments in t2 and t4 added no extra information.",
-              "reasoning_summary": "The active focus switched from a code-execution constraint to recalling a prior communication preference. The latest user turn can be answered from compact pinned semantics rather than keeping the earlier raw block. The reply-organization rule is durable and should survive as a pin. The shadow-only instruction is a still-relevant session constraint, so preserve it semantically even if its raw turn leaves. The assistant confirmation turns are redundant eviction candidates."
+              "archive_summary": "User preference established: default response structure should give the conclusion first, then expand with details. A temporary coding instruction followed: this round should only do shadow work and not take over the main path; that detour appears inactive now.",
+              "reasoning_summary": "The latest user turn asks to recall an earlier durable reply-format preference, so that preference should survive as a semantic pin. The shadow/main-path coding detour is a resolved side instruction and is not needed for the next turn. Because the active focus returns to the earlier preference and the detour can drop from the raw working set, this is a switch."
             },
             "decision_transport": "codex_exec",
             "snapshot": {
               "applied": {
                 "relation": "switch",
-                "confidence": 0.96,
-                "archiveSummary": "Pinned durable reply-style preference from t1: default to giving the conclusion first, then expanding details. Pinned session-scoped coding constraint from t3: for this round, only do shadow work and do not take over the main path. Assistant acknowledgments in t2 and t4 added no extra information.",
-                "reasoningSummary": "The active focus switched from a code-execution constraint to recalling a prior communication preference. The latest user turn can be answered from compact pinned semantics rather than keeping the earlier raw block. The reply-organization rule is durable and should survive as a pin. The shadow-only instruction is a still-relevant session constraint, so preserve it semantically even if its raw turn leaves. The assistant confirmation turns are redundant eviction candidates.",
+                "confidence": 0.95,
+                "archiveSummary": "User preference established: default response structure should give the conclusion first, then expand with details. A temporary coding instruction followed: this round should only do shadow work and not take over the main path; that detour appears inactive now.",
+                "reasoningSummary": "The latest user turn asks to recall an earlier durable reply-format preference, so that preference should survive as a semantic pin. The shadow/main-path coding detour is a resolved side instruction and is not needed for the next turn. Because the active focus returns to the earlier preference and the detour can drop from the raw working set, this is a switch.",
                 "latestUserTurnId": "t5",
                 "pinTurnIds": [
-                  "t1",
-                  "t3"
+                  "t1"
                 ],
-                "pinnedOnlyTurnIds": [
-                  "t1",
-                  "t3"
-                ],
+                "pinnedOnlyTurnIds": [],
                 "requestedEvictTurnIds": [
-                  "t1",
                   "t2",
                   "t3",
                   "t4"
                 ],
                 "blockedEvictTurnIds": [],
                 "appliedEvictTurnIds": [
-                  "t1",
                   "t2",
                   "t3",
                   "t4"
                 ],
                 "keepTurnIds": [
+                  "t1",
                   "t5"
                 ],
                 "baselineTokens": 25,
-                "keptTokens": 6,
-                "prunedTokens": 19,
-                "reductionRatio": 0.76,
+                "keptTokens": 10,
+                "prunedTokens": 15,
+                "reductionRatio": 0.6,
                 "keepTurns": [
+                  {
+                    "id": "t1",
+                    "role": "user",
+                    "content": "以后默认先给我结论，再展开细节。",
+                    "tokenEstimate": 4
+                  },
                   {
                     "id": "t5",
                     "role": "user",
@@ -643,12 +648,6 @@
                   }
                 ],
                 "evictedTurns": [
-                  {
-                    "id": "t1",
-                    "role": "user",
-                    "content": "以后默认先给我结论，再展开细节。",
-                    "tokenEstimate": 4
-                  },
                   {
                     "id": "t2",
                     "role": "assistant",
@@ -670,39 +669,36 @@
                 ]
               },
               "baselineRawTranscript": "t1 user: 以后默认先给我结论，再展开细节。\nt2 assistant: 记住了，以后默认先给结论。\nt3 user: 现在切到代码：这轮先只做 shadow，不接管主路径。\nt4 assistant: 收到，这轮先只做 shadow。\nt5 user: 代码先到这。刚才我要求你默认怎么组织回复？",
-              "shadowRawTranscript": "t5 user: 代码先到这。刚才我要求你默认怎么组织回复？",
-              "semanticPinNotes": [
-                "user: 以后默认先给我结论，再展开细节。",
-                "user: 现在切到代码：这轮先只做 shadow，不接管主路径。"
-              ],
-              "archiveSummary": "Pinned durable reply-style preference from t1: default to giving the conclusion first, then expanding details. Pinned session-scoped coding constraint from t3: for this round, only do shadow work and do not take over the main path. Assistant acknowledgments in t2 and t4 added no extra information.",
+              "shadowRawTranscript": "t1 user: 以后默认先给我结论，再展开细节。\nt5 user: 代码先到这。刚才我要求你默认怎么组织回复？",
+              "semanticPinNotes": [],
+              "archiveSummary": "User preference established: default response structure should give the conclusion first, then expand with details. A temporary coding instruction followed: this round should only do shadow work and not take over the main path; that detour appears inactive now.",
               "injectedArchiveSummary": "",
               "baselinePromptEstimate": 38,
-              "shadowRawPromptEstimate": 8,
-              "shadowPackageEstimate": 30,
-              "shadowPackageText": "Active raw turns:\nt5 user: 代码先到这。刚才我要求你默认怎么组织回复？\n\nSemantic pins:\nuser: 以后默认先给我结论，再展开细节。\nuser: 现在切到代码：这轮先只做 shadow，不接管主路径。"
+              "shadowRawPromptEstimate": 14,
+              "shadowPackageEstimate": 19,
+              "shadowPackageText": "Recent raw context:\nt1 user: 以后默认先给我结论，再展开细节。\nt5 user: 代码先到这。刚才我要求你默认怎么组织回复？"
             },
             "scorecard": {
               "relation": "switch",
               "baselineTurnCount": 5,
-              "keptTurnCount": 1,
-              "evictedTurnCount": 4,
-              "pinCount": 2,
+              "keptTurnCount": 2,
+              "evictedTurnCount": 3,
+              "pinCount": 1,
               "baselinePromptEstimate": 38,
-              "shadowRawPromptEstimate": 8,
-              "shadowPackageEstimate": 30,
-              "rawReductionRatio": 0.76,
-              "packageReductionRatio": 0.2105,
+              "shadowRawPromptEstimate": 14,
+              "shadowPackageEstimate": 19,
+              "rawReductionRatio": 0.6,
+              "packageReductionRatio": 0.5,
               "candidateLoadElapsedMs": 0,
               "assemblyBuildElapsedMs": 0,
-              "decisionElapsedMs": 20932,
-              "totalElapsedMs": 20933,
+              "decisionElapsedMs": 10121,
+              "totalElapsedMs": 10122,
               "guardedEnabled": true,
               "guardedApplied": true,
               "guardedReason": "guarded_candidate",
-              "guardedMessageCount": 1,
-              "guardedCarryForwardEstimate": 24,
-              "guardedFilteredMessageEstimate": 6
+              "guardedMessageCount": 2,
+              "guardedCarryForwardEstimate": 0,
+              "guardedFilteredMessageEstimate": 10
             },
             "guarded": {
               "enabled": true,
@@ -711,38 +707,47 @@
               "filteredMessages": [
                 {
                   "role": "user",
+                  "content": "以后默认先给我结论，再展开细节。"
+                },
+                {
+                  "role": "user",
                   "content": "代码先到这。刚才我要求你默认怎么组织回复？"
                 }
               ],
-              "filteredMessageCount": 1,
-              "filteredMessageTokenEstimate": 6,
-              "carryForwardText": "Conversation carry-forward pins:\n- user: 以后默认先给我结论，再展开细节。\n- user: 现在切到代码：这轮先只做 shadow，不接管主路径。",
-              "carryForwardEstimate": 24,
+              "filteredMessageCount": 2,
+              "filteredMessageTokenEstimate": 10,
+              "carryForwardText": "",
+              "carryForwardEstimate": 0,
               "evictedSourceIndices": [
-                0,
                 1,
                 2,
                 3
               ]
             },
             "timings": {
-              "totalElapsedMs": 20933,
-              "decisionElapsedMs": 20932
+              "totalElapsedMs": 10122,
+              "decisionElapsedMs": 10121
             },
             "artifact_paths": {
-              "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc-live-2026-04-18/exports/codex-codex-minor-gc-style-pin-survives-detour-shadow-1776488218276-xnyss7.json",
+              "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc-live-2026-04-18/exports/codex-codex-minor-gc-style-pin-survives-detour-shadow-1776559100513-gbgsyd.json",
               "summary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc-live-2026-04-18/telemetry.jsonl"
             }
           },
           "codexGuardReason": "codex_packaged_guard",
-          "packagedContextBlock": "## Context Minor GC Working Set\nActive raw turns:\nt5 user: 代码先到这。刚才我要求你默认怎么组织回复？\n\nSemantic pins:\n- user: 以后默认先给我结论，再展开细节。\n- user: 现在切到代码：这轮先只做 shadow，不接管主路径。",
-          "packagedContextEstimate": 39,
+          "packagedContextBlock": "## Context Minor GC Working Set\nRecent raw context:\nt1 user: 以后默认先给我结论，再展开细节。\nt5 user: 代码先到这。刚才我要求你默认怎么组织回复？",
+          "packagedContextEstimate": 27,
+          "artifactPaths": {
+            "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc-live-2026-04-18/exports/codex-codex-minor-gc-style-pin-survives-detour-shadow-1776559100513-gbgsyd-codex-packaged.json",
+            "summary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc-live-2026-04-18/codex-telemetry.jsonl",
+            "shadowExport": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc-live-2026-04-18/exports/codex-codex-minor-gc-style-pin-survives-detour-shadow-1776559100513-gbgsyd.json",
+            "shadowSummary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc-live-2026-04-18/telemetry.jsonl"
+          },
           "baselinePromptBlock": "## Recent Conversation Context t1 user: 以后默认先给我结论，再展开细节。 t2 assistant: 记住了，以后默认先给结论。 t3 user: 现在切到代码：这轮先只做 shadow，不接管主路径。 t4 assistant: 收到，这轮先只做 shadow。 t5 user: 代码先到这。刚才我要求你默认怎么组织回复？",
-          "optimizedPromptBlock": "## Context Minor GC Working Set Active raw turns: t5 user: 代码先到这。刚才我要求你默认怎么组织回复？ Semantic pins: user: 以后默认先给我结论，再展开细节。 user: 现在切到代码：这轮先只做 shadow，不接管主路径。",
-          "effectivePromptBlock": "## Context Minor GC Working Set Active raw turns: t5 user: 代码先到这。刚才我要求你默认怎么组织回复？ Semantic pins: - user: 以后默认先给我结论，再展开细节。 - user: 现在切到代码：这轮先只做 shadow，不接管主路径。",
+          "optimizedPromptBlock": "## Context Minor GC Working Set Recent raw context: t1 user: 以后默认先给我结论，再展开细节。 t5 user: 代码先到这。刚才我要求你默认怎么组织回复？",
+          "effectivePromptBlock": "## Context Minor GC Working Set Recent raw context: t1 user: 以后默认先给我结论，再展开细节。 t5 user: 代码先到这。刚才我要求你默认怎么组织回复？",
           "baselinePromptEstimate": 46,
-          "optimizedPromptEstimate": 38,
-          "effectivePromptEstimate": 39
+          "optimizedPromptEstimate": 27,
+          "effectivePromptEstimate": 27
         }
       }
     },
@@ -752,11 +757,11 @@
       "expectedGuardedApplied": false,
       "baseline": {
         "answer": "版本、安装、回滚。",
-        "elapsedMs": 8394,
+        "elapsedMs": 5950,
         "usage": {
-          "input_tokens": 10899,
+          "input_tokens": 11272,
           "cached_input_tokens": 2432,
-          "output_tokens": 36
+          "output_tokens": 73
         },
         "passed": true,
         "checks": [
@@ -789,11 +794,11 @@
       },
       "minorGc": {
         "answer": "版本、安装、回滚。",
-        "elapsedMs": 9015,
+        "elapsedMs": 7400,
         "usage": {
-          "input_tokens": 10899,
+          "input_tokens": 11272,
           "cached_input_tokens": 2432,
-          "output_tokens": 41
+          "output_tokens": 40
         },
         "passed": true,
         "checks": [
@@ -860,10 +865,10 @@
             }
           ],
           "baselineContextBlock": "## Recent Conversation Context\nt1 user: 把发布验收拆成版本、安装、回滚三部分。\nt2 user: 插一句，我的时区是 Asia/Shanghai，记住。\nt3 user: 先回到刚才的发布验收，那三部分是什么？",
-          "optimizedContextBlock": "## Context Minor GC Working Set\nActive raw turns: t1 user: 把发布验收拆成版本、安装、回滚三部分。 t3 user: 先回到刚才的发布验收，那三部分是什么？ Semantic pins: user: 插一句，我的时区是 Asia/Shanghai，记住。",
+          "optimizedContextBlock": "## Context Minor GC Working Set\nRecent raw context: t1 user: 把发布验收拆成版本、安装、回滚三部分。 t3 user: 先回到刚才的发布验收，那三部分是什么？",
           "effectiveContextBlock": "## Recent Conversation Context\nt1 user: 把发布验收拆成版本、安装、回滚三部分。\nt2 user: 插一句，我的时区是 Asia/Shanghai，记住。\nt3 user: 先回到刚才的发布验收，那三部分是什么？",
           "baselineContextEstimate": 32,
-          "optimizedContextEstimate": 39,
+          "optimizedContextEstimate": 28,
           "effectiveContextEstimate": 32,
           "promptReductionRatio": 0,
           "applied": false,
@@ -871,8 +876,8 @@
           "relation": "continue",
           "event": {
             "schema_version": "umc.dialogue-working-set-shadow.v1",
-            "event_id": "shadow-1776488249074-ff0tlq",
-            "generated_at": "2026-04-18T04:57:29.074Z",
+            "event_id": "shadow-1776559116033-c7e866",
+            "generated_at": "2026-04-19T00:38:36.033Z",
             "session_key": "codex:codex-minor-gc-branch-negative",
             "agent_id": "main",
             "query": "先回到刚才的发布验收，那三部分是什么？",
@@ -902,23 +907,23 @@
             ],
             "decision": {
               "relation": "continue",
-              "confidence": 0.96,
+              "confidence": 0.97,
               "evict_turn_ids": [
                 "t2"
               ],
               "pin_turn_ids": [
                 "t2"
               ],
-              "archive_summary": "The user defined release acceptance as three parts: version, installation, and rollback. The user’s timezone is Asia/Shanghai and should be preserved as a durable fact.",
-              "reasoning_summary": "The latest turn returns to the original release-acceptance topic and depends directly on t1, so this stays a continue. t1 should remain raw because it contains the answer context the assistant needs next. t2 is a resolved side note with durable preference/fact content, so its raw turn can leave the next-turn prompt while its timezone fact is preserved as a semantic pin."
+              "archive_summary": "Durable user fact: user's timezone is Asia/Shanghai. Active topic remains release acceptance split into three parts: version, installation, rollback.",
+              "reasoning_summary": "The latest turn returns to the original release-acceptance topic and depends directly on t1, so t1 should remain raw. t2 is a resolved side note with durable preference/fact value, so its raw turn can leave the next-turn prompt while its semantic content is preserved as a pin."
             },
             "decision_transport": "codex_exec",
             "snapshot": {
               "applied": {
                 "relation": "continue",
-                "confidence": 0.96,
-                "archiveSummary": "The user defined release acceptance as three parts: version, installation, and rollback. The user’s timezone is Asia/Shanghai and should be preserved as a durable fact.",
-                "reasoningSummary": "The latest turn returns to the original release-acceptance topic and depends directly on t1, so this stays a continue. t1 should remain raw because it contains the answer context the assistant needs next. t2 is a resolved side note with durable preference/fact content, so its raw turn can leave the next-turn prompt while its timezone fact is preserved as a semantic pin.",
+                "confidence": 0.97,
+                "archiveSummary": "Durable user fact: user's timezone is Asia/Shanghai. Active topic remains release acceptance split into three parts: version, installation, rollback.",
+                "reasoningSummary": "The latest turn returns to the original release-acceptance topic and depends directly on t1, so t1 should remain raw. t2 is a resolved side note with durable preference/fact value, so its raw turn can leave the next-turn prompt while its semantic content is preserved as a pin.",
                 "latestUserTurnId": "t3",
                 "pinTurnIds": [
                   "t2"
@@ -969,12 +974,12 @@
               "semanticPinNotes": [
                 "user: 插一句，我的时区是 Asia/Shanghai，记住。"
               ],
-              "archiveSummary": "The user defined release acceptance as three parts: version, installation, and rollback. The user’s timezone is Asia/Shanghai and should be preserved as a durable fact.",
+              "archiveSummary": "Durable user fact: user's timezone is Asia/Shanghai. Active topic remains release acceptance split into three parts: version, installation, rollback.",
               "injectedArchiveSummary": "",
               "baselinePromptEstimate": 24,
               "shadowRawPromptEstimate": 15,
-              "shadowPackageEstimate": 31,
-              "shadowPackageText": "Active raw turns:\nt1 user: 把发布验收拆成版本、安装、回滚三部分。\nt3 user: 先回到刚才的发布验收，那三部分是什么？\n\nSemantic pins:\nuser: 插一句，我的时区是 Asia/Shanghai，记住。"
+              "shadowPackageEstimate": 20,
+              "shadowPackageText": "Recent raw context:\nt1 user: 把发布验收拆成版本、安装、回滚三部分。\nt3 user: 先回到刚才的发布验收，那三部分是什么？"
             },
             "scorecard": {
               "relation": "continue",
@@ -984,16 +989,16 @@
               "pinCount": 1,
               "baselinePromptEstimate": 24,
               "shadowRawPromptEstimate": 15,
-              "shadowPackageEstimate": 31,
+              "shadowPackageEstimate": 20,
               "rawReductionRatio": 0.4118,
-              "packageReductionRatio": -0.2917,
+              "packageReductionRatio": 0.1667,
               "candidateLoadElapsedMs": 0,
               "assemblyBuildElapsedMs": 0,
-              "decisionElapsedMs": 13422,
-              "totalElapsedMs": 13424,
+              "decisionElapsedMs": 10860,
+              "totalElapsedMs": 10864,
               "guardedEnabled": true,
               "guardedApplied": false,
-              "guardedReason": "relation_not_allowed",
+              "guardedReason": "continue_pin_only_not_allowed",
               "guardedMessageCount": 3,
               "guardedCarryForwardEstimate": 0,
               "guardedFilteredMessageEstimate": 17
@@ -1001,7 +1006,7 @@
             "guarded": {
               "enabled": true,
               "applied": false,
-              "reason": "relation_not_allowed",
+              "reason": "continue_pin_only_not_allowed",
               "filteredMessages": [
                 {
                   "role": "user",
@@ -1023,22 +1028,28 @@
               "evictedSourceIndices": []
             },
             "timings": {
-              "totalElapsedMs": 13424,
-              "decisionElapsedMs": 13422
+              "totalElapsedMs": 10864,
+              "decisionElapsedMs": 10860
             },
             "artifact_paths": {
-              "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc-live-2026-04-18/exports/codex-codex-minor-gc-branch-negative-shadow-1776488249074-ff0tlq.json",
+              "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc-live-2026-04-18/exports/codex-codex-minor-gc-branch-negative-shadow-1776559116033-c7e866.json",
               "summary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc-live-2026-04-18/telemetry.jsonl"
             }
           },
-          "codexGuardReason": "relation_not_allowed",
-          "packagedContextBlock": "## Context Minor GC Working Set\nActive raw turns:\nt1 user: 把发布验收拆成版本、安装、回滚三部分。\nt3 user: 先回到刚才的发布验收，那三部分是什么？\n\nSemantic pins:\n- user: 插一句，我的时区是 Asia/Shanghai，记住。",
-          "packagedContextEstimate": 40,
+          "codexGuardReason": "continue_pin_only_not_allowed",
+          "packagedContextBlock": "## Context Minor GC Working Set\nRecent raw context:\nt1 user: 把发布验收拆成版本、安装、回滚三部分。\nt3 user: 先回到刚才的发布验收，那三部分是什么？",
+          "packagedContextEstimate": 28,
+          "artifactPaths": {
+            "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc-live-2026-04-18/exports/codex-codex-minor-gc-branch-negative-shadow-1776559116033-c7e866-codex-packaged.json",
+            "summary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc-live-2026-04-18/codex-telemetry.jsonl",
+            "shadowExport": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc-live-2026-04-18/exports/codex-codex-minor-gc-branch-negative-shadow-1776559116033-c7e866.json",
+            "shadowSummary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc-live-2026-04-18/telemetry.jsonl"
+          },
           "baselinePromptBlock": "## Recent Conversation Context t1 user: 把发布验收拆成版本、安装、回滚三部分。 t2 user: 插一句，我的时区是 Asia/Shanghai，记住。 t3 user: 先回到刚才的发布验收，那三部分是什么？",
-          "optimizedPromptBlock": "## Context Minor GC Working Set Active raw turns: t1 user: 把发布验收拆成版本、安装、回滚三部分。 t3 user: 先回到刚才的发布验收，那三部分是什么？ Semantic pins: user: 插一句，我的时区是 Asia/Shanghai，记住。",
+          "optimizedPromptBlock": "## Context Minor GC Working Set Recent raw context: t1 user: 把发布验收拆成版本、安装、回滚三部分。 t3 user: 先回到刚才的发布验收，那三部分是什么？",
           "effectivePromptBlock": "## Recent Conversation Context t1 user: 把发布验收拆成版本、安装、回滚三部分。 t2 user: 插一句，我的时区是 Asia/Shanghai，记住。 t3 user: 先回到刚才的发布验收，那三部分是什么？",
           "baselinePromptEstimate": 32,
-          "optimizedPromptEstimate": 39,
+          "optimizedPromptEstimate": 28,
           "effectivePromptEstimate": 32
         }
       }
@@ -1049,11 +1060,11 @@
       "expectedGuardedApplied": false,
       "baseline": {
         "answer": "当前新任务是写 shadow mode 报告，并且报告里还要明确 rollback boundary。",
-        "elapsedMs": 9701,
+        "elapsedMs": 6113,
         "usage": {
-          "input_tokens": 10871,
+          "input_tokens": 11244,
           "cached_input_tokens": 2432,
-          "output_tokens": 50
+          "output_tokens": 53
         },
         "passed": true,
         "checks": [
@@ -1084,12 +1095,12 @@
         "promptEstimate": 30
       },
       "minorGc": {
-        "answer": "当前新任务是写 `shadow mode` 报告，并且报告里要明确 `rollback boundary`。",
-        "elapsedMs": 11518,
+        "answer": "当前新任务是写 shadow mode 报告，并且报告里还要明确 rollback boundary。",
+        "elapsedMs": 6339,
         "usage": {
-          "input_tokens": 10871,
+          "input_tokens": 11244,
           "cached_input_tokens": 2432,
-          "output_tokens": 89
+          "output_tokens": 54
         },
         "passed": true,
         "checks": [
@@ -1097,7 +1108,7 @@
             "name": "expected_any",
             "passed": true,
             "expected": [],
-            "actual": "当前新任务是写 `shadow mode` 报告，并且报告里要明确 `rollback boundary`。"
+            "actual": "当前新任务是写 shadow mode 报告，并且报告里还要明确 rollback boundary。"
           },
           {
             "name": "expected_all",
@@ -1106,7 +1117,7 @@
               "shadow",
               "报告"
             ],
-            "actual": "当前新任务是写 `shadow mode` 报告，并且报告里要明确 `rollback boundary`。"
+            "actual": "当前新任务是写 shadow mode 报告，并且报告里还要明确 rollback boundary。"
           },
           {
             "name": "forbidden_any",
@@ -1114,7 +1125,7 @@
             "expected": [
               "不知道"
             ],
-            "actual": "当前新任务是写 `shadow mode` 报告，并且报告里要明确 `rollback boundary`。"
+            "actual": "当前新任务是写 shadow mode 报告，并且报告里还要明确 rollback boundary。"
           }
         ],
         "context_minor_gc": {
@@ -1155,10 +1166,10 @@
             }
           ],
           "baselineContextBlock": "## Recent Conversation Context\nt1 user: 当前新任务是写 shadow mode 报告。\nt2 user: 报告里还要明确 rollback boundary。\nt3 user: 我们当前新任务是什么？",
-          "optimizedContextBlock": "## Context Minor GC Working Set\nActive raw turns: t1 user: 当前新任务是写 shadow mode 报告。 t2 user: 报告里还要明确 rollback boundary。 t3 user: 我们当前新任务是什么？",
+          "optimizedContextBlock": "## Context Minor GC Working Set\nRecent raw context: t1 user: 当前新任务是写 shadow mode 报告。 t2 user: 报告里还要明确 rollback boundary。 t3 user: 我们当前新任务是什么？",
           "effectiveContextBlock": "## Recent Conversation Context\nt1 user: 当前新任务是写 shadow mode 报告。\nt2 user: 报告里还要明确 rollback boundary。\nt3 user: 我们当前新任务是什么？",
           "baselineContextEstimate": 30,
-          "optimizedContextEstimate": 35,
+          "optimizedContextEstimate": 36,
           "effectiveContextEstimate": 30,
           "promptReductionRatio": 0,
           "applied": false,
@@ -1166,8 +1177,8 @@
           "relation": "continue",
           "event": {
             "schema_version": "umc.dialogue-working-set-shadow.v1",
-            "event_id": "shadow-1776488271515-stpviv",
-            "generated_at": "2026-04-18T04:57:51.515Z",
+            "event_id": "shadow-1776559134302-mh4jo5",
+            "generated_at": "2026-04-19T00:38:54.302Z",
             "session_key": "codex:codex-minor-gc-continue-negative",
             "agent_id": "main",
             "query": "我们当前新任务是什么？",
@@ -1197,19 +1208,19 @@
             ],
             "decision": {
               "relation": "continue",
-              "confidence": 0.99,
+              "confidence": 0.98,
               "evict_turn_ids": [],
               "pin_turn_ids": [],
-              "archive_summary": "Active task remains to write the shadow mode report, with a requirement to explicitly define the rollback boundary.",
-              "reasoning_summary": "The latest user question asks to restate the current active task, and it directly depends on the immediately preceding task-definition turns. Nothing is resolved or irrelevant yet, so those turns should remain raw context rather than being demoted to pins or evicted."
+              "archive_summary": "Active task context remains: the current new task is to write the shadow mode report, and it must explicitly define the rollback boundary.",
+              "reasoning_summary": "The latest user turn asks to restate the current task, which directly depends on t1 and t2. This is the same active topic, so keep those raw turns in the next-turn working set rather than demoting them to pins."
             },
             "decision_transport": "codex_exec",
             "snapshot": {
               "applied": {
                 "relation": "continue",
-                "confidence": 0.99,
-                "archiveSummary": "Active task remains to write the shadow mode report, with a requirement to explicitly define the rollback boundary.",
-                "reasoningSummary": "The latest user question asks to restate the current active task, and it directly depends on the immediately preceding task-definition turns. Nothing is resolved or irrelevant yet, so those turns should remain raw context rather than being demoted to pins or evicted.",
+                "confidence": 0.98,
+                "archiveSummary": "Active task context remains: the current new task is to write the shadow mode report, and it must explicitly define the rollback boundary.",
+                "reasoningSummary": "The latest user turn asks to restate the current task, which directly depends on t1 and t2. This is the same active topic, so keep those raw turns in the next-turn working set rather than demoting them to pins.",
                 "latestUserTurnId": "t3",
                 "pinTurnIds": [],
                 "pinnedOnlyTurnIds": [],
@@ -1250,12 +1261,12 @@
               "baselineRawTranscript": "t1 user: 当前新任务是写 shadow mode 报告。\nt2 user: 报告里还要明确 rollback boundary。\nt3 user: 我们当前新任务是什么？",
               "shadowRawTranscript": "t1 user: 当前新任务是写 shadow mode 报告。\nt2 user: 报告里还要明确 rollback boundary。\nt3 user: 我们当前新任务是什么？",
               "semanticPinNotes": [],
-              "archiveSummary": "Active task remains to write the shadow mode report, with a requirement to explicitly define the rollback boundary.",
+              "archiveSummary": "Active task context remains: the current new task is to write the shadow mode report, and it must explicitly define the rollback boundary.",
               "injectedArchiveSummary": "",
               "baselinePromptEstimate": 23,
               "shadowRawPromptEstimate": 23,
-              "shadowPackageEstimate": 27,
-              "shadowPackageText": "Active raw turns:\nt1 user: 当前新任务是写 shadow mode 报告。\nt2 user: 报告里还要明确 rollback boundary。\nt3 user: 我们当前新任务是什么？"
+              "shadowPackageEstimate": 28,
+              "shadowPackageText": "Recent raw context:\nt1 user: 当前新任务是写 shadow mode 报告。\nt2 user: 报告里还要明确 rollback boundary。\nt3 user: 我们当前新任务是什么？"
             },
             "scorecard": {
               "relation": "continue",
@@ -1265,16 +1276,16 @@
               "pinCount": 0,
               "baselinePromptEstimate": 23,
               "shadowRawPromptEstimate": 23,
-              "shadowPackageEstimate": 27,
+              "shadowPackageEstimate": 28,
               "rawReductionRatio": 0,
-              "packageReductionRatio": -0.1739,
+              "packageReductionRatio": -0.2174,
               "candidateLoadElapsedMs": 0,
               "assemblyBuildElapsedMs": 0,
-              "decisionElapsedMs": 10217,
-              "totalElapsedMs": 10217,
+              "decisionElapsedMs": 8883,
+              "totalElapsedMs": 8884,
               "guardedEnabled": true,
               "guardedApplied": false,
-              "guardedReason": "relation_not_allowed",
+              "guardedReason": "not_enough_evictions",
               "guardedMessageCount": 3,
               "guardedCarryForwardEstimate": 0,
               "guardedFilteredMessageEstimate": 16
@@ -1282,7 +1293,7 @@
             "guarded": {
               "enabled": true,
               "applied": false,
-              "reason": "relation_not_allowed",
+              "reason": "not_enough_evictions",
               "filteredMessages": [
                 {
                   "role": "user",
@@ -1304,23 +1315,818 @@
               "evictedSourceIndices": []
             },
             "timings": {
-              "totalElapsedMs": 10217,
-              "decisionElapsedMs": 10217
+              "totalElapsedMs": 8884,
+              "decisionElapsedMs": 8883
             },
             "artifact_paths": {
-              "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc-live-2026-04-18/exports/codex-codex-minor-gc-continue-negative-shadow-1776488271515-stpviv.json",
+              "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc-live-2026-04-18/exports/codex-codex-minor-gc-continue-negative-shadow-1776559134302-mh4jo5.json",
               "summary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc-live-2026-04-18/telemetry.jsonl"
             }
           },
-          "codexGuardReason": "relation_not_allowed",
-          "packagedContextBlock": "## Context Minor GC Working Set\nActive raw turns:\nt1 user: 当前新任务是写 shadow mode 报告。\nt2 user: 报告里还要明确 rollback boundary。\nt3 user: 我们当前新任务是什么？",
-          "packagedContextEstimate": 35,
+          "codexGuardReason": "not_enough_evictions",
+          "packagedContextBlock": "## Context Minor GC Working Set\nRecent raw context:\nt1 user: 当前新任务是写 shadow mode 报告。\nt2 user: 报告里还要明确 rollback boundary。\nt3 user: 我们当前新任务是什么？",
+          "packagedContextEstimate": 36,
+          "artifactPaths": {
+            "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc-live-2026-04-18/exports/codex-codex-minor-gc-continue-negative-shadow-1776559134302-mh4jo5-codex-packaged.json",
+            "summary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc-live-2026-04-18/codex-telemetry.jsonl",
+            "shadowExport": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc-live-2026-04-18/exports/codex-codex-minor-gc-continue-negative-shadow-1776559134302-mh4jo5.json",
+            "shadowSummary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc-live-2026-04-18/telemetry.jsonl"
+          },
           "baselinePromptBlock": "## Recent Conversation Context t1 user: 当前新任务是写 shadow mode 报告。 t2 user: 报告里还要明确 rollback boundary。 t3 user: 我们当前新任务是什么？",
-          "optimizedPromptBlock": "## Context Minor GC Working Set Active raw turns: t1 user: 当前新任务是写 shadow mode 报告。 t2 user: 报告里还要明确 rollback boundary。 t3 user: 我们当前新任务是什么？",
+          "optimizedPromptBlock": "## Context Minor GC Working Set Recent raw context: t1 user: 当前新任务是写 shadow mode 报告。 t2 user: 报告里还要明确 rollback boundary。 t3 user: 我们当前新任务是什么？",
           "effectivePromptBlock": "## Recent Conversation Context t1 user: 当前新任务是写 shadow mode 报告。 t2 user: 报告里还要明确 rollback boundary。 t3 user: 我们当前新任务是什么？",
           "baselinePromptEstimate": 30,
-          "optimizedPromptEstimate": 35,
+          "optimizedPromptEstimate": 36,
           "effectivePromptEstimate": 30
+        }
+      }
+    },
+    {
+      "id": "codex-minor-gc-current-editor-update-after-detour",
+      "description": "A current-state fact update should survive a short detour and return the newer value.",
+      "expectedGuardedApplied": true,
+      "baseline": {
+        "answer": "你现在默认编辑器是 Zed。",
+        "elapsedMs": 6934,
+        "usage": {
+          "input_tokens": 11335,
+          "cached_input_tokens": 2432,
+          "output_tokens": 45
+        },
+        "passed": true,
+        "checks": [
+          {
+            "name": "expected_any",
+            "passed": true,
+            "expected": [],
+            "actual": "你现在默认编辑器是 Zed。"
+          },
+          {
+            "name": "expected_all",
+            "passed": true,
+            "expected": [
+              "Zed"
+            ],
+            "actual": "你现在默认编辑器是 Zed。"
+          },
+          {
+            "name": "forbidden_any",
+            "passed": true,
+            "expected": [
+              "Vim",
+              "不知道"
+            ],
+            "actual": "你现在默认编辑器是 Zed。"
+          }
+        ],
+        "promptEstimate": 69
+      },
+      "minorGc": {
+        "answer": "你现在默认编辑器是 Zed。",
+        "elapsedMs": 7602,
+        "usage": {
+          "input_tokens": 11335,
+          "cached_input_tokens": 9600,
+          "output_tokens": 53
+        },
+        "passed": true,
+        "checks": [
+          {
+            "name": "expected_any",
+            "passed": true,
+            "expected": [],
+            "actual": "你现在默认编辑器是 Zed。"
+          },
+          {
+            "name": "expected_all",
+            "passed": true,
+            "expected": [
+              "Zed"
+            ],
+            "actual": "你现在默认编辑器是 Zed。"
+          },
+          {
+            "name": "forbidden_any",
+            "passed": true,
+            "expected": [
+              "Vim",
+              "不知道"
+            ],
+            "actual": "你现在默认编辑器是 Zed。"
+          }
+        ],
+        "context_minor_gc": {
+          "enabled": true,
+          "status": "captured",
+          "reason": "",
+          "sessionKey": "codex:codex-minor-gc-current-editor-update-after-detour",
+          "query": "我现在默认编辑器是什么？",
+          "projectedTurns": [
+            {
+              "id": "t1",
+              "role": "user",
+              "content": "记一下：我以前默认编辑器是 Vim。"
+            },
+            {
+              "id": "t2",
+              "role": "assistant",
+              "content": "记住了，你以前默认编辑器是 Vim。"
+            },
+            {
+              "id": "t3",
+              "role": "user",
+              "content": "更新一下：我现在默认编辑器是 Zed。"
+            },
+            {
+              "id": "t4",
+              "role": "assistant",
+              "content": "记住了，你现在默认编辑器是 Zed。"
+            },
+            {
+              "id": "t5",
+              "role": "user",
+              "content": "切个话题。为什么 shadow mode 默认先不开？"
+            },
+            {
+              "id": "t6",
+              "role": "assistant",
+              "content": "因为默认先保守，只在明确收益成立时再进入更积极的 working-set 裁剪。"
+            },
+            {
+              "id": "t7",
+              "role": "user",
+              "content": "回到编辑器问题。我现在默认编辑器是什么？"
+            }
+          ],
+          "projectedMessages": [
+            {
+              "role": "user",
+              "content": "记一下：我以前默认编辑器是 Vim。"
+            },
+            {
+              "role": "assistant",
+              "content": "记住了，你以前默认编辑器是 Vim。"
+            },
+            {
+              "role": "user",
+              "content": "更新一下：我现在默认编辑器是 Zed。"
+            },
+            {
+              "role": "assistant",
+              "content": "记住了，你现在默认编辑器是 Zed。"
+            },
+            {
+              "role": "user",
+              "content": "切个话题。为什么 shadow mode 默认先不开？"
+            },
+            {
+              "role": "assistant",
+              "content": "因为默认先保守，只在明确收益成立时再进入更积极的 working-set 裁剪。"
+            },
+            {
+              "role": "user",
+              "content": "回到编辑器问题。我现在默认编辑器是什么？"
+            }
+          ],
+          "baselineContextBlock": "## Recent Conversation Context\nt1 user: 记一下：我以前默认编辑器是 Vim。\nt2 assistant: 记住了，你以前默认编辑器是 Vim。\nt3 user: 更新一下：我现在默认编辑器是 Zed。\nt4 assistant: 记住了，你现在默认编辑器是 Zed。\nt5 user: 切个话题。为什么 shadow mode 默认先不开？\nt6 assistant: 因为默认先保守，只在明确收益成立时再进入更积极的 working-set 裁剪。\nt7 user: 回到编辑器问题。我现在默认编辑器是什么？",
+          "optimizedContextBlock": "## Context Minor GC Working Set\nRecent raw context: t7 user: 回到编辑器问题。我现在默认编辑器是什么？",
+          "effectiveContextBlock": "## Context Minor GC Working Set\nRecent raw context:\nt7 user: 回到编辑器问题。我现在默认编辑器是什么？",
+          "baselineContextEstimate": 69,
+          "optimizedContextEstimate": 21,
+          "effectiveContextEstimate": 21,
+          "promptReductionRatio": 0.6957,
+          "applied": true,
+          "decisionTransport": "codex_exec",
+          "relation": "switch",
+          "event": {
+            "schema_version": "umc.dialogue-working-set-shadow.v1",
+            "event_id": "shadow-1776559149531-1kftnf",
+            "generated_at": "2026-04-19T00:39:09.531Z",
+            "session_key": "codex:codex-minor-gc-current-editor-update-after-detour",
+            "agent_id": "main",
+            "query": "我现在默认编辑器是什么？",
+            "status": "captured",
+            "reason": "",
+            "sampling": {
+              "max_turns": 12,
+              "min_turns": 3,
+              "max_chars_per_turn": 900
+            },
+            "transcript": [
+              {
+                "id": "t1",
+                "role": "user",
+                "content": "记一下：我以前默认编辑器是 Vim。"
+              },
+              {
+                "id": "t2",
+                "role": "assistant",
+                "content": "记住了，你以前默认编辑器是 Vim。"
+              },
+              {
+                "id": "t3",
+                "role": "user",
+                "content": "更新一下：我现在默认编辑器是 Zed。"
+              },
+              {
+                "id": "t4",
+                "role": "assistant",
+                "content": "记住了，你现在默认编辑器是 Zed。"
+              },
+              {
+                "id": "t5",
+                "role": "user",
+                "content": "切个话题。为什么 shadow mode 默认先不开？"
+              },
+              {
+                "id": "t6",
+                "role": "assistant",
+                "content": "因为默认先保守，只在明确收益成立时再进入更积极的 working-set 裁剪。"
+              },
+              {
+                "id": "t7",
+                "role": "user",
+                "content": "回到编辑器问题。我现在默认编辑器是什么？"
+              }
+            ],
+            "decision": {
+              "relation": "switch",
+              "confidence": 0.96,
+              "evict_turn_ids": [
+                "t1",
+                "t2",
+                "t3",
+                "t4",
+                "t5",
+                "t6"
+              ],
+              "pin_turn_ids": [
+                "t1",
+                "t3"
+              ],
+              "archive_summary": "Durable editor facts: user previously used Vim as the default editor, then updated their current default editor to Zed. A brief detour asked why shadow mode is off by default; it was answered as a conservative default and is no longer relevant to the active topic.",
+              "reasoning_summary": "The active topic switched back from a resolved shadow-mode detour to the editor fact lookup. The latest turn depends on the durable editor-state facts, which can be preserved as compact pins rather than raw turns. The shadow-mode exchange is solved and off-topic, so it is a strong eviction candidate. Keeping pins for both the historical Vim fact and the updated current Zed fact preserves the needed memory while shrinking the next-turn raw prompt."
+            },
+            "decision_transport": "codex_exec",
+            "snapshot": {
+              "applied": {
+                "relation": "switch",
+                "confidence": 0.96,
+                "archiveSummary": "Durable editor facts: user previously used Vim as the default editor, then updated their current default editor to Zed. A brief detour asked why shadow mode is off by default; it was answered as a conservative default and is no longer relevant to the active topic.",
+                "reasoningSummary": "The active topic switched back from a resolved shadow-mode detour to the editor fact lookup. The latest turn depends on the durable editor-state facts, which can be preserved as compact pins rather than raw turns. The shadow-mode exchange is solved and off-topic, so it is a strong eviction candidate. Keeping pins for both the historical Vim fact and the updated current Zed fact preserves the needed memory while shrinking the next-turn raw prompt.",
+                "latestUserTurnId": "t7",
+                "pinTurnIds": [
+                  "t1",
+                  "t3"
+                ],
+                "pinnedOnlyTurnIds": [
+                  "t1",
+                  "t3"
+                ],
+                "requestedEvictTurnIds": [
+                  "t1",
+                  "t2",
+                  "t3",
+                  "t4",
+                  "t5",
+                  "t6"
+                ],
+                "blockedEvictTurnIds": [],
+                "appliedEvictTurnIds": [
+                  "t1",
+                  "t2",
+                  "t3",
+                  "t4",
+                  "t5",
+                  "t6"
+                ],
+                "keepTurnIds": [
+                  "t7"
+                ],
+                "baselineTokens": 42,
+                "keptTokens": 5,
+                "prunedTokens": 37,
+                "reductionRatio": 0.8809523809523809,
+                "keepTurns": [
+                  {
+                    "id": "t7",
+                    "role": "user",
+                    "content": "回到编辑器问题。我现在默认编辑器是什么？",
+                    "tokenEstimate": 5
+                  }
+                ],
+                "evictedTurns": [
+                  {
+                    "id": "t1",
+                    "role": "user",
+                    "content": "记一下：我以前默认编辑器是 Vim。",
+                    "tokenEstimate": 5
+                  },
+                  {
+                    "id": "t2",
+                    "role": "assistant",
+                    "content": "记住了，你以前默认编辑器是 Vim。",
+                    "tokenEstimate": 5
+                  },
+                  {
+                    "id": "t3",
+                    "role": "user",
+                    "content": "更新一下：我现在默认编辑器是 Zed。",
+                    "tokenEstimate": 5
+                  },
+                  {
+                    "id": "t4",
+                    "role": "assistant",
+                    "content": "记住了，你现在默认编辑器是 Zed。",
+                    "tokenEstimate": 5
+                  },
+                  {
+                    "id": "t5",
+                    "role": "user",
+                    "content": "切个话题。为什么 shadow mode 默认先不开？",
+                    "tokenEstimate": 7
+                  },
+                  {
+                    "id": "t6",
+                    "role": "assistant",
+                    "content": "因为默认先保守，只在明确收益成立时再进入更积极的 working-set 裁剪。",
+                    "tokenEstimate": 10
+                  }
+                ]
+              },
+              "baselineRawTranscript": "t1 user: 记一下：我以前默认编辑器是 Vim。\nt2 assistant: 记住了，你以前默认编辑器是 Vim。\nt3 user: 更新一下：我现在默认编辑器是 Zed。\nt4 assistant: 记住了，你现在默认编辑器是 Zed。\nt5 user: 切个话题。为什么 shadow mode 默认先不开？\nt6 assistant: 因为默认先保守，只在明确收益成立时再进入更积极的 working-set 裁剪。\nt7 user: 回到编辑器问题。我现在默认编辑器是什么？",
+              "shadowRawTranscript": "t7 user: 回到编辑器问题。我现在默认编辑器是什么？",
+              "semanticPinNotes": [
+                "user: 记一下：我以前默认编辑器是 Vim。",
+                "user: 更新一下：我现在默认编辑器是 Zed。"
+              ],
+              "archiveSummary": "Durable editor facts: user previously used Vim as the default editor, then updated their current default editor to Zed. A brief detour asked why shadow mode is off by default; it was answered as a conservative default and is no longer relevant to the active topic.",
+              "injectedArchiveSummary": "",
+              "baselinePromptEstimate": 61,
+              "shadowRawPromptEstimate": 8,
+              "shadowPackageEstimate": 13,
+              "shadowPackageText": "Recent raw context:\nt7 user: 回到编辑器问题。我现在默认编辑器是什么？"
+            },
+            "scorecard": {
+              "relation": "switch",
+              "baselineTurnCount": 7,
+              "keptTurnCount": 1,
+              "evictedTurnCount": 6,
+              "pinCount": 2,
+              "baselinePromptEstimate": 61,
+              "shadowRawPromptEstimate": 8,
+              "shadowPackageEstimate": 13,
+              "rawReductionRatio": 0.881,
+              "packageReductionRatio": 0.7869,
+              "candidateLoadElapsedMs": 0,
+              "assemblyBuildElapsedMs": 0,
+              "decisionElapsedMs": 13563,
+              "totalElapsedMs": 13565,
+              "guardedEnabled": true,
+              "guardedApplied": true,
+              "guardedReason": "guarded_candidate",
+              "guardedMessageCount": 1,
+              "guardedCarryForwardEstimate": 22,
+              "guardedFilteredMessageEstimate": 5
+            },
+            "guarded": {
+              "enabled": true,
+              "applied": true,
+              "reason": "guarded_candidate",
+              "filteredMessages": [
+                {
+                  "role": "user",
+                  "content": "回到编辑器问题。我现在默认编辑器是什么？"
+                }
+              ],
+              "filteredMessageCount": 1,
+              "filteredMessageTokenEstimate": 5,
+              "carryForwardText": "Conversation carry-forward pins:\n- user: 记一下：我以前默认编辑器是 Vim。\n- user: 更新一下：我现在默认编辑器是 Zed。",
+              "carryForwardEstimate": 22,
+              "evictedSourceIndices": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            },
+            "timings": {
+              "totalElapsedMs": 13565,
+              "decisionElapsedMs": 13563
+            },
+            "artifact_paths": {
+              "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc-live-2026-04-18/exports/codex-codex-minor-gc-current-editor-update-after-detour-shadow-1776559149531-1kftnf.json",
+              "summary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc-live-2026-04-18/telemetry.jsonl"
+            }
+          },
+          "codexGuardReason": "codex_packaged_guard",
+          "packagedContextBlock": "## Context Minor GC Working Set\nRecent raw context:\nt7 user: 回到编辑器问题。我现在默认编辑器是什么？",
+          "packagedContextEstimate": 21,
+          "artifactPaths": {
+            "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc-live-2026-04-18/exports/codex-codex-minor-gc-current-editor-update-after-detour-shadow-1776559149531-1kftnf-codex-packaged.json",
+            "summary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc-live-2026-04-18/codex-telemetry.jsonl",
+            "shadowExport": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc-live-2026-04-18/exports/codex-codex-minor-gc-current-editor-update-after-detour-shadow-1776559149531-1kftnf.json",
+            "shadowSummary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc-live-2026-04-18/telemetry.jsonl"
+          },
+          "baselinePromptBlock": "## Recent Conversation Context t1 user: 记一下：我以前默认编辑器是 Vim。 t2 assistant: 记住了，你以前默认编辑器是 Vim。 t3 user: 更新一下：我现在默认编辑器是 Zed。 t4 assistant: 记住了，你现在默认编辑器是 Zed。 t5 user: 切个话题。为什么 shadow mode 默认先不开？ t6 assistant: 因为默认先保守，只在明确收益成立时再进入更积极的 working-set 裁剪。 t7 user: 回到编辑器问题。我现在默认编辑器是什么？",
+          "optimizedPromptBlock": "## Context Minor GC Working Set Recent raw context: t7 user: 回到编辑器问题。我现在默认编辑器是什么？",
+          "effectivePromptBlock": "## Context Minor GC Working Set Recent raw context: t7 user: 回到编辑器问题。我现在默认编辑器是什么？",
+          "baselinePromptEstimate": 69,
+          "optimizedPromptEstimate": 21,
+          "effectivePromptEstimate": 21
+        }
+      }
+    },
+    {
+      "id": "codex-minor-gc-zh-dense-multitopic-return",
+      "description": "A denser natural-Chinese multi-topic switch should still return to the right travel fact.",
+      "expectedGuardedApplied": true,
+      "baseline": {
+        "answer": "京都",
+        "elapsedMs": 5684,
+        "usage": {
+          "input_tokens": 11408,
+          "cached_input_tokens": 2432,
+          "output_tokens": 29
+        },
+        "passed": true,
+        "checks": [
+          {
+            "name": "expected_any",
+            "passed": true,
+            "expected": [],
+            "actual": "京都"
+          },
+          {
+            "name": "expected_all",
+            "passed": true,
+            "expected": [
+              "京都"
+            ],
+            "actual": "京都"
+          },
+          {
+            "name": "forbidden_any",
+            "passed": true,
+            "expected": [
+              "大阪",
+              "不知道"
+            ],
+            "actual": "京都"
+          }
+        ],
+        "promptEstimate": 89
+      },
+      "minorGc": {
+        "answer": "京都",
+        "elapsedMs": 4577,
+        "usage": {
+          "input_tokens": 11408,
+          "cached_input_tokens": 9600,
+          "output_tokens": 27
+        },
+        "passed": true,
+        "checks": [
+          {
+            "name": "expected_any",
+            "passed": true,
+            "expected": [],
+            "actual": "京都"
+          },
+          {
+            "name": "expected_all",
+            "passed": true,
+            "expected": [
+              "京都"
+            ],
+            "actual": "京都"
+          },
+          {
+            "name": "forbidden_any",
+            "passed": true,
+            "expected": [
+              "大阪",
+              "不知道"
+            ],
+            "actual": "京都"
+          }
+        ],
+        "context_minor_gc": {
+          "enabled": true,
+          "status": "captured",
+          "reason": "",
+          "sessionKey": "codex:codex-minor-gc-zh-dense-multitopic-return",
+          "query": "刚才旅行那段里，我更想住哪座城市？",
+          "projectedTurns": [
+            {
+              "id": "t1",
+              "role": "user",
+              "content": "我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。"
+            },
+            {
+              "id": "t2",
+              "role": "assistant",
+              "content": "记住了：预算 2 万元，更想住京都，最好靠近地铁站。"
+            },
+            {
+              "id": "t3",
+              "role": "user",
+              "content": "现在切到代码：给我一个 Python 正则，提取 foo123bar 里的数字。"
+            },
+            {
+              "id": "t4",
+              "role": "assistant",
+              "content": "可以用 `re.search(r'\\d+', 'foo123bar').group()` 提取数字。"
+            },
+            {
+              "id": "t5",
+              "role": "user",
+              "content": "继续代码：如果只取第一个数字分组，写法怎么更短？"
+            },
+            {
+              "id": "t6",
+              "role": "assistant",
+              "content": "如果只取第一个匹配，`re.search(r'\\d+', s)[0]` 会更短一些。"
+            },
+            {
+              "id": "t7",
+              "role": "user",
+              "content": "先不聊代码了。刚才旅行那段里，我更想住哪座城市？"
+            }
+          ],
+          "projectedMessages": [
+            {
+              "role": "user",
+              "content": "我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。"
+            },
+            {
+              "role": "assistant",
+              "content": "记住了：预算 2 万元，更想住京都，最好靠近地铁站。"
+            },
+            {
+              "role": "user",
+              "content": "现在切到代码：给我一个 Python 正则，提取 foo123bar 里的数字。"
+            },
+            {
+              "role": "assistant",
+              "content": "可以用 `re.search(r'\\d+', 'foo123bar').group()` 提取数字。"
+            },
+            {
+              "role": "user",
+              "content": "继续代码：如果只取第一个数字分组，写法怎么更短？"
+            },
+            {
+              "role": "assistant",
+              "content": "如果只取第一个匹配，`re.search(r'\\d+', s)[0]` 会更短一些。"
+            },
+            {
+              "role": "user",
+              "content": "先不聊代码了。刚才旅行那段里，我更想住哪座城市？"
+            }
+          ],
+          "baselineContextBlock": "## Recent Conversation Context\nt1 user: 我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。\nt2 assistant: 记住了：预算 2 万元，更想住京都，最好靠近地铁站。\nt3 user: 现在切到代码：给我一个 Python 正则，提取 foo123bar 里的数字。\nt4 assistant: 可以用 `re.search(r'\\d+', 'foo123bar').group()` 提取数字。\nt5 user: 继续代码：如果只取第一个数字分组，写法怎么更短？\nt6 assistant: 如果只取第一个匹配，`re.search(r'\\d+', s)[0]` 会更短一些。\nt7 user: 先不聊代码了。刚才旅行那段里，我更想住哪座城市？",
+          "optimizedContextBlock": "## Context Minor GC Working Set\nRecent raw context: t1 user: 我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。 t7 user: 先不聊代码了。刚才旅行那段里，我更想住哪座城市？",
+          "effectiveContextBlock": "## Context Minor GC Working Set\nRecent raw context:\nt1 user: 我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。\nt7 user: 先不聊代码了。刚才旅行那段里，我更想住哪座城市？",
+          "baselineContextEstimate": 89,
+          "optimizedContextEstimate": 32,
+          "effectiveContextEstimate": 32,
+          "promptReductionRatio": 0.6404,
+          "applied": true,
+          "decisionTransport": "codex_exec",
+          "relation": "switch",
+          "event": {
+            "schema_version": "umc.dialogue-working-set-shadow.v1",
+            "event_id": "shadow-1776559170700-h3s9w9",
+            "generated_at": "2026-04-19T00:39:30.700Z",
+            "session_key": "codex:codex-minor-gc-zh-dense-multitopic-return",
+            "agent_id": "main",
+            "query": "刚才旅行那段里，我更想住哪座城市？",
+            "status": "captured",
+            "reason": "",
+            "sampling": {
+              "max_turns": 12,
+              "min_turns": 3,
+              "max_chars_per_turn": 900
+            },
+            "transcript": [
+              {
+                "id": "t1",
+                "role": "user",
+                "content": "我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。"
+              },
+              {
+                "id": "t2",
+                "role": "assistant",
+                "content": "记住了：预算 2 万元，更想住京都，最好靠近地铁站。"
+              },
+              {
+                "id": "t3",
+                "role": "user",
+                "content": "现在切到代码：给我一个 Python 正则，提取 foo123bar 里的数字。"
+              },
+              {
+                "id": "t4",
+                "role": "assistant",
+                "content": "可以用 `re.search(r'\\d+', 'foo123bar').group()` 提取数字。"
+              },
+              {
+                "id": "t5",
+                "role": "user",
+                "content": "继续代码：如果只取第一个数字分组，写法怎么更短？"
+              },
+              {
+                "id": "t6",
+                "role": "assistant",
+                "content": "如果只取第一个匹配，`re.search(r'\\d+', s)[0]` 会更短一些。"
+              },
+              {
+                "id": "t7",
+                "role": "user",
+                "content": "先不聊代码了。刚才旅行那段里，我更想住哪座城市？"
+              }
+            ],
+            "decision": {
+              "relation": "switch",
+              "confidence": 0.96,
+              "evict_turn_ids": [
+                "t2",
+                "t3",
+                "t4",
+                "t5",
+                "t6"
+              ],
+              "pin_turn_ids": [
+                "t1"
+              ],
+              "archive_summary": "旅行偏好已记录：预算 2 万元，更想住京都，最好靠近地铁站。代码话题已解决：用 Python 正则从 `foo123bar` 提取数字，且更短写法可用 `re.search(r'\\d+', s)[0]`。",
+              "reasoning_summary": "当前活跃话题已从代码切回旅行。最新问题只依赖旅行偏好信息；代码块已完成且与当前问答无关，适合从下一轮原始提示中移除。将 t1 作为语义 pin 保留，可在压缩原始上下文的同时继续支持后续旅行相关问题。"
+            },
+            "decision_transport": "codex_exec",
+            "snapshot": {
+              "applied": {
+                "relation": "switch",
+                "confidence": 0.96,
+                "archiveSummary": "旅行偏好已记录：预算 2 万元，更想住京都，最好靠近地铁站。代码话题已解决：用 Python 正则从 `foo123bar` 提取数字，且更短写法可用 `re.search(r'\\d+', s)[0]`。",
+                "reasoningSummary": "当前活跃话题已从代码切回旅行。最新问题只依赖旅行偏好信息；代码块已完成且与当前问答无关，适合从下一轮原始提示中移除。将 t1 作为语义 pin 保留，可在压缩原始上下文的同时继续支持后续旅行相关问题。",
+                "latestUserTurnId": "t7",
+                "pinTurnIds": [
+                  "t1"
+                ],
+                "pinnedOnlyTurnIds": [],
+                "requestedEvictTurnIds": [
+                  "t2",
+                  "t3",
+                  "t4",
+                  "t5",
+                  "t6"
+                ],
+                "blockedEvictTurnIds": [],
+                "appliedEvictTurnIds": [
+                  "t2",
+                  "t3",
+                  "t4",
+                  "t5",
+                  "t6"
+                ],
+                "keepTurnIds": [
+                  "t1",
+                  "t7"
+                ],
+                "baselineTokens": 62,
+                "keptTokens": 15,
+                "prunedTokens": 47,
+                "reductionRatio": 0.7580645161290323,
+                "keepTurns": [
+                  {
+                    "id": "t1",
+                    "role": "user",
+                    "content": "我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。",
+                    "tokenEstimate": 9
+                  },
+                  {
+                    "id": "t7",
+                    "role": "user",
+                    "content": "先不聊代码了。刚才旅行那段里，我更想住哪座城市？",
+                    "tokenEstimate": 6
+                  }
+                ],
+                "evictedTurns": [
+                  {
+                    "id": "t2",
+                    "role": "assistant",
+                    "content": "记住了：预算 2 万元，更想住京都，最好靠近地铁站。",
+                    "tokenEstimate": 7
+                  },
+                  {
+                    "id": "t3",
+                    "role": "user",
+                    "content": "现在切到代码：给我一个 Python 正则，提取 foo123bar 里的数字。",
+                    "tokenEstimate": 10
+                  },
+                  {
+                    "id": "t4",
+                    "role": "assistant",
+                    "content": "可以用 `re.search(r'\\d+', 'foo123bar').group()` 提取数字。",
+                    "tokenEstimate": 13
+                  },
+                  {
+                    "id": "t5",
+                    "role": "user",
+                    "content": "继续代码：如果只取第一个数字分组，写法怎么更短？",
+                    "tokenEstimate": 6
+                  },
+                  {
+                    "id": "t6",
+                    "role": "assistant",
+                    "content": "如果只取第一个匹配，`re.search(r'\\d+', s)[0]` 会更短一些。",
+                    "tokenEstimate": 11
+                  }
+                ]
+              },
+              "baselineRawTranscript": "t1 user: 我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。\nt2 assistant: 记住了：预算 2 万元，更想住京都，最好靠近地铁站。\nt3 user: 现在切到代码：给我一个 Python 正则，提取 foo123bar 里的数字。\nt4 assistant: 可以用 `re.search(r'\\d+', 'foo123bar').group()` 提取数字。\nt5 user: 继续代码：如果只取第一个数字分组，写法怎么更短？\nt6 assistant: 如果只取第一个匹配，`re.search(r'\\d+', s)[0]` 会更短一些。\nt7 user: 先不聊代码了。刚才旅行那段里，我更想住哪座城市？",
+              "shadowRawTranscript": "t1 user: 我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。\nt7 user: 先不聊代码了。刚才旅行那段里，我更想住哪座城市？",
+              "semanticPinNotes": [],
+              "archiveSummary": "旅行偏好已记录：预算 2 万元，更想住京都，最好靠近地铁站。代码话题已解决：用 Python 正则从 `foo123bar` 提取数字，且更短写法可用 `re.search(r'\\d+', s)[0]`。",
+              "injectedArchiveSummary": "",
+              "baselinePromptEstimate": 81,
+              "shadowRawPromptEstimate": 19,
+              "shadowPackageEstimate": 24,
+              "shadowPackageText": "Recent raw context:\nt1 user: 我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。\nt7 user: 先不聊代码了。刚才旅行那段里，我更想住哪座城市？"
+            },
+            "scorecard": {
+              "relation": "switch",
+              "baselineTurnCount": 7,
+              "keptTurnCount": 2,
+              "evictedTurnCount": 5,
+              "pinCount": 1,
+              "baselinePromptEstimate": 81,
+              "shadowRawPromptEstimate": 19,
+              "shadowPackageEstimate": 24,
+              "rawReductionRatio": 0.7581,
+              "packageReductionRatio": 0.7037,
+              "candidateLoadElapsedMs": 0,
+              "assemblyBuildElapsedMs": 0,
+              "decisionElapsedMs": 16369,
+              "totalElapsedMs": 16370,
+              "guardedEnabled": true,
+              "guardedApplied": true,
+              "guardedReason": "guarded_candidate",
+              "guardedMessageCount": 2,
+              "guardedCarryForwardEstimate": 0,
+              "guardedFilteredMessageEstimate": 15
+            },
+            "guarded": {
+              "enabled": true,
+              "applied": true,
+              "reason": "guarded_candidate",
+              "filteredMessages": [
+                {
+                  "role": "user",
+                  "content": "我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。"
+                },
+                {
+                  "role": "user",
+                  "content": "先不聊代码了。刚才旅行那段里，我更想住哪座城市？"
+                }
+              ],
+              "filteredMessageCount": 2,
+              "filteredMessageTokenEstimate": 15,
+              "carryForwardText": "",
+              "carryForwardEstimate": 0,
+              "evictedSourceIndices": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            },
+            "timings": {
+              "totalElapsedMs": 16370,
+              "decisionElapsedMs": 16369
+            },
+            "artifact_paths": {
+              "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc-live-2026-04-18/exports/codex-codex-minor-gc-zh-dense-multitopic-return-shadow-1776559170700-h3s9w9.json",
+              "summary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc-live-2026-04-18/telemetry.jsonl"
+            }
+          },
+          "codexGuardReason": "codex_packaged_guard",
+          "packagedContextBlock": "## Context Minor GC Working Set\nRecent raw context:\nt1 user: 我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。\nt7 user: 先不聊代码了。刚才旅行那段里，我更想住哪座城市？",
+          "packagedContextEstimate": 32,
+          "artifactPaths": {
+            "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc-live-2026-04-18/exports/codex-codex-minor-gc-zh-dense-multitopic-return-shadow-1776559170700-h3s9w9-codex-packaged.json",
+            "summary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc-live-2026-04-18/codex-telemetry.jsonl",
+            "shadowExport": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc-live-2026-04-18/exports/codex-codex-minor-gc-zh-dense-multitopic-return-shadow-1776559170700-h3s9w9.json",
+            "shadowSummary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-context-minor-gc-live-2026-04-18/telemetry.jsonl"
+          },
+          "baselinePromptBlock": "## Recent Conversation Context t1 user: 我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。 t2 assistant: 记住了：预算 2 万元，更想住京都，最好靠近地铁站。 t3 user: 现在切到代码：给我一个 Python 正则，提取 foo123bar 里的数字。 t4 assistant: 可以用 `re.search(r'\\d+', 'foo123bar').group()` 提取数字。 t5 user: 继续代码：如果只取第一个数字分组，写法怎么更短？ t6 assistant: 如果只取第一个匹配，`re.search(r'\\d+', s)[0]` 会更短一些。 t7 user: 先不聊代码了。刚才旅行那段里，我更想住哪座城市？",
+          "optimizedPromptBlock": "## Context Minor GC Working Set Recent raw context: t1 user: 我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。 t7 user: 先不聊代码了。刚才旅行那段里，我更想住哪座城市？",
+          "effectivePromptBlock": "## Context Minor GC Working Set Recent raw context: t1 user: 我们先聊旅行。记一下：预算 2 万元，更想住京都，最好靠近地铁站。 t7 user: 先不聊代码了。刚才旅行那段里，我更想住哪座城市？",
+          "baselinePromptEstimate": 89,
+          "optimizedPromptEstimate": 32,
+          "effectivePromptEstimate": 32
         }
       }
     }

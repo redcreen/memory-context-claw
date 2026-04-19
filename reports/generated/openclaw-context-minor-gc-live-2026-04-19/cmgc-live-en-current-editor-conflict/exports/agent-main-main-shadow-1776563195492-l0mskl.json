@@ -1,0 +1,413 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776563195492-l0mskl",
+  "generated_at": "2026-04-19T01:46:35.492Z",
+  "session_key": "agent:main:main",
+  "agent_id": "main",
+  "query": "Switch topics. Give me one short sentence on why shadow mode stays default-off.",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "Remember this old preference: my default editor used to be Vim."
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "Noted."
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "Update it now: my current default editor is Zed."
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "Updated."
+    }
+  ],
+  "decision": {
+    "relation": "resolve",
+    "confidence": 0.94,
+    "evict_turn_ids": [
+      "t1",
+      "t2",
+      "t4"
+    ],
+    "pin_turn_ids": [
+      "t3"
+    ],
+    "archive_summary": "Old default-editor preference was superseded; current durable fact is that the user's default editor is Zed.",
+    "reasoning_summary": "The earlier Vim preference is obsolete and the update is complete, so the resolved topic can be dropped from raw context except for the durable preference capsule that the user now uses Zed."
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "resolve",
+      "confidence": 0.94,
+      "archiveSummary": "Old default-editor preference was superseded; current durable fact is that the user's default editor is Zed.",
+      "reasoningSummary": "The earlier Vim preference is obsolete and the update is complete, so the resolved topic can be dropped from raw context except for the durable preference capsule that the user now uses Zed.",
+      "latestUserTurnId": "t3",
+      "pinTurnIds": [
+        "t3"
+      ],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t4"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t4"
+      ],
+      "keepTurnIds": [
+        "t3"
+      ],
+      "baselineTokens": 32,
+      "keptTokens": 12,
+      "prunedTokens": 20,
+      "reductionRatio": 0.625,
+      "keepTurns": [
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "Update it now: my current default editor is Zed.",
+          "tokenEstimate": 12
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "Remember this old preference: my default editor used to be Vim.",
+          "tokenEstimate": 16
+        },
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "Noted.",
+          "tokenEstimate": 2
+        },
+        {
+          "id": "t4",
+          "role": "assistant",
+          "content": "Updated.",
+          "tokenEstimate": 2
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: Remember this old preference: my default editor used to be Vim.\nt2 assistant: Noted.\nt3 user: Update it now: my current default editor is Zed.\nt4 assistant: Updated.",
+    "shadowRawTranscript": "t3 user: Update it now: my current default editor is Zed.",
+    "semanticPinNotes": [],
+    "archiveSummary": "Old default-editor preference was superseded; current durable fact is that the user's default editor is Zed.",
+    "injectedArchiveSummary": "Old default-editor preference was superseded; current durable fact is that the user's default ed...",
+    "baselinePromptEstimate": 44,
+    "shadowRawPromptEstimate": 15,
+    "shadowPackageEstimate": 20,
+    "shadowPackageText": "Recent raw context:\nt3 user: Update it now: my current default editor is Zed."
+  },
+  "scorecard": {
+    "relation": "resolve",
+    "baselineTurnCount": 4,
+    "keptTurnCount": 1,
+    "evictedTurnCount": 3,
+    "pinCount": 1,
+    "baselinePromptEstimate": 44,
+    "shadowRawPromptEstimate": 15,
+    "shadowPackageEstimate": 20,
+    "rawReductionRatio": 0.625,
+    "packageReductionRatio": 0.5455,
+    "candidateLoadElapsedMs": 8,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 12878,
+    "totalElapsedMs": 12881,
+    "guardedEnabled": false,
+    "guardedApplied": false,
+    "guardedReason": "feature_disabled",
+    "guardedMessageCount": 11,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 356
+  },
+  "guarded": {
+    "enabled": false,
+    "applied": false,
+    "reason": "feature_disabled",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Remember this old preference: my default editor used to be Vim."
+          }
+        ],
+        "timestamp": 1776563171008
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "toolCall",
+            "id": "call_FqcO92ajQRyBN2QDF0mgUBZh",
+            "name": "read",
+            "arguments": {
+              "path": "MEMORY.md"
+            },
+            "partialJson": "{\"path\":\"MEMORY.md\"}"
+          },
+          {
+            "type": "toolCall",
+            "id": "call_omIyxD7zCDFZcEhClUMq33Yo",
+            "name": "read",
+            "arguments": {
+              "path": "memory/2026-04-12.md"
+            },
+            "partialJson": "{\"path\":\"memory/2026-04-12.md\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 13998,
+          "output": 56,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "totalTokens": 14054,
+          "cost": {
+            "input": 0.010498500000000001,
+            "output": 0.000252,
+            "cacheRead": 0,
+            "cacheWrite": 0,
+            "total": 0.010750500000000001
+          }
+        },
+        "stopReason": "toolUse",
+        "timestamp": 1776563171011,
+        "responseId": "resp_0a13a722f9d8d6700169e433e55a408191be900d8ab411eb91"
+      },
+      {
+        "role": "toolResult",
+        "toolCallId": "call_FqcO92ajQRyBN2QDF0mgUBZh",
+        "toolName": "read",
+        "content": [
+          {
+            "type": "text",
+            "text": "# Long-Term Memory\n\n- Preferred name: Maya Chen.\n- Role: independent product engineer building a clinic analytics assistant.\n- Timezone: Asia/Shanghai.\n- Preferred reply style: concise bullets first, then a one-line rationale only if needed.\n- Strong dislike: avoid voice calls when async text will work.\n- Coffee order: oat milk flat white with no sugar.\n- Seat preference for flights: aisle seat.\n- Debugging rule: start from the smallest reproducible example before trying broad fixes.\n- Release rule: stable releases use semantic version tags in the form `vX.Y.Z`.\n- Default deploy region: `eu-west-1`.\n- Primary database version: PostgreSQL 16.\n- If memory is missing or conflicting and no current answer is clear, do not guess.\n"
+          }
+        ],
+        "isError": false,
+        "timestamp": 1776563175718
+      },
+      {
+        "role": "toolResult",
+        "toolCallId": "call_omIyxD7zCDFZcEhClUMq33Yo",
+        "toolName": "read",
+        "content": [
+          {
+            "type": "text",
+            "text": "# Daily Memory 2026-04-12\n\n- Confirmed update: Maya switched the main editor from Vim to Zed last week.\n- Confirmed update: the clinic demo moved to next Tuesday at 15:00 Shanghai time.\n- Confirmed update: the deploy region decision is now `eu-west-1`; the older `us-east-1` draft should be ignored.\n- Current keyboard preference: tactile switches over linear red switches.\n- Current notebook for meetings: the charcoal A5 notebook, not the old blue pocket notebook.\n"
+          }
+        ],
+        "isError": false,
+        "timestamp": 1776563175719
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "toolCall",
+            "id": "call_2Kr5IhK9uTxRnhWnq7jV7fH2",
+            "name": "edit",
+            "arguments": {
+              "path": "MEMORY.md",
+              "edits": [
+                {
+                  "oldText": "- If memory is missing or conflicting and no current answer is clear, do not guess.\n",
+                  "newText": "- If memory is missing or conflicting and no current answer is clear, do not guess.\n- Old preference: default editor used to be Vim.\n"
+                }
+              ]
+            },
+            "partialJson": "{\"path\":\"MEMORY.md\",\"edits\":[{\"oldText\":\"- If memory is missing or conflicting and no current answer is clear, do not guess.\\n\",\"newText\":\"- If memory is missing or conflicting and no current answer is clear, do not guess.\\n- Old preference: default editor used to be Vim.\\n\"}]}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 517,
+          "output": 82,
+          "cacheRead": 13824,
+          "cacheWrite": 0,
+          "totalTokens": 14423,
+          "cost": {
+            "input": 0.00038775,
+            "output": 0.000369,
+            "cacheRead": 0.0010368,
+            "cacheWrite": 0,
+            "total": 0.00179355
+          }
+        },
+        "stopReason": "toolUse",
+        "timestamp": 1776563175721,
+        "responseId": "resp_0440b7aff8ed369f0169e433e85260819182ba81005236b800"
+      },
+      {
+        "role": "toolResult",
+        "toolCallId": "call_2Kr5IhK9uTxRnhWnq7jV7fH2",
+        "toolName": "edit",
+        "content": [
+          {
+            "type": "text",
+            "text": "Successfully replaced 1 block(s) in MEMORY.md."
+          }
+        ],
+        "isError": false,
+        "timestamp": 1776563177734
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "Noted.",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0548dd4e8c19d79d0169e433eb562c8197878d53ef459f8b6e\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 108,
+          "output": 7,
+          "cacheRead": 14336,
+          "cacheWrite": 0,
+          "totalTokens": 14451,
+          "cost": {
+            "input": 0.000081,
+            "output": 0.0000315,
+            "cacheRead": 0.0010752,
+            "cacheWrite": 0,
+            "total": 0.0011876999999999999
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776563177736,
+        "responseId": "resp_0548dd4e8c19d79d0169e433eac96081978282083f0bbaf24b"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Update it now: my current default editor is Zed."
+          }
+        ],
+        "timestamp": 1776563184465
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "toolCall",
+            "id": "call_wXwCBwuRoj5Umo7YPYBnMeyU",
+            "name": "edit",
+            "arguments": {
+              "path": "MEMORY.md",
+              "edits": [
+                {
+                  "oldText": "- Old preference: default editor used to be Vim.\n",
+                  "newText": "- Current default editor: Zed.\n- Old preference: default editor used to be Vim.\n"
+                }
+              ]
+            },
+            "partialJson": "{\"path\":\"MEMORY.md\",\"edits\":[{\"oldText\":\"- Old preference: default editor used to be Vim.\\n\",\"newText\":\"- Current default editor: Zed.\\n- Old preference: default editor used to be Vim.\\n\"}]}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 14446,
+          "output": 65,
+          "cacheRead": 0,
+          "cacheWrite": 0,
+          "totalTokens": 14511,
+          "cost": {
+            "input": 0.0108345,
+            "output": 0.0002925,
+            "cacheRead": 0,
+            "cacheWrite": 0,
+            "total": 0.011127
+          }
+        },
+        "stopReason": "toolUse",
+        "timestamp": 1776563184468,
+        "responseId": "resp_0548dd4e8c19d79d0169e433f14d7081978c7c8d4b9b575f3c"
+      },
+      {
+        "role": "toolResult",
+        "toolCallId": "call_wXwCBwuRoj5Umo7YPYBnMeyU",
+        "toolName": "edit",
+        "content": [
+          {
+            "type": "text",
+            "text": "Successfully replaced 1 block(s) in MEMORY.md."
+          }
+        ],
+        "isError": false,
+        "timestamp": 1776563186505
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "Updated.",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0548dd4e8c19d79d0169e433f60b948197b0a3ecdb4f8f3c6a\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 196,
+          "output": 6,
+          "cacheRead": 14336,
+          "cacheWrite": 0,
+          "totalTokens": 14538,
+          "cost": {
+            "input": 0.000147,
+            "output": 0.000027,
+            "cacheRead": 0.0010752,
+            "cacheWrite": 0,
+            "total": 0.0012491999999999998
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776563186507,
+        "responseId": "resp_0548dd4e8c19d79d0169e433f32e008197a5f2b4b2af840fbe"
+      }
+    ],
+    "filteredMessageCount": 11,
+    "filteredMessageTokenEstimate": 356,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 12881,
+    "decisionElapsedMs": 12878
+  }
+}

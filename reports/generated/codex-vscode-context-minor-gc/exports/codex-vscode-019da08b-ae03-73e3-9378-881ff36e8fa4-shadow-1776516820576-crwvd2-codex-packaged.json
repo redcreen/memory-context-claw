@@ -1,0 +1,177 @@
+{
+  "schema_version": "umc.codex-context-minor-gc.v1",
+  "generated_at": "2026-04-18T12:54:25.346Z",
+  "event_id": "shadow-1776516820576-crwvd2-codex-packaged",
+  "session_key": "codex:vscode:019da08b-ae03-73e3-9378-881ff36e8fa4",
+  "query": "现在用户端有明显好用了么？",
+  "status": "captured",
+  "reason": "",
+  "decision_transport": "codex_exec",
+  "relation": "continue",
+  "applied": true,
+  "codex_guard_reason": "codex_packaged_guard",
+  "prompt_reduction_ratio": 0.5911,
+  "baseline_context_estimate": 247,
+  "packaged_context_estimate": 101,
+  "effective_context_estimate": 101,
+  "shadow_status": "captured",
+  "shadow_guarded_applied": true,
+  "shadow_guarded_reason": "guarded_candidate",
+  "shadow_export_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da08b-ae03-73e3-9378-881ff36e8fa4-shadow-1776516820576-crwvd2.json",
+  "shadow_summary_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl",
+  "export_path": "exports/codex-vscode-019da08b-ae03-73e3-9378-881ff36e8fa4-shadow-1776516820576-crwvd2-codex-packaged.json",
+  "effective_context_block": "## Context Minor GC Working Set\nActive raw turns:\nt2 assistant: `Stage 11` 的控制面我已经收口了。现在 `.codex/status.md` 和 `.codex/plan.md` 都回到 `Stage 12` 当前，当前切片是 `group-12a-contract-and-replay-hold`；`continue.md`、`progress.md`、`handoff.md`、`codex-resume-pack.md`，以及自动恢复提示也都同步成同一套口径，不再把 `Stage 11` 当作 reopened 主线。 校验已做完：`git diff --check` 通过，`node --test test/codex-context-minor-gc.test.js…\nt3 user: 现在用户端有明显好用了么？",
+  "packaged_context_block": "## Context Minor GC Working Set\nActive raw turns:\nt2 assistant: `Stage 11` 的控制面我已经收口了。现在 `.codex/status.md` 和 `.codex/plan.md` 都回到 `Stage 12` 当前，当前切片是 `group-12a-contract-and-replay-hold`；`continue.md`、`progress.md`、`handoff.md`、`codex-resume-pack.md`，以及自动恢复提示也都同步成同一套口径，不再把 `Stage 11` 当作 reopened 主线。 校验已做完：`git diff --check` 通过，`node --test test/codex-context-minor-gc.test.js…\nt3 user: 现在用户端有明显好用了么？",
+  "shadow_event": {
+    "schema_version": "umc.dialogue-working-set-shadow.v1",
+    "event_id": "shadow-1776516820576-crwvd2",
+    "generated_at": "2026-04-18T12:53:40.576Z",
+    "session_key": "codex:vscode:019da08b-ae03-73e3-9378-881ff36e8fa4",
+    "agent_id": "main",
+    "query": "现在用户端有明显好用了么？",
+    "status": "captured",
+    "reason": "",
+    "sampling": {
+      "max_turns": 12,
+      "min_turns": 3,
+      "max_chars_per_turn": 900
+    },
+    "transcript": [
+      {
+        "id": "t1",
+        "role": "user",
+        "content": "# Files mentioned by the user: ## codex-resume-pack.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/codex-resume-pack.md ## continue.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/continue.md ## handoff.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/handoff.md ## progress.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/progress.md ## status.md: /Users/redcreen/Project/unified-memory-core/.codex/status.md ## plan.md: /Users/redcreen/Project/unified-memory-core/.codex/plan.md ## My request for Codex: Stage 11 继续 直到收口"
+      },
+      {
+        "id": "t2",
+        "role": "assistant",
+        "content": "`Stage 11` 的控制面我已经收口了。现在 `.codex/status.md` 和 `.codex/plan.md` 都回到 `Stage 12` 当前，当前切片是 `group-12a-contract-and-replay-hold`；`continue.md`、`progress.md`、`handoff.md`、`codex-resume-pack.md`，以及自动恢复提示也都同步成同一套口径，不再把 `Stage 11` 当作 reopened 主线。 校验已做完：`git diff --check` 通过，`node --test test/codex-context-minor-gc.test.js…"
+      },
+      {
+        "id": "t3",
+        "role": "user",
+        "content": "现在用户端有明显好用了么？"
+      }
+    ],
+    "decision": {
+      "relation": "continue",
+      "confidence": 0.88,
+      "evict_turn_ids": [
+        "t1"
+      ],
+      "pin_turn_ids": [],
+      "archive_summary": "Stage 11 closure request was completed and the control-plane/status documents were synchronized to Stage 12 with validation passing.",
+      "reasoning_summary": "The latest user question asks whether the recent work produced a noticeable improvement on the user side, which still depends on the immediately preceding assistant summary of what changed. This is the same active topic, so relation=continue. The older Stage 11 kickoff turn is now resolved and can leave the next-turn raw working set; no durable pin is needed from it."
+    },
+    "decision_transport": "codex_exec",
+    "snapshot": {
+      "applied": {
+        "relation": "continue",
+        "confidence": 0.88,
+        "archiveSummary": "Stage 11 closure request was completed and the control-plane/status documents were synchronized to Stage 12 with validation passing.",
+        "reasoningSummary": "The latest user question asks whether the recent work produced a noticeable improvement on the user side, which still depends on the immediately preceding assistant summary of what changed. This is the same active topic, so relation=continue. The older Stage 11 kickoff turn is now resolved and can leave the next-turn raw working set; no durable pin is needed from it.",
+        "latestUserTurnId": "t3",
+        "pinTurnIds": [],
+        "pinnedOnlyTurnIds": [],
+        "requestedEvictTurnIds": [
+          "t1"
+        ],
+        "blockedEvictTurnIds": [],
+        "appliedEvictTurnIds": [
+          "t1"
+        ],
+        "keepTurnIds": [
+          "t2",
+          "t3"
+        ],
+        "baselineTokens": 232,
+        "keptTokens": 83,
+        "prunedTokens": 149,
+        "reductionRatio": 0.6422413793103449,
+        "keepTurns": [
+          {
+            "id": "t2",
+            "role": "assistant",
+            "content": "`Stage 11` 的控制面我已经收口了。现在 `.codex/status.md` 和 `.codex/plan.md` 都回到 `Stage 12` 当前，当前切片是 `group-12a-contract-and-replay-hold`；`continue.md`、`progress.md`、`handoff.md`、`codex-resume-pack.md`，以及自动恢复提示也都同步成同一套口径，不再把 `Stage 11` 当作 reopened 主线。 校验已做完：`git diff --check` 通过，`node --test test/codex-context-minor-gc.test.js…",
+            "tokenEstimate": 79
+          },
+          {
+            "id": "t3",
+            "role": "user",
+            "content": "现在用户端有明显好用了么？",
+            "tokenEstimate": 4
+          }
+        ],
+        "evictedTurns": [
+          {
+            "id": "t1",
+            "role": "user",
+            "content": "# Files mentioned by the user: ## codex-resume-pack.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/codex-resume-pack.md ## continue.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/continue.md ## handoff.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/handoff.md ## progress.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/progress.md ## status.md: /Users/redcreen/Project/unified-memory-core/.codex/status.md ## plan.md: /Users/redcreen/Project/unified-memory-core/.codex/plan.md ## My request for Codex: Stage 11 继续 直到收口",
+            "tokenEstimate": 149
+          }
+        ]
+      },
+      "baselineRawTranscript": "t1 user: # Files mentioned by the user: ## codex-resume-pack.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/codex-resume-pack.md ## continue.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/continue.md ## handoff.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/handoff.md ## progress.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/progress.md ## status.md: /Users/redcreen/Project/unified-memory-core/.codex/status.md ## plan.md: /Users/redcreen/Project/unified-memory-core/.codex/plan.md ## My request for Codex: Stage 11 继续 直到收口\nt2 assistant: `Stage 11` 的控制面我已经收口了。现在 `.codex/status.md` 和 `.codex/plan.md` 都回到 `Stage 12` 当前，当前切片是 `group-12a-contract-and-replay-hold`；`continue.md`、`progress.md`、`handoff.md`、`codex-resume-pack.md`，以及自动恢复提示也都同步成同一套口径，不再把 `Stage 11` 当作 reopened 主线。 校验已做完：`git diff --check` 通过，`node --test test/codex-context-minor-gc.test.js…\nt3 user: 现在用户端有明显好用了么？",
+      "shadowRawTranscript": "t2 assistant: `Stage 11` 的控制面我已经收口了。现在 `.codex/status.md` 和 `.codex/plan.md` 都回到 `Stage 12` 当前，当前切片是 `group-12a-contract-and-replay-hold`；`continue.md`、`progress.md`、`handoff.md`、`codex-resume-pack.md`，以及自动恢复提示也都同步成同一套口径，不再把 `Stage 11` 当作 reopened 主线。 校验已做完：`git diff --check` 通过，`node --test test/codex-context-minor-gc.test.js…\nt3 user: 现在用户端有明显好用了么？",
+      "semanticPinNotes": [],
+      "archiveSummary": "Stage 11 closure request was completed and the control-plane/status documents were synchronized to Stage 12 with validation passing.",
+      "injectedArchiveSummary": "",
+      "baselinePromptEstimate": 239,
+      "shadowRawPromptEstimate": 88,
+      "shadowPackageEstimate": 93,
+      "shadowPackageText": "Active raw turns:\nt2 assistant: `Stage 11` 的控制面我已经收口了。现在 `.codex/status.md` 和 `.codex/plan.md` 都回到 `Stage 12` 当前，当前切片是 `group-12a-contract-and-replay-hold`；`continue.md`、`progress.md`、`handoff.md`、`codex-resume-pack.md`，以及自动恢复提示也都同步成同一套口径，不再把 `Stage 11` 当作 reopened 主线。 校验已做完：`git diff --check` 通过，`node --test test/codex-context-minor-gc.test.js…\nt3 user: 现在用户端有明显好用了么？"
+    },
+    "scorecard": {
+      "relation": "continue",
+      "baselineTurnCount": 3,
+      "keptTurnCount": 2,
+      "evictedTurnCount": 1,
+      "pinCount": 0,
+      "baselinePromptEstimate": 239,
+      "shadowRawPromptEstimate": 88,
+      "shadowPackageEstimate": 93,
+      "rawReductionRatio": 0.6422,
+      "packageReductionRatio": 0.6109,
+      "candidateLoadElapsedMs": 0,
+      "assemblyBuildElapsedMs": 0,
+      "decisionElapsedMs": 44765,
+      "totalElapsedMs": 44769,
+      "guardedEnabled": true,
+      "guardedApplied": true,
+      "guardedReason": "guarded_candidate",
+      "guardedMessageCount": 2,
+      "guardedCarryForwardEstimate": 0,
+      "guardedFilteredMessageEstimate": 83
+    },
+    "guarded": {
+      "enabled": true,
+      "applied": true,
+      "reason": "guarded_candidate",
+      "filteredMessages": [
+        {
+          "role": "assistant",
+          "content": "`Stage 11` 的控制面我已经收口了。现在 `.codex/status.md` 和 `.codex/plan.md` 都回到 `Stage 12` 当前，当前切片是 `group-12a-contract-and-replay-hold`；`continue.md`、`progress.md`、`handoff.md`、`codex-resume-pack.md`，以及自动恢复提示也都同步成同一套口径，不再把 `Stage 11` 当作 reopened 主线。 校验已做完：`git diff --check` 通过，`node --test test/codex-context-minor-gc.test.js…"
+        },
+        {
+          "role": "user",
+          "content": "现在用户端有明显好用了么？"
+        }
+      ],
+      "filteredMessageCount": 2,
+      "filteredMessageTokenEstimate": 83,
+      "carryForwardText": "",
+      "carryForwardEstimate": 0,
+      "evictedSourceIndices": [
+        0
+      ]
+    },
+    "timings": {
+      "totalElapsedMs": 44769,
+      "decisionElapsedMs": 44765
+    },
+    "artifact_paths": {
+      "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da08b-ae03-73e3-9378-881ff36e8fa4-shadow-1776516820576-crwvd2.json",
+      "summary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl"
+    }
+  }
+}

@@ -1,0 +1,145 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776571512877-w0vlw1",
+  "generated_at": "2026-04-19T04:05:12.877Z",
+  "session_key": "agent:main:main",
+  "agent_id": "main",
+  "query": "还是旅行：刚才这段里，我更想住哪座城市？",
+  "status": "skipped",
+  "reason": "explicit_continue_marker",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "记住了： - 这个发布方案第一页的项目代号固定写：`north-star-lantern` 之后我们聊 release 方案时，我会按这个固定事实来。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "继续同一个 release 话题：把验收拆成版本、安装、回滚、观测四块，而且每块都要写 owner、风险和 rollback boundary。"
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "可以，建议把验收结构固定成 4 块： - 版本 - 安装 - 回滚 - 观测 每一块都统一写这 3 项： - owner - 风险 - rollback boundary 我建议你直接用这个版式： ### 1. 版本 - owner: - 风险: - rollback boundary: ### 2. 安装 - owner: - 风险: - rollback boundary: ### 3. 回滚 - owner: - 风险: - rollback boundary: ### 4. 观测 - owner: - 风险: - rollback boundary: 如果你愿意，我下一条可以直接帮你把这 4 块展开成一版可用的 release 验收草案。"
+    },
+    {
+      "id": "t5",
+      "role": "user",
+      "content": "再补充同一个方案：版本块要写 tag、commit、构建时间、镜像 digest；安装块要写目标环境、前置条件和灰度范围。"
+    },
+    {
+      "id": "t6",
+      "role": "assistant",
+      "content": "可以，版本块和安装块可以补成这样： ### 1. 版本 - owner: - 风险: - rollback boundary: - tag: - commit: - 构建时间: - 镜像 digest: ### 2. 安装 - owner: - 风险: - rollback boundary: - 目标环境: - 前置条件: - 灰度范围: ### 3. 回滚 - owner: - 风险: - rollback boundary: ### 4. 观测 - owner: - 风险: - rollback boundary: 如果你要，我可以下一条直接把它整理成一份完整的 release 验收模板，带上适合填写的字段说明。"
+    },
+    {
+      "id": "t7",
+      "role": "user",
+      "content": "继续 release：回滚块要写开关、数据库兼容边界、失败后的人工兜底；观测块要写 dashboard、告警和日志关键字。"
+    },
+    {
+      "id": "t8",
+      "role": "assistant",
+      "content": "可以，补全后建议统一成这样： ### 1. 版本 - owner: - 风险: - rollback boundary: - tag: - commit: - 构建时间: - 镜像 digest: ### 2. 安装 - owner: - 风险: - rollback boundary: - 目标环境: - 前置条件: - 灰度范围: ### 3. 回滚 - owner: - 风险: - rollback boundary: - 开关: - 数据库兼容边界: - 失败后的人工兜底: ### 4. 观测 - owner: - 风险: - rollback boundary: - dashboard: - 告警: - 日志关键字: 如果你愿意，我可以下一条把这份 release 方案整理成最终版模板，顺手把字段顺序也统一好。"
+    },
+    {
+      "id": "t9",
+      "role": "user",
+      "content": "还是同一个发布方案：如果这轮只保留 5 条关键检查项，你先别展开内容，只确认你记住的是同一个方案。"
+    },
+    {
+      "id": "t10",
+      "role": "assistant",
+      "content": "记住了，是同一个发布方案。"
+    },
+    {
+      "id": "t11",
+      "role": "user",
+      "content": "继续：以后我问这个发布方案时，默认先给结论，再补细节，而且回答里保留 north-star-lantern 这个代号。"
+    },
+    {
+      "id": "t12",
+      "role": "assistant",
+      "content": "记住了。 以后你问这个发布方案时，我会默认： - 先给结论 - 再补细节 - 回答里保留 `north-star-lantern` 这个代号"
+    },
+    {
+      "id": "t13",
+      "role": "user",
+      "content": "再补一层：这个方案要先跑 staging，再进 production，而且 staging 通过后 30 分钟内要盯错误率和回滚开关。"
+    },
+    {
+      "id": "t14",
+      "role": "assistant",
+      "content": "记住了，还是同一个发布方案，并且新增这条流程约束： - 先跑 staging，再进 production - staging 通过后，30 分钟内重点盯： - 错误率 - 回滚开关 我后面继续按这套上下文回答。"
+    },
+    {
+      "id": "t15",
+      "role": "user",
+      "content": "现在换个完全不同的话题。帮我想一个京都三晚行程，偏安静、靠地铁、预算两万元。"
+    },
+    {
+      "id": "t16",
+      "role": "assistant",
+      "content": "可以，先给结论： - **建议住 2 个点位都靠地铁**： 1) **乌丸/四条周边**住前 2 晚，去市内景点最顺 2) **京都站周边**住最后 1 晚，返程方便 - **节奏主打安静**：寺院、庭园、老街、河边散步，尽量避开祇园夜游和过度打卡路线 - **两万元预算完全够**：按 3 晚、偏舒适酒店 + 正常餐饮 + 地铁/少量打车，通常还有余量 ### 行程建议（3晚4天） #### Day 1｜抵达京都：轻松适应 + 傍晚散步 - 抵达后先去酒店放行李 - 下午/傍晚： - **京都御苑**：非常适合安静走一圈 - **京都御所外圈**或**鸭川沿岸**散步 - 晚餐： - 选四条或乌丸附近的定食、荞麦面、豆腐料理 - 住宿：**乌丸 / 四条站附近** #### Day 2｜北边安静线：寺院 + 庭园 - 上午： - **金阁寺**（早去，游客相对少一点） - 中午： - 去 **北野天满宫** 周边简单吃饭 - 下午： - **龙安寺** 或 **等持院** - 如果想更静，可以二选一就够，不用塞太满 - 傍晚： - 回市区，在**乌丸御池**附近找咖啡馆或居酒屋 - 住宿：继续住 **乌丸/四条** #### Day 3｜西南线：岚山但走“安静版” - 上午尽量早出发： - **岚山竹林**早去 - **天龙寺庭园** - 如果体力和兴趣还在： - **大河内山庄庭园**，比纯打卡更安静 - 午后： - 回市区休息，别硬塞清水寺一带 - 晚上： - 逛 **先斗町** 外围或直接在酒店周边吃饭 - 住宿：仍住市中心，方便 #### Day 4｜返程前：补一个最舒服的点 - 如果航班/新干线在下午或晚上： - **东本愿寺** 或 **建仁寺** 二选一 - 然后去京都站取行李返程 - 如果时间紧，就直接慢慢早餐后出发 --- ### 住宿建议 优先找这些区域： - **乌丸御池** - **四条乌丸** - **京都站** - **二条城前** 也可以，安静但出行稍微看线路 选酒店时重点看： - 离地铁站步行 **5–8分钟内** - 房间不要临主..."
+    },
+    {
+      "id": "t17",
+      "role": "user",
+      "content": "继续旅行话题：如果第一晚住四条乌丸，后两晚更适合住哪里？一句话。"
+    },
+    {
+      "id": "t18",
+      "role": "assistant",
+      "content": "后两晚更适合住 **京都站周边**，最省心，返程和去东寺、东本愿寺这类安静点都方便。"
+    }
+  ],
+  "decision": null,
+  "decision_transport": "",
+  "snapshot": null,
+  "scorecard": {
+    "relation": "",
+    "baselineTurnCount": 18,
+    "keptTurnCount": 0,
+    "evictedTurnCount": 0,
+    "pinCount": 0,
+    "baselinePromptEstimate": 0,
+    "shadowRawPromptEstimate": 0,
+    "shadowPackageEstimate": 0,
+    "rawReductionRatio": 0,
+    "packageReductionRatio": 0,
+    "candidateLoadElapsedMs": 8,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 0,
+    "totalElapsedMs": 0,
+    "guardedEnabled": true,
+    "guardedApplied": false,
+    "guardedReason": "not_evaluated",
+    "guardedMessageCount": 24,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 0
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": false,
+    "reason": "not_evaluated",
+    "filteredMessageCount": 24,
+    "filteredMessageTokenEstimate": 0,
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 0,
+    "decisionElapsedMs": 0
+  }
+}

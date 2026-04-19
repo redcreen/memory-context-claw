@@ -1,0 +1,416 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776568518329-oatoz1",
+  "generated_at": "2026-04-19T03:15:18.329Z",
+  "session_key": "agent:main:main",
+  "agent_id": "main",
+  "query": "现在换个完全不同的话题。给我一个适合工作日晚饭的番茄牛肉炖菜思路，要求一锅做完。",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "记一下：我以前默认编辑器是 Vim。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "已记下。"
+    },
+    {
+      "id": "t3",
+      "role": "assistant",
+      "content": "已记下。"
+    },
+    {
+      "id": "t4",
+      "role": "user",
+      "content": "更新一下：我现在默认编辑器是 Zed，而且后面都按这个新值算。"
+    },
+    {
+      "id": "t5",
+      "role": "assistant",
+      "content": "已更新，后面按 Zed 记。"
+    },
+    {
+      "id": "t6",
+      "role": "user",
+      "content": "继续同一个编辑器话题：我把日常工作拆成代码导航、批量替换、Git 操作、预览四块，你先记住这是同一个 workflow。"
+    },
+    {
+      "id": "t7",
+      "role": "assistant",
+      "content": "记住了：默认编辑器现在按 Zed 算，而且代码导航、批量替换、Git 操作、预览这四块我会当成同一个日常 workflow 来理解。"
+    },
+    {
+      "id": "t8",
+      "role": "user",
+      "content": "再补充：代码导航要快，批量替换要可回滚，Git 操作要偏命令行，预览要尽量轻量。"
+    },
+    {
+      "id": "t9",
+      "role": "assistant",
+      "content": "记住了：这四块我会按同一个 workflow 处理。 - 代码导航：要快 - 批量替换：要可回滚 - Git 操作：偏命令行 - 预览：尽量轻量 后面我会按这个默认值来。"
+    },
+    {
+      "id": "t10",
+      "role": "user",
+      "content": "还是同一个 workflow：如果以后我问编辑器选择，默认先给结论，再说明原因，不要把旧值 Vim 当成当前值。"
+    },
+    {
+      "id": "t11",
+      "role": "assistant",
+      "content": "记住了。以后问编辑器选择，我会先给结论，再补原因，并且不会把 Vim 当成当前值。"
+    },
+    {
+      "id": "t12",
+      "role": "user",
+      "content": "继续：这个 workflow 主要服务于 Node.js 和文档维护，不是为了写长篇文章。"
+    },
+    {
+      "id": "t13",
+      "role": "assistant",
+      "content": "记住了。这个 workflow 我会按 Node.js 和文档维护来理解，不会默认往长篇写作方向带。"
+    },
+    {
+      "id": "t14",
+      "role": "user",
+      "content": "再补一条：我切题之后再回来问当前编辑器，你也应该优先回答现在这个新值。"
+    },
+    {
+      "id": "t15",
+      "role": "assistant",
+      "content": "记住了。以后你再回头问当前编辑器，我会优先按现在这个新值回答。"
+    }
+  ],
+  "decision": {
+    "relation": "switch",
+    "confidence": 0.97,
+    "evict_turn_ids": [
+      "t1",
+      "t2",
+      "t3",
+      "t4",
+      "t5",
+      "t6",
+      "t7",
+      "t8",
+      "t9",
+      "t10",
+      "t11",
+      "t12",
+      "t13",
+      "t14",
+      "t15"
+    ],
+    "pin_turn_ids": [
+      "t4",
+      "t6",
+      "t8",
+      "t10",
+      "t12",
+      "t14"
+    ],
+    "archive_summary": "用户的长期偏好/事实：默认编辑器改为 Zed，不再以 Vim 为当前值；同一日常 workflow 包含代码导航、批量替换、Git 操作、预览四块；代码导航要快，批量替换要可回滚，Git 操作偏命令行，预览尽量轻量；以后问编辑器选择时先给结论再说明原因；该 workflow 主要服务于 Node.js 和文档维护；以后回头问当前编辑器时优先回答新值。",
+    "reasoning_summary": "当前用户已切换到全新且无关的话题（工作日晚饭番茄牛肉炖菜一锅做完），原编辑器/workflow 讨论可从下一轮原始提示中移除。保留的语义只应作为紧凑 pin 存在，以支持未来若再次提到编辑器时的默认值与回答风格。"
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "switch",
+      "confidence": 0.97,
+      "archiveSummary": "用户的长期偏好/事实：默认编辑器改为 Zed，不再以 Vim 为当前值；同一日常 workflow 包含代码导航、批量替换、Git 操作、预览四块；代码导航要快，批量替换要可回滚，Git 操作偏命令行，预览尽量轻量；以后问编辑器选择时先给结论再说明原因；该 workflow 主要服务于 Node.js 和文档维护；以后回头问当前编辑器时优先回答新值。",
+      "reasoningSummary": "当前用户已切换到全新且无关的话题（工作日晚饭番茄牛肉炖菜一锅做完），原编辑器/workflow 讨论可从下一轮原始提示中移除。保留的语义只应作为紧凑 pin 存在，以支持未来若再次提到编辑器时的默认值与回答风格。",
+      "latestUserTurnId": "t14",
+      "pinTurnIds": [
+        "t4",
+        "t6",
+        "t8",
+        "t10",
+        "t12",
+        "t14"
+      ],
+      "pinnedOnlyTurnIds": [
+        "t4",
+        "t6",
+        "t8",
+        "t10",
+        "t12"
+      ],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8",
+        "t9",
+        "t10",
+        "t11",
+        "t12",
+        "t13",
+        "t14",
+        "t15"
+      ],
+      "blockedEvictTurnIds": [
+        "t14"
+      ],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8",
+        "t9",
+        "t10",
+        "t11",
+        "t12",
+        "t13",
+        "t15"
+      ],
+      "keepTurnIds": [
+        "t14"
+      ],
+      "baselineTokens": 150,
+      "keptTokens": 9,
+      "prunedTokens": 141,
+      "reductionRatio": 0.94,
+      "keepTurns": [
+        {
+          "id": "t14",
+          "role": "user",
+          "content": "再补一条：我切题之后再回来问当前编辑器，你也应该优先回答现在这个新值。",
+          "tokenEstimate": 9
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "记一下：我以前默认编辑器是 Vim。",
+          "tokenEstimate": 5
+        },
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "已记下。",
+          "tokenEstimate": 1
+        },
+        {
+          "id": "t3",
+          "role": "assistant",
+          "content": "已记下。",
+          "tokenEstimate": 1
+        },
+        {
+          "id": "t4",
+          "role": "user",
+          "content": "更新一下：我现在默认编辑器是 Zed，而且后面都按这个新值算。",
+          "tokenEstimate": 8
+        },
+        {
+          "id": "t5",
+          "role": "assistant",
+          "content": "已更新，后面按 Zed 记。",
+          "tokenEstimate": 4
+        },
+        {
+          "id": "t6",
+          "role": "user",
+          "content": "继续同一个编辑器话题：我把日常工作拆成代码导航、批量替换、Git 操作、预览四块，你先记住这是同一个 workflow。",
+          "tokenEstimate": 15
+        },
+        {
+          "id": "t7",
+          "role": "assistant",
+          "content": "记住了：默认编辑器现在按 Zed 算，而且代码导航、批量替换、Git 操作、预览这四块我会当成同一个日常 workflow 来理解。",
+          "tokenEstimate": 17
+        },
+        {
+          "id": "t8",
+          "role": "user",
+          "content": "再补充：代码导航要快，批量替换要可回滚，Git 操作要偏命令行，预览要尽量轻量。",
+          "tokenEstimate": 10
+        },
+        {
+          "id": "t9",
+          "role": "assistant",
+          "content": "记住了：这四块我会按同一个 workflow 处理。 - 代码导航：要快 - 批量替换：要可回滚 - Git 操作：偏命令行 - 预览：尽量轻量 后面我会按这个默认值来。",
+          "tokenEstimate": 22
+        },
+        {
+          "id": "t10",
+          "role": "user",
+          "content": "还是同一个 workflow：如果以后我问编辑器选择，默认先给结论，再说明原因，不要把旧值 Vim 当成当前值。",
+          "tokenEstimate": 14
+        },
+        {
+          "id": "t11",
+          "role": "assistant",
+          "content": "记住了。以后问编辑器选择，我会先给结论，再补原因，并且不会把 Vim 当成当前值。",
+          "tokenEstimate": 11
+        },
+        {
+          "id": "t12",
+          "role": "user",
+          "content": "继续：这个 workflow 主要服务于 Node.js 和文档维护，不是为了写长篇文章。",
+          "tokenEstimate": 12
+        },
+        {
+          "id": "t13",
+          "role": "assistant",
+          "content": "记住了。这个 workflow 我会按 Node.js 和文档维护来理解，不会默认往长篇写作方向带。",
+          "tokenEstimate": 13
+        },
+        {
+          "id": "t15",
+          "role": "assistant",
+          "content": "记住了。以后你再回头问当前编辑器，我会优先按现在这个新值回答。",
+          "tokenEstimate": 8
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 记一下：我以前默认编辑器是 Vim。\nt2 assistant: 已记下。\nt3 assistant: 已记下。\nt4 user: 更新一下：我现在默认编辑器是 Zed，而且后面都按这个新值算。\nt5 assistant: 已更新，后面按 Zed 记。\nt6 user: 继续同一个编辑器话题：我把日常工作拆成代码导航、批量替换、Git 操作、预览四块，你先记住这是同一个 workflow。\nt7 assistant: 记住了：默认编辑器现在按 Zed 算，而且代码导航、批量替换、Git 操作、预览这四块我会当成同一个日常 workflow 来理解。\nt8 user: 再补充：代码导航要快，批量替换要可回滚，Git 操作要偏命令行，预览要尽量轻量。\nt9 assistant: 记住了：这四块我会按同一个 workflow 处理。 - 代码导航：要快 - 批量替换：要可回滚 - Git 操作：偏命令行 - 预览：尽量轻量 后面我会按这个默认值来。\nt10 user: 还是同一个 workflow：如果以后我问编辑器选择，默认先给结论，再说明原因，不要把旧值 Vim 当成当前值。\nt11 assistant: 记住了。以后问编辑器选择，我会先给结论，再补原因，并且不会把 Vim 当成当前值。\nt12 user: 继续：这个 workflow 主要服务于 Node.js 和文档维护，不是为了写长篇文章。\nt13 assistant: 记住了。这个 workflow 我会按 Node.js 和文档维护来理解，不会默认往长篇写作方向带。\nt14 user: 再补一条：我切题之后再回来问当前编辑器，你也应该优先回答现在这个新值。\nt15 assistant: 记住了。以后你再回头问当前编辑器，我会优先按现在这个新值回答。",
+    "shadowRawTranscript": "t14 user: 再补一条：我切题之后再回来问当前编辑器，你也应该优先回答现在这个新值。",
+    "semanticPinNotes": [
+      "user: 更新一下：我现在默认编辑器是 Zed，而且后面都按这个新值算。",
+      "user: 继续同一个编辑器话题：我把日常工作拆成代码导航、批量替换、Git 操作、预览四块，你先记住这是同一个 workflow。",
+      "user: 再补充：代码导航要快，批量替换要可回滚，Git 操作要偏命令行，预览要尽量轻量。",
+      "user: 还是同一个 workflow：如果以后我问编辑器选择，默认先给结论，再说明原因，不要把旧值 Vim 当成当前值。",
+      "user: 继续：这个 workflow 主要服务于 Node.js 和文档维护，不是为了写长篇文章。"
+    ],
+    "archiveSummary": "用户的长期偏好/事实：默认编辑器改为 Zed，不再以 Vim 为当前值；同一日常 workflow 包含代码导航、批量替换、Git 操作、预览四块；代码导航要快，批量替换要可回滚，Git 操作偏命令行，预览尽量轻量；以后问编辑器选择时先给结论再说明原因；该 workflow 主要服务于 Node.js 和文档维护；以后回头问当前编辑器时优先回答新值。",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 194,
+    "shadowRawPromptEstimate": 12,
+    "shadowPackageEstimate": 17,
+    "shadowPackageText": "Recent raw context:\nt14 user: 再补一条：我切题之后再回来问当前编辑器，你也应该优先回答现在这个新值。"
+  },
+  "scorecard": {
+    "relation": "switch",
+    "baselineTurnCount": 15,
+    "keptTurnCount": 1,
+    "evictedTurnCount": 14,
+    "pinCount": 6,
+    "baselinePromptEstimate": 194,
+    "shadowRawPromptEstimate": 12,
+    "shadowPackageEstimate": 17,
+    "rawReductionRatio": 0.94,
+    "packageReductionRatio": 0.9124,
+    "candidateLoadElapsedMs": 9,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 7663,
+    "totalElapsedMs": 7665,
+    "guardedEnabled": true,
+    "guardedApplied": true,
+    "guardedReason": "guarded_candidate",
+    "guardedMessageCount": 3,
+    "guardedCarryForwardEstimate": 78,
+    "guardedFilteredMessageEstimate": 24
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": true,
+    "reason": "guarded_candidate",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "再补一条：我切题之后再回来问当前编辑器，你也应该优先回答现在这个新值。"
+          }
+        ],
+        "timestamp": 1776568508281
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "toolCall",
+            "id": "call_umgbvm5RNHGnsGxVfzQVs2if",
+            "name": "edit",
+            "arguments": {
+              "path": "memory/2026-04-12.md",
+              "edits": [
+                {
+                  "oldText": "- This workflow mainly serves Node.js work and documentation maintenance, not long-form writing.\n",
+                  "newText": "- This workflow mainly serves Node.js work and documentation maintenance, not long-form writing.\n- If the topic returns later, answer with the current editor value first.\n"
+                }
+              ]
+            },
+            "partialJson": "{\"path\":\"memory/2026-04-12.md\",\"edits\":[{\"oldText\":\"- This workflow mainly serves Node.js work and documentation maintenance, not long-form writing.\\n\",\"newText\":\"- This workflow mainly serves Node.js work and documentation maintenance, not long-form writing.\\n- If the topic returns later, answer with the current editor value first.\\n\"}]}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 10228,
+          "output": 90,
+          "cacheRead": 5120,
+          "cacheWrite": 0,
+          "totalTokens": 15438,
+          "cost": {
+            "input": 0.007671,
+            "output": 0.00040500000000000003,
+            "cacheRead": 0.000384,
+            "cacheWrite": 0,
+            "total": 0.00846
+          }
+        },
+        "stopReason": "toolUse",
+        "timestamp": 1776568508289,
+        "responseId": "resp_0d82fb5ef959a2600169e448bce8dc8193a246be2245bd97b8"
+      },
+      {
+        "role": "toolResult",
+        "toolCallId": "call_umgbvm5RNHGnsGxVfzQVs2if",
+        "toolName": "edit",
+        "content": [
+          {
+            "type": "text",
+            "text": "Successfully replaced 1 block(s) in memory/2026-04-12.md."
+          }
+        ],
+        "isError": false,
+        "timestamp": 1776568511565
+      }
+    ],
+    "filteredMessageCount": 3,
+    "filteredMessageTokenEstimate": 24,
+    "carryForwardText": "Conversation carry-forward pins:\n- user: 更新一下：我现在默认编辑器是 Zed，而且后面都按这个新值算。\n- user: 继续同一个编辑器话题：我把日常工作拆成代码导航、批量替换、Git 操作、预览四块，你先记住这是同一个 workflow。\n- user: 再补充：代码导航要快，批量替换要可回滚，Git 操作要偏命令行，预览要尽量轻量。\n- user: 还是同一个 workflow：如果以后我问编辑器选择，默认先给结论，再说明原因，不要把旧值 Vim 当成当前值。\n- user: 继续：这个 workflow 主要服务于 Node.js 和文档维护，不是为了写长篇文章。",
+    "carryForwardEstimate": 78,
+    "evictedSourceIndices": [
+      0,
+      1,
+      3,
+      4,
+      9,
+      10,
+      15,
+      16,
+      19,
+      20,
+      23,
+      24,
+      27,
+      31
+    ]
+  },
+  "timings": {
+    "totalElapsedMs": 7665,
+    "decisionElapsedMs": 7663
+  }
+}

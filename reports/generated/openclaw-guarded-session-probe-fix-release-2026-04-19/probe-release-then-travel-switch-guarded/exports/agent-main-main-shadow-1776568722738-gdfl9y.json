@@ -1,0 +1,310 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776568722738-gdfl9y",
+  "generated_at": "2026-04-19T03:18:42.738Z",
+  "session_key": "agent:main:main",
+  "agent_id": "main",
+  "query": "再补充同一个方案：版本块要写 tag、commit、构建时间、镜像 digest；安装块要写目标环境、前置条件和灰度范围。",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "记住了：这个发布方案第一页的项目代号固定是 `north-star-lantern`。 我也把这条写进了本地记忆。"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "继续同一个 release 话题：把验收拆成版本、安装、回滚、观测四块，而且每块都要写 owner、风险和 rollback boundary。"
+    },
+    {
+      "id": "t4",
+      "role": "assistant",
+      "content": "可以，先把验收结构定成这四块： - **版本** - owner - 风险 - rollback boundary - **安装** - owner - 风险 - rollback boundary - **回滚** - owner - 风险 - rollback boundary - **观测** - owner - 风险 - rollback boundary 如果你愿意，我下一步可以直接把它整理成一页 release 方案模板，顺手把 `north-star-lantern` 放到第一页标题里。"
+    }
+  ],
+  "decision": {
+    "relation": "continue",
+    "confidence": 0.96,
+    "evict_turn_ids": [
+      "t2"
+    ],
+    "pin_turn_ids": [
+      "t1"
+    ],
+    "archive_summary": "固定事实：该 release 方案第一页的项目代号必须写 `north-star-lantern`。",
+    "reasoning_summary": "这是同一个未完成的 release 方案话题，最新用户是在继续细化同一方案，仍依赖先前关于项目代号与验收分块的上下文，因此保持 continue。仅回收纯确认性的 t2；t1 的项目代号是可长期复用的稳定事实，适合压缩为语义 pin。t3 和 t4 仍是当前方案的有效工作上下文，不应移出原始工作集。"
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "continue",
+      "confidence": 0.96,
+      "archiveSummary": "固定事实：该 release 方案第一页的项目代号必须写 `north-star-lantern`。",
+      "reasoningSummary": "这是同一个未完成的 release 方案话题，最新用户是在继续细化同一方案，仍依赖先前关于项目代号与验收分块的上下文，因此保持 continue。仅回收纯确认性的 t2；t1 的项目代号是可长期复用的稳定事实，适合压缩为语义 pin。t3 和 t4 仍是当前方案的有效工作上下文，不应移出原始工作集。",
+      "latestUserTurnId": "t3",
+      "pinTurnIds": [
+        "t1"
+      ],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [
+        "t2"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t2"
+      ],
+      "keepTurnIds": [
+        "t1",
+        "t3",
+        "t4"
+      ],
+      "baselineTokens": 113,
+      "keptTokens": 98,
+      "prunedTokens": 15,
+      "reductionRatio": 0.13274336283185842,
+      "keepTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。",
+          "tokenEstimate": 16
+        },
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "继续同一个 release 话题：把验收拆成版本、安装、回滚、观测四块，而且每块都要写 owner、风险和 rollback boundary。",
+          "tokenEstimate": 18
+        },
+        {
+          "id": "t4",
+          "role": "assistant",
+          "content": "可以，先把验收结构定成这四块： - **版本** - owner - 风险 - rollback boundary - **安装** - owner - 风险 - rollback boundary - **回滚** - owner - 风险 - rollback boundary - **观测** - owner - 风险 - rollback boundary 如果你愿意，我下一步可以直接把它整理成一页 release 方案模板，顺手把 `north-star-lantern` 放到第一页标题里。",
+          "tokenEstimate": 64
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "记住了：这个发布方案第一页的项目代号固定是 `north-star-lantern`。 我也把这条写进了本地记忆。",
+          "tokenEstimate": 15
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 user: 我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。\nt2 assistant: 记住了：这个发布方案第一页的项目代号固定是 `north-star-lantern`。 我也把这条写进了本地记忆。\nt3 user: 继续同一个 release 话题：把验收拆成版本、安装、回滚、观测四块，而且每块都要写 owner、风险和 rollback boundary。\nt4 assistant: 可以，先把验收结构定成这四块： - **版本** - owner - 风险 - rollback boundary - **安装** - owner - 风险 - rollback boundary - **回滚** - owner - 风险 - rollback boundary - **观测** - owner - 风险 - rollback boundary 如果你愿意，我下一步可以直接把它整理成一页 release 方案模板，顺手把 `north-star-lantern` 放到第一页标题里。",
+    "shadowRawTranscript": "t1 user: 我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。\nt3 user: 继续同一个 release 话题：把验收拆成版本、安装、回滚、观测四块，而且每块都要写 owner、风险和 rollback boundary。\nt4 assistant: 可以，先把验收结构定成这四块： - **版本** - owner - 风险 - rollback boundary - **安装** - owner - 风险 - rollback boundary - **回滚** - owner - 风险 - rollback boundary - **观测** - owner - 风险 - rollback boundary 如果你愿意，我下一步可以直接把它整理成一页 release 方案模板，顺手把 `north-star-lantern` 放到第一页标题里。",
+    "semanticPinNotes": [],
+    "archiveSummary": "固定事实：该 release 方案第一页的项目代号必须写 `north-star-lantern`。",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 124,
+    "shadowRawPromptEstimate": 106,
+    "shadowPackageEstimate": 41,
+    "shadowPackageText": "Task state summary:\n固定事实：该 release 方案第一页的项目代号必须写 `north-star-lantern`。\n\nLatest user ask:\n- 继续同一个 release 话题：把验收拆成版本、安装、回滚、观测四块，而且每块都要写 owner、风险和 rollback boundary。"
+  },
+  "scorecard": {
+    "relation": "continue",
+    "baselineTurnCount": 4,
+    "keptTurnCount": 3,
+    "evictedTurnCount": 1,
+    "pinCount": 1,
+    "baselinePromptEstimate": 124,
+    "shadowRawPromptEstimate": 106,
+    "shadowPackageEstimate": 41,
+    "rawReductionRatio": 0.1327,
+    "packageReductionRatio": 0.6694,
+    "candidateLoadElapsedMs": 7,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 9423,
+    "totalElapsedMs": 9425,
+    "guardedEnabled": true,
+    "guardedApplied": false,
+    "guardedReason": "reduction_below_min",
+    "guardedMessageCount": 7,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 186
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": false,
+    "reason": "reduction_below_min",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "我们先聊 release 方案。记住一个固定事实：这个发布方案第一页的项目代号固定写 north-star-lantern。"
+          }
+        ],
+        "timestamp": 1776568670807
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "toolCall",
+            "id": "call_2XhTK4ph9flLh1jN7aBVFsxV",
+            "name": "write",
+            "arguments": {
+              "path": "/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-hermetic-current-EMzoWR/agents/main/agent/memory/2025-02-14.md",
+              "content": "# 2025-02-14\n\n- User asked to discuss the release plan.\n- Fixed fact to remember: the first page of this release plan must always use project codename `north-star-lantern`.\n"
+            },
+            "partialJson": "{\"path\":\"/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-hermetic-current-EMzoWR/agents/main/agent/memory/2025-02-14.md\",\"content\":\"# 2025-02-14\\n\\n- User asked to discuss the release plan.\\n- Fixed fact to remember: the first page of this release plan must always use project codename `north-star-lantern`.\\n\"}"
+          },
+          {
+            "type": "toolCall",
+            "id": "call_jsZsfTTS8cemyi0LWYYdM7z0",
+            "name": "edit",
+            "arguments": {
+              "path": "/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-hermetic-current-EMzoWR/agents/main/agent/MEMORY.md",
+              "edits": [
+                {
+                  "oldText": "- If memory is missing or conflicting and no current answer is clear, do not guess.\n",
+                  "newText": "- If memory is missing or conflicting and no current answer is clear, do not guess.\n- Fixed release-plan fact: the first page must always use project codename `north-star-lantern`.\n"
+                }
+              ]
+            },
+            "partialJson": "{\"path\":\"/var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-hermetic-current-EMzoWR/agents/main/agent/MEMORY.md\",\"edits\":[{\"oldText\":\"- If memory is missing or conflicting and no current answer is clear, do not guess.\\n\",\"newText\":\"- If memory is missing or conflicting and no current answer is clear, do not guess.\\n- Fixed release-plan fact: the first page must always use project codename `north-star-lantern`.\\n\"}]}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 8561,
+          "output": 271,
+          "cacheRead": 5120,
+          "cacheWrite": 0,
+          "totalTokens": 13952,
+          "cost": {
+            "input": 0.00642075,
+            "output": 0.0012195,
+            "cacheRead": 0.000384,
+            "cacheWrite": 0,
+            "total": 0.00802425
+          }
+        },
+        "stopReason": "toolUse",
+        "timestamp": 1776568670812,
+        "responseId": "resp_0c1c8c3a41fc77e80169e4495f68e081968892b6e15846233d"
+      },
+      {
+        "role": "toolResult",
+        "toolCallId": "call_2XhTK4ph9flLh1jN7aBVFsxV",
+        "toolName": "write",
+        "content": [
+          {
+            "type": "text",
+            "text": "Successfully wrote 173 bytes to /var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-hermetic-current-EMzoWR/agents/main/agent/memory/2025-02-14.md"
+          }
+        ],
+        "isError": false,
+        "timestamp": 1776568676096
+      },
+      {
+        "role": "toolResult",
+        "toolCallId": "call_jsZsfTTS8cemyi0LWYYdM7z0",
+        "toolName": "edit",
+        "content": [
+          {
+            "type": "text",
+            "text": "Successfully replaced 1 block(s) in /var/folders/cb/t_w66gc17vx7x1ckprhljwbm0000gn/T/umc-hermetic-current-EMzoWR/agents/main/agent/MEMORY.md."
+          }
+        ],
+        "isError": false,
+        "timestamp": 1776568676097
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "记住了：这个发布方案第一页的项目代号固定是 `north-star-lantern`。\n\n我也把这条写进了本地记忆。",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0f45fc53c07e51610169e44966411081998c2371d09fc9917e\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 761,
+          "output": 39,
+          "cacheRead": 13312,
+          "cacheWrite": 0,
+          "totalTokens": 14112,
+          "cost": {
+            "input": 0.00057075,
+            "output": 0.0001755,
+            "cacheRead": 0.0009984,
+            "cacheWrite": 0,
+            "total": 0.00174465
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776568676098,
+        "responseId": "resp_0f45fc53c07e51610169e44964cee08199891920aaa07068d3"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "继续同一个 release 话题：把验收拆成版本、安装、回滚、观测四块，而且每块都要写 owner、风险和 rollback boundary。"
+          }
+        ],
+        "timestamp": 1776568699518
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "可以，先把验收结构定成这四块：\n\n- **版本**\n  - owner\n  - 风险\n  - rollback boundary\n\n- **安装**\n  - owner\n  - 风险\n  - rollback boundary\n\n- **回滚**\n  - owner\n  - 风险\n  - rollback boundary\n\n- **观测**\n  - owner\n  - 风险\n  - rollback boundary\n\n如果你愿意，我下一步可以直接把它整理成一页 release 方案模板，顺手把 `north-star-lantern` 放到第一页标题里。",
+            "textSignature": "{\"v\":1,\"id\":\"msg_0f45fc53c07e51610169e4497d9b2481998291c73a1de5b458\",\"phase\":\"final_answer\"}"
+          }
+        ],
+        "api": "openai-codex-responses",
+        "provider": "openai-codex",
+        "model": "gpt-5.4-mini",
+        "usage": {
+          "input": 8842,
+          "output": 127,
+          "cacheRead": 5120,
+          "cacheWrite": 0,
+          "totalTokens": 14089,
+          "cost": {
+            "input": 0.0066315,
+            "output": 0.0005715000000000001,
+            "cacheRead": 0.000384,
+            "cacheWrite": 0,
+            "total": 0.007587
+          }
+        },
+        "stopReason": "stop",
+        "timestamp": 1776568699522,
+        "responseId": "resp_0f45fc53c07e51610169e4497c34108199be538461aeaf23a3"
+      }
+    ],
+    "filteredMessageCount": 7,
+    "filteredMessageTokenEstimate": 186,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 9425,
+    "decisionElapsedMs": 9423
+  }
+}

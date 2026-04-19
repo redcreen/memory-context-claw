@@ -1,0 +1,294 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776530742589-70gemp",
+  "generated_at": "2026-04-18T16:45:42.589Z",
+  "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+  "agent_id": "main",
+  "query": "[GC-D2] 切个话题。为什么 shadow mode 默认先不开？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "assistant",
+      "content": "根因基本确认了，不是单纯“模型把 B/D 判成了 `continue`”。 核心问题有两个。"
+    },
+    {
+      "id": "t2",
+      "role": "user",
+      "content": "要； 先做1，然后做2"
+    },
+    {
+      "id": "t3",
+      "role": "assistant",
+      "content": "已经做完，顺序就是你要的 `1 -> 2`。 第 1 条已修： - timeout 不再伪装成 `continue` - 现在会落成 `status=\"error\", reason=\"decision_timeout\"` - 相关改动在 [structured-decision-runner.js](/Users/redcreen/Project/unified-memory-core/src/structured-decision-…"
+    },
+    {
+      "id": "t4",
+      "role": "user",
+      "content": "需要"
+    },
+    {
+      "id": "t5",
+      "role": "assistant",
+      "content": "先重跑短一点的 `Case D`。下一条发这个： ```text [GC-D2] 记一下：我以前默认编辑器是 Vim。 ```"
+    },
+    {
+      "id": "t6",
+      "role": "user",
+      "content": "[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？"
+    },
+    {
+      "id": "t7",
+      "role": "assistant",
+      "content": "Zed。 不过这条还是旧前缀 `GC-D1`，不适合拿来验证修复后的行为。要干净重跑，请下一条改发："
+    },
+    {
+      "id": "t8",
+      "role": "user",
+      "content": "[GC-D2] 记一下：我以前默认编辑器是 Vim。"
+    },
+    {
+      "id": "t9",
+      "role": "assistant",
+      "content": "很好，`GC-D2` 已经是干净样本了。 下一条发："
+    },
+    {
+      "id": "t10",
+      "role": "user",
+      "content": "[GC-D2] 更新一下：我现在默认编辑器是 Zed。"
+    },
+    {
+      "id": "t11",
+      "role": "assistant",
+      "content": "下一条发： ```text [GC-D2] 切个话题。为什么 shadow mode 默认先不开？ ```"
+    },
+    {
+      "id": "t12",
+      "role": "user",
+      "content": "[GC-D2] 切个话题。为什么 shadow mode 默认先不开？"
+    }
+  ],
+  "decision": {
+    "relation": "switch",
+    "confidence": 0.95,
+    "evict_turn_ids": [
+      "t1",
+      "t2",
+      "t3",
+      "t4",
+      "t5",
+      "t6",
+      "t7",
+      "t8",
+      "t9",
+      "t10",
+      "t11"
+    ],
+    "pin_turn_ids": [
+      "t8",
+      "t10"
+    ],
+    "archive_summary": "Previous topic was a GC-D2 validation flow around editor-memory behavior. The durable user fact established there is that the user used to default to Vim and now defaults to Zed. The validation/setup turns and status chatter are resolved and can leave the next-turn raw prompt.",
+    "reasoning_summary": "The latest user turn explicitly switches topics from editor-default memory testing to a product question about why shadow mode is not enabled by default. The prior validation thread appears resolved, so its raw turns are good eviction candidates. The only durable context worth preserving is the user fact update history (formerly Vim, now Zed), which should survive as compact pins rather than raw prompt context."
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "switch",
+      "confidence": 0.95,
+      "archiveSummary": "Previous topic was a GC-D2 validation flow around editor-memory behavior. The durable user fact established there is that the user used to default to Vim and now defaults to Zed. The validation/setup turns and status chatter are resolved and can leave the next-turn raw prompt.",
+      "reasoningSummary": "The latest user turn explicitly switches topics from editor-default memory testing to a product question about why shadow mode is not enabled by default. The prior validation thread appears resolved, so its raw turns are good eviction candidates. The only durable context worth preserving is the user fact update history (formerly Vim, now Zed), which should survive as compact pins rather than raw prompt context.",
+      "latestUserTurnId": "t12",
+      "pinTurnIds": [
+        "t8",
+        "t10"
+      ],
+      "pinnedOnlyTurnIds": [
+        "t8",
+        "t10"
+      ],
+      "requestedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8",
+        "t9",
+        "t10",
+        "t11"
+      ],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8",
+        "t9",
+        "t10",
+        "t11"
+      ],
+      "keepTurnIds": [
+        "t12"
+      ],
+      "baselineTokens": 151,
+      "keptTokens": 9,
+      "prunedTokens": 142,
+      "reductionRatio": 0.9403973509933775,
+      "keepTurns": [
+        {
+          "id": "t12",
+          "role": "user",
+          "content": "[GC-D2] 切个话题。为什么 shadow mode 默认先不开？",
+          "tokenEstimate": 9
+        }
+      ],
+      "evictedTurns": [
+        {
+          "id": "t1",
+          "role": "assistant",
+          "content": "根因基本确认了，不是单纯“模型把 B/D 判成了 `continue`”。 核心问题有两个。",
+          "tokenEstimate": 12
+        },
+        {
+          "id": "t2",
+          "role": "user",
+          "content": "要； 先做1，然后做2",
+          "tokenEstimate": 3
+        },
+        {
+          "id": "t3",
+          "role": "assistant",
+          "content": "已经做完，顺序就是你要的 `1 -> 2`。 第 1 条已修： - timeout 不再伪装成 `continue` - 现在会落成 `status=\"error\", reason=\"decision_timeout\"` - 相关改动在 [structured-decision-runner.js](/Users/redcreen/Project/unified-memory-core/src/structured-decision-…",
+          "tokenEstimate": 55
+        },
+        {
+          "id": "t4",
+          "role": "user",
+          "content": "需要",
+          "tokenEstimate": 1
+        },
+        {
+          "id": "t5",
+          "role": "assistant",
+          "content": "先重跑短一点的 `Case D`。下一条发这个： ```text [GC-D2] 记一下：我以前默认编辑器是 Vim。 ```",
+          "tokenEstimate": 16
+        },
+        {
+          "id": "t6",
+          "role": "user",
+          "content": "[GC-D1] 回到编辑器问题。我现在默认编辑器是什么？",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t7",
+          "role": "assistant",
+          "content": "Zed。 不过这条还是旧前缀 `GC-D1`，不适合拿来验证修复后的行为。要干净重跑，请下一条改发：",
+          "tokenEstimate": 13
+        },
+        {
+          "id": "t8",
+          "role": "user",
+          "content": "[GC-D2] 记一下：我以前默认编辑器是 Vim。",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t9",
+          "role": "assistant",
+          "content": "很好，`GC-D2` 已经是干净样本了。 下一条发：",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t10",
+          "role": "user",
+          "content": "[GC-D2] 更新一下：我现在默认编辑器是 Zed。",
+          "tokenEstimate": 7
+        },
+        {
+          "id": "t11",
+          "role": "assistant",
+          "content": "下一条发： ```text [GC-D2] 切个话题。为什么 shadow mode 默认先不开？ ```",
+          "tokenEstimate": 14
+        }
+      ]
+    },
+    "baselineRawTranscript": "t1 assistant: 根因基本确认了，不是单纯“模型把 B/D 判成了 `continue`”。 核心问题有两个。\nt2 user: 要； 先做1，然后做2\nt3 assistant: 已经做完，顺序就是你要的 `1 -> 2`。 第 1 条已修： - timeout 不再伪装成 `continue` - 现在会落成 `status=\"error\", reason=\"decision_timeout\"` - 相关改动在 [structured-decision-runner.js](/Users/redcreen/Project/unified-memory-core/src/structured-decision-…\nt4 user: 需要\nt5 assistant: 先重跑短一点的 `Case D`。下一条发这个： ```text [GC-D2] 记一下：我以前默认编辑器是 Vim。 ```\nt6 user: [GC-D1] 回到编辑器问题。我现在默认编辑器是什么？\nt7 assistant: Zed。 不过这条还是旧前缀 `GC-D1`，不适合拿来验证修复后的行为。要干净重跑，请下一条改发：\nt8 user: [GC-D2] 记一下：我以前默认编辑器是 Vim。\nt9 assistant: 很好，`GC-D2` 已经是干净样本了。 下一条发：\nt10 user: [GC-D2] 更新一下：我现在默认编辑器是 Zed。\nt11 assistant: 下一条发： ```text [GC-D2] 切个话题。为什么 shadow mode 默认先不开？ ```\nt12 user: [GC-D2] 切个话题。为什么 shadow mode 默认先不开？",
+    "shadowRawTranscript": "t12 user: [GC-D2] 切个话题。为什么 shadow mode 默认先不开？",
+    "semanticPinNotes": [
+      "user: [GC-D2] 记一下：我以前默认编辑器是 Vim。",
+      "user: [GC-D2] 更新一下：我现在默认编辑器是 Zed。"
+    ],
+    "archiveSummary": "Previous topic was a GC-D2 validation flow around editor-memory behavior. The durable user fact established there is that the user used to default to Vim and now defaults to Zed. The validation/setup turns and status chatter are resolved and can leave the next-turn raw prompt.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 185,
+    "shadowRawPromptEstimate": 12,
+    "shadowPackageEstimate": 96,
+    "shadowPackageText": "Task state summary:\nPrevious topic was a GC-D2 validation flow around editor-memory behavior. The durable user fact established there is that the user used to default to Vim and now defaults to Zed. The validation/setup turns and status ch…\n\nLatest user ask:\n- [GC-D2] 切个话题。为什么 shadow mode 默认先不开？\n\nSemantic pins:\n- user: [GC-D2] 记一下：我以前默认编辑器是 Vim。\n- user: [GC-D2] 更新一下：我现在默认编辑器是 Zed。"
+  },
+  "scorecard": {
+    "relation": "switch",
+    "baselineTurnCount": 12,
+    "keptTurnCount": 1,
+    "evictedTurnCount": 11,
+    "pinCount": 2,
+    "baselinePromptEstimate": 185,
+    "shadowRawPromptEstimate": 12,
+    "shadowPackageEstimate": 96,
+    "rawReductionRatio": 0.9404,
+    "packageReductionRatio": 0.4811,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 19711,
+    "totalElapsedMs": 19714,
+    "guardedEnabled": true,
+    "guardedApplied": true,
+    "guardedReason": "guarded_candidate",
+    "guardedMessageCount": 1,
+    "guardedCarryForwardEstimate": 26,
+    "guardedFilteredMessageEstimate": 9
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": true,
+    "reason": "guarded_candidate",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": "[GC-D2] 切个话题。为什么 shadow mode 默认先不开？"
+      }
+    ],
+    "filteredMessageCount": 1,
+    "filteredMessageTokenEstimate": 9,
+    "carryForwardText": "Conversation carry-forward pins:\n- user: [GC-D2] 记一下：我以前默认编辑器是 Vim。\n- user: [GC-D2] 更新一下：我现在默认编辑器是 Zed。",
+    "carryForwardEstimate": 26,
+    "evictedSourceIndices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ]
+  },
+  "timings": {
+    "totalElapsedMs": 19714,
+    "decisionElapsedMs": 19711
+  }
+}

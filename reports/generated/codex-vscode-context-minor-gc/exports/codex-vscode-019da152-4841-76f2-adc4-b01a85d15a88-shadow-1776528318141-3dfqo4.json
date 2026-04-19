@@ -1,0 +1,144 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776528318141-3dfqo4",
+  "generated_at": "2026-04-18T16:05:18.141Z",
+  "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+  "agent_id": "main",
+  "query": "现在每一轮的context 已经能够正常gc了么",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "新的对话，也还是在umc项目里， 为什么context数据不对；"
+    },
+    {
+      "id": "t2",
+      "role": "user",
+      "content": "现在每一轮的context 已经能够正常gc了么"
+    },
+    {
+      "id": "t3",
+      "role": "assistant",
+      "content": "不是“每一轮都会压缩”，但现在看起来已经是“每一轮都会评估，满足条件就正常 GC 应用”。 这轮之所以没压，是因为这是新对话，抽出来的 turn 不够。代码里 `minTurns` 默认是 `3`，少于 3 就直接 `not_enough_turns`，见 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/cod…"
+    }
+  ],
+  "decision": {
+    "relation": "continue",
+    "confidence": 0.96,
+    "evict_turn_ids": [],
+    "pin_turn_ids": [],
+    "archive_summary": "Active topic is still the Codex VS Code context minor-GC behavior in this repo: the user is asking whether per-turn context GC is now working normally, and the assistant has already explained the current rule that each turn is evaluated but GC only applies when thresholds such as minimum turn count are met.",
+    "reasoning_summary": "The latest user turn stays on the same unresolved topic as t1-t3. The next turn will likely depend on the immediately preceding explanation about per-turn evaluation versus conditional GC, so those raw turns should remain in the working set. Nothing older is present to evict, and no semantic-only pin is needed yet because this is still active-topic evidence rather than durable background preference."
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "continue",
+      "confidence": 0.96,
+      "archiveSummary": "Active topic is still the Codex VS Code context minor-GC behavior in this repo: the user is asking whether per-turn context GC is now working normally, and the assistant has already explained the current rule that each turn is evaluated but GC only applies when thresholds such as minimum turn count are met.",
+      "reasoningSummary": "The latest user turn stays on the same unresolved topic as t1-t3. The next turn will likely depend on the immediately preceding explanation about per-turn evaluation versus conditional GC, so those raw turns should remain in the working set. Nothing older is present to evict, and no semantic-only pin is needed yet because this is still active-topic evidence rather than durable background preference.",
+      "latestUserTurnId": "t2",
+      "pinTurnIds": [],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [],
+      "keepTurnIds": [
+        "t1",
+        "t2",
+        "t3"
+      ],
+      "baselineTokens": 69,
+      "keptTokens": 69,
+      "prunedTokens": 0,
+      "reductionRatio": 0,
+      "keepTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "新的对话，也还是在umc项目里， 为什么context数据不对；",
+          "tokenEstimate": 8
+        },
+        {
+          "id": "t2",
+          "role": "user",
+          "content": "现在每一轮的context 已经能够正常gc了么",
+          "tokenEstimate": 6
+        },
+        {
+          "id": "t3",
+          "role": "assistant",
+          "content": "不是“每一轮都会压缩”，但现在看起来已经是“每一轮都会评估，满足条件就正常 GC 应用”。 这轮之所以没压，是因为这是新对话，抽出来的 turn 不够。代码里 `minTurns` 默认是 `3`，少于 3 就直接 `not_enough_turns`，见 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/cod…",
+          "tokenEstimate": 55
+        }
+      ],
+      "evictedTurns": []
+    },
+    "baselineRawTranscript": "t1 user: 新的对话，也还是在umc项目里， 为什么context数据不对；\nt2 user: 现在每一轮的context 已经能够正常gc了么\nt3 assistant: 不是“每一轮都会压缩”，但现在看起来已经是“每一轮都会评估，满足条件就正常 GC 应用”。 这轮之所以没压，是因为这是新对话，抽出来的 turn 不够。代码里 `minTurns` 默认是 `3`，少于 3 就直接 `not_enough_turns`，见 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/cod…",
+    "shadowRawTranscript": "t1 user: 新的对话，也还是在umc项目里， 为什么context数据不对；\nt2 user: 现在每一轮的context 已经能够正常gc了么\nt3 assistant: 不是“每一轮都会压缩”，但现在看起来已经是“每一轮都会评估，满足条件就正常 GC 应用”。 这轮之所以没压，是因为这是新对话，抽出来的 turn 不够。代码里 `minTurns` 默认是 `3`，少于 3 就直接 `not_enough_turns`，见 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/cod…",
+    "semanticPinNotes": [],
+    "archiveSummary": "Active topic is still the Codex VS Code context minor-GC behavior in this repo: the user is asking whether per-turn context GC is now working normally, and the assistant has already explained the current rule that each turn is evaluated but GC only applies when thresholds such as minimum turn count are met.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 78,
+    "shadowRawPromptEstimate": 78,
+    "shadowPackageEstimate": 71,
+    "shadowPackageText": "Task state summary:\nActive topic is still the Codex VS Code context minor-GC behavior in this repo: the user is asking whether per-turn context GC is now working normally, and the assistant has already explained the current rule that each…\n\nLatest user ask:\n- 现在每一轮的context 已经能够正常gc了么"
+  },
+  "scorecard": {
+    "relation": "continue",
+    "baselineTurnCount": 3,
+    "keptTurnCount": 3,
+    "evictedTurnCount": 0,
+    "pinCount": 0,
+    "baselinePromptEstimate": 78,
+    "shadowRawPromptEstimate": 78,
+    "shadowPackageEstimate": 71,
+    "rawReductionRatio": 0,
+    "packageReductionRatio": 0.0897,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 18115,
+    "totalElapsedMs": 18115,
+    "guardedEnabled": true,
+    "guardedApplied": false,
+    "guardedReason": "not_enough_evictions",
+    "guardedMessageCount": 3,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 69
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": false,
+    "reason": "not_enough_evictions",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": "新的对话，也还是在umc项目里， 为什么context数据不对；"
+      },
+      {
+        "role": "user",
+        "content": "现在每一轮的context 已经能够正常gc了么"
+      },
+      {
+        "role": "assistant",
+        "content": "不是“每一轮都会压缩”，但现在看起来已经是“每一轮都会评估，满足条件就正常 GC 应用”。 这轮之所以没压，是因为这是新对话，抽出来的 turn 不够。代码里 `minTurns` 默认是 `3`，少于 3 就直接 `not_enough_turns`，见 [src/codex-vscode-context-minor-gc.js](/Users/redcreen/Project/unified-memory-core/src/cod…"
+      }
+    ],
+    "filteredMessageCount": 3,
+    "filteredMessageTokenEstimate": 69,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 18115,
+    "decisionElapsedMs": 18115
+  }
+}

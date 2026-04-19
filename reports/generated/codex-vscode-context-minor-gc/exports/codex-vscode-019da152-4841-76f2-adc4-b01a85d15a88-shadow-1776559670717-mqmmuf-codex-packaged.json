@@ -1,0 +1,319 @@
+{
+  "schema_version": "umc.codex-context-minor-gc.v1",
+  "generated_at": "2026-04-19T00:48:09.725Z",
+  "event_id": "shadow-1776559670717-mqmmuf-codex-packaged",
+  "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+  "query": "需要，我如何开一个新的线程后，你能够引导我做测试？",
+  "status": "captured",
+  "reason": "",
+  "decision_transport": "codex_exec",
+  "relation": "switch",
+  "applied": true,
+  "codex_guard_reason": "codex_packaged_guard",
+  "prompt_reduction_ratio": 0.7131,
+  "baseline_context_estimate": 237,
+  "packaged_context_estimate": 68,
+  "effective_context_estimate": 68,
+  "shadow_status": "captured",
+  "shadow_guarded_applied": true,
+  "shadow_guarded_reason": "guarded_candidate",
+  "shadow_export_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da152-4841-76f2-adc4-b01a85d15a88-shadow-1776559670717-mqmmuf.json",
+  "shadow_summary_path": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl",
+  "export_path": "exports/codex-vscode-019da152-4841-76f2-adc4-b01a85d15a88-shadow-1776559670717-mqmmuf-codex-packaged.json",
+  "effective_context_block": "## Context Minor GC Working Set\nTask state summary:\n此前关于 codex context minor GC 的修复与回归测试已完成并收口：加入更难的中文多话题回归 case，收紧 packaged guard，不再依赖白名单；自动评测已跑过并为全绿。随后用户结束该实现/修复阶段，准备重新做一次“体感是否明显改变”的测试。助手指出当前线程上下文已很重，不适合评估新一轮真实体感，建议在新线程中进行测试。\n\nLatest user ask:\n- 需要，我如何开一个新的线程后，你能够引导我做测试？",
+  "packaged_context_block": "## Context Minor GC Working Set\nTask state summary:\n此前关于 codex context minor GC 的修复与回归测试已完成并收口：加入更难的中文多话题回归 case，收紧 packaged guard，不再依赖白名单；自动评测已跑过并为全绿。随后用户结束该实现/修复阶段，准备重新做一次“体感是否明显改变”的测试。助手指出当前线程上下文已很重，不适合评估新一轮真实体感，建议在新线程中进行测试。\n\nLatest user ask:\n- 需要，我如何开一个新的线程后，你能够引导我做测试？",
+  "shadow_event": {
+    "schema_version": "umc.dialogue-working-set-shadow.v1",
+    "event_id": "shadow-1776559670717-mqmmuf",
+    "generated_at": "2026-04-19T00:47:50.717Z",
+    "session_key": "codex:vscode:019da152-4841-76f2-adc4-b01a85d15a88",
+    "agent_id": "main",
+    "query": "需要，我如何开一个新的线程后，你能够引导我做测试？",
+    "status": "captured",
+    "reason": "",
+    "sampling": {
+      "max_turns": 12,
+      "min_turns": 3,
+      "max_chars_per_turn": 900
+    },
+    "transcript": [
+      {
+        "id": "t1",
+        "role": "assistant",
+        "content": "已经把 harder case 补进固定回归了。 新增 case： - `codex-minor-gc-zh-dense-multitopic-return` - 文件：[evals/codex-context-minor-gc-live-cases.js](/Users/redcreen/Project/unified-memory-core/evals/codex-context-minor-gc-live-cases.js)"
+      },
+      {
+        "id": "t2",
+        "role": "user",
+        "content": "要；尽量不是白名单，有硬编码嫌疑；"
+      },
+      {
+        "id": "t3",
+        "role": "assistant",
+        "content": "已经收住了，而且不是靠白名单。 我做了两步： - 把中文多轮切题 harder case 收进固定回归 - 再把 packaged guard 收紧成“不能覆盖 shadow guard 的否决”"
+      },
+      {
+        "id": "t4",
+        "role": "user",
+        "content": "那刚才不通过的测试，可以重新测试，预期是可以通过了对么？"
+      },
+      {
+        "id": "t5",
+        "role": "assistant",
+        "content": "是。 更准确地说："
+      },
+      {
+        "id": "t6",
+        "role": "user",
+        "content": "能自动跑的，你帮我跑一遍"
+      },
+      {
+        "id": "t7",
+        "role": "assistant",
+        "content": "我已经替你自动跑了一遍： ```bash node scripts/eval-codex-context-minor-gc-live.js --format markdown ```"
+      },
+      {
+        "id": "t8",
+        "role": "user",
+        "content": "继续"
+      },
+      {
+        "id": "t9",
+        "role": "assistant",
+        "content": "已经收成全绿了。 我继续做的两条通用修正是： - `continue` 下如果有 turn 被降成 `pin-only`，拒绝激活 - `summary-first` 不再强制优先；只要 raw keep 更轻，就统一退回 raw keep"
+      },
+      {
+        "id": "t10",
+        "role": "user",
+        "content": "就此结束，接下来， 我们重新来做测试，看下体感有么有明显改变；"
+      },
+      {
+        "id": "t11",
+        "role": "assistant",
+        "content": "可以，但这次为了看“体感有没有明显改变”，不要在当前线程测。 原因很直接： - 这个线程已经到 `384k / 486k` - 现在测出来的体感会被旧历史污染 - 你想看的其实是“新一轮真实使用时，是否更薄、更稳、更快收缩”"
+      },
+      {
+        "id": "t12",
+        "role": "user",
+        "content": "需要，我如何开一个新的线程后，你能够引导我做测试？"
+      }
+    ],
+    "decision": {
+      "relation": "switch",
+      "confidence": 0.93,
+      "evict_turn_ids": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8",
+        "t9"
+      ],
+      "pin_turn_ids": [
+        "t10",
+        "t11"
+      ],
+      "archive_summary": "此前关于 codex context minor GC 的修复与回归测试已完成并收口：加入更难的中文多话题回归 case，收紧 packaged guard，不再依赖白名单；自动评测已跑过并为全绿。随后用户结束该实现/修复阶段，准备重新做一次“体感是否明显改变”的测试。助手指出当前线程上下文已很重，不适合评估新一轮真实体感，建议在新线程中进行测试。",
+      "reasoning_summary": "当前活动从“修复并重跑测试”切换为“如何开新线程并在新线程里由助手引导测试”。旧实现与测试结果块已基本解决，适合从下一轮原始提示中移出。保留最新用户提问即可继续回答；把 t10-t11 的语义作为 pin 保留，用于说明为什么要新开线程以及下一步目标是做新线程体感测试。"
+    },
+    "decision_transport": "codex_exec",
+    "snapshot": {
+      "applied": {
+        "relation": "switch",
+        "confidence": 0.93,
+        "archiveSummary": "此前关于 codex context minor GC 的修复与回归测试已完成并收口：加入更难的中文多话题回归 case，收紧 packaged guard，不再依赖白名单；自动评测已跑过并为全绿。随后用户结束该实现/修复阶段，准备重新做一次“体感是否明显改变”的测试。助手指出当前线程上下文已很重，不适合评估新一轮真实体感，建议在新线程中进行测试。",
+        "reasoningSummary": "当前活动从“修复并重跑测试”切换为“如何开新线程并在新线程里由助手引导测试”。旧实现与测试结果块已基本解决，适合从下一轮原始提示中移出。保留最新用户提问即可继续回答；把 t10-t11 的语义作为 pin 保留，用于说明为什么要新开线程以及下一步目标是做新线程体感测试。",
+        "latestUserTurnId": "t12",
+        "pinTurnIds": [
+          "t10",
+          "t11"
+        ],
+        "pinnedOnlyTurnIds": [],
+        "requestedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3",
+          "t4",
+          "t5",
+          "t6",
+          "t7",
+          "t8",
+          "t9"
+        ],
+        "blockedEvictTurnIds": [],
+        "appliedEvictTurnIds": [
+          "t1",
+          "t2",
+          "t3",
+          "t4",
+          "t5",
+          "t6",
+          "t7",
+          "t8",
+          "t9"
+        ],
+        "keepTurnIds": [
+          "t10",
+          "t11",
+          "t12"
+        ],
+        "baselineTokens": 195,
+        "keptTokens": 43,
+        "prunedTokens": 152,
+        "reductionRatio": 0.7794871794871795,
+        "keepTurns": [
+          {
+            "id": "t10",
+            "role": "user",
+            "content": "就此结束，接下来， 我们重新来做测试，看下体感有么有明显改变；",
+            "tokenEstimate": 8
+          },
+          {
+            "id": "t11",
+            "role": "assistant",
+            "content": "可以，但这次为了看“体感有没有明显改变”，不要在当前线程测。 原因很直接： - 这个线程已经到 `384k / 486k` - 现在测出来的体感会被旧历史污染 - 你想看的其实是“新一轮真实使用时，是否更薄、更稳、更快收缩”",
+            "tokenEstimate": 28
+          },
+          {
+            "id": "t12",
+            "role": "user",
+            "content": "需要，我如何开一个新的线程后，你能够引导我做测试？",
+            "tokenEstimate": 7
+          }
+        ],
+        "evictedTurns": [
+          {
+            "id": "t1",
+            "role": "assistant",
+            "content": "已经把 harder case 补进固定回归了。 新增 case： - `codex-minor-gc-zh-dense-multitopic-return` - 文件：[evals/codex-context-minor-gc-live-cases.js](/Users/redcreen/Project/unified-memory-core/evals/codex-context-minor-gc-live-cases.js)",
+            "tokenEstimate": 55
+          },
+          {
+            "id": "t2",
+            "role": "user",
+            "content": "要；尽量不是白名单，有硬编码嫌疑；",
+            "tokenEstimate": 5
+          },
+          {
+            "id": "t3",
+            "role": "assistant",
+            "content": "已经收住了，而且不是靠白名单。 我做了两步： - 把中文多轮切题 harder case 收进固定回归 - 再把 packaged guard 收紧成“不能覆盖 shadow guard 的否决”",
+            "tokenEstimate": 25
+          },
+          {
+            "id": "t4",
+            "role": "user",
+            "content": "那刚才不通过的测试，可以重新测试，预期是可以通过了对么？",
+            "tokenEstimate": 7
+          },
+          {
+            "id": "t5",
+            "role": "assistant",
+            "content": "是。 更准确地说：",
+            "tokenEstimate": 3
+          },
+          {
+            "id": "t6",
+            "role": "user",
+            "content": "能自动跑的，你帮我跑一遍",
+            "tokenEstimate": 3
+          },
+          {
+            "id": "t7",
+            "role": "assistant",
+            "content": "我已经替你自动跑了一遍： ```bash node scripts/eval-codex-context-minor-gc-live.js --format markdown ```",
+            "tokenEstimate": 23
+          },
+          {
+            "id": "t8",
+            "role": "user",
+            "content": "继续",
+            "tokenEstimate": 1
+          },
+          {
+            "id": "t9",
+            "role": "assistant",
+            "content": "已经收成全绿了。 我继续做的两条通用修正是： - `continue` 下如果有 turn 被降成 `pin-only`，拒绝激活 - `summary-first` 不再强制优先；只要 raw keep 更轻，就统一退回 raw keep",
+            "tokenEstimate": 30
+          }
+        ]
+      },
+      "baselineRawTranscript": "t1 assistant: 已经把 harder case 补进固定回归了。 新增 case： - `codex-minor-gc-zh-dense-multitopic-return` - 文件：[evals/codex-context-minor-gc-live-cases.js](/Users/redcreen/Project/unified-memory-core/evals/codex-context-minor-gc-live-cases.js)\nt2 user: 要；尽量不是白名单，有硬编码嫌疑；\nt3 assistant: 已经收住了，而且不是靠白名单。 我做了两步： - 把中文多轮切题 harder case 收进固定回归 - 再把 packaged guard 收紧成“不能覆盖 shadow guard 的否决”\nt4 user: 那刚才不通过的测试，可以重新测试，预期是可以通过了对么？\nt5 assistant: 是。 更准确地说：\nt6 user: 能自动跑的，你帮我跑一遍\nt7 assistant: 我已经替你自动跑了一遍： ```bash node scripts/eval-codex-context-minor-gc-live.js --format markdown ```\nt8 user: 继续\nt9 assistant: 已经收成全绿了。 我继续做的两条通用修正是： - `continue` 下如果有 turn 被降成 `pin-only`，拒绝激活 - `summary-first` 不再强制优先；只要 raw keep 更轻，就统一退回 raw keep\nt10 user: 就此结束，接下来， 我们重新来做测试，看下体感有么有明显改变；\nt11 assistant: 可以，但这次为了看“体感有没有明显改变”，不要在当前线程测。 原因很直接： - 这个线程已经到 `384k / 486k` - 现在测出来的体感会被旧历史污染 - 你想看的其实是“新一轮真实使用时，是否更薄、更稳、更快收缩”\nt12 user: 需要，我如何开一个新的线程后，你能够引导我做测试？",
+      "shadowRawTranscript": "t10 user: 就此结束，接下来， 我们重新来做测试，看下体感有么有明显改变；\nt11 assistant: 可以，但这次为了看“体感有没有明显改变”，不要在当前线程测。 原因很直接： - 这个线程已经到 `384k / 486k` - 现在测出来的体感会被旧历史污染 - 你想看的其实是“新一轮真实使用时，是否更薄、更稳、更快收缩”\nt12 user: 需要，我如何开一个新的线程后，你能够引导我做测试？",
+      "semanticPinNotes": [],
+      "archiveSummary": "此前关于 codex context minor GC 的修复与回归测试已完成并收口：加入更难的中文多话题回归 case，收紧 packaged guard，不再依赖白名单；自动评测已跑过并为全绿。随后用户结束该实现/修复阶段，准备重新做一次“体感是否明显改变”的测试。助手指出当前线程上下文已很重，不适合评估新一轮真实体感，建议在新线程中进行测试。",
+      "injectedArchiveSummary": "",
+      "baselinePromptEstimate": 229,
+      "shadowRawPromptEstimate": 52,
+      "shadowPackageEstimate": 60,
+      "shadowPackageText": "Task state summary:\n此前关于 codex context minor GC 的修复与回归测试已完成并收口：加入更难的中文多话题回归 case，收紧 packaged guard，不再依赖白名单；自动评测已跑过并为全绿。随后用户结束该实现/修复阶段，准备重新做一次“体感是否明显改变”的测试。助手指出当前线程上下文已很重，不适合评估新一轮真实体感，建议在新线程中进行测试。\n\nLatest user ask:\n- 需要，我如何开一个新的线程后，你能够引导我做测试？"
+    },
+    "scorecard": {
+      "relation": "switch",
+      "baselineTurnCount": 12,
+      "keptTurnCount": 3,
+      "evictedTurnCount": 9,
+      "pinCount": 2,
+      "baselinePromptEstimate": 229,
+      "shadowRawPromptEstimate": 52,
+      "shadowPackageEstimate": 60,
+      "rawReductionRatio": 0.7795,
+      "packageReductionRatio": 0.738,
+      "candidateLoadElapsedMs": 0,
+      "assemblyBuildElapsedMs": 0,
+      "decisionElapsedMs": 19005,
+      "totalElapsedMs": 19007,
+      "guardedEnabled": true,
+      "guardedApplied": true,
+      "guardedReason": "guarded_candidate",
+      "guardedMessageCount": 3,
+      "guardedCarryForwardEstimate": 0,
+      "guardedFilteredMessageEstimate": 43
+    },
+    "guarded": {
+      "enabled": true,
+      "applied": true,
+      "reason": "guarded_candidate",
+      "filteredMessages": [
+        {
+          "role": "user",
+          "content": "就此结束，接下来， 我们重新来做测试，看下体感有么有明显改变；"
+        },
+        {
+          "role": "assistant",
+          "content": "可以，但这次为了看“体感有没有明显改变”，不要在当前线程测。 原因很直接： - 这个线程已经到 `384k / 486k` - 现在测出来的体感会被旧历史污染 - 你想看的其实是“新一轮真实使用时，是否更薄、更稳、更快收缩”"
+        },
+        {
+          "role": "user",
+          "content": "需要，我如何开一个新的线程后，你能够引导我做测试？"
+        }
+      ],
+      "filteredMessageCount": 3,
+      "filteredMessageTokenEstimate": 43,
+      "carryForwardText": "",
+      "carryForwardEstimate": 0,
+      "evictedSourceIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    "timings": {
+      "totalElapsedMs": 19007,
+      "decisionElapsedMs": 19005
+    },
+    "artifact_paths": {
+      "export": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/exports/codex-vscode-019da152-4841-76f2-adc4-b01a85d15a88-shadow-1776559670717-mqmmuf.json",
+      "summary": "/Users/redcreen/Project/unified-memory-core/reports/generated/codex-vscode-context-minor-gc/telemetry.jsonl"
+    }
+  }
+}

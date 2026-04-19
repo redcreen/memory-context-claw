@@ -1,0 +1,144 @@
+{
+  "schema_version": "umc.dialogue-working-set-shadow.v1",
+  "event_id": "shadow-1776516831836-whhrhs",
+  "generated_at": "2026-04-18T12:53:51.836Z",
+  "session_key": "codex:vscode:019da08b-ae03-73e3-9378-881ff36e8fa4",
+  "agent_id": "main",
+  "query": "现在用户端有明显好用了么？",
+  "status": "captured",
+  "reason": "",
+  "sampling": {
+    "max_turns": 12,
+    "min_turns": 3,
+    "max_chars_per_turn": 900
+  },
+  "transcript": [
+    {
+      "id": "t1",
+      "role": "user",
+      "content": "# Files mentioned by the user: ## codex-resume-pack.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/codex-resume-pack.md ## continue.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/continue.md ## handoff.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/handoff.md ## progress.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/progress.md ## status.md: /Users/redcreen/Project/unified-memory-core/.codex/status.md ## plan.md: /Users/redcreen/Project/unified-memory-core/.codex/plan.md ## My request for Codex: Stage 11 继续 直到收口"
+    },
+    {
+      "id": "t2",
+      "role": "assistant",
+      "content": "`Stage 11` 的控制面我已经收口了。现在 `.codex/status.md` 和 `.codex/plan.md` 都回到 `Stage 12` 当前，当前切片是 `group-12a-contract-and-replay-hold`；`continue.md`、`progress.md`、`handoff.md`、`codex-resume-pack.md`，以及自动恢复提示也都同步成同一套口径，不再把 `Stage 11` 当作 reopened 主线。 校验已做完：`git diff --check` 通过，`node --test test/codex-context-minor-gc.test.js…"
+    },
+    {
+      "id": "t3",
+      "role": "user",
+      "content": "现在用户端有明显好用了么？"
+    }
+  ],
+  "decision": {
+    "relation": "continue",
+    "confidence": 0.85,
+    "evict_turn_ids": [],
+    "pin_turn_ids": [],
+    "archive_summary": "Stage 11 control-plane cleanup was completed and repository-facing status docs were normalized to Stage 12 / group-12a-contract-and-replay-hold, with validation passing.",
+    "reasoning_summary": "The latest user question asks whether the user-facing side feels noticeably improved as a result of the immediately preceding Stage 11 closure work. That depends directly on the prior request and assistant report, so this remains the same active topic. Keep t1 and t2 raw; nothing older is available to evict, and no pin-only compression is appropriate yet because the evidence for the answer is still active."
+  },
+  "decision_transport": "codex_exec",
+  "snapshot": {
+    "applied": {
+      "relation": "continue",
+      "confidence": 0.85,
+      "archiveSummary": "Stage 11 control-plane cleanup was completed and repository-facing status docs were normalized to Stage 12 / group-12a-contract-and-replay-hold, with validation passing.",
+      "reasoningSummary": "The latest user question asks whether the user-facing side feels noticeably improved as a result of the immediately preceding Stage 11 closure work. That depends directly on the prior request and assistant report, so this remains the same active topic. Keep t1 and t2 raw; nothing older is available to evict, and no pin-only compression is appropriate yet because the evidence for the answer is still active.",
+      "latestUserTurnId": "t3",
+      "pinTurnIds": [],
+      "pinnedOnlyTurnIds": [],
+      "requestedEvictTurnIds": [],
+      "blockedEvictTurnIds": [],
+      "appliedEvictTurnIds": [],
+      "keepTurnIds": [
+        "t1",
+        "t2",
+        "t3"
+      ],
+      "baselineTokens": 232,
+      "keptTokens": 232,
+      "prunedTokens": 0,
+      "reductionRatio": 0,
+      "keepTurns": [
+        {
+          "id": "t1",
+          "role": "user",
+          "content": "# Files mentioned by the user: ## codex-resume-pack.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/codex-resume-pack.md ## continue.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/continue.md ## handoff.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/handoff.md ## progress.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/progress.md ## status.md: /Users/redcreen/Project/unified-memory-core/.codex/status.md ## plan.md: /Users/redcreen/Project/unified-memory-core/.codex/plan.md ## My request for Codex: Stage 11 继续 直到收口",
+          "tokenEstimate": 149
+        },
+        {
+          "id": "t2",
+          "role": "assistant",
+          "content": "`Stage 11` 的控制面我已经收口了。现在 `.codex/status.md` 和 `.codex/plan.md` 都回到 `Stage 12` 当前，当前切片是 `group-12a-contract-and-replay-hold`；`continue.md`、`progress.md`、`handoff.md`、`codex-resume-pack.md`，以及自动恢复提示也都同步成同一套口径，不再把 `Stage 11` 当作 reopened 主线。 校验已做完：`git diff --check` 通过，`node --test test/codex-context-minor-gc.test.js…",
+          "tokenEstimate": 79
+        },
+        {
+          "id": "t3",
+          "role": "user",
+          "content": "现在用户端有明显好用了么？",
+          "tokenEstimate": 4
+        }
+      ],
+      "evictedTurns": []
+    },
+    "baselineRawTranscript": "t1 user: # Files mentioned by the user: ## codex-resume-pack.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/codex-resume-pack.md ## continue.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/continue.md ## handoff.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/handoff.md ## progress.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/progress.md ## status.md: /Users/redcreen/Project/unified-memory-core/.codex/status.md ## plan.md: /Users/redcreen/Project/unified-memory-core/.codex/plan.md ## My request for Codex: Stage 11 继续 直到收口\nt2 assistant: `Stage 11` 的控制面我已经收口了。现在 `.codex/status.md` 和 `.codex/plan.md` 都回到 `Stage 12` 当前，当前切片是 `group-12a-contract-and-replay-hold`；`continue.md`、`progress.md`、`handoff.md`、`codex-resume-pack.md`，以及自动恢复提示也都同步成同一套口径，不再把 `Stage 11` 当作 reopened 主线。 校验已做完：`git diff --check` 通过，`node --test test/codex-context-minor-gc.test.js…\nt3 user: 现在用户端有明显好用了么？",
+    "shadowRawTranscript": "t1 user: # Files mentioned by the user: ## codex-resume-pack.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/codex-resume-pack.md ## continue.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/continue.md ## handoff.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/handoff.md ## progress.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/progress.md ## status.md: /Users/redcreen/Project/unified-memory-core/.codex/status.md ## plan.md: /Users/redcreen/Project/unified-memory-core/.codex/plan.md ## My request for Codex: Stage 11 继续 直到收口\nt2 assistant: `Stage 11` 的控制面我已经收口了。现在 `.codex/status.md` 和 `.codex/plan.md` 都回到 `Stage 12` 当前，当前切片是 `group-12a-contract-and-replay-hold`；`continue.md`、`progress.md`、`handoff.md`、`codex-resume-pack.md`，以及自动恢复提示也都同步成同一套口径，不再把 `Stage 11` 当作 reopened 主线。 校验已做完：`git diff --check` 通过，`node --test test/codex-context-minor-gc.test.js…\nt3 user: 现在用户端有明显好用了么？",
+    "semanticPinNotes": [],
+    "archiveSummary": "Stage 11 control-plane cleanup was completed and repository-facing status docs were normalized to Stage 12 / group-12a-contract-and-replay-hold, with validation passing.",
+    "injectedArchiveSummary": "",
+    "baselinePromptEstimate": 239,
+    "shadowRawPromptEstimate": 239,
+    "shadowPackageEstimate": 244,
+    "shadowPackageText": "Active raw turns:\nt1 user: # Files mentioned by the user: ## codex-resume-pack.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/codex-resume-pack.md ## continue.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/continue.md ## handoff.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/handoff.md ## progress.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/progress.md ## status.md: /Users/redcreen/Project/unified-memory-core/.codex/status.md ## plan.md: /Users/redcreen/Project/unified-memory-core/.codex/plan.md ## My request for Codex: Stage 11 继续 直到收口\nt2 assistant: `Stage 11` 的控制面我已经收口了。现在 `.codex/status.md` 和 `.codex/plan.md` 都回到 `Stage 12` 当前，当前切片是 `group-12a-contract-and-replay-hold`；`continue.md`、`progress.md`、`handoff.md`、`codex-resume-pack.md`，以及自动恢复提示也都同步成同一套口径，不再把 `Stage 11` 当作 reopened 主线。 校验已做完：`git diff --check` 通过，`node --test test/codex-context-minor-gc.test.js…\nt3 user: 现在用户端有明显好用了么？"
+  },
+  "scorecard": {
+    "relation": "continue",
+    "baselineTurnCount": 3,
+    "keptTurnCount": 3,
+    "evictedTurnCount": 0,
+    "pinCount": 0,
+    "baselinePromptEstimate": 239,
+    "shadowRawPromptEstimate": 239,
+    "shadowPackageEstimate": 244,
+    "rawReductionRatio": 0,
+    "packageReductionRatio": -0.0209,
+    "candidateLoadElapsedMs": 0,
+    "assemblyBuildElapsedMs": 0,
+    "decisionElapsedMs": 26890,
+    "totalElapsedMs": 26894,
+    "guardedEnabled": true,
+    "guardedApplied": false,
+    "guardedReason": "not_enough_evictions",
+    "guardedMessageCount": 3,
+    "guardedCarryForwardEstimate": 0,
+    "guardedFilteredMessageEstimate": 232
+  },
+  "guarded": {
+    "enabled": true,
+    "applied": false,
+    "reason": "not_enough_evictions",
+    "filteredMessages": [
+      {
+        "role": "user",
+        "content": "# Files mentioned by the user: ## codex-resume-pack.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/codex-resume-pack.md ## continue.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/continue.md ## handoff.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/handoff.md ## progress.md: /Users/redcreen/Project/unified-memory-core/.codex/host-views/progress.md ## status.md: /Users/redcreen/Project/unified-memory-core/.codex/status.md ## plan.md: /Users/redcreen/Project/unified-memory-core/.codex/plan.md ## My request for Codex: Stage 11 继续 直到收口"
+      },
+      {
+        "role": "assistant",
+        "content": "`Stage 11` 的控制面我已经收口了。现在 `.codex/status.md` 和 `.codex/plan.md` 都回到 `Stage 12` 当前，当前切片是 `group-12a-contract-and-replay-hold`；`continue.md`、`progress.md`、`handoff.md`、`codex-resume-pack.md`，以及自动恢复提示也都同步成同一套口径，不再把 `Stage 11` 当作 reopened 主线。 校验已做完：`git diff --check` 通过，`node --test test/codex-context-minor-gc.test.js…"
+      },
+      {
+        "role": "user",
+        "content": "现在用户端有明显好用了么？"
+      }
+    ],
+    "filteredMessageCount": 3,
+    "filteredMessageTokenEstimate": 232,
+    "carryForwardText": "",
+    "carryForwardEstimate": 0,
+    "evictedSourceIndices": []
+  },
+  "timings": {
+    "totalElapsedMs": 26895,
+    "decisionElapsedMs": 26890
+  }
+}
